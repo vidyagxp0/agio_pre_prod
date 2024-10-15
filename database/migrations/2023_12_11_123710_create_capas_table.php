@@ -58,7 +58,7 @@ return new class extends Migration
             $table->longText('initial_observation')->nullable();
             $table->string('interim_containnment')->nullable();
             $table->longText('containment_comments')->nullable();
-            $table->string('capa_attachment')->nullable();
+            $table->longText('capa_attachment')->nullable();
             $table->longText('capa_qa_comments')->nullable();
             $table->longText('capa_qa_comments2')->nullable();
             $table->text('Microbiology_new')->nullable();
@@ -86,7 +86,7 @@ return new class extends Migration
             $table->text('effectiveness')->nullable();
             $table->string('effect_check')->nullable();
             $table->date('effect_check_date')->nullable();
-            $table->text('closure_attachment')->nullable();
+            $table->longText('closure_attachment')->nullable();
             $table->text('plan_proposed_by')->nullable();
             $table->string('plan_proposed_on')->nullable();
             $table->string('comment')->nullable();

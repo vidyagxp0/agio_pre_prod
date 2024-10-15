@@ -174,7 +174,7 @@
                     '<div class="group-input input-date">' +
                     '<div class="calenderauditee">' +
                     '<input class="click_date" id="End_date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
-                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" min="' + new Date().toISOString().split('T')[0] + '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
                     '</div></div></div></td>' +
                     '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Lead_Investigator]">' +
                     '<option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
@@ -596,7 +596,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -606,7 +606,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
@@ -617,7 +617,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -693,7 +693,7 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
                         <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
@@ -1003,21 +1003,17 @@
                                                 <select name="year"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Deviation"
-                                                        @if ($data->year == 'Deviation') selected @endif>Deviation</option>
-                                                    <option value="CAPA"
-                                                        @if ($data->year == 'CAPA') selected @endif>CAPA</option>
-                                                        <option value="Lab Incident"
-                                                        @if ($data->year == 'Lab Incident') selected @endif>Lab Incident</option>
-                                                        <option value="Internal Audit"
-                                                        @if ($data->year == 'Internal Audit') selected @endif>Internal Audit</option>
+                                                    <option value="Yearly Planner"
+                                                        @if ($data->year == 'Yearly Planner') selected @endif>Yearly Planner</option>
+                                                    <option value="Monthly Planner"
+                                                        @if ($data->year == 'Monthly Planner') selected @endif>Monthly Planner</option>
                                                     <option value="Other"
                                                         @if ($data->year == 'Other') selected @endif>Other</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6" id="yearly_container" style="display: none;">
+                                        <div class="col-lg-12" id="yearly_container" style="display: none;">
                                             <div class="group-input">
                                                 <label for="yearly_other">Initiated Through(Others)<span
                                                         class="text-danger">*</span></label>
@@ -1041,7 +1037,7 @@
 
                                             // Call the function on page load to set the initial state
                                             document.addEventListener('DOMContentLoaded', function() {
-                                                var typeSelect = document.querySelector('select[name="type"]');
+                                                var typeSelect = document.querySelector('select[name="year"]');
                                                 toggleTabField(typeSelect);
                                             });
                                         </script>
@@ -1331,6 +1327,7 @@
                                                                                         id="End_date_{{ $loop->index }}_input"
                                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['End_date']) ? $grid['End_date'] : '' }}"
+                                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                         class="hide-input show_date"
                                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                                         onchange="handleDateInput(this, 'End_date_{{ $loop->index }}')" />
@@ -2000,60 +1997,76 @@
                             <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                    <!-- <div class="col-12">
+                                            <div class="sub-head">Submit</div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_By..">Submitted By</label>
+                                                <label for="Submitted_By..">Submit By</label>
                                                 <div class="static">{{ $data->submitted_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Submitted On</label>
+                                                <label for="Submit_On">Submit On</label>
                                                 <div class="static">{{ $data->submitted_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Submitted Comment</label>
+                                                <label for="Submit_On">Submit Comment</label>
                                                 <div class="static">{{ $data->Submitted_comment }}</div>
                                             </div>
                                         </div>
+                                        <!-- <div class="col-12">
+                                            <div class="sub-head">Approve</div>
+                                        </div> -->
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Approved_By">Approved By</label>
+                                                <label for="Approved_By">Approve By</label>
                                                 <div class="static">{{ $data->approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Approved_On">Approved On</label>
+                                                <label for="Approved_On">Approve On</label>
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">ApprovedComment</label>
+                                                <label for="Submitted_On">Approve Comment</label>
                                                 <div class="static">{{ $data->approved_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <!-- <div class="col-12">
+                                            <div class="sub-head">More Info Required</div>
+                                        </div> -->
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_By">More Information Required By</label>
+                                                <label for="Rejected_By">More Info Required By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_On">More Information Required On</label>
+                                                <label for="Rejected_On">More Info Required On</label>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">More Information Required Comment</label>
+                                                <label for="Submitted_On">More Info Required Comment</label>
                                                 <div class="static">{{ $data->reject_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <!-- <div class="col-12">
+                                            <div class="sub-head">Audit Completed</div>
+                                        </div> -->
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit_Completed_By">Audit Completed By</label>
@@ -2072,21 +2085,26 @@
                                                 <div class="static">{{ $data->Audit_Completed_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <!-- <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div> -->
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled_By">Cancelled By</label>
+                                                <label for="Cancelled_By">Cancel By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled_On">Cancelled On</label>
+                                                <label for="Cancelled_On">Cancel On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Cancelled Comment</label>
+                                                <label for="Submitted_On">Cancel Comment</label>
                                                 <div class="static">{{ $data->Cancelled_comment }}</div>
                                             </div>
                                         </div>

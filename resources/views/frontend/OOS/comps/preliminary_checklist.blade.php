@@ -58,17 +58,36 @@
                                             </td>
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
+                                                    @php
+                                                    $dataItem = $checklist_lab_invs->data[$loop->index] ?? null;
+                                                @endphp
+
+                                                <select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;" {{Helpers::isOOSChemical($data->stage)}}>
+                                                    <option value="">Select an Option</option>
+
+                                                    <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                </select>
+
+                                                    {{--<select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
                                                         <option value="">Select an Option</option>
                                                         <option value="Yes" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                         <option value="No" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                         <option value="N/A" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
+                                                    </select>--}}
                                                 </div>
                                             </td>
                                             <td style="vertical-align: middle;">
                                                 <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_lab_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'remark') }}</textarea>
+                                                    @php
+                                                    $dataItem = $checklist_lab_invs->data[$loop->index] ?? null;
+                                                    $remark = isset($dataItem) ? Helpers::getArrayKey($dataItem, 'remark') : '';
+                                                @endphp
+
+                                                <textarea name="checklist_lab_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSChemical($data->stage)}}>{{ $remark }}</textarea>
+
+                                                    {{--<textarea name="checklist_lab_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'remark') }}</textarea>--}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -77,7 +96,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                 </div>
             </div>
 

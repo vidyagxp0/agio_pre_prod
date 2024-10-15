@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Incident Single Report
+                    Incident Report
                 </td>
 
                 <td class="w-30">
@@ -311,6 +311,15 @@
                 </table>
                 <table>
                     <tr>
+                        <th class="w-20">Incident Observed By</th>
+                        <td class="w-30">
+                            @if ($data->Facility)
+                                {{ $data->Facility }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Incident Reported On </th>
                         <td class="w-30">
                             @if ($data->incident_reported_date)
@@ -319,14 +328,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Incident Observed by</th>
-                        <td class="w-30">
-                            @if ($data->Facility)
-                                {{ $data->Facility }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+
                         {{--@php
                             $facilityIds = explode(',', $data->Facility);
                             $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
@@ -354,7 +356,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20"> Others</th>
+                       <th class="w-20"> Others</th>
                         <td class="w-30">
                             @if ($data->others)
                                 {{ $data->others }}
@@ -364,13 +366,24 @@
                         </td>
 
                     </tr>
+
+                    <tr>
+                        <th class="w-20">Delay Justification</th>
+                        <td class="w-30">
+                            @if ($data->Delay_Justification)
+                                {{ $data->Delay_Justification }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                 </table>
                 <table>
                     <tr>
                         <th class="w-20"> Department Head</th>
                         <td class="w-30">
                             @if ($data->department_head)
-                                {{ $data->department_head }}
+                                {{ Helpers::getInitiatorName($data->department_head) }}
                             @else
                                 Not Applicable
                             @endif
@@ -378,7 +391,7 @@
                         <th class="w-20"> QA Reviewer</th>
                         <td class="w-30">
                             @if ($data->qa_reviewer)
-                                {{ $data->qa_reviewer }}
+                                {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
                                 Not Applicable
                             @endif
@@ -402,7 +415,7 @@
                 </table>
                 <div class="block">
                     <div class="block-head">
-                        Facility/ Equipment/ Instrument/ System Details
+                        Facility/Equipment/Instrument/System Details
                     </div>
                     <div class="border-table">
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
@@ -468,9 +481,9 @@
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Row#</th>
+                                    <th style="width: 16%">Document Name</th>
                                     <th style="width: 12%">Document Number</th>
-                                    <th style="width: 16%"> Reference Document Name</th>
-                                    <th style="width: 16%"> Remarks</th>
+                                    <th style="width: 16%">Remarks</th>
 
                                     {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
@@ -480,10 +493,10 @@
                                 @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}
+                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
 
                                         </td>
-                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
+                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}
 
                                         </td>
                                         <td>{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}
@@ -508,7 +521,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Product/Batch Required?</th>
+                        <th class="w-20">Products / Material  Details Required?</th>
                         <td class="w-80">
                             @if ($data->Product_Details_Required)
                                 {{ $data->Product_Details_Required }}
@@ -520,16 +533,16 @@
                 </table>
                 <div class="block">
                     <div class="block-head">
-                        Product/Batch Details
+                        Product / Material Details
                     </div>
                     <div class="border-table">
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Row#</th>
-                                    <th style="width: 12%">Product</th>
-                                    <th style="width: 16%"> Stage</th>
-                                    <th style="width: 16%">Batch No</th>
+                                    <th style="width: 12%">Product Material</th>
+                                    <th style="width: 16%">Stage</th>
+                                    <th style="width: 16%">A.R.No. / Batch No</th>
 
                                     {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
@@ -591,7 +604,7 @@
                 </table>
                 <table>
                     <tr>
-                        <th class="w-20">Immediate corrective action</th>
+                        <th class="w-20">Immediate Corrective Action</th>
                         <td class="w-80">
                             @if ($data->immediate_correction)
                                 {{ $data->immediate_correction }}
@@ -602,9 +615,12 @@
                     </tr>
                 </table>
             </div>
+
+            <br>
+
             <div class="border-table">
                 <div class="block-head">
-                    Initial Attachments
+                    Initial Attachment
                 </div>
                 <table>
 
@@ -630,13 +646,14 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     HOD Review
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Review Of Incident And Verfication Of Effectivess Of Correction</th>
+                        <th class="w-20">Review Of Incident And Verification Of Effectiveness Of Corrcetion</th>
                         <td class="w-80">
                             @if ($data->review_of_verific)
                                 {{ $data->review_of_verific }}
@@ -668,7 +685,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-30">HOD Remarks</th>
+                        <th class="w-30">HOD Remark</th>
                         <td class="w-80">
                             @if ($data->HOD_Remarks)
                                 {{ $data->HOD_Remarks }}
@@ -707,6 +724,7 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     QA Initial Review
@@ -767,7 +785,7 @@
 
                     <tr>
                         <th class="w-20">
-                            If Yes, Then Mention:
+                            If Yes, Then Mention
                         </th>
                         <td class="w-30">
                             @if ($data->any_similar_incident_in_past)
@@ -851,7 +869,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">QA Head/Designee approval comment</th>
+                        <th class="w-20">QA Head/Designee Approval Comment</th>
                         <td class="w-30">
                             @if ($data->qa_head_deginee_comment)
                                 {{ $data->qa_head_deginee_comment }}
@@ -866,7 +884,7 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    QA Head/Designee approval attachement
+                    QA Head/Designee Approval Attachment
                 </div>
                 <table>
 
@@ -893,6 +911,7 @@
             </div>
 
 
+            <br>
 
             <div class="block">
                 <div class="block-head">
@@ -994,6 +1013,7 @@
                 </table>
             </div>
 
+            <br>
             <div class="block">
                 <div class="block-head">
                     HOD Final Review
@@ -1012,6 +1032,7 @@
                     </tr>
                 </table>
             </div>
+
             <div class="border-table">
                 <div class="block-head">
                     HOD Final Review Attachments
@@ -1039,7 +1060,10 @@
 
                 </table>
             </div>
-            <div class="border-table">
+
+            <br>
+
+            {{--<div class="border-table">--}}
                 <div class="block-head">
                     QA Final Review
                 </div>
@@ -1057,8 +1081,8 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
+            {{--</div>--}}
+<br>
             <div class="border-table">
                 <div class="block-head">
                     QA Final Review Attachments
@@ -1089,7 +1113,12 @@
 
 
 
-            <div class="border-table">
+            <br>
+{{--@php
+    dd($data->Disposition_Batch);
+@endphp--}}
+
+            {{--<div class="border-table">--}}
                 <div class="block-head">
                     QAH/Designee Closure Approval
                 </div>
@@ -1098,8 +1127,8 @@
                         <th class="w-20">
                             Closure Comments</th>
                         <td class="w-30">
-                            @if ($data->CAPA_Closure_Comments)
-                                {{ $data->CAPA_Closure_Comments }}
+                            @if ($data->Closure_Comments)
+                                {{ $data->Closure_Comments }}
                             @else
                                 Not Applicable
                             @endif
@@ -1117,8 +1146,8 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
+            {{--</div>--}}
+<br>
             <div class="border-table">
                 <div class="block-head">
                     Closure Attachments
@@ -1147,6 +1176,85 @@
                 </table>
             </div>
 
+            <br>
+            <div class="block">
+                <div class="block-head">Activity Log</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submit By</th>
+                        <td class="w-80">{{ $data->submit_by }}</td>
+                        <th class="w-20">Submit On</th>
+                        <td class="w-80">{{ $data->submit_on }}</td>
+                        <th class="w-20">Submit Comment</th>
+                        <td class="w-80">{{ $data->submit_comment }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">HOD Initial Review Complete By</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Initial Review Complete On</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Complete_On }}</td>
+                        <th class="w-20">HOD Initial Review Complete Comment</th>
+                        <td class="w-80">{{ $data->HOD_Initial_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Initial Review Complete By</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">QA Initial Review Complete On</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Complete_On }}</td>
+                        <th class="w-20">QA Initial Review Complete Comment</th>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QAH/Designee Approval Complete By</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_By }}</td>
+                        <th class="w-20">QAH/Designee Approval Complete On</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_On }}</td>
+                        <th class="w-20">QAH/Designee Approval Complete Comment</th>
+                        <td class="w-80">{{ $data->QAH_Designee_Approval_Complete_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Pending Initiator Update Complete By</th>
+                        <td class="w-80">{{ $data->Pending_Review_Complete_By }}</td>
+                        <th class="w-20">Pending Initiator Update Complete On</th>
+                        <td class="w-80">{{ $data->Pending_Review_Complete_On }}</td>
+                        <th class="w-20">Pending Initiator Update Complete Comment</th>
+                        <td class="w-80">{{ $data->Pending_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Final Review Complete By</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Final Review Complete On</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Complete_On }}</td>
+                        <th class="w-20">HOD Final Review Complete Comment</th>
+                        <td class="w-80">{{ $data->Hod_Final_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Final Review Complete By</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Complete_By }}</td>
+                        <th class="w-20">QA Final Review Complete On</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Complete_On }}</td>
+                        <th class="w-20">QA Final Review Complete Comment</th>
+                        <td class="w-80">{{ $data->QA_Final_Review_Comments }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-80">{{ $data->QA_head_approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-80">{{ $data->QA_head_approved_on }}</td>
+                        <th class="w-20">Approved Comment</th>
+                        <td class="w-80">{{ $data->QA_head_approved_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-80">{{ $data->Cancelled_by }}</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-80">{{ $data->Cancelled_on }}</td>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-80">{{ $data->Cancelled_cmt }}</td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
     </div>

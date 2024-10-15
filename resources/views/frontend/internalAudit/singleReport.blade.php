@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Single Report
+                   Internal Audit  Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -630,6 +630,7 @@
                 
                
             </div>
+            
 
                         @php
                             $questions_packing = [
@@ -711,23 +712,22 @@
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
                                             <div class="block-head">
-                                                Checklist - Tablet Dispensing & Granulation
-                                            </div>
+                                                Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
                                             <div>
                                                 @php
                                                     $checklists = [
                                                         [
-                                                            'title' => 'Checklist for Tablet Dispensing',
+                                                            'title' => 'STAGE 1 : DISPENSING',
                                                             'questions' => $questions_packing,
                                                             'prefix' => 1
                                                         ],
                                                         [
-                                                            'title' => 'Checklist for INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION',
+                                                            'title' => 'Stage -02 Granulation',
                                                             'questions' => $questions_documentation,
                                                             'prefix' => 2
                                                         ],
                                                         [
-                                                            'title' => 'Checklist for Documentation Table',
+                                                            'title' => 'Stage -03 Documentation',
                                                             'questions' => $questions_documentation_table,
                                                             'prefix' => 3
                                                         ]
@@ -781,7 +781,7 @@
                                 </div>
                                          
                                 @php
-                                    $questions_packing1 = [
+                                    $questions_packing = [
                                         'Check for area activity record.',
                                         'Check for equipment usage record.',
                                         'Check for general equipment details and accessory details.',
@@ -804,7 +804,7 @@
                                         'Have you any standard procedure for removal of scrap?',
                                     ];
 
-                                    $questions_documentation1 = [
+                                    $questions_documentation = [
                                         'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
                                         'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
                                         'Is the batch record is on line up to the current stage of a process?',
@@ -812,24 +812,281 @@
                                         'Is there any area cleaning record available for all individual areas?',
                                         "Current version of SOP's is available in respective areas?",
                                     ];
-                            @endphp    
-                            <div class="inner-block">
+                                            @endphp   
+                                            @if(!empty($data->checklist3))
+                
+                                                    <div class="inner-block">
+                                                        <div class="content-table">
+                                                            <!-- <div class="border-table"> -->
+                                                                <div class="block-head">
+                                                                    Checklist - Tablet/Capsule Packing
+                                                                </div>
+                                                                <div>
+                                                                    @php
+                                                                        $checklists = [
+                                                                            [
+                                                                                'title' => 'STAGE 1 : PACKING',
+                                                                                'questions' => $questions_packing,
+                                                                                'prefix' => 1
+                                                                            ],
+                                                                            [
+                                                                                'title' => 'STAGE 2: DOCUMENTATION',
+                                                                                'questions' => $questions_documentation,
+                                                                                'prefix' => 2
+                                                                            ],
+
+                                                                        ];
+                                                                    @endphp
+
+                                                                    @foreach ($checklists as $checklist)
+                                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                            {{ $checklist['title'] }}
+                                                                        </div>
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                                    <th style="width: 40%;">Question</th>
+                                                                                    <th style="width: 20%;">Response</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                                    @php
+                                                                                        $response = $checklist3->{"tablet_capsule_packing_" . ($index + 1)};
+                                                                                        $remark = $checklist3->{"tablet_capsule_packing_remark_" . ($index + 1)};
+                                                                                    @endphp
+
+                                                                                    <!-- Check if either response or remark is not empty -->
+                                                                                    @if($response || $remark)
+                                                                                        <tr>
+                                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                            <td>{{ $question }}</td>
+                                                                                            <td>
+                                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                    {{ $response }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="vertical-align: middle;">
+                                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                    {{ $remark }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    @endforeach
+                                                                </div>
+                                                            <!-- </div> -->
+                                                        </div>
+                                                    </div>  
+                                        @endif
+                                            
+                                            @php
+                                            $questions = [
+                                                'Is status labels displayed on all equipments / machines?',
+                                                '1.2Equipment cleanliness, check few equipments.',
+                                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                                'Are there written instructions describing how to use in-process data to control the process?',
+                                                'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                                'Is equipment inspected immediately prior to use?',
+                                                'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                                'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
+                                                'Is equipment cleaned promptly after use?',
+                                                'Is there proper storage of cleaned equipment so as to prevent contamination?	',
+                                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
+                                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                'Are all weighing and measuring performed by one qualified person and checked by a second person',
+                                                'All the person working in manufacturing area having proper gowning?',
+                                                'Have you any SOP regarding Hold time of material during staging?',
+                                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                'Check for area activity record',
+                                                'Check for equipment usage record',
+                                                'Check for general equipment details and accessory details.',
+                                                'Check for man & material movement in the area',
+                                                'Air handling system qualification, cleaning details and PAO test reports',
+                                                'Check for the status labeling in the area and, material randomly',
+                                                'Check the in-process equipments cleaning status & records.',
+                                                'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                                'Status label of area & equipment available?',
+                                                'Have you any proper storage area for primary and secondary packing material?',
+                                                'Do you have proper segregation system for keeping product/batch separately?',
+                                                'Stereo impression record available? Check the record for any 2 batches.',
+                                                'Where you keep the rejected ampoule / cartons?',
+                                                'Is there any standard practice for destruction of printed ampoule label & printed cartons?',
+                                                'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                                'Is there any procedure for operation and cleaning of ampoule label machine, verify the record',
+                                                'Is there any procedure for operation and cleaning of ampoule blister machine, verify the record.',
+                                                'Have you any standard procedure for removal of scrap?',
+                                                'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
+                                            ];
+
+                                            $questions_documentation = [
+                                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
+                                                'Is the batch record is on line up to the current stage of a process?',
+                                                'In process carried out as per the written instruction describe in batch record?',
+                                                'Is there any punch inventory and punch utilization record?	',
+                                                'Is there any area cleaning record available for all individual areas?',
+                                                'Current version of SOP’s is available in respective areas?',
+                                            ];
+                                        @endphp
+                                   @if(!empty($data->checklist3))
+
+                                        <div class="inner-block">
+                                            <div class="content-table">
+                                                <!-- <div class="border-table"> -->
+                                                    <div class="block-head">
+                                                        Checklist - Production (Tablet Compression)                                                    </div>
+                                                    <div>
+                                                        @php
+                                                            $checklists = [
+                                                                [
+                                                                    'title' => 'STAGE 1: COMPRESSION ',
+                                                                    'questions' => $questions,
+                                                                    'prefix' => 1
+                                                                ],
+                                                                [
+                                                                    'title' => 'STAGE 2: DOCUMENTATION',
+                                                                    'questions' => $questions_documentation,
+                                                                    'prefix' => 2
+                                                                ],
+
+                                                            ];
+                                                        @endphp
+
+                                                        @foreach ($checklists as $checklist)
+                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                {{ $checklist['title'] }}
+                                                            </div>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                        <th style="width: 40%;">Question</th>
+                                                                        <th style="width: 20%;">Response</th>
+                                                                        <th>Remarks</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                        @php
+                                                                            $response = $checklist1->{"tablet_compress_response_" . ($index + 1)};
+                                                                            $remark = $checklist1->{"tablet_compress_remark_" . ($index + 1)};
+                                                                        @endphp
+
+                                                                        <!-- Check if either response or remark is not empty -->
+                                                                        @if($response || $remark)
+                                                                            <tr>
+                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                <td>{{ $question }}</td>
+                                                                                <td>
+                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                        {{ $response }}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td style="vertical-align: middle;">
+                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                        {{ $remark }}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        @endforeach
+                                                    </div>
+                                                <!-- </div> -->
+                                            </div>
+                                        </div>
+                                        
+                                    @endif
+
+                                        @php
+                                            $liquidOintmentPackingQuestions = [
+                                                'Is status labels displayed on all equipments?',
+                                                'Equipment cleanliness, check few equipments.',
+                                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
+                                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                                'Are there written instructions describing how to use in-process data to control the process?',
+                                                'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                                'Is equipment inspected immediately prior to use?',
+                                            'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                                "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+                                                'Is equipment cleaned promptly after use?',
+                                                'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                                'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
+                                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                                'All the person working in manufacturing area having proper gowning?',
+                                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                        'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+                                                        'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                                        'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
+                                                        'Check the calibration labels for instrument calibration status.',
+                                                        'Temperature & RH record log book is available for each staging area.',
+                                                        'Material/Product in out register is available for each staging area.',
+                                                        'Check for area activity record.',
+                                                        'Check for equipment usage record.',
+                                                        'Check for general equipment details and accessory details.',
+                                                        'Check for man & material movement in the area.',
+                                                        'Air handling system qualification, cleaning details and PAO test reports.',
+                                                        'Check for purified water hose pipe status and water hold up.',
+                                                        'Check for the status labeling in the area and, material randomly.',
+                                                        'Check the in-process equipments cleaning status & records.',
+                                                        'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                                        'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+                                                        'Is there a preventive maintenance program for all equipment and status of it?',
+                                                        'Do you have any sop for operation of autocoator?',
+                                                        'Have u any usage log book for autocoator.',
+                                                        
+
+                                            
+                                            ];
+
+                                            $documentationQuestions = [
+                                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                                'Is the batch record is on line up to the current stage of a process?',
+                                                'In process carried out as per the written instruction describe in batch record?',
+                                                'Is there any area cleaning record available for all individual areas?',
+                                                'Current version of SOP’s is available in respective areas?',
+                                            ];
+                                    @endphp
+                               @if(!empty($data->checklist2))
+                               <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
                                         <div class="block-head">
-                                            Checklist - Tablet/Capsule Packing
+                                            Checklist -Tablet Coating
                                         </div>
                                         <div>
                                             @php
                                                 $checklists = [
                                                     [
-                                                        'title' => 'Checklist for Packing',
-                                                        'questions' => $questions_packing1,
+                                                        'title' => 'STAGE 1 :  COATING',
+                                                        'questions' => $questions,
                                                         'prefix' => 1
                                                     ],
                                                     [
-                                                        'title' => 'Checklist for Documentation',
-                                                        'questions' => $questions_documentation1,
+                                                        'title' => 'STAGE 2: DOCUMENTATION',
+                                                        'questions' => $questions_documentation,
                                                         'prefix' => 2
                                                     ],
 
@@ -852,8 +1109,8 @@
                                                     <tbody>
                                                         @foreach ($checklist['questions'] as $index => $question)
                                                             @php
-                                                                $response = $checklist3->{"tablet_capsule_packing_" . ($index + 1)};
-                                                                $remark = $checklist3->{"tablet_capsule_packing_remark_" . ($index + 1)};
+                                                                $response = $checklist2->{"tablet_coating_response_" . ($index + 1)};
+                                                                $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
                                                             @endphp
 
                                                             <!-- Check if either response or remark is not empty -->
@@ -881,510 +1138,274 @@
                                     <!-- </div> -->
                                 </div>
                             </div>  
-                            
-                            @php
-                            $questions0 = [
-                                'Is status labels displayed on all equipments / machines?',
-                                '1.2Equipment cleanliness, check few equipments.',
-                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
-                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
-                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                                'Are there written instructions describing how to use in-process data to control the process?',
-                                'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                                'Is equipment inspected immediately prior to use?',
-                                'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
-                                'Is equipment cleaned promptly after use?',
-                                 'Is there proper storage of cleaned equipment so as to prevent contamination?	',
-                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
-                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                'Are all weighing and measuring performed by one qualified person and checked by a second person',
-                                'All the person working in manufacturing area having proper gowning?',
-                                'Have you any SOP regarding Hold time of material during staging?',
-                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
-                                'Check for area activity record',
-                                'Check for equipment usage record',
-                                'Check for general equipment details and accessory details.',
-                                'Check for man & material movement in the area',
-                                'Air handling system qualification, cleaning details and PAO test reports',
-                                'Check for the status labeling in the area and, material randomly',
-                                'Check the in-process equipments cleaning status & records.',
-                                'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                'Status label of area & equipment available?',
-                                'Have you any proper storage area for primary and secondary packing material?',
-                                'Do you have proper segregation system for keeping product/batch separately?',
-                                'Stereo impression record available? Check the record for any 2 batches.',
-                                'Where you keep the rejected ampoule / cartons?',
-                                'Is there any standard practice for destruction of printed ampoule label & printed cartons?',
-                                'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
-                                'Is there any procedure for operation and cleaning of ampoule label machine, verify the record',
-                                'Is there any procedure for operation and cleaning of ampoule blister machine, verify the record.',
-                                'Have you any standard procedure for removal of scrap?',
-                                'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
-                            ];
+                               @endif
 
-                            $questions_documentation0 = [
-                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
-                                'Is the batch record is on line up to the current stage of a process?',
-                                'In process carried out as per the written instruction describe in batch record?',
-                                'Is there any punch inventory and punch utilization record?	',
-                                'Is there any area cleaning record available for all individual areas?',
-                                'Current version of SOP’s is available in respective areas?',
-                            ];
-                        @endphp
-                         <div class="inner-block">
-                            <div class="content-table">
-                                <!-- <div class="border-table"> -->
-                                    <div class="block-head">
-                                        Checklist -Tablet Compression
-                                    </div>
-                                    <div>
-                                        @php
-                                            $checklists = [
-                                                [
-                                                    'title' => 'Checklist for Tablet Compression',
-                                                    'questions' => $questions0,
-                                                    'prefix' => 1
-                                                ],
-                                                [
-                                                    'title' => 'Checklist for Documentation',
-                                                    'questions' => $questions_documentation0,
-                                                    'prefix' => 2
-                                                ],
+                                    
 
-                                            ];
-                                        @endphp
+                                            @php
+                                            $CapsulePackingQuestions=[
+                                                    'equipment status labels displayed on all equipments?',
+                                                    'Equipment cleanliness, check few equipments.',
+                                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non-additive so as not to affect the product?',
+                                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment, and material? Check for procedure compliance.',
+                                                    'Are there written instructions describing how to use in-process data to control the process?',
+                                                    'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment numbers correspond to an entry in a log book.',
+                                                    'Is equipment inspected immediately prior to use?',
+                                                    'Do cleaning instructions include disassembly and drainage procedures, if required, to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid the growth of microorganisms?',
+                                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for a few equipments.',
+                                                    'Is equipment cleaned promptly after use?',
+                                                    'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                                    'Is there an adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                                    'Is sewage, trash, and other refuse disposed of in a safe and sanitary manner (and with sufficient frequency)?',
+                                                    'Are written records maintained on equipment cleaning, sanitizing, and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                                    'Is the pressure differential of every particular area within limit?',
+                                                    'Are all persons working in the manufacturing area having proper gowning?',
+                                                    'Do you have any SOP regarding the hold time of material during staging?',
+                                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                    'Are written operating procedures available for each piece of equipment used in manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+                                                    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                                    'Does the process control address all issues to ensure identity, strength, quality, and purity of the product?',
+                                                    'Check the calibration labels for instrument calibration status.',
+                                                    'Temperature & RH record log book is available for each staging area.',
+                                                    'Check for area activity record.',
+                                                    'Check for equipment usage record.',
+                                                    'Check for general equipment details and accessory details.',
+                                                    'Check for man & material movement in the area.',
+                                                    'Air handling system qualification, cleaning details and PAO test reports.',
+                                                    'Check for purified water hose pipe status and water hold up.',
+                                                    'Check for the status labeling in the area and material randomly.',
+                                                    'Check the in-process equipment cleaning status & records.',
+                                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                                    'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+                                                    'Is there a preventive maintenance program for all equipment and the status of it?',
+                                                    'Is there a written procedure for clearing the packaging area after one packaging operation and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                                    'Do you have any standard procedure for the removal of scrap?',
+                                                    'Is this plant free from infestation by rodents, birds, insects, and vermin?',
+                                                    'Do you have written procedures for the safe use of suitable rodenticides, insecticides, fungicides, and fumigating agents? Check the corresponding records.',
+                                                    'Do records have doer & checker signatures? Check the timings, date, and yield, etc. in the batch production record.',
+                                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In-process analytical reports.',
+                                                    'Is the batch record online up to the current stage of the process?',
+                                                    'Is the process carried out as per the written instructions described in the batch record?',
+                                                    'Is there any area cleaning record available for all individual areas?',
+                                                    'Current version  of SOPs available in respective areas?',
+                                                
+                                                ];
+                                                // $documentationQuestions =[
+                                                //     'Do records have doer & checker signatures? Check the timings, date, and yield, etc. in the batch production record.',
+                                                //     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In-process analytical reports.',
+                                                //     'Is the batch record online up to the current stage of the process?',
+                                                //     'Is the process carried out as per the written instructions described in the batch record?',
+                                                //     'Is there any area cleaning record available for all individual areas?',
+                                                //     'Current version  of SOPs available in respective areas?'];
+                                            @endphp
+                                    @if(!empty($data->checklist4))
+                                    <div class="inner-block">
+                                        <div class="content-table">
+                                            <!-- <div class="border-table"> -->
+                                                <div class="block-head">
+                                                    Checklist - Production (Capsule)
+                                                </div>
+                                                <div>
+                                                    @php
+                                                        $checklists = [
+                                                            [
+                                                                'title' => 'STAGE 1: CAPSULE',
+                                                                'questions' => $CapsulePackingQuestions,
+                                                                'prefix' => 1
+                                                            ],
+                                                            // [
+                                                            //     'title' => 'STAGE 2: DOCUMENTATION',
+                                                            //     'questions' => $documentationQuestions,
+                                                            //     'prefix' => 2
+                                                            // ],
 
-                                        @foreach ($checklists as $checklist)
-                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                {{ $checklist['title'] }}
-                                            </div>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr. No.</th>
-                                                        <th style="width: 40%;">Question</th>
-                                                        <th style="width: 20%;">Response</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($checklist['questions'] as $index => $question)
-                                                        @php
-                                                            $response = $checklist1->{"tablet_compress_response_" . ($index + 1)};
-                                                            $remark = $checklist1->{"tablet_compress_remark_" . ($index + 1)};
-                                                        @endphp
+                                                        ];
+                                                    @endphp
 
-                                                        <!-- Check if either response or remark is not empty -->
-                                                        @if($response || $remark)
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                        {{ $response }}
-                                                                    </div>
-                                                                </td>
-                                                                <td style="vertical-align: middle;">
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        {{ $remark }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
+                                                    @foreach ($checklists as $checklist)
+                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                            {{ $checklist['title'] }}
+                                                        </div>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                    @php
+                                                                        $response = $checklist4->{"capsule_response_" . ($index + 1)};
+                                                                        $remark = $checklist4->{"capsule_remark_" . ($index + 1)};
+                                                                    @endphp
+
+                                                                    <!-- Check if either response or remark is not empty -->
+                                                                    @if($response || $remark)
+                                                                        <tr>
+                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                            <td>{{ $question }}</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                    {{ $response }}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td style="vertical-align: middle;">
+                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                    {{ $remark }}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
                                                     @endforeach
-                                                </tbody>
-                                            </table>
-                                        @endforeach
-                                    </div>
-                                <!-- </div> -->
-                            </div>
-                        </div>  
-
-                        @php
-                            $liquidOintmentPackingQuestions = [
-                                'Is status labels displayed on all equipments?',
-                                'Equipment cleanliness, check few equipments.',
-                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
-                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
-                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                                'Are there written instructions describing how to use in-process data to control the process?',
-                                'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                                'Is equipment inspected immediately prior to use?',
-                            'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
-                                'Is equipment cleaned promptly after use?',
-                                'Is there proper storage of cleaned equipment so as to prevent contamination?',
-                                'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
-                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
-                                'All the person working in manufacturing area having proper gowning?',
-                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
+                                    </div>  
+                                    @endif
+                                    @php
+                                    $liquidOintmentPacking = [
+                                        'Is status labels displayed on all equipments?',
+                                        'Equipment cleanliness, check few equipments.',
+                                        'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                        'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
+                                        'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                        
+                                        'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                        'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                        'Are there written instructions describing how to use in-process data to control the process?',
+                                        'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                        'Is equipment inspected immediately prior to use?',
+                                        
+                                        'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                        'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                        'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                        "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+                                        'Is equipment cleaned promptly after use?',
+                                    
+                                        'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                        'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                        'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
+                                        'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                    
+                                        'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                        'All the person working in packing area having proper gowning?',
                                         'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
-                                        'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                        'Does each equipment have written instructions for maintenance that includes a schedule for maintenance?',
                                         'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
                                         'Check the calibration labels for instrument calibration status.',
                                         'Temperature & RH record log book is available for each staging area.',
-                                        'Material/Product in out register is available for each staging area.',
                                         'Check for area activity record.',
                                         'Check for equipment usage record.',
                                         'Check for general equipment details and accessory details.',
                                         'Check for man & material movement in the area.',
                                         'Air handling system qualification, cleaning details and PAO test reports.',
-                                        'Check for purified water hose pipe status and water hold up.',
                                         'Check for the status labeling in the area and, material randomly.',
                                         'Check the in-process equipments cleaning status & records.',
                                         'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                        'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                        'Is there a preventive maintenance program for all equipment and status of it?',
-                                        'Do you have any sop for operation of autocoator?',
-                                        'Have u any usage log book for autocoator.',
-                                        
-
-                            
-                            ];
-
-                            $documentationQuestions = [
-                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
-                                'Is the batch record is on line up to the current stage of a process?',
-                                'In process carried out as per the written instruction describe in batch record?',
-                                'Is there any area cleaning record available for all individual areas?',
-                                'Current version of SOP’s is available in respective areas?',
-                            ];
-                    @endphp
-                        <div class="inner-block">
-                            <div class="content-table">
-                                <!-- <div class="border-table"> -->
-                                    <div class="block-head">
-                                        Checklist -Tablet Coating
-                                    </div>
-                                    <div>
-                                        @php
-                                            $checklists = [
-                                                [
-                                                    'title' => 'Checklist for Tablet Coating',
-                                                    'questions' => $questions0,
-                                                    'prefix' => 1
-                                                ],
-                                                [
-                                                    'title' => 'Checklist for Documentation',
-                                                    'questions' => $questions_documentation0,
-                                                    'prefix' => 2
-                                                ],
-
-                                            ];
-                                        @endphp
-
-                                        @foreach ($checklists as $checklist)
-                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                {{ $checklist['title'] }}
-                                            </div>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr. No.</th>
-                                                        <th style="width: 40%;">Question</th>
-                                                        <th style="width: 20%;">Response</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($checklist['questions'] as $index => $question)
-                                                        @php
-                                                            $response = $checklist2->{"tablet_coating_response" . ($index + 1)};
-                                                            $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
-                                                        @endphp
-
-                                                        <!-- Check if either response or remark is not empty -->
-                                                        @if($response || $remark)
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                        {{ $response }}
-                                                                    </div>
-                                                                </td>
-                                                                <td style="vertical-align: middle;">
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        {{ $remark }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @endforeach
-                                    </div>
-                                <!-- </div> -->
-                            </div>
-                        </div>  
-                                  @php
-                                   $CapsulePackingQuestions=[
-                                        'equipment status labels displayed on all equipments?',
-                                        'Equipment cleanliness, check few equipments.',
-                                        'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non-additive so as not to affect the product?',
-                                        'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
-                                        'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                        'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                        'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment, and material? Check for procedure compliance.',
-                                        'Are there written instructions describing how to use in-process data to control the process?',
-                                        'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment numbers correspond to an entry in a log book.',
-                                        'Is equipment inspected immediately prior to use?',
-                                        'Do cleaning instructions include disassembly and drainage procedures, if required, to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                        'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                        'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid the growth of microorganisms?',
-                                        'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for a few equipments.',
-                                        'Is equipment cleaned promptly after use?',
-                                        'Is there proper storage of cleaned equipment so as to prevent contamination?',
-                                        'Is there an adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                                        'Is sewage, trash, and other refuse disposed of in a safe and sanitary manner (and with sufficient frequency)?',
-                                        'Are written records maintained on equipment cleaning, sanitizing, and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                        'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
-                                        'Is the pressure differential of every particular area within limit?',
-                                        'Are all persons working in the manufacturing area having proper gowning?',
-                                        'Do you have any SOP regarding the hold time of material during staging?',
-                                        'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
-                                        'Are written operating procedures available for each piece of equipment used in manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
-                                        'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
-                                        'Does the process control address all issues to ensure identity, strength, quality, and purity of the product?',
-                                        'Check the calibration labels for instrument calibration status.',
-                                        'Temperature & RH record log book is available for each staging area.',
-                                        'Check for area activity record.',
-                                        'Check for equipment usage record.',
-                                        'Check for general equipment details and accessory details.',
-                                        'Check for man & material movement in the area.',
-                                        'Air handling system qualification, cleaning details and PAO test reports.',
-                                        'Check for purified water hose pipe status and water hold up.',
-                                        'Check for the status labeling in the area and material randomly.',
-                                        'Check the in-process equipment cleaning status & records.',
-                                        'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                        'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                        'Is there a preventive maintenance program for all equipment and the status of it?',
-                                        'Is there a written procedure for clearing the packaging area after one packaging operation and cleaning before the next operation, especially if the area is used for packaging different materials?',
-                                        'Do you have any standard procedure for the removal of scrap?',
-                                        'Is this plant free from infestation by rodents, birds, insects, and vermin?',
-                                        'Do you have written procedures for the safe use of suitable rodenticides, insecticides, fungicides, and fumigating agents? Check the corresponding records.',
-                                     
+                                        'Status label of area & equipment available?',
+                                        'Have you any proper storage area for primary and secondary packing material?',
+                                        'Do you have proper segregation system for keeping product/batch separately?',
+                                        'Stereo impression record available? Check the record for any 2 batches.',
+                                        'Where you keep the rejected tube / bottle/ cartons?',
+                                        'Is there any standard practice for destruction of printed bottle label & printed cartons?',
+                                        'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                        'Have you any standard procedure for removal of scrap?',
+                                        'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
+                                        'Is there Lux Level of all working table is within acceptance limit?',
                                     ];
-                                    $documentationQuestions =[
-                                        'Do records have doer & checker signatures? Check the timings, date, and yield, etc. in the batch production record.',
-                                        'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In-process analytical reports.',
-                                        'Is the batch record online up to the current stage of the process?',
-                                        'Is the process carried out as per the written instructions described in the batch record?',
+
+                                    $liquidOintmentQuestions = [
+                                        'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                        'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                        'Is the batch record is on line up to the current stage of a process?',
+                                        'In process carried out as per the written instruction describe in batch record?',
                                         'Is there any area cleaning record available for all individual areas?',
-                                        'Current version  of SOPs available in respective areas?'];
+                                        'Current version of SOP’s is available in respective areas?',
+                                    ];
                                 @endphp
-                          <div class="inner-block">
-                            <div class="content-table">
-                                <!-- <div class="border-table"> -->
-                                    <div class="block-head">
-                                        Checklist -Capsule
-                                    </div>
-                                    <div>
-                                        @php
-                                            $checklists = [
-                                                [
-                                                    'title' => 'Checklist for Capsule',
-                                                    'questions' => $CapsulePackingQuestions,
-                                                    'prefix' => 1
-                                                ],
-                                                [
-                                                    'title' => 'Checklist for Documentation',
-                                                    'questions' => $documentationQuestions,
-                                                    'prefix' => 2
-                                                ],
-
-                                            ];
-                                        @endphp
-
-                                        @foreach ($checklists as $checklist)
-                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                {{ $checklist['title'] }}
-                                            </div>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr. No.</th>
-                                                        <th style="width: 40%;">Question</th>
-                                                        <th style="width: 20%;">Response</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($checklist['questions'] as $index => $question)
-                                                        @php
-                                                            $response = $checklist4->{"capsule_response_" . ($index + 1)};
-                                                            $remark = $checklist4->{"capsule_remark_" . ($index + 1)};
-                                                        @endphp
-
-                                                        <!-- Check if either response or remark is not empty -->
-                                                        @if($response || $remark)
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                        {{ $response }}
-                                                                    </div>
-                                                                </td>
-                                                                <td style="vertical-align: middle;">
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        {{ $remark }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @endforeach
-                                    </div>
-                                <!-- </div> -->
-                            </div>
-                        </div>  
-                        @php
-                        $liquidOintmentPacking = [
-                            'Is status labels displayed on all equipments?',
-                            'Equipment cleanliness, check few equipments.',
-                            'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
-                            'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
-                            'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                            
-                            'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                            'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                            'Are there written instructions describing how to use in-process data to control the process?',
-                            'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                            'Is equipment inspected immediately prior to use?',
-                            
-                            'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                            'Has a written schedule been established and is it followed for cleaning of equipment?',
-                            'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                            "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
-                            'Is equipment cleaned promptly after use?',
-                           
-                            'Is there proper storage of cleaned equipment so as to prevent contamination?',
-                            'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                            'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
-                            'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                          
-                            'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
-                            'All the person working in packing area having proper gowning?',
-                            'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
-                            'Does each equipment have written instructions for maintenance that includes a schedule for maintenance?',
-                            'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
-                            'Check the calibration labels for instrument calibration status.',
-                            'Temperature & RH record log book is available for each staging area.',
-                            'Check for area activity record.',
-                            'Check for equipment usage record.',
-                            'Check for general equipment details and accessory details.',
-                            'Check for man & material movement in the area.',
-                            'Air handling system qualification, cleaning details and PAO test reports.',
-                            'Check for the status labeling in the area and, material randomly.',
-                            'Check the in-process equipments cleaning status & records.',
-                            'Are any unplanned process changes (process excursions) documented in the batch record?',
-                            'Status label of area & equipment available?',
-                            'Have you any proper storage area for primary and secondary packing material?',
-                            'Do you have proper segregation system for keeping product/batch separately?',
-                            'Stereo impression record available? Check the record for any 2 batches.',
-                            'Where you keep the rejected tube / bottle/ cartons?',
-                            'Is there any standard practice for destruction of printed bottle label & printed cartons?',
-                            'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
-                            'Have you any standard procedure for removal of scrap?',
-                            'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
-                            'Is there Lux Level of all working table is within acceptance limit?',
-                        ];
-
-                        $liquidOintmentQuestions = [
-                            'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                            'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
-                            'Is the batch record is on line up to the current stage of a process?',
-                            'In process carried out as per the written instruction describe in batch record?',
-                            'Is there any area cleaning record available for all individual areas?',
-                            'Current version of SOP’s is available in respective areas?',
-                        ];
-                    @endphp
-                       <div class="inner-block">
-                        <div class="content-table">
-                            <!-- <div class="border-table"> -->
-                                <div class="block-head">
-                                    Checklist - Liquid/Ointment Packing                                </div>
-                                <div>
-                                    @php
-                                        $checklists = [
-                                            [
-                                                'title' => 'Checklist for Liquid/Ointment Packing',
-                                                'questions' => $liquidOintmentPacking,
-                                                'prefix' => 1
-                                            ],
-                                            [
-                                                'title' => 'Checklist for Documentation',
-                                                'questions' => $liquidOintmentQuestions,
-                                                'prefix' => 2
-                                            ],
-
-                                        ];
-                                    @endphp
-
-                                    @foreach ($checklists as $checklist)
-                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                            {{ $checklist['title'] }}
-                                        </div>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%;">Sr. No.</th>
-                                                    <th style="width: 40%;">Question</th>
-                                                    <th style="width: 20%;">Response</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($checklist['questions'] as $index => $question)
+                                    @if(!empty($data->checklist5))
+                                    <div class="inner-block">
+                                        <div class="content-table">
+                                            <!-- <div class="border-table"> -->
+                                                <div class="block-head">
+                                                    Checklist - Liquid/Ointment Packing                                </div>
+                                                <div>
                                                     @php
-                                                        $response = $checklist5->{"liquid_ointments_response_" . ($index + 1)};
-                                                        $remark = $checklist5->{"liquid_ointments_remark_" . ($index + 1)};
+                                                        $checklists = [
+                                                            [
+                                                                'title' => 'STAGE 1 : LIQUIDE/OINTMENT PACKING',
+                                                                'questions' => $liquidOintmentPacking,
+                                                                'prefix' => 1
+                                                            ],
+                                                            [
+                                                                'title' => 'STAGE 2: DOCUMENTATION',
+                                                                'questions' => $liquidOintmentQuestions,
+                                                                'prefix' => 2
+                                                            ],
+
+                                                        ];
                                                     @endphp
 
-                                                    <!-- Check if either response or remark is not empty -->
-                                                    @if($response || $remark)
-                                                        <tr>
-                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                            <td>{{ $question }}</td>
-                                                            <td>
-                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                    {{ $response }}
-                                                                </div>
-                                                            </td>
-                                                            <td style="vertical-align: middle;">
-                                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                                    {{ $remark }}
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @endforeach
-                                </div>
-                            <!-- </div> -->
-                        </div>
-                    </div>  
+                                                    @foreach ($checklists as $checklist)
+                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                            {{ $checklist['title'] }}
+                                                        </div>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>checklist6
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                    @php
+                                                                        $response = $checklist5->{"liquid_ointments_response_" . ($index + 1)};
+                                                                        $remark = $checklist5->{"liquid_ointments_remark_" . ($index + 1)};
+                                                                    @endphp
 
-                    @php
+                                                                    <!-- Check if either response or remark is not empty -->
+                                                                    @if($response || $remark)
+                                                                        <tr>
+                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                            <td>{{ $question }}</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                    {{ $response }}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td style="vertical-align: middle;">
+                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                    {{ $remark }}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @endforeach
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
+                                    </div>  
+                                    @endif
+
+                               @php
                                 $dispensingAndManufacturingQuestions = [
                                     'Is access to the facility restricted?',
                                     'Is the dispensing area cleaned as per SOP?',
@@ -1445,9 +1466,6 @@
                                     'Check for the status labeling in the area and material randomly.',
                                     "Check the in-process equipment's cleaning status & records.",
                                     'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                ];
-
-                                $documentationQuestions = [
                                     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
                                     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
                                     'Is the batch record on line up to the current stage of a process?',
@@ -1455,26 +1473,24 @@
                                     'Is there any area cleaning record available for all individual areas?',
                                     "Current version of SOP's is available in respective areas?",
                                 ];
+
+                               
                             @endphp
-                               <div class="inner-block">
+                             @if(!empty($data->checklist6))
+                             <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
                                         <div class="block-head">
-                                            Checklist - Liquid/Ointment Packing                                </div>
+                                            Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)                                                       </div>
                                         <div>
                                             @php
                                                 $checklists = [
                                                     [
-                                                        'title' => 'Checklist for Liquid/Ointment Packing',
+                                                        'title' => 'STAGE 1: DISPENSING',
                                                         'questions' => $dispensingAndManufacturingQuestions,
                                                         'prefix' => 1
                                                     ],
-                                                    [
-                                                        'title' => 'Checklist for Documentation',
-                                                        'questions' => $documentationQuestions,
-                                                        'prefix' => 2
-                                                    ],
-        
+                                                   
                                                 ];
                                             @endphp
         
@@ -1522,9 +1538,10 @@
                                         </div>
                                     <!-- </div> -->
                                 </div>
-                            </div>  
+                            </div> 
+                             @endif 
 
-                            @php
+                           @php
                                 $qualityAssuranceQuestions = [
                                     'Does the QA unit have a person specifically charged with the responsibility of designing, revising and obtaining approval for production and testing procedures, forms and records?',
                                     'Is the production batch record and release test results reviewed for accuracy and completeness before a batch of finished product is released?',
@@ -1569,15 +1586,9 @@
                                     'Is a log maintained for changes to documents and facility?',
                                 ];
 
-                                $documentationQuestions = [
-                                    'Does QA have authority to review and approve or reject?',
-                                    'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
-                                    'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented? Is their effectiveness verified in subsequent audits?',
-                                    'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
-                                    'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
-                                    'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?',
-                                ];
+                                
                             @endphp
+                                 @if(!empty($data->checklist7))
                                  <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -1592,11 +1603,11 @@
                                                             'questions' => $qualityAssuranceQuestions,
                                                             'prefix' => 1
                                                         ],
-                                                        [
-                                                            'title' => 'Checklist for Documentation',
-                                                            'questions' => $documentationQuestions,
-                                                            'prefix' => 2
-                                                        ],
+                                                        // [
+                                                        //     'title' => 'STAGE 2: DOCUMENTATION',
+                                                        //     'questions' => $documentationQuestions,
+                                                        //     'prefix' => 2
+                                                        // ],
             
                                                     ];
                                                 @endphp
@@ -1646,6 +1657,7 @@
                                         <!-- </div> -->
                                     </div>
                                 </div>  
+                                 @endif
 
 
                                 {{-- Engineering --}}
@@ -1691,1517 +1703,1172 @@
                                     'Check pressure gradient and cleaning of Area.',
                                     'Check area cleanness and HEPA grills.',
                                 ];
-                            @endphp
-
-
-<div class="inner-block">
-    <div class="content-table">
-        <!-- <div class="border-table"> -->
-            <div class="block-head">
-                Checklist - Engineering
-            </div>
-            <div>
-                @php
-                    $checklists = [
-                        [
-                            'title' => 'Checklist for Engineering',
-                            'questions' => $checklistEngineering,
-                            'prefix' => 1
-                        ],
-                        [
-                            'title' => 'Checklist for Building Facility',
-                            'questions' => $checklistBuilding,
-                            'prefix' => 2
-                        ],
-                        [
-                            'title' => 'Checklist for HVAC/HEPA',
-                            'questions' => $checklistHVAC,
-                            'prefix' => 3
-                        ],
-
-                    ];
-                @endphp
-
-                @foreach ($checklists as $checklist)
-                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                        {{ $checklist['title'] }}
-                    </div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">Sr. No.</th>
-                                <th style="width: 40%;">Question</th>
-                                <th style="width: 20%;">Response</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($checklist['questions'] as $index => $question)
-                                @php
-                                    $response = $checklist9->{"engineering_response_" . ($index + 1)};
-                                    $remark = $checklist9->{"engineering_remark_" . ($index + 1)};
                                 @endphp
 
-                                <!-- Check if either response or remark is not empty -->
-                                @if($response || $remark)
-                                    <tr>
-                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                        <td>{{ $question }}</td>
-                                        <td>
-                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                {{ $response }}
+                                @if(!empty($data->checklist9))
+                                <div class="inner-block">
+                                    <div class="content-table">
+                                        <!-- <div class="border-table"> -->
+                                            <div class="block-head">
+                                                Checklist - Engineering
                                             </div>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                {{ $remark }}
+                                            <div>
+                                                @php
+                                                    $checklists = [
+                                                        [
+                                                            'title' => 'Checklist for Engineering',
+                                                            'questions' => $checklistEngineering,
+                                                            'prefix' => 1
+                                                        ],
+                                                        [
+                                                            'title' => 'Checklist for Building Facility',
+                                                            'questions' => $checklistBuilding,
+                                                            'prefix' => 2
+                                                        ],
+                                                        [
+                                                            'title' => 'Checklist for HVAC/HEPA',
+                                                            'questions' => $checklistHVAC,
+                                                            'prefix' => 3
+                                                        ],
+
+                                                    ];
+                                                @endphp
+
+                                                @foreach ($checklists as $checklist)
+                                                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                        {{ $checklist['title'] }}
+                                                    </div>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">Sr. No.</th>
+                                                                <th style="width: 40%;">Question</th>
+                                                                <th style="width: 20%;">Response</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($checklist['questions'] as $index => $question)
+                                                                @php
+                                                                    $response = $checklist9->{"engineering_response_" . ($index + 1)};
+                                                                    $remark = $checklist9->{"engineering_remark_" . ($index + 1)};
+                                                                @endphp
+
+                                                                <!-- Check if either response or remark is not empty -->
+                                                                @if($response || $remark)
+                                                                    <tr>
+                                                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                        <td>{{ $question }}</td>
+                                                                        <td>
+                                                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                {{ $response }}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="vertical-align: middle;">
+                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                {{ $remark }}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                @endforeach
                                             </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endforeach
-            </div>
-        <!-- </div> -->
-    </div>
-</div>  
-@php
-$checklistqualitycontrol = [
-    'Are the complete index and a complete set of applicable SOPs available in the department?',
-    'Are the index & annexure current?',
-    'Are training records of the employees working in the department up-to-date?',
-    'Is Job Description of the employees working in the department up-to-date?',
-    // "Have the employees undergone training in the following areas?",
-    'cGLP (Related: SOP for Good Laboratory Practices)',
-    'SOPs',
-    'Analytical Techniques',
-    'EU_GMP',
-    'Is Training Calendar of the employees working in the department up-to-date?',
-    'Is an up-to-date organizational chart of the Quality Control Department available?',
-    'Are all employees following the garments SOP, including where necessary masks & gloves?',
-    'Is the laboratory neat and orderly with sufficient space for equipment and operations?',
-    'Is the good housekeeping followed?',
-    'Are the laboratory instruments/equipment qualified?',
-    // "Are all reagents and solutions",
-    'Clearly labeled with their proper name?',
-    'Labeled with the date of receipt and/or expiration date?',
-    // "Are prepared solutions labeled with the",
-    'Name of the person who prepared them?',
-    'Date of preparation?',
-    'Expiration date?',
-    'Is there any written procedure available for status labeling?',
-    'Is the area qualified? Have any modification in the facility in the last 6 months?',
-    'Are the entire area log books updated?',
-    'Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?',
-    'Is there an SOP for corrective action if an instrument is found to be out of calibration?',
-    'Where standards are used to calibrate an instrument, is there a written procedure for their preparation?',
-    'Is a specific person responsible for the receipt of samples for testing?',
-    'Is there a written SOP describing sample receipt and recording (logging in)?',
-    'Where are samples stored before and after testing?',
-    'Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?',
-    'Is there a time limit on how long a sample may remain in the laboratory prior to testing?',
-    'Is the approved vendor list for all raw materials and packing materials available?',
-    'Is there any data backup policy available?',
-    'Is there any written procedure for the Audit trail?',
-    'Is there any written procedure for the management of software & creation of user ID?',
-    'Are there approved test procedures available for all tests performed in the laboratory?',
-    'Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?',
-    'Has the test method been validated for precision and reliability?',
-    'Examine the work currently being performed on the HPLCs.',
-    'Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?',
-    'Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?',
-    'Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?',
-    'Are laboratory records indicating the date of receipt of the sample and expiry date?',
-    'Are appropriate reference standards used and are they stored in a proper manner to ensure stability? Are their expiration dates adequately monitored so they are not used beyond the expiration dates?',
-    'Is reference standard kept under proper storage condition?',
-    'Are working standards prepared as per the protocol? Check for its storage condition',
-    'Is there a record of the preparation of volumetric solutions?',
-    'Are volumetric solutions freshly prepared? If stored, what expiration date is given?',
-    'Are raw data reviewed prior to release from the laboratory by a person other than the analyst who performed the test?',
-    'Check method validation for any product which is done in between two self-inspections with respect to SOP.',
-    'Is a stability study schedule available?',
-    'Are protocols for all stability study samples available?',
-    'Does the procedure for keeping stability samples available?',
-    'Are stability samples kept as per the storage requirement?',
-    'Is the stability summary available?',
-    'Are records maintained of nonconforming materials, related investigations and corrective actions?',
-    'For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?',
-    'Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list) maintained and are incoming raw materials checked against it?',
-    'Are statistical sampling plans used to assure that the samples are representative of the lot?',
-    'Are sampled containers labeled with sampler’s name and date of sampling?',
-    'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
-    'Are raw materials approved before being used in production?',
-    'Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
-    'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
-    'Is raw materials identification test performed on every batch and receipt?',
-    'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
-    'In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?',
-    'If operators perform in-process testing, have they been trained and was the training documented? Does QC periodically verify their results?',
-    'Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?',
-    'When and where is the finished product sampled for release?',
-    'Is every product batch tested and approved before shipment?',
-    'Are there complete written instructions for testing and releasing final product, including methods, equipment, operating parameters, and acceptance specifications?',
-    'If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?',
-    'Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?',
-    'Is the stability protocol available?',
-    'Are these stability chambers available to carryout stability of the product at',
-    'Do you keep both hard copy and electronic copy of temperature/Rh monitoring?',
-    'Are the stability results reviewed by a qualified, experienced person?',
-    'Is stability study in primary pack done for different products?',
-    'Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
-    'Are calibrated instruments labeled with date calibrated and date next calibration is due?',
-    'Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
-    'Are in-process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?',
-    'Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?',
-    'Are written sampling and testing procedures and acceptance criteria available for each product?',
-    'Are specific tests for foreign particles done?',
-    'Are Packing materials approved before being used in production?',
-    'Check for compliance of stability data and its summary',
-    'Check for Analytical Data Sheet',
-    'Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?',
-    'Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?',
-    'Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms? Are equipment ID numbers recorded for each analysis?',
-    'Are data and calculations checked by a second person and countersigned?',
-    'Are Material safety data sheet (MSDS) of chemical which are used is available?',
-    'Microbiological Laboratories',
-    'Are positive and negative controls used for testing? Are their results recorded?',
-    'Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?',
-    'Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?',
-    'Are isolates from microbiological testing identified if appropriate?',
-    'Is each lot of microbial ID systems checked with positive and negative controls?',
-];
-@endphp
-
-    <div class="inner-block">
-      <div class="content-table">
-        <!-- <div class="border-table"> -->
-            <div class="block-head">
-                Checklist - Quality Control
-            </div>
-            <div>
-                @php
-                    $checklists = [
-                        [
-                            'title' => 'Checklist for Quality Assurance',
-                            'questions' => $checklistqualitycontrol,
-                            'prefix' => 1
-                        ],
-                       
-
-                    ];
-                @endphp
-
-                @foreach ($checklists as $checklist)
-                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                        {{ $checklist['title'] }}
-                    </div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">Sr. No.</th>
-                                <th style="width: 40%;">Question</th>
-                                <th style="width: 20%;">Response</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($checklist['questions'] as $index => $question)
+                                        <!-- </div> -->
+                                    </div>
+                                </div>  
+                               @endif
+                                
                                 @php
-                                    $response = $checklist10->{"quality_control_response_" . ($index + 1)};
-                                    $remark = $checklist10->{"quality_control_remark__" . ($index + 1)};
+                                $checklistqualitycontrol = [
+                                    'Are the complete index and a complete set of applicable SOPs available in the department?',
+                                    'Are the index & annexure current?',
+                                    'Are training records of the employees working in the department up-to-date?',
+                                    'Is Job Description of the employees working in the department up-to-date?',
+                                    // "Have the employees undergone training in the following areas?",
+                                    'cGLP (Related: SOP for Good Laboratory Practices)',
+                                    'SOPs',
+                                    'Analytical Techniques',
+                                    'EU_GMP',
+                                    'Is Training Calendar of the employees working in the department up-to-date?',
+                                    'Is an up-to-date organizational chart of the Quality Control Department available?',
+                                    'Are all employees following the garments SOP, including where necessary masks & gloves?',
+                                    'Is the laboratory neat and orderly with sufficient space for equipment and operations?',
+                                    'Is the good housekeeping followed?',
+                                    'Are the laboratory instruments/equipment qualified?',
+                                    // "Are all reagents and solutions",
+                                    'Clearly labeled with their proper name?',
+                                    'Labeled with the date of receipt and/or expiration date?',
+                                    // "Are prepared solutions labeled with the",
+                                    'Name of the person who prepared them?',
+                                    'Date of preparation?',
+                                    'Expiration date?',
+                                    'Is there any written procedure available for status labeling?',
+                                    'Is the area qualified? Have any modification in the facility in the last 6 months?',
+                                    'Are the entire area log books updated?',
+                                    'Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?',
+                                    'Is there an SOP for corrective action if an instrument is found to be out of calibration?',
+                                    'Where standards are used to calibrate an instrument, is there a written procedure for their preparation?',
+                                    'Is a specific person responsible for the receipt of samples for testing?',
+                                    'Is there a written SOP describing sample receipt and recording (logging in)?',
+                                    'Where are samples stored before and after testing?',
+                                    'Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?',
+                                    'Is there a time limit on how long a sample may remain in the laboratory prior to testing?',
+                                    'Is the approved vendor list for all raw materials and packing materials available?',
+                                    'Is there any data backup policy available?',
+                                    'Is there any written procedure for the Audit trail?',
+                                    'Is there any written procedure for the management of software & creation of user ID?',
+                                    'Are there approved test procedures available for all tests performed in the laboratory?',
+                                    'Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?',
+                                    'Has the test method been validated for precision and reliability?',
+                                    'Examine the work currently being performed on the HPLCs.',
+                                    'Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?',
+                                    'Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?',
+                                    'Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?',
+                                    'Are laboratory records indicating the date of receipt of the sample and expiry date?',
+                                    'Are appropriate reference standards used and are they stored in a proper manner to ensure stability? Are their expiration dates adequately monitored so they are not used beyond the expiration dates?',
+                                    'Is reference standard kept under proper storage condition?',
+                                    'Are working standards prepared as per the protocol? Check for its storage condition',
+                                    'Is there a record of the preparation of volumetric solutions?',
+                                    'Are volumetric solutions freshly prepared? If stored, what expiration date is given?',
+                                    'Are raw data reviewed prior to release from the laboratory by a person other than the analyst who performed the test?',
+                                    'Check method validation for any product which is done in between two self-inspections with respect to SOP.',
+                                    'Is a stability study schedule available?',
+                                    'Are protocols for all stability study samples available?',
+                                    'Does the procedure for keeping stability samples available?',
+                                    'Are stability samples kept as per the storage requirement?',
+                                    'Is the stability summary available?',
+                                    'Are records maintained of nonconforming materials, related investigations and corrective actions?',
+                                    'For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?',
+                                    'Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list) maintained and are incoming raw materials checked against it?',
+                                    'Are statistical sampling plans used to assure that the samples are representative of the lot?',
+                                    'Are sampled containers labeled with sampler’s name and date of sampling?',
+                                    'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
+                                    'Are raw materials approved before being used in production?',
+                                    'Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
+                                    'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
+                                    'Is raw materials identification test performed on every batch and receipt?',
+                                    'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
+                                    'In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?',
+                                    'If operators perform in-process testing, have they been trained and was the training documented? Does QC periodically verify their results?',
+                                    'Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?',
+                                    'When and where is the finished product sampled for release?',
+                                    'Is every product batch tested and approved before shipment?',
+                                    'Are there complete written instructions for testing and releasing final product, including methods, equipment, operating parameters, and acceptance specifications?',
+                                    'If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?',
+                                    'Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?',
+                                    'Is the stability protocol available?',
+                                    'Are these stability chambers available to carryout stability of the product at',
+                                    'Do you keep both hard copy and electronic copy of temperature/Rh monitoring?',
+                                    'Are the stability results reviewed by a qualified, experienced person?',
+                                    'Is stability study in primary pack done for different products?',
+                                    'Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
+                                    'Are calibrated instruments labeled with date calibrated and date next calibration is due?',
+                                    'Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
+                                    'Are in-process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?',
+                                    'Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?',
+                                    'Are written sampling and testing procedures and acceptance criteria available for each product?',
+                                    'Are specific tests for foreign particles done?',
+                                    'Are Packing materials approved before being used in production?',
+                                    'Check for compliance of stability data and its summary',
+                                    'Check for Analytical Data Sheet',
+                                    'Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?',
+                                    'Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?',
+                                    'Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms? Are equipment ID numbers recorded for each analysis?',
+                                    'Are data and calculations checked by a second person and countersigned?',
+                                    'Are Material safety data sheet (MSDS) of chemical which are used is available?',
+                                    'Microbiological Laboratories',
+                                    'Are positive and negative controls used for testing? Are their results recorded?',
+                                    'Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?',
+                                    'Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?',
+                                    'Are isolates from microbiological testing identified if appropriate?',
+                                    'Is each lot of microbial ID systems checked with positive and negative controls?',
+                                ];
                                 @endphp
 
-                                <!-- Check if either response or remark is not empty -->
-                                @if($response || $remark)
-                                    <tr>
-                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                        <td>{{ $question }}</td>
-                                        <td>
-                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                {{ $response }}
-                                            </div>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                {{ $remark }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endforeach
-            </div>
-        <!-- </div> -->
-      </div>
- </div>  
-                    @php
-                        $questions_stores = [
-                            'Is there a potential for contamination or cross-contamination from any sources? If so, how it is controlled / prevented?',
-                            'Are there complete written master manufacturing instructions that specify formula, names and codes of raw materials, equipment, manufacturing flow, operating parameters, in-process sampling, packaging materials, labeling, and documentation of each significant step?',
-                            'Are critical environmental parameters monitored and recorded?',
-                            'Is there an SOP for receiving, handling, storing and accountability of pre-printed labels?',
-                            'If filled unlabeled containers are set aside for future labeling, is there sufficient identification to determine name, strength, quantity, lot number and other information needed for traceability?',
-                            'Is a list of acceptable suppliers maintained and are incoming raw materials checked against it?',
-                            'Are statistical sampling plans used to assure that the samples are representative of the lot?',
-                            'Are sampled containers labeled with sampler’s name and date of sampling?',
-                            'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
-                            'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing, and is periodic monitoring performed?',
-                            'Are raw materials approved before being used in production?',
-                            'If raw materials are accepted on certificates of analysis, is at least an identification test performed (where safe) on every batch and receipt?',
-                            'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
-                            'Is there any material in reject area? Check the record of the same.',
-                            'If fresh and recovered solvents are commingled, are the recovered solvents sampled and assayed and found to be satisfactory prior to commingling, and is the quality of commingled solvents monitored on an established schedule?',
-                            'Is cleaning record maintained for store?',
-                            'Is printed packing material storage separately and the same is recorded?',
-                            'Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF?',
-                            'Checking of approved vendor list on receipt of material in the store.',
-                            'Check the Dispensing and sampling area records.',
-                            'Check if any stains on dispensed color/flavor poly bag which cover material.',
-                            'Is there any product dedicated scoop for different active raw materials?',
-                            'Check the Scoops / Spatula usage log sheet.',
-                            'Is there clean the area of Finished Goods store? Check the record for last 3 months.',
-                            'Check the Temperature and RH data of the Finished goods store. Check last 3 month records.',
-                            'Do you have any record of the temperature of freeze?',
-                            'Is there any separate location / separate method to identify the stage of raw materials?',
-                            'Do you have any details record of dispatch for all finished goods?',
-                            'Have you any standard practice for dispatch of finished goods?',
-                        ];
-                    @endphp
-<div class="inner-block">
-    <div class="content-table">
-      <!-- <div class="border-table"> -->
-          <div class="block-head">
-              Checklist - Stores
-          </div>
-          <div>
-              @php
-                  $checklists = [
-                      [
-                          'title' => 'Checklist for Stores',
-                          'questions' => $questions_stores,
-                          'prefix' => 1
-                      ],
-                     
-
-                  ];
-              @endphp
-
-              @foreach ($checklists as $checklist)
-                  <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                      {{ $checklist['title'] }}
-                  </div>
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th style="width: 5%;">Sr. No.</th>
-                              <th style="width: 40%;">Question</th>
-                              <th style="width: 20%;">Response</th>
-                              <th>Remarks</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach ($checklist['questions'] as $index => $question)
-                              @php
-                                  $response = $checklist11->{"checklist_stores_response_" . ($index + 1)};
-                                  $remark = $checklist11->{"checklist_stores_remark_" . ($index + 1)};
-                              @endphp
-
-                              <!-- Check if either response or remark is not empty -->
-                              @if($response || $remark)
-                                  <tr>
-                                      <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                      <td>{{ $question }}</td>
-                                      <td>
-                                          <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                              {{ $response }}
-                                          </div>
-                                      </td>
-                                      <td style="vertical-align: middle;">
-                                          <div style="margin: auto; display: flex; justify-content: center;">
-                                              {{ $remark }}
-                                          </div>
-                                      </td>
-                                  </tr>
-                              @endif
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endforeach
-          </div>
-      <!-- </div> -->
-    </div>
-</div>
-@php
-                                $questions_hr = [
-                                    'Do you have written procedure for material movement inside the factory premises?',
-                                    'Do the material taken out from the gate require valid gate pass at the security?',
-                                    'Do you have written procedure for visitor movement?',
-                                    'Do you have pest and rodent control procedure?',
-                                    'Whether the contract is updated?',
-                                    'Check the data for the pest & rodent control for the last 3 months, is it ok?',
-                                    'Whether the areas are marked for rodent trap & rodent gum pad? Check 4-5 points randomly.',
-                                    'Whether the rodent trap, checked for trapped rodent on daily basis & record of the same is maintained by HR, check last 3 months data.',
-                                    'Check whether any rodent is trapped in last 3 months and disposed properly?',
-                                    'Drains / Main holes are sprayed with pesticides. Check the record for the last 3 months.',
-                                    'Check the cleaning record for the road, dustbin, drain, toilet, floors, fans and tubes, canteen, tables, chairs, premises of last 3 months.',
-                                    'Do you have a written procedure for linen washing?',
-                                    'Is the linen for washing is collected from respective area in polybags?',
-                                    'Do you have written training procedure, check one training record from each department',
-                                    'Check the annual training schedule cum card for new joinee.',
-                                    'Check the operator training and record',
-                                    'Check the induction training record for one new recruit in the production, store, QA, QC.',
-                                    'Is annual medical checkup being done by a competent medical doctor?',
-                                    'Do annual medical checkup program covers tests like Hematology, urine, blood sugar, ECG, X-ray and VDRL test?',
-                                    'Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections?',
-                                    'Is there a procedure for issue, storage, washing and collection of used garments?',
-                                    'Is there any color code for garments and foot wear followed?',
-                                    'Check the linen cleaning record for last three months.',
-                                    'Whether the garments handling properly before issued.',
-                                    'Check the training record for the SOP related changes for two person for production, QA and QC',
-                                    'Do you have a laid down procedure for operation of washing machine and tumbler dryer?',
-                                    'Do you have a laid down procedure for fire prevention & control in factory premises.',
-                                    'Is there any emergency evacuation system in factory premises?',
-                                    'Check the first aid services at security gate are available or not.',
-                                    'Check the use of personnel protective equipment during critical manufacturing operation.',
-                                    'Check the canteen area is neat & clean.',
-                                    'Check the scrap record for last 2 months.',
-                                    'Checks the surrounding areas of factory are neat & clean.',
-                                    'Are you ensuring that at no stage linen of two different colors or from two different sections shall be mixed for washing?',
-                                ];
-                            @endphp
-                            
-                            <div class="inner-block">
-                                <div class="content-table">
-                                  <!-- <div class="border-table"> -->
-                                      <div class="block-head">
-                                          Checklist - Stores
-                                      </div>
-                                      <div>
-                                          @php
-                                              $checklists = [
-                                                  [
-                                                      'title' => 'Checklist for Human Resource',
-                                                      'questions' => $questions_hr,
-                                                      'prefix' => 1
-                                                  ],
-                                                 
-                            
-                                              ];
-                                          @endphp
-                            
-                                          @foreach ($checklists as $checklist)
-                                              <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                  {{ $checklist['title'] }}
-                                              </div>
-                                              <table class="table table-bordered">
-                                                  <thead>
-                                                      <tr>
-                                                          <th style="width: 5%;">Sr. No.</th>
-                                                          <th style="width: 40%;">Question</th>
-                                                          <th style="width: 20%;">Response</th>
-                                                          <th>Remarks</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      @foreach ($checklist['questions'] as $index => $question)
-                                                          @php
-                                                              $response = $checklist12->{"checklist_hr_response_" . ($index + 1)};
-                                                              $remark = $checklist12->{"checklist_hr_response__" . ($index + 1)};
-                                                          @endphp
-                            
-                                                          <!-- Check if either response or remark is not empty -->
-                                                          @if($response || $remark)
-                                                              <tr>
-                                                                  <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                  <td>{{ $question }}</td>
-                                                                  <td>
-                                                                      <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                          {{ $response }}
-                                                                      </div>
-                                                                  </td>
-                                                                  <td style="vertical-align: middle;">
-                                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                                          {{ $remark }}
-                                                                      </div>
-                                                                  </td>
-                                                              </tr>
-                                                          @endif
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-                                          @endforeach
-                                      </div>
-                                  <!-- </div> -->
-                                </div>
-                            </div>
-
-                            @php
-                                $questions_dispensing = [
-                                    'Is access to the facility restricted?',
-                                    'Is the dispensing area cleaned as per SOP?',
-                                    'Check the status label of area and equipment.',
-                                    'Are all raw materials carry proper label?',
-                                    'Standard operating procedure for dispensing of raw material is displayed?',
-                                    'All the person involve in dispensing having proper gowning?',
-                                    'Where you keep the materials after dispensing?',
-                                    'Is there any log book for keeping the record of dispensing?',
-                                    'Have you any standard practice to cross check the approved status of raw materials before dispensing?',
-                                    'Are all balances calibrated which are to be use for dispensing?',
-                                    'Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______',
-                                    'Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________',
-                                    'Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%',
-                                ];
-
-                                $questions_visual_inspection = [
-                                    'Is status labels displayed on all equipments?',
-                                    'Equipment cleanliness, check few equipments.',
-                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
-                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
-                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                                    'Are there written instructions describing how to use in-process data to control the process?',
-                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                                    'Is equipment inspected immediately prior to use?',
-                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments.',
-                                    'Is equipment cleaned promptly after use?',
-                                    'Is there proper storage of cleaned equipment so as to prevent contamination?',
-                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
-                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record',
-                                    'All the person working in manufacturing area having proper gowning?',
-                                    'Is the Mfg tank calibrated?',
-                                    'Check the CIP-SIP system in place and verify the records.',
-                                    'Is the pressure differential of every particular area are within limit?',
-                                    'Is there a define procedure for filtration and verify the records.',
-                                    'Is there any procedure to carryout integrity test of the filter used in process?',
-                                    'Is there any procedure for cleaning of filling machine?',
-                                    'Is there any procedure to expose the settle plate during complete filling activity?',
-                                    'Have you any SOP regarding Hold time of material during staging?',
-                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
-                                    'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
-                                    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
-                                    'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
-                                    'Check the calibration labels for instrument calibration status',
-                                    'Temperature & RH record log book is available for each staging area.',
-                                    'Is there any procedure for operation and cleaning of tunnel, verify the records',
-                                    'Check is there any sop for operations & cleaning of autoclave verify the records.',
-                                    'Is there any procedure for operation and cleaning of washing machine, verify the records.',
-                                    'Is there any procedure for operation and cleaning of leak test apparatus, verify the records.',
-                                    'Is there any procedure for operation and cleaning of ampoule visual inspection machine, verify the records.',
-                                    'Check for area activity record',
-                                    'Check for equipment usage record',
-                                    'Check for general equipment details and accessory details.',
-                                    'Check for man & material movement in the area',
-                                    'Air handling system qualification, cleaning details and PAO test reports',
-                                    'Check for WFI hose pipe status and water hold up.',
-                                    'Check for the status labeling in the area and, material randomly',
-                                    'Check the in-process equipments cleaning status & records.',
-                                    'Have you any SOP regarding Hold time of material during staging?',
-                                ];
-
-                                $questions_documentation = [
-                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
-                                    'Is the batch record is on line up to the current stage of a process?',
-                                    'In process carried out as per the written instruction describe in batch record?',
-                                    'Is there any area cleaning record available for all individual areas?',
-                                    'Current version of SOP’s is available in respective areas?',
-                                ];
-                            @endphp       
-                          <div class="inner-block">
-                            <div class="content-table">
-                              <!-- <div class="border-table"> -->
-                                  <div class="block-head">
-                                      Checklist - Production (Injection Dispensing & Manufacturing)
-                                  </div>
-                                  <div>
-                                      @php
-                                          $checklists = [
-                                              [
-                                                  'title' => 'Checklist for Human Resource',
-                                                  'questions' => $questions_dispensing,
-                                                  'prefix' => 1
-                                              ],
-                                              [
-                                                    'title' => 'Checklist for Building Facility',
-                                                    'questions' => $questions_visual_inspection,
-                                                    'prefix' => 2
-                                              ],
-                                              [
-                                                    'title' => 'Checklist for HVAC/HEPA',
-                                                    'questions' => $questions_documentation,
-                                                    'prefix' => 3
-                                             ],
-
-
-                                             
-                        
-                                          ];
-                                      @endphp
-                        
-                                      @foreach ($checklists as $checklist)
-                                          <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                              {{ $checklist['title'] }}
-                                          </div>
-                                          <table class="table table-bordered">
-                                              <thead>
-                                                  <tr>
-                                                      <th style="width: 5%;">Sr. No.</th>
-                                                      <th style="width: 40%;">Question</th>
-                                                      <th style="width: 20%;">Response</th>
-                                                      <th>Remarks</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  @foreach ($checklist['questions'] as $index => $question)
-                                                      @php
-                                                          $response = $checklist13->{"response_dispensing_" . ($index + 1)};
-                                                          $remark = $checklist13->{"remark_dispensing_" . ($index + 1)};
-                                                      @endphp
-                        
-                                                      <!-- Check if either response or remark is not empty -->
-                                                      @if($response || $remark)
-                                                          <tr>
-                                                              <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                              <td>{{ $question }}</td>
-                                                              <td>
-                                                                  <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                      {{ $response }}
-                                                                  </div>
-                                                              </td>
-                                                              <td style="vertical-align: middle;">
-                                                                  <div style="margin: auto; display: flex; justify-content: center;">
-                                                                      {{ $remark }}
-                                                                  </div>
-                                                              </td>
-                                                          </tr>
-                                                      @endif
-                                                  @endforeach
-                                              </tbody>
-                                          </table>
-                                      @endforeach
-                                  </div>
-                              <!-- </div> -->
-                            </div>
-                        </div>          
-                        @php
-                                $questions_injection_packing = [
-                                    'Is status labels displayed on all equipments/machines?',
-                                    'Equipment cleanliness, check few equipments.',
-                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
-                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
-                                    
-                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                                    'Are there written instructions describing how to use in-process data to control the process?',
-                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                                    
-                                    'Is equipment inspected immediately prior to use?',
-                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
-                                   
-                                    'Is equipment cleaned promptly after use?',
-                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
-                                    
-                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                   
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person',
-                                    
-                                    
-                                    'All the person working in manufacturing area having proper gowning?',
-                                    'Have you any SOP regarding Hold time of material during staging?',
-                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
-                                    'Check for area activity record',
-                                    'Check for equipment usage record',
-                                    'Check for general equipment details and accessory details.',
-                                    'Check for man & material movement in the area',
-                                    'Air handling system qualification, cleaning details and PAO test reports',
-                                    'Check for the status labeling in the area and, material randomly',
-                                    'Check the in-process equipments cleaning status & records.',
-                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                    'Status label of area & equipment available?',
-                                    'Have you any proper storage area for primary and secondary packing material?',
-                                    'Do you have proper segregation system for keeping product/batch separately?',
-                                    'Stereo impression record available? Check the record for any 2 batches.',
-                                    'Where you keep the rejected ampoule / cartons?',
-                                    'Is there any standard practice for destruction of printed ampoule label & printed cartons?',
-                                    'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
-                                    'Is there any procedure for operation and cleaning of ampoule label machine, verify the record',
-                                    'Is there any procedure for operation and cleaning of ampoule blister machine, verify the record.',
-                                    'Have you any standard procedure for removal of scrap?',
-                                    'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
-                                ];
-
-                                $questions_documentation = [
-                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
-                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
-                                    'Is the batch record is on line up to the current stage of a process?',
-                                    'In process carried out as per the written instruction describe in batch record?',
-                                    'Is there any area cleaning record available for all individual areas?',
-                                    'Current version of SOP’s is available in respective areas?',
-                                ];
-                            @endphp  
-                              
-                              <div class="inner-block">
-                                <div class="content-table">
-                                  <!-- <div class="border-table"> -->
-                                      <div class="block-head">
-                                          Checklist -Production (Injection Packing)
-
-                                      </div>
-                                      <div>
-                                          @php
-                                              $checklists = [
-                                                  [
-                                                      'title' => 'Checklist for Injection Packing',
-                                                      'questions' => $questions_injection_packing,
-                                                      'prefix' => 1
-                                                  ],
-                                                  [
-                                                        'title' => 'Checklist for Building Facility',
-                                                        'questions' => $questions_documentation,
-                                                        'prefix' => 2
-                                                  ],
-                                                
-    
-                                                 
-                            
-                                              ];
-                                          @endphp
-                            
-                                          @foreach ($checklists as $checklist)
-                                              <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                  {{ $checklist['title'] }}
-                                              </div>
-                                              <table class="table table-bordered">
-                                                  <thead>
-                                                      <tr>
-                                                          <th style="width: 5%;">Sr. No.</th>
-                                                          <th style="width: 40%;">Question</th>
-                                                          <th style="width: 20%;">Response</th>
-                                                          <th>Remarks</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      @foreach ($checklist['questions'] as $index => $question)
-                                                          @php
-                                                              $response = $checklist14->{"response_injection_packing_" . ($index + 1)};
-                                                              $remark = $checklist14->{"remark_injection_packing_" . ($index + 1)};
-                                                          @endphp
-                            
-                                                          <!-- Check if either response or remark is not empty -->
-                                                          @if($response || $remark)
-                                                              <tr>
-                                                                  <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                  <td>{{ $question }}</td>
-                                                                  <td>
-                                                                      <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                          {{ $response }}
-                                                                      </div>
-                                                                  </td>
-                                                                  <td style="vertical-align: middle;">
-                                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                                          {{ $remark }}
-                                                                      </div>
-                                                                  </td>
-                                                              </tr>
-                                                          @endif
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-                                          @endforeach
-                                      </div>
-                                  <!-- </div> -->
-                                </div>
-                            </div>
-
-                            @php
-                                $questions_powder_manufacturing_filling = [
-                                    'Is status labels displayed on all equipments?',
-                                    'Equipment cleanliness, check few equipments.',
-                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non–additive so as not to affect the product?',
-                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
-                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
-                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
-                                    'Are there written instructions describing how to use in-process data to control the process?',
-                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
-                                    'Is equipment inspected immediately prior to use?',
-                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
-                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
-                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
-                                    'Is equipment cleaned promptly after use?',
-                                    'Is there proper storage of cleaned equipment so as to prevent contamination?',
-                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
-                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
-                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record',
-                                    'Are the sieves & screen kept in proper place with proper label?',
-                                    'Is the pressure differential of every particular area within limit?',
-                                    'All the person working in manufacturing area having proper gowning?',
-                                    'Have you any SOP regarding Hold time of material during staging?',
-                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
-                                    'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
-                                    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
-                                    'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
-                                    'Check the calibration labels for instrument calibration status',
-                                    'Temperature & RH record log book is available for each staging area.',
-                                    'Check for area activity record.',
-                                    'Check for equipment usage record',
-                                    'Check for general equipment details and accessory details.',
-                                    'Check for man & material movement in the area',
-                                    'Air handling system qualification, cleaning details and PAO test reports',
-                                    'Check for purified water hose pipe status and water hold up.',
-                                    'Check for the status labeling in the area and, material randomly',
-                                    'Check the in-process equipments cleaning status & records.',
-                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
-                                    'If the product is blended, are there blending parameters and/or homogeneity specifications?',
-                                    'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                    'Is there a preventive maintenance program for all equipment and status of it?',
-                                    'Do you have any SOP for operation of pouch filling and sealing machine?',
-                                    'Have you any usage logbook for powder filling and sealing machine.',
-                                ];
-
-                                $questions_packing_manufacturing = [
-                                    'Status label of area & equipment available?',
-                                    'Have you any proper storage area for primary and secondary packing material?',
-                                ];
-                            @endphp
-                            {{-- <div class="inner-block">
-                                <div class="content-table">
-                                  <!-- <div class="border-table"> -->
-                                     <div class="block-head">
-                                        Checklist - Production (Powder Manufacturing and Packing)   
-
-                                      </div>
-                                      <div>
-                                          @php
-                                              $checklists = [
-                                                  [
-                                                      'title' => 'Checklist for Powder Manufacturing & Filling',
-                                                      'questions' => $questions_powder_manufacturing_filling,
-                                                      'prefix' => 1
-                                                  ],
-                                                  [
-                                                        'title' => 'Checklist for Packing',
-                                                        'questions' => $questions_packing_manufacturing,
-                                                        'prefix' => 2
-                                                  ],
-                                                
-    
-                                                 
-                            
-                                              ];
-                                          @endphp
-                            
-                                          @foreach ($checklists as $checklist)
-                                              <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                  {{ $checklist['title'] }}
-                                              </div>
-                                              <table class="table table-bordered">
-                                                <thead>
-                                                      <tr>
-                                                          <th style="width: 5%;">Sr. No.</th>
-                                                          <th style="width: 40%;">Question</th>
-                                                          <th style="width: 20%;">Response</th>
-                                                          <th>Remarks</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      @foreach ($checklist['questions'] as $index => $question)
-                                                          @php
-                                                               $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-                                                                $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
-                                                          @endphp
-                            
-                                                          <!-- Check if either response or remark is not empty -->
-                                                          @if($response || $remark)
-                                                              <tr>
-                                                                  <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                  <td>{{ $question }}</td>
-                                                                  <td>
-                                                                      <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                          {{ $response }}
-                                                                      </div>
-                                                                  </td>
-                                                                  <td style="vertical-align: middle;">
-                                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                                          {{ $remark }}
-                                                                      </div>
-                                                                  </td>
-                                                              </tr>
-                                                          @endif
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-                                          @endforeach
-                                      </div>
-                                  <!-- </div> -->
-                                </div>
-                            </div> --}}
-                            <div class="inner-block">
-                                <div class="content-table">
-                                  <!-- <div class="border-table"> -->
-                                      <div class="block-head">
-                                        Checklist - Production (Powder Manufacturing and Packing)   
-                                      
-                                      </div>
-                                      <div>
-                                          @php
-                                              $checklists = [
-                                                [
-                                                      'title' => 'Checklist for Powder Manufacturing & Filling',
-                                                      'questions' => $questions_powder_manufacturing_filling,
-                                                      'prefix' => 1
-                                                  ],
-                                                  [
-                                                        'title' => 'Checklist for Packing',
-                                                        'questions' => $questions_packing_manufacturing,
-                                                        'prefix' => 2
-                                                  ],
-    
-                                                 
-                            
-                                              ];
-                                          @endphp
-                            
-                                          @foreach ($checklists as $checklist)
-                                              <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                  {{ $checklist['title'] }}
-                                              </div>
-                                              <table class="table table-bordered">
-                                                  <thead>
-                                                      <tr>
-                                                          <th style="width: 5%;">Sr. No.</th>
-                                                          <th style="width: 40%;">Question</th>
-                                                          <th style="width: 20%;">Response</th>
-                                                          <th>Remarks</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      @foreach ($checklist['questions'] as $index => $question)
-                                                          @php
-                                                                 $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-                                                                  $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};                 
-                                                      @endphp
-                            
-                                                          <!-- Check if either response or remark is not empty -->
-                                                          @if($response || $remark)
-                                                              <tr>
-                                                                  <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                  <td>{{ $question }}</td>
-                                                                  <td>
-                                                                      <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                          {{ $response }}
-                                                                      </div>
-                                                                  </td>
-                                                                  <td style="vertical-align: middle;">
-                                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                                          {{ $remark }}
-                                                                      </div>
-                                                                  </td>
-                                                              </tr>
-                                                          @endif
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-                                          @endforeach
-                                      </div>
-                                  <!-- </div> -->
-                                </div>
-                            </div>   
-                            
-                            @php
-                            $questions_analytical_research_development = [
-                                'Is there an adequate system SOP for reviewing and implementing analytical development?',
-                                'Is Lic. Copy available?',
-                                'Do you refer current pharmacopeias / literature search/ reference books etc. at the time of analytical development?',
-                                'Regarding in house raw materials, do you receive method of analysis from manufacturer?',
-                                'Do you receive working standards along with COA from manufacturer?',
-                                'Can market / Generic sample study to be done?',
-                                'Do you document method development analytical reports?',
-                                'Can separate file to be prepared for each product?',
-                                'Can comparative study be carried out with market sample?',
-                                'Have non-compendial methods been validated, including accuracy, linearity, ruggedness and comparison with compendial methods or have compendial methods (Official) been verified to function properly in the company’s laboratories with proper documentation / SOP of same available?',
-                                'Are FPS/STP available for finished product?',
-                                'Are technology transfer SOP/documents available?',
-                                // "Are stability study carried out for the product at",
-                                '25°C / 60% RH',
-                                '30°C / 70% RH',
-                                '40°C / 75% RH',
-                                'Are the stability results reviewed by a qualified, experienced person?',
-                                'Is stability study in primary pack done for different products?',
-                                'Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
-                                'Are instruments calibrated & labeled with date calibrated and date next calibration is due?',
-                                'Are daily or monthly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
-                                'Check for compliance of stability data and its summary',
-                                'Check for analytical reports?',
-                                'Are data and calculations checked by a second person & countersigned?',
-                                'Is there any checklist for the dossier requirement?',
-                                'Current versions of SOPs are available in respective areas?',
-                            ];
-                        @endphp
-                           
-                                       <div class="inner-block">
+                                    @if(!empty($data->checklist10))
+                                    <div class="inner-block">
                                         <div class="content-table">
                                           <!-- <div class="border-table"> -->
                                               <div class="block-head">
-                                                Checklist - Analytical Research and Development   
-                                              
+                                                  Checklist - Quality Control
                                               </div>
                                               <div>
                                                   @php
                                                       $checklists = [
-                                                        [
-                                                            'title' => 'Checklist for Analytical Research and Development',
-                                                            'questions' => $questions_analytical_research_development,
-                                                            'prefix' => 1
-                                                         ],
-            
-                                                         
-                                    
+                                                          [
+                                                              'title' => 'Checklist for Quality Assurance',
+                                                              'questions' => $checklistqualitycontrol,
+                                                              'prefix' => 1
+                                                          ],
+                                                      
+  
                                                       ];
                                                   @endphp
-                        
-                                      @foreach ($checklists as $checklist)
-                                          <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                              {{ $checklist['title'] }}
-                                          </div>
-                                            <table class="table table-bordered">
-                                              <thead>
-                                                  <tr>
-                                                      <th style="width: 5%;">Sr. No.</th>
-                                                      <th style="width: 40%;">Question</th>
-                                                      <th style="width: 20%;">Response</th>
-                                                      <th>Remarks</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  @foreach ($checklist['questions'] as $index => $question)
-                                                      @php
-                                                          $response = $checklist16->{"response_analytical_research_development_" . ($index + 1)};
-                                                          $remark = $checklist16->{"remark_analytical_research_development_" . ($index + 1)};
-                                                      @endphp
-                        
-                                                      <!-- Check if either response or remark is not empty -->
-                                                      @if($response || $remark)
-                                                          <tr>
-                                                              <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                              <td>{{ $question }}</td>
-                                                              <td>
-                                                                  <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                      {{ $response }}
-                                                                  </div>
-                                                              </td>
-                                                              <td style="vertical-align: middle;">
-                                                                  <div style="margin: auto; display: flex; justify-content: center;">
-                                                                      {{ $remark }}
-                                                                  </div>
-                                                              </td>
-                                                          </tr>
-                                                      @endif
+  
+                                                  @foreach ($checklists as $checklist)
+                                                      <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                          {{ $checklist['title'] }}
+                                                      </div>
+                                                      <table class="table table-bordered">
+                                                          <thead>
+                                                              <tr>
+                                                                  <th style="width: 5%;">Sr. No.</th>
+                                                                  <th style="width: 40%;">Question</th>
+                                                                  <th style="width: 20%;">Response</th>
+                                                                  <th>Remarks</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              @foreach ($checklist['questions'] as $index => $question)
+                                                                  @php
+                                                                      $response = $checklist10->{"quality_control_response_" . ($index + 1)};
+                                                                      $remark = $checklist10->{"quality_control_remark__" . ($index + 1)};
+                                                                  @endphp
+  
+                                                                  <!-- Check if either response or remark is not empty -->
+                                                                  @if($response || $remark)
+                                                                      <tr>
+                                                                          <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                          <td>{{ $question }}</td>
+                                                                          <td>
+                                                                              <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                  {{ $response }}
+                                                                              </div>
+                                                                          </td>
+                                                                          <td style="vertical-align: middle;">
+                                                                              <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                  {{ $remark }}
+                                                                              </div>
+                                                                          </td>
+                                                                      </tr>
+                                                                  @endif
+                                                              @endforeach
+                                                          </tbody>
+                                                      </table>
                                                   @endforeach
-                                              </tbody>
-                                          </table>
-                                      @endforeach
-                                  </div>
-                              <!-- </div> -->
-                            </div>
-                        </div>
+                                              </div>
+                                          <!-- </div> -->
+                                        </div>
+                                      </div>  
+                                    @endif
+                                                    @php
+                                                        $questions_stores = [
+                                                            'Is there a potential for contamination or cross-contamination from any sources? If so, how it is controlled / prevented?',
+                                                            'Are there complete written master manufacturing instructions that specify formula, names and codes of raw materials, equipment, manufacturing flow, operating parameters, in-process sampling, packaging materials, labeling, and documentation of each significant step?',
+                                                            'Are critical environmental parameters monitored and recorded?',
+                                                            'Is there an SOP for receiving, handling, storing and accountability of pre-printed labels?',
+                                                            'If filled unlabeled containers are set aside for future labeling, is there sufficient identification to determine name, strength, quantity, lot number and other information needed for traceability?',
+                                                            'Is a list of acceptable suppliers maintained and are incoming raw materials checked against it?',
+                                                            'Are statistical sampling plans used to assure that the samples are representative of the lot?',
+                                                            'Are sampled containers labeled with sampler’s name and date of sampling?',
+                                                            'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
+                                                            'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing, and is periodic monitoring performed?',
+                                                            'Are raw materials approved before being used in production?',
+                                                            'If raw materials are accepted on certificates of analysis, is at least an identification test performed (where safe) on every batch and receipt?',
+                                                            'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
+                                                            'Is there any material in reject area? Check the record of the same.',
+                                                            'If fresh and recovered solvents are commingled, are the recovered solvents sampled and assayed and found to be satisfactory prior to commingling, and is the quality of commingled solvents monitored on an established schedule?',
+                                                            'Is cleaning record maintained for store?',
+                                                            'Is printed packing material storage separately and the same is recorded?',
+                                                            'Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF?',
+                                                            'Checking of approved vendor list on receipt of material in the store.',
+                                                            'Check the Dispensing and sampling area records.',
+                                                            'Check if any stains on dispensed color/flavor poly bag which cover material.',
+                                                            'Is there any product dedicated scoop for different active raw materials?',
+                                                            'Check the Scoops / Spatula usage log sheet.',
+                                                            'Is there clean the area of Finished Goods store? Check the record for last 3 months.',
+                                                            'Check the Temperature and RH data of the Finished goods store. Check last 3 month records.',
+                                                            'Do you have any record of the temperature of freeze?',
+                                                            'Is there any separate location / separate method to identify the stage of raw materials?',
+                                                            'Do you have any details record of dispatch for all finished goods?',
+                                                            'Have you any standard practice for dispatch of finished goods?',
+                                                        ];
+                                                    @endphp
+                                                        
+                                                        @if(!empty($data->checklist11))
+                                                        <div class="inner-block">
+                                                            <div class="content-table">
+                                                            <!-- <div class="border-table"> -->
+                                                                <div class="block-head">
+                                                                    Checklist - Stores
+                                                                </div>
+                                                                <div>
+                                                                    @php
+                                                                        $checklists = [
+                                                                            [
+                                                                                'title' => 'Checklist for Stores',
+                                                                                'questions' => $questions_stores,
+                                                                                'prefix' => 1
+                                                                            ],
+                                                                            
 
-                   
+                                                                        ];
+                                                                    @endphp
 
-                        @php
-                            $questions_formulation_research_development = [
-                                'Is there an adequate system for reviewing and implementing development?',
-                                'Is any product development checklist?',
-                                'Is Lic Copy available?',
-                                'Are refer current pharmacopoeia at the time of development?',
-                                'Can Market sample/Generic Sample Study to be done?',
-                                'Can tooling and change part availability to be checked before initiating development?',
-                                'Can validation be performed for IH products?',
-                                'Is MFR-RM BOM available?',
-                                'Is PDR available (Product development Report)?',
-                                'Is FD involved in the change control process?',
-                                'Is Technology transfer SOP available?',
-                                'Can separate file be prepared for each product?',
-                                'Can comparative study be carried out with market sample?',
-                                'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
-                                'Are these stability chambers available to carry out stability of the product at -',
-                                '25°C / 60% Rh',
-                                '30°C / 65% Rh',
-                                '40°C / 75% Rh',
-                                'Do you keep both hard copy and electronic copy of temperature/RH monitoring?',
-                                'Are the stability results reviewed by a qualified, experienced person?',
-                                'Is stability study in primary pack done for different products?',
-                                'Is any checklist for the dossier requirement?',
-                                'Current version of SOP’s is available in respective areas?',
-                            ];
-                    @endphp
+                                                                    @foreach ($checklists as $checklist)
+                                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                            {{ $checklist['title'] }}
+                                                                        </div>
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                                    <th style="width: 40%;">Question</th>
+                                                                                    <th style="width: 20%;">Response</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                                    @php
+                                                                                        $response = $checklist11->{"checklist_stores_response_" . ($index + 1)};
+                                                                                        $remark = $checklist11->{"checklist_stores_remark_" . ($index + 1)};
+                                                                                    @endphp
 
-<div class="inner-block">
-    <div class="content-table">
-      <!-- <div class="border-table"> -->
-          <div class="block-head">
-            Checklist - Formulation Research and Development    
-          </div> 
-            @php
-                        $checklists = [
-                            [
-                                'title' => 'Checklist for Formulation Research and Development',
-                                'questions' => $questions_formulation_research_development,
-                                'prefix' => 1
-                            ],
-                            
-                    
+                                                                                    <!-- Check if either response or remark is not empty -->
+                                                                                    @if($response || $remark)
+                                                                                        <tr>
+                                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                            <td>{{ $question }}</td>
+                                                                                            <td>
+                                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                    {{ $response }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="vertical-align: middle;">
+                                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                    {{ $remark }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    @endforeach
+                                                                </div>
+                                                            <!-- </div> -->
+                                                            </div>
+                                                        </div>
+                                                       @endif
+                                                        @php
+                                                                $questions_hr = [
+                                                                    'Do you have written procedure for material movement inside the factory premises?',
+                                                                    'Do the material taken out from the gate require valid gate pass at the security?',
+                                                                    'Do you have written procedure for visitor movement?',
+                                                                    'Do you have pest and rodent control procedure?',
+                                                                    'Whether the contract is updated?',
+                                                                    'Check the data for the pest & rodent control for the last 3 months, is it ok?',
+                                                                    'Whether the areas are marked for rodent trap & rodent gum pad? Check 4-5 points randomly.',
+                                                                    'Whether the rodent trap, checked for trapped rodent on daily basis & record of the same is maintained by HR, check last 3 months data.',
+                                                                    'Check whether any rodent is trapped in last 3 months and disposed properly?',
+                                                                    'Drains / Main holes are sprayed with pesticides. Check the record for the last 3 months.',
+                                                                    'Check the cleaning record for the road, dustbin, drain, toilet, floors, fans and tubes, canteen, tables, chairs, premises of last 3 months.',
+                                                                    'Do you have a written procedure for linen washing?',
+                                                                    'Is the linen for washing is collected from respective area in polybags?',
+                                                                    'Do you have written training procedure, check one training record from each department',
+                                                                    'Check the annual training schedule cum card for new joinee.',
+                                                                    'Check the operator training and record',
+                                                                    'Check the induction training record for one new recruit in the production, store, QA, QC.',
+                                                                    'Is annual medical checkup being done by a competent medical doctor?',
+                                                                    'Do annual medical checkup program covers tests like Hematology, urine, blood sugar, ECG, X-ray and VDRL test?',
+                                                                    'Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections?',
+                                                                    'Is there a procedure for issue, storage, washing and collection of used garments?',
+                                                                    'Is there any color code for garments and foot wear followed?',
+                                                                    'Check the linen cleaning record for last three months.',
+                                                                    'Whether the garments handling properly before issued.',
+                                                                    'Check the training record for the SOP related changes for two person for production, QA and QC',
+                                                                    'Do you have a laid down procedure for operation of washing machine and tumbler dryer?',
+                                                                    'Do you have a laid down procedure for fire prevention & control in factory premises.',
+                                                                    'Is there any emergency evacuation system in factory premises?',
+                                                                    'Check the first aid services at security gate are available or not.',
+                                                                    'Check the use of personnel protective equipment during critical manufacturing operation.',
+                                                                    'Check the canteen area is neat & clean.',
+                                                                    'Check the scrap record for last 2 months.',
+                                                                    'Checks the surrounding areas of factory are neat & clean.',
+                                                                    'Are you ensuring that at no stage linen of two different colors or from two different sections shall be mixed for washing?',
+                                                                ];
+                                                            @endphp
+                                                            
+                                                            @if(!empty($data->checklist12))
+                                                            <div class="inner-block">
+                                                                <div class="content-table">
+                                                                <!-- <div class="border-table"> -->
+                                                                    <div class="block-head">
+                                                                        Checklist - Stores
+                                                                    </div>
+                                                                    <div>
+                                                                        @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'Checklist for Human Resource',
+                                                                                    'questions' => $questions_hr,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                                                                
+                                                            
+                                                                            ];
+                                                                        @endphp
+                                                            
+                                                                        @foreach ($checklists as $checklist)
+                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                                {{ $checklist['title'] }}
+                                                                            </div>
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                                        @php
+                                                                                            $response = $checklist12->{"checklist_hr_response_" . ($index + 1)};
+                                                                                            $remark = $checklist12->{"checklist_hr_response__" . ($index + 1)};
+                                                                                        @endphp
+                                                            
+                                                                                        <!-- Check if either response or remark is not empty -->
+                                                                                        @if($response || $remark)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                                <td>{{ $question }}</td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                        {{ $response }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        {{ $remark }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        @endforeach
+                                                                    </div>
+                                                                <!-- </div> -->
+                                                                </div>
+                                                            </div>
+                                                            @endif
 
-                     
+                                                            @php
+                                                                $questions_dispensing = [
+                                                                    'Is access to the facility restricted?',
+                                                                    'Is the dispensing area cleaned as per SOP?',
+                                                                    'Check the status label of area and equipment.',
+                                                                    'Are all raw materials carry proper label?',
+                                                                    'Standard operating procedure for dispensing of raw material is displayed?',
+                                                                    'All the person involve in dispensing having proper gowning?',
+                                                                    'Where you keep the materials after dispensing?',
+                                                                    'Is there any log book for keeping the record of dispensing?',
+                                                                    'Have you any standard practice to cross check the approved status of raw materials before dispensing?',
+                                                                    'Are all balances calibrated which are to be use for dispensing?',
+                                                                    'Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______',
+                                                                    'Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________',
+                                                                    'Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%',
+                                                                ];
 
-                  ];
-              @endphp
+                                                                $questions_visual_inspection = [
+                                                                    'Is status labels displayed on all equipments?',
+                                                                    'Equipment cleanliness, check few equipments.',
+                                                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                                                    'Are there written instructions describing how to use in-process data to control the process?',
+                                                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                                                    'Is equipment inspected immediately prior to use?',
+                                                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments.',
+                                                                    'Is equipment cleaned promptly after use?',
+                                                                    'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
+                                                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                                    'Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record',
+                                                                    'All the person working in manufacturing area having proper gowning?',
+                                                                    'Is the Mfg tank calibrated?',
+                                                                    'Check the CIP-SIP system in place and verify the records.',
+                                                                    'Is the pressure differential of every particular area are within limit?',
+                                                                    'Is there a define procedure for filtration and verify the records.',
+                                                                    'Is there any procedure to carryout integrity test of the filter used in process?',
+                                                                    'Is there any procedure for cleaning of filling machine?',
+                                                                    'Is there any procedure to expose the settle plate during complete filling activity?',
+                                                                    'Have you any SOP regarding Hold time of material during staging?',
+                                                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                                    'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+                                                                    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                                                    'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
+                                                                    'Check the calibration labels for instrument calibration status',
+                                                                    'Temperature & RH record log book is available for each staging area.',
+                                                                    'Is there any procedure for operation and cleaning of tunnel, verify the records',
+                                                                    'Check is there any sop for operations & cleaning of autoclave verify the records.',
+                                                                    'Is there any procedure for operation and cleaning of washing machine, verify the records.',
+                                                                    'Is there any procedure for operation and cleaning of leak test apparatus, verify the records.',
+                                                                    'Is there any procedure for operation and cleaning of ampoule visual inspection machine, verify the records.',
+                                                                    'Check for area activity record',
+                                                                    'Check for equipment usage record',
+                                                                    'Check for general equipment details and accessory details.',
+                                                                    'Check for man & material movement in the area',
+                                                                    'Air handling system qualification, cleaning details and PAO test reports',
+                                                                    'Check for WFI hose pipe status and water hold up.',
+                                                                    'Check for the status labeling in the area and, material randomly',
+                                                                    'Check the in-process equipments cleaning status & records.',
+                                                                    'Have you any SOP regarding Hold time of material during staging?',
+                                                                ];
 
-              @foreach ($checklists as $checklist)
-                  <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                      {{ $checklist['title'] }}
-                  </div>
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th style="width: 5%;">Sr. No.</th>
-                              <th style="width: 40%;">Question</th>
-                              <th style="width: 20%;">Response</th>
-                              <th>Remarks</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach ($checklist['questions'] as $index => $question)
-                              @php
-                                  $response = $checklist17->{"response_formulation_research_development_" . ($index + 1)};
-                                  $remark = $checklist17->{"remark_formulation_research_development_" . ($index + 1)};
-                              @endphp
+                                                                $questions_documentation = [
+                                                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
+                                                                    'Is the batch record is on line up to the current stage of a process?',
+                                                                    'In process carried out as per the written instruction describe in batch record?',
+                                                                    'Is there any area cleaning record available for all individual areas?',
+                                                                    'Current version of SOP’s is available in respective areas?',
+                                                                ];
+                                                            @endphp       
+                                                        @if(!empty($data->checklist13))
+                                                        <div class="inner-block">
+                                                            <div class="content-table">
+                                                            <!-- <div class="border-table"> -->
+                                                                <div class="block-head">
+                                                                    Checklist - Production (Injection Dispensing & Manufacturing)
+                                                                </div>
+                                                                <div>
+                                                                    @php
+                                                                        $checklists = [
+                                                                            [
+                                                                                'title' => 'Checklist for Human Resource',
+                                                                                'questions' => $questions_dispensing,
+                                                                                'prefix' => 1
+                                                                            ],
+                                                                            [
+                                                                                    'title' => 'Checklist for Building Facility',
+                                                                                    'questions' => $questions_visual_inspection,
+                                                                                    'prefix' => 2
+                                                                            ],
+                                                                            [
+                                                                                    'title' => 'Checklist for HVAC/HEPA',
+                                                                                    'questions' => $questions_documentation,
+                                                                                    'prefix' => 3
+                                                                            ],
 
-                              <!-- Check if either response or remark is not empty -->
-                              @if($response || $remark)
-                                  <tr>
-                                      <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                      <td>{{ $question }}</td>
-                                      <td>
-                                          <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                              {{ $response }}
-                                          </div>
-                                      </td>
-                                      <td style="vertical-align: middle;">
-                                          <div style="margin: auto; display: flex; justify-content: center;">
-                                              {{ $remark }}
-                                          </div>
-                                      </td>
-                                  </tr>
-                              @endif
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endforeach
-          </div>
-      <!-- </div> -->
-    </div>
-                </div>
-              
-                    
-           
-        <div class="inner-block">
-            <div class="content-table">
-                <div class="block-head">
-                    Checklist - LL / P2P
-                </div>
-        
-                @php
-                    // Define your static question arrays
-                    $general_information = [
-                        'How long has the company been manufacturing the materials being audited?',
-                        'Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of the certificate)',
-                        'Have the inspectional issues been resolved?',
-                        'Is there an FDA Drug Master File? And is it periodically updated?',
-                        'Is there a Site Master File? And is it periodically updated?',
-                        'Number of employees in Production, in QA / QC and overall number of employees. Production Dept: Quality Dept: Production Dept',
-                        'Quality Dept',
-                        'Total',
-                        'Contracts for employees: Permanent / Temporary / Casual',
-                        'Are your personnel aware that the products supplied shall be used for Pharmaceuticals?',
-                        'Location',
-                        'Do you make use of the service of sub-contractors? If yes, which firm and for which material?',
-                        'Do you take steps to assure yourselves of the integrity and security of your product whilst it is at your sub-contractors? If yes, list the steps taken',
-                        'Is there a separate system for manufacture and control of penicillin / β lactam / any product of biological or animal origin / hormones?',
-                        'Is Quality Policy available? (If Yes, Attach copy of Quality Policy)',
-                    ];
-        
-                    $training_program = [
-                        'Do you have written job descriptions for all personnel?',
-                        'Do you have procedures that document how you perform training?',
-                        'Do you maintain records of the training?',
-                        'Does the Training Program in place have the following elements: Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)',
-                        'Training program for freshly recruited personnel?',
-                        'Periodic refresher training programs for established employees?',
-                        'At the start of new product manufacturing?',
-                        'When new methods are used?',
-                        'Quality techniques for production people?',
-                    ];
-                                $premises_design = [
-                                                                'Were the premises designed or adapted for the present use?',
-                                                                'Are there separate areas for:',
-                                                                'Handling of starting materials? :Manufacturing?',
 
-                                                                'Quarantined finished products or are other control systems in place?',
-                                                                'Approved finished products?',
-                                                                'Packaging and dispatch?',
-                                                                'Rest and eating?',
-                                                                // 'Does the present design prevent:',
-                                                                'Chemical contamination?',
-                                                                'Physical contamination?',
-                                                                'Microbial contamination?',
-                                                                // 'Are your working-rooms:',
-                                                                'Of proper size for the intended functions?',
-                                                                'Satisfactorily lighted, air-conditioned?',
-                                                                'Clean and cleaned-up?',
-                                                                'Designed to avoid cross-contamination?',
-                                                                'Supplied with security and fire protection measurements?',
-                                                                'Do you have written Good House Keeping Procedures?',
-                                                                    'If yes, do you maintain follow-up records of these procedures?',
-                                                                    'Do your manufacturing locations follow Good Manufacturing Practices?',
-                                                                    'Are plant supply pipelines identified and labeled?',
-                                                                    'Is the core area equipped with HVAC/AHU system?',
-                                                                        'Is there provision of compressed air in core area?',
-                                                                        'Have support systems like compressed air been validated?',
-                                                                        'Do you monitor the quality of the water used during the manufacturing process?',
-                                                                        'Is the premises situated in an environment which causes minimum risk of contamination to material or products?',
-                                                                        'Is area sufficient for orderly storage of materials?',
-                                                                        'Is area provided commensurate with production activities and adequate storage areas for under-process materials and finished products provided?',
-                                                                        'Are procedures available for maintenance, cleaning, and sanitation of buildings, premises, and surroundings?',
-                                                                        'Are arrangements made for control of pest, rodent, and birds? If yes, please specify the frequency for such controls?',
-                                                                        'Do you have changing / toilet / refreshment facilities physically separated from production / storage areas?',
-                                ];
-                                            $equipment_maintenance = [
-                                                            'Is the production line multipurpose or single purpose?',
-                                                            'Is there a maintenance and preventative maintenance program for all pieces of equipment?',
-                                                            'Do you have written maintenance and calibration procedures for critical equipment?',
-                                                            'Can all critical apparatus and devices easily be recognized as such, e.g. by calibration stickers?',
-                                                            'Are these calibrations traceable back to national standards?',
-                                                            'Do you retain records of calibration as evidence of control?',
-                                                            'Is there a cleaning plan/procedure for production machines, equipment?',
-                                                            'Have the cleaning and sterilization processes been validated?',
-                                                            'Are logbooks for major equipments available for use, cleaning, and maintenance?',
-                                                            'Is any manufacturing equipment software controlled?',
-                                                            'Do you have a documented procedure for the validation of all test and measuring equipment used to demonstrate the conformance of product to the specified requirements?',
-                                                            'Do you retain records of validation as evidence of control?',
-                                                            'If yes, is the software validated?',
-                                                            'Are modifications of software (or its use) implemented by manufacturing personnel?',
-                                                            'Is there a procedure concerning change of software and its copying?',
-                                                            'Is the security of software controlled?',
-                                                            'Do you contract out any of the following services:',
-                                                            'Instrument Calibration?',
-                                                            'Preventative / Breakdown Maintenance?',
-                                                            'Are all equipments having status labels all the time?'
-                                            ];
-                             $production_process_control = [
-                                    'Is the workflow organized in the manufacturing area?',
-                                    'Is your manufacturing process validated?',
-                                    'If not, do you have plans to do so?',
-                                    'If you do: what is your target date for completion?',
-                                    'Is distinct staging area for starting material or component used in manufacturing?',
-                                    'Do have procedure for general housekeeping and environmental control?',
-                                    'What is your normal lot/batch size?',
-                                    'Does each lot/batch have an identification number?',
-                                    'Do you manufacture according to a written procedure for each product supplied to the market?',
-                                    'Are these procedures approved by QA?',
-                                    'Do you have a batch record for each batch/lot manufactured?',
-                                    'Description, Lot Number & Quantities of Material used?',
-                                    'Processing Conditions (Temperature, Time etc.)?',
-                                    'The identification of the Person who performed the particular step?',
-                                    'Results of any In-process tests?',
-                                    'All deviations from standard conditions?',
-                                    'All cleaning operations carried out before & after batch manufacture?',
-                                    'If yes, for how long do you keep the batch records?',
-                                    'Do you maintain records of use, maintenance for process equipment, in order to demonstrate the traceability in batches, product processed and personnel?',
-                                    'Are computers used to store records of manufacture, testing, storage or distribution for the product you supply?',
-                                    'If yes, have these computer systems been validated (i.e. have the complete life cycles of the systems been assessed and documented including stages of planning, specifications, programming, testing, commissioning, documentation, operation, monitoring and modifying)?',
-                                    'Do all product containers bear identification labels, e.g. stating batch/lot number, product name etc.?',
-                                    'Is there expiry or retest dates defined for all material?',
-                                    'Is there storage conditions defined for all material?',
-                                    'Is the product identifiable throughout the manufacturing process?',
-                                    'Is traceability of all raw materials used, maintained throughout manufacture?',
-                                    'Is there a procedure in place to prevent cross-contamination?',
-                                    'Are line clearances undertaken between product changes during manufacturing and labeling?',
-                                    'Do you use dedicated equipment for the production of the product in question?',
-                                    'Is testing or inspection performed between processes or manufacturing stages?',
-                                    'Is testing or inspection performed on finished products?',
-                                    'Are rejected lots identified as such and separated?',
-                                    'Do you perform a failure investigation in case of a reject?',
-                                    'Is reprocessing of rejected lots documented?',
-                                    'Do you have a procedure covering rework/reprocessing or recovery of material?',
-                                    'Is non-conforming final product ever blended with conforming product to bring it into specification?',
-                                    'Do you have procedures and records of plant sanitation?'
-                          ];
-                          $section6 = [
-    "Do you have an approved supplier list?",
-    "Do you have agreements in place with all your suppliers that require them to notify you of any change in raw material or the manufacturing process of the product supplied?",
-    "Do you have written specifications for all incoming raw material?",
-    "Who is responsible for establishing and approving the specifications of raw materials?",
-    "Are Certificates of Analysis routinely compared against a written specification?",
-    "Do you routinely test receipted materials to verify conformance with the supplier certification?",
-    "Is a defined sampling plan used for sampling of materials?",
-    "Do record of analysis indicate the sample traceability and date and sign of the analyst?",
-    "Is there a retention sample policy for key starting materials?",
-    "Are starting materials visibly controlled and marked with Quarantine/Under test / Sampled / Approved / Rejected / Recalled",
-    "Your lot Identity?",
-    "Suppliers Lot No?",
-    "Date of Receipt?",
-    "Quantity?",
-    "Suppliers name?",
-    "Shelf Life?",
-    "Test Results?",
-    "Specification?",
-    "Accepted/Rejected?",
-    "Retained Sample?",
-    "Do you have defined areas for Receipt, Identification, Sampling and Quarantine of incoming materials?",
-    "Are material properly segregated to avoid mix-ups?",
-    "Do you use stock rotation system (FIFO/FEFO)?",
-    "Are rejected material marked and stored separately in a secured area?",
-    "Do you have procedure for visual examination of materials for damage at the time of receipt?",
-    "Is controlled storage conditions maintained wherever required?",
-    "Is separate finished products storage available?",
-    "Is finished products distribution records maintained?",
-    "Are records for action taken on rejected goods available?",
-    "Are printed/ coded packing materials (if used) stored in secured area or with restricted access?"
-];
+                                                                            
+                                                        
+                                                                        ];
+                                                                    @endphp
+                                                        
+                                                                    @foreach ($checklists as $checklist)
+                                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                            {{ $checklist['title'] }}
+                                                                        </div>
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                                    <th style="width: 40%;">Question</th>
+                                                                                    <th style="width: 20%;">Response</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                                    @php
+                                                                                        $response = $checklist13->{"response_dispensing_" . ($index + 1)};
+                                                                                        $remark = $checklist13->{"remark_dispensing_" . ($index + 1)};
+                                                                                    @endphp
+                                                        
+                                                                                    <!-- Check if either response or remark is not empty -->
+                                                                                    @if($response || $remark)
+                                                                                        <tr>
+                                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                            <td>{{ $question }}</td>
+                                                                                            <td>
+                                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                    {{ $response }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="vertical-align: middle;">
+                                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                    {{ $remark }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    @endforeach
+                                                                </div>
+                                                            <!-- </div> -->
+                                                            </div>
+                                                        </div>          
+                                                        @endif
+                                                        @php
+                                                                $questions_injection_packing = [
+                                                                    'Is status labels displayed on all equipments/machines?',
+                                                                    'Equipment cleanliness, check few equipments.',
+                                                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                                                    
+                                                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                                                    'Are there written instructions describing how to use in-process data to control the process?',
+                                                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                                                    
+                                                                    'Is equipment inspected immediately prior to use?',
+                                                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
+                                                                
+                                                                    'Is equipment cleaned promptly after use?',
+                                                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
+                                                                    
+                                                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                                
+                                                                    'Are all weighing and measuring performed by one qualified person and checked by a second person',
+                                                                    
+                                                                    
+                                                                    'All the person working in manufacturing area having proper gowning?',
+                                                                    'Have you any SOP regarding Hold time of material during staging?',
+                                                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                                    'Check for area activity record',
+                                                                    'Check for equipment usage record',
+                                                                    'Check for general equipment details and accessory details.',
+                                                                    'Check for man & material movement in the area',
+                                                                    'Air handling system qualification, cleaning details and PAO test reports',
+                                                                    'Check for the status labeling in the area and, material randomly',
+                                                                    'Check the in-process equipments cleaning status & records.',
+                                                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                                                    'Status label of area & equipment available?',
+                                                                    'Have you any proper storage area for primary and secondary packing material?',
+                                                                    'Do you have proper segregation system for keeping product/batch separately?',
+                                                                    'Stereo impression record available? Check the record for any 2 batches.',
+                                                                    'Where you keep the rejected ampoule / cartons?',
+                                                                    'Is there any standard practice for destruction of printed ampoule label & printed cartons?',
+                                                                    'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                                                    'Is there any procedure for operation and cleaning of ampoule label machine, verify the record',
+                                                                    'Is there any procedure for operation and cleaning of ampoule blister machine, verify the record.',
+                                                                    'Have you any standard procedure for removal of scrap?',
+                                                                    'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
+                                                                ];
 
-// Section 7: Quality Control
-$section7 = [
-    "Is Quality Control (QC) independent of Production?",
-    "Are records kept of all samples that are submitted to the laboratories?",
-    "Are there formal written procedures for all performed tests?",
-    "Are the analytical methods validated?",
-    "Are analytical calculations checked by a second person?",
-    "Do you perform trend analysis on analytical results?",
-    "Are the results of reference standard testing maintained on file?",
-    "Is there a procedure for documenting and investigating out-of-specification results?",
-    "Do you use any contract laboratories?",
-    "Have you qualified/evaluated these contract laboratories?",
-    "Starting materials?",
-    "In-process control?",
-    "Physical identification at all stages (e.g. labeling of semi-finished products)?",
-    "Finished products?",
-    "Microbiological control?",
-    "Are records kept of all control results?",
-    "Is your critical analytical laboratory equipment fully qualified?",
-    "Is there a maintenance plan/procedure for laboratory equipment?",
-    "Do you have a calibration scheme?",
-    "Do you have calibration instructions?",
-    "Do you keep all records of calibration performances?",
-    "Does any laboratory equipment have software control?",
-    "If Yes, Is the software validated?",
-    "Are samples of end product taken by appropriate trained personnel?",
-    "Do you keep retain samples of each lot?",
-    "For how long do you keep retain samples?",
-    "Is there a procedure in place to establish and manage reference standards?",
-    "Is there a written stability program / Procedure?",
-    "Is there annual stability Program?",
-    "Is pre-defined sampling plan adopted on routine basis?",
-    "Will you provide a certificate of analysis for each batch or lot supplied to us?"
-];
+                                                                $questions_documentation = [
+                                                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                                                    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
+                                                                    'Is the batch record is on line up to the current stage of a process?',
+                                                                    'In process carried out as per the written instruction describe in batch record?',
+                                                                    'Is there any area cleaning record available for all individual areas?',
+                                                                    'Current version of SOP’s is available in respective areas?',
+                                                                ];
+                                                            @endphp  
+                                                            
+                                                            @if(!empty($data->checklist14))
+                                                            <div class="inner-block">
+                                                                <div class="content-table">
+                                                                <!-- <div class="border-table"> -->
+                                                                    <div class="block-head">
+                                                                        Checklist -Production (Injection Packing)
 
-// Section 8: Quality Assurance
-$section8 = [
-    "Is there an independent Quality Assurance (QA) department within the company?",
-    "Do you have procedures covering the release or rejection of material?",
-    "Who is responsible for release and reject of your end product?",
-    "Are batch records reviewed / approved by QA before the batch is dispatched?",
-    "Are deviations and non-conformances investigated, documented and filed?",
-    "Would you notify your Customer of any significant changes (Critical, Major) in analytical test methods and specifications or manufacturing procedures or site of production?",
-    "Do you introduce changes according to a written procedure?",
-    "Do you supply a Certificate of Analysis with each batch?",
-    "Is there a company recall program?",
-    "Do you have defined validation program?",
-    "Do you have defined equipment qualification / re-qualification program?",
-    "Is there a self-inspection program? If yes, what is the frequency?",
-    "Is product quality review performed and records available?",
-    "Is all GMP relevant documentation readily available?",
-    "Do you have OOS procedure in place?",
-    "Are TSE/BSE certificates available? If Yes provide the copy of the certificate."
-];
+                                                                    </div>
+                                                                    <div>
+                                                                        @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'Checklist for Injection Packing',
+                                                                                    'questions' => $questions_injection_packing,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                                                                [
+                                                                                        'title' => 'Checklist for Building Facility',
+                                                                                        'questions' => $questions_documentation,
+                                                                                        'prefix' => 2
+                                                                                ],
+                                                                                
+                                    
+                                                                                
+                                                            
+                                                                            ];
+                                                                        @endphp
+                                                            
+                                                                        @foreach ($checklists as $checklist)
+                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                                {{ $checklist['title'] }}
+                                                                            </div>
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                                        @php
+                                                                                            $response = $checklist14->{"response_injection_packing_" . ($index + 1)};
+                                                                                            $remark = $checklist14->{"remark_injection_packing_" . ($index + 1)};
+                                                                                        @endphp
+                                                            
+                                                                                        <!-- Check if either response or remark is not empty -->
+                                                                                        @if($response || $remark)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                                <td>{{ $question }}</td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                        {{ $response }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        {{ $remark }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        @endforeach
+                                                                    </div>
+                                                                <!-- </div> -->
+                                                                </div>
+                                                            </div>
+                                                            @endif
 
-// Section 9: Packaging, Labelling and Shipping
-$section9 = [
-    "Packaging components",
-    "Packing operation",
-    "Labels and labeling",
-    "Will each bag/container on a pallet have the lot/batch no. and/or description clearly visible on it?",
-    "Do you use your own transport for shipping to customers or do you use a contractor?",
-    "If you use a contractor, Do you have an agreed contract between parties which specifies required shipping conditions for materials?",
-    "Packaging operation?",
-    "Labels and labeling?",
-    "Does the labeling procedure emphasize special precautions to prevent unintentional mix-up or substitution?",
-    "Do you maintain lot separation during packaging?",
-    "Are you prepared to meet packaging and labeling requirements from your customers?",
-    "Material Name with Pharmacopoeial grade?",
-    "Batch Number?",
-    "Site of manufacturing?",
-    "Batch Number?",
-    "Expiry / retest date?",
-    "Quantity?",
-    "What details do you place on your dispatch labels? Give details."
-];
+                                                            @php
+                                                                $questions_powder_manufacturing_filling = [
+                                                                    'Is status labels displayed on all equipments?',
+                                                                    'Equipment cleanliness, check few equipments.',
+                                                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non–additive so as not to affect the product?',
+                                                                    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                                                    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                                                    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                                                    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                                                    'Are there written instructions describing how to use in-process data to control the process?',
+                                                                    'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                                                    'Is equipment inspected immediately prior to use?',
+                                                                    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                                                    'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                                                    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                                                    'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
+                                                                    'Is equipment cleaned promptly after use?',
+                                                                    'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                                                    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                                                    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
+                                                                    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record',
+                                                                    'Are the sieves & screen kept in proper place with proper label?',
+                                                                    'Is the pressure differential of every particular area within limit?',
+                                                                    'All the person working in manufacturing area having proper gowning?',
+                                                                    'Have you any SOP regarding Hold time of material during staging?',
+                                                                    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                                                    'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+                                                                    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                                                    'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
+                                                                    'Check the calibration labels for instrument calibration status',
+                                                                    'Temperature & RH record log book is available for each staging area.',
+                                                                    'Check for area activity record.',
+                                                                    'Check for equipment usage record',
+                                                                    'Check for general equipment details and accessory details.',
+                                                                    'Check for man & material movement in the area',
+                                                                    'Air handling system qualification, cleaning details and PAO test reports',
+                                                                    'Check for purified water hose pipe status and water hold up.',
+                                                                    'Check for the status labeling in the area and, material randomly',
+                                                                    'Check the in-process equipments cleaning status & records.',
+                                                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                                                    'If the product is blended, are there blending parameters and/or homogeneity specifications?',
+                                                                    'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+                                                                    'Is there a preventive maintenance program for all equipment and status of it?',
+                                                                    'Do you have any SOP for operation of pouch filling and sealing machine?',
+                                                                    'Have you any usage logbook for powder filling and sealing machine.',
+                                                                ];
 
-// Section 10: Safety, Health, and Environment (SHE)
-$section10 = [
-    "Do you have an operational management system(s) for Safety, Health and Environment (SHE)?",
-    "If so, are these systems",
-    "based on an international standard (ISO 9001/14001/18001)?",
-    "certified by an accredited third party auditing body?",
-    "Are the following subjects regulated by law and/or specific standards:",
-    "discharge of waste water",
-    "emissions to air",
-    "disposal of hazardous waste",
-    "protection against/remediation of soil pollution",
-    "risk control and reduction",
-    "nuisance by noise/odour",
-    "Do you have a structured SHE program, which is regularly monitored and updated?",
-    "Does your site operate its own wastewater treatment installation?",
-    "Is your personnel instructed on the handling of any kind of hazardous materials that you use and on how to act in case of unwanted events?",
-    "Do you have an adequate emergency response plan and organization?",
-    "Are there enough extinguishers present to do the job?",
-    "Are extinguisher locations conspicuously marked?",
-    "Are extinguishers properly mounted and easily accessible?",
-    "Are all extinguishers fully charged and operable?"
-];
-                                
-        
-                    // Define checklists for the table headers
-                    $checklists = [
-                        [
-                            'title' => 'Checklist for Audit Assessment',
-                            'questions' => $general_information, // Static question set
-                            'response_data' => $auditAssessmentChecklist->data, // Assuming data comes from $auditAssessmentChecklist
-                            'prefix' => 1
-                        ],
-                        [
-                            'title' => 'Checklist for Personnel, Training, and Education',
-                            'questions' => $training_program, // Static question set
-                            'response_data' => $auditPersonnelChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 2
-                        ],
-                        [
-                            'title' => 'Checklist for Facility and Utilities',
-                            'questions' => $premises_design, // Static question set
-                            'response_data' => $auditfacilityChecklist->data, // Assuming data comes from $auditAssessmentChecklist
-                            'prefix' => 3
-                        ],
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $equipment_maintenance, // Static question set
-                            'response_data' => $auditMachinesChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 4
-                        ],    
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $production_process_control, // Static question set
-                            'response_data' => $auditProductionChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 5
-                        ], 
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $section6, // Static question set
-                            'response_data' => $auditMaterialsChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 6
-                        ],   
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $section7, // Static question set
-                            'response_data' => $auditQualityControlChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 7
-                        ],    
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $section8, // Static question set
-                            'response_data' => $auditQualityAssuranceChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 8
-                        ], 
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $section9, // Static question set
-                            'response_data' => $auditPackagingChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 9
-                        ],     
-                        [
-                            'title' => 'Checklist for Machines and Equipment',
-                            'questions' => $section10, // Static question set
-                            'response_data' => $auditSheChecklist->data, // Assuming data comes from $auditPersonnelChecklist
-                            'prefix' => 10
-                        ],          
-                   ];
-                @endphp
-        
-                @foreach ($checklists as $checklist)
-                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                        {{ $checklist['title'] }}
-                    </div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">Sr. No.</th>
-                                <th style="width: 40%;">Question</th>
-                                <th style="width: 20%;">Response</th>
-                                <th style="width: 35%;">Remarks</th>
+                                                                $questions_packing_manufacturing = [
+                                                                        'Status label of area & equipment available?',
+                                                                        'Have you any proper storage area for primary and secondary packing material?',
+                                                                        'Do you have proper segregation system for keeping product/batch separately?',
+                                                                        'Where you keep the rejected strips / blisters / containers / cartons? ',
+                                                                        'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                                                        'Have you any standard procedure for removal of scrap?',
+                                                                    ];
+                                                                    $questions_documentation = [
+                                                                            'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
+                                                                            'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                                                            'Is the batch record is on line up to the current stage of a process?',
+                                                                            'In process carried out as per the written instruction describe in batch record?',
+                                                                            'Is there any area cleaning record available for all individual areas?',
+                                                                            "Current version of SOP's is available in respective areas?",
+                                                                        ];
+                                                            @endphp
+                                                            {{-- <div class="inner-block">
+                                                                <div class="content-table">
+                                                                <!-- <div class="border-table"> -->
+                                                                    <div class="block-head">
+                                                                        Checklist - Production (Powder Manufacturing and Packing)   
 
-                                {{-- <th>Remarks</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($checklist['questions'] as $index => $question)
-                                @php
-                                    // Fetch response and remark for each question item dynamically
-                                    $response = $checklist['response_data'][$index]['response'] ?? ''; // Fetch response dynamically
-                                    $remark = $checklist['response_data'][$index]['remarks'] ?? ''; // Fetch remark dynamically
-                                @endphp
-        
-                                @if ($response || $remark)
-                                    <tr>
-                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                        <td>{{ $question }}</td>
-                                        <td>
-                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                {{ $response }}
+                                                                    </div>
+                                                                    <div>
+                                                                        @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'STAGE 1 : POWEDER MFG & FILLING',
+                                                                                    'questions' => $questions_powder_manufacturing_filling,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                                                                [
+                                                                                        'title' => 'Checklist for Packing',
+                                                                                        'questions' => $questions_packing_manufacturing,
+                                                                                        'prefix' => 2
+                                                                                ],
+                                                                                
+                                    
+                                                                                
+                                                            
+                                                                            ];
+                                                                        @endphp
+                                                            
+                                                                        @foreach ($checklists as $checklist)
+                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                                {{ $checklist['title'] }}
+                                                                            </div>
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                                        @php
+                                                                                            $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
+                                                                                                $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
+                                                                                        @endphp
+                                                            
+                                                                                        <!-- Check if either response or remark is not empty -->
+                                                                                        @if($response || $remark)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                                <td>{{ $question }}</td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                        {{ $response }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        {{ $remark }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        @endforeach
+                                                                    </div>
+                                                                <!-- </div> -->
+                                                                </div>
+                                                            </div> --}}
+                                                            @if(!empty($data->checklist15))
+                                                            <div class="inner-block">
+                                                                <div class="content-table">
+                                                                <!-- <div class="border-table"> -->
+                                                                    <div class="block-head">
+                                                                        Checklist - Production (Powder Manufacturing and Packing)   
+                                                                    
+                                                                    </div>
+                                                                    <div>
+                                                                        @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'STAGE 1 : POWEDER MFG & FILLING',
+                                                                                    'questions' => $questions_powder_manufacturing_filling,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                                                                [
+                                                                                        'title' => 'STAGE 2: PACKING',
+                                                                                        'questions' => $questions_packing_manufacturing,
+                                                                                        'prefix' => 2
+                                                                                ],
+                                                                                [
+                                                                                        'title' => 'STAGE 3: DOCUMENTATION ',
+                                                                                        'questions' => $powder_questions_packing_manufacturing,
+                                                                                        'prefix' => 2
+                                                                                ],
+                                    
+                                                                                
+                                                            
+                                                                            ];
+                                                                        @endphp
+                                                            
+                                                                        @foreach ($checklists as $checklist)
+                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                                {{ $checklist['title'] }}
+                                                                            </div>
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                                        @php
+                                                                                                $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
+                                                                                                $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};                 
+                                                                                    @endphp
+                                                            
+                                                                                        <!-- Check if either response or remark is not empty -->
+                                                                                        @if($response || $remark)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                                <td>{{ $question }}</td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                        {{ $response }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        {{ $remark }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        @endforeach
+                                                                    </div>
+                                                                <!-- </div> -->
+                                                                </div>
+                                                            </div>   
+                                                            @endif
+                                                            
+                                                            @php
+                                                            $questions_analytical_research_development = [
+                                                                'Is there an adequate system SOP for reviewing and implementing analytical development?',
+                                                                'Is Lic. Copy available?',
+                                                                'Do you refer current pharmacopeias / literature search/ reference books etc. at the time of analytical development?',
+                                                                'Regarding in house raw materials, do you receive method of analysis from manufacturer?',
+                                                                'Do you receive working standards along with COA from manufacturer?',
+                                                                'Can market / Generic sample study to be done?',
+                                                                'Do you document method development analytical reports?',
+                                                                'Can separate file to be prepared for each product?',
+                                                                'Can comparative study be carried out with market sample?',
+                                                                'Have non-compendial methods been validated, including accuracy, linearity, ruggedness and comparison with compendial methods or have compendial methods (Official) been verified to function properly in the company’s laboratories with proper documentation / SOP of same available?',
+                                                                'Are FPS/STP available for finished product?',
+                                                                'Are technology transfer SOP/documents available?',
+                                                                // "Are stability study carried out for the product at",
+                                                                '25°C / 60% RH',
+                                                                '30°C / 70% RH',
+                                                                '40°C / 75% RH',
+                                                                'Are the stability results reviewed by a qualified, experienced person?',
+                                                                'Is stability study in primary pack done for different products?',
+                                                                'Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
+                                                                'Are instruments calibrated & labeled with date calibrated and date next calibration is due?',
+                                                                'Are daily or monthly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
+                                                                'Check for compliance of stability data and its summary',
+                                                                'Check for analytical reports?',
+                                                                'Are data and calculations checked by a second person & countersigned?',
+                                                                'Is there any checklist for the dossier requirement?',
+                                                                'Current versions of SOPs are available in respective areas?',
+                                                            ];
+                                                        @endphp
+                                                        
+                                                        @if(!empty($data->checklist16))
+                                                        <div class="inner-block">
+                                                            <div class="content-table">
+                                                             <!-- <div class="border-table"> -->
+                                                                <div class="block-head">
+                                                                    Checklist - Analytical Research and Development   
+                                                                
+                                                                </div>
+                                                                <div>
+                                                                        @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'Checklist for Analytical Research and Development',
+                                                                                    'questions' => $questions_analytical_research_development,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                    
+                                                                                
+                                                            
+                                                                            ];
+                                                                        @endphp
+                                            
+                                                                        @foreach ($checklists as $checklist)
+                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                                {{ $checklist['title'] }}
+                                                                            </div>
+                                                                                <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr. No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                                                        @php
+                                                                                            $response = $checklist16->{"response_analytical_research_development_" . ($index + 1)};
+                                                                                            $remark = $checklist16->{"remark_analytical_research_development_" . ($index + 1)};
+                                                                                        @endphp
+                                                            
+                                                                                        <!-- Check if either response or remark is not empty -->
+                                                                                        @if($response || $remark)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                                <td>{{ $question }}</td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                        {{ $response }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        {{ $remark }}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        @endforeach
+                                                           </div>
+                                                       </div>
                                             </div>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                {{ $remark }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endforeach
-            </div>
-        </div>
-        
-        
 
+                                                        @endif
+                                                
 
+                                                        @php
+                                                            $questions_formulation_research_development = [
+                                                                'Is there an adequate system for reviewing and implementing development?',
+                                                                'Is any product development checklist?',
+                                                                'Is Lic Copy available?',
+                                                                'Are refer current pharmacopoeia at the time of development?',
+                                                                'Can Market sample/Generic Sample Study to be done?',
+                                                                'Can tooling and change part availability to be checked before initiating development?',
+                                                                'Can validation be performed for IH products?',
+                                                                'Is MFR-RM BOM available?',
+                                                                'Is PDR available (Product development Report)?',
+                                                                'Is FD involved in the change control process?',
+                                                                'Is Technology transfer SOP available?',
+                                                                'Can separate file be prepared for each product?',
+                                                                'Can comparative study be carried out with market sample?',
+                                                                'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
+                                                                'Are these stability chambers available to carry out stability of the product at -',
+                                                                '25°C / 60% Rh',
+                                                                '30°C / 65% Rh',
+                                                                '40°C / 75% Rh',
+                                                                'Do you keep both hard copy and electronic copy of temperature/RH monitoring?',
+                                                                'Are the stability results reviewed by a qualified, experienced person?',
+                                                                'Is stability study in primary pack done for different products?',
+                                                                'Is any checklist for the dossier requirement?',
+                                                                'Current version of SOP’s is available in respective areas?',
+                                                            ];
+                                                    @endphp
+
+                                            @if(!empty($data->checklist17))
+                                            <div class="inner-block">
+                                                <div class="content-table">
+                                                    <div class="block-head">
+                                                        Checklist - Formulation Research and Development    
+                                                    </div> 
+                                                                @php
+                                                                            $checklists = [
+                                                                                [
+                                                                                    'title' => 'Checklist for Formulation Research and Development',
+                                                                                    'questions' => $questions_formulation_research_development,
+                                                                                    'prefix' => 1
+                                                                                ],
+                                                                                
+                                                                        
+            
+                                                                        
+            
+                                                                    ];
+                                                                @endphp
+            
+                                                                    @foreach ($checklists as $checklist)
+                                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                                            {{ $checklist['title'] }}
+                                                                        </div>
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                                    <th style="width: 40%;">Question</th>
+                                                                                    <th style="width: 20%;">Response</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                                    @php
+                                                                                        $response = $checklist17->{"response_formulation_research_development_" . ($index + 1)};
+                                                                                        $remark = $checklist17->{"remark_formulation_research_development_" . ($index + 1)};
+                                                                                    @endphp
+            
+                                                                                    <!-- Check if either response or remark is not empty -->
+                                                                                    @if($response || $remark)
+                                                                                        <tr>
+                                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                                            <td>{{ $question }}</td>
+                                                                                            <td>
+                                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                                    {{ $response }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="vertical-align: middle;">
+                                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                    {{ $remark }}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    @endforeach
+                                                 </div>
+                                                <!-- </div> -->
+                                                </div>
+                                                            </div>
+                                            @endif
+                                            
+                                                    
+                                        
+                                     
             
             <div class="inner-block">
             <div class="content-table">
@@ -3215,7 +2882,7 @@ $section10 = [
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Schedule Audit On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Schedule Audit Comment</th>
                         <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
                     </tr>
                     <tr>
@@ -3223,7 +2890,7 @@ $section10 = [
                         <td class="w-30">{{ $data->cancelled_1_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Cancelled Comment</th>
                         <td class="w-30">{{ $data->cancel_1_comment }}</td>
                     </tr>
                     <tr>
@@ -3231,7 +2898,7 @@ $section10 = [
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
                         <th class="w-20">Acknowledement On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Acknowledement Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
                     <tr>
@@ -3239,23 +2906,23 @@ $section10 = [
                         <td class="w-30">{{ $data->more_info_2_by }}</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_2_comment }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_2_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->cancel_2_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Issue Report By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
                         <th class="w-20">Issue Report On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Issue Report Comment</th>
                         <td class="w-30">{{ $data->issue_report_comment }}</td>
                     </tr>
                     <tr>
@@ -3264,7 +2931,7 @@ $section10 = [
                         <td class="w-30">{{ $data->more_info_3_by }}</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> More Info Required Comment</th>
                         <td class="w-30">{{ $data->more_info_3_comment }}</td>
                     </tr>
                     <tr>
@@ -3272,7 +2939,7 @@ $section10 = [
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Cancelled Comment</th>
                         <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>
@@ -3281,7 +2948,7 @@ $section10 = [
                         <th class="w-20">
                             CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> CAPA Plan Proposed Comment</th>
                         <td class="w-30">{{ $data->capa_plan_comment }}</td>
                     
                     </tr>
@@ -3291,7 +2958,7 @@ $section10 = [
                         <th class="w-20">
                             No CAPAs Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->no_capa_plan_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> No CAPAs Required Comment</th>
                         <td class="w-30">{{ $data->no_capa_plan_required_comment }}</td>
                     
                     </tr>
@@ -3301,7 +2968,7 @@ $section10 = [
                         <th class="w-20">
                             Response Reviewed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
-                        <th class="w-20">Comment</th>
+                        <th class="w-20"> Response Reviewed Comment</th>
                         <td class="w-30">{{ $data->response_reviewd_comment }}</td>
                     
                     </tr>

@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PDF;
 use Helpers;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -36,13 +37,13 @@ class CapaController extends Controller
         // Record number ko pad karke 4 digits ka bana rahe hain
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-    
+
         // Division ke hisaab se latest record check kar rahe hain
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-    
+
         if ($division) {
             $last_capa = Capa::where('division_id', $division->id)->latest()->first();
-    
+
             if ($last_capa) {
                 // Agar last record hai to usko pad karke next record number bana rahe hain
                 $record_number = $last_capa->record ? str_pad($last_capa->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
@@ -50,11 +51,11 @@ class CapaController extends Controller
                 $record_number = '0001';
             }
         }
-    
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-    
+
         $changeControl = OpenStage::find(1);
         if (!empty($changeControl->cft)) {
             $cft = explode(',', $changeControl->cft);
@@ -84,27 +85,27 @@ class CapaController extends Controller
            'Incident' => \App\Models\Incident::class,
            'FI' => \App\Models\FailureInvestigation::class,
            'ERRATA' => \App\Models\errata::class,
-           'OOSMicr' => \App\Models\OOS_micro::class,     
+           'OOSMicr' => \App\Models\OOS_micro::class,
            // Add other models as necessary...
         ];
-        
+
         // Create an empty collection to store the related records
         $relatedRecords = collect();
-        
+
         // Loop through each model and get the records, adding the process name to each record
         foreach ($pre as $processName => $modelClass) {
            $records = $modelClass::all()->map(function ($record) use ($processName) {
                $record->process_name = $processName; // Attach the process name to each record
                return $record;
            });
-        
+
            // Merge the records into the collection
            $relatedRecords = $relatedRecords->merge($records);
         }
-    
+
         return view("frontend.forms.capa", compact('due_date', 'record_number','relatedRecords', 'old_records', 'cft'));
     }
-    
+
     public function capastore(Request $request)
     {
         // return $request;
@@ -143,7 +144,7 @@ class CapaController extends Controller
         // dd($capa->initiator_Group);
 
         //  dd($capa->initiator_Group);
-       
+
         // $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
     //    dd($capa->initiator_Group );
         $capa->initiator_group_code= $request->initiator_group_code;
@@ -169,10 +170,10 @@ class CapaController extends Controller
        $capa->effectivness_check = $request->effectivness_check;
 
 
-      
+
     //    $capa->hod_attachment = $request->hod_attachment;
     //    $capa->qa_attachment = $request->qa_attachment;
-    //    $capa->capafileattachement = $request->capafileattachement;    
+    //    $capa->capafileattachement = $request->capafileattachement;
        $capa->investigation = $request->investigation;
        $capa->rcadetails = $request->rcadetails;
 
@@ -298,7 +299,7 @@ class CapaController extends Controller
             }
             $capa->initiator_capa_attachment = json_encode($files);
         }
-       
+
         if (!empty($request->qa_closure_attachment)) {
             $files = [];
             if ($request->hasfile('qa_closure_attachment')) {
@@ -353,7 +354,7 @@ class CapaController extends Controller
             }
             $capa->closure_attachment = json_encode($files);
         }
-        
+
         $capa->status = 'Opened';
         $capa->stage = 1;
         $capa->save();
@@ -361,7 +362,7 @@ class CapaController extends Controller
         $data1 = new CapaGrid();
     $data1->capa_id = $capa->id;
     $data1->type = "Product_Details";
-    
+
     if (!empty($request->material_name)) {
         $data1->product_name = serialize($request->material_name);
     }
@@ -484,7 +485,7 @@ class CapaController extends Controller
             $history->save();
         }
 
-       
+
         if (!empty($capa->intiation_date)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -501,12 +502,13 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        // dd($request->assign_to);
         if (!empty($request->assign_to)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($request->assign_to);
+            $history->current = $request->assign_to;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -516,7 +518,7 @@ class CapaController extends Controller
             $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
-           
+
         } ;
         if (!empty($capa->due_date)) {
             $history = new CapaAuditTrial();
@@ -540,7 +542,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorGroupFullName($request->initiator_Group) ;
+            $history->current = Helpers::getFullDepartmentName($request->initiator_Group) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -567,7 +569,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
         if (!empty($capa->short_description)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -677,7 +679,7 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA Team';
             $history->previous = "Null";
             $history->current = $capa_teamNamesString;
-          
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -688,7 +690,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
 
         if (!empty($capa->capa_related_record)) {
             $history = new CapaAuditTrial();
@@ -701,7 +703,7 @@ class CapaController extends Controller
                 // If it's a string, no need to implode
                 $history->current = $capa->capa_related_record;
             }
-            
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -713,7 +715,77 @@ class CapaController extends Controller
             $history->save();
         }
 
-       
+        if (!empty($capa->initial_observation)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Initial Observation';
+            $history->previous = "Null";
+            $history->current = $capa->initial_observation;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+
+
+        if (!empty($capa->interim_containnment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Interim Containment';
+            $history->previous = "Null";
+            $history->current = $capa->interim_containnment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if (!empty($capa->containment_comments)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Containment Comments';
+            $history->previous = "Null";
+            $history->current = $capa->containment_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+
+        }
+
+        if (!empty($capa->capa_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA Attachment';
+            $history->previous = "Null";
+            $history->current = $capa->capa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
         if (!empty($capa->investigation)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -730,7 +802,10 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->rcadetails)) {    
+
+
+
+        if (!empty($capa->rcadetails)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Root Cause';
@@ -746,14 +821,14 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-       
-        /////////////////////// Equipment / MAterial Info///////////
-        if (!empty($capa->severity_level_form)) {
+
+
+        if (!empty($capa->details_new)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Severity Level';
+            $history->activity_type = 'Details';
             $history->previous = "Null";
-            $history->current = $capa->severity_level_form;
+            $history->current = $capa->details_new;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -764,12 +839,14 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->details_new)) {
+
+        /////////////////////// Equipment / MAterial Info///////////
+        if (!empty($capa->severity_level_form)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Details';
+            $history->activity_type = 'Severity Level';
             $history->previous = "Null";
-            $history->current = $capa->details_new;
+            $history->current = $capa->severity_level_form;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -798,7 +875,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-    
+
         if (!empty($capa->corrective_action)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -886,75 +963,14 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-       
 
-        if (!empty($capa->initial_observation)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Initial Observation';
-            $history->previous = "Null";
-            $history->current = $capa->initial_observation;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
 
-        if (!empty($capa->interim_containnment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Interim Containnment';
-            $history->previous = "Null";
-            $history->current = $capa->interim_containnment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-             $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
 
-        if (!empty($capa->containment_comments)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Containment Comments';
-            $history->previous = "Null";
-            $history->current = $capa->containment_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
 
-        }
-        if (!empty($capa->capa_attachment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA Attachment';
-            $history->previous = "Null";
-            $history->current = $capa->capa_attachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
+
+
+
+
 
 
         if (!empty($capa->capa_qa_comments)) {
@@ -973,7 +989,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-      
+
         if (!empty($capa->qa_attachment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -1146,11 +1162,11 @@ class CapaController extends Controller
 
         ///////////////// HOD final Review////////////////////
 
-        
+
 if (!empty($capa->hod_final_review)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'HOD Final Review Comment';
+            $history->activity_type = 'HOD Final Review Comments';
             $history->previous = "Null";
             $history->current = $capa->hod_final_review;
             $history->comment = "Not Applicable";
@@ -1182,7 +1198,7 @@ if (!empty($capa->hod_final_review)) {
         if (!empty($capa->initiator_capa_attachment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Initiator CAPA update Attachment';
+            $history->activity_type = 'Initiator CAPA Update Attachment';
             $history->previous = "Null";
             $history->current = $capa->initiator_capa_attachment;
             $history->comment = "Not Applicable";
@@ -1268,7 +1284,7 @@ if (!empty($capa->qah_cq_comments)) {
 if (!empty($capa->initiator_comment)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $capa->id;
-    $history->activity_type = 'Initiator CAPA update Comment';
+    $history->activity_type = 'Initiator CAPA Update Comment';
     $history->previous = "Null";
     $history->current = $capa->initiator_comment;
     $history->comment = "Not Applicable";
@@ -1312,8 +1328,8 @@ if (!empty($capa->qa_attachmentc)) {
     $history->save();
 }
 
-       
-        
+
+
 
         if (!empty($capa->supervisor_review_comments)) {
             $history = new CapaAuditTrial();
@@ -1335,7 +1351,7 @@ if (!empty($capa->qa_attachmentc)) {
         if (!empty($capa->qa_review)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'QA Head Review & Closure Review Comment';
+            $history->activity_type = 'QA/CQA Head Closure Review Comment';
             $history->previous = "Null";
             $history->current = $capa->qa_review;
             $history->comment = "Not Applicable";
@@ -1399,8 +1415,8 @@ if (!empty($capa->qa_attachmentc)) {
             $history->action_name = "Create";
             $history->save();
         }
-        
-       
+
+
         // if (!empty($capa->capa_type)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $capa->id;
@@ -1446,23 +1462,43 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_to = $request->assign_to;
+        if($capa->stage == 1)
+        {
+            $capa->assign_to=  implode(',',(array) $request->assign_to);
+        }
+        // $capa->assign_to = $request->assign_to;
       //  $capa->capa_team = $request->capa_team;
         // $capa->capa_team = implode(',', $request->capa_team);
-        
+
+     if($capa->stage == 1){
         $capa->capa_team =  implode(',', $request->capa_team);
         $capa_teamIdsArray = explode(',', $capa->capa_team);
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
         $capa_teamNamesString = implode(', ', $capa_teamNames);
-
-        $capa->capa_type = $request->capa_type;
+     }
+     if($capa->stage == 1)
+     {
+         $capa->capa_type=  implode(',',(array) $request->capa_type);
+     }
+        // $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
-        $capa->initiated_through = $request->initiated_through;
+        if($capa->stage == 1)
+        {
+            $capa->initiated_through=  implode(',',(array) $request->initiated_through);
+        }
+        // $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
-        $capa->repeat = $request->repeat;
-        $capa->initiator_Group= $request->initiator_Group;
-      
-        
+        // $capa->repeat = $request->repeat;
+        if ($capa->stage == 1) {
+            $capa->repeat = implode(',', (array) $request->repeat); // Cast to array and implode
+        }
+        if($capa->stage == 1)
+        {
+            $capa->initiator_Group=  implode(',',(array) $request->initiator_Group);
+        }
+        // $capa->initiator_Group= $request->initiator_Group;
+
+
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->severity_level_form= $request->severity_level_form;
         $capa->cft_comments_form= $request->cft_comments_form;
@@ -1483,13 +1519,17 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-         $capa->capa_related_record=  implode(',', $request->capa_related_record);
-        // $capa->reference_record = $request->reference_record;
+        if($capa->stage == 1)
+        {
+            $capa->capa_related_record=  implode(',', $request->capa_related_record);
+        }        // $capa->reference_record = $request->reference_record;
         $capa->Microbiology_new= $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
-
-        $capa->interim_containnment = $request->interim_containnment;
+        if ($capa->stage == 1) {
+            $capa->interim_containnment = implode(',', (array) $request->interim_containnment);
+        }
+        // $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
 
         $capa->capa_qa_comments= $request->capa_qa_comments;
@@ -1522,7 +1562,7 @@ if (!empty($capa->qa_attachmentc)) {
 
         //    $capa->hod_attachment = $request->hod_attachment;
         //    $capa->qa_attachment = $request->qa_attachment;
-        //    $capa->capafileattachement = $request->capafileattachement;    
+        //    $capa->capafileattachement = $request->capafileattachement;
            $capa->investigation = $request->investigation;
            $capa->rcadetails = $request->rcadetails;
 
@@ -1571,8 +1611,8 @@ if (!empty($capa->qa_attachmentc)) {
             }
             $capa->capafileattachement = json_encode($files);
         }
-    
-       
+
+
         if (!empty($request->closure_attachment)) {
             $files = [];
             if ($request->hasfile('closure_attachment')) {
@@ -1690,10 +1730,13 @@ if (!empty($capa->qa_attachmentc)) {
             if (!empty($request->material_remark)) {
                 $data2->material_remark = serialize($request->material_remark);
             }
-            if (!empty($request->material_batch_status)) {
-                $data2->material_batch_status = serialize($request->material_batch_status);
-            }
 
+            if($capa->stage == 1)
+            {
+                if (!empty($request->material_batch_status)) {
+                    $data2->material_batch_status = serialize($request->material_batch_status);
+                }
+            }
 
             $data2->update();
         }
@@ -1736,47 +1779,47 @@ if (!empty($capa->qa_attachmentc)) {
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $lastDocument->status;
-            
+
         //     // Null or empty check
         //     if (is_null($lastDocument->division_code) || $lastDocument->division_code === '') {
         //         $history->action_name = "New";
         //     } else {
         //         $history->action_name = "Update";
         //     }
-            
+
         //     $history->save();
         // }
-        
+
         if ($lastDocument->initiator_Group != $capa->initiator_Group || !empty($request->initiator_Group_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Initiator Department';
-            $history->previous = $lastDocument->initiator_Group;
-              
+            $history->previous =Helpers::getFullDepartmentName ($lastDocument->initiator_Group);
             $history->current = Helpers::getFullDepartmentName($capa->initiator_Group );
-            $history->comment = Helpers::getFullDepartmentName($request->initiator_Group_comment ) ;
+            $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->initiator_Group) || $lastDocument->initiator_Group === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->due_date != $capa->due_date || !empty($request->due_date_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $capa->due_date;
+            // Helpers::getdateFormat($data->due_date)
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($capa->due_date);
             $history->comment =$request->due_date_comment ;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1784,14 +1827,14 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->due_date) || $lastDocument->due_date === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->initiator_group_code != $capa->initiator_group_code || !empty($request->initiator_group_code_comment)) {
@@ -1807,17 +1850,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->initiator_group_code) || $lastDocument->initiator_group_code === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
-        
+
 
         if ($lastDocument->short_description != $capa->short_description || !empty($request->short_description_comment)) {
             $history = new CapaAuditTrial();
@@ -1832,17 +1875,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
-        
+
         if ($lastDocument->rcadetails != $capa->rcadetails) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1856,17 +1899,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->rcadetails) || $lastDocument->rcadetails === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
-        
+
         if ($lastDocument->investigation != $capa->investigation) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1880,17 +1923,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             // Null or empty check
             if (is_null($lastDocument->investigation) || $lastDocument->investigation === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
-        
+
         if ($lastDocument->hod_remarks != $capa->hod_remarks) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1904,17 +1947,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->hod_remarks) || $lastDocument->hod_remarks === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->initiated_through != $capa->initiated_through) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1928,17 +1971,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->initiated_through) || $lastDocument->initiated_through === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->problem_description != $capa->problem_description || !empty($request->problem_description_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1952,23 +1995,22 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->problem_description) || $lastDocument->problem_description === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-
         if ($lastDocument->assign_to != $capa->assign_to || !empty($request->problem_description_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Assigned To';
             $history->previous = $lastDocument->assign_to;
-            $history->current = $capa->assign_to;
+            $history->current = ($capa->assign_to);
             $history->comment = $request->problem_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1976,17 +2018,17 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         // if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $id;
@@ -2000,17 +2042,17 @@ if (!empty($capa->qa_attachmentc)) {
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $lastDocument->status;
-        
+
         //     // Null or empty check
         //     if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
         //         $history->action_name = "New";
         //     } else {
         //         $history->action_name = "Update";
         //     }
-        
+
         //     $history->save();
         // }
-        
+
         if ($lastDocument->capa_team != $capa->capa_team || !empty($request->capa_team_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2024,14 +2066,14 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->capa_team) || $lastDocument->capa_team === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
          // if ($lastDocument->reference_record != $capa->reference_record || !empty($request->reference_record_comment)) {
@@ -2066,10 +2108,10 @@ if (!empty($capa->qa_attachmentc)) {
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->initial_observation != $capa->initial_observation || !empty($request->initial_observation_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2083,20 +2125,20 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->initial_observation) || $lastDocument->initial_observation === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->interim_containnment != $capa->interim_containnment || !empty($request->interim_containnment_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Interim Containnment';
+            $history->activity_type = 'Interim Containment';
             $history->previous = $lastDocument->interim_containnment;
             $history->current = $capa->interim_containnment;
             $history->comment = $request->interim_containnment_comment;
@@ -2106,13 +2148,13 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->interim_containnment) || $lastDocument->interim_containnment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
@@ -2129,46 +2171,46 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->containment_comments) || $lastDocument->containment_comments === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
-        if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Interim Containnment';
-            $history->previous = $lastDocument->due_date_extension;
-            $history->current = $capa->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-        
-            if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-        
-            $history->save();
-        }
+        // if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Interim Containment';
+        //     $history->previous = $lastDocument->due_date_extension;
+        //     $history->current = $capa->due_date_extension;
+        //     $history->comment = $request->due_date_extension_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+
+        //     if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+
+        //     $history->save();
+        // }
 
         ///////////////////////////////////CAPA Clousure//////////////////////////////////////////////////
 
         if ($lastDocument->qa_review != $capa->qa_review || !empty($request->qa_review_comment)) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'QA Head Review & Closure';
+            $history->activity_type = 'QA/CQA Head Closure Review Comment';
             $history->previous = $lastDocument->qa_review;
             $history->current = $capa->qa_review;
             $history->comment = $request->qa_review_comment;
@@ -2198,21 +2240,21 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         /////////////////////HOD Final REview////////////////
-        
+
         if ($lastDocument->hod_final_review != $capa->hod_final_review || !empty($request->hod_final_review_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'HOD Final Review Comment';
+            $history->activity_type = 'HOD Final Review Comments';
             $history->previous = $lastDocument->hod_final_review;
             $history->current = $capa->hod_final_review;
             $history->comment = $request->hod_final_review_comment;
@@ -2222,16 +2264,16 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->hod_final_review) || $lastDocument->hod_final_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->hod_final_attachment != $capa->hod_final_attachment || !empty($request->hod_final_attachment_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2245,19 +2287,19 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->hod_final_attachment) || $lastDocument->hod_final_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         if ($lastDocument->initiator_capa_attachment != $capa->initiator_capa_attachment || !empty($request->initiator_capa_attachment_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Initiator CAPA update Attachment ';
+            $history->activity_type = 'Initiator CAPA Update Attachment ';
             $history->previous = $lastDocument->initiator_capa_attachment;
             $history->current = $capa->initiator_capa_attachment;
             $history->comment = $request->initiator_capa_attachment_comment;
@@ -2267,13 +2309,13 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->initiator_capa_attachment) || $lastDocument->initiator_capa_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         ////////////////QA/CQA Closure Review//////////////////
@@ -2291,13 +2333,13 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->qa_cqa_qa_comments) || $lastDocument->qa_cqa_qa_comments === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
@@ -2314,13 +2356,13 @@ if (!empty($capa->qa_attachmentc)) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->qa_closure_attachment) || $lastDocument->qa_closure_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 ////{{-- ==========================QAH/CQAH ================ --}}
@@ -2354,7 +2396,7 @@ if ($lastDocument->qah_cq_comments != $capa->qah_cq_comments || !empty($request-
 if ($lastDocument->initiator_comment != $capa->initiator_comment || !empty($request->initiator_comment_comment)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $id;
-    $history->activity_type = 'Initiator CAPA update Comment';
+    $history->activity_type = 'Initiator CAPA Update Comment';
     $history->previous = $lastDocument->initiator_comment;
     $history->current = $capa->initiator_comment;
     $history->comment = $request->initiator_comment_comment;
@@ -2376,7 +2418,7 @@ if ($lastDocument->initiator_comment != $capa->initiator_comment || !empty($requ
 if ($lastDocument->effectivness_check != $capa->effectivness_check || !empty($request->effectivness_check_comment)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $id;
-    $history->activity_type = 'QA/CQA Approval Comment';
+    $history->activity_type = 'Effectiveness check required';
     $history->previous = $lastDocument->effectivness_check;
     $history->current = $capa->effectivness_check;
     $history->comment = $request->effectivness_check_comment;
@@ -2432,16 +2474,16 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->capa_attachment) || $lastDocument->capa_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->capa_qa_comments != $capa->capa_qa_comments || !empty($request->capa_qa_comments_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2455,13 +2497,13 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->capa_qa_comments) || $lastDocument->capa_qa_comments === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         if ($lastDocument->details_new != $capa->details_new) {
@@ -2477,13 +2519,13 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->details_new) || $lastDocument->details_new === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         if ($lastDocument->capa_type != $capa->capa_type) {
@@ -2499,13 +2541,13 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->capa_type) || $lastDocument->capa_type === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
         if ($lastDocument->capa_qa_comments2 != $capa->capa_qa_comments2 || !empty($request->capa_qa_comments2_comment)) {
@@ -2521,16 +2563,16 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             if (is_null($lastDocument->capa_qa_comments2) || $lastDocument->capa_qa_comments2 === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->details != $capa->details || !empty($request->details_comment)) {
 
             $history = new CapaAuditTrial();
@@ -2558,17 +2600,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->project_details_application) || $lastDocument->project_details_application === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->project_initiator_group != $capa->project_initiator_group || !empty($request->project_initiator_group_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2582,17 +2624,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->project_initiator_group) || $lastDocument->project_initiator_group === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->site_number != $capa->site_number || !empty($request->site_number_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2606,17 +2648,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->site_number) || $lastDocument->site_number === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->subject_number != $capa->subject_number || !empty($request->subject_number_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2630,17 +2672,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->subject_number) || $lastDocument->subject_number === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->subject_initials != $capa->subject_initials || !empty($request->subject_initials_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2654,17 +2696,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->subject_initials) || $lastDocument->subject_initials === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->sponsor != $capa->sponsor || !empty($request->sponsor_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2678,17 +2720,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->sponsor) || $lastDocument->sponsor === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->general_deviation != $capa->general_deviation || !empty($request->general_deviation_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2702,17 +2744,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->general_deviation) || $lastDocument->general_deviation === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->corrective_action != $capa->corrective_action || !empty($request->corrective_action_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2726,17 +2768,17 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Null or empty check
             if (is_null($lastDocument->corrective_action) || $lastDocument->corrective_action === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
         if ($lastDocument->preventive_action != $capa->preventive_action || !empty($request->preventive_action_comment)) {
 
             $history = new CapaAuditTrial();
@@ -2758,7 +2800,7 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->supervisor_review_comments != $capa->supervisor_review_comments || !empty($request->supervisor_review_comments_comment)) {
 
             $history = new CapaAuditTrial();
@@ -2780,11 +2822,11 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
-       
-        
+
+
+
         if ($lastDocument->effectiveness != $capa->effectiveness || !empty($request->effectiveness_comment)) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Effectiveness Check required';
@@ -2804,9 +2846,9 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->effect_check_date != $capa->effect_check_date || !empty($request->effect_check_date_comment)) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Effect.Check Creation Date';
@@ -2826,7 +2868,7 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
 
         if ($lastDocument->severity_level_form != $capa->severity_level_form) {
 
@@ -2849,9 +2891,9 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->repeat_nature != $capa->repeat_nature) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Repeat Nature';
@@ -2871,11 +2913,11 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->repeat != $capa->repeat) {
-        
+
             $history = new CapaAuditTrial();
-            $history->capa_id = $id; 
+            $history->capa_id = $id;
             $history->activity_type = 'Repeat';
             $history->previous = $lastDocument->repeat;
             $history->current = $capa->repeat;
@@ -2893,11 +2935,11 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->hod_attachment != $capa->hod_attachment) {
-        
+
             $history = new CapaAuditTrial();
-            $history->capa_id = $id; 
+            $history->capa_id = $id;
             $history->activity_type = 'HOD Attachment';
             $history->previous = $lastDocument->hod_attachment;
             $history->current = $capa->hod_attachment;
@@ -2915,11 +2957,11 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->qa_attachment != $capa->qa_attachment) {
-        
+
             $history = new CapaAuditTrial();
-            $history->capa_id = $id; 
+            $history->capa_id = $id;
             $history->activity_type = 'QA/CQA Attachment';
             $history->previous = $lastDocument->qa_attachment;
             $history->current = $capa->qa_attachment;
@@ -2938,11 +2980,11 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $history->save();
         }
 
-        
+
         if ($lastDocument->capafileattachement != $capa->capafileattachement) {
-        
+
             $history = new CapaAuditTrial();
-            $history->capa_id = $id; 
+            $history->capa_id = $id;
             $history->activity_type = 'File Attachment';
             $history->previous = $lastDocument->capafileattachement;
             $history->current = $capa->capafileattachement;
@@ -2960,9 +3002,8 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
         if ($lastDocument->initiated_through_req != $capa->initiated_through_req) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Others';
@@ -2982,9 +3023,9 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             }
             $history->save();
         }
-        
+
         if ($lastDocument->closure_attachment != $capa->closure_attachment || !empty($request->closure_attachment_comment)) {
-        
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'QA/CQA Head Closure Review Attachment';
@@ -3060,7 +3101,7 @@ $pre = [
    'Incident' => \App\Models\Incident::class,
    'FI' => \App\Models\FailureInvestigation::class,
    'ERRATA' => \App\Models\errata::class,
-   'OOSMicr' => \App\Models\OOS_micro::class,     
+   'OOSMicr' => \App\Models\OOS_micro::class,
    // Add other models as necessary...
 ];
 
@@ -3088,8 +3129,25 @@ foreach ($pre as $processName => $modelClass) {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);
-            
+
             if ($capa->stage == 1) {
+                if (!$capa->short_description) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Short Description is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for HOD Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "2";
                 $capa->status = "HOD Review";
                 $capa->plan_proposed_by = Auth::user()->name;
@@ -3098,7 +3156,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Propose Plan By,Propose Plan On';
-                    $history->action = 'Propose Plan';     
+                    $history->action = 'Propose Plan';
                     $history->previous = "";
                     $history->current = $capa->plan_proposed_by;
                     $history->comment = $request->comment;
@@ -3106,7 +3164,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                   
+
                      $history->change_to = "HOD Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Review';
@@ -3124,29 +3182,50 @@ foreach ($pre as $processName => $modelClass) {
                     }
                     $history->save();
 
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $capa->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Propose Plan ", 'process' => 'Capa', 'comment' => $capa->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Propose Plan  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $capa],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
 
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 2) {
+                if (!$capa->hod_remarks) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Remarks is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA/CQA Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "3";
                 $capa->status = "QA/CQA Review";
                 $capa->hod_review_completed_by = Auth::user()->name;
@@ -3155,7 +3234,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
                 $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
-                $history->action = 'HOD Review Complete';     
+                $history->action = 'HOD Review Complete';
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
                 $history->comment = $request->comment;
@@ -3180,21 +3259,45 @@ foreach ($pre as $processName => $modelClass) {
                 }
                 $history->save();
 
-                // $list = Helpers::getQAUserList();
+                // $list = Helpers::getQAUserList($capa->division_id);
                 // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $capa->division_id){
-                //     $email = Helpers::getInitiatorEmail($u->user_id);
-                //     if ($email !== null) {
-                //         Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $capa],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Plan Approved By ".Auth::user()->name);
+                //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $capa) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         );
-                //     }
-                //   }
+                //         }
+                //     // }
+                // }
+                // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Review Complete ", 'process' => 'Capa', 'comment' => $capa->hod_comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $capa) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete  Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
                 // }
 
                 $capa->update();
@@ -3202,6 +3305,23 @@ foreach ($pre as $processName => $modelClass) {
                 return back();
             }
             if ($capa->stage == 3) {
+                if (!$capa->capa_qa_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA/CQA Approval state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "4";
                 $capa->status = "QA/CQA Approval";
                 $capa->qa_review_completed_by = Auth::user()->name;
@@ -3210,7 +3330,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
-                    $history->action = 'QA/CQA Review Complete';     
+                    $history->action = 'QA/CQA Review Complete';
                     $history->previous = "";
                     $history->current = $capa->completed_by;
                     $history->comment = $request->comment;
@@ -3234,11 +3354,68 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAApproverUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 4) {
+                if (!$capa->qah_cq_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA/CQA Approval Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for CAPA In progress state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "5";
                 $capa->status = "CAPA In progress";
                 $capa->approved_by = Auth::user()->name;
@@ -3272,11 +3449,49 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Approved ", 'process' => 'Capa', 'comment' => $capa->approved_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 5) {
+                if (!$capa->initiator_comment) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Initiator CAPA Update Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for HOD Final Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "6";
                 $capa->status = "HOD Final Review";
                 $capa->completed_by = Auth::user()->name;
@@ -3286,7 +3501,7 @@ foreach ($pre as $processName => $modelClass) {
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
                         $history->activity_type = 'Completed By,Completed On';
-                        $history->action = 'Complete';
+                        $history->action = 'Completed';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
                         $history->comment = $request->comment;
@@ -3310,11 +3525,48 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                        // $list = Helpers::getHodUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Complete ", 'process' => 'Capa', 'comment' => $capa->com_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 6) {
+                if (!$capa->hod_final_review) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Final Review Comments is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QA/CQA Closure Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "7";
                 $capa->status = "QA/CQA Closure Review";
                 $capa->hod_final_review_completed_by = Auth::user()->name;
@@ -3323,8 +3575,8 @@ foreach ($pre as $processName => $modelClass) {
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
-                        $history->action = 'HOD Final Review Complete';
+                        $history->activity_type = 'HOD Final Review Completed By,HOD Final Review Completed On';
+                        $history->action = 'HOD Final Review Completed';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
                         $history->comment = $request->comment;
@@ -3348,11 +3600,68 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                        // $list = Helpers::getQAUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "HOD Final Complete ", 'process' => 'Capa', 'comment' => $capa->final_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 7) {
+                if (!$capa->qa_cqa_qa_comments) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA/CQA Closure Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for QAH/CQA Approval state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "8";
                 $capa->status = "QA/CQA Approval ";
                 $capa->qa_closure_review_completed_by = Auth::user()->name;
@@ -3361,8 +3670,8 @@ foreach ($pre as $processName => $modelClass) {
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'QA/CQA Closure Review Complete By,QA/CQA Closure Review Complete On';
-                        $history->action = 'QA/CQA Closure Review Complete';
+                        $history->activity_type = 'QA/CQA Closure Review Completed By,QA/CQA Closure Review Completed On';
+                        $history->action = 'QA/CQA Closure Review Completed';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
                         $history->comment = $request->comment;
@@ -3386,12 +3695,49 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                        // $list = Helpers::getQAHeadUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QA/CQA Closure Review Complete ", 'process' => 'Capa', 'comment' => $capa->qa_closure_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Closure Review Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
 
             if ($capa->stage == 8) {
+                if (!$capa->qa_review) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA/CQA Head Closure Review Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Closed - Done state',
+                        'type' => 'success',
+                    ]);
+                }
                 $capa->stage = "9";
                 $capa->status = "Closed - Done";
                 $capa->qah_approval_completed_by = Auth::user()->name;
@@ -3399,8 +3745,8 @@ foreach ($pre as $processName => $modelClass) {
                 $capa->qah_comment = $request->comment;
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'QA/CQA Approval  Complete By,QA/CQA Approval  Complete On';
-                        $history->action = 'QA/CQA Approval  Complete';
+                        $history->activity_type = 'QAH/CQA Approval Completed By,QAH/CQA Approval Completed On';
+                        $history->action = 'QAH/CQA Approval Completed';
                         $history->previous = "";
                         $history->current = $capa->completed_by;
                         $history->comment = $request->comment;
@@ -3424,6 +3770,126 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                        // $list = Helpers::getQAUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getCQAApproverUsersList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
+                        // $list = Helpers::getHodUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "QAH/CQA Head Approval Complete ", 'process' => 'Capa', 'comment' => $capa->qah_comment, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQA Head Approval Complete  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3440,7 +3906,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);
-              
+
            if($capa->stage == 2){
             $capa->stage = "0";
             $capa->status = "Closed-Cancelled";
@@ -3473,6 +3939,46 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "Cancel ", 'process' => 'Capa', 'comment' => $capa->cancel_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -3550,6 +4056,26 @@ foreach ($pre as $processName => $modelClass) {
                         //     $history->action_name = 'Update';
                         // }
                         $history->save();
+                        // $list = Helpers::getInitiatorUserList($capa->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->hod_comment1, 'user'=> Auth::user()->name],
+                        //                     function ($message) use ($email, $capa) {
+                        //                         $message->to($email)
+                        //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                        //                     }
+                        //                 );
+                        //             } catch(\Exception $e) {
+                        //                 info('Error sending mail', [$e]);
+                        //             }
+                        //         }
+                        //     // }
+                        // }
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -3559,7 +4085,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->stage_id = $capa->stage;
                 $history->status = $capa->status;
                 $history->save();
-               
+
                 toastr()->success('Document Sent');
                 return back();
               }
@@ -3599,6 +4125,26 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qa_commenta, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -3662,7 +4208,47 @@ foreach ($pre as $processName => $modelClass) {
                     // } else {
                     //     $history->action_name = 'Update';
                     // }
-                    $history->save();
+                    // $history->save();
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAReviewerUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->app_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
         $capa->update();
         $history = new CapaHistory();
         $history->type = "Capa";
@@ -3710,6 +4296,7 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
+
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -3719,7 +4306,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->stage_id = $capa->stage;
             $history->status = $capa->status;
             $history->save();
-            
+
             toastr()->success('Document Sent');
             return back();
           }
@@ -3759,6 +4346,26 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
+                    // $list = Helpers::getInitiatorUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->final_hod_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -3768,7 +4375,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->stage_id = $capa->stage;
             $history->status = $capa->status;
             $history->save();
-            
+
             toastr()->success('Document Sent');
             return back();
          }
@@ -3806,7 +4413,27 @@ foreach ($pre as $processName => $modelClass) {
                     // } else {
                     //     $history->action_name = 'Update';
                     // }
-                    $history->save();
+                    // $history->save();
+                    // $list = Helpers::getHodUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->closure_qa_comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                      $capa->update();
                     $history = new CapaHistory();
                  $history->type = "Capa";
@@ -3816,7 +4443,7 @@ foreach ($pre as $processName => $modelClass) {
                    $history->stage_id = $capa->stage;
                  $history->status = $capa->status;
                   $history->save();
-            
+
             toastr()->success('Document Sent');
             return back();
           }
@@ -3855,6 +4482,46 @@ foreach ($pre as $processName => $modelClass) {
                     //     $history->action_name = 'Update';
                     // }
                     $history->save();
+                    // $list = Helpers::getQAUserList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAUsersList($capa->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $capa->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qah_comment1, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $capa) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
                      $capa->update();
                     $history = new CapaHistory();
                  $history->type = "Capa";
@@ -3864,13 +4531,13 @@ foreach ($pre as $processName => $modelClass) {
                    $history->stage_id = $capa->stage;
                  $history->status = $capa->status;
                   $history->save();
-            
+
             toastr()->success('Document Sent');
             return back();
           }
-        
-        
-        
+
+
+
         else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3910,7 +4577,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Opened";
                     $history->change_from = "Pending CAPA Plan";
-                    
+
                 $history->save();
                 $capa->update();
                 // $list = Helpers::getInitiatorUserList();
@@ -3967,7 +4634,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->change_from = "CAPA In Progress";
                     $history->stage = 'CAPA In Progress';
                     $history->action_name = 'Update';
-                   
+
                 $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -4047,9 +4714,11 @@ foreach ($pre as $processName => $modelClass) {
             $parentRecord = Capa::where('id', $id)->value('record');
             $parent_name = "CAPA";
             $data=Capa::find($id);
+            // $p_record = OutOfCalibration::find($id);
+                   $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
-        } 
+            return view('frontend.action-item.action-item', compact('expectedParenRecord','old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record'));
+        }
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         // }
@@ -4057,7 +4726,7 @@ foreach ($pre as $processName => $modelClass) {
             // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             // $record_number = $record;
             return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
-    
+
         }
         if ($request->child_type == "extension") {
             $parent_name = "CAPA";
@@ -4071,8 +4740,10 @@ foreach ($pre as $processName => $modelClass) {
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-            $relatedRecords= Helpers::getAllRelatedRecords();            
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type'));
+            $data = Capa::find($id);
+            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CAPA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $relatedRecords= Helpers::getAllRelatedRecords();
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type', 'extension_record'));
         }
     }
 
@@ -4091,7 +4762,7 @@ foreach ($pre as $processName => $modelClass) {
     public static function singleReport($id)
     {
         $data = Capa::find($id);
-        
+
         if (!empty($data))
          {
             $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();

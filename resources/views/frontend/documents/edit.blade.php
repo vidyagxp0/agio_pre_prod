@@ -631,6 +631,46 @@
     @endif
     </div>
 
+    <div class="col-6">
+        <div class="group-input">
+            <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
+                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal" style="font-size: 0.8rem; font-weight: 400;">
+                    (Launch Instruction) </span>
+            </label>
+            <input type="number" name="major" id="major" min="0" value="{{ $document->major }}" required {{Helpers::isRevised($document->stage)}}>
+
+            @foreach ($history as $tempHistory)
+            @if (
+            $tempHistory->activity_type == 'Major' &&
+            !empty($tempHistory->comment) &&
+            $tempHistory->user_id == Auth::user()->id)
+            @php
+            $users_name = DB::table('users')
+            ->where('id', $tempHistory->user_id)
+            ->value('name');
+            @endphp
+            <p style="color: blue">Modify by {{ $users_name }} at
+                {{ $tempHistory->created_at }}
+            </p>
+            <input class="input-field" style="background: #ffff0061;
+                                color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+            @endif
+            @endforeach
+        </div>
+        @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
+            <div>
+                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                    at {{ date('d-M-Y h:i:s') }}</p>
+
+                <input class="input-field" type="text" name="major_comment">
+            </div>
+            <div class="button">Add Comment</div>
+    </div>
+    @endif
+    </div>
+
+
+
 
     <div class="col-md-6">
     <div class="group-input">

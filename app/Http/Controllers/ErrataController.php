@@ -119,7 +119,7 @@ class ErrataController extends Controller
         $data->QA_Comment1 = $request->QA_Comment1;
 
 
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
+        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
         if (!empty($request->QA_Attachments)) {
@@ -493,7 +493,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'Department Head';
             $history->previous = "Null";
-            $history->current = $data->department_head_to;
+            $history->current = Helpers::getInitiatorName($data->department_head_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -510,7 +510,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'QA reviewer';
             $history->previous = "Null";
-            $history->current = $data->qa_reviewer;
+            $history->current = Helpers::getInitiatorName($data->qa_reviewer);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -559,7 +559,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Feedbacks)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Comment';
+            $history->activity_type = 'QA/CQA Initial Comment';
             $history->previous = "Null";
             $history->current = $data->QA_Feedbacks;
             $history->comment = "Not Applicable";
@@ -576,7 +576,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Attachments)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous = "Null";
             $history->current = $data->QA_Attachments;
             $history->comment = "Not Applicable";
@@ -694,7 +694,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Comment1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final review Comment';
+            $history->activity_type = 'HOD final Review Comment';
             $history->previous = "Null";
             $history->current = $data->HOD_Comment1;
             $history->comment = "Not Applicable";
@@ -919,25 +919,26 @@ class ErrataController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                // $list = Helpers::getQAUserList();
+
+                // $list = Helpers::getHodUserList($ErrataControl->division_id);
                 //     foreach ($list as $u) {
-                //         if ($u->q_m_s_divisions_id == $ErrataControl->division_id) {
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //             if ($email !== null) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
                 //                 try {
                 //                     Mail::send(
                 //                         'mail.view-mail',
-                //                         ['data' => $ErrataControl],
-                //                         function ($message) use ($email) {
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Submit", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
                 //                             $message->to($email)
-                //                                 ->subject("Activity Performed By " . Auth::user()->name);
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                 //                         }
                 //                     );
-                //                 } catch (\Exception $e) {
-
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
                 //                 }
                 //             }
-                //         }
+                //         // }
                 //     }
 
 
@@ -993,26 +994,47 @@ class ErrataController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                // $list = Helpers::getQAUserList();
+                // $list = Helpers::getQAUserList($ErrataControl->division_id);
                 //     foreach ($list as $u) {
-                //         if ($u->q_m_s_divisions_id == $ErrataControl->division_id) {
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //             if ($email !== null) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
                 //                 try {
                 //                     Mail::send(
                 //                         'mail.view-mail',
-                //                         ['data' => $ErrataControl],
-                //                         function ($message) use ($email) {
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "HOD Initial Review Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
                 //                             $message->to($email)
-                //                                 ->subject("Activity Performed By " . Auth::user()->name);
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete Performed");
                 //                         }
                 //                     );
-                //                 } catch (\Exception $e) {
-
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
                 //                 }
                 //             }
-                //         }
+                //         // }
                 //     }
+
+                    // $list = Helpers::getCQAUsersList($ErrataControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "HOD Initial Review Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $ErrataControl) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -1067,6 +1089,48 @@ class ErrataController extends Controller
                 }
                 $history->save();
 
+                // $list = Helpers::getQAHeadUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Review Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
+
+                    // $list = Helpers::getCQAHeadDesignUsersList($ErrataControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Review Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $ErrataControl) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1112,7 +1176,7 @@ class ErrataController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Pending Correction";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'Approval Completed';
+                $history->stage = 'Approval Complete';
                 if (is_null($lastDocument->approved_by) || $lastDocument->approved_on == '') {
                     $history->action_name = 'New';
                 } else {
@@ -1120,7 +1184,26 @@ class ErrataController extends Controller
                 }
                 $history->save();
 
-                // $ErrataControl->status = "Pending Correction";
+                // $list = Helpers::getInitiatorUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Approval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1174,7 +1257,27 @@ class ErrataController extends Controller
                 }
                 $history->save();
 
-                // $ErrataControl->status = "Pending HOD Review";
+                // $list = Helpers::getHodUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Correction Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Correction Completed Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1230,7 +1333,48 @@ class ErrataController extends Controller
                 }
                 $history->save();
 
-                // $ErrataControl->status = "Pending QA Head Approval";
+                // $list = Helpers::getQAHeadUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "HOD Review Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Completed Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+                // $list = Helpers::getCQAHeadDesignUsersList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "HOD Review Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Completed Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1245,7 +1389,7 @@ class ErrataController extends Controller
                         'type' => 'warning',
                     ]);
 
-               
+
                     return redirect()->back();
                 } else {
                     Session::flash('swal', [
@@ -1287,8 +1431,91 @@ class ErrataController extends Controller
                 }
                 $history->save();
 
+                // $list = Helpers::getQAUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
 
-                // $ErrataControl->status = "Closed-Done";
+                    // $list = Helpers::getCQAUsersList($ErrataControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $ErrataControl) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+
+                    // $list = Helpers::getInitiatorUserList($ErrataControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     function ($message) use ($email, $ErrataControl) {
+                    //                         $message->to($email)
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                     }
+                    //                 );
+                    //             } catch(\Exception $e) {
+                    //                 info('Error sending mail', [$e]);
+                    //             }
+                    //         }
+                    //     // }
+                    // }
+
+                //     $list = Helpers::getHodUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1330,6 +1557,28 @@ class ErrataController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                // $list = Helpers::getInitiatorUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
+
                 $ErrataControl->update();
                 return back();
             }
@@ -1357,6 +1606,28 @@ class ErrataController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                // $list = Helpers::getHodUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
                 $ErrataControl->update();
                 return back();
             }
@@ -1384,6 +1655,49 @@ class ErrataController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                // $list = Helpers::getQAUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+                // $list = Helpers::getCQAUsersList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
                 $ErrataControl->update();
                 return back();
             }
@@ -1411,6 +1725,28 @@ class ErrataController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                // $list = Helpers::getQAHeadUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
+
                 $ErrataControl->update();
                 return back();
             }
@@ -1427,7 +1763,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Reject';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1438,6 +1774,28 @@ class ErrataController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                // $list = Helpers::getInitiatorUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
+
                 $ErrataControl->update();
                 return back();
             }
@@ -1456,6 +1814,7 @@ class ErrataController extends Controller
                 }
                 $history->action = 'Send To Opened';
                 $history->current = $ErrataControl->sent_to_open_state_by . ',' . $ErrataControl->sent_to_open_state_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1469,6 +1828,27 @@ class ErrataController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+                // $list = Helpers::getHodUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Send To Opened", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send To Opened Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -1525,6 +1905,69 @@ class ErrataController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+                // $list = Helpers::getInitiatorUserList($ErrataControl->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Cancel", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $ErrataControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //             }
+                //         // }
+                //     }
+
+                //     $list = Helpers::getHodUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Cancel", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+                // $list = Helpers::getQAUserList($ErrataControl->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $ErrataControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Cancel", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $ErrataControl) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -1628,7 +2071,7 @@ class ErrataController extends Controller
 
 
         if ($request->has('Date_and_time_of_correction') && $request->Date_and_time_of_correction !== null) {
-            $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
+            $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y') : '';
         }
 
         $data->QA_Feedbacks = $request->QA_Feedbacks;
@@ -1646,7 +2089,7 @@ class ErrataController extends Controller
         // }
         if (!empty($request->QA_Attachments) || !empty($request->deleted_QA_Attachments)) {
             $existingFiles = json_decode($data->QA_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_QA_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_QA_Attachments);
@@ -1654,7 +2097,7 @@ class ErrataController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('QA_Attachments')) {
@@ -1664,12 +2107,12 @@ class ErrataController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->QA_Attachments = json_encode($allFiles);
         }
-        
+
 
         // $data->HOD_Remarks = $request->HOD_Remarks;
 
@@ -1769,7 +2212,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         // }
         if (!empty($request->Initiator_Attachments) || !empty($request->deleted_Initiator_Attachments)) {
             $existingFiles = json_decode($data->Initiator_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Initiator_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_Initiator_Attachments);
@@ -1777,7 +2220,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Initiator_Attachments')) {
@@ -1787,14 +2230,14 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->Initiator_Attachments = json_encode($allFiles);
         }
-        
 
-        
+
+
         if (!empty($request->QA_Attachments1)) {
             $files = [];
             if ($request->hasFile('QA_Attachments1')) {
@@ -1821,7 +2264,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if (!empty($request->Approval_Attachments) || !empty($request->deleted_Approval_Attachments)) {
             $existingFiles = json_decode($data->Approval_Attachments, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Approval_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_Approval_Attachments);
@@ -1829,7 +2272,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Approval_Attachments')) {
@@ -1839,12 +2282,12 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->Approval_Attachments = json_encode($allFiles);
         }
-        
+
         // if (!empty($request->HOD_Attachments1)) {
         //     $files = [];
         //     if ($request->hasFile('HOD_Attachments1')) {
@@ -1858,7 +2301,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         // }
         if (!empty($request->HOD_Attachments1) || !empty($request->deleted_HOD_Attachments1)) {
             $existingFiles = json_decode($data->HOD_Attachments1, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_HOD_Attachments1)) {
                 $filesToDelete = explode(',', $request->deleted_HOD_Attachments1);
@@ -1866,7 +2309,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('HOD_Attachments1')) {
@@ -1876,12 +2319,12 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->HOD_Attachments1 = json_encode($allFiles);
         }
-        
+
 
         $data->update();
         // if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
@@ -2164,11 +2607,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty($request->HOD_Remarks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final Initial Comment')
+                ->where('activity_type', 'HOD Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final Initial Comment';
+            $history->activity_type = 'HOD Initial Comment';
             $history->previous =  $lastData->HOD_Remarks;
             $history->current = $data->HOD_Remarks;
             $history->comment = $request->HOD_Remarks_comment;
@@ -2183,11 +2626,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         }
         if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty($request->HOD_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final Initial Attachments')
+                ->where('activity_type', 'HOD Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final Initial Attachments';
+            $history->activity_type = 'HOD Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments);
             $history->comment = $request->HOD_Attachments_comment;
@@ -2363,11 +2806,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Comment1 != $data->HOD_Comment1 || !empty($request->HOD_Comment1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD final review Comment')
+                ->where('activity_type', 'HOD final Review Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD final review Comment';
+            $history->activity_type = 'HOD final Review Comment';
             $history->previous =  $lastData->HOD_Comment1;
             $history->current = $data->HOD_Comment1;
             $history->comment = $request->HOD_Comment1_comment;

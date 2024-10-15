@@ -113,14 +113,20 @@
                                 href="{{ url('errataaudittrail', $showdata->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($showdata->stage == 1 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @if (
+                            $showdata->stage == 1 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($showdata->stage == 2 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
+                        @elseif(
+                            $showdata->stage == 2 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 4) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
                             </button>
@@ -130,7 +136,11 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button> --}}
-                        @elseif($showdata->stage == 3 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @elseif(
+                            $showdata->stage == 3 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 66) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 Reject
                             </button>
@@ -140,7 +150,11 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button> --}}
-                        @elseif($showdata->stage == 4 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
+                        @elseif(
+                            $showdata->stage == 4 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Reject
@@ -149,7 +163,10 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
                                 Approval Complete
                             </button>
-                        @elseif($showdata->stage == 5 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                        @elseif(
+                            $showdata->stage == 5 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Request More Info
@@ -157,7 +174,10 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval-model">
                                 Correction Completed
                             </button>
-                        @elseif($showdata->stage == 6 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
+                        @elseif(
+                            $showdata->stage == 6 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 4) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Request More Info
@@ -166,7 +186,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
                                 HOD Review Completed
                             </button>
-                        @elseif($showdata->stage == 7 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
+                        @elseif(
+                            $showdata->stage == 7 &&
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
                                 Sent To Opened State
                             </button>
@@ -303,24 +327,24 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Initiated Through">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Initiated Through <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <select id="select-state" placeholder="Select..." name="initiated_by"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="">--Select--</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Initiated Through">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="initiated_by"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">--Select--</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -464,27 +488,27 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="reference_record">Reference Documents</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($old_record as $new)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="reference_record">Reference Documents</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($old_record as $new)
     <option value="{{ $new->id }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
     @endforeach
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="{{ $referenceValue }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- Uncomment and add more options as needed --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- Uncomment and add more options as needed --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 {{-- <div class="">
                                     <div class="group-input">
@@ -563,7 +587,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title <span
-                                        class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input type="text" name="document_title" maxlength="255"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_title }}">
@@ -576,8 +600,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Type Of Error<span
-                                            class="text-danger">*</span>
+                                            Type Of Error<span class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
@@ -633,7 +656,8 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Correction Of Error">Correction Of Error required</label>
+                                        <label class="mt-4" for="Correction Of Error">Correction Of Error
+                                            required</label>
                                         <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Correction_Of_Error }}</textarea>
                                     </div>
@@ -662,21 +686,21 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="search">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($users as $key => $value)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="search">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <select id="select-state" placeholder="Select..." name="">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @foreach ($users as $key => $value)
     <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
     @endforeach
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @error('department_head_to')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -722,8 +746,8 @@
                                                     <th style="width: 2%">Row#</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
                                                     <!-- <th style="width: 16%"> Prepared By</th>
-                                                    <th style="width: 15%">Checked By</th>
-                                                    <th style="width: 15%">Approved By</th> -->
+                                                                <th style="width: 15%">Checked By</th>
+                                                                <th style="width: 15%">Approved By</th> -->
                                                     <th style="width: 3%">Action</th>
 
                                                 </tr>
@@ -745,23 +769,23 @@
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <!-- <td><input type="text"
-                                                                    name="details[{{ $loop->index }}][PreparedBy]"
-                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
-                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="details[{{ $loop->index }}][CheckedBy]"
-                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
-                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="details[{{ $loop->index }}][ApprovedBy]"
-                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
-                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td> -->
+                                                                                name="details[{{ $loop->index }}][PreparedBy]"
+                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                                                value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
+                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                        </td>
+                                                                        <td><input type="text"
+                                                                                name="details[{{ $loop->index }}][CheckedBy]"
+                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                                                value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
+                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                        </td>
+                                                                        <td><input type="text"
+                                                                                name="details[{{ $loop->index }}][ApprovedBy]"
+                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                                                value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
+                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                        </td> -->
                                                             <td><button type="text"
                                                                     class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -817,46 +841,53 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="HOD_Attachments">HOD Initial Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="HOD_Attachments">
                                                 @if ($showdata->HOD_Attachments)
-                                                    @foreach(json_decode($showdata->HOD_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->HOD_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_HOD_Attachments[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_HOD_Attachments[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="HOD_Attachments[]" 
+                                                <input type="file" id="myfile" name="HOD_Attachments[]"
                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_HOD_Attachments" name="deleted_HOD_Attachments" value="">
-                                
+                                <input type="hidden" id="deleted_HOD_Attachments" name="deleted_HOD_Attachments"
+                                    value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -865,36 +896,38 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_HOD_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    const deletedFilesInput = document.getElementById(
+                                                        'deleted_HOD_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -902,16 +935,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
 
 
                                 <div class="button-block">
@@ -2208,46 +2241,53 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA_Attachments">QA/CQA Initial Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="QA_Attachments">
                                                 @if ($showdata->QA_Attachments)
-                                                    @foreach(json_decode($showdata->QA_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->QA_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_QA_Attachments[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_QA_Attachments[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Attachments[]" 
+                                                <input type="file" id="myfile" name="QA_Attachments[]"
                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_QA_Attachments" name="deleted_QA_Attachments" value="">
-                                
+                                <input type="hidden" id="deleted_QA_Attachments" name="deleted_QA_Attachments"
+                                    value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -2256,36 +2296,37 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_QA_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -2293,16 +2334,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
 
 
                                 <div class="button-block">
@@ -2380,46 +2421,54 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Approval_Attachments">Approval Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Approval_Attachments">
                                                 @if ($showdata->Approval_Attachments)
-                                                    @foreach(json_decode($showdata->Approval_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->Approval_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_Approval_Attachments[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_Approval_Attachments[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Approval_Attachments" name="Approval_Attachments[]" 
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                <input type="file" id="Approval_Attachments"
+                                                    name="Approval_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_Approval_Attachments" name="deleted_Approval_Attachments" value="">
-                                
+                                <input type="hidden" id="deleted_Approval_Attachments"
+                                    name="deleted_Approval_Attachments" value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -2428,36 +2477,38 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_Approval_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    const deletedFilesInput = document.getElementById(
+                                                        'deleted_Approval_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -2465,16 +2516,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                                            
+
 
 
 
@@ -2653,6 +2704,9 @@
                                     </div>
                                 </div>
 
+
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 5)
@@ -2726,46 +2780,54 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator_Attachments">Initiator Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Initiator_Attachments">
                                                 @if ($showdata->Initiator_Attachments)
-                                                    @foreach(json_decode($showdata->Initiator_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->Initiator_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_Initiator_Attachments[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_Initiator_Attachments[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Initiator_Attachments" name="Initiator_Attachments[]" 
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                <input type="file" id="Initiator_Attachments"
+                                                    name="Initiator_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_Initiator_Attachments" name="deleted_Initiator_Attachments" value="">
-                                
+                                <input type="hidden" id="deleted_Initiator_Attachments"
+                                    name="deleted_Initiator_Attachments" value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -2774,36 +2836,38 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_Initiator_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    const deletedFilesInput = document.getElementById(
+                                                        'deleted_Initiator_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -2811,16 +2875,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
 
 
 
@@ -2851,10 +2915,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 6)
-                                            <label class="mt-4" for="HOD Comment">HOD final review Comment<span
+                                            <label class="mt-4" for="HOD Comment">HOD final Review Comment<span
                                                     class="text-danger">*</span></label>
                                         @else
-                                            <label class="mt-4" for="HOD Comment">HOD final review Comment</label>
+                                            <label class="mt-4" for="HOD Comment">HOD final Review Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Comment">HOD Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
@@ -2901,46 +2965,53 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="HOD_Attachments1">HOD final Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="HOD_Attachments1">
                                                 @if ($showdata->HOD_Attachments1)
-                                                    @foreach(json_decode($showdata->HOD_Attachments1) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->HOD_Attachments1) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_HOD_Attachments1[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_HOD_Attachments1[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]" 
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_HOD_Attachments1" name="deleted_HOD_Attachments1" value="">
-                                
+                                <input type="hidden" id="deleted_HOD_Attachments1" name="deleted_HOD_Attachments1"
+                                    value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -2949,36 +3020,38 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_HOD_Attachments1');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    const deletedFilesInput = document.getElementById(
+                                                        'deleted_HOD_Attachments1');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this if needed for local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -2986,16 +3059,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
 
 
 
@@ -3155,46 +3228,54 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Closure_Attachments">Closure Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Closure_Attachments">
                                                 @if ($showdata->Closure_Attachments)
-                                                    @foreach(json_decode($showdata->Closure_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_Closure_Attachments[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_Closure_Attachments[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Closure_Attachments" name="Closure_Attachments[]" 
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                <input type="file" id="Closure_Attachments"
+                                                    name="Closure_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_Closure_Attachments" name="deleted_Closure_Attachments" value="">
-                                
+                                <input type="hidden" id="deleted_Closure_Attachments" name="deleted_Closure_Attachments"
+                                    value="">
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -3203,36 +3284,38 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_Closure_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    const deletedFilesInput = document.getElementById(
+                                                        'deleted_Closure_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews if needed
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -3240,16 +3323,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
 
 
 
@@ -3282,76 +3365,76 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted by">Submitted By</label>
+                                        <label for="Submitted by">Submit By</label>
                                         <div class="static">{{ $showdata->submitted_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Submitted On</label>
+                                        <label for="Submitted on">Submit On</label>
                                         <div class="static">{{ $showdata->submitted_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> Submit Comment</label>
                                         <div class="static">{{ $showdata->comment }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">HOD Initial Review Completed By</label>
+                                        <label for="Reviewed by">HOD Initial Review Complete By</label>
                                         <div class="static">{{ $showdata->review_completed_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approved on">HOD Initial Review Completed On</label>
+                                        <label for="Approved on">HOD Initial Review Complete On</label>
                                         <div class="static">{{ $showdata->review_completed_on }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> HOD Initial Review Complete Comment</label>
                                         <div class="static">{{ $showdata->review_completed_comment }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">Review Completed By</label>
+                                        <label for="Reviewed by">Review Complete By</label>
                                         <div class="static">{{ $showdata->Reviewed_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approved on">Review Completed On</label>
+                                        <label for="Approved on">Review Complete On</label>
                                         <div class="static">{{ $showdata->Reviewed_on }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Review Complete Comment</label>
                                         <div class="static">{{ $showdata->Reviewed_commemt }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">Approval Completed By</label>
+                                        <label for="Reviewed by">Approval Complete By</label>
                                         <div class="static">{{ $showdata->approved_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approved on">Approval Completed On</label>
+                                        <label for="Approved on">Approval Complete On</label>
                                         <div class="static">{{ $showdata->approved_on }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Approval Complete Comment</label>
                                         <div class="static">{{ $showdata->approved_comment }}</div>
                                     </div>
                                 </div>
@@ -3371,41 +3454,41 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> Correction Completed Comment</label>
                                         <div class="static">{{ $showdata->correction_completed_comment }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD Review Complete By">HOD Review Complete By</label>
+                                        <label for="HOD Review Complete By">HOD Review Completed By</label>
                                         <div class="static">{{ $showdata->hod_review_complete_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD Review Complete By on">HOD Review Complete By On</label>
+                                        <label for="HOD Review Complete By on">HOD Review Completed On</label>
                                         <div class="static">{{ $showdata->hod_review_complete_on }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on"> HOD Review Completed Comment</label>
                                         <div class="static">{{ $showdata->hod_review_complete_comment }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed by">QA Head Aproval Completed
+                                        <label for="QA Head Aproval Completed by">QA/CQA Head Approval Completed
                                             By</label>
                                         <div class="static">{{ $showdata->qa_head_approval_completed_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed on">QA Head Aproval Completed
+                                        <label for="QA/CQA Head Approval Completed on">QA/CQA Head Approval Completed
                                             On</label>
                                         <div class="static">{{ $showdata->qa_head_approval_completed_on }}</div>
                                     </div>
@@ -3413,7 +3496,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">QA/CQA Head Approval Completed Comment</label>
                                         <div class="static">{{ $showdata->qa_head_approval_completed_comment }}</div>
                                     </div>
                                 </div>
@@ -3422,13 +3505,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Sent to Opened State BY">Sent to Opened State By</label>
+                                        <label for="Sent to Opened State BY">Sent To Opened State By</label>
                                         <div class="static">{{ $showdata->sent_to_open_state_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Head Aproval Completed on">Sent to Opened State
+                                        <label for="QA Head Aproval Completed on">Sent To Opened State
                                             On</label>
                                         <div class="static">{{ $showdata->sent_to_open_state_on }}</div>
                                     </div>
@@ -3436,7 +3519,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Sent To Opened State Comment</label>
                                         <div class="static">{{ $showdata->sent_to_open_state_comment }}</div>
                                     </div>
                                 </div>
@@ -3456,7 +3539,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
+                                        <label for="Submitted on">Cancel Comment</label>
                                         <div class="static">{{ $showdata->cancel_comment }}</div>
                                     </div>
                                 </div>

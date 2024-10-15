@@ -71,8 +71,6 @@
                        <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
-                            <option value="Intial"{{ $data->results_to_be_reported_oosc == 'Intial' ?
-                                'selected' : '' }}>Initial</option>
                             <option value="Retested result"{{ $data->results_to_be_reported_oosc == 'Retested result' ?
                                 'selected' : '' }}>Retested Result</option>
                     </select>
@@ -127,8 +125,8 @@
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]"
                         placeholder="Select Reference Records">
                         
-                        @if (!empty($old_record))
-                            @foreach ($old_record as $new)
+                        @if (!empty($capa_record))
+                            @foreach ($capa_record as $new)
                                 @php
                                     $recordValue =
                                         Helpers::getDivisionName($new->division_id) .

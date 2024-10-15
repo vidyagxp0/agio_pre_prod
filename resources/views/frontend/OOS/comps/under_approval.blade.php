@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
                         <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
@@ -77,19 +77,19 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Other's</label>
-                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
                 </div>
             </div>
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
-                        <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
+                        <option value="" {{ $data->material_batch_release_bd == '' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
-                        <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
+                        <option value="To Be Released" {{ $data->material_batch_release_bd == 'To Be Released' ? 'selected' : ''
                             }}>To Be Released</option>
-                        <option value="reject" {{ $data->material_batch_release_bd == 'reject' ? 'selected' : ''
+                        <option value="To Be Rejected" {{ $data->material_batch_release_bd == 'To Be Rejected' ? 'selected' : ''
                             }}>To Be Rejected</option>
                         <option value="other" {{ $data->material_batch_release_bd == 'other' ? 'selected' : ''
                             }}>Other Action (Specify)</option>
@@ -196,7 +196,7 @@
             </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Justify for Delay in Activity</label>
+                    <label for="Description Deviation">Justify For Delay In Activity</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                     {{ $data->justify_for_delay_in_activity_bd ?? '' }}
@@ -230,7 +230,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'readonly' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 

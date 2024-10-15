@@ -36,13 +36,13 @@ class ResamplingController extends Controller
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
-       
+
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
 
-   
-     
+
+
  $pre = [
     'DEV' => \App\Models\Deviation::class,
    'AP' => \App\Models\AuditProgram::class,
@@ -68,7 +68,7 @@ class ResamplingController extends Controller
    'Incident' => \App\Models\Incident::class,
    'FI' => \App\Models\FailureInvestigation::class,
    'ERRATA' => \App\Models\errata::class,
-   'OOSMicr' => \App\Models\OOS_micro::class,     
+   'OOSMicr' => \App\Models\OOS_micro::class,
    // Add other models as necessary...
 ];
 
@@ -90,7 +90,7 @@ foreach ($pre as $processName => $modelClass) {
     }
     public function index()
     {
-       
+
         $document = Resampling::all();
         $old_record = Resampling::select('id', 'division_id', 'record')->get();
         foreach ($document as $data) {
@@ -130,7 +130,7 @@ foreach ($pre as $processName => $modelClass) {
         $openState->short_description = $request->short_description;
 
 
-        
+
         $openState->qa_remark = $request->qa_remark;
 
         $openState->if_others = $request->if_others;
@@ -157,12 +157,12 @@ foreach ($pre as $processName => $modelClass) {
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                      
+
                     $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             }
             $openState->file_attach = json_encode($files);
         }
@@ -174,7 +174,7 @@ foreach ($pre as $processName => $modelClass) {
             $files = [];
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {
                     $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -183,17 +183,17 @@ foreach ($pre as $processName => $modelClass) {
             }
             $openState->qa_head = json_encode($files);
         }
-        
+
         if (!empty($request->Support_doc)) {
             $files = [];
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    
+
                     $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             $openState->Support_doc = json_encode($files);
             }
         }
@@ -201,12 +201,12 @@ foreach ($pre as $processName => $modelClass) {
             $files = [];
             if ($request->hasfile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
-                    
+
                     $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             $openState->final_attach = json_encode($files);
             }
         }
@@ -296,7 +296,7 @@ foreach ($pre as $processName => $modelClass) {
         }
 
 
-      
+
 
         if (!empty($openState->intiation_date)) {
             $history = new ResamplingAudittrail();
@@ -316,7 +316,7 @@ foreach ($pre as $processName => $modelClass) {
         }
 
 
- 
+
         if (!empty($openState->title)) {
         $history = new ResamplingAudittrail();
         $history->resampling_id = $openState->id;
@@ -355,7 +355,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->resampling_id =  $openState->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current =  $openState->due_date;
+            $history->current = Helpers::getdateFormat ($openState->due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -367,27 +367,27 @@ foreach ($pre as $processName => $modelClass) {
             $history->save();
             }
 
-            if (!empty($openState->related_records)) {
-                $history = new ResamplingAudittrail();
-                $history->resampling_id =  $openState->id;
-                $history->activity_type = 'Related Records';
-                $history->previous = "Null";
-                $history->current = str_replace(',', ', ', $openState->related_records); 
-                $history->comment = "NA";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $openState->status;
-                $history->change_to = "Opened";
-                $history->change_from = "Initiation";
-                $history->action_name = "Create";
-                $history->save();
-                }
-        
+            // if (!empty($openState->related_records)) {
+            //     $history = new ResamplingAudittrail();
+            //     $history->resampling_id =  $openState->id;
+            //     $history->activity_type = 'Related Records';
+            //     $history->previous = "Null";
+            //     $history->current = str_replace(',', ', ', $openState->related_records);
+            //     $history->comment = "NA";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $openState->status;
+            //     $history->change_to = "Opened";
+            //     $history->change_from = "Initiation";
+            //     $history->action_name = "Create";
+            //     $history->save();
+            //     }
+
         if (!empty($openState->Reference_Recores1)) {
         $history = new ResamplingAudittrail();
         $history->resampling_id =   $openState->id;
-        $history->activity_type = 'Reference_Recores1';
+        $history->activity_type = 'Reference Recores1';
         $history->previous = "Null";
         $history->current =  $openState->Reference_Recores1;
         $history->comment = "NA";
@@ -400,8 +400,26 @@ foreach ($pre as $processName => $modelClass) {
         $history->action_name = "Create";
         $history->save();
         }
-        
-          
+        if (!is_null($openState->related_records) && trim($openState->related_records) !== '') {
+    $history = new ResamplingAudittrail();
+    $history->resampling_id = $openState->id;
+    $history->activity_type = 'Related Records';
+    $history->previous = "Null";
+    $history->current = str_replace(',', ', ', $openState->related_records);
+    $history->comment = "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $openState->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+
+    $history->save();
+}
+
+
+
         if (!empty($openState->short_description)) {
         $history = new ResamplingAudittrail();
         $history->resampling_id =   $openState->id;
@@ -419,7 +437,7 @@ foreach ($pre as $processName => $modelClass) {
 
         $history->save();
         }
-        
+
         if (!empty($openState->initiatorGroup)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
@@ -434,11 +452,11 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
             }
-            
-          
+
+
         if (!empty($openState->assign_to)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
@@ -453,10 +471,10 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
             }
-        
+
             if (!empty($openState->description)) {
                 $history = new ResamplingAudittrail();
                 $history->resampling_id =   $openState->id;
@@ -471,14 +489,14 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = "Create";
-       
+
                 $history->save();
                 }
-            
+
                 if (!empty($openState->hod_preson)) {
                     $history = new ResamplingAudittrail();
                     $history->resampling_id =   $openState->id;
-                    $history->activity_type = 'HOD Persons';
+                    $history->activity_type = 'HOD Person';
                     $history->previous = "Null";
                     $history->current =   Helpers::getInitiatorName($openState->hod_preson);
                     $history->comment = "NA";
@@ -489,7 +507,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-           
+
                     $history->save();
                     }
                  if (!empty($openState->action_taken)) {
@@ -506,7 +524,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-           
+
                     $history->save();
                }
                if (!empty($openState->start_date)) {
@@ -523,7 +541,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = "Create";
-       
+
                 $history->save();
            }
            if (!empty($openState->end_date)) {
@@ -540,7 +558,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
        }
        if (!empty($openState->comments)) {
@@ -563,7 +581,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->qa_comments)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QA/CQA Review Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
             $history->comment = "NA";
@@ -574,14 +592,14 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
         if (!empty($openState->qa_remark)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
-            $history->activity_type = 'QA Remarks';
+            $history->activity_type = 'QA/CQA Head Remark';
             $history->previous = "Null";
             $history->current =  $openState->qa_remark;
             $history->comment = "NA";
@@ -592,7 +610,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -611,7 +629,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
       if (!empty($openState->if_others)) {
@@ -628,7 +646,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -639,7 +657,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->resampling_id =   $openState->id;
             $history->activity_type = 'Due Date Extension Justification';
             $history->previous = "Null";
-            $history->current =  $openState->due_date_extension;
+            $history->current =  Helpers::getdateFormat($openState->due_date_extension);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -648,7 +666,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -666,7 +684,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -674,7 +692,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->qa_head)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA Attachment';
             $history->previous = "Null";
             $history->current =  $openState->qa_head;
             $history->comment = "NA";
@@ -685,13 +703,13 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
         if (!empty($openState->Support_doc)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
-            $history->activity_type = ' Completion Attachments';
+            $history->activity_type = ' Completion Attachment';
             $history->previous = "Null";
             $history->current =  $openState->Support_doc;
             $history->comment = "NA";
@@ -702,13 +720,13 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
         if (!empty($openState->final_attach)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
-            $history->activity_type = 'Action ApprovalAttachments';
+            $history->activity_type = 'Action ApprovalAttachment';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "NA";
@@ -719,32 +737,32 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
-        if (!empty($openState->departments)) {
-            $history = new ResamplingAudittrail();
-            $history->resampling_id =   $openState->id;
-            $history->activity_type = 'Departments';
-            $history->previous = "Null";
-            $history->current =  $openState->departments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-   
-            $history->save();
-        }
-   
-   
-   
-                             
-       
+        // if (!empty($openState->departments)) {
+        //     $history = new ResamplingAudittrail();
+        //     $history->resampling_id =   $openState->id;
+        //     $history->activity_type = 'Departments';
+        //     $history->previous = "Null";
+        //     $history->current =  $openState->departments;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+
+        //     $history->save();
+        // }
+
+
+
+
+
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');
     }
@@ -755,8 +773,8 @@ foreach ($pre as $processName => $modelClass) {
 
 
 
-    
-    
+
+
 
  $pre = [
     'DEV' => \App\Models\Deviation::class,
@@ -783,7 +801,7 @@ foreach ($pre as $processName => $modelClass) {
    'Incident' => \App\Models\Incident::class,
    'FI' => \App\Models\FailureInvestigation::class,
    'ERRATA' => \App\Models\errata::class,
-   'OOSMicr' => \App\Models\OOS_micro::class,     
+   'OOSMicr' => \App\Models\OOS_micro::class,
    // Add other models as necessary...
 ];
 
@@ -804,7 +822,7 @@ foreach ($pre as $processName => $modelClass) {
         $data = Resampling::find($id);
         $cc = CC::find($data->resampling_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        
+
         return view('frontend.resampling.resampling_view', compact('data', 'cc','old_record','relatedRecords'));
     }
 
@@ -817,7 +835,7 @@ foreach ($pre as $processName => $modelClass) {
 
 
          //return $request->if_others;
-    
+
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -866,7 +884,7 @@ foreach ($pre as $processName => $modelClass) {
 
         if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
             $existingFiles = json_decode($openState->file_attach, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_file_attach)) {
                 $filesToDelete = explode(',', $request->deleted_file_attach);
@@ -874,7 +892,7 @@ foreach ($pre as $processName => $modelClass) {
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('file_attach')) {
@@ -884,7 +902,7 @@ foreach ($pre as $processName => $modelClass) {
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->file_attach = json_encode($allFiles);
@@ -894,7 +912,7 @@ foreach ($pre as $processName => $modelClass) {
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
             //     foreach ($request->file('file_attach') as $file) {
-            //         if ($file instanceof \Illuminate\Http\UploadedFile) {  
+            //         if ($file instanceof \Illuminate\Http\UploadedFile) {
             //         $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
             //         $file->move('upload/', $name);
             //         $files[] = $name;
@@ -902,13 +920,13 @@ foreach ($pre as $processName => $modelClass) {
             // }
             // }
             // $openState->file_attach = json_encode($files);
-        
+
 
         // if (!empty($request->Support_doc)) {
         //     $files = [];
         //     if ($request->hasfile('Support_doc')) {
         //         foreach ($request->file('Support_doc') as $file) {
-        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {
         //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
@@ -921,7 +939,7 @@ foreach ($pre as $processName => $modelClass) {
 
         if (!empty($request->Support_doc) || !empty($request->deleted_Support_doc)) {
             $existingFiles = json_decode($openState->Support_doc, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Support_doc)) {
                 $filesToDelete = explode(',', $request->deleted_Support_doc);
@@ -929,7 +947,7 @@ foreach ($pre as $processName => $modelClass) {
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Support_doc')) {
@@ -939,7 +957,7 @@ foreach ($pre as $processName => $modelClass) {
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->Support_doc = json_encode($allFiles);
@@ -949,7 +967,7 @@ foreach ($pre as $processName => $modelClass) {
         //     $files = [];
         //     if ($request->hasfile('final_attach')) {
         //         foreach ($request->file('final_attach') as $file) {
-        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {
         //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
@@ -961,7 +979,7 @@ foreach ($pre as $processName => $modelClass) {
 
         if (!empty($request->final_attach) || !empty($request->deleted_final_attach)) {
             $existingFiles = json_decode($openState->final_attach, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_final_attach)) {
                 $filesToDelete = explode(',', $request->deleted_final_attach);
@@ -969,7 +987,7 @@ foreach ($pre as $processName => $modelClass) {
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('final_attach')) {
@@ -979,17 +997,17 @@ foreach ($pre as $processName => $modelClass) {
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->final_attach = json_encode($allFiles);
         }
-       
-        
+
+
 
         if (!empty($request->qa_head) || !empty($request->deleted_qa_head)) {
             $existingFiles = json_decode($openState->qa_head, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_qa_head)) {
                 $filesToDelete = explode(',', $request->deleted_qa_head);
@@ -997,7 +1015,7 @@ foreach ($pre as $processName => $modelClass) {
                     return !in_array($file, $filesToDelete);
                 });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('qa_head')) {
@@ -1007,7 +1025,7 @@ foreach ($pre as $processName => $modelClass) {
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->qa_head = json_encode($allFiles);
@@ -1035,7 +1053,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
 
@@ -1057,9 +1075,9 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
 
         //  if ($lastopenState->dept != $openState->dept || !empty($request->dept_comment)) {
         //     $history = new ResamplingAudittrail;
@@ -1079,15 +1097,36 @@ foreach ($pre as $processName => $modelClass) {
         //     } else {
         //         $history->action_name = "Update";
         //     }
-   
-        //     $history->save();
-        // }  
 
+        //     $history->save();
+        // }
+
+        // if ($lastopenState->related_records != $openState->related_records) {
+        //     $history = new ResamplingAudittrail;
+        //     $history->resampling_id = $id;
+        //     $history->activity_type = 'Related Records';
+        //     $history->previous =str_replace(',', ', ', $lastopenState->related_records);
+        //     $history->current = str_replace(',', ', ', $openState->related_records);
+        //     $history->comment = $request->related_records_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //    $history->change_from = $lastopenState->status;
+        //      if (is_null($lastopenState->related_records)) {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+
+        //     $history->save();
+        // }
         if ($lastopenState->related_records != $openState->related_records) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Related Records';
-            $history->previous =str_replace(',', ', ', $lastopenState->related_records); 
+            $history->previous =str_replace(',', ', ', $lastopenState->related_records);
             $history->current = str_replace(',', ', ', $openState->related_records);
             $history->comment = $request->related_records_comment;
             $history->user_id = Auth::user()->id;
@@ -1101,15 +1140,15 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
         if ($lastopenState->departments != $openState->departments) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Responsible Department';
-            $history->previous = $lastopenState->departments;
-            $history->current = $openState->departments;
+            $history->previous = Helpers::getFullDepartmentName($lastopenState->department);
+            $history->current = Helpers::getFullDepartmentName($openState->departments);
             $history->comment = $request->departments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1122,15 +1161,15 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
         if ($lastopenState->due_date != $openState->due_date ) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastopenState->due_date;
-            $history->current = $openState->due_date;
+            $history->previous = Helpers::getdateFormat($lastopenState->due_date);
+            $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1143,15 +1182,15 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
         if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastopenState->assign_to;
-            $history->current = $openState->assign_to;
+            $history->previous =Helpers::getInitiatorName($lastopenState->assign_to);
+            $history->current = Helpers::getInitiatorName($openState->assign_to);
             $history->comment = $request->dept_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1164,10 +1203,10 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
-          
+        }
+
         if ($lastopenState->if_others != $openState->if_others || !empty($request->assign_to_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
@@ -1186,14 +1225,14 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
 
         if ($lastopenState->qa_remark != $openState->qa_remark || !empty($request->assign_to_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'If Others';
+            $history->activity_type = 'QA/CQA Head Remark';
             $history->previous = $lastopenState->qa_remark;
             $history->current = $openState->qa_remark;
             $history->comment = $request->dept_comment;
@@ -1208,9 +1247,9 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
 
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             $history = new ResamplingAudittrail;
@@ -1230,7 +1269,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
 
@@ -1248,7 +1287,7 @@ foreach ($pre as $processName => $modelClass) {
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $openState->status;
         //     $history->action_name = "Update";
-   
+
         //     $history->save();
         // }
         // if (!empty($openState->short_description)) {
@@ -1270,7 +1309,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-    
+
             $history->save();
             }
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
@@ -1291,13 +1330,13 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'HOD Persons';
+            $history->activity_type = 'HOD Person';
             $history->previous =   Helpers::getInitiatorName($lastopenState->hod_preson);
             $history->current =   Helpers::getInitiatorName($openState->hod_preson);
             $history->comment = $request->hod_preson_comment;
@@ -1312,7 +1351,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
@@ -1334,7 +1373,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->action_taken != $openState->action_taken || !empty($request->action_taken_comment)) {
@@ -1396,7 +1435,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->comments != $openState->comments || !empty($request->comments_comment)) {
@@ -1417,13 +1456,13 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->qa_comments != $openState->qa_comments || !empty($request->qa_comments_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QA/CQA Review Comments';
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
@@ -1465,8 +1504,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Due Date Extension';
-            $history->previous = $lastopenState->due_date_extension;
-            $history->current = $openState->due_date_extension;
+            $history->previous = Helpers::getdateFormat($lastopenState->due_date_extension);
+            $history->current = Helpers::getdateFormat($openState->due_date_extension);
             $history->comment = $request->due_date_extension_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1479,7 +1518,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->file_attach != $openState->file_attach || !empty($request->file_attach_comment)) {
@@ -1487,7 +1526,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->resampling_id = $id;
             $history->activity_type = 'File Attachments';
             $history->previous =  str_replace(',', ', ', $lastopenState->file_attach);
-            $history->current =str_replace(',', ', ', $openState->file_attach); 
+            $history->current =str_replace(',', ', ', $openState->file_attach);
             $history->comment = $request->file_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1505,7 +1544,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'Action Approval Attachemnts';
+            $history->activity_type = 'Action Approval Attachemnt';
             $history->previous =   str_replace(',', ', ', $lastopenState->final_attach);
             $history->current =str_replace(',', ', ',  $openState->final_attach);
             $history->comment = $request->final_attach_comment;
@@ -1520,7 +1559,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
 
@@ -1528,7 +1567,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->qa_head != $openState->qa_head || !empty($request->final_attach_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA Attachment';
             $history->previous =  str_replace(',', ', ', $lastopenState->qa_head);
             $history->current = str_replace(',', ', ', $openState->qa_head);
             $history->comment = $request->final_attach_comment;
@@ -1543,13 +1582,13 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->Support_doc != $openState->Support_doc || !empty($request->Support_doc_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Completion Attachment';
             $history->previous = str_replace(',', ', ', $lastopenState->Support_doc);
             $history->current = str_replace(',', ', ', $openState->Support_doc);
             $history->comment = $request->Support_doc_comment;
@@ -1564,7 +1603,7 @@ foreach ($pre as $processName => $modelClass) {
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         toastr()->success('Document update');
@@ -1584,15 +1623,15 @@ foreach ($pre as $processName => $modelClass) {
             $lastopenState = Resampling::find($id);
             // $openState = Resampling::find($id);
             // $task = Taskdetails::where('resampling_id', $id)->first();
-         
-            
+
+
             if ($changeControl->stage == 1) {
                 $changeControl->stage = '2';
                 $changeControl->status = 'Head QA/CQA Approval';
                 $changeControl->acknowledgement_by = Auth::user()->name;
                 $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
-                
+
                       $history = new ResamplingAudittrail;
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -1604,7 +1643,7 @@ foreach ($pre as $processName => $modelClass) {
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                       
+
                         $history->change_to = "Head QA/CQA Approval";
                         $history->change_from = $lastopenState->status;
                         $history->stage = '2';
@@ -1621,6 +1660,52 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+
+
+
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Submit", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
+                                    }
+                                }
+                            // }
+                        }
+
+
+
+                        $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Submit", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
+                                    }
+                                }
+                            // }
+                        }
                 $changeControl->update();
                 // $history = new CCStageHistory();
                 $history = new ResamplingAudittrail;
@@ -1639,7 +1724,7 @@ foreach ($pre as $processName => $modelClass) {
             //         if($u->q_m_s_divisions_id == $openState->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $openState],
@@ -1649,7 +1734,7 @@ foreach ($pre as $processName => $modelClass) {
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 toastr()->success('Document Sent');
 
@@ -1657,7 +1742,7 @@ foreach ($pre as $processName => $modelClass) {
             }
 
             if ($changeControl->stage == 2) {
-               
+
                 if (empty($changeControl->qa_remark))
                 {
                     Session::flash('swal', [
@@ -1665,7 +1750,7 @@ foreach ($pre as $processName => $modelClass) {
                         'title' => 'Mandatory Fields!',
                         'message' => 'Pls fill QA Head Tab is yet to be filled'
                     ]);
-                    
+
                     return redirect()->back();
                 }
                 else {
@@ -1684,7 +1769,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history = new ResamplingAudittrail;
                 $history->action = "Approved";
 
-                     
+
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = $lastopenState->completed_by;
@@ -1720,7 +1805,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "Acknowledge";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-            //   
+            //
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1735,7 +1820,7 @@ foreach ($pre as $processName => $modelClass) {
                         'title' => 'Mandatory Fields!',
                         'message' => 'Pls fill Acknowledge Tab is yet to be filled'
                     ]);
-                    
+
                     return redirect()->back();
                 }
                 else {
@@ -1778,6 +1863,50 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+
+
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
+                                    }
+                                }
+                            // }
+                        }
+
+
+                        $list = Helpers::getCQAUsersList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
+                                    }
+                                }
+                            // }
+                        }
                 $changeControl->update();
                 // $history = new CCStageHistory();
                 //  $history->type = "Action-Item";
@@ -1789,7 +1918,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "QA/CQA Verification";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-            //   
+            //
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1805,7 +1934,7 @@ foreach ($pre as $processName => $modelClass) {
                         'title' => 'Mandatory Fields!',
                         'message' => 'Pls fill Action Approval Tab is yet to be filled'
                     ]);
-                    
+
                     return redirect()->back();
                 }
                 else {
@@ -1832,7 +1961,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
-              
+
                 $history->stage = '3';
                 $history->activity_type = 'Varification Complete By, Varification Complete On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
@@ -1847,6 +1976,72 @@ foreach ($pre as $processName => $modelClass) {
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
+
+
+                $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
+
+
+                
+                $list = Helpers::getHodUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
                 $changeControl->update();
                 // $history = new CCStageHistory();
                 // $history->type = "Action-Item";
@@ -1858,12 +2053,12 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-            //   
+            //
                 toastr()->success('Document Sent');
 
                 return back();
             }
-            
+
         } else {
             toastr()->error('E-signature Not match');
 
@@ -1932,14 +2127,14 @@ public function resamplingStageCancel(Request $request, $id)
             // $history->user_name = Auth::user()->name;
             // $history->stage_id = $changeControl->stage;
             // $history->status = $changeControl->status;
-            
+
             $history->save();
             // $list = Helpers::getActionOwnerUserList();
             //         foreach ($list as $u) {
             //             if($u->q_m_s_divisions_id == $openState->division_id){
             //                 $email = Helpers::getInitiatorEmail($u->user_id);
             //                  if ($email !== null) {
-                          
+
             //                   Mail::send(
             //                       'mail.view-mail',
             //                        ['data' => $openState],
@@ -1949,13 +2144,13 @@ public function resamplingStageCancel(Request $request, $id)
             //                     }
             //                   );
             //                 }
-            //          } 
+            //          }
             //       }
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
 
-  
+
     } else {
         toastr()->error('E-signature Not match');
         return back();
@@ -1976,7 +2171,7 @@ public function resamplingmoreinfo(Request $request, $id)
             $changeControl->more_information_required_by = (string)Auth::user()->name;
             $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
             $changeControl->more_info_requ_comment =$request->comment;
-        
+
             $history = new ResamplingAudittrail;
             $history->action = "More Information Required";
             $history->resampling_id = $id;
@@ -1990,7 +2185,7 @@ public function resamplingmoreinfo(Request $request, $id)
             $history->stage = "More Information Required";
             $history->save();
             $changeControl->update();
-           
+
             // $history->type = "Action Item";
             // $history->doc_id = $id;
             // $history->user_id = Auth::user()->id;
@@ -2005,7 +2200,7 @@ public function resamplingmoreinfo(Request $request, $id)
         //         if($u->q_m_s_divisions_id == $openState->division_id){
         //             $email = Helpers::getInitiatorEmail($u->user_id);
         //              if ($email !== null) {
-                  
+
         //               Mail::send(
         //                   'mail.view-mail',
         //                    ['data' => $openState],
@@ -2015,7 +2210,7 @@ public function resamplingmoreinfo(Request $request, $id)
         //                 }
         //               );
         //             }
-        //      } 
+        //      }
         //   }
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
@@ -2049,7 +2244,7 @@ public function resamplingmoreinfo(Request $request, $id)
             $history->change_to = "HOD Review";
             $history->change_from = $lastopenState->status;
             $history->save();
-      
+
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
@@ -2082,7 +2277,7 @@ public function resamplingmoreinfo(Request $request, $id)
             $history->change_to = "Acknowledge";
             $history->change_from = $lastopenState->status;
             $history->save();
-      
+
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
@@ -2098,9 +2293,113 @@ public function resamplingAuditTrialShow($id)
     $today = Carbon::now()->format('d-m-y');
     $document = Resampling::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
+    $users = User::all();
 
-    return view('frontend.resampling.audit-trial', compact('audit', 'document', 'today'));
+    return view('frontend.resampling.audit-trial', compact('audit', 'document', 'today','users'));
+    
 }
+
+
+
+
+
+
+
+public function audit_trail_filter(Request $request,$id)
+{
+
+    
+   $query= ResamplingAudittrail::query();
+             $query->where('resampling_id',$id);
+
+     if($request->filled('typedata'))
+     {
+        switch($request->typedata)
+        {
+            case 'cft_review':
+
+                $cft_field= ['CFT Review Complete'];
+                $query->where('action',$cft_field);
+                break;
+
+             case 'stage':
+
+                $stage = ['Submit By, Submit On','HOD Assessment Complete By,
+                 HOD Assessment Complete On','QA/CQA Initial Assessment Complete By, QA/CQA Initial Assessment Complete On','CFT Assessment Complete By','RA Approval By, RA Approval On','RA Approval Complete By, RA Approval Complete On','Rejected By, Rejected On','QA/CQA Final Review Complete By, QA/CQA Final Review Complete On','QA/CQA Head/Manager Designee Approval By, QA/CQA Head/Manager Designee ApprovalOn','Initiator Updated Complete By, Initiator Updated Complete On','HOD Final Review Complete By, HOD Final Review Complete On', 'Implementation verification by QA/CQA Complete By, Implementation verification by QA/CQA Complete On','QA/CQA Head/Manager Designee Approval By, QA/CQA Head/Manager Designee Approval On','Pending Initiator Update By, Pending Initiator Update On','Approved By, Approved On','HOD Final Review Complete By, HOD Final Review Complete On','Implementation verification by QA/CQA By, Implementation verification by CQA/QA On','QA/CQA Closure Approval By, Closure Approval On','More Info Required By, More Info Required On'];
+
+
+
+
+
+                $query->whereIn('activity_type',$stage);
+                break;
+
+                case 'user_action':
+                    $user_action = [
+                        'Submit', 'Approved', 'Acknowledge Complete','Varification Complete', 'Cancel','More Information Required', 'More Information Required','More Information Required'
+                    ];
+                $query->whereIn('action',$user_action);
+                break;
+
+
+
+                case 'notification':
+                    $notification = [ 'user notification'
+
+                    ];
+                $query->where('action',$notification);
+                break;
+
+
+
+                case 'business':
+                    $business = [ 'business'
+
+                    ];
+                $query->where('action',$business);
+                break;
+              default;
+              break;
+        }
+
+     }
+     if ($request->filled('user')) {
+        $query->where('user_id', $request->user);
+    }
+
+    if ($request->filled('from_date')) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->filled('to_date')) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    // Get the filtered results
+    $audit = $query->orderByDesc('id')->get();
+
+    $filter_request = true;
+  
+
+    $responseHtml = view('frontend.resampling.resampling_filter', compact('audit', 'filter_request'))->render();
+
+ return response()->json(['html' => $responseHtml]);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 public function actionItemAuditTrialDetails($id)
 {
@@ -2121,6 +2420,7 @@ public static function singleReport($id)
         $data->originator = User::where('id', $data->initiator_id)->value('name');
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
+        
         $pdf = PDF::loadview('frontend.resampling.singleReport', compact('data'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
@@ -2191,7 +2491,7 @@ public function auditTrailPdf($id)
                 'isRemoteEnabled' => true,
                 'isPhpEnabled' => true,
             ]);
-        
+
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();

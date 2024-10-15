@@ -79,7 +79,7 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Approval</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
 
@@ -166,13 +166,16 @@
                                         <label for="Extension Number">
                                             Extension Number
                                         </label>
-                                        <select id="Extension" placeholder="Select..." name="Extension">
-                                            <option value="">Select Extension Number</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-
-                                        </select>
+                                        @if(!empty($countData))
+                                        <input id="docname" type="text" value="{{ $countData }}" readonly>
+                                        @else
+                                        <select name="count" id="">
+                                                <option value="">--Select Extension Number--</option>
+                                                <option value="number1">1</option>
+                                                <option value="number2">2</option>
+                                                <option value="number">3</option>
+                                                </select>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -194,9 +197,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="related_records">Parent Record Number</label>
+                                        <label for="related_records">Parent Records Number</label>
                                         <select multiple name="related_records[]" placeholder="Select Parent Record Number"
                                             data-silent-initial-value-set="true" id="related_records">
 
@@ -227,12 +230,25 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Parent Records Number</b></label>
+                                        @if (!empty($extension_record))
+                                            <input readonly type="text" name="related_records"
+                                                value="{{ $extension_record }}">
+                                        @else
+                                            <input readonly type="text" name="related_records" value="">
+                                        @endif
+                                    </div>
+
                                 </div>
 
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA approval </label>
+                                        <label for="Assigned To">QA/CQA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers">
                                             <option value="">-- Select --</option>
@@ -337,7 +353,7 @@
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
 
-                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                             </div>
 
@@ -352,7 +368,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks</label>
-                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"></textarea>
+                                    <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" disabled></textarea>
                                 </div>
                             </div>
 
@@ -366,7 +382,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -378,7 +395,7 @@
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
 
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>
@@ -390,13 +407,13 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments</label>
-                                    <textarea name="approver_remarks" id="approver_remarks" cols="30"></textarea>
+                                    <textarea name="approver_remarks" id="approver_remarks" cols="30" disabled></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment">QA/CQA Approval Attachment</label>
+                                    <label for="Guideline Attachment">QA/CQA Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -404,7 +421,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
+                                                disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +433,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>
@@ -438,7 +456,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated On">Comment</label>
+                                    <label for="Activated On">Submit Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -456,12 +474,12 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Cancel Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">More Information Required By</label>
                                     <div class="static"></div>
@@ -475,10 +493,10 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-lg-4">
@@ -495,10 +513,30 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Review Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
+
+
+                            {{-- <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for=" Rejected By">System By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">System Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
 
 
                             <div class="col-lg-4">
@@ -515,12 +553,12 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Reject Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">More Information Required By</label>
                                     <div class="static"></div>
@@ -534,10 +572,10 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">More Information Required Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-4">
                                 <div class="group-input">
@@ -553,7 +591,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Send for CQA Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -566,13 +604,13 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On"> Approved On</label>
+                                    <label for="Rejected On">Approved On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">Approved Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -591,7 +629,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">Comment</label>
+                                    <label for="Rejected On">CQA Approval Complete Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -613,7 +651,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                             <button type="button">
-                                <a href="{{ url('TMS') }}" class="text-white">
+                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>

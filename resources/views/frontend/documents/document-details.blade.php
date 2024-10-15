@@ -25,11 +25,15 @@
                                 <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
                                 {{-- <button>Cancel</button> --}}
                                 @endif
+                                @if(Helpers::checkControlAccess())
                                 <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                 </button>
+                                @endif
+                                @if(Helpers::checkControlAccess())
                                 <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
                                     Print
                                 </button>
+                                @endif
                                 {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
@@ -194,14 +198,14 @@
                         @endif
                         @if ($document->training_required == 'yes')
                         @if ($document->stage >= 8)
-                        <div class="active">Pending-Traning</div>
+                        <div class="active">Pending-Training</div>
                         @else
-                        <div class="">Pending-Traning</div>
+                        <div class="">Pending-Training</div>
                         @endif
                         @if ($document->stage >= 9)
-                        <div class="active">Traning-Complete</div>
+                        <div class="active">Training-Complete</div>
                         @else
-                        <div class="">Traning-Complete</div>
+                        <div class="">Training-Complete</div>
                         @endif
                         @endif
                         @if ($document->stage >= 10)

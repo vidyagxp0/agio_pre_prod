@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 
@@ -120,7 +121,8 @@ class ExtensionNewController extends Controller
         $extensionNew->parent_record = $request->parent_record;
 
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+        // $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
@@ -199,6 +201,14 @@ class ExtensionNewController extends Controller
             $extensionNew->file_attachment_approver = json_encode($files);
         }
 
+        $count = 1;
+        $existingRecord = extension_new::where(['parent_id' => $request->parent_id, 'parent_type' => $request->parent_type])->latest()->first();
+        // dd($existingRecord);
+        if($existingRecord){
+            $extensionNew->count = intval(str_replace('number',1,$existingRecord->count)) + 1;
+        } else {
+            $extensionNew->count = $count;
+        }
 
         $extensionNew->save();
 
@@ -287,6 +297,23 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
+        if (!empty($request->count)) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension Number';
+            $history->previous = "Null";
+            $history->current = $extensionNew->count;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty($request->Extension)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -322,7 +349,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->approvers)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = "Not Applicable";
@@ -339,7 +366,7 @@ class ExtensionNewController extends Controller
         if (!empty($extensionNew->related_records)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Parent Record Number';
+            $history->activity_type = 'Parent Records Number';
             $history->previous = "Null";
             $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = "Not Applicable";
@@ -405,7 +432,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->justification_reason)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Justification / Reason';
+            $history->activity_type = 'Justification/Reason';
             $history->previous = "Null";
             $history->current = $extensionNew->justification_reason;
             $history->comment = "Not Applicable";
@@ -490,7 +517,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->file_attachment_approver)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = "Null";
             $history->current = $extensionNew->file_attachment_approver;
             $history->comment = "Not Applicable";
@@ -513,7 +540,13 @@ class ExtensionNewController extends Controller
     public function show(Request $request, $id)
     {
         $extensionNew = extension_new::find($id);
-        $count = extension_new::where('parent_type', 'LabIncident')->get()->count();
+        // if ($extensionNew->parent_type == "LabIncident") {
+        //     $count = extension_new::where('parent_type', 'LabIncident')->count();
+        // }
+        // elseif($extensionNew->parent_type == "OOC"){
+        //     $count = extension_new::where('parent_type', 'OOC')->count();
+        // }
+
         $pre = [
             'DEV' => \App\Models\Deviation::class,
             'AP' => \App\Models\AuditProgram::class,
@@ -571,7 +604,9 @@ class ExtensionNewController extends Controller
             ->where('user_roles.q_m_s_roles_id', 1)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew', 'reviewers', 'approvers', 'count', 'relatedRecords'));
+
+            // return $extensionNew;
+        return view('frontend.extension.extension_view', compact('extensionNew', 'reviewers', 'approvers', 'relatedRecords'));
     }
 
     public function update(Request $request, $id)
@@ -585,10 +620,17 @@ class ExtensionNewController extends Controller
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
-        $extensionNew->related_records = implode(',', $request->related_records);
+        // $extensionNew->related_records = implode(',', $request->related_records);
+        $extensionNew->related_records = $request->related_records;
+
         $extensionNew->short_description = $request->short_description;
 
         $extensionNew->Extension = $request->Extension;
+        if($extensionNew->stage == 1){
+            $extensionNew->count = $request->count;
+            $extensionNew->parent_type = $request->count;
+            // dd($request->count);
+        }
 
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -712,6 +754,28 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
+
+        if ($lastDocument->count != $extensionNew->count) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension Number';
+            $history->previous = Helpers::extensionCount($lastDocument->count);
+            $history->current = Helpers::extensionCount($extensionNew->count);
+            $history->comment = $request->short_description_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->count) || $lastDocument->count === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
         if ($lastDocument->Extension != $extensionNew->Extension) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -780,7 +844,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->approvers != $extensionNew->approvers) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = Helpers::getInitiatorName($lastDocument->approvers);
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = $request->approvers_comment;
@@ -977,7 +1041,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->file_attachment_approver != $extensionNew->file_attachment_approver) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_approver);
             $history->current = str_replace(',', ', ', $extensionNew->file_attachment_approver);
             $history->comment = $request->file_attachment_approver_comment;
@@ -1187,6 +1251,28 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
+                    //$list = Helpers::getHodUserList($extensionNew->division_id); // Notify HOD
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //                try {
+                    //                    Mail::send(
+                    //                        'mail.view-mail',
+                    //                        ['data' => $extensionNew, 'site' => "CC", 'history' => "Send For Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                        function ($message) use ($email, $extensionNew) {
+                    //                            $message->to($email)
+                    //                            ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Submit Performed");
+                    //                        }
+                    //                    );
+                    //                } catch(\Exception $e) {
+                    //                    info('Error sending mail', [$e]);
+                    //                }
+                    //        }
+                    //    // }
+                    //}
+
+
 
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
@@ -1208,30 +1294,86 @@ class ExtensionNewController extends Controller
                     //             }
                     //         }
                     //     }
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
                     // }
+                }
 
-                    // $list = Helpers::getHeadoperationsUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-
-                    //             Mail::send(
-                    //                 'mail.Categorymail',
-                    //                 ['data' => $extensionNew],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Activity Performed By " . Auth::user()->name);
-                    //                 }
-                    //             );
-                    //         }
-                    //     }
-                    // }
-                    // dd($extensionNew);
                     $extensionNew->update();
                     return back();
                 }
+                if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3)
+                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number')
+                ){
                 if ($extensionNew->stage == 2) {
+                    $extensionNew->stage = "5";
+                    $extensionNew->status = "In CQA Approval";
+                    $extensionNew->submit_by_review = Auth::user()->name;
+                    $extensionNew->submit_on_review = Carbon::now()->format('d-M-Y');
+                    $extensionNew->submit_comment_review = $request->comment;
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'System By, System On';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
+                    }
+                    $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
+                    $history->comment = $request->comment;
+                    $history->action = 'Review';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "In Approved";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'In Approved';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                    $extensionNew->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+            }
+                else{
+                    if ($extensionNew->stage == 2) {
                     $extensionNew->stage = "3";
                     $extensionNew->status = "In Approved";
                     $extensionNew->submit_by_review = Auth::user()->name;
@@ -1264,90 +1406,29 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                    // dd($history->action);
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $extensionNew],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                }
+
+                $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+               // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                   $email = Helpers::getUserEmail($u->user_id);
+                       if ($email !== null) {
+                       Mail::send(
+                           'mail.view-mail',
+                           ['data' => $extensionNew, 'site' => "Ext", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                           function ($message) use ($email, $extensionNew) {
+                               $message->to($email)
+                               ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                           }
+                       );
+                   }
+               // }
+           }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
 
-                if ($extensionNew->stage == 3) {
-
-                    $extensionNew->stage = "4";
-                    $extensionNew->status = "Closed - Reject";
-
-
-                    $extensionNew->submit_by_inapproved = Auth::user()->name;
-                    $extensionNew->submit_on_inapproved = Carbon::now()->format('d-M-Y');
-                    $extensionNew->submit_commen_inapproved = $request->comment;
-
-                    $history = new ExtensionNewAuditTrail();
-                    $history->extension_id = $id;
-                    $history->activity_type = 'Reject By, Reject On';
-                    if (is_null($lastDocument->submit_by_inapproved) || $lastDocument->submit_by_inapproved === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->submit_by_inapproved . ' , ' . $lastDocument->submit_on_inapproved;
-                    }
-                    $history->current = $extensionNew->submit_by_inapproved . ' , ' . $extensionNew->submit_on_inapproved;
-                    $history->action = 'Reject';
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->change_to =   "Closed - Reject";
-                    $history->change_from = $lastDocument->status;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Closed - Reject';
-                    if (is_null($lastDocument->submit_by_inapproved) || $lastDocument->submit_by_inapproved === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $extensionNew],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    $extensionNew->update();
-                    toastr()->success('Document Sent');
-                    return back();
-                }
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
@@ -1359,6 +1440,83 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
+
+    public function rejectStage(Request $request, $id){
+
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $extensionNew = extension_new::find($id);
+                $lastDocument = extension_new::find($id);
+
+        if ($extensionNew->stage == 3) {
+
+            $extensionNew->stage = "4";
+            $extensionNew->status = "Closed - Reject";
+
+
+            $extensionNew->submit_by_inapproved = Auth::user()->name;
+            $extensionNew->submit_on_inapproved = Carbon::now()->format('d-M-Y');
+            $extensionNew->submit_commen_inapproved = $request->comment;
+
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Reject By, Reject On';
+            if (is_null($lastDocument->submit_by_inapproved) || $lastDocument->submit_by_inapproved === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->submit_by_inapproved . ' , ' . $lastDocument->submit_on_inapproved;
+            }
+            $history->current = $extensionNew->submit_by_inapproved . ' , ' . $extensionNew->submit_on_inapproved;
+            $history->action = 'Reject';
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Closed - Reject";
+            $history->change_from = $lastDocument->status;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'Closed - Reject';
+            if (is_null($lastDocument->submit_by_inapproved) || $lastDocument->submit_by_inapproved === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+
+            $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+             foreach ($list as $u) {
+            // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                $email = Helpers::getUserEmail($u->user_id);
+                    if ($email !== null) {
+                    Mail::send(
+                        'mail.view-mail',
+                        ['data' => $extensionNew, 'site' => "Ext", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                        function ($message) use ($email, $extensionNew) {
+                            $message->to($email)
+                            ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject");
+                        }
+                    );
+                }
+            // }
+        }
+            $extensionNew->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+
+    }else {
+        toastr()->error('E-signature Not match');
+        return back();
+    }
+} catch (\Throwable $th) {
+    return response()->json([
+        'success' => false,
+        'message' => $th->getMessage()
+    ], 500);
+}
+}
+
+
     public function sendCQA(Request $request, $id)
     {
         try {
@@ -1379,12 +1537,12 @@ class ExtensionNewController extends Controller
                     $history = new ExtensionNewAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = ' Send for CQA By,  Send for CQA On';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->previous = "Null";
                     } else {
-                        $history->previous = $lastDocument->send_cqa_by . ' , ' . $lastDocument->send_cqa_on;
+                        $history->previous = ($lastDocument == 'System' ). ' , ' . $lastDocument->send_cqa_on;
                     }
-                    $history->current = $extensionNew->send_cqa_by . ' , ' . $extensionNew->send_cqa_on;
+                    $history->current = $extensionNew == 'System' . ' , ' . $extensionNew->send_cqa_on;
                     $history->action = ' Send for CQA';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1394,7 +1552,7 @@ class ExtensionNewController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'In CQA Approval';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
@@ -1459,26 +1617,23 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $extensionNew],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
+
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete");
+                                }
+                            );
+                        }
                     // }
+                }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1536,6 +1691,22 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Approved", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                                }
+                            );
+                        }
+                    // }
+                }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1583,10 +1754,103 @@ class ExtensionNewController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = extension_new::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator)->value('name');
-
+        $users = User::all();
         // dd($document);
-        return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
+        return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today', 'users'));
     }
+
+    public function audit_trail_filter(Request $request, $id)
+    {
+        // Start query for DeviationAuditTrail
+        $query = ExtensionNewAuditTrail::query();
+        $query->where('extension_id', $id);
+
+        // Check if typedata is provided
+        if ($request->filled('typedata')) {
+            switch ($request->typedata) {
+                case 'cft_review':
+                    // Filter by specific CFT review actions
+                    $cft_field = ['CFT Review Complete', 'Not Applicable',];
+                    $query->whereIn('action', $cft_field);
+                    break;
+
+                case 'stage':
+                    // Filter by activity log stage changes
+                    $stage = [
+                        'Submit',
+                        'Review Complete',
+                        'Approval Complete',
+                        'Correction Complete',
+                        'Reject',
+                        'Cancel',
+                        'Approved',
+                        'Correction Completed',
+                        'HOD Review Complete',
+                        'Sent To Opened State',
+                        'QA Head Aproval Completed'
+                    ];
+                    $query->whereIn('action', $stage); // Ensure correct activity_type value
+                    break;
+
+                case 'user_action':
+                    // Filter by various user actions
+                    $user_action = [
+                        'Submit',
+                        'Review Complete',
+                        'Approval Complete',
+                        'Correction Complete',
+                        'Reject',
+                        'Cancel',
+                        'Approved',
+                        'Correction Completed',
+                        'HOD Review Complete',
+                        'Sent To Opened State',
+                        'QA Head Aproval Completed'
+                    ];
+                    $query->whereIn('action', $user_action);
+                    break;
+                case 'notification':
+                    // Filter by various user actions
+                    $notification = [];
+                    $query->whereIn('action', $notification);
+                    break;
+                case 'business':
+                    // Filter by various user actions
+                    $business = [];
+                    $query->whereIn('action', $business);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+        // Apply additional filters
+        if ($request->filled('user')) {
+            $query->where('user_id', $request->user);
+        }
+
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+
+        // Get the filtered results
+        $audit = $query->orderByDesc('id')->get();
+
+        // Flag for filter request
+        $filter_request = true;
+
+        // Render the filtered view and return as JSON
+        $responseHtml = view('frontend.extension.audit_trail_new_filter', compact('audit', 'filter_request'))->render();
+
+        return response()->json(['html' => $responseHtml]);
+    }
+
 
     public static function auditReport($id)
     {

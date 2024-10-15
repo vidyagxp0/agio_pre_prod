@@ -584,29 +584,12 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if(!empty($labnew->closure_incident_c)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $labnew->id;
-            $history->activity_type = 'Closure Of Incident';
-            $history->previous = "Null";
-            $history->current = $labnew->closure_incident_c;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
-
         if(!empty($data->record)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/LI/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);;
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/LI/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1435,23 +1418,6 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-
-        if (!empty($data->QA_Head_Attachment)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Head Attachment';
-            $history->previous = "Null";
-            $history->current = $data->QA_Head_Attachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->origin_state = $data->status;
-            $history->save();
-        }
         if (!empty($data->QA_initial_Comments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -1634,7 +1600,7 @@ class LabIncidentController extends Controller
         if (!empty($data->details_investigation_ia)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Detail Investigation';
+            $history->activity_type = 'Detail Investigation / Probable Root Cause';
             $history->previous = "Null";
             $history->current = $data->details_investigation_ia;
             $history->comment = "Not Applicable";
@@ -1799,10 +1765,45 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
+        if (!empty($data->investigator_data)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Investigator';
+            $history->previous = "Null";
+            $history->current = $data->investigator_data;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->qc_review_data)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Review';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->qc_review_data);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+
         if (!empty($data->proposed_correctivei_ia)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Proposed Corrective';
+            $history->activity_type = 'Proposed Corrective Action/Corrective Action Taken';
             $history->previous = "Null";
             $history->current = $data->proposed_correctivei_ia;
             $history->comment = "Not Applicable";
@@ -2108,7 +2109,7 @@ class LabIncidentController extends Controller
     if (!empty($data->QA_Head_Attachment)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'QA Head Attachment';
+        $history->activity_type = 'QC Head Review Attachment';
         $history->previous = "Null";
         $history->current = $data->QA_Head_Attachment;
         $history->comment = "Not Applicable";
@@ -2376,38 +2377,54 @@ class LabIncidentController extends Controller
         $history->origin_state = $data->status;
         $history->save();
     }
-
-    if (!empty($data->Detail_investigation_ssfi)) {
+    if(!empty($labnew->qa_hear_remark_c)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Detail Investigation';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'QA Head Comment';
         $history->previous = "Null";
-        $history->current = $data->Detail_investigation_ssfi;
+        $history->current = $labnew->qa_hear_remark_c;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
         $history->change_to = "Opened";
         $history->change_from = "Initiation";
         $history->action_name = "Create";
-        $history->origin_state = $data->status;
         $history->save();
     }
 
-    if (!empty($data->proposed_corrective_ssfi)) {
+    if(!empty($labnew->closure_attachment_c)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Proposed Corrective Action';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Closure Attachment';
         $history->previous = "Null";
-        $history->current = $data->proposed_corrective_ssfi;
+        $history->current = $labnew->closure_attachment_c;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
         $history->change_to = "Opened";
         $history->change_from = "Initiation";
         $history->action_name = "Create";
+        $history->save();
+    }
+
+    if(!empty($labnew->closure_incident_c)) {
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Closure Of Incident';
+        $history->previous = "Null";
+        $history->current = $labnew->closure_incident_c;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
         $history->save();
     }
 
@@ -3695,28 +3712,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
            
         }
 
-        if ($lastlabtab->closure_incident_c != $labtab->closure_incident_c ) {
-        // dd($data->closure_incident_c);
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Closure Of Incident';
-            $history->previous = $labtab->closure_incident_c;
-            $history->current = $labtab->closure_incident_c;
-            $history->comment = $request->closure_incident_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($labtab->closure_incident_c) || $labtab->closure_incident_c === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-           
-        }
+
 
         $department = [
             'CQA' => 'Corporate Quality Assurance',
@@ -4252,28 +4248,28 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     $history->save();
         // }
 
-        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
+        // if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
 
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Review Attachment';
-            $history->previous = $lastDocument->QA_Head_Attachment;
-            $history->current = $data->QA_Head_Attachment;
-            $history->comment = $request->QA_Review_Comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'QA Review Attachment';
+        //     $history->previous = $lastDocument->QA_Head_Attachment;
+        //     $history->current = $data->QA_Head_Attachment;
+        //     $history->comment = $request->QA_Review_Comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
            
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
         if ($lastDocument->QA_initial_Comments != $data->QA_initial_Comments) {
 
@@ -4637,28 +4633,28 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment ) {
+        // if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment ) {
 
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head Attachment';
-            $history->previous = $lastDocument->QA_Head_Attachment;
-            $history->current = $data->QA_Head_Attachment;
-            $history->comment = $request->QA_Head_Attachment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'QA Head Attachment';
+        //     $history->previous = $lastDocument->QA_Head_Attachment;
+        //     $history->current = $data->QA_Head_Attachment;
+        //     $history->comment = $request->QA_Head_Attachment_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
            
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->effect_check_date != $data->effect_check_date ) {
 
             $history = new LabIncidentAuditTrial();
@@ -5435,49 +5431,8 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             $history->save();
         }
 
-        if ($lastDocument->Detail_investigation_ssfi != $data->Detail_investigation_ssfi) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Detail Investigation';
-            $history->previous = $lastDocument->Detail_investigation_ssfi;
-            $history->current = $data->Detail_investigation_ssfi;
-            $history->comment = $request->Detail_investigation_ssfi_comment ?? "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-     if (is_null($lastDocument->Detail_investigation_ssfi) || $lastDocument->Detail_investigation_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-          
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+    
 
-        if ($lastDocument->proposed_corrective_ssfi != $data->proposed_corrective_ssfi) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Proposed Corrective';
-            $history->previous = $lastDocument->proposed_corrective_ssfi;
-            $history->current = $data->proposed_corrective_ssfi;
-            $history->comment = $request->proposed_corrective_ssfi_comment ?? "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-     if (is_null($lastDocument->proposed_corrective_ssfi) || $lastDocument->proposed_corrective_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-          
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
 
         if ($lastDocument->root_cause_ssfi != $data->root_cause_ssfi) {
             $history = new LabIncidentAuditTrial();
@@ -6004,8 +5959,10 @@ $suitabilityReport->save();
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                    
                     $data=LabIncident::find($id);
+                    // $p_record = OutOfCalibration::find($id);
+                    $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                    $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record'));
 
                }
 
@@ -6066,7 +6023,11 @@ $suitabilityReport->save();
                if ($request->revision == "Extension") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $relatedRecords = Helpers::getAllRelatedRecords();
-                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   $data=LabIncident::find($id);
+                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    $count = Helpers::getChildData($id, $parent_type);
+                    $countData = $count + 1; 
+                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record'));
 
                }
 
@@ -6229,6 +6190,20 @@ $suitabilityReport->save();
             }
             $history->save();
 
+            // $list = Helpers::getCftUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
 
             $labstate->update();
 
@@ -6284,12 +6259,11 @@ $suitabilityReport->save();
 
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -6330,7 +6304,7 @@ $suitabilityReport->save();
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 // $history->activity_type = 'Activity Log';
-                $history->activity_type = 'QA Head/HOD Initial Review Complete By, QA Head/HOD Initial Review Complete On';
+                $history->activity_type = 'QC Head/HOD Initial Review Complete By, QC Head/HOD Initial Review Complete On';
                 if (is_null($lastDocument->verification_complete_completed_by) || $lastDocument->verification_complete_completed_by === '') {
                     $history->previous = "";
                 } else {
@@ -6357,15 +6331,14 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
-                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Initial Review Complete");
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
                 //                 }
                 //             );
                 //         }
@@ -6430,12 +6403,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
@@ -6504,12 +6476,11 @@ $suitabilityReport->save();
 
                     // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                     // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //         $email = Helpers::getUserEmail($u->user_id);
                     //             if ($email !== null) {
                     //             Mail::send(
                     //                 'mail.view-mail',
-                    //                 ['data' => $changeControl, 'site' => "view", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                 function ($message) use ($email, $changeControl) {
                     //                     $message->to($email)
                     //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
@@ -6561,10 +6532,10 @@ $suitabilityReport->save();
                 $history->change_to = "QA Secondary Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->action='QA Head/HOD Secondary Review Complete';
-                $history->stage='QA Head/HOD Secondary Review Complete';
+                $history->action='Qc Head/HOD Secondary Review Complete';
+                $history->stage='Qc Head/HOD Secondary Review Complete';
 
-                $history->activity_type = 'QA Head/HOD Secondary Review Complete By, QA Head/HOD Secondary Review Complete On';
+                $history->activity_type = 'Qc Head/HOD Secondary Review Complete By, Qc Head/HOD Secondary Review Complete On';
                     if (is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_by === '') {
                         $history->previous = "";
                     } else {
@@ -6580,12 +6551,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Secondary Review Complete");
@@ -6652,14 +6622,13 @@ $suitabilityReport->save();
 
                 $history->save();
 
-                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getCftUserList($changeControl->division_id);
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Secondry Review Complete");
@@ -6729,12 +6698,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Root Cause Not Found", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Root Cause Not Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Root Cause Not Found");
@@ -6769,28 +6737,27 @@ $suitabilityReport->save();
                 $history->stage='QA Head/HOD Final Review Complete';
                 $history->action='QA Head/HOD Final Review Complete';
 
-                $history->activity_type = 'QA Head/HOD Final Review Complete By, QA Head/HOD Final Review Complete On';
-                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
-                        $history->previous = "";
-                    } else {
-                        $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
-                    }
-                    $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
-                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                // $history->activity_type = 'QA Head/HOD Final Review Complete By, QA Head/HOD Final Review Complete On';
+                //     if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                //         $history->previous = "";
+                //     } else {
+                //         $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
+                //     }
+                //     $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
+                //     if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                //         $history->action_name = 'New';
+                //     } else {
+                //         $history->action_name = 'Update';
+                //     }
 
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Head/HOD Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Head/HOD Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head/HOD Final Review Complete");
@@ -6842,12 +6809,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "QA Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Final Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
@@ -6900,12 +6866,11 @@ $suitabilityReport->save();
                 $history->save();
                 // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "view", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Root Cause Found");
@@ -6946,17 +6911,18 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_1_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_1_by . ' , ' . $lastDocument->more_info_req_1_on;
-                }
-                $history->current = $changeControl->more_info_req_1_by . ' , ' . $changeControl->more_info_req_1_on;
+                $history->activity_type = "Not Applicable";
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_1_by . ' , ' . $lastDocument->more_info_req_1_on;
+                // }
+                // $history->current = $changeControl->more_info_req_1_by . ' , ' . $changeControl->more_info_req_1_on;
 
-                // $history->previous = "Not Applicable";
-                // $history->current = "Not Applicable";
+                $history->previous = "Not Applicable";
                 $history->current = "Not Applicable";
+                // $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6966,13 +6932,29 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
 
                 toastr()->success('Document Sent');
@@ -6986,14 +6968,14 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_2_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                // $history->activity_type = 'Not Applicable';
-                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_2_by . ' , ' . $lastDocument->more_info_req_2_on;
-                }
-                $history->current = $changeControl->more_info_req_2_by . ' , ' . $changeControl->more_info_req_2_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                $history->activity_type = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_2_by . ' , ' . $lastDocument->more_info_req_2_on;
+                // }
+                // $history->current = $changeControl->more_info_req_2_by . ' , ' . $changeControl->more_info_req_2_on;
                 $history->previous = "Not Applicable";
                 $history->current = "Not Applicable";
                 $history->comment = $request->comment;
@@ -7005,13 +6987,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7024,16 +7021,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_3_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_3_by . ' , ' . $lastDocument->more_info_req_3_on;
-                }
-                $history->current = $changeControl->more_info_req_3_by . ' , ' . $changeControl->more_info_req_3_on;
-                // $history->activity_type = 'Not Applicable';
-                // $history->previous = "Not Applicable";
-                // $history->current = "Not Applicable";
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_3_by . ' , ' . $lastDocument->more_info_req_3_on;
+                // }
+                // $history->current = $changeControl->more_info_req_3_by . ' , ' . $changeControl->more_info_req_3_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7043,13 +7040,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7062,16 +7074,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_4_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_4_by . ' , ' . $lastDocument->more_info_req_4_on;
-                }
-                $history->current = $changeControl->more_info_req_4_by . ' , ' . $changeControl->more_info_req_4_on;
-                // $history->activity_type = 'Not Applicable';
-                // $history->previous = "Not Applicable";
-                // $history->current = "Not Applicable";
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_4_by . ' , ' . $lastDocument->more_info_req_4_on;
+                // }
+                // $history->current = $changeControl->more_info_req_4_by . ' , ' . $changeControl->more_info_req_4_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7081,13 +7093,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7100,16 +7127,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_5_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_5_by . ' , ' . $lastDocument->more_info_req_5_on;
-                }
-                $history->current = $changeControl->more_info_req_5_by . ' , ' . $changeControl->more_info_req_5_on;
-                // $history->activity_type = 'Not Applicable';
-                // $history->previous = "Not Applicable";
-                // $history->current = "Not Applicable";
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_5_by . ' , ' . $lastDocument->more_info_req_5_on;
+                // }
+                // $history->current = $changeControl->more_info_req_5_by . ' , ' . $changeControl->more_info_req_5_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7119,13 +7146,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7138,16 +7180,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_6_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_6_by . ' , ' . $lastDocument->more_info_req_6_on;
-                }
-                $history->current = $changeControl->more_info_req_6_by . ' , ' . $changeControl->more_info_req_6_on;
-                // $history->activity_type = 'Not Applicable';
-                // $history->previous = "Not Applicable";
-                // $history->current = "Not Applicable";
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_6_by . ' , ' . $lastDocument->more_info_req_6_on;
+                // }
+                // $history->current = $changeControl->more_info_req_6_by . ' , ' . $changeControl->more_info_req_6_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7157,13 +7199,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7176,13 +7233,13 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_7_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_7_by . ' , ' . $lastDocument->more_info_req_7_on;
-                }
-                $history->current = $changeControl->more_info_req_7_by . ' , ' . $changeControl->more_info_req_7_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_7_by . ' , ' . $lastDocument->more_info_req_7_on;
+                // }
+                // $history->current = $changeControl->more_info_req_7_by . ' , ' . $changeControl->more_info_req_7_on;
                 // $history->activity_type = 'Not Applicable';
                 // $history->previous = "Not Applicable";
                 // $history->current = "Not Applicable";
@@ -7195,13 +7252,28 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                // $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7263,6 +7335,21 @@ $suitabilityReport->save();
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                 }
+                //             );
+                //         }
+                // }
+
             $changeControl->update();
             toastr()->success('Document Sent');
             return back();

@@ -81,7 +81,8 @@
                             <div class="group-input">
                                 <label for="question-bank">Choose Question Bank</label>
                                 <select name="question_bank"  id="question-bank">
-                                    <option value="">---</option>
+                                  
+                                    <option value="" disabled selected>Question Bank Select</option>
                                     @foreach ($questions as $data)
                                     <option data-id="{{ $data->id }}" value="{{ $data->id }}" @if($quize->question_bank == $data->id) selected @endif>{{ $data->title }}</option>
                                     @endforeach
@@ -137,10 +138,32 @@
                 </div>
             </div>
 
-            <div class="foot-btns">
+            <div class="foot-btn">
                 <button>Cancel</button>
                 <button id="quize-Submit" type="submit">Save</button>
             </div>
+               <style>
+                .foot-btn button {
+                background: #fff;
+                color: #4274da;
+                font-size: 1.2rem;
+                border: 0;
+                padding: 5px 15px;
+                cursor: pointer;
+                border-radius: 5px; 
+            }
+            .foot-btn {
+                display: flex;
+                justify-content: flex-end; 
+                gap: 10px; 
+            }
+            .foot-btns button:hover {
+                background-color: #4274da;
+                color: #fff;
+                transition: background-color 0.3s ease;
+            }
+
+               </style>
             </form>
 
         </div>

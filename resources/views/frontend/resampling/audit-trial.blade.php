@@ -1,14 +1,6 @@
-
-
-
-
-
-
-
-
-
 @extends('frontend.layout.main')
 @section('container')
+
     <div id="audit-trial">
         <div class="container-fluid">
             <!DOCTYPE html>
@@ -175,13 +167,22 @@
                     justify-content: end;
                     gap: 10px;
                 }
+
+                .allow-wb {
+                   word-break: break-all;
+                   word-wrap: break-word;
+                }
+
+                
+
+                
             </style>
 
             <body>
                 <div style="display: flex; justify-content: flex-end;">
                    
-                    <a  class="button_theme1 text-white" style="margin-right: 10px" href="{{ url('resampling_view', $document->id) }}"> Back </a>
-                     <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a> 
+                    <!-- <a  class="button_theme1 text-white" style="margin-right: 10px" href="{{ url('resampling_view', $document->id) }}"> Back </a>
+                     <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a>  -->
                     </div>
 
                 <header>
@@ -194,6 +195,152 @@
                         </tr>
                     </table>
 
+
+
+
+
+
+                    @php
+                         $userRoles = DB::table('user_roles')
+                             ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
+                             ->get();
+                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                         $auditCollect = DB::table('audit_reviewers_details')
+                             ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                             ->latest()
+                             ->first();
+                     @endphp
+
+                     <div class="d-flex justify-content-between align-items-center">
+                         @if ($auditCollect)
+                             <div style="color: green; font-weight: 600">The Audit Trail has been reviewed.</div>
+                         @else
+                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
+                         @endif
+                         <div class="buttons-new">
+                             @if ($document->stage < 9 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                     Review
+                                 </button>
+                             @endif
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                 View
+                             </button>
+                             <button class="button_theme1"><a class="text-white"
+                             href="{{ url('resampling_view', $document->id) }}">
+                                     Back
+                                 </a>
+                             </button>
+                             <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a>
+                         </div>
+                     </div>
+
+                     <div class="modal fade" id="auditViewers">
+                         <div class="modal-dialog modal-dialog-centered">
+                             <div class="modal-content">
+
+                                 <style>
+                                     .validationClass {
+                                         margin-left: 100px
+                                     }
+                                 </style>
+
+                                 <!-- Modal Header -->
+                                 <div class="modal-header">
+                                     <h4 class="modal-title">Audit Reviewers Details</h4>
+                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                 </div>
+
+                                 @php
+                                     $reviewer = DB::table('audit_reviewers_details')
+                                         ->where(['doc_id' => $document->id, 'type' => 'Resampling'])
+                                         ->get();
+                                 @endphp
+                                 <!-- Customer grid view -->
+                                 <div class="table-responsive" style="padding: 20px;">
+                                     <table class="table">
+                                         <thead>
+                                             <tr>
+                                                 <th>Review By</th>
+                                                 <th>Review On</th>
+                                                 <th>Comment</th>
+                                             </tr>
+                                         </thead>
+                                         <tbody>
+                                             <!-- Check if reviewer array is empty or null -->
+                                             @if ($reviewer && count($reviewer) > 0)
+                                                 <!-- Iterate over stored reviewer and display them -->
+                                                 @foreach ($reviewer as $review)
+                                                     <tr>
+                                                         <td>{{ $review->reviewer_comment_by }}</td>
+                                                         <td>{{ \Carbon\Carbon::parse($review->reviewer_comment_on)->format('d-M-Y') }}
+                                                         </td>
+                                                         <td>{{ $review->reviewer_comment }}</td>
+                                                     </tr>
+                                                 @endforeach
+                                             @else
+                                                 <tr>
+                                                     <td colspan="9">No results available</td>
+                                                 </tr>
+                                             @endif
+                                         </tbody>
+                                     </table>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     <div class="modal fade" id="auditReviewer">
+                         <div class="modal-dialog modal-dialog-centered">
+                             <div class="modal-content">
+
+                                 <style>
+                                     .validationClass {
+                                         margin-left: 100px
+                                     }
+                                 </style>
+
+                                 <!-- Modal Header -->
+                                 <div class="modal-header">
+                                     <h4 class="modal-title">Audit Reviewers</h4>
+                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                 </div>
+                                 <!-- <form action="" method="POST"> -->
+                                 <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                     @csrf
+                                     <!-- Modal body -->
+                                     <div class="modal-body">
+                                         <div class="group-input">
+                                             <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                     class="text-danger">*</span></label>
+                                             <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                     does not require completion</small></div>
+                                             <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                         </div>
+                                         <div class="group-input">
+                                             <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                             <input disabled type="text" class="form-control"
+                                                 name="reviewer_completed_by" id="reviewer_completed_by"
+                                                 value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                         </div>
+                                         <div class="group-input">
+                                             <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                             <input disabled type="text" class="form-control"
+                                                 name="reviewer_completed_on" id="reviewer_completed_on"
+                                                 value="{{ $auditCollect && $auditCollect->reviewer_comment_on ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
+                                         </div>
+
+                                         <input type="hidden" id="type" name="type" value="Resampling">
+                                     </div>
+                                     <div class="modal-footer">
+                                         {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                         <button type="button" data-bs-dismiss="modal">Close</button>
+                                     </div>
+                                 </form>
+
+                             </div>
+                         </div>
+                     </div>
                  
 
                     <table>
@@ -220,82 +367,63 @@
         </header>
 
         <div class="inner-block">
-            <div class="division">
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="typedata">Type</label>
+                        <select class="form-control" id="typedata" name="typedata">
+                            <option value="">Select Type</option>
+                            <option value="cft_review">CFT Review</option>
+                            <option value="notification">Notification</option>
+                            <option value="business">Business Rules</option>
+                            <option value="stage">Stage Change</option>
+                            <option value="user_action">User Action</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="user">Perform By</label>
+                        <select class="form-control" id="user" name="user">
+                            <option value="">Select User</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="from_date">From Date</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="to_date">To Date</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date">
+                    </div>
+                </div>
+
+
+                <div class="division">
+                </div>
+                <div class="second-table">
+                    <table>
+                        <thead>
+                            <tr class="table_bg">
+                                <th>S.No</th>
+                                <th>Flow Changed From</th>
+                                <th>Flow Changed To</th>
+                                <th>Data Field</th>
+                                <th>Action Type</th>
+                                <th>Performer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-data">
+                            @include('frontend.resampling.resampling_filter')
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="second-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
 
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
 
-                        @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
 
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
 
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -365,7 +493,50 @@
             </div>
         </div>
     </div>
-    <script type='text/javascript'>
+   
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val(); 
+    
+                $.ajax({
+                    url: "{{ route('api.resaplingFilter',$document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
+    
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
+            });
+        });
+
+
+
+
+
+
+
+
         $(document).ready(function() {
 
             $('#auditTable').on('click', '.viewdetails', function() {

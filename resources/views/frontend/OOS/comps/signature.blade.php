@@ -1,47 +1,47 @@
 <div id="CCForm17" class="inner-block cctabcontent">
     <div class="inner-block-content">
-         <center><div class="sub-head">Activity Log</div></center>
          <div class="row">
-            <div class="col-12 sub-head">  Initiator </div>
+            <div class="col-12 sub-head"> Submit</div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Audit Agenda">Submited by</label>
+                    <label for="Audit Agenda">Submit By</label>
                     <div class="static">{{ $data->Submite_by }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Audit Agenda">Submited on</label>
+                    <label for="Audit Agenda">Submit On</label>
                     <div class="Date">{{ $data->Submite_on }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                <div class="group-input">
-                <label for="Submitted on">Comment</label>
+                <label for="Submitted on">Submit Comment</label>
                 <div class="Date">{{ $data->Submite_comment }}</div>
                </div>
             </div>
+            <div class="col-12 sub-head">Request for Cancellation</div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="cancelled by">Cancelled By :</label>
+                    <label for="cancelled by">Request for Cancellation By</label>
                     <div class="static">{{ $data->cancelled_by }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="cancelled on">Cancelled On :</label>
+                    <label for="cancelled on">Request for Cancellation On</label>
                     <div class="Date">{{ $data->cancelled_on }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                <div class="group-input">
-                <label for="Submitted on">Comment</label>
+                <label for="Submitted on">Request for Cancellation Comment</label>
                 <div class="Date">{{ $data->comment_cancle }}</div>
                </div>
             </div>
         <div>
         <div class="row">
-        <div class="col-12 sub-head">HOD/Designee</div>
+        <div class="col-12 sub-head">HOD Primary Review Complete</div>
          <!-- Request More Info -->
             <!--  Initial Phase I Investigation  Done By -->
             <div class="col-lg-4">
@@ -62,9 +62,28 @@
                 <div class="Date">{{ $data->HOD_Primary_Review_Complete_Comment }}</div>
                </div>
             </div>
+            <div class="col-12 sub-head">  Cancel </div>
+            <div class="col-lg-4">
+                <div class="group-input">
+                    <label for="cancelled by">Cancel By</label>
+                    <div class="static">{{ $data->cancelled_by }}</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="group-input">
+                    <label for="cancelled on">Cancel On</label>
+                    <div class="Date">{{ $data->cancelled_on }}</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="group-input">
+                <label for="Submitted on">Cancel Comment</label>
+                <div class="Date">{{ $data->comment_cancle }}</div>
+               </div>
+            </div>
         <div>
         <div class="row">
-            <div class="col-12 sub-head">QC Head/Designee </div>
+            <div class="col-12 sub-head">QA/CQA Head Primary Review Complete</div>
             <!-- Request More Info -->
             <!-- Assignable Cause Found -->
             <div class="col-lg-4">
@@ -87,7 +106,7 @@
             </div>
             <!-- Request More Info -->
             <!-- Assignable Cause Not Found -->
-            <div class="col-12 sub-head">Initiator</div>
+            <div class="col-12 sub-head">Phase IA Investigation</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Audit Attachments">Phase IA Investigation By</label>
@@ -108,7 +127,7 @@
             </div>
         <div>
         <div class="row">
-            <div class="col-12 sub-head">HOD/Designee</div>
+            <div class="col-12 sub-head">Phase IA HOD Review Complete</div>
              <!-- Request More Info -->
             <!-- Correction Completed -->
             <div class="col-lg-4">
@@ -131,7 +150,7 @@
             </div>
             <!-- Request More Info -->
             <!-- Proposed Hypothesis Experiment -->
-            <div class="col-12 sub-head">QA/CQA</div>
+            <div class="col-12 sub-head">Phase IA QA/CQA Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Audit Response Completed By"> Phase IA QA/CQA Review Complete By</label>
@@ -151,7 +170,7 @@
                </div>
             </div>
             <!-- Obvious Error Found -->
-            <div class="col-12 sub-head">CQA/QA Head/Designee</div>
+            <div class="col-12 sub-head">Assignable Cause Found</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Audit Attachments">Assignable Cause Not Found By</label>
@@ -191,7 +210,7 @@
             </div>
         <div>
         <div class="row">
-            <div class="col-12 sub-head">Initiator</div>
+            <div class="col-12 sub-head">Phase IB Investigation</div>
             <!-- Request More Info -->
             <!-- Repeat Analysis Completed -->
             <div class="col-lg-4">
@@ -214,7 +233,7 @@
             </div>
             <!-- Request More Info -->
             <!-- Full Scale Investigation -->
-            <div class="col-12 sub-head">HOD/Designee</div>
+            <div class="col-12 sub-head">Phase IB HOD Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Audit Attachments">Phase IB HOD Review Complete by</label>
@@ -235,7 +254,7 @@
             </div>
         <div>
         <div class="row">
-            <div class="col-12 sub-head">QA/CQA</div>
+            <div class="col-12 sub-head">Phase IB QA/CQA Review Complete</div>
             <!-- Request More Info -->
             <!-- Assignable Cause Found (Manufacturing Defect) -->
             <div class="col-lg-4">
@@ -260,19 +279,19 @@
             <div class="col-12 sub-head">CQA/QA Head/Designee</div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Reference Recores">P-I B Assignable Cause Not Found By</label>
+                    <label for="Reference Recores">P-IB Assignable Cause Not Found By</label>
                     <div class=" static">{{ $data->P_I_B_Assignable_Cause_Not_Found_By }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Reference Recores">P-I B Assignable Cause Not Found On </label>
+                    <label for="Reference Recores">P-IB Assignable Cause Not Found On </label>
                     <div class="date">{{ $data->P_I_B_Assignable_Cause_Not_Found_On }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                <div class="group-input">
-                <label for="Submitted on">P-I B Assignable Cause Not Found Comment</label>
+                <label for="Submitted on">P-IB Assignable Cause Not Found Comment</label>
                 <div class="Date">{{ $data->P_I_B_Assignable_Cause_Not_Found_Comment }}</div>
                </div>
             </div>
@@ -281,25 +300,25 @@
             
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Reference Recores">P-I B Assignable Cause Found By</label>
+                    <label for="Reference Recores">P-IB Assignable Cause Found By</label>
                     <div class="static">{{ $data->P_I_B_Assignable_Cause_Found_By }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="Reference Recores">P-I B Assignable Cause Found On</label>
+                    <label for="Reference Recores">P-IB Assignable Cause Found On</label>
                     <div class="date">{{ $data->P_I_B_Assignable_Cause_Found_On }}</div>
                 </div>
             </div>
             <div class="col-lg-4">
                <div class="group-input">
-                <label for="Submitted on">P-I B Assignable Cause Found Comment</label>
+                <label for="Submitted on">P-IB Assignable Cause Found Comment</label>
                 <div class="Date">{{ $data->P_I_B_Assignable_Cause_Found_Comment }}</div>
                </div>
             </div>
         
              <!--  Phase II A Correction Inconclusive -->
-             <div class="col-12 sub-head">Production</div>
+             <div class="col-12 sub-head">Phase II A Investigation</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Reference Recores">Phase II A Investigation By</label>
@@ -321,7 +340,7 @@
        
             <!-- Request More Info -->
              <!-- Retesting/resampling -->
-             <div class="col-12 sub-head">Production Head</div>
+             <div class="col-12 sub-head">Phase II A HOD Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Reference Recores">Phase II A HOD Review Complete By </label>
@@ -342,7 +361,7 @@
             </div>
         
             <!-- Phase II B Correction Inconclusive -->
-            <div class="col-12 sub-head">QA/CQA</div>
+            <div class="col-12 sub-head">Phase II A QA/CQA Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Reference Recores">Phase II A QA/CQA Review Complete By </label>
@@ -404,7 +423,7 @@
                 <div class="Date">{{ $data->P_II_A_Assignable_Cause_Found_Comment }}</div>
                </div>
             </div>
-            <div class="col-12 sub-head">Initiator</div>
+            <div class="col-12 sub-head">Phase II B Investigation</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="completed by"> Phase II B Investigation By</label>
@@ -423,7 +442,7 @@
                 <div class="Date">{{ $data->Phase_II_B_Investigation_Comment }}</div>
                </div>
             </div>
-            <div class="col-12 sub-head">HOD/Designee</div>
+            <div class="col-12 sub-head">Phase II B HOD Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="completed by"> Phase II B HOD Review Complete By</label>
@@ -442,7 +461,7 @@
                 <div class="Date">{{ $data->Phase_II_B_HOD_Review_Complete_Comment }}</div>
                </div>
             </div>
-            <div class="col-12 sub-head">QA/CQA</div>
+            <div class="col-12 sub-head">Phase II B QA/CQA Review Complete</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="completed by">Phase II B QA/CQA Review Complete By</label>
@@ -461,7 +480,7 @@
                 <div class="Date">{{ $data->Phase_II_B_QA_Review_Complete_Comment }}</div>
                </div>
             </div>
-            <div class="col-12 sub-head">CQA/QA Head /Designee</div>
+            <div class="col-12 sub-head">P-II B Assignable Cause Found</div>
             <div class="col-lg-4">
                 <div class="group-input">
                     <label for="completed by">P-II B Assignable Cause Not Found By</label>
@@ -498,8 +517,28 @@
                 <div class="Date">{{ $data->P_II_B_Assignable_Cause_Found_Comment }}</div>
                </div>
             </div>
-        </div>
 
+            <div class="col-12 sub-head">P III Investigation Applicaion/Not Applicable</div>
+
+            <div class="col-lg-4">
+                <div class="group-input">
+                    <label for="completed by">P III Investigation Applicaion/Not Applicable By</label>
+                    <div class="static">{{ $data->P_III_Investigation_Applicable_By }}</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="group-input">
+                    <label for="completed on">P III Investigation Applicaion/Not Applicable On</label>
+                    <div class="Date">{{ $data->P_III_Investigation_Applicable_On }}</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="group-input">
+                <label for="Submitted on">P III Investigation Applicaion/Not Applicable Comment</label>
+                <div class="Date">{{ $data->P_III_Investigation_Applicable_Comment }}</div>
+               </div>
+            </div>
+        </div>
         <div class="button-block">
             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
             

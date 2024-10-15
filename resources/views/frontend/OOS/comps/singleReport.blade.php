@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOS/OOT Single Report
+                    OOS/OOT Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -177,7 +177,9 @@
                     <strong> OOS/OOT No.</strong>
                 </td>
                 <td class="w-40">
-                  {{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ $record_number }}                
+                {{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
+
+                  {{--{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}--}}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -243,49 +245,54 @@
         <div class="content-table">
             <!-- start block -->
             <div class="block">
-                <div class="block-head"> General Information </div>
+                <div class="block-head">General Information</div>
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{  str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">
+                            {{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
+                        </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="w-30">{{ ($data->Form_type) }}</td>
-                        {{ $data->created_at }} added by {{ $data->originator }}
+                        <td class="w-30">{{ $data->Form_type }}</td>
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
-                       
-                     </tr>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                    </tr>
                     <tr>
-                       <th class="w-20">Date of Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30">@if($data->due_date){{ str_pad(Helpers::getdateFormat($data['due_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
-                        </tr>
+                        <td class="w-30">
+                            @if($data->due_date)
+                                {{ Helpers::getdateFormat($data->due_date) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiation department Group</th>
+                        <th class="w-20">Initiation Department Group</th>
                         <td class="w-30">
-                        <select>
-                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
-                            @endif>{{ $initiator_group }}</option>
-                        @endforeach
-                        </select>
+                            @if(Helpers::getFullDepartmentName($data->initiator_group))
+                                {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
-                        <th class="w-20">Initiation department Code</th>
-                        <td class="w-80">{{ $data->initiator_group_code }}</td>
+                        <th class="w-20">Initiation Department Code</th>
+                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                       <th class="w-20">If Others</th>
+                        <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Is Repeat </th>
+                        <th class="w-20">Is Repeat</th>
                         <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
@@ -293,34 +300,45 @@
                         <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
-                   </tr>
+                    </tr>
                     <tr>
                         <th class="w-20">Reference System Document</th>
                         <td class="w-80">@if($data->reference_system_document_gi){{ $data->reference_system_document_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Reference Document</th>
-                        <td class="w-80">@if($data->reference_document_gi){{ $data->reference_document_gi }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->reference_document){{ $data->reference_document }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Occurred On</th>
-                        <td class="w-30">@if($data->deviation_occured_on_gi)
-                            {{ str_pad(Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">OOS/OOT Occurred On</th>
+                        <td class="w-30">
+                            @if($data->deviation_occured_on_gi)
+                                {{ Helpers::getdateFormat($data->deviation_occured_on_gi) }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
-                        <th class="w-20"> OOS Observed On </th>
+                        <th class="w-20">OOS/OOT Observed On</th>
                         <td class="w-80">@if($data->oos_observed_on){{ $data->oos_observed_on }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr> 
+                    <tr>
                         <th class="w-20">Delay Justification</th>
                         <td class="w-80">@if($data->delay_justification){{ $data->delay_justification }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Reported On</th>
-                        <td class="w-30">@if($data->oos_reported_date)
-                            {{ str_pad(Helpers::getdateFormat($data['oos_reported_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">OOS/OOT Reported On</th>
+                        <td class="w-30">
+                            @if($data->oos_reported_date)
+                                {{ Helpers::getdateFormat($data->oos_reported_date) }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
                         <th class="w-20">Immediate Action</th>
                         <td class="w-80">@if($data->immediate_action){{ $data->immediate_action }}@else Not Applicable @endif</td>
                     </tr>
-                      <div class="block-head">OOS Information</div>
+                </table>
+
+                <div class="block-head">OOS/OOT Information</div>
+                <table>
                     <tr>
                         <th class="w-20">Sample Type</th>
                         <td class="w-80">@if($data->sample_type_gi){{ Helpers::recordFormat($data->sample_type_gi) }}@else Not Applicable @endif</td>
@@ -329,7 +347,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Market</th>
-                        <td class="w-80">@if($data->market_gi){{ $data->market_gi}}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Customer</th>
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
@@ -343,9 +361,9 @@
                         <th class="w-20">Manufacture/Vendor</th>
                         <td class="w-80">@if($data->manufacture_vendor){{ Helpers::recordFormat($data->manufacture_vendor) }}@else Not Applicable @endif</td>
                     </tr>
-                     
                 </table>
             </div>
+
             <!-- Allgrid -->
             <!-- Info. On Product/ Material -->
 
@@ -516,13 +534,13 @@
             </div>
              <!-- OOS Details  -->
             <div class="block">
-                <div class="block-head"> OOS Details</div>
+                <div class="block-head"> OOS/OOT Details</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
                         <th style="width: 4%">Row#</th>
                                 <th style="width: 8%">AR Number.</th>
-                                <th style="width: 8%">Test Name of OOS</th>
+                                <th style="width: 8%">Test Name of OOS/OOT</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
                                 <!-- <th style="width: 16%">File Attachment</th> -->
@@ -536,8 +554,7 @@
                             <td class="w-15">{{ $datagridIII['oos_test_name'] ?  $datagridIII['oos_test_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
-                            <td class="w-15">
-                            {{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
+                            <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
                             </td>
                         </tr>
                         @endforeach
@@ -616,8 +633,8 @@
                             <td class="w-15">{{ $instrument_detail ? $key + 1  : "Not Applicable" }}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_name'] ?  $instrument_detail['instrument_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_id_number'] ?  $instrument_detail['instrument_id_number']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  $products_detail['calibrated_on']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  $products_detail['calibratedduedate_on']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibrated_on'] ?  Helpers::getdateFormat($instrument_detail['calibrated_on']): "Not Applicable"}}</td>
+                            <td class="w-15">{{ $instrument_detail['calibratedduedate_on'] ?  Helpers::getdateFormat($instrument_detail['calibratedduedate_on']): "Not Applicable"}}</td>
                         </tr>
                         @endforeach
                         @else
@@ -636,7 +653,7 @@
 
            <div class="block">
             <div class="block-head">HOD Primary Review</div>
-            <table> 
+            <table>
                <tr>
                     <th class="w-20">HOD Remark</th>
                     <td class="w-80">{{ $data->hod_remark1 ? $data->hod_remark1 : 'Not Applicable' }}</td>
@@ -644,7 +661,7 @@
              </table>
            </div>
            <div class="block">
-            <div class="block-head">HOD Attachment</div>
+            <div class="block-head">HOD Primary Attachment</div>
               <div class="border-table">
                 <table>
                     <tr class="table_bg">
@@ -670,9 +687,9 @@
 
           {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
 
-           <div class="block">
+           {{-- <div class="block">
             <div class="block-head">CQA/QA Head</div>
-            <table> 
+            <table>
                <tr>
                     <th class="w-20">CQA/QA Head Remark</th>
                     <td class="w-80">{{ $data->QA_Head_remark1 ? $data->QA_Head_remark1 : 'Not Applicable' }}</td>
@@ -702,21 +719,21 @@
                   @endif
               </table>
             </div>
-           </div>
+           </div> --}}
 
             {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
 
             <div class="block">
-                <div class="block-head">CQA/QA Head Primary</div>
-                <table> 
+                <div class="block-head">CQA/QA Head Primary Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">CQA/QA Head Primary Remark</th>
+                        <th class="w-20">CQA/QA Head Remark</th>
                         <td class="w-80">{{ $data->QA_Head_primary_remark1 ? $data->QA_Head_primary_remark1 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
             </div>
             <div class="block">
-                <div class="block-head">CCQA/QA Head Primary Attachment</div>
+                <div class="block-head">CQA/QA Head Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -741,42 +758,42 @@
             </div>
            <!-- Preliminary Lab. Investigation TapII -->
             <div class="block">
-                <div class="block-head"> Preliminary Lab. Investigation TapII </div>
+                <div class="block-head">Phase IA Investigation</div>
                 <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-10">Workbench evaluation</th>
+                    <tr>  {{ $data->created_at }} Added By {{ $data->originator }}
+                        <th class="w-10">Workbench Evaluation</th>
                         <td class="w-90">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
                     </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-10">Checklist outcome</th>
+                    <tr>  {{ $data->created_at }} Added By {{ $data->originator }}
+                        <th class="w-10">Checklist Outcome</th>
                         <td class="w-90">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
                     </tr>
-                    <tr>  
+                    <tr>
                         <th class="w-20">Immediate action taken</th>
                         <td class="w-80">{{ $data->root_comment ? $data->root_comment : 'Not Applicable' }}</td>
                     </tr>
-                    <tr>  
-                        <th class="w-20">Delay justification for investigation</th>
+                    <tr>
+                        <th class="w-20">Delay Justification For Investigation</th>
                         <td class="w-80">{{ $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : 'Not Applicable' }}</td>
                     </tr>
-                    <tr>  
-                        <th class="w-20">Analyst interview details</th>
+                    <tr>
+                        <th class="w-20">Analyst Interview Details</th>
                         <td class="w-80">{{ $data->analyst_interview_pli ? $data->analyst_interview_pli : 'Not Applicable' }}</td>
                     </tr>
                       <tr>
-                        <th class="w-20">Any other cause/suspected cause</th>
+                        <th class="w-20">Any Other Cause/Suspected Cause</th>
                         <td class="w-80">{{ $data->Any_other_cause ? $data->Any_other_cause : 'Not Applicable' }}</td>
                       </tr>
                       <tr>
-                        <th class="w-20">Any other batches analyzed</th>
+                        <th class="w-20">Any Other Batches Analyzed</th>
                         <td class="w-30">{{ $data->Any_other_batches ? $data->Any_other_batches : 'Not Applicable' }}</td>
                       </tr>
                       <tr>
-                        <th class="w-20">Details of trend</th>
+                        <th class="w-20">Details Of Trend</th>
                         <td class="w-80">{{ $data->details_of_trend ? $data->details_of_trend : 'Not Applicable' }}</td>
                       </tr>
                       <tr>
-                        <th class="w-20">Assignable cause and rational for assignable cause</th>
+                        <th class="w-20">Assignable Cause And Rational For Assignable Cause</th>
                         <td class="w-80">{{ $data->rational_for_assingnable ? $data->rational_for_assingnable : 'Not Applicable' }}</td>
                       </tr>
                       <tr>
@@ -788,11 +805,11 @@
                         <td class="w-80">{{ $data->phase_i_investigation_pli ? $data->phase_i_investigation_pli : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Category</th>
+                        <th class="w-20">OOS/OOT Category</th>
                         <td class="w-80">{{ $data->oos_category_root_cause_ident_plic ? $data->oos_category_root_cause_ident_plic : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Category (If Others)</th>
+                        <th class="w-20">OOS/OOT Category (If Others)</th>
                         <td class="w-80">{{ $data->oos_category_others_plic ? $data->oos_category_others_plic : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
@@ -806,7 +823,7 @@
                         <td class="w-80">{{ $data->root_cause_details_plic ? $data->root_cause_details_plic : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS review for similar nature</th>
+                        <th class="w-20">OOS/OOT Review For Similar Nature</th>
                         <td class="w-30">{{ $data->review_comments_plir ? $data->review_comments_plir : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
@@ -816,29 +833,29 @@
                         <td class="w-30">{{ $data->phase_ii_inv_required_plir ? $data->phase_ii_inv_required_plir : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Retest/Re-measurement required</th>
+                        <th class="w-20">Retest/Re-Measurement Required</th>
                         <td class="w-30">{{ $data->root_cause_identified_pia ? $data->root_cause_identified_pia : 'Not Applicable' }}</td>
-                        <th class="w-20">Resampling required</th>
+                        <th class="w-20">Resampling Required</th>
                         <td class="w-30">{{ $data->is_repeat_assingable_pia ? $data->is_repeat_assingable_pia : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Repeat testing required</th>
+                        <th class="w-20">Repeat Testing Required</th>
                         <td class="w-30">{{ $data->repeat_testing_pia ? $data->repeat_testing_pia : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Results of Retest/re-measurement</th>
+                        <th class="w-20">Results Of Retest/Re-Measurement</th>
                         <td class="w-80">{{ $data->Description_Deviation ? $data->Description_Deviation : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Results of Repeat testing</th>
+                        <th class="w-20">Results Of Repeat Testing</th>
                         <td class="w-80">{{ $data->result_of_repeat ? $data->result_of_repeat : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Impact assessment</th>
+                        <th class="w-20">Impact Assessment</th>
                         <td class="w-80">{{ $data->impact_assesment_pia ? $data->impact_assesment_pia : 'Not Applicable' }}</td>
                     </tr>
                 </table>
-                <div class="block-head">Analyst interview Attachment</div>
+                <div class="block-head">Analyst Interview Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -883,18 +900,18 @@
                       @endif
                   </table>
                 </div>
-            </div>  
-           
+
+
             {{-- <div class="block">
                 <table>
                    <tr>
                         <th class="w-20">Root Cause Identified</th>
                         <td class="w-30">{{ $data->root_cause_identified_plic ? $data->root_cause_identified_plic : 'Not Applicable' }}</td>
                     </tr>
-                    
-                  
-                   
-                   
+
+
+
+
                   <tr>
                         <th class="w-80"> Delay Justification for Preliminary Investigation.</th>
                         <td class="w-80">{{ $data->delay_justification_for_pi_plic ? $data->delay_justification_for_pi_plic : 'Not Applicable' }}</td>
@@ -925,15 +942,15 @@
             </div> --}}
             {{-- <div class="block">
                   <table>
-                    
+
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                       
-                       
+
+
                     </tr>
                     </table>
              </div>         --}}
             </div>
-            <div class="block">
+            {{-- <div class="block">
                 <h2>OOS Review for Similar Nature</h2>
                 <div class="block-head"> Info. On Product/ Material</div>
                 <div class="border-table">
@@ -990,7 +1007,7 @@
                                 <td class="w-2">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
                                 <td class="w-8">{{ $datagridV['info_oos_capa_requirement'] ?  $datagridV['info_oos_capa_requirement']: "Not Applicable"}}</td>
                                <td class="w-8">{{ $datagridIV['info_oos_capa_reference_number'] ?  $datagridIV['info_oos_capa_reference_number']: "Not Applicable"}}</td>
-                           
+
                             </tr>
                             @endforeach
                         @else
@@ -1001,20 +1018,20 @@
                         @endif
                     </table>
                 </div>
-            </div>
+            </div> --}}
               {{-- <!-- Phase IA HOD Primary --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA HOD Primary</div>
-                <table> 
+                <div class="block-head">Phase IA HOD Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">Phase IA HOD Primary Remark</th>
+                        <th class="w-20">Phase IA HOD Remark</th>
                         <td class="w-30">{{ $data->hod_remark2 ? $data->hod_remark2 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
                </div>
                <div class="block">
-                <div class="block-head">Phase IA HOD Primary Attachment</div>
+                <div class="block-head">Phase IA HOD Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -1041,8 +1058,8 @@
                 {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA CQA/QA</div>
-                <table> 
+                <div class="block-head">Phase IA CQA/QA Review</div>
+                <table>
                    <tr>
                         <th class="w-20">Phase IA CQA/QA Remark</th>
                         <td class="w-80">@if($data->QA_Head_remark2){{ $data->QA_Head_remark2 }}@else Not Applicable @endif</td>
@@ -1077,17 +1094,17 @@
                  {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
 
               <div class="block">
-                <div class="block-head">Phase IA CQAH/QAH</div>
-                <table> 
+                <div class="block-head">Phase IA CQAH/QAH Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">P-IA CQAH/QAH Primary Remark</th>
+                        <th class="w-20">P-IA CQAH/QAH Remark</th>
                         <td class="w-80">@if($data->QA_Head_primary_remark2){{ $data->QA_Head_primary_remark2 }}@else Not Applicable @endif</td>
 
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">P-IA CQAH/QAH Primary Attachment</div>
+                <div class="block-head">P-IA CQAH/QAH Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1114,83 +1131,83 @@
               {{-- <!-- Phase IB Investigation --> ~Aditya Rajput --}}
               <div class="block">
                 <div class="block-head">Phase IB Investigation</div>
-                <table> 
+                <table>
                    <tr>
-                        <th class="w-20">Outcome of Phase IA investigation</th>
+                        <th class="w-20">Outcome Of Phase IA Investigation</th>
                         <td class="w-80">{{ $data->outcome_phase_IA ? $data->outcome_phase_IA : 'Not Applicable' }}</td>
-                        <th class="w-20">Reason for proceeding to Phase IB investigation</th>
+                        <th class="w-20">Reason For Proceeding To Phase IB Investigation</th>
                         <td class="w-80">{{ $data->reason_for_proceeding ? $data->reason_for_proceeding : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Summary of Review</th>
+                    <th class="w-20">Summary Of Review</th>
                     <td class="w-80">{{ $data->summaryy_of_review ? $data->summaryy_of_review : 'Not Applicable' }}</td>
                     <th class="w-20">Probable Cause Identification</th>
                     <td class="w-80">{{ $data->Probable_cause_iden ? $data->Probable_cause_iden : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Proposal for Phase IB hypothesis</th>
-                    <td class="w-80">{{ $data->proposal_for_hypothesis_IB ? $data->proposal_for_hypothesis_IB : 'Not Applicable' }}</td>
+                    {{-- <th class="w-20">Proposal for Phase IB hypothesis</th>
+                    <td class="w-80">{{ $data->proposal_for_hypothesis_IB ? $data->proposal_for_hypothesis_IB : 'Not Applicable' }}</td> --}}
                     <th class="w-20">Others</th>
                     <td class="w-80">{{ $data->proposal_for_hypothesis_others ? $data->proposal_for_hypothesis_others : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Details of results (Including original OOS results for side by side comparison)</th>
+                    <th class="w-20">Details Of Results (Including original OOS/OOT results for side by side comparison)</th>
                     <td class="w-80">{{ $data->details_of_result ? $data->details_of_result : 'Not Applicable' }}</td>
-                    <th class="w-20">Probable Cause Identified in Phase IB investigation</th>
+                    <th class="w-20">Probable Cause Identified In Phase IB Investigation</th>
                     <td class="w-80">{{ $data->Probable_Cause_Identified ? $data->Probable_Cause_Identified : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Any other Comments/ Probable Cause Evidence</th>
+                    <th class="w-20">Any Other Comments/ Probable Cause Evidence</th>
                     <td class="w-80">{{ $data->Any_other_Comments ? $data->Any_other_Comments : 'Not Applicable' }}</td>
-                    <th class="w-20">Proposal for Hypothesis testing to confirm Probable Cause identified</th>
+                    <th class="w-20">Proposal For Hypothesis Testing To Confirm Probable Cause Identified</th>
                     <td class="w-80">{{ $data->Proposal_for_Hypothesis ? $data->Proposal_for_Hypothesis : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Summary of Hypothesis</th>
+                    <th class="w-20">Summary Of Hypothesis</th>
                     <td class="w-80">{{ $data->Summary_of_Hypothesis ? $data->Summary_of_Hypothesis : 'Not Applicable' }}</td>
                     <th class="w-20">Assignable Cause</th>
                     <td class="w-80">{{ $data->Assignable_Cause ? $data->Assignable_Cause : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Types of assignable cause</th>
+                    <th class="w-20">Types Of Assignable Cause</th>
                     <td class="w-80">{{ $data->Types_of_assignable ? $data->Types_of_assignable : 'Not Applicable' }}</td>
                     <th class="w-20">Others</th>
                     <td class="w-80">{{ $data->Types_of_assignable_others ? $data->Types_of_assignable_others : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Evaluation of Phase IB investigation Timeline</th>
+                    <th class="w-20">Evaluation Of Phase IB Investigation Timeline</th>
                     <td class="w-80">{{ $data->Evaluation_Timeline ? $data->Evaluation_Timeline : 'Not Applicable' }}</td>
-                    <th class="w-20">Is Phase IB investigation timeline met</th>
+                    <th class="w-20">Is Phase IB Investigation Timeline Met</th>
                     <td class="w-80">{{ $data->timeline_met ? $data->timeline_met : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">If No, Justify for timeline extension</th>
+                    <th class="w-20">If No, Justify For Timeline Extension</th>
                     <td class="w-80">{{ $data->timeline_extension ? $data->timeline_extension : 'Not Applicable' }}</td>
-                    <th class="w-20">CAPA applicable</th>
+                    <th class="w-20">CAPA Applicable</th>
                     <td class="w-80">{{ $data->CAPA_applicable ? $data->CAPA_applicable : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Resampling required</th>
+                    <th class="w-20">Resampling Required</th>
                     <td class="w-80">{{ $data->resampling_required_ib ? $data->resampling_required_ib : 'Not Applicable' }}</td>
-                    <th class="w-20">Repeat testing required</th>
+                    <th class="w-20">Repeat Testing Required</th>
                     <td class="w-80">{{ $data->repeat_testing_ib ? $data->repeat_testing_ib : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Repeat testing plan</th>
+                    <th class="w-20">Repeat Testing Plan</th>
                     <td class="w-80">{{ $data->Repeat_testing_plan ? $data->Repeat_testing_plan : 'Not Applicable' }}</td>
-                    <th class="w-20">Phase II investigation required</th>
+                    <th class="w-20">Phase II Investigation Required</th>
                     <td class="w-80">{{ $data->phase_ii_inv_req_ib ? $data->phase_ii_inv_req_ib : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
                     <th class="w-20">Production Person</th>
-                    <td class="w-80">{{ $data->production_person_ib ? $data->production_person_ib : 'Not Applicable' }}</td>
-                    <th class="w-20">Repeat analysis method/resampling</th>
+                    <td class="w-80">{{ Helpers::getInitiatorName($data->production_person_ib) ? Helpers::getInitiatorName($data->production_person_ib) : 'Not Applicable' }}</td>
+                    <th class="w-20">Repeat Analysis Method/Resampling</th>
                     <td class="w-80">{{ $data->Repeat_analysis_method ? $data->Repeat_analysis_method : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                    <th class="w-20">Details of repeat analysis</th>
+                    <th class="w-20">Details Of Repeat Analysis</th>
                     <td class="w-80">{{ $data->Details_repeat_analysis ? $data->Details_repeat_analysis : 'Not Applicable' }}</td>
-                    <th class="w-20">Impact assessment</th>
+                    <th class="w-20">Impact Assessment</th>
                     <td class="w-80">{{ $data->Impact_assessment1 ? $data->Impact_assessment1 : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
@@ -1203,16 +1220,16 @@
                {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase IB HOD Primary</div>
-                <table> 
+                <div class="block-head">Phase IB HOD Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">Phase IB HOD Primary Remark</th>
+                        <th class="w-20">Phase IB HOD Remark</th>
                         <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase IB HOD Primary Attachment</div>
+                <div class="block-head">Phase IB HOD Attachment</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -1239,16 +1256,16 @@
                {{-- <!-- Phase IB CQA/QA  --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase IB CQA/QA </div>
-                <table> 
+                <div class="block-head">Phase IB CQA/QA Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">Phase IB CQA/QA  Remark</th>
+                        <th class="w-20">Phase IB CQA/QA Remark</th>
                         <td class="w-80">{{ $data->QA_Head_remark3 ? $data->QA_Head_remark3 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase IB CQA/QA  Attachment</div>
+                <div class="block-head">Phase IB CQA/QA Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1275,18 +1292,18 @@
                {{-- <!-- P-IB CQAH/QAH --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">P-IB CQAH/QAH</div>
-                <table> 
+                <div class="block-head">Phase IB CQAH/QAH Review</div>
+                <table>
                     <tr>
                         <th class="w-20">Escalation required</th>
                         <td class="w-80">{{ $data->escalation_required ? $data->escalation_required : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Notification details</th>
+                        <th class="w-20">If Yes, Notification</th>
                         <td class="w-80">{{ $data->notification_ib ? $data->notification_ib : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Justification details</th>
+                        <th class="w-20">If No, Justification</th>
                         <td class="w-80">{{ $data->justification_ib ? $data->justification_ib : 'Not Applicable' }}</td>
                     </tr>
                    <tr>
@@ -1296,7 +1313,7 @@
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">P-IB CQAH/QAH Attachment</div>
+                <div class="block-head">Phase IB CQAH/QAH Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1319,11 +1336,11 @@
                   </table>
                 </div>
               </div>
-            
+
             @include('frontend.OOS.comps.allchecklistSingleReport')
 
             <div class="block">
-                <div class="block-head"> Phase II Investigation </div>
+                <div class="block-head"> Phase II A Investigation </div>
                 <table>
                     <tr>
                         <th class="w-20">Checklist Outcome</th>
@@ -1331,7 +1348,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Production Head Person</th>
-                        <td class="w-30">{{ $data->production_head_person ? $data->production_head_person : 'Not Applicable' }}</td>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->production_head_person) ? Helpers::getInitiatorName($data->production_head_person) : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Immediate Action Taken</th>
@@ -1348,17 +1365,17 @@
                             <td class="w-80">{{ $data->hypo_exp_reference_piii ? $data->hypo_exp_reference_piii : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Cause Identified II A</th>
+                        <th class="w-20">OOS/OOT Cause Identified II A</th>
                         <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">OOS Category II A</th>
+                        <th class="w-20">OOS/OOT Category II A</th>
                         <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
                         {{-- <th class="w-20">Manufacturing Invest. Type</th>
                         <td class="w-80">{{ $data->manufacturing_invest_type_piii ? $data->manufacturing_invest_type_piii : 'Not Applicable' }}</td> --}}
                     </tr>
-                   
+
                     <tr>
-                        <th class="w-20">OOS Category If Others</th>
-                        <td class="w-80">{{ $data->if_others_oos_category ? $data->if_others_oos_category : 'Not Applicable' }}</td>  
+                        <th class="w-20">OOS/OOT Category If Others</th>
+                        <td class="w-80">{{ $data->if_others_oos_category ? $data->if_others_oos_category : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CAPA Required</th>
@@ -1369,7 +1386,7 @@
                         <td class="w-80">{{ $data->reference_capa_no_iia ? $data->reference_capa_no_iia : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">OOS Review For Similar Nature II A</th>
+                        <th class="w-20">OOS/OOT Review For Similar Nature II A</th>
                         <td class="w-80">{{ $data->OOS_review_similar ? $data->OOS_review_similar : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
@@ -1460,55 +1477,20 @@
                       </div>
                 </table>
             </div>
-             {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
-
-             <div class="block">
-                <div class="block-head">Phase IB HOD Primary</div>
-                <table> 
-                   <tr>
-                        <th class="w-20">Phase IB HOD Primary Remark</th>
-                        <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
-                  </tr>
-                 </table>
-              </div>
-              <div class="block">
-                <div class="block-head">Phase IB HOD Primary Attachment</div>
-                <div class="border-table">
-                  <table>
-                      <tr class="table_bg">
-                          <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
-                      </tr>
-                      @if ($data->hod_attachment3)
-                      @foreach ($data->hod_attachment3 as $key => $file)
-                           <tr>
-                              <td>{{ $key + 1 }}</td>
-                              <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                          </tr>
-                      @endforeach
-                      @else
-                          <tr>
-                              <td class="w-20">1</td>
-                              <td class="w-20">Not Applicable</td>
-                          </tr>
-                      @endif
-                  </table>
-                </div>
-              </div>
 
                {{-- <!-- Phase II A HOD Primary --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase II A HOD Primary</div>
-                <table> 
+                <div class="block-head">Phase II A HOD Review</div>
+                <table>
                    <tr>
-                        <th class="w-20">Phase II A HOD Primary Remark</th>
+                        <th class="w-20">Phase II A HOD Remark</th>
                         <td class="w-80">{{ $data->hod_remark4 ? $data->hod_remark4 : 'Not Applicable' }}</td>
                   </tr>
                  </table>
               </div>
               <div class="block">
-                <div class="block-head">Phase II A HOD Primary Attachment</div>
+                <div class="block-head">Phase II A HOD Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1536,8 +1518,8 @@
                {{-- <!-- Phase II A CQA/QA --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">Phase II A CQA/QA</div>
-                <table> 
+                <div class="block-head">Phase II A CQA/QA Review</div>
+                <table>
                    <tr>
                         <th class="w-20">Phase II A CQA/QA Remark</th>
                         <td class="w-80">{{ $data->QA_Head_remark4 ? $data->QA_Head_remark4 : 'Not Applicable' }}</td>
@@ -1572,8 +1554,8 @@
                {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
                <div class="block">
-                <div class="block-head">P-II A QAH/CQAH</div>
-                <table> 
+                <div class="block-head">P-II A QAH/CQAH Review</div>
+                <table>
                    <tr>
                         <th class="w-20">P-II A QAH/CQAH Remark</th>
                         <td class="w-80">{{ $data->QA_Head_primary_remark4 ? $data->QA_Head_primary_remark4 : 'Not Applicable' }}</td>
@@ -1608,9 +1590,9 @@
                 {{-- <!-- Phase IIB Investigation --> ~Aditya Rajput --}}
 
                 <div class="block">
-                    <div class="block-head">Phase IIB Investigation</div>
-                    <table> 
-                        
+                    <div class="block-head">Phase II B Investigation</div>
+                    <table>
+
                         <tr>
                             <th class="w-20">Summary Of Investigation</th>
                             <td class="w-80">{{ $data->Summary_Of_Inv_IIB ? $data->Summary_Of_Inv_IIB : 'Not Applicable' }}</td>
@@ -1630,7 +1612,7 @@
                             <td class="w-80">{{ $data->Repeat_testing_IIB ? $data->Repeat_testing_IIB : 'Not Applicable' }}</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Results Of Repeat testing required IIB Inv.</th>
+                            <th class="w-20">Results Of Repeat testing IIB Inv.</th>
                             <td class="w-80">{{ $data->result_of_rep_test_IIB ? $data->result_of_rep_test_IIB : 'Not Applicable' }}</td>
                         </tr>
                         <tr>
@@ -1664,16 +1646,16 @@
                {{-- <!-- Phase II B HOD Primary --> ~Aditya Rajput --}}
 
                 <div class="block">
-                    <div class="block-head">Phase II B HOD Primary</div>
-                    <table> 
+                    <div class="block-head">Phase II B HOD Review</div>
+                    <table>
                     <tr>
-                            <th class="w-20">Phase II B HOD Primary Remark</th>
+                            <th class="w-20">Phase II B HOD Remark</th>
                             <td class="w-80">{{ $data->hod_remark5 ? $data->hod_remark5 : 'Not Applicable' }}</td>
                     </tr>
                     </table>
                 </div>
                 <div class="block">
-                    <div class="block-head">Phase II B HOD Primary Attachment</div>
+                    <div class="block-head">Phase II B HOD Attachment</div>
                         <div class="border-table">
                             <table>
                                 <tr class="table_bg">
@@ -1700,8 +1682,8 @@
                     {{-- <!-- Phase II B CQA/QA --> ~Aditya Rajput --}}
 
                     <div class="block">
-                        <div class="block-head">Phase II B CQA/QA</div>
-                        <table> 
+                        <div class="block-head">Phase II B CQA/QA Review</div>
+                        <table>
                         <tr>
                                 <th class="w-20">Phase II B CQA/QA Remark</th>
                                 <td class="w-80">{{ $data->QA_Head_remark5 ? $data->QA_Head_remark5 : 'Not Applicable' }}</td>
@@ -1736,8 +1718,8 @@
                  {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
                             <div class="block">
-                                <div class="block-head">P-II A QAH/CQAH</div>
-                                <table> 
+                                <div class="block-head">P-II A QAH/CQAH Review</div>
+                                <table>
                                 <tr>
                                         <th class="w-20">P-II A QAH/CQAH Remark</th>
                                         <td class="w-80">{{ $data->QA_Head_primary_remark4 ? $data->QA_Head_primary_remark4 : 'Not Applicable' }}</td>
@@ -1770,7 +1752,7 @@
                             </div>
 
                             <div class="block">
-                                <div class="block-head">Phase IIB QAH/CQAH</div>
+                                <div class="block-head">Phase II B QAH/CQAH Review</div>
                                 <table>
                                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                                         <th class="w-20">Approval Comment</th>
@@ -1801,9 +1783,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <table>  
+                                <table>
                                     <tr>
-                                        <th class="w-20">OOS Category</th>
+                                        <th class="w-20">OOS/OOT Category</th>
                                         <td class="w-80">{{ $data->oos_category_bd ? $data->oos_category_bd : 'Not Applicable' }}</td>
                                     </tr>
                                     <tr>
@@ -1883,7 +1865,7 @@
                                     </table>
                                     </div>
 
-                                    
+
                                 </table>
                             </div>
 
@@ -1904,7 +1886,7 @@
                                                 <th class="w-20">Any Other Actions Required </th>
                                                 <td class="w-80">{{ $data->any_other_actions_required_atp ? $data->any_other_actions_required_atp : 'Not Applicable' }}</td>
                                             </tr>
-                                        
+
                                         <div class="block-head"> Additional Testing Attachment</div>
                                             <div class="border-table">
                                                 <table>
@@ -1930,7 +1912,7 @@
                                         </table>
                                     </div> --}}
                                     <div class="block">
-                                        <div class="block-head"> OOS Conclusion </div>
+                                        <div class="block-head"> OOS/OOT Conclusion </div>
                                         <table>
                                             <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                                                 <th class="w-20">Conclusion Comments.</th>
@@ -1950,7 +1932,7 @@
                                                 <th class="w-20">Justifi. for Averaging Results</th>
                                                 <td class="w-80">{{ $data->justifi_for_averaging_results_oosc ? $data->justifi_for_averaging_results_oosc : 'Not Applicable' }}</td>
                                             </tr>
-                                            <tr>  
+                                            <tr>
                                                 <th class="w-20">OOS Stands</th>
                                                 <td class="w-80">{{ $data->oos_stands_oosc ? $data->oos_stands_oosc : 'Not Applicable' }}</td>
                                             </tr>
@@ -1964,7 +1946,7 @@
                                                 <th class="w-20"> Justify if CAPA not required.</th>
                                                 <td class="w-80">{{ $data->justify_if_capa_not_required_oosc ? $data->justify_if_capa_not_required_oosc : 'Not Applicable' }}</td>
                                             </tr>
-                                            <tr>  
+                                            <tr>
                                                 <th class="w-20"> Action Item Req..</th>
                                                 <td class="w-80">{{ $data->action_plan_req_oosc ? $data->action_plan_req_oosc : 'Not Applicable' }}</td>
                                             </tr>
@@ -1977,7 +1959,7 @@
                                                 <td class="w-80">{{ $data->justification_for_delay_oosc ? $data->justification_for_delay_oosc : 'Not Applicable' }}</td>
                                             </tr>
                                             </table>
-                                            <div class="block">
+                                            {{-- <div class="block">
                                                 <div class="block-head"> Summary of OOS Test Results </div>
                                                 <div class="border-table">
                                                 <table>
@@ -1997,9 +1979,9 @@
                                                             <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}</td>
                                                             <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}</td>
                                                             <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}</td>
-                                                            <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}</td> 
+                                                            <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}</td>
                                                         </tr>
-                                                        
+
                                                         @endforeach
                                                         @else
                                                         <tr>
@@ -2011,7 +1993,7 @@
                                                         @endif
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="block-head"> Attachments if Any </div>
                                             <div class="border-table">
                                                 <table>
@@ -2062,7 +2044,7 @@
                                                 <td class="w-80">{{ $data->cq_approver ? $data->cq_approver : 'Not Applicable' }}</td>
                                             </tr>
                                             </table>
-                                            <div class="block">
+                                            {{-- <div class="block">
                                                 <div class="block-head"> Summary of OOS Test Results </div>
                                                 <div class="border-table">
                                                 <table>
@@ -2093,7 +2075,7 @@
                                                         @endif
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="block-head">Conclusion Attachment </div>
                                             <div class="border-table">
                                                 <table>
@@ -2125,7 +2107,7 @@
                                                 <th class="w-20">CQ Review Comments</th>
                                                 <td class="w-30">{{ $data->cq_review_comments_ocqr ? $data->cq_review_comments_ocqr : 'Not Applicable' }}</td>
                                             </tr>
-                                            
+
                                         <div class="block-head"> CQ Attachment</div>
                                             <div class="border-table">
                                                 <table>
@@ -2150,7 +2132,7 @@
                                             </div>
                                         </table>
                                     </div> --}}
-                                
+
                                     {{-- <div class="block">
                                         <div class="block-head">  QA Head/designee Approval </div>
                                         <table>
@@ -2158,7 +2140,7 @@
                                                 <th class="w-20">Approval Comment</th>
                                                 <td class="w-30">{{ $data->reopen_approval_comments_uaa ? $data->reopen_approval_comments_uaa : 'Not Applicable' }}</td>
                                             </tr>
-                                            
+
                                         <div class="block-head"> Approval Attachment</div>
                                             <div class="border-table">
                                                 <table>
@@ -2186,9 +2168,9 @@
                             <!-- close block -->
                                 </div>
           </div>
-    
-               
-          
+
+
+
 
     <footer>
         <table>

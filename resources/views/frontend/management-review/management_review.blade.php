@@ -8,7 +8,50 @@
         header {
             display: none;
         }
+
+        .swal-modal {
+            scale: 0.7 !important;
+        }
+
+        .whyblock-bottom {
+            margin-bottom: 10px;
+        }
+
+        .swal-icon {
+            scale: 0.8 !important;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @if (Session::has('swal'))
+        <script>
+            swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                "{{ Session::get('swal')['type'] }}")
+        </script>
+    @endif
+
+
+
+    <script>
+        function otherController(value, checkValue, blockID) {
+            let block = document.getElementById(blockID)
+            let blockTextarea = block.getElementsByTagName('textarea')[0];
+            let blockLabel = block.querySelector('label span.text-danger');
+            if (value === checkValue) {
+                blockLabel.classList.remove('d-none');
+                blockTextarea.setAttribute('required', 'required');
+            } else {
+                blockLabel.classList.add('d-none');
+                blockTextarea.removeAttribute('required');
+            }
+        }
+    </script>
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -83,16 +126,64 @@
                             // dd($cftCompleteUser);
                         @endphp
 
+                        @php
+                            $userRoles = DB::table('user_roles')
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                                ->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                            $hodcftUsers = DB::table('hodmanagement_cfts')
+                                ->where(['ManagementReview_id' => $data->id])
+                                ->first();
+
+                            // Define the column names
+                            $columns2 = [
+                                'hod_Production_Table_Person',
+                                'hod_Production_Injection_Person',
+                                'hod_ResearchDevelopment_person',
+                                'hod_Store_person',
+                                'hod_Quality_Control_Person',
+                                'hod_QualityAssurance_person',
+                                'hod_RegulatoryAffair_person',
+                                'hod_ProductionLiquid_person',
+                                'hod_Microbiology_person',
+                                'hod_Engineering_person',
+                                'hod_ContractGiver_person',
+                                'hod_Environment_Health_Safety_person',
+                                'hod_Human_Resource_person',
+                                'hod_CorporateQualityAssurance_person',
+                            ];
+
+                            // Initialize an array to store the values
+                            $valuesArray = [];
+
+                            // Iterate over the columns and retrieve the values
+                            foreach ($columns2 as $column) {
+                                $value = $hodcftUsers->$column;
+                                // Check if the value is not null and not equal to 0
+                                if ($value !== null && $value != 0) {
+                                    $valuesArray[] = $value;
+                                }
+                            }
+                            $hodcftCompleteUser = DB::table('hodmanagement_cft__responses')
+                                ->whereIn('status', ['In-progress', 'Completed'])
+                                ->where('ManagementReview_id', $data->id)
+                                ->where('cft_user_id', Auth::user()->id)
+                                ->whereNull('deleted_at')
+                                ->first();
+                            // dd($cftCompleteUser);
+                        @endphp
+
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Management Review', 42))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -102,9 +193,9 @@
 
 
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </button> -->
-                        @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
                             </button>
@@ -112,32 +203,42 @@
                                 Child
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button> --}}
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
+                            <!-- @if (!$cftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Action Complete
                             </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <!--
+    @endif -->
+                        @elseif(
+                            ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                            <!-- @if (!$hodcftCompleteUser)
+    -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <!--
+    @endif -->
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Management Review', 42))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
@@ -231,11 +332,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head review </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head Review </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
@@ -266,10 +367,15 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         <input type="hidden" name="initiator_id">
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" value="{{ $data->initiator_name }}">
                                     </div>
                                 </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="originator">Initiator</label>
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}" />
+                                    </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -331,26 +437,71 @@
                                     </div>
                                 </div> --}}
                                 <div class="row">
+                                    {{--
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Department<span class="text-danger">*</span></b></label>
+                                        <select name="initiator_Group"
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $value)
+                                                <option value="{{ $key }}" @if ($data->initiator_Group == $key) selected @endif>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-                                   <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator department</b></label>
-                                            <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                id="initiator_group">
-                                                <option value="">-- Select --</option>
-                                                @foreach (Helpers::getDepartments() as $key => $value)
-                                                    <option value="{{ $key }}" @if ($data->initiator_Group == $key) selected @endif>
-                                                        {{ $value }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+
+                                        @error('initiator_Group')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
+                                </div> --}}
+                                    <div class="col-md-12">
+                                        @if ($data->stage == 1)
+                                            <div class="group-input">
+                                                <label for="Initiator Group"><b>Initiator Department</b></label>
+                                                <select name="initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    id="initiator_group">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $value)
+                                                        <option value="{{ $key }}"
+                                                            @if ($data->initiator_Group == $key) selected @endif>
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="Initiator Group"><b>Initiator Department<span
+                                                            class="text-danger">*</span></b></label>
+                                                <select name="initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    id="initiator_group">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $value)
+                                                        <option value="{{ $key }}"
+                                                            @if ($data->initiator_Group == $key) selected @endif>
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+                                        @error('HOD_Remarks')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group Code">Initiator department Code</label>
+                                            <label for="Initiator Group Code">Initiator Department Code</label>
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $data->initiator_Group }}" id="initiator_group_code"
                                                 value="{{ $data->initiator_Group }}" readonly>
@@ -359,13 +510,13 @@
 
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                         </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Short Description">Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
 
 
 
@@ -388,14 +539,14 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="type">Type</label>
-                                        <select name="summary_recommendation" id="summary_recommendation"
+                                        <label for="type">Type <span class="text-danger">*</span></label>
+                                        <select required name="summary_recommendation" id="summary_recommendation"
                                             onchange="toggleReviewPeriod()"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                            <option value="">Select Type</option>
+                                            <option required value="">Select Type</option>
                                             <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
                                                 Monthly</option>
-                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif
-                                                value="Six Monthly">Six Monthly</option>
+                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
+                                                Six Monthly</option>
                                         </select>
                                     </div>
                                 </div>
@@ -593,12 +744,13 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Proposed Scheduled Start Date</label>
+                                        <label for="Audit Start Date">Proposed Scheduled Start Date <span
+                                                class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                             <input type="date" id="start_date_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required
                                                 name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->start_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -800,23 +952,29 @@
                                         });
                                     });
                                 </script> --}}
-                                 <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="inv_attachment">GI Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="inv_attachment">
                                                 @if ($data->inv_attachment)
-                                                    @foreach(json_decode($data->inv_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    @foreach (json_decode($data->inv_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
                                                             </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                             </a>
-                                                            <input type="hidden" name="existing_inv_attachment[]" value="{{ $file }}">
+                                                            <input type="hidden" name="existing_inv_attachment[]"
+                                                                value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -832,7 +990,8 @@
                                 </div>
 
                                 <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_inv_attachment" name="deleted_inv_attachment" value="">
+                                <input type="hidden" id="deleted_inv_attachment" name="deleted_inv_attachment"
+                                    value="">
 
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
@@ -854,7 +1013,8 @@
 
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_inv_attachment');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                        ',') : [];
                                                     deletedFiles.push(fileName);
                                                     deletedFilesInput.value = deletedFiles.join(',');
                                                 }
@@ -912,9 +1072,9 @@
 
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="Operations">
-                                    QA review comment
+                                    QA review comment<span class="text-danger">*</span>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-operations-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -922,30 +1082,58 @@
                                     </span>
                                 </label>
                                 <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
-                            </div>
-                                                            @php
-
-                                    $assignedUsers = explode(',', $data->assign_to ?? '');
-
-                                @endphp
-                                                                <div class="col-lg-12">
+                            </div> --}}
+                            <div class="col-md-12">
+                                @if ($data->stage == 2)
                                     <div class="group-input">
-                                        <label for="assign_to">Invite Person Notify</label>
-                                        <select id="assign_to" name="assign_to[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->name }}" {{-- Pass the user's name instead of id --}}
-                                                    {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
-                                                    {{ $user->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
+                                        <label for="HOD Remarks">QA Head Review comment <span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea class="tiny" name="Operations" id="summernote-4" required>{{ $data->Operations }}</textarea>
                                     </div>
+                                @else
+                                    <div class="group-input">
+                                        <label for="QA review comment">QA Head Review comment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                does not require completion</small></div>
+                                        <textarea readonly class="tiny" name="Operations" id="summernote-4">{{ $data->Operations }}</textarea>
+                                    </div>
+                                @endif
+                                @error('Operations')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            @php
+
+                                $assignedUsers = explode(',', $data->assign_to ?? '');
+
+                            @endphp
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
+
+                                    <!-- Disabled select for stages 0 or 2 -->
+                                    <select id="assign_to" name="assign_to[]" multiple>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->name }}"
+                                                {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+
+
                                 </div>
+
+                            </div>
+
+
                             {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">QA Head Review Attachment</label>
@@ -984,103 +1172,112 @@
                                     <input type="hidden" name="removed_files" id="removed_files">
                                       </div>
                             </div> --}}
-                             <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="file_attchment_if_any">QA Head Review Attachmen</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attchment_if_any">
-                                                @if ($data->file_attchment_if_any)
-                                                    @foreach(json_decode($data->file_attchment_if_any) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                            </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                            </a>
-                                                            <input type="hidden" name="existing_file_attchment_if_any[]" value="{{ $file }}">
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
-                                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="file_attchment_if_any">QA Head Review Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attchment_if_any">
+                                            @if ($data->file_attchment_if_any)
+                                                @foreach (json_decode($data->file_attchment_if_any) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attchment_if_any[]"
+                                                            value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attchment_if_any[]"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_file_attchment_if_any" name="deleted_file_attchment_if_any" value="">
+                            <!-- Hidden field to keep track of files to be deleted -->
+                            <input type="hidden" id="deleted_file_attchment_if_any" name="deleted_file_attchment_if_any"
+                                value="">
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
 
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
 
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
-
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_file_attchment_if_any');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
                                                 }
-                                            });
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById(
+                                                    'deleted_file_attchment_if_any');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                    ',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
                                         });
                                     });
+                                });
 
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
 
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
 
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
 
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
 
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
 
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
 
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
+                                        fileListContainer.appendChild(fileContainer);
                                     }
-                                </script>
+                                }
+                            </script>
 
 
 
@@ -1237,30 +1434,33 @@
                             <div class="row">
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Meeting Start Date</label>
+                                        <label for="Audit Start Date">Meeting Start Date <span
+                                                class="text-danger">*</span></label>
                                         <div class="calenderauditee">
+                                            <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly
-                                                placeholder="DD-MMM-YYYY"
+                                                placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="external_supplier_performance"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit End Date">Meeting End Date</label>
+                                        <label for="Audit End Date">Meeting End Date <span
+                                                class="text-danger">*</span></label>
                                         <div class="calenderauditee">
+
                                             <input type="text" id="customer_satisfaction_level" readonly
-                                                placeholder="DD-MMM-YYYY"
+                                                placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
                                             <input type="date" id="customer_satisfaction_level_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="customer_satisfaction_level"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->customer_satisfaction_level }}" class="hide-input"
@@ -1268,6 +1468,7 @@
                                         </div>
                                     </div>
                                 </div>
+
 
                                 <script>
                                     function checkStartDate(startDateInput) {
@@ -1373,6 +1574,113 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="meeting_and_summary_attachment">Meetings and Summary Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="meeting_and_summary_attachment">
+                                            @if ($data->meeting_and_summary_attachment)
+                                                @foreach (json_decode($data->meeting_and_summary_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_meeting_and_summary_attachment[]"
+                                                            value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="meeting_and_summary_attachment[]"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                oninput="addMultipleFiles(this, 'meeting_and_summary_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to keep track of files to be deleted -->
+                            <input type="hidden" id="deleted_meeting_and_summary_attachment" name="deleted_meeting_and_summary_attachment"
+                                value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById(
+                                                    'deleted_meeting_and_summary_attachment');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                    ',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
+
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
+
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileListContainer.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                             {{-- <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
                                 <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
@@ -1482,8 +1790,8 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet"> Production Tablet/Capsule Powder Required ? <span
-                                                    class="text-danger">*</span></label>
+                                            <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?
+                                                <span class="text-danger">*</span></label>
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
@@ -1509,8 +1817,8 @@
                                     @endphp
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder Person <span
-                                                    id="asteriskPT"
+                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder
+                                                Person <span id="asteriskPT"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
@@ -1528,12 +1836,12 @@
                                     </div>
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule Powder Person <span
-                                                    id="asteriskPT"
+                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule
+                                                Powder Person <span id="asteriskPT"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 5) disabled @endif
+                                            <select @if ($data->stage == 4) disabled @endif
                                                 name="hod_Production_Table_Person" class="hod_Production_Table_Person"
                                                 id="hod_Production_Table_Person">
                                                 <option value="">-- Select --</option>
@@ -1562,7 +1870,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet feedback">Production Tablet/Capsule Powder Status of Action Item
+                                            <label for="Production Tablet feedback">Production Tablet/Capsule Powder Status
+                                                of Action Item
                                                 <span id="asteriskPT2"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -1612,7 +1921,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Completed
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder
+                                                Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                 name="Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -1705,7 +2015,8 @@
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet">Production Tablet/Capsule Powder Required ?</label>
+                                            <label for="Production Tablet">Production Tablet/Capsule Powder Required
+                                                ?</label>
                                             <select name="Production_Table_Review" disabled id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
@@ -1730,8 +2041,8 @@
                                     @endphp
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder Person <span
-                                                    id="asteriskInvi11" style="display: none"
+                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder
+                                                Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="Production_Table_Person" disabled id="Production_Table_Person">
                                                 <option value="">-- Select --</option>
@@ -1745,8 +2056,8 @@
                                     </div>
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule Powder Person <span
-                                                    id="asteriskInvi11" style="display: none"
+                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule
+                                                Powder Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_Production_Table_Person" disabled
                                                 id="hod_Production_Table_Person">
@@ -1766,8 +2077,8 @@
                                                     Tablet/Capsule Powder
                                                     )
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1777,11 +2088,12 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder Status of Action
+                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder
+                                                    Status of Action
                                                     item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1795,8 +2107,8 @@
                                                 <label for="Production Tablet assessment">Description of Action Item (By
                                                     Tablet/Capsule Powder)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1806,10 +2118,11 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder Status of Action Item
+                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder
+                                                    Status of Action Item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1857,8 +2170,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Completed
-                                                By</label>
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule PowderCompleted By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                 name="Production_Table_By" id="Production_Table_By">
 
@@ -2189,8 +2501,8 @@
                                                 <label for="Production Injection assessment">Description of Action Item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2203,8 +2515,8 @@
                                                 <label for="Production Injection Status of Action Item">Production
                                                     Injection Status of Action Item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2218,8 +2530,8 @@
                                                 <label for="Production Injection assessment">Description of Action Item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2232,8 +2544,8 @@
                                                 <label for="Production Injection Status of Action Item">Production
                                                     Injection Status of Action Item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2346,14 +2658,11 @@
                                             <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif
-                                                    value='yes'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
-                                                    value='no'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
-                                                    value='na'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
                                                     NA</option>
                                             </select>
 
@@ -2390,7 +2699,8 @@
                                     </div>
                                     <div class="col-lg-6 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development notification">HOD Research & Development Person
+                                            <label for="Research Development notification">HOD Research & Development
+                                                Person
                                                 <span id="asteriskPT"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
@@ -2587,7 +2897,8 @@
                                     </div>
                                     <div class="col-lg-6 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development notification">HOD Research & Development Person
+                                            <label for="Research Development notification">HOD Research & Development
+                                                Person
                                                 <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_ResearchDevelopment_person" disabled
@@ -2689,7 +3000,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development Completed By">Research & Development Completed
+                                            <label for="Research Development Completed By">Research & Development
+                                                Completed
                                                 By</label>
                                             <input readonly type="text"
                                                 value="{{ $data1->ResearchDevelopment_by }}"
@@ -3198,8 +3510,7 @@
                                     </div>
                                     <div class="col-lg-6 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance notification">HOD Corporate Quality
-                                                Assurance Person <span id="asteriskPT"
+                                            <label for="Corporate Quality Assurance notification">HOD Corporate Quality Assurance Person <span id="asteriskPT"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
@@ -3226,12 +3537,12 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif
-                                                class="summernote CorporateQualityAssurance_assessment" @if (
+                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
+                                                @if (
                                                     $data->stage == 3 ||
                                                         (isset($data1->CorporateQualityAssurance_person) &&
-                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif
-                                                name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment"
+                                                id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
@@ -4775,7 +5086,7 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                             <span class="text-danger">*</span></label>
-                                        <select @if ($data->stage == 3) required @endif
+                                        <select @if ($data->stage == 3)  @endif
                                             name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
@@ -5005,8 +5316,8 @@
                                     @endphp
                                     <div class="col-lg-6 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid notification">Production Liquid/Ointment Person <span
-                                                    id="asteriskPT"
+                                            <label for="Production Liquid notification">Production Liquid/Ointment Person
+                                                <span id="asteriskPT"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
@@ -5024,8 +5335,8 @@
                                     </div>
                                     <div class="col-lg-6 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid notification">HOD Production Liquid/Ointment Person <span
-                                                    id="asteriskPT"
+                                            <label for="Production Liquid notification">HOD Production Liquid/Ointment
+                                                Person <span id="asteriskPT"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
@@ -5058,7 +5369,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid feedback">Production Liquid/Ointment Status of action
+                                            <label for="Production Liquid feedback">Production Liquid/Ointment Status of
+                                                action
                                                 item <span id="asteriskPT2"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5108,7 +5420,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid Completed By">Production Liquid/Ointment Completed
+                                            <label for="Production Liquid Completed By">Production Liquid/Ointment
+                                                Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->ProductionLiquid_by }}"
                                                 name="ProductionLiquid_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -5211,8 +5524,8 @@
                                     @endphp
                                     <div class="col-lg-6 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid notification">Production Liquid/Ointment Person <span
-                                                    id="asteriskInvi11" style="display: none"
+                                            <label for="Production Liquid notification">Production Liquid/Ointment Person
+                                                <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="ProductionLiquid_person" disabled
                                                 id="ProductionLiquid_person">
@@ -5227,8 +5540,8 @@
                                     </div>
                                     <div class="col-lg-6 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid notification">HOD Production Liquid/Ointment Person <span
-                                                    id="asteriskInvi11" style="display: none"
+                                            <label for="Production Liquid notification">HOD Production Liquid/Ointment
+                                                Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_ProductionLiquid_person" disabled
                                                 id="hod_ProductionLiquid_person">
@@ -5255,7 +5568,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid/Ointment Status of action
+                                                <label for="Production Liquid feedback">Production Liquid/Ointment Status
+                                                    of action
                                                     item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5277,7 +5591,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid/Ointment Status of action
+                                                <label for="Production Liquid feedback">Production Liquid/Ointment Status
+                                                    of action
                                                     item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5325,7 +5640,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid Completed By">Production Liquid/Ointment Completed
+                                            <label for="Production Liquid Completed By">Production Liquid/Ointment
+                                                Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->ProductionLiquid_by }}"
                                                 name="ProductionLiquid_by" id="ProductionLiquid_by">
@@ -6561,344 +6877,6 @@
 
 
                                 <!-- HTML Section -->
-                                <div class="sub-head">
-                                    Contract Giver
-                                </div>
-
-                                @php
-                                    $data1 = DB::table('management_cfts')
-                                        ->where('ManagementReview_id', $data->id)
-                                        ->first();
-                                @endphp
-
-                                @if ($data1->ContractGiver_Review !== 'yes')
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Initially hide or show based on the current value of the select
-                                            if ($('[name="ContractGiver_Review"]').val() === 'yes') {
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-
-                                            // Handle changes to the select field
-                                            $('[name="ContractGiver_Review"]').change(function() {
-                                                if ($(this).val() === 'yes') {
-                                                    $('.ContractGiver').show();
-                                                    $('.ContractGiver span').show();
-                                                } else {
-                                                    $('.ContractGiver').hide();
-                                                    $('.ContractGiver span').hide();
-                                                }
-                                            });
-                                        });
-                                    </script>
-                                @endif
-
-                                @if ($data->stage == 3 || $data->stage == 4)
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Contract Giver">Contract Required ? <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Review" id="ContractGiver_Review">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
-                                                    value='yes'>Yes</option>
-                                                <option @if ($data1->ContractGiver_Review == 'no') selected @endif
-                                                    value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    @php
-                                        $userRoles = DB::table('user_roles')
-                                            ->where([
-                                                'q_m_s_roles_id' => 60,
-                                                'q_m_s_divisions_id' => $data->division_id,
-                                            ])
-                                            ->get();
-                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                    @endphp
-
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
-                                                    id="asteriskPT" class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="ContractGiver_person" id="ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">HOD Contract Giver Person <span
-                                                    id="asteriskPT" class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="hod_ContractGiver_person" id="hod_ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data5->hod_ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of Action Item (By Contract
-                                                Giver)
-                                                <span id="asteriskPT1" class="text-danger"
-                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of Action Item
-                                                <span id="asteriskPT2" class="text-danger"
-                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="ContractGiver_attachment">
-                                                    @if ($data1->ContractGiver_attachment)
-                                                        @foreach (json_decode($data1->ContractGiver_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile"
-                                                        name="ContractGiver_attachment[]"
-                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'ContractGiver_attachment')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
-                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                name="ContractGiver_by" id="ContractGiver_by">
-                                        </div>
-                                    </div>
-
-                                    {{-- <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data1->ContractGiver_on }}">
-                                        </div>
-                                    </div> --}}
-                                    <div class="col-6 ContractGiver new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Contract Giver Completed On">Contract Giver
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="ContractGiver_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-                                                <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
-                                            </div>
-                                            @error('ContractGiver_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Contract Giver">Contract Giver Required ?</label>
-                                            <select name="ContractGiver_Review" disabled id="ContractGiver_Review">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
-                                                    value='yes'>Yes</option>
-                                                <option @if ($data1->ContractGiver_Review == 'no') selected @endif
-                                                    value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    @php
-                                        $userRoles = DB::table('user_roles')
-                                            ->where([
-                                                'q_m_s_roles_id' => 60,
-                                                'q_m_s_divisions_id' => $data->division_id,
-                                            ])
-                                            ->get();
-                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                    @endphp
-
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
-                                                    id="asteriskInvi11" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="ContractGiver_person" id="ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver notification">HOD Contract Giver Person <span
-                                                    id="asteriskInvi11" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="hod_ContractGiver_person" id="hod_ContractGiver_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data5->hod_ContractGiver_person) selected @endif>
-                                                        {{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of Action Item (By Contract
-                                                Giver)
-                                                <span id="asteriskPT1" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_assessment" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of Action Item
-                                                <span id="asteriskPT2" style="display: none"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
-                                                name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="ContractGiver_attachment">
-                                                    @if ($data1->ContractGiver_attachment)
-                                                        @foreach (json_decode($data1->ContractGiver_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile"
-                                                        name="ContractGiver_attachment[]"
-                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'ContractGiver_attachment')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
-                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                name="ContractGiver_by" id="ContractGiver_by">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 ContractGiver new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Contract Giver Completed On">Contract Giver
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="ContractGiver_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-                                                <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
-                                            </div>
-                                            @error('ContractGiver_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @endif
 
 
                                 @if ($data->stage == 3 || $data->stage == 4)
@@ -6988,111 +6966,140 @@
 
                                         </div>
                                     </div>
-                           <div class="col-lg-12 Other1_reviews">
-                              <div class="group-input">
-                                  <label for="Department1">Other's 1 Department
-                                        <span id="asteriskod1"
-                                            style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other1_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other1_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                                    <div class="col-md-12 mb-3 other1_reviews ">
+                                    {{-- <div class="col-lg-12 Other1_reviews">
                                         <div class="group-input">
-                                            <label for="Description of Action Item12">Description of Action Item (By
-                                                Other's 1)
+                                            <label for="Department1">Other's 1 Department
+                                                <span id="asteriskod1"
+                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
                                             </label>
-                                            <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
-                                                @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+                                            <select name="Other1_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other1_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Feedback1"> Other's 1 Status of Action Item
-                                            </label>
-                                            <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
-                                                @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                    </div> --}}
+                                    <div class="col-12 other1_reviews">
+
+
+                                        <div class="col-lg-12 Other1_reviews">
+
+                                            <div class="group-input">
+                                                <label for="Department1">Other's 1 Department
+                                                    <span id="asteriskod5"
+                                                        style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                        class="text-danger">*</span>
+                                                </label>
+                                                <select name="Other1_Department_person"
+                                                    @if ($data->stage == 4) disabled @endif
+                                                    id="Other1_Department_person">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $name)
+                                                        <option value="{{ $key }}"
+                                                            @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                            {{ $name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
                                         </div>
-                                    </div>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('Other1_review');
-                                            var inputsToToggle = [];
+                                        <div class="col-md-12 mb-3 other1_reviews ">
+                                            <div class="group-input">
+                                                <label for="Description of Action Item12">Description of Action Item (By
+                                                    Other's 1)
+                                                </label>
+                                                <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
+                                                    @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3 other1_reviews ">
+                                            <div class="group-input">
+                                                <label for="Feedback1"> Other's 1 Status of Action Item
+                                                </label>
+                                                <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
+                                                    @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var selectField = document.getElementById('Other1_review');
+                                                var inputsToToggle = [];
 
-                                            var facilityNameInputs = document.getElementsByClassName('Other1_person');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-                                            var facilityNameInputs = document.getElementsByClassName('Other1_Department_person');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
+                                                var facilityNameInputs = document.getElementsByClassName('Other1_person');
+                                                for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                    inputsToToggle.push(facilityNameInputs[i]);
+                                                }
+                                                var facilityNameInputs = document.getElementsByClassName('Other1_Department_person');
+                                                for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                    inputsToToggle.push(facilityNameInputs[i]);
+                                                }
 
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
+                                                selectField.addEventListener('change', function() {
+                                                    var isRequired = this.value === 'yes';
 
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
+                                                    inputsToToggle.forEach(function(input) {
+                                                        input.required = isRequired;
+                                                    });
+
+                                                    var asteriskIcon = document.getElementById('asterisko1');
+                                                    var asteriskIcon1 = document.getElementById('asteriskod1');
+                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                    asteriskIcon1.style.display = isRequired ? 'inline' : 'none';
                                                 });
-
-                                                var asteriskIcon = document.getElementById('asterisko1');
-                                                var asteriskIcon1 = document.getElementById('asteriskod1');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                asteriskIcon1.style.display = isRequired ? 'inline' : 'none';
                                             });
-                                        });
-                                    </script>
-                                    <div class="col-12 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Audit Attachments">Other's 1 Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list" id="Other1_attachment">
-                                                    @if ($data1->Other1_attachment)
-                                                        @foreach (json_decode($data1->Other1_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="Other1_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
+                                        </script>
+                                        <div class="col-12 other1_reviews ">
+                                            <div class="group-input">
+                                                <label for="Audit Attachments">Other's 1 Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Other1_attachment">
+                                                        @if ($data1->Other1_attachment)
+                                                            @foreach (json_decode($data1->Other1_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="myfile" name="Other1_attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Other1_attachment')"
+                                                            multiple>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3 other1_reviews ">
-                                        <div class="group-input">
-                                            <label for="Review Completed By1"> Other's 1 Review Completed By</label>
-                                            <input disabled type="text" value="{{ $data1->Other1_by }}"
-                                                name="Other1_by" id="Other1_by">
+                                        <div class="col-md-6 mb-3 other1_reviews ">
+                                            <div class="group-input">
+                                                <label for="Review Completed By1"> Other's 1 Review Completed By</label>
+                                                <input disabled type="text" value="{{ $data1->Other1_by }}"
+                                                    name="Other1_by" id="Other1_by">
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="col-md-6 mb-3 other1_reviews ">
+                                        {{-- <div class="col-md-6 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Review Completed On1">Other's 1 Review Completed On</label>
                                             <input disabled type="date" name="Other1_on" id="Other1_on"
@@ -7100,21 +7107,23 @@
 
                                         </div>
                                     </div> --}}
-                                    <div class="col-6 other1_reviews new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Others 1 Completed On">Others 1
-                                                Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Other1_on" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
-                                                <input readonly type="date" name="Other1_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                    class="hide-input" oninput="handleDateInput(this, 'Other1_on')" />
+                                        <div class="col-6 other1_reviews new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Others 1 Completed On">Others 1
+                                                    Completed On</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="Other1_on" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
+                                                    <input readonly type="date" name="Other1_on"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="" class="hide-input"
+                                                        oninput="handleDateInput(this, 'Other1_on')" />
+                                                </div>
+                                                @error('Other1_on')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
-                                            @error('Other1_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -7203,25 +7212,26 @@
                                         </div>
                                     </div>
 
-                                 <div class="col-lg-12 Other2_reviews">
-                              <div class="group-input">
-                                  <label for="Department2">Other's 2 Department
-                                        <span id="asteriskod2"
-                                            style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other2_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other2_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other2_reviews">
+                                        <div class="group-input">
+                                            <label for="Department2">Other's 2 Department
+                                                <span id="asteriskod2"
+                                                    style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other2_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other2_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other2_review');
@@ -7414,25 +7424,26 @@
                                         </div>
                                     </div>
 
-                            <div class="col-lg-12 Other3_reviews">
-                              <div class="group-input">
-                                  <label for="Department3">Other's 3 Department
-                                        <span id="asteriskod3"
-                                            style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other3_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other3_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other3_reviews">
+                                        <div class="group-input">
+                                            <label for="Department3">Other's 3 Department
+                                                <span id="asteriskod3"
+                                                    style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other3_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other3_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other3_review');
@@ -7628,25 +7639,26 @@
 
                                         </div>
                                     </div>
-                                     <div class="col-lg-12 Other4_reviews">
-                                <div class="group-input">
-                                    <label for="Department4">Other's 4 Department
-                                        <span id="asteriskod4"
-                                            style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other4_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other4_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other4_reviews">
+                                        <div class="group-input">
+                                            <label for="Department4">Other's 4 Department
+                                                <span id="asteriskod4"
+                                                    style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other4_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other4_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other4_review');
@@ -7841,25 +7853,26 @@
                                         </div>
                                     </div>
 
-                                     <div class="col-lg-12 Other5_reviews">
-                              <div class="group-input">
-                                  <label for="Department5">Other's 5 Department
-                                        <span id="asteriskod5"
-                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other5_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other5_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other5_reviews">
+                                        <div class="group-input">
+                                            <label for="Department5">Other's 5 Department
+                                                <span id="asteriskod5"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other5_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other5_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
@@ -8038,25 +8051,26 @@
 
                                         </div>
                                     </div>
-                                  <div class="col-lg-12 Other1_reviews">
-                              <div class="group-input">
-                                  <label for="Department1">Other's 1 Department
-                                        <span id="asteriskod1"
-                                            style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other1_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other1_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other1_reviews">
+                                        <div class="group-input">
+                                            <label for="Department1">Other's 1 Department
+                                                <span id="asteriskod1"
+                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other1_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other1_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Description of Action Item12">Description of Action Item (By
@@ -8195,25 +8209,26 @@
 
                                         </div>
                                     </div>
-                                                    <div class="col-lg-12 Other2_reviews">
-                              <div class="group-input">
-                                  <label for="Department2">Other's 2 Department
-                                        <span id="asteriskod2"
-                                            style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other2_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other2_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other2_reviews">
+                                        <div class="group-input">
+                                            <label for="Department2">Other's 2 Department
+                                                <span id="asteriskod2"
+                                                    style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other2_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other2_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
@@ -8363,25 +8378,26 @@
 
                                         </div>
                                     </div>
-                                       <div class="col-lg-12 Other3_reviews">
-                              <div class="group-input">
-                                  <label for="Department3">Other's 3 Department
-                                        <span id="asteriskod3"
-                                            style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other3_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other3_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other3_reviews">
+                                        <div class="group-input">
+                                            <label for="Department3">Other's 3 Department
+                                                <span id="asteriskod3"
+                                                    style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other3_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other3_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Description of Action Item14">Description of Action Item (By
@@ -8504,25 +8520,26 @@
                                         </div>
                                     </div>
 
-                            <div class="col-lg-12 Other4_reviews">
-                              <div class="group-input">
-                                  <label for="Department4">Other's 4 Department
-                                        <span id="asteriskod4"
-                                            style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other4_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other4_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other4_reviews">
+                                        <div class="group-input">
+                                            <label for="Department4">Other's 4 Department
+                                                <span id="asteriskod4"
+                                                    style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other4_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other4_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Description of Action Item15">Description of Action Item (By
@@ -8671,25 +8688,26 @@
                                         </div>
                                     </div>
 
-                            <div class="col-lg-12 Other5_reviews">
-                              <div class="group-input">
-                                  <label for="Department4">Other's 5 Department
-                                        <span id="asteriskod4"
-                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other5_Department_person"
-                                        @if ($data->stage == 4) disabled @endif
-                                        id="Other5_Department_person">
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 Other5_reviews">
+                                        <div class="group-input">
+                                            <label for="Department4">Other's 5 Department
+                                                <span id="asteriskod4"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other5_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
+                                                id="Other5_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}"
+                                                        @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Description of Action Item16">Description of Action Item (By
@@ -8788,9 +8806,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                                    </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                            </a> -->
                             </div>
                         </div>
                     </div>
@@ -8812,7 +8830,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -8823,8 +8841,8 @@
 
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet feedback">HOD Production Tablet/Capsule Powder Comments <span
-                                                id="asteriskPT2"
+                                        <label for="Production Tablet feedback">HOD Production Tablet/Capsule Powder
+                                            Comments <span id="asteriskPT2"
                                                 style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -8871,10 +8889,10 @@
                                         </div>
                                     </div>
                                 </div>
+                              
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule Powder Completed
-                                            By</label>
+                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule Powder Completed By</label>
                                         <input readonly type="text" value="{{ $data5->hod_Production_Table_By }}"
                                             name="hod_Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                             id="hod_Production_Table_By">
@@ -8942,7 +8960,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 51,
+                                            'q_m_s_roles_id' => 68,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -8953,10 +8971,11 @@
                                 @else
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet feedback">HOD Production Tablet/Capsule Powder Comments
+                                            <label for="Production Tablet feedback">HOD Production Tablet/Capsule Powder
+                                                Comments
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9004,7 +9023,8 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Completed
+                                        <label for="Production Tablet Completed By">Production Tablet/Capsule Powder
+                                            Completed
                                             By</label>
                                         <input readonly type="text" value="{{ $data5->hod_Production_Table_By }}"
                                             name="hod_Production_Table_By" id="hod_Production_Table_By">
@@ -9064,7 +9084,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9197,7 +9217,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 53,
+                                            'q_m_s_roles_id' => 70,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9211,8 +9231,8 @@
                                             <label for="Production Injection Status of Action Item">HOD Production
                                                 Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9226,8 +9246,8 @@
                                             <label for="Production Injection Status of Action Item">HOD Production
                                                 Injection Comments
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9338,7 +9358,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9402,7 +9422,8 @@
                                 </div>
                                 <div class="col-md-6 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Completed By">HOD Research & Development Completed
+                                        <label for="Research Development Completed By">HOD Research & Development
+                                            Completed
                                             By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_ResearchDevelopment_by }}"
@@ -9469,7 +9490,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 55,
+                                            'q_m_s_roles_id' => 72,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9605,7 +9626,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9616,8 +9637,8 @@
 
                                 <div class="col-md-12 mb-3 Human_Resource">
                                     <div class="group-input">
-                                        <label for="Human Resource Status of Action Item">HOD Human Resource Comments <span
-                                                id="asteriskPT2"
+                                        <label for="Human Resource Status of Action Item">HOD Human Resource Comments
+                                            <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_Human_Resource_review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -9750,7 +9771,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 31,
+                                            'q_m_s_roles_id' => 77,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9907,7 +9928,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -9915,7 +9936,7 @@
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
 
-
+                   
                                 <div class="col-md-12 mb-3 CQA">
                                     <div class="group-input">
                                         <label for="Corporate Quality Assurance feedback">HOD Corporate Quality Assurance
@@ -9969,11 +9990,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- @php
+                                dd( $data5->hod_CorporateQualityAssurance_by);
+                            @endphp --}}
                                 <div class="col-md-6 mb-3 CQA">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality
-                                            Assurance Completed
-                                            By</label>
+                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality Assurance Completed By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_CorporateQualityAssurance_by }}"
                                             name="hod_CorporateQualityAssurance_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -10050,7 +10072,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 58,
+                                            'q_m_s_roles_id' => 74,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10121,11 +10143,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-6 mb-3 CQA">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality
-                                            Assurance Completed
-                                            By</label>
+                                        <label for="Corporate Quality Assurance Completed By">HOD Corporate Quality Assurance Completed By</label>
                                         <input readonly type="text"
                                             value="{{ $data5->hod_CorporateQualityAssurance_by }}"
                                             name="hod_CorporateQualityAssurance_by"
@@ -10190,7 +10211,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10318,7 +10339,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 54,
+                                            'q_m_s_roles_id' => 71,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10448,7 +10469,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10459,7 +10480,8 @@
 
                                 <div class="col-md-12 mb-3 Engineering">
                                     <div class="group-input">
-                                        <label for="Engineering feedback">HOD Engineering Comments <span id="asteriskPT2"
+                                        <label for="Engineering feedback">HOD Engineering Comments <span
+                                                id="asteriskPT2"
                                                 style="display: {{ $data5->hod_Engineering_review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -10581,7 +10603,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 25,
+                                            'q_m_s_roles_id' => 78,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10706,7 +10728,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10842,7 +10864,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 57,
+                                            'q_m_s_roles_id' => 81,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -10971,7 +10993,7 @@
 
                             @php
                                 $userRoles = DB::table('user_roles')
-                                    ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                    ->where(['q_m_s_roles_id' => 79, 'q_m_s_divisions_id' => $data->division_id])
                                     ->get();
                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                 //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -11110,7 +11132,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11121,8 +11143,8 @@
 
                                 <div class="col-md-12 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid feedback">HOD Production Liquid/Ointment Comments <span
-                                                id="asteriskPT2"
+                                        <label for="Production Liquid feedback">HOD Production Liquid/Ointment Comments
+                                            <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_ProductionLiquid_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -11171,7 +11193,8 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">HOD Production Liquid/Ointment Completed
+                                        <label for="Production Liquid Completed By">HOD Production Liquid/Ointment
+                                            Completed
                                             By</label>
                                         <input readonly type="text" value="{{ $data5->hod_ProductionLiquid_by }}"
                                             name="hod_ProductionLiquid_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -11246,7 +11269,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 52,
+                                            'q_m_s_roles_id' => 69,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11257,7 +11280,8 @@
                                 @if ($data->stage == 5)
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid Comment">HOD Production Liquid/Ointment Comments</label>
+                                            <label for="Production Liquid Comment">HOD Production Liquid/Ointment
+                                                Comments</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -11267,7 +11291,8 @@
                                 @else
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid feedback">HOD Production Liquid/Ointment Comments</label>
+                                            <label for="Production Liquid feedback">HOD Production Liquid/Ointment
+                                                Comments</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -11314,7 +11339,8 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid Completed By">HOD Production Liquid/Ointment Completed
+                                        <label for="Production Liquid Completed By">HOD Production Liquid/Ointment
+                                            Completed
                                             By</label>
                                         <input readonly type="text" value="{{ $data5->hod_ProductionLiquid_by }}"
                                             name="hod_ProductionLiquid_by" id="hod_ProductionLiquid_by">
@@ -11375,7 +11401,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11511,7 +11537,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 24,
+                                            'q_m_s_roles_id' => 80,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11637,7 +11663,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11771,7 +11797,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 56,
+                                            'q_m_s_roles_id' => 73,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -11898,7 +11924,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12034,7 +12060,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where([
-                                            'q_m_s_roles_id' => 59,
+                                            'q_m_s_roles_id' => 75,
                                             'q_m_s_divisions_id' => $data->division_id,
                                         ])
                                         ->get();
@@ -12136,233 +12162,7 @@
 
 
                             <!-- HTML Section -->
-                            <div class="sub-head">
-                                Contract Giver
-                            </div>
 
-                            @php
-                                $data5 = DB::table('hodmanagement_cfts')
-                                    ->where('ManagementReview_id', $data->id)
-                                    ->first();
-                            @endphp
-
-                            @if ($data5->hod_ContractGiver_Review !== 'yes')
-                                <!-- <script>
-                                    $(document).ready(function() {
-                                        // Initially hide or show based on the current value of the select
-                                        if ($('[name="hod_ContractGiver_Review"]').val() === 'yes') {
-                                            $('.ContractGiver').show();
-                                            $('.ContractGiver span').show();
-                                        } else {
-                                            $('.ContractGiver').hide();
-                                            $('.ContractGiver span').hide();
-                                        }
-
-                                        // Handle changes to the select field
-                                        $('[name="hod_ContractGiver_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-                                        });
-                                    });
-                                </script> -->
-                            @endif
-
-                            @if ($data->stage == 3 || $data->stage == 5)
-
-
-                                @php
-                                    $userRoles = DB::table('user_roles')
-                                        ->where([
-                                            'q_m_s_roles_id' => 60,
-                                            'q_m_s_divisions_id' => $data->division_id,
-                                        ])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                @endphp
-
-
-
-
-                                <div class="col-md-12 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">HOD Contract Giver Comments <span
-                                                id="asteriskPT2" class="text-danger"
-                                                style="display: {{ $data5->hod_ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea class="summernote hod_ContractGiver_feedback" @if (
-                                            $data->stage == 3 ||
-                                                (isset($data5->hod_ContractGiver_person) && Auth::user()->name != $data5->hod_ContractGiver_person)) readonly @endif
-                                            name="hod_ContractGiver_feedback" id="summernote-18" @if ($data5->hod_ContractGiver_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_ContractGiver_feedback }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">HOD Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_ContractGiver_attachment">
-                                                @if ($data5->hod_ContractGiver_attachment)
-                                                    @foreach (json_decode($data5->hod_ContractGiver_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    type="file" id="myfile"
-                                                    name="hod_ContractGiver_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'hod_ContractGiver_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">HOD Contract Giver Completed By</label>
-                                        <input readonly type="text" value="{{ $data5->hod_ContractGiver_by }}"
-                                            name="hod_ContractGiver_by" id="hod_ContractGiver_by">
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data5->ContractGiver_on }}">
-                                        </div>
-                                    </div> --}}
-                                <div class="col-6 ContractGiver new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Contract Giver Completed On">HOD Contract Giver
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="hod_ContractGiver_on" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data5->hod_ContractGiver_on) }}" />
-                                            <input readonly type="date" name="hod_ContractGiver_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'hod_ContractGiver_on')" />
-                                        </div>
-                                        @error('hod_ContractGiver_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @else
-                                @php
-                                    $userRoles = DB::table('user_roles')
-                                        ->where([
-                                            'q_m_s_roles_id' => 60,
-                                            'q_m_s_divisions_id' => $data->division_id,
-                                        ])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
-                                @endphp
-
-
-
-
-                                <div class="col-md-12 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">HOD Contract Giver Comments <span
-                                                id="asteriskPT2" style="display: none"
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea class="summernote hod_ContractGiver_feedback" @if ($data->stage == 3 || (isset($data5->ContractGiver_person) && Auth::user()->name != $data5->ContractGiver_person)) readonly @endif
-                                            name="hod_ContractGiver_feedback" id="summernote-18">{{ $data5->hod_ContractGiver_feedback }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">HOD Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_ContractGiver_attachment">
-                                                @if ($data5->hod_ContractGiver_attachment)
-                                                    @foreach (json_decode($data5->hod_ContractGiver_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    type="file" id="myfile"
-                                                    name="hod_ContractGiver_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'hod_ContractGiver_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 ContractGiver">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">HOD Contract Giver Completed By</label>
-                                        <input readonly type="text" value="{{ $data5->hod_ContractGiver_by }}"
-                                            name="hod_ContractGiver_by" id="hod_ContractGiver_by">
-                                    </div>
-                                </div>
-
-                                <div class="col-6 ContractGiver new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Contract Giver Completed On">HOD Contract Giver
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="hod_ContractGiver_on" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data5->hod_ContractGiver_on) }}" />
-                                            <input readonly type="date" name="hod_ContractGiver_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'hod_ContractGiver_on')" />
-                                        </div>
-                                        @error('hod_ContractGiver_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @endif
 
 
                             @if ($data->stage == 3 || $data->stage == 5)
@@ -12399,12 +12199,21 @@
 
 
 
-                                <div class="col-md-12 mb-3 hod_Other1_reviews ">
+
+                                {{-- <div class="col-md-12 mb-3 hod_Other1_reviews">
                                     <div class="group-input">
                                         <label for="Feedback1"> HOD Other's 1 Comments
                                         </label>
                                         <textarea @if ($data5->hod_Other1_review == 'yes' && $data->stage == 5) required @endif class="tiny" name="hod_Other1_feedback"
                                             @if ($data->stage == 3 || Auth::user()->name != $data5->hod_Other1_person) readonly @endif id="summernote-42">{{ $data5->hod_Other1_feedback }}</textarea>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-12 mb-3 hod_Other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Feedback1"> HOD Other's 1 Comments
+                                        </label>
+                                        <textarea @if ($data->stage == 3 || Auth::user()->name != $data5->hod_Other1_person) readonly @endif class="tiny" name="hod_Other1_feedback"
+                                            @if ($data5->hod_Other1_review == 'yes' && $data->stage == 5) required @endif id="summernote-44">{{ $data5->hod_Other1_feedback }}</textarea>
                                     </div>
                                 </div>
                                 <script>
@@ -12649,7 +12458,7 @@
                                         @endif
                                     });
                                 </script>
-         -->
+                 -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -13478,9 +13287,9 @@
                                         </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                                    </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                            </a> -->
                         </div>
                     </div>
                 </div>
@@ -13488,17 +13297,39 @@
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 
-                        <div class="group-input">
-                            <label for="additional_suport_required">
-                                QA verification Comment
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#management-review-additional_suport_required-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
+                        {{-- <div class="group-input">
+    <label for="additional_suport_required">
+        QA verification Comment <span class="text-danger">*</span>
+        <span class="text-primary" data-bs-toggle="modal"
+            data-bs-target="#management-review-additional_suport_required-instruction-modal"
+            style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+            (Launch Instruction)
+        </span>
+    </label>
+    <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>{{ $data->additional_suport_required }}</textarea>
+</div> --}}
+                        <div class="col-md-12">
+                            @if ($data->stage == 6)
+                                <div class="group-input">
+                                    <label for="HOD Remarks">QA Verification Comment <span
+                                            class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                            does not require completion</small></div>
+                                    <textarea class="tiny" name="additional_suport_required" id="summernote-4" required>{{ $data->additional_suport_required }}</textarea>
+                                </div>
+                            @else
+                                <div class="group-input">
+                                    <label for="HOD Remarks">QA Verification Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                            does not require completion</small></div>
+                                    <textarea readonly class="tiny" name="additional_suport_required" id="summernote-4">{{ $data->additional_suport_required }}</textarea>
+                                </div>
+                            @endif
+                            @error('additional_suport_required')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Inv Attachments">Action Item Status Attachment</label>
@@ -13536,103 +13367,112 @@
                                 <input type="hidden" name="removed_files" id="removed_files">
                             </div>
                         </div> --}}
-                         <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="qa_verification_file">Action Item Status Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="qa_verification_file">
-                                                @if ($data->qa_verification_file)
-                                                    @foreach(json_decode($data->qa_verification_file) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                            </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                            </a>
-                                                            <input type="hidden" name="existing_qa_verification_file[]" value="{{ $file }}">
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_verification_file[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'qa_verification_file')" multiple>
-                                            </div>
-                                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="qa_verification_file">QA Verification Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="qa_verification_file">
+                                        @if ($data->qa_verification_file)
+                                            @foreach (json_decode($data->qa_verification_file) as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_qa_verification_file[]"
+                                                        value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="qa_verification_file[]"
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            oninput="addMultipleFiles(this, 'qa_verification_file')" multiple>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_qa_verification_file" name="deleted_qa_verification_file" value="">
+                        <!-- Hidden field to keep track of files to be deleted -->
+                        <input type="hidden" id="deleted_qa_verification_file" name="deleted_qa_verification_file"
+                            value="">
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const removeButtons = document.querySelectorAll('.remove-file');
 
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
+                                removeButtons.forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
 
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
+                                        // Hide the file container
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                            // Remove hidden input associated with this file
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
 
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_qa_verification_file');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
-                                                }
-                                            });
-                                        });
+                                            // Add the file name to the deleted files list
+                                            const deletedFilesInput = document.getElementById(
+                                                'deleted_qa_verification_file');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                ',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, id) {
+                                const fileListContainer = document.getElementById(id);
+                                const files = input.files;
+
+                                for (let i = 0; i < files.length; i++) {
+                                    const file = files[i];
+                                    const fileName = file.name;
+                                    const fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    const fileText = document.createElement('b');
+                                    fileText.textContent = fileName;
+
+                                    const viewLink = document.createElement('a');
+                                    viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                    viewLink.target = '_blank';
+                                    viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                    const removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = fileName;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function() {
+                                        fileContainer.style.display = 'none';
                                     });
 
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(viewLink);
+                                    fileContainer.appendChild(removeLink);
 
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
-
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
-
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
-                                    }
-                                </script>
+                                    fileListContainer.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
 
 
                         <div class="button-block">
@@ -13668,10 +13508,31 @@
                                 <label for="summary_recommendation">Summary & Recommendation</label>
                                 <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
                             </div> --}}
-                        <div class="group-input">
-                            <label for="conclusion">QA Head Comment</label>
-                            <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_new }}</textarea>
+                        {{-- <div class="group-input">
+    <label for="conclusion">QA Head Comment <span class="text-danger">*</span></label>
+    <textarea name="conclusion_new" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>{{ $data->conclusion_new }}</textarea>
+</div> --}}
+                        <div class="col-md-12">
+                            @if ($data->stage == 7)
+                                <div class="group-input">
+                                    <label for="HOD Remarks">QA Head Comment <span class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                            does not require completion</small></div>
+                                    <textarea class="tiny" name="conclusion_new" id="summernote-4" required>{{ $data->conclusion_new }}</textarea>
+                                </div>
+                            @else
+                                <div class="group-input">
+                                    <label for="HOD Remarks">QA Head Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                            does not require completion</small></div>
+                                    <textarea readonly class="tiny" name="conclusion_new" id="summernote-4">{{ $data->conclusion_new }}</textarea>
+                                </div>
+                            @endif
+                            @error('conclusion_new')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         {{-- <div class="group-input">
                             <label for="closure_attachments">Closure Attachments</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting
@@ -13702,103 +13563,112 @@
                                 </div>
                             </div>
                         </div> --}}
-                         <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="closure_attachments">Closure Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="closure_attachments">
-                                                @if ($data->closure_attachments)
-                                                    @foreach(json_decode($data->closure_attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                            </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                            </a>
-                                                            <input type="hidden" name="existing_closure_attachments[]" value="{{ $file }}">
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="closure_attachments[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
-                                            </div>
-                                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="closure_attachments">Closure Attachments</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="closure_attachments">
+                                        @if ($data->closure_attachments)
+                                            @foreach (json_decode($data->closure_attachments) as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_closure_attachments[]"
+                                                        value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="closure_attachments[]"
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_closure_attachments" name="deleted_closure_attachments" value="">
+                        <!-- Hidden field to keep track of files to be deleted -->
+                        <input type="hidden" id="deleted_closure_attachments" name="deleted_closure_attachments"
+                            value="">
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const removeButtons = document.querySelectorAll('.remove-file');
 
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
+                                removeButtons.forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
 
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
+                                        // Hide the file container
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                            // Remove hidden input associated with this file
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
 
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_closure_attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
-                                                }
-                                            });
-                                        });
+                                            // Add the file name to the deleted files list
+                                            const deletedFilesInput = document.getElementById(
+                                                'deleted_closure_attachments');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(
+                                                ',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, id) {
+                                const fileListContainer = document.getElementById(id);
+                                const files = input.files;
+
+                                for (let i = 0; i < files.length; i++) {
+                                    const file = files[i];
+                                    const fileName = file.name;
+                                    const fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    const fileText = document.createElement('b');
+                                    fileText.textContent = fileName;
+
+                                    const viewLink = document.createElement('a');
+                                    viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                    viewLink.target = '_blank';
+                                    viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                    const removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = fileName;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function() {
+                                        fileContainer.style.display = 'none';
                                     });
 
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(viewLink);
+                                    fileContainer.appendChild(removeLink);
 
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
-
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
-
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
-                                    }
-                                </script>
+                                    fileListContainer.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
 
                         {{-- <div class="sub-head">
                                 Extension Justification
@@ -13827,19 +13697,19 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Submited By</label>
+                                    <label for="Completed By">Submit By</label>
                                     <div class="static">{{ $data->Submited_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Submited On</label>
+                                    <label for="Completed By">Submit On</label>
                                     <div class="static">{{ $data->Submited_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">Submit Comment</label>
                                     <div class="static">{{ $data->Submited_Comment }}</div>
                                 </div>
                             </div>
@@ -13876,7 +13746,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">QA Head Review Complete Comment</label>
                                     <div class="static">{{ $data->qaHeadReviewComplete_Comment }}</div>
                                 </div>
                             </div>
@@ -13895,7 +13765,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">Meeting and Summary Complete Comment</label>
                                     <div class="static">{{ $data->meeting_summary_comment }}</div>
                                 </div>
                             </div>
@@ -13914,7 +13784,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">CFT Action Complete Comment</label>
                                     <div class="static">{{ $data->ALLAICompleteby_comment }}</div>
                                 </div>
                             </div>
@@ -13933,7 +13803,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">CFT HOD Review Complete Comment</label>
                                     <div class="static">{{ $data->hodFinaleReviewComplete_comment }}</div>
                                 </div>
                             </div>
@@ -13952,7 +13822,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">QA Verification Complete Comment</label>
                                     <div class="static">{{ $data->QAVerificationComplete_Comment }}</div>
                                 </div>
                             </div>
@@ -13971,7 +13841,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
+                                    <label for="Completed By">Approved Comment</label>
                                     <div class="static">{{ $data->Approved_comment }}</div>
                                 </div>
                             </div>
@@ -14065,9 +13935,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14112,9 +13982,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14157,9 +14027,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14495,6 +14365,116 @@
                 });
             });
         });
+    </script>
+    <script>
+        console.log('Script working')
+
+        $(document).ready(function() {
+
+
+            function submitForm() {
+
+                let auditForm = document.getElementById('auditForm');
+
+
+                console.log('sumitting form')
+
+                document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                    button.disabled = true;
+                })
+
+                document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                    spinner.style.display = 'flex';
+                })
+
+                auditForm.submit();
+            }
+
+            $('#ChangesaveButton01').click(function() {
+                document.getElementById('formNameField').value = 'general-open';
+                submitForm();
+            });
+
+            $('#ChangesaveButton02').click(function() {
+                document.getElementById('formNameField').value = 'hod';
+                submitForm();
+            });
+            $('#ChangesaveButton02221').click(function() {
+                document.getElementById('formNameField').value = 'pending';
+                submitForm();
+            });
+            $('#ChangesaveButton02222').click(function() {
+                document.getElementById('formNameField').value = 'hod final';
+                submitForm();
+            });
+
+            $('#ChangesaveButton03').click(function() {
+                document.getElementById('formNameField').value = 'qa';
+                submitForm();
+            });
+
+            $('#ChangesaveButton04').click(function() {
+                document.getElementById('formNameField').value = 'capa';
+                submitForm();
+            });
+            $('#ChangesaveButton022').click(function() {
+                document.getElementById('formNameField').value = 'qrm';
+                submitForm();
+            });
+            $('#ChangesaveButton023').click(function() {
+                document.getElementById('formNameField').value = 'inv';
+                submitForm();
+            });
+
+            $('#ChangesaveButton05').click(function() {
+                document.getElementById('formNameField').value = 'qa-final';
+                submitForm();
+            });
+
+            $('#ChangesaveButton06').click(function() {
+                document.getElementById('formNameField').value = 'qah';
+                submitForm();
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var signatureForm = document.getElementById('signatureModalForm');
+
+            signatureForm.addEventListener('submit', function(e) {
+
+                var submitButton = signatureForm.querySelector('.signatureModalButton');
+                var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                submitButton.disabled = true;
+
+                spinner.style.display = 'inline-block';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var signatureForm = document.getElementById('pendingInitiatorForm');
+
+            signatureForm.addEventListener('submit', function(e) {
+
+                var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
+                var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
+
+                submitButton.disabled = true;
+
+                spinner.style.display = 'inline-block';
+            });
+        });
+
+
+        // =========================
+        wow = new WOW({
+            boxClass: 'wow', // default
+            animateClass: 'animated', // default
+            offset: 0, // default
+            mobile: true, // default
+            live: true // default
+        })
+        wow.init();
     </script>
     <script>
         var maxLength = 255;

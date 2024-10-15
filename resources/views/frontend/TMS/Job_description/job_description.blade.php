@@ -297,7 +297,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 <div class="form-field-head">
 
     <div class="division-bar">
-        <strong>JOb Description</strong>
+        <strong>Job Description</strong>
         {{-- <strong>Site Division/Project</strong> : --}}
     </div>
 </div>
@@ -317,7 +317,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
         <!-- Tab links -->
         <div class="cctab">
-            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Job Description</button>
 
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
         </div>
@@ -327,42 +327,25 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             <div id="step-form">
 
                 <!-- General information content -->
-                <div id="CCForm1" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
+                <!-- <div id="CCForm1" class="inner-block cctabcontent"> -->
 
-                            @if (!empty($parent_id))
-                            <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                            <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                            @endif
-
-            <div class="sub-head">
-                Job Description
-            </div>
 
             <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <!-- Employee Name -->
+                 
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}">{{ $employee->employee_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employee_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
+                                    <label for="location">Name of Employee</label>
+                                    <input id="selected_employee_id" type="text" value ="{{ $mainvalue->employee_name}}" name="name_employee" readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" id=""  >
+                                    <input type="text" name="job_description_no" id="" disabled >
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -372,31 +355,30 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Employee Code </label>
                                     <input type="text" name="employee_id" id="employee_ids" readonly>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Employee Code </label>
+                                    <input type="text" name="employee_id" value ="{{$mainvalue->full_employee_id}}" id="employee_id"  readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <input type="text" name="new_department" id="departments" readonly>
+                                    <input type="text" name="new_department" value="{{ Helpers::getDepartments()[$mainvalue->department]}}" id="departments" readonly>
                                 </div>
                             </div>
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="department_location">Location <span class="text-danger">*</span></label>
-                                    <input type="text" name="location" id="city" readonly>
-                                </div>
-                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="designation">Designation </label>
-                                    <input type="text" name="designation" id="designees"  readonly>
+                                    <input type="text" name="designation" value="{{$mainvalue->job_title}}" id="designees"  readonly>
                                 </div>
                             </div>
                             <input type="hidden" name="employee_name" id="employee_name">
@@ -404,7 +386,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Short Description">Qualification </label>
-                                    <input id="qualifications" type="text" name="qualification" readonly>
+                                    <input id="qualifications" type="text" name="qualification" value="{{$mainvalue->qualification}}" readonly>
                                 </div>
                             </div>
 
@@ -415,15 +397,22 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="date_joining_displays" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_joining_displays"  placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" />
                                         </div>
                                     </div>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Date of Joining </label>
+                                    <input type="date" name="date_joining" id="">
                                 </div>
                             </div>
 

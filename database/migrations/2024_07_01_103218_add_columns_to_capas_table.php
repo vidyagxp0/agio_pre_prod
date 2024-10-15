@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('capas', function (Blueprint $table) {
             $table->longText('hod_remarks')->nullable();
-            $table->string('hod_attachment')->nullable();
-            $table->string('qa_attachment')->nullable();
+            $table->longText('hod_attachment')->nullable();
+            $table->longText('qa_attachment')->nullable();
             $table->string('capafileattachement')->nullable();
             $table->text('investigation')->nullable();
             $table->text('rcadetails')->nullable();

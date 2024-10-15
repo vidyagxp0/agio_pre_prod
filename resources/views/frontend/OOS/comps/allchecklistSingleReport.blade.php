@@ -1,8 +1,8 @@
    <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
- 
-        <div class="inner-block"> 
+
+        <div class="inner-block">
             <div class="content-table">
-                    
+
                 <div class="block">
                     <div class="block-head"> Checklist for Analyst Training and Procedure : </div>
                         <div class="border-table">
@@ -55,14 +55,14 @@
                                         ]
                                         ];
 
-                            @endphp                  
+                            @endphp
                             <table>
                                 <tr class="table_bg">
                                     <th style="width: 5%;">Sr.No.</th>
                                     <th style="width: 40%;">Question</th>
                                     <th style="width: 20%;">Response</th>
                                     <th>Remarks</th>
-                                </tr> 
+                                </tr>
                                 @php
                                     $main_question_index = 2.0;
                                     $sub_question_index = 0;
@@ -85,6 +85,421 @@
                                     @endforeach
                             </table>
                         </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">Sample receiving & verification in lab</div>
+                    <div class="border-table">
+                        @php
+                        $check_sample_receiving_vars = [
+                        [
+                        'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the correct quantity of the sample withdrawn ?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was there any discrepancy observed during sampling ?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the sample container (Physical integrity) checked before testing ? ",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        ];
+
+                   @endphp
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @php
+                                $main_question_index = 2.0;
+                                $sub_question_index = 0;
+                            @endphp
+                            @foreach ($check_sample_receiving_vars as $index => $review_item)
+                            @php
+                                if ($review_item['is_sub_question']) {
+                                    $sub_question_index++;
+                                } else {
+                                    $sub_question_index = 0;
+                                    $main_question_index += 0.1;
+                                }
+                            @endphp
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{$review_item['question']}}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) ?? '' }}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>
+                                @endforeach
+                        </table>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head"> Method /procedure used during analysis</div>
+                    <div class="border-table">
+                        @php
+                                $check_method_procedure_during_analysis = [
+                                [
+                                'question' => "Was correct applicable specification/Test procedure/MOA/ used for analysis ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Verified specification/Test procedure/MOA No.",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the test procedure followed as per method validation ?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the any change in the validated change method ?if yes, was test performed with the new validated method ?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was BET reagents (Lysate ,CSE,LRW and Buffer) procured from the approved vender ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was lysate and CSE stored at the recommended temp.and duration? Storage condition:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all product /reagents contact parts of BET testing (Tips/Accessories /Sample Container) depayrogenated ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Assay tube /Batch No.",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Expiry date:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Tipe lot /Batch No.",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Expiry date:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was the test done at correct MVD as per validated method ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were calculation of MVD/Test dilution done correctly?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were correct dilutions prepared ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was labeled claim lysate sensitivity checked before the use of the lot?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all reagents (LRW/CSE and Lysate) used in the test with in the expiry?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "LRW expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "CSE expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Lysate expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Buffer expiry date?",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was рН of the test sample/dilution verified?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were appropriate рН strip /measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were proper incubation conditions followed ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+
+                                [
+                                'question' => "Was there any spillage that occurred during the vortexing of dilutions?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were the results of positive, negative and test controls found satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Is the test incubator /heating block kept on a vibration –free surface ?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                ]
+                                @endphp
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @php
+                                $main_question_index = 2.0;
+                                $sub_question_index = 0;
+                            @endphp
+                            @foreach ($check_method_procedure_during_analysis as $index => $review_item)
+                            @php
+                                if ($review_item['is_sub_question']) {
+                                    $sub_question_index++;
+                                } else {
+                                    $sub_question_index = 0;
+                                    $main_question_index += 0.1;
+                                }
+                            @endphp
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{$review_item['question']}}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) ?? '' }}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>
+                                @endforeach
+                        </table>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">Instrument/Equipment Details</div>
+                    <div class="border-table">
+                        @php
+                        $check_Instrument_Equipment_Details = [
+                            [
+                            'question' => "Was the equipment used, calibrated/qualified and within the specified range? ",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Dry block /Heating block equipment ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Calibration date & Next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Pipettes ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Calibration date and Next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Refrigerator (2-8̊ C) ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Validation date and next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Dehydrogenation over ID:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Validation date and next due date:",
+                            'is_sub_question' => false,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was the depyrogenation done as per the validated load pattern?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was assay tubes incubated in the dry block (time and temp).as specified in the procedure?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Were any other samples tested along with this sample?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "If yes, whether those sample’s results found satisfactory?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Were any other sample’s analyzed on the same time on the same instruments ?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "If yes, what were the results of other Batches:",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            ]
+                            @endphp
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @php
+                                $main_question_index = 2.0;
+                                $sub_question_index = 0;
+                            @endphp
+                            @foreach ($check_Instrument_Equipment_Details as $index => $review_item)
+                            @php
+                                if ($review_item['is_sub_question']) {
+                                    $sub_question_index++;
+                                } else {
+                                    $sub_question_index = 0;
+                                    $main_question_index += 0.1;
+                                }
+                            @endphp
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{$review_item['question']}}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) ?? '' }}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>
+                                @endforeach
+                        </table>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">Results and Calculation</div>
+                    <div class="border-table">
+                        @php
+                        $Results_and_Calculation = [
+                            [
+                            'question' => "Were results taken properly ?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Raw data checked By……………….",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Was formula dilution factor used for calculating the results corrected?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            ];
+
+                    @endphp
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @php
+                                $main_question_index = 2.0;
+                                $sub_question_index = 0;
+                            @endphp
+                            @foreach ($Results_and_Calculation as $index => $review_item)
+                            @php
+                                if ($review_item['is_sub_question']) {
+                                    $sub_question_index++;
+                                } else {
+                                    $sub_question_index = 0;
+                                    $main_question_index += 0.1;
+                                }
+                            @endphp
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{$review_item['question']}}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) ?? '' }}</td>
+                                    <td>{{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>
+                                @endforeach
+                        </table>
+                    </div>
                 </div>
 
                 <div class="block">
@@ -124,14 +539,14 @@
                             ]
                             ];
 
-                        @endphp      
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -193,14 +608,14 @@
                         ]
                         ];
 
-                        @endphp              
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -257,14 +672,14 @@
                             ]
                             ];
 
-                        @endphp            
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -351,14 +766,14 @@
                                         ]
                                         ];
 
-                                        @endphp      
+                                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -425,14 +840,14 @@
                             ]
                             ];
 
-                        @endphp    
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -509,14 +924,14 @@
                             ]
                             ];
 
-                            @endphp      
+                            @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -588,14 +1003,14 @@
                                 ]
                                 ];
 
-                                @endphp      
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -674,7 +1089,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -782,7 +1197,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -879,14 +1294,14 @@
                         ]
                     ];
 
-                    @endphp      
+                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1053,14 +1468,14 @@
                                             ]
                                         ];
 
-                                    @endphp      
+                                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1074,12 +1489,25 @@
                                     $main_question_index += 0.1;
                                 }
                             @endphp
-                                <tr>
+                                {{--<tr>
                                     <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
                                     <td>{{$review_item['question']}}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) ?? '' }}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index) ?? '' }}</td>
+                                </tr>--}}
+                                <tr>
+                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{ $review_item['question'] }}</td>
+
+                                    @php
+                                        $response = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index);
+                                        $remark = Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index);
+                                    @endphp
+
+                                    <td>{{ is_array($response) ? json_encode($response) : ($response ?? '') }}</td>
+                                    <td>{{ is_array($remark) ? json_encode($remark) : ($remark ?? '') }}</td>
                                 </tr>
+
                                 @endforeach
                         </table>
                     </div>
@@ -1129,7 +1557,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1236,14 +1664,14 @@
                         ]
                         ];
 
-                    @endphp      
+                    @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1295,14 +1723,14 @@
                                 ]
                             ];
 
-                                @endphp   
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1348,15 +1776,15 @@
                                     'input_type' => 'date'
                                 ]
                                 ];
-            
-                                @endphp   
+
+                                @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1413,14 +1841,14 @@
                             ]
                         ];
 
-                        @endphp   
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1492,14 +1920,14 @@
                                 ]
                             ];
 
-                            @endphp  
+                            @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1660,7 +2088,7 @@
                                                     'input_type' => 'date'
                                                 ],
                                                 ];
-                            
+
                                             @endphp
                         <table>
                             <tr class="table_bg">
@@ -1668,7 +2096,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1729,15 +2157,15 @@
                                         'input_type' => 'text'
                                     ]
                                     ];
-                                
-                        @endphp  
+
+                        @endphp
                         <table>
                             <tr class="table_bg">
                                 <th style="width: 5%;">Sr.No.</th>
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1795,7 +2223,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1904,7 +2332,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -1958,7 +2386,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2036,7 +2464,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2100,7 +2528,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2179,7 +2607,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2243,7 +2671,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2322,7 +2750,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2376,7 +2804,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2435,7 +2863,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2494,7 +2922,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2523,7 +2951,7 @@
                     <div class="block-head"> Checklist for review of Test Method & procedure: </div>
                     <div class="border-table">
                         @php
-                        
+
                                 $CR_of_test_method_CIEMs = [
                                         [
                                             'question' => "Was the test method, monitoring SOP followed correctly?",
@@ -2536,7 +2964,7 @@
                                             'input_type' => 'number'
                                         ]
                                     ];
-            
+
                                 @endphp
                         <table>
                             <tr class="table_bg">
@@ -2544,7 +2972,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2613,7 +3041,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2724,7 +3152,7 @@
                                                 'input_type' => 'date'
                                             ]
                                         ];
-            
+
                                 @endphp
                         <table>
                             <tr class="table_bg">
@@ -2732,7 +3160,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2773,7 +3201,7 @@
                                             'input_type' => 'text'
                                         ]
                                     ];
-            
+
                                     @endphp
                         <table>
                             <tr class="table_bg">
@@ -2781,7 +3209,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2850,7 +3278,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2924,7 +3352,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -2997,7 +3425,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3056,7 +3484,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3180,7 +3608,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3239,7 +3667,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3292,7 +3720,7 @@
                                 <th style="width: 40%;">Question</th>
                                 <th style="width: 20%;">Response</th>
                                 <th>Remarks</th>
-                            </tr> 
+                            </tr>
                             @php
                                 $main_question_index = 2.0;
                                 $sub_question_index = 0;
@@ -3317,7 +3745,7 @@
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
 
                         @php
                         $ph_meter_questions = array(
@@ -3410,7 +3838,7 @@
                             "Was temperature of the instrument as per STP?",
                             "Was temperature acquired during analysis?",
                         );
-                        @endphp           
+                        @endphp
                         <div class="block">
                         <div class="block-head"> CheckList - Melting Point</div>
                         <div class="border-table">
@@ -3440,7 +3868,7 @@
                             @endif
                         </table>
                         </div>
-                        </div>             
+                        </div>
                         @php
 
                         $Dis_solution_questions = array(
@@ -3492,7 +3920,7 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
                         @php
                         $HPLC_GC_questions = array(
                         "Was analyst used correct column as per mentioned in STP?",
@@ -3587,7 +4015,7 @@
                             @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
 
                         @php
                         $General_Checklist_questions = array(
@@ -3663,7 +4091,7 @@
                                     @endif
                                 </table>
                             </div>
-                        </div> 
+                        </div>
                         @php
                         $kF_Potentionmeter_questions = array(
                         "Was Correct Reagent used for analysis?",
@@ -3684,7 +4112,7 @@
                         "Is RSD of KF within limit as per SOP/STP?",
                         "Was activated desiccant used?",
                         "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
-                        
+
                         );
                         @endphp
                         <div class="block">
@@ -3716,7 +4144,7 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>
                         @php
                         $RM_PM_questions = array(
                         "Was analyst Varified the GRN as per received samples?",
@@ -3764,4 +4192,4 @@
                         @endif
                         </table>
                         </div>
-                        </div> 
+                        </div>

@@ -56,9 +56,14 @@ class ManagementReviewController extends Controller
     {
          //$request->dd();
         //  return $request;
+         $form_progress = null;
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
+            return redirect()->back();
+        }
+         if (!$request->initiator_Group) {
+            toastr()->error("Initiator Department is required");
             return redirect()->back();
         }
         $management = new ManagementReview();
@@ -98,6 +103,7 @@ class ManagementReviewController extends Controller
         $management->division_id = $request->division_id;
         $management->record = ((RecordNumber::first()->value('counter')) + 1);
         $management->initiator_id = Auth::user()->id;
+        $management->form_progress = isset($form_progress) ? $form_progress : null;
         $management->intiation_date = $request->intiation_date;
         $management->division_code = $request->division_code;
         // $management->Initiator_id = $request->Initiator_id;
@@ -171,6 +177,19 @@ class ManagementReviewController extends Controller
             }
 
             $management->closure_attachments= json_encode($files);
+        }
+
+        if (!empty($request->meeting_and_summary_attachment)) {
+            $files = [];
+            if ($request->hasfile('meeting_and_summary_attachment')) {
+                foreach ($request->file('meeting_and_summary_attachment') as $file) {
+                    $name = $request->name . 'meeting_and_summary_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $management->meeting_and_summary_attachment= json_encode($files);
         }
 
 
@@ -721,8 +740,8 @@ class ManagementReviewController extends Controller
         $hodCft->hod_CorporateQualityAssurance_assessment = $request->hod_CorporateQualityAssurance_assessment;
         $hodCft->hod_CorporateQualityAssurance_feedback = $request->hod_CorporateQualityAssurance_feedback;
         $hodCft->hod_CorporateQualityAssurance_by = $request->hod_CorporateQualityAssurance_by;
+        // dd($hodCft->hod_CorporateQualityAssurance_by);
         $hodCft->hod_CorporateQualityAssurance_on = $request->hod_CorporateQualityAssurance_on;
-
         $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review;
         $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person;
         $hodCft->hod_ContractGiver_assessment = $request->hod_ContractGiver_assessment;
@@ -1370,6 +1389,21 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
+        if (!empty($management->meeting_and_summary_attachment)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Meetings and Summary Attachments';
+            $history->previous = "Null";
+            $history->current = $management->meeting_and_summary_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
 
   if (!empty($management->description)) {
         $history = new ManagementAuditTrial();
@@ -1407,7 +1441,7 @@ class ManagementReviewController extends Controller
          if (!empty($management->Operations)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA review comment ';
+            $history->activity_type = 'QA Head Review comment ';
             $history->previous = "Null";
             $history->current = $management->Operations;
             $history->comment = "Not Applicable";
@@ -1422,7 +1456,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->file_attchment_if_any)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'QA review Attachment';
+        $history->activity_type = 'QA Head Review Attachment';
         $history->previous = "Null";
         $history->current = $management->file_attchment_if_any;
         $history->comment = "NA";
@@ -1515,7 +1549,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->qa_verification_file)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Action Item Status Attachment';
+            $history->activity_type = 'QA Verification Attachment';
             $history->previous = "Null";
             $history->current = $management->qa_verification_file;
             $history->comment = "Not Applicable";
@@ -1583,6 +1617,8 @@ class ManagementReviewController extends Controller
 
 
 
+
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1595,13 +1631,46 @@ class ManagementReviewController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+         if (!$request->summary_recommendation) {
+            toastr()->error("Type is required");
+            return redirect()->back();
+        }
+         if (!$request->start_date) {
+            toastr()->error("Proposed Scheduled Start Date is required");
+            return redirect()->back();
+        }
+        // if (!$request->assign_to) {
+        //     toastr()->error("Invite Person Notify is required");
+        //     return redirect()->back();
+        // }
+        // // if (!$request->external_supplier_performance) {
+        // //     toastr()->error("Meeting End Date is required");
+        // //     return redirect()->back();
+        // // }
+        // if (!$request->customer_satisfaction_level) {
+        //     toastr()->error("Meeting Start Date is required");
+        //     return redirect()->back();
+        // }
+        // if (!$request->additional_suport_required) {
+        //     toastr()->error("QA verification Comment  is required");
+        //     return redirect()->back();
+        // }
+        // if (!$request->conclusion_new) {
+        //     toastr()->error("QA Head Comment is required");
+        //     return redirect()->back();
+        // }
         $lastDocument = ManagementReview::find($id);
         $management = ManagementReview::find($id);
+            $changeControl = ManagementReview::find($id);
+
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
         $lastCft = hodmanagementCft::where('ManagementReview_id', $management->id)->first();
         $Cft = managementCft::where('ManagementReview_id', $id)->first();
+        $hodCft = hodmanagementCft::where('ManagementReview_id', $id)->first();
 
-        $management->initiator_id = Auth::user()->id;
+        // $management->initiator_id = Auth::user()->id;
+        // $changeControl->form_progress = isset($form_progress) ? $form_progress : null;
+
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
@@ -1611,6 +1680,8 @@ class ManagementReviewController extends Controller
         $management->assign_to = implode(',', $request->assign_to);
 
 
+
+        $management->form_progress = isset($form_progress) ? $form_progress : null;
 
         $management->due_date = $request->due_date;
         $management->type = $request->type;
@@ -1678,6 +1749,7 @@ class ManagementReviewController extends Controller
 
     //    $attachments = json_decode($management->inv_attachment, true) ?? [];
         // Handle file removals
+
 
             if($management->stage == 3 || $management->stage == 4 ){
 
@@ -2135,6 +2207,7 @@ class ManagementReviewController extends Controller
                 // Define the column names
                 $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
 
+
                 // Initialize an array to store the values
                 $valuesArray = [];
 
@@ -2181,63 +2254,63 @@ class ManagementReviewController extends Controller
 
 
 
-            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review ?? $hodCft->hod_Production_Table_Review;
-            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person ?? $hodCft->hod_Production_Table_Person;
+            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review == null ? $hodCft->hod_Production_Table_Review : $request->hod_Production_Table_Review;
+            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person == null ? $hodCft->hod_Production_Table_Person : $request->hod_Production_Table_Person;
 
 
-            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review ?? $hodCft->hod_Production_Injection_Review;
-            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person ?? $hodCft->hod_Production_Injection_Person;
+            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review == null ? $hodCft->hod_Production_Injection_Review : $request->hod_Production_Injection_Review;
+            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person == null ? $hodCft->hod_Production_Injection_Person : $request->hod_Production_Injection_Person;
 
-            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review ?? $hodCft->hod_ProductionLiquid_Review;
-            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person ?? $hodCft->hod_ProductionLiquid_person;
+            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review == null ? $hodCft->hod_ProductionLiquid_Review : $request->hod_ProductionLiquid_Review;
+            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person == null ? $hodCft->hod_ProductionLiquid_person : $request->hod_ProductionLiquid_person;
 
-            $hodCft->hod_Store_person = $request->hod_Store_person ?? $hodCft->hod_Store_person;
-            $hodCft->hod_Store_Review = $request->hod_Store_Review ?? $hodCft->hod_Store_Review;
+            $hodCft->hod_Store_person = $request->hod_Store_person == null ? $hodCft->hod_Store_person : $request->hod_Store_person;
+            $hodCft->hod_Store_Review = $request->hod_Store_Review == null ? $hodCft->hod_Store_Review : $request->hod_Store_Review;
 
-            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person ?? $hodCft->hod_ResearchDevelopment_person;
-            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review ?? $hodCft->hod_ResearchDevelopment_Review;
+            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person == null ? $hodCft->hod_ResearchDevelopment_person : $request->hod_ResearchDevelopment_person;
+            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review == null ? $hodCft->hod_ResearchDevelopment_Review : $request->hod_ResearchDevelopment_Review;
 
-            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person ?? $hodCft->hod_Microbiology_person;
-            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review ?? $hodCft->hod_Microbiology_Review;
+            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person == null ? $hodCft->hod_Microbiology_person : $request->hod_Microbiology_person;
+            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review == null ? $hodCft->hod_Microbiology_Review : $request->hod_Microbiology_Review;
 
-            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person ?? $hodCft->hod_RegulatoryAffair_person;
-            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review ?? $hodCft->hod_RegulatoryAffair_Review;
+            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person == null ? $hodCft->hod_RegulatoryAffair_person : $request->hod_RegulatoryAffair_person;
+            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review == null ? $hodCft->hod_RegulatoryAffair_Review : $request->hod_RegulatoryAffair_Review;
 
-            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person ?? $hodCft->hod_CorporateQualityAssurance_person;
-            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review ?? $hodCft->hod_CorporateQualityAssurance_Review;
+            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person == null ? $hodCft->hod_CorporateQualityAssurance_person : $request->hod_CorporateQualityAssurance_person;
+            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review == null ? $hodCft->hod_CorporateQualityAssurance_Review : $request->hod_CorporateQualityAssurance_Review;
 
-            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person ?? $hodCft->hod_ContractGiver_person;
-            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review ?? $hodCft->hod_ContractGiver_Review;
+            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person == null ? $hodCft->hod_ContractGiver_person : $request->hod_ContractGiver_person;
+            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review == null ? $hodCft->hod_ContractGiver_Review : $request->hod_ContractGiver_Review;
 
-            $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
-            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
+            $hodCft->hod_Quality_review = $request->hod_Quality_review == null ? $hodCft->hod_Quality_review : $request->hod_Quality_review;
+            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person == null ? $hodCft->hod_Quality_Control_Person : $request->hod_Quality_Control_Person;
 
-            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
-            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review == null ? $hodCft->hod_Quality_Assurance_Review : $request->hod_Quality_Assurance_Review;
+            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person == null ? $hodCft->hod_QualityAssurance_person : $request->hod_QualityAssurance_person;
 
-            $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
-            $hodCft->hod_Engineering_person = $request->hod_Engineering_person ?? $hodCft->hod_Engineering_person;
+            $hodCft->hod_Engineering_review = $request->hod_Engineering_review == null ? $hodCft->hod_Engineering_review : $request->hod_Engineering_review;
+            $hodCft->hod_Engineering_person = $request->hod_Engineering_person == null ? $hodCft->hod_Engineering_person : $request->hod_Engineering_person;
 
-            $hodCft->hod_Environment_Health_review = $request->Environment_Health_review ?? $hodCft->hod_Environment_Health_review;
-            $hodCft->hod_Environment_Health_Safety_person = $request->Environment_Health_Safety_person ?? $hodCft->hod_Environment_Health_Safety_person;
+            $hodCft->hod_Environment_Health_review = $request->Environment_Health_review == null ? $hodCft->hod_Environment_Health_review : $request->hod_Environment_Health_review;
+            $hodCft->hod_Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $hodCft->hod_Environment_Health_Safety_person : $request->hod_Environment_Health_Safety_person;
 
-            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review ?? $hodCft->hod_Human_Resource_review;
-            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person ?? $hodCft->hod_Human_Resource_person;
+            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review == null ? $hodCft->hod_Human_Resource_review : $request->hod_Human_Resource_review;
+            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person == null ? $hodCft->hod_Human_Resource_person : $request->hod_Human_Resource_person;
 
-            $hodCft->hod_Other1_review = $request->hod_Other1_review ?? $hodCft->hod_Other1_review;
-            $hodCft->hod_Other1_person = $request->hod_Other1_person ?? $hodCft->hod_Other1_person;
+            $hodCft->hod_Other1_review = $request->hod_Other1_review == null ? $hodCft->hod_Other1_review : $request->hod_Other1_review;
+            $hodCft->hod_Other1_person = $request->hod_Other1_person == null ? $hodCft->hod_Other1_person : $request->hod_Other1_person;
 
-            $hodCft->hod_Other2_review = $request->hod_Other2_review ?? $hodCft->hod_Other2_review;
-            $hodCft->hod_Other2_person = $request->hod_Other2_person ?? $hodCft->hod_Other2_person;
+            $hodCft->hod_Other2_review = $request->hod_Other2_review == null ? $hodCft->hod_Other2_review : $request->hod_Other2_review;
+            $hodCft->hod_Other2_person = $request->hod_Other2_person == null ? $hodCft->hod_Other2_person : $request->hod_Other2_person;
 
-            $hodCft->hod_Other3_review = $request->hod_Other3_review ?? $hodCft->hod_Other3_review;
-            $hodCft->hod_Other3_person = $request->hod_Other3_person ?? $hodCft->hod_Other3_person;
+            $hodCft->hod_Other3_review = $request->hod_Other3_review == null ? $hodCft->hod_Other3_review : $request->hod_Other3_review;
+            $hodCft->hod_Other3_person = $request->hod_Other3_person == null ? $hodCft->hod_Other3_person : $request->hod_Other3_person;
 
-            $hodCft->hod_Other4_review = $request->hod_Other4_review ?? $hodCft->hod_Other4_review;
-            $hodCft->hod_Other4_person = $request->hod_Other4_person ?? $hodCft->hod_Other4_person;
+            $hodCft->hod_Other4_review = $request->hod_Other4_review == null ? $hodCft->hod_Other4_review : $request->hod_Other4_review;
+            $hodCft->hod_Other4_person = $request->hod_Other4_person == null ? $hodCft->hod_Other4_person : $request->hod_Other4_person;
 
-            $hodCft->hod_Other5_review = $request->hod_Other5_review ?? $hodCft->hod_Other5_review;
-            $hodCft->hod_Other5_person = $request->hod_Other5_person ?? $hodCft->hod_Other5_person;
+            $hodCft->hod_Other5_review = $request->hod_Other5_review == null ? $hodCft->hod_Other5_review : $request->hod_Other5_review;
+            $hodCft->hod_Other5_person = $request->hod_Other5_person == null ? $hodCft->hod_Other5_person : $request->hod_Other5_person;
 
             }
             else{
@@ -2659,20 +2732,20 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
             $hodCft->save();
             $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-                $hodcftUsers = DB::table('hodmanagement_cft__responses')->where(['ManagementReview_id' => $id])->first();
+                $hodcftUsers = DB::table('hodmanagement_cfts')->where(['ManagementReview_id' => $id])->first();
                 // Define the column names
-                $columns = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
+                $columns2 = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
 
                 // Initialize an array to store the values
                 $valuesArray = [];
 
-                // foreach ($columns as $index => $column) {
-                //     $value = $hodcftUsers->$column;
-                //     // Check if the value is not null and not equal to 0
-                //     if ($value != null && $value != 0) {
-                //         $valuesArray[] = $value;
-                //     }
-                // }
+                foreach ($columns2 as $index => $column) {
+                    $value = $hodcftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
                 // Remove duplicates from the array
                 $valuesArray = array_unique($valuesArray);
 
@@ -2859,6 +2932,34 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
     $allFiles = array_merge($existingFiles, $newFiles);
     $management->closure_attachments = json_encode($allFiles);
 }
+if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted_meeting_and_summary_attachment)) {
+    $existingFiles = json_decode($management->meeting_and_summary_attachment, true) ?? [];
+
+    // Handle deleted files
+    if (!empty($request->deleted_meeting_and_summary_attachment)) {
+        $filesToDelete = explode(',', $request->deleted_meeting_and_summary_attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new files
+    $newFiles = [];
+    if ($request->hasFile('meeting_and_summary_attachment')) {
+        foreach ($request->file('meeting_and_summary_attachment') as $file) {
+            $name = $request->name . 'meeting_and_summary_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing and new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $management->meeting_and_summary_attachment = json_encode($allFiles);
+}
+
+
+
              if (!empty($request->cft_hod_attach)) {
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
@@ -3108,11 +3209,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
             if($lastDocument->Operations !=$management->Operations || !empty($request->Operations_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'QA review comment ')
+                            ->where('activity_type', 'QA Head Review comment ')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA review comment ';
+            $history->activity_type = 'QA Head Review comment ';
             $history->previous =  $lastDocument->Operations;
             $history->current = $management->Operations;
             $history->comment = $request->Operations_comment;
@@ -5562,8 +5663,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 1 Department';
-            $history->previous = $lastCft->Other1_Department_person;
-            $history->current = $request->Other1_Department_person;
+            $history->previous = Helpers::getFullDepartmentName ($lastCft->Other1_Department_person);
+            $history->current =Helpers::getFullDepartmentName ($request->Other1_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5745,8 +5846,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Department';
-            $history->previous = $lastCft->Other2_Department_person;
-            $history->current = $request->Other2_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5927,8 +6028,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Department';
-            $history->previous = $lastCft->Other3_Department_person;
-            $history->current = $request->Other3_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other3_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other3_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6109,8 +6210,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Others 4 Department';
-            $history->previous = $lastCft->Other4_Department_person;
-            $history->current = $request->Other4_Department_person;
+            $history->previous =Helpers::getFullDepartmentName( $lastCft->Other4_Department_person);
+            $history->current = Helpers::getFullDepartmentName($request->Other4_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6292,8 +6393,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Department';
-            $history->previous = $lastCft->Other5_Department_person;
-            $history->current = $request->Other5_Department_person;
+            $history->previous = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
+            $history->current =Helpers::getFullDepartmentName ($request->Other5_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7956,11 +8057,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
            if($lastDocument->qa_verification_file !=$management->qa_verification_file || !empty($request->qa_verification_file_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Action Item Status Attachment')
+                            ->where('activity_type', 'QA Verification Attachment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Action Item Status Attachment';
+            $history->activity_type = 'QA Verification Attachment';
             $history->previous =  $lastDocument->qa_verification_file;
             $history->current = $management->qa_verification_file;
             $history->comment = $request->qa_verification_file_comment;
@@ -8032,6 +8133,27 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+        if ($lastDocument->meeting_and_summary_attachment != $management->meeting_and_summary_attachment || !empty($request->meeting_and_summary_attachment_comment)) {
+            $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                           ->where('activity_type', 'Meetings and Summary Attachment')
+                           ->exists();
+
+           $history = new ManagementAuditTrial();
+           $history->ManagementReview_id = $id;
+           $history->activity_type = 'Meetings and Summary Attachment';
+           $history->previous = $lastDocument->meeting_and_summary_attachment;
+           $history->current = $management->meeting_and_summary_attachment;
+           $history->comment = $request->meeting_and_summary_attachment_comment;
+           $history->user_id = Auth::user()->id;
+           $history->user_name = Auth::user()->name;
+           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+           $history->origin_state = $lastDocument->status;
+                      $history->change_to= "Not Applicable";
+           $history->change_from= $lastDocument->status;
+           $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+           $history->save();
+       }
 
 
 
@@ -8218,12 +8340,33 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
+            $Cft = managementCft::where('ManagementReview_id', $id)->first();
+            $management = ManagementReview::find($id);
             $lastDocument =  ManagementReview::find($id);
             $data =  ManagementReview::find($id);
              $updateCFT = managementCft::where('ManagementReview_id', $id)->latest()->first();
+             $updatehodCFT = hodmanagementCft::where('ManagementReview_id', $id)->latest()->first();
              $cftDetails = managementCft_Response::withoutTrashed()->where(['status' => 'In-progress', 'ManagementReview_id' => $id])->distinct('cft_user_id')->count();
+             $cfthodDetails = hodmanagementCft_Response::withoutTrashed()->where(['status' => 'In-progress', 'ManagementReview_id' => $id])->distinct('cft_user_id')->count();
+
 
             if ($changeControl->stage == 1) {
+                 if (!$changeControl->short_description || !$changeControl->summary_recommendation || !$changeControl->start_date) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => ' Short Discription and Type and Proposed Scheduled Start Date is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Review state'
+                        ]);
+                    }
                 $changeControl->stage = "2";
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
@@ -8327,6 +8470,22 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             //     return back();
             // }
             if ($changeControl->stage == 2) {
+                 if (!$changeControl->assign_to || !$changeControl->Operations) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA Head Review Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Review state'
+                        ]);
+                    }
                 $changeControl->stage = "3";
                 $changeControl->status = 'Meeting And Summary';
                 $changeControl->qaHeadReviewComplete_By = Auth::user()->name;
@@ -8379,6 +8538,53 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
                 return back();
             }
             if ($changeControl->stage == 3) {
+                 if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Meeting And Summary Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CFT actions state'
+                        ]);
+                    }
+                //  if ($management->form_progress !== 'cft')
+                //     {
+                //         Session::flash('swal', [
+                //             'type' => 'warning',
+                //             'title' => 'Mandatory Fields!',
+                //             'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
+                //         ]);
+
+                //         return redirect()->back();
+                //     } else {
+                //         Session::flash('swal', [
+                //             'type' => 'success',
+                //             'title' => 'Success',
+                //             'message' => 'Sent for CFT review state'
+                //         ]);
+                //     }
+                  if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
                 $changeControl->stage = "4";
                 $changeControl->status = 'CFT actions';
                  $stage = new managementCft_Response();
@@ -8440,6 +8646,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             }
 
                 if ($changeControl->stage == 4) {
+
 
                     // CFT review state update form_progress
                     // if ($changeControl->form_progress !== 'cft')
@@ -9122,6 +9329,14 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                         $changeControl->stage = "5";
                         $changeControl->status = "CFT HOD Review";
+                         $stage = new hodmanagementCft_Response();
+                    $stage->ManagementReview_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
                         $changeControl->ALLAICompleteby_by = Auth::user()->name;
                         $changeControl->ALLAICompleteby_on = Carbon::now()->format('d-M-Y');
                         $changeControl->ALLAICompleteby_comment = $request->comment;
@@ -9231,798 +9446,822 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     return back();
             // }
 
-//               if ($changeControl->stage == 5) {
+              if ($changeControl->stage == 5) {
+                  
+                  // CFT review state update form_progress
+                  // if ($changeControl->form_progress !== 'cft')
+                  // {
+                    //     Session::flash('swal', [
+                        //         'type' => 'warning',
+                        //         'title' => 'Mandatory Fields!',
+                        //         'message' => 'CFT Tab is yet to be filled'
+                        //     ]);
+                        
+                        //     return redirect()->back();
+                        // }
+                        //  else {
+                    //     Session::flash('swal', [
+                        //         'type' => 'success',
+                        //         'title' => 'Success',
+                        //         'message' => 'Sent for Investigation and CAPA review state'
+                        //     ]);
+                    // }
 
-//                     // CFT review state update form_progress
-//                     // if ($changeControl->form_progress !== 'cft')
-//                     // {
-//                     //     Session::flash('swal', [
-//                     //         'type' => 'warning',
-//                     //         'title' => 'Mandatory Fields!',
-//                     //         'message' => 'CFT Tab is yet to be filled'
-//                     //     ]);
+                    
+                    $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+                    $hodcftUsers = DB::table('hodmanagement_cfts')->where(['ManagementReview_id' => $id])->first();
+                    // dd($hodcftUsers);
+                    // Define the column names
+                    $columns2 = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
+                    // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+                    
+                    // Initialize an array to store the values
+                    $valuesArray = [];
+                    
+                    // Iterate over the columns and retrieve the values
+                    foreach ($columns2 as $index => $column) {
+                        $value = $hodcftUsers->$column;
+                        if ($index == 0 && $hodcftUsers->$column == Auth::user()->name) {
+                           
+    $updatehodCFT->hod_Quality_Control_by = Auth::user()->name;
+    $updatehodCFT->hod_Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-//                     //     return redirect()->back();
-//                     // }
-//                     //  else {
-//                     //     Session::flash('swal', [
-//                     //         'type' => 'success',
-//                     //         'title' => 'Success',
-//                     //         'message' => 'Sent for Investigation and CAPA review state'
-//                     //     ]);
-//                     // }
+    $history = new ManagementAuditTrial();
+    $history->ManagementReview_id = $id;
+    $history->activity_type = 'HOD Quality Control Completed By, HOD Quality Control Completed On';
 
+    if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
+        $history->previous = "";
+    } else {
+        $history->previous = $lastDocument->hod_Quality_Control_by . ' , ' . $lastDocument->hod_Quality_Control_on;
+    }
 
-//                     $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-//                     $hodcftUsers = DB::table('hodmanagement_cft__responses')->where(['ManagementReview_id' => $id])->first();
-//                     // Define the column names
-//                     $columns = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
-//                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+    $history->action = 'HOD Final Review Complete';
 
-//                     // Initialize an array to store the values
-//                     $valuesArray = [];
+    // Make sure you're using the updated $updatehodCFT object here
+    $history->current = $updatehodCFT->hod_Quality_Control_by . ', ' . $updatehodCFT->hod_Quality_Control_on;
 
-//                     // Iterate over the columns and retrieve the values
-// //                     foreach ($columns as $index => $column) {
-// //                         $value = $hodcftUsers->$column;
-// //                        if ($index == 0 && $hodcftUsers->$column == Auth::user()->name) {
-// //     $updateCFT->hod_Quality_Control_by = Auth::user()->name;
-// //     $updateCFT->hod_Quality_Control_on = Carbon::now()->format('Y-m-d');
+    $history->comment = $request->comment;
+    $history->user_id = Auth::user()->name;
+    $history->user_name = Auth::user()->name;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->stage = 'HOD Final Review';
 
-// //     $history = new ManagementAuditTrial();
-// //     $history->ManagementReview_id = $id;
-// //     $history->activity_type = 'HOD Quality Control Completed By, HOD Quality Control Completed On';
+    if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
+        $history->action_name = 'New';
+    } else {
+        $history->action_name = 'Update';
+    }
 
-// //     if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
-// //         $history->previous = "";
-// //     } else {
-// //         $history->previous = $lastDocument->hod_Quality_Control_by . ' , ' . $lastDocument->hod_Quality_Control_on;
-// //     }
+    $history->save();
+}
 
-// //     $history->action = 'HOD Final Review Complete';
+                     if ($index == 1 && $hodcftUsers->$column == Auth::user()->name) {
+    $updatehodCFT->hod_QualityAssurance_by = Auth::user()->name;
+    $updatehodCFT->hod_QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-// //     // Make sure you're using the updated $updateCFT object here
-// //     $history->current = $updateCFT->hod_Quality_Control_by . ', ' . $updateCFT->hod_Quality_Control_on;
+    $history = new ManagementAuditTrial();
+    $history->ManagementReview_id = $id;
+    $history->activity_type = 'HOD Quality Assurance Completed By,HOD Quality Assurance Completed On';
 
-// //     $history->comment = $request->comment;
-// //     $history->user_id = Auth::user()->name;
-// //     $history->user_name = Auth::user()->name;
-// //     $history->change_to = "Not Applicable";
-// //     $history->change_from = $lastDocument->status;
-// //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //     $history->origin_state = $lastDocument->status;
-// //     $history->stage = 'HOD Final Review';
+    if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
+        $history->previous = "";
+    } else {
+        $history->previous = $lastDocument->hod_QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->hod_QualityAssurance_on);
+    }
 
-// //     if (is_null($lastDocument->hod_Quality_Control_by) || $lastDocument->hod_Quality_Control_on == '') {
-// //         $history->action_name = 'New';
-// //     } else {
-// //         $history->action_name = 'Update';
-// //     }
+    $history->action = 'HOD Final Review Complete';
+    $history->current = $updatehodCFT->hod_QualityAssurance_by . ',' .Helpers::getdateFormat ($updatehodCFT->hod_QualityAssurance_on);
+    $history->comment = $request->comment;
+    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+    $history->user_name = Auth::user()->name;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->stage = 'HOD Final Review';
 
-// //     $history->save();
-// // }
+    if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
+        $history->action_name = 'New';
+    } else {
+        $history->action_name = 'Update';
+    }
 
-// //                      if ($index == 1 && $hodcftUsers->$column == Auth::user()->name) {
-// //     $updateCFT->hod_QualityAssurance_by = Auth::user()->name;
-// //     $updateCFT->hod_QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+    $history->save();
+}
 
-// //     $history = new ManagementAuditTrial();
-// //     $history->ManagementReview_id = $id;
-// //     $history->activity_type = 'HOD Quality Assurance Completed By,HOD Quality Assurance Completed On';
+                        if($index == 2 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Engineering_by = Auth::user()->name;
+                            $updatehodCFT->hod_Engineering_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Engineering Completed By, HOD Engineering Completed On';
+                    if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Engineering_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Engineering_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Engineering_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Engineering_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 3 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Environment_Health_Safety_by = Auth::user()->name;
+                            $updatehodCFT->hod_Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Safety Completed By, HOD Safety Completed On';
+                    if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Environment_Health_Safety_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Environment_Health_Safety_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Environment_Health_Safety_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Environment_Health_Safety_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 4 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Human_Resource_by = Auth::user()->name;
+                            $updatehodCFT->hod_Human_Resource_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Human Resource Completed By, HOD Human Resource Completed On';
+                    if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Human_Resource_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Human_Resource_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Human_Resource_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Human_Resource_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                    //     if($index == 5 && $hodcftUsers->$column == Auth::user()->name){
+                    //         $updatehodCFT->Information_Technology_by = Auth::user()->name;
+                    //         $updatehodCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                    //         $history = new ManagementAuditTrial();
+                    //         $history->ManagementReview_id = $id;
+                    //         $history->activity_type = 'HODCFT Review Completed By, CFT Review Completed On';
+                    // if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
+                    //     $history->previous = "";
+                    // }else{
+                    //     $history->previous = $lastDocument->Information_Technology_by. ' ,' . Helpers::getdateFormat($lastDocument->Information_Technology_on);
+                    // }
+                    // $history->action='CFT Review Complete';
+                    // $history->current = $updatehodCFT->Information_Technology_by. ',' . Helpers::getdateFormat($updatehodCFT->Information_Technology_on);
+                    //         $history->user_id = Auth::user()->name;
+                    //         $history->user_name = Auth::user()->name;
+                    //         $history->change_to =   "Not Applicable";
+                    //         $history->change_from = $lastDocument->status;
+                    //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    //         $history->origin_state = $lastDocument->status;
+                    //         $history->stage = 'CFT Review';
+                    //         if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
+                    // {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    //         $history->save();
+                    //     }
+                        if($index == 5 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Other1_by = Auth::user()->name;
+                            $updatehodCFT->hod_Other1_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Others 1 Completed By, HOD Others 1 Completed On';
+                    if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Other1_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Other1_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Other1_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Other1_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 6 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Other2_by = Auth::user()->name;
+                            $updatehodCFT->hod_Other2_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Others 2 Completed By,HOD Others 2 Completed On';
+                    if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Other2_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other2_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Other2_by. ',' .Helpers::getdateFormat($updatehodCFT->hod_Other2_on);
+                            $history->current = $updatehodCFT->hod_Other2_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 7 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Other3_by = Auth::user()->name;
+                            $updatehodCFT->hod_Other3_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Others 3 Completed By,HOD Others 3 Completed On';
+                    if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Other3_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other3_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Other3_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Other3_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 8 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Other4_by = Auth::user()->name;
+                            $updatehodCFT->hod_Other4_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+$history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
+                    if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Other4_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other4_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Other4_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Other4_on);
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 9 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Other5_by = Auth::user()->name;
+                            $updatehodCFT->hod_Other5_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Others 5 Completed By, HOD Others 5 Completed On';
+                    if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Other5_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other5_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Other5_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Other5_on);
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                           if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        // if($index == 11 && $hodcftUsers->$column == Auth::user()->name){
+                        //     $updatehodCFT->RA_by = Auth::user()->name;
+                        //     $updatehodCFT->RA_on = Carbon::now()->format('Y-m-d');
+                        //     $history = new ManagementAuditTrial();
+                        //     $history->ManagementReview_id = $id;
+                        //     $history->activity_type = 'Activity Log';
+                        //     $history->previous = "";
+                        //     $history->action= 'CFT Review';
+                        //     $history->current = $updatehodCFT->RA_by;
+                        //     $history->comment = $request->comment;
+                        //     $history->user_id = Auth::user()->name;
+                        //     $history->user_name = Auth::user()->name;
+                        //     $history->change_to =   "Not Applicable";
+                        //     $history->change_from = $lastDocument->status;
+                        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        //     $history->origin_state = $lastDocument->status;
+                        //     $history->stage = 'CFT Review';
+                        //     $history->action_name = "Update";
+                        //     $history->save();
+                        // }
+                        if($index == 10 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Production_Table_By = Auth::user()->name;
+                            $updatehodCFT->hod_Production_Table_On = Carbon::now()->format('Y-m-d');
+                            
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                           $history->activity_type = 'HOD Production Table Completed By,HOD Production Table Completed On';
+                    if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Production_Table_By. ' ,' . Helpers::getdateFormat($lastDocument->hod_Production_Table_On);
+                    }
+                   $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Production_Table_By. ',' .Helpers::getdateFormat ($updatehodCFT->hod_Production_Table_On);
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 11 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_ProductionLiquid_by = Auth::user()->name;
+                            $updatehodCFT->hod_ProductionLiquid_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Production Liquid Completed By, HOD Production Liquid Completed On';
+                    if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_ProductionLiquid_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ProductionLiquid_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_ProductionLiquid_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_ProductionLiquid_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 12 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Production_Injection_By = Auth::user()->name;
+                            $updatehodCFT->hod_Production_Injection_On = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Production Injection Completed By, HOD Production Injection Completed On';
+                    if(is_null($lastDocument->hod_Production_Injection_By) || $lastDocument->hod_Production_Injection_On == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Production_Injection_By. ' ,' .Helpers::getdateFormat( $lastDocument->hod_Production_Injection_On);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Production_Injection_By. ',' . Helpers::getdateFormat($updatehodCFT->hod_Production_Injection_On);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Production_Injection_By) || $lastDocument->hod_Production_Injection_On == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 13 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Store_by = Auth::user()->name;
+                            $updatehodCFT->hod_Store_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                           $history->activity_type = 'HOD Stores Completed By,HOD Stores Completed On';
+                    if(is_null($lastDocument->hod_Store_by) || $lastDocument->hod_Store_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Store_by. ' ,' .Helpers::getdateFormat( $lastDocument->hod_Store_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Store_by. ',' .Helpers::getdateFormat( $updatehodCFT->hod_Store_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Store_by) || $lastDocument->hod_Store_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 14 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_ResearchDevelopment_by = Auth::user()->name;
+                            $updatehodCFT->hod_ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Research & Development Completed By,HOD Research & Development Completed On';
+                    if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_ResearchDevelopment_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ResearchDevelopment_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_ResearchDevelopment_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_ResearchDevelopment_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        // dd($index == 15 && $hodcftUsers->$column == Auth::user()->name);
+                        if($index == 15 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_Microbiology_by = Auth::user()->name;
+                            $updatehodCFT->hod_Microbiology_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Microbiology Completed By,HOD Microbiology Completed On';
+                    if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_Microbiology_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Microbiology_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_Microbiology_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_Microbiology_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 16 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_RegulatoryAffair_by = Auth::user()->name;
 
-// //     if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
-// //         $history->previous = "";
-// //     } else {
-// //         $history->previous = $lastDocument->hod_QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->hod_QualityAssurance_on);
-// //     }
+                            $updatehodCFT->hod_RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Regulatory Affair Completed By,HOD Regulatory Affair Completed On';
+                    if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_RegulatoryAffair_by. ' ,' .Helpers::getdateFormat( $lastDocument->hod_RegulatoryAffair_on);
+                    }
+                   $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_RegulatoryAffair_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_RegulatoryAffair_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        
+                          
+                        if($index == 17 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_CorporateQualityAssurance_by= Auth::user()->name;
+                            $updatehodCFT->hod_CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
 
-// //     $history->action = 'HOD Final Review Complete';
-// //     $history->current = $updateCFT->hod_QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->hod_QualityAssurance_on);
-// //     $history->comment = $request->comment;
-// //     $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-// //     $history->user_name = Auth::user()->name;
-// //     $history->change_to = "Not Applicable";
-// //     $history->change_from = $lastDocument->status;
-// //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //     $history->origin_state = $lastDocument->status;
-// //     $history->stage = 'HOD Final Review';
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Corporate Quality Assurance Completed By,HOD Corporate Quality Assurance Completed On';
+                    if(is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_CorporateQualityAssurance_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_CorporateQualityAssurance_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_CorporateQualityAssurance_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_CorporateQualityAssurance_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_CorporateQualityAssurance_by) ||$lastDocument->hod_CorporateQualityAssurance_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        if($index == 18 && $hodcftUsers->$column == Auth::user()->name){
+                            $updatehodCFT->hod_ContractGiver_by = Auth::user()->name;
+                            $updatehodCFT->hod_ContractGiver_on = Carbon::now()->format('Y-m-d');
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+                            $history->activity_type = 'HOD Contract Giver Completed By,HOD Contract Giver Completed On';
+                    if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ContractGiver_on);
+                    }
+                    $history->action='HOD Final Review Complete';
+                    $history->current = $updatehodCFT->hod_ContractGiver_by. ',' . Helpers::getdateFormat($updatehodCFT->hod_ContractGiver_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'HOD Final Review';
+                            if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                            $history->save();
+                        }
+                        $updatehodCFT->update();
 
-// //     if (is_null($lastDocument->hod_QualityAssurance_by) || $lastDocument->hod_QualityAssurance_on == '') {
-// //         $history->action_name = 'New';
-// //     } else {
-// //         $history->action_name = 'Update';
-// //     }
+                        // Check if the value is not null and not equal to 0
+                        if ($value != null && $value != 0) {
+                            $valuesArray[] = $value;
+                        }
+                    }
+                    // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
+                    if ($IsCFTRequired) {
+                        if (count(array_unique($valuesArray)) == ($cfthodDetails + 1)) {
+                            $stage = new hodmanagementCft_Response();
+                            $stage->ManagementReview_id = $id;
+                            $stage->cft_user_id = Auth::user()->id;
+                            $stage->status = "Completed";
+                            // $stage->cft_stage = ;
+                            $stage->comment = $request->comment;
+                            $stage->save();
+                        } else {
+                            $stage = new hodmanagementCft_Response();
+                            $stage->ManagementReview_id = $id;
+                            $stage->cft_user_id = Auth::user()->id;
+                            $stage->status = "In-progress";
+                            // $stage->cft_stage = ;
+                            $stage->comment = $request->comment;
+                            $stage->save();
+                        }
+                    }
 
-// //     $history->save();
-// // }
+                    $checkCFTCount = hodmanagementCft_Response::withoutTrashed()->where(['status' => 'Completed', 'ManagementReview_id' => $id])->count();
 
-// //                         if($index == 2 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Engineering_by = Auth::user()->name;
-// //                             $updateCFT->hod_Engineering_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Engineering Completed By, HOD Engineering Completed On';
-// //                     if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Engineering_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Engineering_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Engineering_by. ',' . Helpers::getdateFormat($updateCFT->hod_Engineering_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 3 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Environment_Health_Safety_by = Auth::user()->name;
-// //                             $updateCFT->hod_Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Safety Completed By, HOD Safety Completed On';
-// //                     if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Environment_Health_Safety_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Environment_Health_Safety_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Environment_Health_Safety_by. ',' . Helpers::getdateFormat($updateCFT->hod_Environment_Health_Safety_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 4 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Human_Resource_by = Auth::user()->name;
-// //                             $updateCFT->hod_Human_Resource_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Human Resource Completed By, HOD Human Resource Completed On';
-// //                     if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Human_Resource_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Human_Resource_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Human_Resource_by. ',' . Helpers::getdateFormat($updateCFT->hod_Human_Resource_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                     //     if($index == 5 && $hodcftUsers->$column == Auth::user()->name){
-// //                     //         $updateCFT->Information_Technology_by = Auth::user()->name;
-// //                     //         $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
-// //                     //         $history = new ManagementAuditTrial();
-// //                     //         $history->ManagementReview_id = $id;
-// //                     //         $history->activity_type = 'HODCFT Review Completed By, CFT Review Completed On';
-// //                     // if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
-// //                     //     $history->previous = "";
-// //                     // }else{
-// //                     //     $history->previous = $lastDocument->Information_Technology_by. ' ,' . Helpers::getdateFormat($lastDocument->Information_Technology_on);
-// //                     // }
-// //                     // $history->action='CFT Review Complete';
-// //                     // $history->current = $updateCFT->Information_Technology_by. ',' . Helpers::getdateFormat($updateCFT->Information_Technology_on);
-// //                     //         $history->user_id = Auth::user()->name;
-// //                     //         $history->user_name = Auth::user()->name;
-// //                     //         $history->change_to =   "Not Applicable";
-// //                     //         $history->change_from = $lastDocument->status;
-// //                     //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                     //         $history->origin_state = $lastDocument->status;
-// //                     //         $history->stage = 'CFT Review';
-// //                     //         if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
-// //                     // {
-// //                     //     $history->action_name = 'New';
-// //                     // } else {
-// //                     //     $history->action_name = 'Update';
-// //                     // }
-// //                     //         $history->save();
-// //                     //     }
-// //                         if($index == 6 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Other1_by = Auth::user()->name;
-// //                             $updateCFT->hod_Other1_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Others 1 Completed By, HOD Others 1 Completed On';
-// //                     if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Other1_by. ' ,' .Helpers::getdateFormat ($lastDocument->hod_Other1_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Other1_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other1_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 7 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Other2_by = Auth::user()->name;
-// //                             $updateCFT->hod_Other2_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Others 2 Completed By,HOD Others 2 Completed On';
-// //                     if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Other2_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other2_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Other2_by. ',' .Helpers::getdateFormat($updateCFT->hod_Other2_on);
-// //                             $history->current = $updateCFT->hod_Other2_by;
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 8 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Other3_by = Auth::user()->name;
-// //                             $updateCFT->hod_Other3_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Others 3 Completed By,HOD Others 3 Completed On';
-// //                     if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Other3_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other3_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Other3_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other3_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 9 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Other4_by = Auth::user()->name;
-// //                             $updateCFT->hod_Other4_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// // $history->activity_type = 'HOD Others 4 Completed By,HOD Others 4 Completed On';
-// //                     if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Other4_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other4_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Other4_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other4_on);
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 10 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Other5_by = Auth::user()->name;
-// //                             $updateCFT->hod_Other5_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Others 5 Completed By, HOD Others 5 Completed On';
-// //                     if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Other5_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Other5_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Other5_by. ',' . Helpers::getdateFormat($updateCFT->hod_Other5_on);
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                            if(is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         // if($index == 11 && $hodcftUsers->$column == Auth::user()->name){
-// //                         //     $updateCFT->RA_by = Auth::user()->name;
-// //                         //     $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
-// //                         //     $history = new ManagementAuditTrial();
-// //                         //     $history->ManagementReview_id = $id;
-// //                         //     $history->activity_type = 'Activity Log';
-// //                         //     $history->previous = "";
-// //                         //     $history->action= 'CFT Review';
-// //                         //     $history->current = $updateCFT->RA_by;
-// //                         //     $history->comment = $request->comment;
-// //                         //     $history->user_id = Auth::user()->name;
-// //                         //     $history->user_name = Auth::user()->name;
-// //                         //     $history->change_to =   "Not Applicable";
-// //                         //     $history->change_from = $lastDocument->status;
-// //                         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                         //     $history->origin_state = $lastDocument->status;
-// //                         //     $history->stage = 'CFT Review';
-// //                         //     $history->action_name = "Update";
-// //                         //     $history->save();
-// //                         // }
-// //                         if($index == 12 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Production_Table_By = Auth::user()->name;
-// //                             $updateCFT->hod_Production_Table_On = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                            $history->activity_type = 'HOD Production Table Completed By,HOD Production Table Completed On';
-// //                     if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Production_Table_By. ' ,' . Helpers::getdateFormat($lastDocument->hod_Production_Table_On);
-// //                     }
-// //                    $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Production_Table_By. ',' .Helpers::getdateFormat ($updateCFT->hod_Production_Table_On);
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 13 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_ProductionLiquid_by = Auth::user()->name;
-// //                             $updateCFT->hod_ProductionLiquid_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Production Liquid Completed By, HOD Production Liquid Completed On';
-// //                     if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_ProductionLiquid_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ProductionLiquid_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_ProductionLiquid_by. ',' . Helpers::getdateFormat($updateCFT->hod_ProductionLiquid_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 14 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->Production_Injection_By = Auth::user()->name;
-// //                             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Production Injection Completed By, HOD Production Injection Completed On';
-// //                     if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->Production_Injection_By. ' ,' .Helpers::getdateFormat( $lastDocument->Production_Injection_On);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->Production_Injection_By. ',' . Helpers::getdateFormat($updateCFT->Production_Injection_On);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 15 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Store_on = Auth::user()->name;
-// //                             $updateCFT->hod_Store_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                            $history->activity_type = 'HOD Stores Completed By,HOD Stores Completed On';
-// //                     if(is_null($lastDocument->hod_Store_on) || $lastDocument->hod_Store_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Store_on. ' ,' .Helpers::getdateFormat( $lastDocument->hod_Store_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Store_on. ',' .Helpers::getdateFormat( $updateCFT->hod_Store_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Store_on) || $lastDocument->hod_Store_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 16 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_ResearchDevelopment_by = Auth::user()->name;
-// //                             $updateCFT->hod_ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Research & Development Completed By,HOD Research & Development Completed On';
-// //                     if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_ResearchDevelopment_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ResearchDevelopment_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_ResearchDevelopment_by. ',' . Helpers::getdateFormat($updateCFT->hod_ResearchDevelopment_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 17 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_Microbiology_by = Auth::user()->name;
-// //                             $updateCFT->hod_Microbiology_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Microbiology Completed By,HOD Microbiology Completed On';
-// //                     if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_Microbiology_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_Microbiology_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_Microbiology_by. ',' . Helpers::getdateFormat($updateCFT->hod_Microbiology_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 18 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_RegulatoryAffair_by = Auth::user()->name;
-// //                             $updateCFT->hod_RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Regulatory Affair Completed By,HOD Regulatory Affair Completed On';
-// //                     if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_RegulatoryAffair_by. ' ,' .Helpers::getdateFormat( $lastDocument->hod_RegulatoryAffair_on);
-// //                     }
-// //                    $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_RegulatoryAffair_by. ',' . Helpers::getdateFormat($updateCFT->hod_RegulatoryAffair_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-
-// //                         if($index == 19 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_CorporateQualityAssurance_by = Auth::user()->name;
-// //                             $updateCFT->hod_CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Corporate Quality Assurance Completed By,HOD Corporate Quality Assurance Completed On';
-// //                     if(is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_CorporateQualityAssurance_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_CorporateQualityAssurance_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_CorporateQualityAssurance_by. ',' . Helpers::getdateFormat($updateCFT->hod_CorporateQualityAssurance_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         if($index == 20 && $hodcftUsers->$column == Auth::user()->name){
-// //                             $updateCFT->hod_ContractGiver_by = Auth::user()->name;
-// //                             $updateCFT->hod_ContractGiver_on = Carbon::now()->format('Y-m-d');
-// //                             $history = new ManagementAuditTrial();
-// //                             $history->ManagementReview_id = $id;
-// //                             $history->activity_type = 'HOD Contract Giver Completed By,HOD Contract Giver Completed On';
-// //                     if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == ''){
-// //                         $history->previous = "";
-// //                     }else{
-// //                         $history->previous = $lastDocument->hod_ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->hod_ContractGiver_on);
-// //                     }
-// //                     $history->action='HOD Final Review Complete';
-// //                     $history->current = $updateCFT->hod_ContractGiver_by. ',' . Helpers::getdateFormat($updateCFT->hod_ContractGiver_on);
-// //                             $history->comment = $request->comment;
-// //                             $history->user_id = Auth::user()->name;
-// //                             $history->user_name = Auth::user()->name;
-// //                             $history->change_to =   "Not Applicable";
-// //                             $history->change_from = $lastDocument->status;
-// //                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-// //                             $history->origin_state = $lastDocument->status;
-// //                             $history->stage = 'HOD Final Review';
-// //                             if(is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == '')
-// //                     {
-// //                         $history->action_name = 'New';
-// //                     } else {
-// //                         $history->action_name = 'Update';
-// //                     }
-// //                             $history->save();
-// //                         }
-// //                         $updateCFT->update();
-
-// //                         // Check if the value is not null and not equal to 0
-// //                         if ($value != null && $value != 0) {
-// //                             $valuesArray[] = $value;
-// //                         }
-// //                     }
-//                     // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
-//                     if ($IsCFTRequired) {
-//                         if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-//                             $stage = new hodmanagementCft_Response();
-//                             $stage->ManagementReview_id = $id;
-//                             $stage->cft_user_id = Auth::user()->id;
-//                             $stage->status = "Completed";
-//                             // $stage->cft_stage = ;
-//                             $stage->comment = $request->comment;
-//                             $stage->save();
-//                         } else {
-//                             $stage = new hodmanagementCft_Response();
-//                             $stage->ManagementReview_id = $id;
-//                             $stage->cft_user_id = Auth::user()->id;
-//                             $stage->status = "In-progress";
-//                             // $stage->cft_stage = ;
-//                             $stage->comment = $request->comment;
-//                             $stage->save();
-//                         }
-//                     }
-
-//                     $checkCFTCount = hodmanagementCft_Response::withoutTrashed()->where(['status' => 'Completed', 'ManagementReview_id' => $id])->count();
-
-//                     $Cft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
-
-
-//                     if (!$IsCFTRequired || $checkCFTCount) {
-
-
-//                         $changeControl->stage = "6";
-//                         $changeControl->status = "QA Verification";
-//                         $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
-//                         $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
-//                         $changeControl->hodFinaleReviewComplete_comment = $request->comment;
-
-//                         $history = new ManagementAuditTrial();
-//                         $history->ManagementReview_id = $id;
-//                         $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
-//                     if(is_null(value: $lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == ''){
-//                         $history->previous = "";
-//                     }else{
-//                         $history->previous = $lastDocument->hodFinaleReviewComplete_by. ' ,' . $lastDocument->hodFinaleReviewComplete_on;
-//                     }
-//                     $history->action='CFT Review Complete';
-//                     $history->current = $changeControl->hodFinaleReviewComplete_by. ',' . $changeControl->hodFinaleReviewComplete_on;
-//                         $history->comment = $request->comment;
-//                         $history->user_id = Auth::user()->id;
-//                         $history->user_name = Auth::user()->name;
-//                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//                         $history->origin_state = $lastDocument->status;
-//                         $history->change_to =   "HOD Final Review";
-//                         $history->change_from = $lastDocument->status;
-//                         $history->stage = 'Complete';
-//                         if(is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == '')
-//                     {
-//                         $history->action_name = 'New';
-//                     } else {
-//                         $history->action_name = 'Update';
-//                     }
-//                         $history->save();
-//                         // $list = Helpers::getQAUserList();
-//                         // foreach ($list as $u) {
-//                         //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-//                         //         $email = Helpers::getInitiatorEmail($u->user_id);
-//                         //         if ($email !== null) {
-//                         //             try {
-//                         //                 Mail::send(
-//                         //                     'mail.view-mail',
-//                         //                     ['data' => $changeControl],
-//                         //                     function ($message) use ($email) {
-//                         //                         $message->to($email)
-//                         //                             ->subject("Activity Performed By " . Auth::user()->name);
-//                         //                     }
-//                         //                 );
-//                         //             } catch (\Exception $e) {
-//                         //                 //log error
-//                         //             }
-//                         //         }
-//                         //     }
-//                         // }
-//                         $changeControl->update();
-//                     }
-//                     toastr()->success('Document Sent');
-//                     return back();
-//                 }
+                    $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
 
 
+                    if (!$IsCFTRequired || $checkCFTCount) {
 
 
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
-                $changeControl->status = 'QA Verification';
-                $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
-                $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
-                $changeControl->hodFinaleReviewComplete_comment  = $request->comment;
+                        $changeControl->stage = "6";
+                        $changeControl->status = "QA Verification";
+                        $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
+                        $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
+                        $changeControl->hodFinaleReviewComplete_comment = $request->comment;
 
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $id;
-                $history->activity_type = 'CFT HOD Review Complete By, CFT HOD Review Complete On';
-                $history->action = 'CFT HOD Review Complete';
-
-                // Check and assign previous values correctly
-                if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
-                    $history->previous = "Null";
-                } else {
-                    // Assign previous user and date correctly
-                    $history->previous = $lastDocument->hodFinaleReviewComplete_by . '  ' . $lastDocument->hodFinaleReviewComplete_on;
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $id;
+                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                    if(is_null(value: $lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hodFinaleReviewComplete_by. ' ,' . $lastDocument->hodFinaleReviewComplete_on;
+                    }
+                    $history->action='CFT Review Complete';
+                    $history->current = $changeControl->hodFinaleReviewComplete_by. ',' . $changeControl->hodFinaleReviewComplete_on;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to =   "HOD Final Review";
+                        $history->change_from = $lastDocument->status;
+                        $history->stage = 'Complete';
+                        if(is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                        $history->save();
+                        // $list = Helpers::getQAUserList();
+                        // foreach ($list as $u) {
+                        //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                        //         $email = Helpers::getInitiatorEmail($u->user_id);
+                        //         if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $changeControl],
+                        //                     function ($message) use ($email) {
+                        //                         $message->to($email)
+                        //                             ->subject("Activity Performed By " . Auth::user()->name);
+                        //                     }
+                        //                 );
+                        //             } catch (\Exception $e) {
+                        //                 //log error
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        $changeControl->update();
+                    }
+                    toastr()->success('Document Sent');
+                    return back();
                 }
 
-                // Assign current user and date correctly
-                $history->current = $changeControl->hodFinaleReviewComplete_by . '  ' . $changeControl->hodFinaleReviewComplete_on;
 
-                // Other fields in history
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'HOD Final Review Complete';
-                $history->change_to = "QA Verification";
-                $history->change_from = $lastDocument->status;
 
-                // Check action name
-                if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
 
-                // Save history and update the change control
-                $history->save();
-                $changeControl->update();
+            // if ($changeControl->stage == 5) {
 
-                // Success message
-                toastr()->success('Document Sent');
-                return back();
-            }
+            //     $changeControl->stage = "6";
+            //     $changeControl->status = 'QA Verification';
+            //     $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
+            //     $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
+            //     $changeControl->hodFinaleReviewComplete_comment  = $request->comment;
+
+            //     $history = new ManagementAuditTrial();
+            //     $history->ManagementReview_id = $id;
+            //     $history->activity_type = 'CFT HOD Review Complete By, CFT HOD Review Complete On';
+            //     $history->action = 'CFT HOD Review Complete';
+
+            //     // Check and assign previous values correctly
+            //     if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
+            //         $history->previous = "Null";
+            //     } else {
+            //         // Assign previous user and date correctly
+            //         $history->previous = $lastDocument->hodFinaleReviewComplete_by . '  ' . $lastDocument->hodFinaleReviewComplete_on;
+            //     }
+
+            //     // Assign current user and date correctly
+            //     $history->current = $changeControl->hodFinaleReviewComplete_by . '  ' . $changeControl->hodFinaleReviewComplete_on;
+
+            //     // Other fields in history
+            //     $history->comment = $request->comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->stage = 'HOD Final Review Complete';
+            //     $history->change_to = "QA Verification";
+            //     $history->change_from = $lastDocument->status;
+
+            //     // Check action name
+            //     if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
+            //         $history->action_name = 'New';
+            //     } else {
+            //         $history->action_name = 'Update';
+            //     }
+
+            //     // Save history and update the change control
+            //     $history->save();
+            //     $changeControl->update();
+
+            //     // Success message
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
 
 
             if ($changeControl->stage == 6) {
+                 if (!$changeControl->additional_suport_required) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA verification Comment  is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Head Closure Approval state'
+                        ]);
+                    }
                 $changeControl->stage = "7";
                 $changeControl->status = 'QA Head Closure Approval';
                 $changeControl->QAVerificationComplete_by = Auth::user()->name;
@@ -10060,6 +10299,22 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             }
 
             if ($changeControl->stage == 7) {
+                 if (!$changeControl->conclusion_new) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA Head Comment is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Closed - Done state'
+                        ]);
+                    }
                 $changeControl->stage = "8";
                 $changeControl->status = 'Closed-Done';
                 $changeControl->Approved_by = Auth::user()->name;
@@ -10486,7 +10741,10 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
         $parentRecord = ManagementReview::where('id', $id)->value('record');
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
+        $p_record = ManagementReview::find($id);
+        $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)

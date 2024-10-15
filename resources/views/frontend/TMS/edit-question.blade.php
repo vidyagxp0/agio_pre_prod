@@ -33,6 +33,26 @@
                             **Question is missing
                           </p>
                         </div>
+
+                        @php
+                         $documentAll = DB::table('documents')->get();
+                        @endphp
+                        <div class="group-input">
+                                        <label for="type_of_training">Assign SOP (For On the Job & Induction Training)</label>
+
+                                        <select name="sopdocument" id="sopdocument" onchange="fetchQuestions(this.value)">
+                                            <option value="">---Select SOP Number---</option>
+
+                                            @foreach ($documentAll as $dat)
+                                                <option
+                                                    value="{{ $dat->id }}"
+                                                    {{ $savedSop == $dat->id ? 'selected' : '' }}>
+                                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
                         @if($question->type == 'Single Selection Questions')
                         
                         <div class="group-input question-options" id="options-group">
@@ -71,7 +91,7 @@
                                         @if (!is_null($option))
                                             <div class="option-group">
                                                 <input type="text" id="option" name="options[]" value="{{ $option }}">
-                                                <input type="checkbox" class="answer" name="answer" value="{{ $option }}" 
+                                                <input type="checkbox" class="answer" name="answers" value="{{ $option }}" 
                                                     {{ in_array($option, unserialize($question->answers)) ? 'checked' : '' }}>
                                             </div>
                                         @endif

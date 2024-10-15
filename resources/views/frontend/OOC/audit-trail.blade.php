@@ -14,7 +14,7 @@
             </head>
 
 
-            
+
 
 
             <style>
@@ -211,9 +211,14 @@
                                 View
                             </button>
                             <!-- <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('ooc_view' . $document->id) }}"> Back
-                                </a>
-                            </button>  -->
+                                            href="{{ url('ooc_view' . $document->id) }}"> Back
+                                        </a>
+                                    </button>  -->
+                            <a class="button_theme1 text-white" href="{{ route('ShowOutofCalibration',$auditrecord->id) }}" style="margin-right: 10px"> Back </a>
+
+                            {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Back
+                                </a> </button> --}}
                             <button class="button_theme1" onclick="window.print();">
                                 Print
                             </button>
@@ -236,7 +241,8 @@
                                 </div>
 
                                 @php
-                                    $reviewer = DB::table('audit_reviewers_details')->where(['doc_id' => $document->id, 'type' => 'OutOfCalibration'])
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'OutOfCalibration'])
                                         ->get();
 
                                 @endphp
@@ -289,42 +295,42 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ url('OOCAuditReview',$document->id)}}" method="POST">
-                                        @csrf
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="group-input">
-                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_by" id="reviewer_completed_by"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                                            </div>
-                                            <input type="hidden" id="type" name="type" value="OutOfCalibration">
+                                <form action="{{ url('OOCAuditReview', $document->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_by"
+                                                id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                                         </div>
-                                    </form>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_on"
+                                                id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                        </div>
+                                        <input type="hidden" id="type" name="type" value="OutOfCalibration">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
                     </div>
 
-                 
+
 
                     <table>
                         <div class="heading">
@@ -333,14 +339,16 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($auditrecord->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($auditrecord->record, 4, '0', STR_PAD_LEFT) }}
+                            </div>
                             {{-- <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div> --}}
-                                <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                    :{{ $auditrecord->initiator ? $auditrecord->initiator : '' }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
+                                :{{ $auditrecord->initiator ? $auditrecord->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $auditrecord->description_ooc }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($auditrecord->due_date) }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :
+                                {{ Helpers::getdateFormat($auditrecord->due_date) }}</div>
 
                         </div>
         </div>
@@ -381,25 +389,74 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ url('rcms/ooc_Audit_Report',$document->id)}}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ url('rcms/ooc_Audit_Report', $document->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change From :</strong>
+                                        {{-- {{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }} --}}
+                                        @if ($dataDemo->change_from)
+                                            {{-- Check if the change_from is a date --}}
+                                            @if (strtotime($dataDemo->change_from))
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                                            @else
+                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                            @endif
+                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                            NULL
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
+                                        {{-- <strong>Change From
+                                            :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }} --}}
+
+                                        <strong>Change From :</strong>
+                                        @if (!empty(strip_tags($dataDemo->previous)))
+                                            {{-- Check if the previous is a date --}}
+                                            @if (strtotime($dataDemo->previous))
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                                            @else
+                                                {!! $dataDemo->previous !!}
+                                            @endif
+                                        @elseif($dataDemo->previous == null)
+                                            Null
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     @endif
                                 </div>
                                 <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                {{-- <div>
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                        <strong>Change To
+                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                    @endif
+                                </div> --}}
+                                <div class="imageContainer">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->change_to))
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                        @else
+                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                        @endif
+                                    @else
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->current))
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                        @else
+                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                        @endif
                                     @endif
                                 </div>
+
                                 <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                    <strong>Change Type
+                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>
                             </td>
                             <td>

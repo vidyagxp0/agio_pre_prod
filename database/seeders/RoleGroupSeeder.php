@@ -133,7 +133,7 @@ class RoleGroupSeeder extends Seeder
 
         // $incrementCount1 = $incrementCount;
 
-        foreach ($processes2 as $process) 
+        foreach ($processes2 as $process)
         {
             foreach ($sites as $site) {
                 foreach ($cft_roles1 as $role) {
@@ -154,22 +154,22 @@ class RoleGroupSeeder extends Seeder
             'Root Cause Analysis' => ['HOD/Designee', 'QA', 'CQA', 'CQA Head', 'Head QA'],
             'Change Control' => ['QA', 'CQA', 'CFT', 'Head QA','CQA'],
             'Lab Incident' => ['QC Head', 'HOD/Designee', 'QA Reviewer'],
-            'CAPA' => ['QA', 'CQA Reviewer', 'QA Approver', 'CQA Approver', 'QA', 'CQA', 'CQA Head', 'Head QA'],            
+            'CAPA' => ['QA', 'CQA Reviewer', 'QA Approver', 'CQA Approver', 'QA', 'CQA', 'CQA Head', 'Head QA'],
             'Audit Program' => ['QA', 'CQA', 'HOD/Designee', 'Head QA', 'CQA Head',],
-            'Internal Audit' => ['Audit Manager', 'Lead Auditor', 'Lead Auditee', 'CQA', 'QA'],            
+            'Internal Audit' => ['Audit Manager', 'Lead Auditor', 'Lead Auditee', 'CQA', 'QA'],
             'External Audit' => ['QA', 'CQA', 'CFT', 'CQA Head', 'QA Head Designee'],
-            'Management Review' => ['QA', 'Head QA', 'CFT', 'HOD/Designee'],            
-            'Risk Assessment' => ['HOD/Designee', 'CFT', 'CQA', 'QA', 'Head QA', 'CQA Head'],          
+            'Management Review' => ['QA', 'Head QA', 'CFT', 'HOD/Designee'],
+            'Risk Assessment' => ['HOD/Designee', 'CFT', 'CQA', 'QA', 'Head QA', 'CQA Head'],
             'Action Item' => ['Initiator', 'QA', 'CQA',],
             'Resampling' => ['Initiator', 'Head QA', 'CQA Head', 'QA', 'CQA',],
             'Extension' => ['HOD/Designee', 'QA Approver', 'CQA Approver'],
-            'Observation' => ['Lead Auditor', 'Lead Auditee', 'QA', 'Audit Manager', 'CQA'],            
+            'Observation' => ['Lead Auditor', 'Lead Auditee', 'QA', 'Audit Manager', 'CQA'],
             'OOS/OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
             // 'OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
             'OOC' => ['QA Head Designee', 'QA', 'Head QA'],
             'Deviation' => ['CQA'],
-            'Market Complaint' => ['CQA','Head QA','CQA Head','CFT'],            
-            'Incident' => ['QA Reviewer', 'Head QA'],            
+            'Market Complaint' => ['CQA','Head QA','CQA Head','CFT'],
+            'Incident' => ['QA Reviewer', 'Head QA'],
             'ERRATA' => ['HOD/Designee','CQA','QA'],
         ];
 
@@ -185,6 +185,44 @@ class RoleGroupSeeder extends Seeder
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
                     $group->save();
                     // $start_from_idNew++;
+                }
+            }
+        }
+
+        //CFT HOD Role for management Review
+        $cft_roles4 = [
+            "HOD Production Tablet",
+            "HOD Production Liquid",
+            "HOD Production Injection",
+            "HOD Stores",
+            "HOD Research & Development",
+            "HOD Microbiology",
+            "HOD Regulatory Affair",
+            "HOD Corporate Quality Assurance",
+            "HOD Safety",
+            "HOD Contract Giver",
+            "HOD Quality Control",
+            "HOD Quality Assurance",
+            "HOD Engineering",
+            "HOD Human Resource & Administration",
+        ];
+
+        $processes5 = [
+            'Management Review'
+        ];
+
+        // $incrementCount1 = $incrementCount;
+
+        foreach ($processes5 as $process)
+        {
+            foreach ($sites as $site) {
+                foreach ($cft_roles4 as $role) {
+                    $group = new RoleGroup();
+                    // $group->id = $incrementCount++;
+                    $group->name = "$site-$process-$role";
+                    $group->description = "$site-$process-$role";
+                    $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+                    $group->save();
                 }
             }
         }
