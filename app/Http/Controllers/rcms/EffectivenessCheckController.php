@@ -213,7 +213,7 @@ class EffectivenessCheckController extends Controller
             $history->extension_id = $openState->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $openState->assign_to;
+            $history->current = Helpers::getInitiatorName($openState->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -835,8 +835,8 @@ class EffectivenessCheckController extends Controller
             $history = new EffectivenessCheckAuditTrail;
             $history->extension_id = $id;
             $history->activity_type = 'Assigned To';
-             $history->previous = $lastopenState->assign_to;
-            $history->current = $openState->assign_to;
+             $history->previous = Helpers::getInitiatorName($lastopenState->assign_to);
+            $history->current = Helpers::getInitiatorName($openState->assign_to);
             $history->comment = $openState->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1348,6 +1348,8 @@ class EffectivenessCheckController extends Controller
                     }
 
                     $history->save();
+
+
 
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {

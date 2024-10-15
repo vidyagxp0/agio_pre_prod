@@ -208,7 +208,7 @@ class ExtensionNewController extends Controller
             $extensionNew->count = intval(str_replace('number',1,$existingRecord->count)) + 1;
         } else {
             $extensionNew->count = $count;
-        }   
+        }
 
         $extensionNew->save();
 
@@ -349,7 +349,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->approvers)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = "Not Applicable";
@@ -754,7 +754,7 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
-        
+
         if ($lastDocument->count != $extensionNew->count) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -844,7 +844,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->approvers != $extensionNew->approvers) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Approval';
+            $history->activity_type = 'QA/CQA Approval';
             $history->previous = Helpers::getInitiatorName($lastDocument->approvers);
             $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = $request->approvers_comment;
@@ -1251,20 +1251,65 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-                //      foreach ($list as $u) {
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $extensionNew) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                //                 }
-                //             );
-                //         }
-                // }
+                    //$list = Helpers::getHodUserList($extensionNew->division_id); // Notify HOD
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //                try {
+                    //                    Mail::send(
+                    //                        'mail.view-mail',
+                    //                        ['data' => $extensionNew, 'site' => "CC", 'history' => "Send For Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                        function ($message) use ($email, $extensionNew) {
+                    //                            $message->to($email)
+                    //                            ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Submit Performed");
+                    //                        }
+                    //                    );
+                    //                } catch(\Exception $e) {
+                    //                    info('Error sending mail', [$e]);
+                    //                }
+                    //        }
+                    //    // }
+                    //}
+
+
+
+                    // $list = Helpers::getHodUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $extensionNew],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                    // }
+                }
 
                     $extensionNew->update();
                     return back();
@@ -1303,22 +1348,24 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
-                    
-                //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-                //      foreach ($list as $u) {
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $extensionNew) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                //                 }
-                //             );
-                //         }
-                // }
+
+
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                }
+                            );
+                        }
+                    // }
+                }
 
                     $extensionNew->update();
                     toastr()->success('Document Sent');
@@ -1361,20 +1408,22 @@ class ExtensionNewController extends Controller
 
                 }
 
-        //         $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-        //         foreach ($list as $u) {
-        //            $email = Helpers::getUserEmail($u->user_id);
-        //                if ($email !== null) {
-        //                Mail::send(
-        //                    'mail.view-mail',
-        //                    ['data' => $extensionNew, 'site' => "Ext", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-        //                    function ($message) use ($email, $extensionNew) {
-        //                        $message->to($email)
-        //                        ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-        //                    }
-        //                );
-        //            }
-        //    }
+                $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+               // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                   $email = Helpers::getUserEmail($u->user_id);
+                       if ($email !== null) {
+                       Mail::send(
+                           'mail.view-mail',
+                           ['data' => $extensionNew, 'site' => "Ext", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                           function ($message) use ($email, $extensionNew) {
+                               $message->to($email)
+                               ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                           }
+                       );
+                   }
+               // }
+           }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1434,26 +1483,27 @@ class ExtensionNewController extends Controller
             }
             $history->save();
 
-        //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-        //      foreach ($list as $u) {
-        //         $email = Helpers::getUserEmail($u->user_id);
-        //             if ($email !== null) {
-        //             Mail::send(
-        //                 'mail.view-mail',
-        //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-        //                 function ($message) use ($email, $extensionNew) {
-        //                     $message->to($email)
-        //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject");
-        //                 }
-        //             );
-        //         }
-        // }
-
+            $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+             foreach ($list as $u) {
+            // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                $email = Helpers::getUserEmail($u->user_id);
+                    if ($email !== null) {
+                    Mail::send(
+                        'mail.view-mail',
+                        ['data' => $extensionNew, 'site' => "Ext", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                        function ($message) use ($email, $extensionNew) {
+                            $message->to($email)
+                            ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject");
+                        }
+                    );
+                }
+            // }
+        }
             $extensionNew->update();
             toastr()->success('Document Sent');
             return back();
         }
-        
+
     }else {
         toastr()->error('E-signature Not match');
         return back();
@@ -1487,12 +1537,12 @@ class ExtensionNewController extends Controller
                     $history = new ExtensionNewAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = ' Send for CQA By,  Send for CQA On';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->previous = "Null";
                     } else {
-                        $history->previous = $lastDocument->send_cqa_by . ' , ' . $lastDocument->send_cqa_on;
+                        $history->previous = ($lastDocument == 'System' ). ' , ' . $lastDocument->send_cqa_on;
                     }
-                    $history->current = $extensionNew->send_cqa_by . ' , ' . $extensionNew->send_cqa_on;
+                    $history->current = $extensionNew == 'System' . ' , ' . $extensionNew->send_cqa_on;
                     $history->action = ' Send for CQA';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1502,7 +1552,7 @@ class ExtensionNewController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'In CQA Approval';
-                    if (is_null($lastDocument->send_cqa_by) || $lastDocument->send_cqa_by === '') {
+                    if (is_null(($lastDocument == 'System')) || ($lastDocument == 'System') === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
@@ -1567,23 +1617,23 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                   
-                //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-                //      foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $extensionNew) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
+
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete");
+                                }
+                            );
+                        }
+                    // }
+                }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1641,22 +1691,22 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
-                //      foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Approved", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $extensionNew) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
+                    $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                     foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $extensionNew, 'site' => "Ext", 'history' => "Approved", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $extensionNew) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                                }
+                            );
+                        }
+                    // }
+                }
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
