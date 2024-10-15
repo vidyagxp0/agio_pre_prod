@@ -17,7 +17,7 @@ use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\{CCController,DeviationController, IncidentController};
+use App\Http\Controllers\rcms\{CCController, DeviationController, IncidentController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
@@ -368,13 +368,6 @@ Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])
 // Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
 Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
 Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
-Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'cancelStage']);
-Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
-
-Route::get('/fetch-questions/{documentId}', [JobTrainingController::class, 'fetchQuestions']);
-
-Route::get('trainingQuestions/{id}/', [JobTrainingController::class, 'trainingQuestions']);
-
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
@@ -388,11 +381,6 @@ Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])-
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
-//new route 
-Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
-
-Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
-
 
 
 //! ============================================
