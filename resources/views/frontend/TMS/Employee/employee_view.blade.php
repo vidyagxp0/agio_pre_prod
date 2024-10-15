@@ -140,15 +140,15 @@
                             </a>
                         </button>
                         <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                                        Activate
-                                                    </button> -->
+                                                            Activate
+                                                        </button> -->
                         @if ($employee->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Activate
                             </button>
                         @elseif($employee->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send Induction to Training
+                                Send To Induction Training
                             </button>
                         @elseif($employee->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -260,16 +260,16 @@
 
 
                             <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Assigned To">Assigned To</label>
-                                                            <select name="assigned_to">
-                                                                <option value="">-- Select --</option>
-                                                                @foreach ($users as $user)
+                                                            <div class="group-input">
+                                                                <label for="Assigned To">Assigned To</label>
+                                                                <select name="assigned_to">
+                                                                    <option value="">-- Select --</option>
+                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}" @if ($user->id == $employee->assigned_to) selected @endif>{{ $user->name }}</option>
     @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div> -->
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -287,14 +287,14 @@
 
 
                             <!-- <div class="col-lg-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <label for="Actual Start Date">Actual Start Date</label>
-                                                            <div class="calenderauditee">
-                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
-                                                                <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                                            <div class="group-input input-date">
+                                                                <label for="Actual Start Date">Actual Start Date</label>
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
+                                                                    <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div> -->
+                                                        </div> -->
 
                             {{-- <div class="col-lg-6">
                         <div class="group-input">
@@ -414,7 +414,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             @php
                                 $savedJobTitle = old('job_title', $employee->job_title);
                             @endphp
@@ -577,22 +577,22 @@
                             </div> --}}
 
                             <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Additional Medical Document">Medical Checkup Report?</label>
+                                                            <div class="group-input">
+                                                                <label for="Additional Medical Document">Medical Checkup Report?</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Attached Medical Document">Medical Checkup Report?</label>
-                                                            @if ($employee->has_additional_document === 'Yes')
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Attached Medical Document">Medical Checkup Report?</label>
+                                                                @if ($employee->has_additional_document === 'Yes')
     <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
     @endif
-                                                        
-                                                                <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
-                                                           
-                                                        </div>
-                                                    </div> -->
+                                                            
+                                                                    <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
+                                                               
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -623,10 +623,11 @@
                             @endif
 
                             <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="{{$employee->email}}" readonly>
-                                    </div>
+                                <div class="group-input">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ $employee->email }}" readonly>
+                                </div>
                             </div>
 
 
@@ -682,85 +683,102 @@
                                 </div>
                             </div>
 
-                           {{-- <script>
-                                    var config = {
-                                        cUrl: 'https://api.countrystatecity.in/v1',
-                                        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
-                                    };
-                                
-                                    var countrySelect = document.querySelector('.country'),
-                                        stateSelect = document.querySelector('.state'),
-                                        citySelect = document.querySelector('.city');
-                                
-                                    function loadStates() {
-                                        stateSelect.disabled = false;
-                                        stateSelect.innerHTML = '<option value="">Select State</option>';
-                                
-                                        const selectedCountryCode = 'IN'; // Fixed country code for India
-                                
-                                        $.ajax({
-                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
-                                            headers: {
-                                                "X-CSCAPI-KEY": config.ckey
-                                            },
-                                            success: function(data) {
-                                                data.forEach(state => {
-                                                    const option = document.createElement('option');
-                                                    option.value = state.name;
-                                                    option.textContent = state.name;
-                                                    option.dataset.code = state.iso2;
-                                                    stateSelect.appendChild(option);
-                                                });
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.error('Error loading states:', error);
-                                            }
-                                        });
-                                    }
-                                
-                                    function loadCities() {
-                                        citySelect.disabled = false;
-                                        citySelect.innerHTML = '<option value="">Select City</option>';
-                                
-                                        const selectedCountryCode = 'IN'; // Fixed country code for India
-                                        const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
-                                
-                                        $.ajax({
-                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
-                                            headers: {
-                                                "X-CSCAPI-KEY": config.ckey
-                                            },
-                                            success: function(data) {
-                                                data.forEach(city => {
-                                                    const option = document.createElement('option');
-                                                    option.value = city.name;
-                                                    option.textContent = city.name;
-                                                    citySelect.appendChild(option);
-                                                });
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.error('Error loading cities:', error);
-                                            }
-                                        });
-                                    }
-                                
-                                    $(document).ready(function() {
-                                        loadStates(); // Directly load states for India on page load
+                            <script>
+                                var config = {
+                                    cUrl: 'https://api.countrystatecity.in/v1',
+                                    ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA==' // Replace with actual key
+                                };
+
+                                var countrySelect = document.querySelector('.country'),
+                                    stateSelect = document.querySelector('.state'),
+                                    citySelect = document.querySelector('.city');
+
+                                // Store the selected state and city from employee data
+                                var selectedState = "{{ $employee->state }}";
+                                var selectedCity = "{{ $employee->city }}";
+
+                                function loadStates() {
+                                    stateSelect.disabled = false;
+                                    stateSelect.innerHTML = '<option value="">Select State</option>';
+
+                                    const selectedCountryCode = 'IN'; // Fixed country code for India
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(state => {
+                                                const option = document.createElement('option');
+                                                option.value = state.name;
+                                                option.textContent = state.name;
+                                                option.dataset.code = state.iso2;
+                                                stateSelect.appendChild(option);
+
+                                                // Preselect state if it matches the employee's state
+                                                if (state.name === selectedState) {
+                                                    option.selected = true;
+                                                    loadCities(); // Load cities if state is already selected
+                                                }
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading states:', error);
+                                        }
                                     });
-                                </script> --}}
+                                }
+
+                                function loadCities() {
+                                    citySelect.disabled = false;
+                                    citySelect.innerHTML = '<option value="">Select City</option>';
+
+                                    const selectedCountryCode = 'IN'; // Fixed country code for India
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(city => {
+                                                const option = document.createElement('option');
+                                                option.value = city.name;
+                                                option.textContent = city.name;
+                                                citySelect.appendChild(option);
+
+                                                // Preselect city if it matches the employee's city
+                                                if (city.name === selectedCity) {
+                                                    option.selected = true;
+                                                }
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading cities:', error);
+                                        }
+                                    });
+                                }
+
+                                $(document).ready(function() {
+                                    loadStates(); // Load states on page load
+                                    stateSelect.addEventListener('change', loadCities); // Load cities when state changes
+                                });
+                            </script>
+
 
 
                             <!-- <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="Site Name">Site Name</label>
-                                                            <select name="site_name">
-                                                                <option value="">Enter Your Selection Here</option>
-                                                                <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
-                                                                <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
-                                                             
-                                                            </select>
-                                                        </div>
-                                                    </div> -->
+                                                            <div class="group-input">
+                                                                <label for="Site Name">Site Name</label>
+                                                                <select name="site_name">
+                                                                    <option value="">Enter Your Selection Here</option>
+                                                                    <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
+                                                                    <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
+                                                                 
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">

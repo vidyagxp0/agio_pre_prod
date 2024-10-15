@@ -381,6 +381,7 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_13 = $request->training_date_13;
         $inductionTraining->training_date_14 = $request->training_date_14;
         $inductionTraining->training_date_15 = $request->training_date_15;
+        // dd($request->training_date_15);
 
         if ($request->hasFile('final_r_attachment')) {
             $file = $request->file('final_r_attachment');
@@ -435,6 +436,7 @@ class InductionTrainingcontroller extends Controller
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
+            // dd($i);
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
@@ -470,7 +472,7 @@ class InductionTrainingcontroller extends Controller
         }
 
         $inductionTraining->trainee_name = $request->trainee_name;
-        $inductionTraining->training_type = $request->training_type;    
+        // $inductionTraining->training_type = $request->training_type;    
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -1012,8 +1014,6 @@ class InductionTrainingcontroller extends Controller
         
         return view('frontend.TMS.Induction_training.Induction_training_certificate');
     }
-
-
 
     public function inductionquestionshow($sopids, $inductiontrainingid){
         $inductiontrainingid = Induction_training::find($inductiontrainingid);
