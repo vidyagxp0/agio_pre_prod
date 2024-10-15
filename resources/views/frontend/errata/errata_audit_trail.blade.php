@@ -211,9 +211,10 @@
                                      Back
                                  </a>
                              </button>
-                             <button class="button_theme1" onclick="window.print();">
+                             <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a>
+                             <!-- <button class="button_theme1" onclick="window.print();">
                                  Print
-                             </button>
+                             </button> -->
                          </div>
                      </div>
 

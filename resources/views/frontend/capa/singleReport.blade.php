@@ -945,67 +945,67 @@
                                 <tr>
                                     <th class="w-30">Propose Plan By
                                     </th>
-                                    <td class="w-30">{{ $data->plan_proposed_by }}</td>
+                                    <td class="w-30"> @if($data->plan_proposed_by){{ $data->plan_proposed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Propose Plan On</th>
-                                    <td class="w-30">{{ $data->plan_proposed_on }}</td>
+                                    <td class="w-30">  @if($data->plan_proposed_on){{ $data->plan_proposed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Propose Plan Comment</th>
-                                    <td class="w-30">{{ $data->comment }}</td>
+                                    <td class="w-30">  @if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">Cancel By
                                     </th>
-                                    <td class="w-30">{{ $data->cancelled_by }}</td>
+                                    <td class="w-30">  @if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Cancel On</th>
-                                    <td class="w-30">{{ $data->cancelled_on }}</td>
+                                    <td class="w-30">  @if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Cancel Comment</th>
-                                    <td class="w-30">{{ $data->cancelled_on_comment }}</td>
+                                    <td class="w-30"> @if($data->cancelled_on_comment){{ $data->cancelled_on_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">HOD Review Complete By
                                     </th>
-                                    <td class="w-30">{{ $data->hod_review_completed_by }}</td>
+                                    <td class="w-30">  @if($data->hod_review_completed_by){{ $data->hod_review_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         HOD Review Complete On</th>
-                                    <td class="w-30">{{ $data->hod_review_completed_on }}</td>
+                                    <td class="w-30">  @if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         HOD Review Complete Comment</th>
-                                    <td class="w-30">{{ $data->hod_comment }}</td>
+                                    <td class="w-30"> @if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">QA/CQA Review Complete By
                                     </th>
-                                    <td class="w-30">{{ $data->qa_review_completed_by }}</td>
+                                    <td class="w-30">  @if($data->qa_review_completed_by){{ $data->qa_review_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         QA/CQA Review Complete On</th>
-                                    <td class="w-30">{{ $data->qa_review_completed_on }}</td>
+                                    <td class="w-30"> @if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         QA/CQA Review Complete Comment</th>
-                                    <td class="w-30">{{ $data->qa_comment }}</td>
+                                    <td class="w-30"> @if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">Approved By</th>
-                                    <td class="w-30">{{ $data->approved_by }}</td>
+                                    <td class="w-30">  @if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">Approved On</th>
-                                    <td class="w-30">{{ $data->approved_on }}</td>
+                                    <td class="w-30">  @if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Approved Comment</th>
-                                    <td class="w-30">{{ $data->approved_comment }}</td>
+                                    <td class="w-30"> @if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 
                                 <tr>
                                     <th class="w-20">Completed By
                                     </th>
-                                    <td class="w-30">{{ $data->completed_by }}</td>
+                                    <td class="w-30"> @if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Completed On</th>
-                                    <td class="w-30">{{ $data->completed_on }}</td>
+                                    <td class="w-30"> @if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         Completed Comment</th>
-                                    <td class="w-30">{{ $data->comment }}</td>
+                                    <td class="w-30"> @if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 {{-- <tr>
                                     <th class="w-20">QA More Info Required By
@@ -1020,30 +1020,30 @@
                                 </tr> --}}
                                 <tr>
                                     <th class="w-20">HOD Final Review Completed By</th>
-                                    <td class="w-30">{{ $data->hod_final_review_completed_by }}</td>
+                                    <td class="w-30">  @if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">HOD Final Review Completed On</th>
-                                    <td class="w-30">{{ $data->hod_final_review_completed_on }}</td>
+                                    <td class="w-30"> @if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         HOD Final Review Completed Comment</th>
-                                    <td class="w-30">{{ $data->final_comment }}</td>
+                                    <td class="w-30">  @if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">QA/CQA Closure Review Completed By</th>
-                                    <td class="w-30">{{ $data->qa_closure_review_completed_by }}</td>
+                                    <td class="w-30">  @if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">QA/CQA Closure Review Completed On</th>
-                                    <td class="w-30">{{ $data->qa_closure_review_completed_on }}</td>
+                                    <td class="w-30">  @if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         QA/CQA Closure Review Completed Comment</th>
-                                    <td class="w-30">{{ $data->qa_closure_comment }}</td>
+                                    <td class="w-30">  @if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
                                     <th class="w-20">QAH/CQA Approval Completed By</th>
-                                    <td class="w-30">{{ $data->qah_approval_completed_by }}</td>
+                                    <td class="w-30"> @if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">QAH/CQA Approval Completed On</th>
-                                    <td class="w-30">{{ $data->qah_approval_completed_on }}</td>
+                                    <td class="w-30"> @if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
                                         QAH/CQA Approval Completed Comment</th>
-                                    <td class="w-30">{{ $data->qah_comment }}</td>
+                                    <td class="w-30"> @if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
                                 </tr>
             
                             </table>
