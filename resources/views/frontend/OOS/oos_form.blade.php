@@ -2491,7 +2491,7 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="If Others">If assignable Cause Identified Perform Re-testing</label>
+                                <label for="If Others">If Assignable Cause Identified Perform Re-testing</label>
                                 <textarea id="If_assignable_cause"  name="If_assignable_cause" ></textarea>
                             </div>
                         </div>
@@ -10684,7 +10684,7 @@ $users = DB::table('users')
                     </div> --}}
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Action on affected batches</label>
+                            <label for="Description Deviation">Action On Affected Batches</label>
                             <textarea class="summernote" name="action_on_affected_batch" id="summernote-1"></textarea>
                         </div>
                     </div>

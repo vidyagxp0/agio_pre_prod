@@ -3248,8 +3248,16 @@ class OOSController extends Controller
     public function child(Request $request, $id)
     {
         $cft = [];
+        $Form_type = OOS::where('id', $id)->value('Form_type');
         $parent_id = $id;
-        $parent_type = "OOS Chemical";
+        if ($Form_type === 'OOS_Chemical') {
+            $parent_type = 'OOS Chemical';
+        } elseif ($Form_type === 'OOS_Micro') {
+            $parent_type = 'OOS Micro';
+        } else {
+            $parent_type = 'OOT';
+        }        
+             
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();

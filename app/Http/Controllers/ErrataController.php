@@ -2037,7 +2037,7 @@ class ErrataController extends Controller
         $lastData = errata::find($id);
         $data = errata::find($id);
         $data->division_id = $request->division_id;
-        $data->initiator_id = Auth::user()->id;
+       // $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
 
