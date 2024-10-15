@@ -261,9 +261,11 @@
                                 <div class="">In Review</div>
                             @endif
 
-                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||$extensionNew->stage >= 6)
+                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
                                 <div class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 5)
+                            @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
+                                <div style="display: none" class="active">In Approved</div>
+                            @elseif($extensionNew->stage == 5 )
                                 <div class="" style="display: none;">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
@@ -278,6 +280,9 @@
                                 <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @else
                                 <div class="" style="display: none"> Closed - Reject</div>
+                            @endif
+                            @if ( $extensionNew->stage_hide == "stage-6")
+                            <div class="active"> In CQA Approval</div>
                             @endif
                             @if ($extensionNew->stage == 5)
                                 <div class="bg-danger" style="display: none" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
@@ -300,8 +305,10 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review </button>
+                @if( $extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3 || $extensionNew->stage == 4 || $extensionNew->stage == 6)
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
-                @if($extensionNew->stage == 5)
+                @endif
+                @if($extensionNew->stage == 5 || $extensionNew->stage == 6)
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
                     @endif
 
@@ -853,6 +860,7 @@
                     </div>
                 </div>
                 <!-- Approver-->
+                @if($extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3 || $extensionNew->stage == 4 || $extensionNew->stage == 6)
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -917,8 +925,9 @@
                         </div>
                     </div>
                 </div>
-                  
-                @if($extensionNew->stage == 5)
+                @endif
+
+                @if($extensionNew->stage == 5 || $extensionNew->stage == 6)
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">

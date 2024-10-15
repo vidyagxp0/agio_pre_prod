@@ -660,7 +660,7 @@ class ExtensionNewController extends Controller
 
         $extensionNew = extension_new::find($id);
         $extensionNew->site_location_code = $request->site_location_code;
-        $extensionNew->initiator = Auth::user()->id;
+        // $extensionNew->initiator = Auth::user()->id;
         $lastDocument = extension_new::find($id);
 
 
@@ -1666,7 +1666,7 @@ class ExtensionNewController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                  
+
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1676,7 +1676,7 @@ class ExtensionNewController extends Controller
 
                     $extensionNew->stage = "6";
                     $extensionNew->status = "Closed - Done";
-
+                    $extensionNew->stage_hide = "stage-6";
 
                     $extensionNew->cqa_approval_by = Auth::user()->name;
                     $extensionNew->cqa_approval_on = Carbon::now()->format('d-M-Y');
