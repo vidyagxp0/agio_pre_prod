@@ -1478,8 +1478,8 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Not Applicable";
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
                     $history->action_name = "Create"; // Since it's a new record, set action as 'New'
                     $history->save();
                 }
@@ -1533,9 +1533,9 @@ class CapaController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "New"; // For new entries, set an appropriate status
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "New";
+                    $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
                     $history->action_name = "Create";
 
                     // Save the history record
