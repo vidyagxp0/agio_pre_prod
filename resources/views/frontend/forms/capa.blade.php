@@ -13,6 +13,10 @@
         }
     </style>
 
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -66,7 +70,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
             </div>
 
-            <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -489,181 +493,150 @@
 
                                     </div>
                                 </div>
-                        <div class="col-12 sub-head">
-                            Product / Material Details
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Material Details">
-                                        Product / Material Details
-                                        <button type="button" name="ann" id="material">+</button>
-                                    </label>
-                                    <table class="table table-bordered" id="productmaterial">
-                                        <thead>
-                                            <tr>
-                                                <th>Row #</th>
-                                                <th>Product / Material Name</th>
-                                                <th>Product /Material Batch No./Lot No./AR No.</th>
-                                                <th>Product / Material Manufacturing Date</th>
-                                                <th>Product / Material Date of Expiry</th>
-                                                <th>Product Batch Disposition Decision</th>
-                                                <th>Product Remark</th>
-                                                <th>Product Batch Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
-                                                
-                                                    {{-- <select name="material_name[]" class="material_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION</option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">CAFFEINECITRATEORALSOLUTION USP 60MG/3ML</option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>
-                                                    </select> --}}
-                                               
-                                                    {{-- <select name="material_batch_no[]" class="batch_no">
-                                                        <option value="">select value</option>
-                                                        <option value="DCAU0030">DCAU0030</option>
-                                                        <option value="BDZH0007">BDZH0007</option>
-                                                        <option value="BDZH0006">BDZH0006</option>
-                                                        <option value="BJJH0004A">BJJH0004A</option>
-                                                        <option value="DCAU0036">DCAU0036</option>
-                                                    </select> --}}
-                                                <td><input type="text" name="material_name[]"></td>
-                                                <td><input type="text" name="material_batch_no[]"></td>
-                                                <td>
-                                                    <input type="date" name="material_mfg_date[]" id="material_mfg_date" class="material_mfg_date" />
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="material_expiry_date[]" class="material_expiry_date" />
-                                                </td>
-                                               
-                                                <td><input type="text" name="material_batch_desposition[]"></td>
-                                                <td><input type="text" name="material_remark[]"></td>
-                                                <td>
-                                                    <select name="material_batch_status[]" class="batch_status">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="Hold">Hold</option>
-                                                        <option value="Release">Release</option>
-                                                        <option value="quarantine">Quarantine</option>
-                                                    </select>
-                                                </td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Material Details">
+                                            Product / Material Details
+                                            <button type="button" name="ann" id="material">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="productmaterial">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row #</th>
+                                                    <th>Product / Material Name</th>
+                                                    <th>Product /Material Batch No./Lot No./AR No.</th>
+                                                    <th>Product / Material Manufacturing Date</th>
+                                                    <th>Product / Material Date of Expiry</th>
+                                                    <th>Product Batch Disposition Decision</th>
+                                                    <th>Product Remark</th>
+                                                    <th>Product Batch Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="material_name[]"></td>
+                                                    <td><input type="text" name="material_batch_no[]"></td>
+                                                    <td><input type="text" name="material_mfg_date[]"
+                                                            class="material_mfg_date" placeholder="DD-MMM-YYYY" /></td>
+                                                    <td><input type="text" name="material_expiry_date[]"
+                                                            class="material_expiry_date" placeholder="DD-MMM-YYYY" /></td>
+                                                    <td><input type="text" name="material_batch_desposition[]"></td>
+                                                    <td><input type="text" name="material_remark[]"></td>
+                                                    <td>
+                                                        <select name="material_batch_status[]" class="batch_status">
+                                                            <option value="">-- Select value --</option>
+                                                            <option value="Hold">Hold</option>
+                                                            <option value="Release">Release</option>
+                                                            <option value="Quarantine">Quarantine</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            {{-- <script>
-                                $(document).on('click', '.removeRowBtn', function() {
-                                    $(this).closest('tr').remove();
-                                })
-                            </script> --}}
 
-                            {{-- <script>
-                                function handleDateInput(dateInput, displayId) {
-                                    const date = new Date(dateInput.value);
-                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                }
-                                
-                                // Call this function initially to ensure the correct format is shown on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const dateInput = document.querySelector('input[name="material_mfg_date"]');
-                                    handleDateInput(dateInput, 'material_mfg_date');
-                                });
-                                </script> --}}
-                            
-                            <script>
-                                $(document).ready(function () {
-                                    // Function to create a new row
-                                    function createNewRow(serialNumber) {
-                                        return $('<tr>' +
-                                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                                            '<td><input type="text" name="material_name[]"></td>' +
-                                            '<td><input type="text" name="material_batch_no[]"></td>' +
-                                            '<td><input type="month" name="material_mfg_date[]" class="material_mfg_date" /></td>' +
-                                            '<td><input type="month" name="material_expiry_date[]" class="material_expiry_date" /></td>' +
-                                            '<td><input type="text" name="material_batch_desposition[]"></td>' +
-                                            '<td><input type="text" name="material_remark[]"></td>' +
-                                            '<td>' +
-                                            '<select name="material_batch_status[]" class="batch_status">' +
-                                            '<option value="">-- Select value --</option>' +
-                                            '<option value="Hold">Hold</option>' +
-                                            '<option value="Release">Release</option>' +
-                                            '<option value="quarantine">Quarantine</option>' +
-                                            '</select>' +
-                                            '</td>' +
-                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                            '</tr>');
-                                    }
-                            
-                                    // Button click to add a new row
-                                    $('#material').click(function (e) {
-                                        e.preventDefault();
-                                        
-                                        // Check if there are any rows in the table
-                                        var rowCount = $('#productmaterial tbody tr').length;
-                                        var newRow;
-                            
-                                        if (rowCount === 0) {
-                                            // If no rows are present, create a new row starting with serial number 1
-                                            newRow = createNewRow(1);
-                                        } else {
-                                            // Clone the first row if rows are present
-                                            newRow = $('#productmaterial tbody tr:first').clone();
-                                            // Set serial number for the new row
-                                            var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
-                                            newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                            // Clear the fields in the new row
-                                            newRow.find('input[name="material_name[]"]').val('');
-                                            newRow.find('input[name="material_batch_no[]"]').val('');
-                                            newRow.find('input.material_mfg_date').val('');
-                                            newRow.find('input.material_expiry_date').val('');
-                                            newRow.find('input[name="material_batch_desposition[]"]').val('');
-                                            newRow.find('input[name="material_remark[]"]').val('');
-                                            newRow.find('select.batch_status').val('');
+<script>
+                                    $(document).ready(function() {
+                                        // Function to create a new row
+                                        function createNewRow(serialNumber) {
+                                            return $('<tr>' +
+                                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="material_name[]"></td>' +
+                                                '<td><input type="text" name="material_batch_no[]"></td>' +
+                                                '<td><input type="text" name="material_mfg_date[]" class="material_mfg_date" placeholder="DD-MMM-YYYY" /></td>' +
+                                                '<td><input type="text" name="material_expiry_date[]" class="material_expiry_date" placeholder="DD-MMM-YYYY" /></td>' +
+                                                '<td><input type="text" name="material_batch_desposition[]"></td>' +
+                                                '<td><input type="text" name="material_remark[]"></td>' +
+                                                '<td>' +
+                                                '<select name="material_batch_status[]" class="batch_status">' +
+                                                '<option value="">-- Select value --</option>' +
+                                                '<option value="Hold">Hold</option>' +
+                                                '<option value="Release">Release</option>' +
+                                                '<option value="Quarantine">Quarantine</option>' +
+                                                '</select>' +
+                                                '</td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>');
                                         }
-                                        
-                                        // Append the new row to the table
-                                        $('#productmaterial tbody').append(newRow);
-                                    });
-                            
-                                    // Remove row event
-                                    $(document).on('click', '.removeRowBtn', function () {
-                                        $(this).closest('tr').remove();
-                            
-                                        // If all rows are removed, reset the serial numbers
-                                        if ($('#productmaterial tbody tr').length === 0) {
-                                            $('#material').trigger('click'); // Add a new row
-                                        } else {
-                                            // Update serial numbers
-                                            $('#productmaterial tbody tr').each(function (index) {
-                                                $(this).find('input[name="serial_number[]"]').val(index + 1);
+
+                                        // Initialize datepicker on input fields
+                                        function initializeDatepicker() {
+                                            $('.material_mfg_date, .material_expiry_date').datepicker({
+                                                dateFormat: 'dd-M-yy', // Format like '10 Oct 2024'
+                                                changeMonth: true,
+                                                changeYear: true,
+                                                showButtonPanel: true,
+                                                onClose: function(dateText, inst) {
+                                                    if (dateText) {
+                                                        $(this).val($.datepicker.formatDate('dd-M-yy', new Date(dateText)));
+                                                    } else {
+                                                        $(this).attr('placeholder',
+                                                        'DD-MMM-YYYY'); // Set the placeholder back if the date is cleared
+                                                    }
+                                                }
                                             });
                                         }
-                                    });
-                            
-                                    // Handling the date change for each row
-                                    $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
-                                        var row = $(this).closest('tr'); // Get the row where the change happened
-                                        var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
-                                        var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
-                            
-                                        // Compare the dates
-                                        if (mfgDate && expiryDate) {
-                                            if (expiryDate <= mfgDate) {
-                                                alert('Expiry date must be greater than the manufacturing date.');
-                                                row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
+
+                                        // Add a new row
+                                        $('#material').click(function(e) {
+                                            e.preventDefault();
+
+                                            // Count existing rows
+                                            var rowCount = $('#productmaterial tbody tr').length;
+                                            var newRow = createNewRow(rowCount + 1); // Create new row with next serial number
+
+                                            // Append the new row to the table
+                                            $('#productmaterial tbody').append(newRow);
+
+                                            // Initialize datepicker for new row
+                                            initializeDatepicker();
+                                        });
+
+                                        // Remove row event
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+
+                                            // If rows are left, update the serial numbers
+                                            $('#productmaterial tbody tr').each(function(index) {
+                                                $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                            });
+                                        });
+
+                                        // Date validation: Ensure expiry date is greater than manufacturing date
+                                        $(document).on('change', '.material_mfg_date, .material_expiry_date', function() {
+                                            var row = $(this).closest('tr');
+                                            var mfgDateVal = row.find('.material_mfg_date').val();
+                                            var expiryDateVal = row.find('.material_expiry_date').val();
+
+                                            if (mfgDateVal && expiryDateVal) {
+                                                var mfgDate = new Date(mfgDateVal);
+                                                var expiryDate = new Date(expiryDateVal);
+
+                                                if (expiryDate <= mfgDate) {
+                                                    alert('Expiry date must be greater than the manufacturing date.');
+
+                                                    // Clear invalid expiry date and set placeholder
+                                                    row.find('.material_expiry_date').val('').attr('placeholder', 'DD-MMM-YYYY');
+                                                }
                                             }
-                                        }
+                                        });
+
+                                        // Initialize datepicker for existing fields on page load
+                                        initializeDatepicker();
                                     });
-                                });
-                            </script>
+                                </script>
+
+                          
+
+
+
+
 
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
@@ -749,11 +722,10 @@
 
                                 </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-
                             </div>
                         </div>
                     </div>
@@ -816,7 +788,7 @@
                 
                                         </div>
                                         <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="submit" class="on-submit-disable-button">Save</button>
                                              <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
                                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
@@ -914,7 +886,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
              <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -999,7 +971,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1098,7 +1070,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="on-submit-disable-button">Save</button>
                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1179,7 +1151,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1259,7 +1231,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1338,7 +1310,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1419,7 +1391,7 @@
           
         </div>
         <div class="button-block">
-            <button type="submit" class="saveButton">Save</button>
+            <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1884,6 +1856,14 @@
             $('#rchars').text(textlen);
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        });
+    </script>
+    
 
     {{-- =======================================================record number ============================================ --}}
     {{-- <script>
