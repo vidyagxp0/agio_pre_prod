@@ -387,6 +387,7 @@ Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail'
 Route::get('job_training-details/{id}', [JobTrainingController::class, 'viewrendersop']);
 Route::get('question_training/{id}', [JobTrainingController::class, 'questionrendersop']);
 Route::get('on_the_job_question_training/{id}/{job_id}', [JobTrainingController::class, 'questionshow']);
+Route::get('job_training_certificate/{id}', [JobTrainingController::class, 'showJobCertificate']);
 
 Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
 Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
