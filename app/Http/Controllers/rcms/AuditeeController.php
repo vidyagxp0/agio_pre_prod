@@ -3422,8 +3422,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'GI Attachment';
-            $history->previous = $lastDocument->inv_attachment;
-            $history->current = $internalAudit->inv_attachment;
+            $history->previous =str_replace(',', ', ',  $lastDocument->inv_attachment);
+            $history->current =str_replace(',', ', ',$internalAudit->inv_attachment) ;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3514,8 +3514,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'QA/CQA Head Approval Attachments';
-            $history->previous = $lastDocument->qa_cqa_attach;
-            $history->current = $internalAudit->qa_cqa_attach;
+            $history->previous =  str_replace(',', ', ', $llastDocumentastData->qa_cqa_attach); $lastDocument->qa_cqa_attach;
+            $history->current =  str_replace(',', ', ', $internalAudit->qa_cqa_attach);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3540,8 +3540,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Summary And Response Attachment';
-            $history->previous = $lastDocument->myfile;
-            $history->current = $internalAudit->myfile;
+            $history->previous =  str_replace(',', ', ', $lastDocument->myfile);
+            $history->current = str_replace(',', ', ', $internalAudit->myfile);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8437,7 +8437,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
         $doc = Auditee::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = AuditTrialExternal::where('ExternalAudit_id', $id)->get();
+            $data = AuditTrialExternal::where('ExternalAudit_id', $id)->orderByDesc('id')->get();
             $audit = AuditTrialExternal::where('ExternalAudit_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

@@ -1372,7 +1372,7 @@
 
 
 
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="reviewer_person_value">CFT review selection</label>
                                         <select id="reviewer_person_value" name="reviewer_person_value[]"
@@ -1382,7 +1382,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-12">
                                     <div class="group-input">

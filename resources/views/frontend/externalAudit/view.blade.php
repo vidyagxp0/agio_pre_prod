@@ -2012,7 +2012,7 @@
 
 
 
-                                        @php
+                                        <!-- @php
 
                                             $assignedUsers = explode(',', $data->reviewer_person_value ?? '');
 
@@ -2034,7 +2034,7 @@
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="myfile">Summary And Response Attachment</label>
@@ -2622,7 +2622,7 @@
                                                         
                                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                             value='yes'>
-                                                            yes</option> 
+                                                            Yes</option> 
                                                             <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>  
                                                                  
                                                         <option @if ($data1->Production_Injection_Review == 'na') selected @endif
@@ -2809,7 +2809,7 @@
                                                         
                                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                             value='yes'>
-                                                            yes</option> 
+                                                            Yes</option> 
                                                         <option @if ($data1->Production_Injection_Review == 'no' || empty($data1->Production_Injection_Review)) selected @endif value='no'>No</option>  
                                                                    
                                                            
@@ -6017,7 +6017,7 @@
                                     </div> --}}
                                             <div class="col-lg-6 qualityControl new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Quality Control Completed On">Quality Control
+                                                    <label for="Quality Control Completed On">Quality Control Review
                                                         Completed On</label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="Quality_Control_on" readonly
