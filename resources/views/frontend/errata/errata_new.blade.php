@@ -273,26 +273,7 @@
                                     //     : explode(',', $showdata->reference_document);
                                 @endphp
 
-                                <!-- <div class="">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Reference Recores">Refrence Documents </label>
-                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                    id="">
-                                                                                                                                    {{-- <option value="">--Select---</option> --}}
-                                                                                                                                    @foreach ($old_record as $new)
-    <option value="{{ $new->id }}">
-                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                        {{-- {{ Helpers::recordFormat($new->record) }} --}}
-                                                                                                                                    </option>
-    @endforeach
-                                                                                                                                        {{-- <option
-                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
-                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
-                                            </option> --}}
-                                                                                                                                </select>
-                                                                                                                            </div>
-                                                                                                                        </div> -->
-                                {{-- <div class="">
+                                    {{-- <div class="">
                                     <div class="group-input">
                                         <label for="Reference Recores">Refrence Documents </label>
 
@@ -308,7 +289,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="reference">Parent Record Number</label>
                                         <select multiple name="reference[]" placeholder="Select Parent Record Number"
@@ -340,6 +321,15 @@
                                         @error('reference')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Observation on Page No.">Parent Record Number
+                                           </label>
+                                        <input  type="text" name="reference" maxlength="255">  
+                                      
                                     </div>
                                 </div>
 
@@ -2225,6 +2215,28 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel BY">Cancel By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel On"> Cancel On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Cancel Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Reviewed by">HOD Initial Review Complete By</label>
@@ -2368,26 +2380,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel BY">Cancel By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel On"> Cancel On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Cancel Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
+                               
 
 
 

@@ -639,6 +639,7 @@ class IncidentController extends Controller
             $data4 = new IncidentGrid();
             $data4->incident_grid_id = $incident->id;
             $data4->type = "Document ";
+
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
                 }
@@ -709,6 +710,7 @@ class IncidentController extends Controller
             $data5 = new IncidentGrid();
             $data5->incident_grid_id = $incident->id;
             $data5->type = "Product ";
+
             if (!empty($request->product_name)) {
                 $data5->product_name = serialize($request->product_name);
             }
@@ -3468,44 +3470,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
         $incident->update();
 
-        // grid
-         $data3 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
-        // $data3->incident_id = $incident->id;
-        // $data3->type = "Incident";
+            // grid
+            // Fetch the existing record from the database based on the incident ID
+            $data3 = IncidentGrid::where('incident_grid_id', $incident->id)
+            ->where('type', "Incident")
+            ->first();
 
-                if (!empty($request->facility_name)) {
-                    $data3->facility_name = serialize($request->facility_name);
-                }
-                if (!empty($request->IDnumber)) {
-                    $data3->IDnumber = serialize($request->IDnumber);
-                }
+            // Store the previous details for comparison before making updates
+            $previousDetails = [
+                'facility_name' => !is_null($data3->facility_name) ? unserialize($data3->facility_name) : null,
+                'IDnumber' => !is_null($data3->IDnumber) ? unserialize($data3->IDnumber) : null,
+                'Remarks' => !is_null($data3->Remarks) ? unserialize($data3->Remarks) : null,
+            ];
 
-                if (!empty($request->Remarks)) {
-                    $data3->Remarks = serialize($request->Remarks);
-                }
+            // Now perform the update after storing the previous values
+            if (!empty($request->facility_name)) {
+                $data3->facility_name = serialize($request->facility_name);
+            }
+            if (!empty($request->IDnumber)) {
+                $data3->IDnumber = serialize($request->IDnumber);
+            }
+            if (!empty($request->Remarks)) {
+                $data3->Remarks = serialize($request->Remarks);
+            }
 
-                $data3->update();
-                // dd($request->Remarks);
+            // Update the record in the database
+            $data3->update();
 
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'facility_name' => 'Name',
+                'IDnumber' => 'ID Number',
+                'Remarks' => 'Remarks'
+            ];
 
-                // Define an associative array to map the field keys to display names
-                $fieldNames = [
-                    'facility_name' => 'Name',
-                    'IDnumber' => 'ID Number',
-                    'Remarks' => 'Remarks'
-                ];
-
-                // Ensure facility_name is an array before iterating
+            // Ensure facility_name is an array before iterating
             if (is_array($request->facility_name) && !empty($request->facility_name)) {
                 foreach ($request->facility_name as $index => $facility_name) {
-                    // Retrieve previous details for comparison
-                    $previousDetails = [
-                        'facility_name' => unserialize($data3->facility_name)[$index] ?? null,
-                        'IDnumber' => unserialize($data3->IDnumber)[$index] ?? null,
-                        'Remarks' => unserialize($data3->Remarks)[$index] ?? null,
+                    // Retrieve previous details for the current index
+                    $previousValues = [
+                        'facility_name' => $previousDetails['facility_name'][$index] ?? null,
+                        'IDnumber' => $previousDetails['IDnumber'][$index] ?? null,
+                        'Remarks' => $previousDetails['Remarks'][$index] ?? null,
                     ];
 
-                    // Current fields values
+                    // Current fields values from the request
                     $fields = [
                         'facility_name' => $facility_name,
                         'IDnumber' => $request->IDnumber[$index],
@@ -3513,11 +3522,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     ];
 
                     foreach ($fields as $key => $currentValue) {
-                        // Ensure null is explicitly stored if no previous value exists
-                        $previousValue = $previousDetails[$key] ?? null;
+                        // Get the previous value from the previous data
+                        $previousValue = $previousValues[$key] ?? null;
 
-                        // Log changes for new or updated rows
-                        if (($previousValue != $currentValue || !empty($request->Remarks[$index])) && !empty($currentValue)) {
+                        // Only log the changes if the previous value is different from the current value
+                        if ($previousValue != $currentValue && !empty($currentValue)) {
                             // Check if an audit trail entry for this specific row and field already exists
                             $existingAudit = IncidentAuditTrail::where('incident_id', $id)
                                 ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
@@ -3534,7 +3543,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
 
                                 // Assign 'Previous' value explicitly as null if it doesn't exist
-                                $history->previous =  'null'; // Previous value or 'null'
+                                $history->previous =  $previousValue; // Previous value or 'null'
 
                                 // Assign 'Current' value, which is the new value
                                 $history->current = $currentValue; // New value
@@ -3547,7 +3556,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->origin_state = $data3->status;
                                 $history->change_to = "Not Applicable";
                                 $history->change_from = $data3->status;
-                                $history->action_name = "Update";
+                                if (is_null($previousValue) || $currentValue === '') {
+                                    $history->action_name = 'New';
+                                } else {
+                                    $history->action_name = 'Update';
+                                }
+                                //$history->action_name = "Update";
 
                                 // Save the history record
                                 $history->save();
@@ -3560,16 +3574,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
             $data4 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
+
+            // Store the previous details for comparison before making updates
+            $previousDetails = [
+                'ReferenceDocumentName' => !is_null($data4->ReferenceDocumentName) ? unserialize($data4->ReferenceDocumentName) : null,
+                'Number' => !is_null($data4->Number) ? unserialize($data4->Number) : null,
+                'Document_Remarks' => !is_null($data4->Document_Remarks) ? unserialize($data4->Document_Remarks) : null,
+            ];
+
+            // Now perform the update after storing the previous values
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
             }
             if (!empty($request->ReferenceDocumentName)) {
                 $data4->ReferenceDocumentName = serialize($request->ReferenceDocumentName);
             }
-
             if (!empty($request->Document_Remarks)) {
                 $data4->Document_Remarks = serialize($request->Document_Remarks);
             }
+
+            // Update the record in the database
             $data4->update();
 
             // Define an associative array to map the field keys to display names
@@ -3582,14 +3606,14 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             // Ensure ReferenceDocumentName is an array before iterating
             if (is_array($request->ReferenceDocumentName) && !empty($request->ReferenceDocumentName)) {
                 foreach ($request->ReferenceDocumentName as $index => $ReferenceDocumentName) {
-                    // Retrieve previous details for comparison
-                    $previousDetails = [
-                        'ReferenceDocumentName' => unserialize($data4->ReferenceDocumentName)[$index] ?? null,
-                        'Number' => unserialize($data4->Number)[$index] ?? null,
-                        'Document_Remarks' => unserialize($data4->Document_Remarks)[$index] ?? null,
+                    // Retrieve previous details for the current index
+                    $previousValues = [
+                        'ReferenceDocumentName' => $previousDetails['ReferenceDocumentName'][$index] ?? null,
+                        'Number' => $previousDetails['Number'][$index] ?? null,
+                        'Document_Remarks' => $previousDetails['Document_Remarks'][$index] ?? null,
                     ];
 
-                    // Current fields values
+                    // Current fields values from the request
                     $fields = [
                         'ReferenceDocumentName' => $ReferenceDocumentName,
                         'Number' => $request->Number[$index],
@@ -3597,11 +3621,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     ];
 
                     foreach ($fields as $key => $currentValue) {
-                        // Ensure null is explicitly stored if no previous value exists
-                        $previousValue = $previousDetails[$key] ?? null;
+                        // Get the previous value from the previous data
+                        $previousValue = $previousValues[$key] ?? null;
 
-                        // Log changes for new or updated rows
-                        if (($previousValue != $currentValue || !empty($request->Document_Remarks[$index])) && !empty($currentValue)) {
+                        // Log changes for new or updated rows only if previous and current values differ
+                        if ($previousValue != $currentValue && !empty($currentValue)) {
                             // Check if an audit trail entry for this specific row and field already exists
                             $existingAudit = IncidentAuditTrail::where('incident_id', $id)
                                 ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
@@ -3618,7 +3642,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
 
                                 // Assign 'Previous' value explicitly as null if it doesn't exist
-                                $history->previous = 'null'; // Previous value or 'null'
+                                $history->previous = $previousValue; // Previous value or 'null'
 
                                 // Assign 'Current' value, which is the new value
                                 $history->current = $currentValue; // New value
@@ -3631,7 +3655,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->origin_state = $data4->status;
                                 $history->change_to = "Not Applicable";
                                 $history->change_from = $data4->status;
-                                $history->action_name = "Update";
+                                if (is_null($previousValue) || $currentValue === '') {
+                                    $history->action_name = 'New';
+                                } else {
+                                    $history->action_name = 'Update';
+                                }
+                                //$history->action_name = "Update";
 
                                 // Save the history record
                                 $history->save();
@@ -3640,92 +3669,105 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                 }
             }
-
 
 
 
             $data5 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
-            if (!empty($request->product_name)) {
-                $data5->product_name = serialize($request->product_name);
-            }
-            if (!empty($request->product_stage)) {
-                $data5->product_stage = serialize($request->product_stage);
-            }
 
-            if (!empty($request->batch_no)) {
-                $data5->batch_no = serialize($request->batch_no);
-            }
-            $data5->update();
+                // Store the previous details for comparison before making updates
+                $previousDetails = [
+                    'product_name' => !is_null($data5->product_name) ? unserialize($data5->product_name) : null,
+                    'product_stage' => !is_null($data5->product_stage) ? unserialize($data5->product_stage) : null,
+                    'batch_no' => !is_null($data5->batch_no) ? unserialize($data5->batch_no) : null,
+                ];
 
-            // Define an associative array to map the field keys to display names
-            $fieldNames = [
-                'product_name' => 'Product / Material',
-                'product_stage' => 'Stage',
-                'batch_no' => 'A.R.No. / Batch No'
-            ];
+                // Now perform the update after storing the previous values
+                if (!empty($request->product_name)) {
+                    $data5->product_name = serialize($request->product_name);
+                }
+                if (!empty($request->product_stage)) {
+                    $data5->product_stage = serialize($request->product_stage);
+                }
+                if (!empty($request->batch_no)) {
+                    $data5->batch_no = serialize($request->batch_no);
+                }
 
-            // Ensure product_name is an array before iterating
-            if (is_array($request->product_name) && !empty($request->product_name)) {
-                foreach ($request->product_name as $index => $product_name) {
-                    // Retrieve previous details for comparison
-                    $previousDetails = [
-                        'product_name' => unserialize($data5->product_name)[$index] ?? null,
-                        'product_stage' => unserialize($data5->product_stage)[$index] ?? null,
-                        'batch_no' => unserialize($data5->batch_no)[$index] ?? null,
-                    ];
+                // Update the record in the database
+                $data5->update();
 
-                    // Current fields values
-                    $fields = [
-                        'product_name' => $product_name,
-                        'product_stage' => $request->product_stage[$index],
-                        'batch_no' => $request->batch_no[$index],
-                    ];
+                // Define an associative array to map the field keys to display names
+                $fieldNames = [
+                    'product_name' => 'Product / Material',
+                    'product_stage' => 'Stage',
+                    'batch_no' => 'A.R.No. / Batch No'
+                ];
 
-                    foreach ($fields as $key => $currentValue) {
-                        // Ensure null is explicitly stored if no previous value exists
-                        $previousValue = $previousDetails[$key] ?? null;
+                // Ensure product_name is an array before iterating
+                if (is_array($request->product_name) && !empty($request->product_name)) {
+                    foreach ($request->product_name as $index => $product_name) {
+                        // Retrieve previous details for the current index
+                        $previousValues = [
+                            'product_name' => $previousDetails['product_name'][$index] ?? null,
+                            'product_stage' => $previousDetails['product_stage'][$index] ?? null,
+                            'batch_no' => $previousDetails['batch_no'][$index] ?? null,
+                        ];
 
-                        // Log changes for new or updated rows
-                        if (($previousValue != $currentValue || !empty($request->Remarks[$index])) && !empty($currentValue)) {
-                            // Check if an audit trail entry for this specific row and field already exists
-                            $existingAudit = IncidentAuditTrail::where('incident_id', $id)
-                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
-                                ->where('previous', $previousValue)
-                                ->where('current', $currentValue)
-                                ->exists();
+                        // Current fields values from the request
+                        $fields = [
+                            'product_name' => $product_name,
+                            'product_stage' => $request->product_stage[$index],
+                            'batch_no' => $request->batch_no[$index],
+                        ];
 
-                            // Only create a new audit trail entry if no existing entry matches
-                            if (!$existingAudit) {
-                                $history = new IncidentAuditTrail();
-                                $history->incident_id = $id;
+                        foreach ($fields as $key => $currentValue) {
+                            // Get the previous value from the previous data
+                            $previousValue = $previousValues[$key] ?? null;
 
-                                // Set activity type to include field name and row index using the fieldNames array
-                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                            // Log changes for new or updated rows only if previous and current values differ
+                            if ($previousValue != $currentValue && !empty($currentValue)) {
+                                // Check if an audit trail entry for this specific row and field already exists
+                                $existingAudit = IncidentAuditTrail::where('incident_id', $id)
+                                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                    ->where('previous', $previousValue)
+                                    ->where('current', $currentValue)
+                                    ->exists();
 
-                                // Assign 'Previous' value explicitly as null if it doesn't exist
-                                $history->previous =  'null'; // Previous value or 'null'
+                                // Only create a new audit trail entry if no existing entry matches
+                                if (!$existingAudit) {
+                                    $history = new IncidentAuditTrail();
+                                    $history->incident_id = $id;
 
-                                // Assign 'Current' value, which is the new value
-                                $history->current = $currentValue; // New value
+                                    // Set activity type to include field name and row index using the fieldNames array
+                                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
 
-                                // Comments and user details
-                                $history->comment = $request->equipment_comments[$index] ?? '';
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $data5->status;
-                                $history->change_to = "Not Applicable";
-                                $history->change_from = $data5->status;
-                                $history->action_name = "Update";
+                                    // Assign 'Previous' value explicitly as null if it doesn't exist
+                                    $history->previous = $previousValue; // Previous value or 'null'
 
-                                // Save the history record
-                                $history->save();
+                                    // Assign 'Current' value, which is the new value
+                                    $history->current = $currentValue; // New value
+
+                                    // Comments and user details
+                                    $history->comment = $request->equipment_comments[$index] ?? '';
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $data5->status;
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = $data5->status;
+                                    if (is_null($previousValue) || $currentValue === '') {
+                                        $history->action_name = 'New';
+                                    } else {
+                                        $history->action_name = 'Update';
+                                    }
+                                    //$history->action_name = "Update";
+
+                                    // Save the history record
+                                    $history->save();
+                                }
                             }
                         }
                     }
                 }
-            }
-
 
 
             if($lastIncident->short_description !=$incident->short_description || !empty($request->comment)) {
@@ -6393,7 +6435,36 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                    //$list = Helpers::getHodUserList($incident->division_id);
+
+                    //$userIds = collect($list)->pluck('user_id')->toArray();
+                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    //$userId = $users->pluck('id')->implode(',');
+                    //if(!empty($users)){
+                    //    try {
+                    //        $history = new IncidentAuditTrail();
+                    //        $history->incident_id = $id;
+                    //        $history->activity_type = "Not Applicable";
+                    //        $history->previous = "Not Applicable";
+                    //        $history->current = "Not Applicable";
+                    //        $history->action = 'Notification';
+                    //        $history->comment = "";
+                    //        $history->user_id = Auth::user()->id;
+                    //        $history->user_name = Auth::user()->name;
+                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    //        $history->origin_state = "Not Applicable";
+                    //        $history->change_to = "Not Applicable";
+                    //        $history->change_from = "HOD Initial Review";
+                    //        $history->stage = "";
+                    //        $history->action_name = "";
+                    //        $history->mailUserId = $userId;
+                    //        $history->role_name = "Initiator";
+                    //        $history->save();
+                    //    } catch (\Throwable $e) {
+                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //    }
+                    //}
+
                     //foreach ($list as $u) {
                     //    // if($u->q_m_s_divisions_id == $incident->division_id){
                     //        $email = Helpers::getUserEmail($u->user_id);
@@ -7715,7 +7786,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     public function incidentAuditTrailPdf($id)
     {
         $doc = Incident::find($id);
-        $audit = IncidentAuditTrail::where('incident_id', $id)->paginate();
+        $audit = IncidentAuditTrail::where('incident_id', $id)->paginate(1000);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = IncidentAuditTrail::where('incident_id', $doc->id)->get();
         $pdf = App::make('dompdf.wrapper');
@@ -7844,11 +7915,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $Capachild->Capachild = $record;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
             $relatedRecords = Helpers::getAllRelatedRecords();
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'INC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 
             $Capachild->save();
 
 
-            return view('frontend.forms.capa', compact('relatedRecords','parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('relatedRecords','parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'reference_record'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
