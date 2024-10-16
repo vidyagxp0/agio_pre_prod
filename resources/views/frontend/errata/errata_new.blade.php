@@ -20,6 +20,13 @@
             display: none;
         }
     </style>
+    <script>
+    $(document).ready(function() {
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    });
+</script>
 
     <div class="form-field-head">
         {{-- <div class="pr-id">
@@ -53,7 +60,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
-            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     @if (!empty($parent_id))
@@ -553,7 +560,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms /qms-dashboard') }}">
                                         Exit </a> </button>
@@ -591,7 +598,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1812,7 +1819,7 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="backButton on-submit-disable-button" onclick="previousStep()">Back</button>
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -1851,7 +1858,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2041,7 +2048,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2086,7 +2093,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2132,7 +2139,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2179,7 +2186,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2385,7 +2392,7 @@
 
 
                                 <div class="button-block">
-                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                    {{-- <button type="submit" class="saveButton on-submit-disable-button">Save</button> --}}
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
 

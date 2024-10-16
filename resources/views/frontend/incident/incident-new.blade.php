@@ -664,7 +664,7 @@ dd($pre);
                     onclick="openCity(event, 'CCForm10')">CAPA</button> --}}
 
             </div>
-            <form id="auditform" action="{{ route('incident-store') }}" method="post" enctype="multipart/form-data">
+            <form class="formSubmit" id="auditform" action="{{ route('incident-store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
@@ -1802,7 +1802,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
 
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
 
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;" type="button"
                                     id="ChangeNextButton" class="nextButton">Next</button>
@@ -1867,7 +1867,7 @@ dd($pre);
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
 
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -2075,7 +2075,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save</button>
+                                    class="saveButton on-submit-disable-button">Save</button>
 
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
@@ -2132,7 +2132,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                    class="saveButton on-submit-disable-button">Save </button>
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>
@@ -2311,7 +2311,7 @@ dd($pre);
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save1</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save1</button>
                                 <a href="/rcms/qms-dashboard"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
@@ -2364,7 +2364,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                    class="saveButton on-submit-disable-button">Save </button>
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>
@@ -2509,7 +2509,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                    class="saveButton on-submit-disable-button">Save </button>
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>
@@ -2590,7 +2590,7 @@ dd($pre);
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save</button>
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <a href="/rcms/qms-dashboard"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
@@ -3815,7 +3815,7 @@ dd($pre);
                             <!-- Save button -->
                             <div
                                 style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
-                                <button type="button" onclick="submitForm()" class="saveButton">Save</button>
+                                <button type="button" onclick="submitForm()" class="saveButton on-submit-disable-button">Save</button>
                             </div>
                         </form>
 
@@ -4242,6 +4242,14 @@ dd($pre);
                     $(this).remove();
                 });
             }
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('.formSubmit').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            });
         </script>
 
     @endsection

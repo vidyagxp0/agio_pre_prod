@@ -731,16 +731,19 @@
                                 @endphp
                                 <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
                                 <button class="button_theme1"> <a class="text-white"
-                                        href="{{ url('rcms/incident-audit-trail', $data->id) }}">Audit Trail </a> </button>
-
-                                @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Incident', 3))
+                                        href="{{ url('rcms/incident-audit-trail', $data->id) }}">Audit Trail </a>
+                                </button>
+{{--@php
+dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+@endphp--}}
+                                @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Incident', 4))
+                                @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -753,7 +756,8 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Incident', 42))
+
+                                @elseif($data->stage == 3 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -764,18 +768,20 @@
                                         Child
                                     </button>
 
-                                @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Incident', 43))
+                                @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                          QAH/Designee Approval Complete
                                     </button>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
+                                    @endif
                                 @elseif(
-                                    $data->stage == 5 && Helpers::check_roles($data->division_id, 'Incident', 3))
+                                    $data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Pending Initiator Update Complete
                                             </button>
@@ -785,42 +791,45 @@
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                             Child
                                         </button>
-                                @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Incident', 4))
+                                @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Final Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
-
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Incident', 7))
+                                    @endif
+                                @elseif($data->stage == 7 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         QA Final Review Complete
                                     </button>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Incident', 43))
-
+                                     @endif
+                                @elseif($data->stage == 8 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Approved                            </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-
+                                    @endif
                                 @endif
                                 <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                                     </a> </button>
-
+                                    {{--Helpers::check_roles($data->division_id, 'Incident', 43)--}}
 
                             </div>
 
@@ -2207,7 +2216,7 @@
                                             </button>
                                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                             <button type="button"
-                                                style=" justify-content: center; width: 4rem; margin-left: 1px;;"> <a
+                                                style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a
                                                     href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                     Exit </a> </button>
 
@@ -8879,11 +8888,12 @@
                                         <input type="radio" name="child_type" id="major" value=" Action_Item">
                                         Action-Item
                                     </label>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <label for="major">
                                         <input type="radio" name="child_type" id="major" value="extension">
                                             Extension
                                     </label>
-
+                                    @endif
 
                                @endif
 
@@ -8914,11 +8924,12 @@
                                         <input type="radio" name="child_type" id="major" value=" Action_Item">
                                         Action-Item
                                     </label>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <label for="major">
                                         <input type="radio" name="child_type" id="major" value="extension">
                                             Extension
                                     </label>
-
+                                    @endif
 
                                 @endif
 
@@ -8937,11 +8948,12 @@
                                             <input type="radio" name="child_type" id="major" value=" Action_Item">
                                             Action-Item
                                         </label>
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                         <label for="major">
                                             <input type="radio" name="child_type" id="major" value="extension">
                                                 Extension
                                         </label>
-
+                                        @endif
 
                                     @endif
                                 </div>
@@ -8970,13 +8982,14 @@
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
+                             @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="radio" name="child_type" value="extension">
                                         Extension
                                     </label>
-
                                 </div>
+                             @endif
 
                             </div>
 

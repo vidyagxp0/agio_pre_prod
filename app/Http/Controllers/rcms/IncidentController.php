@@ -579,6 +579,63 @@ class IncidentController extends Controller
                 $data3->Remarks = serialize($request->Remarks);
             }
             $data3->save();
+
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'facility_name' => 'Name',
+                'IDnumber' => 'ID Number',
+                'Remarks' => 'Remarks'
+            ];
+
+            foreach ($request->facility_name as $index => $facility_name) {
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'facility_name' => null,
+                    'IDnumber' => null,
+                    'Remarks' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'facility_name' => $facility_name,
+                    'IDnumber' => $request->IDnumber[$index],
+                    'Remarks' => $request->Remarks[$index],
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $incident->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
+
+
+
             $data4 = new IncidentGrid();
             $data4->incident_grid_id = $incident->id;
             $data4->type = "Document ";
@@ -594,6 +651,61 @@ class IncidentController extends Controller
             }
              $data4->save();
 
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'Number' => 'Document Number',
+                'ReferenceDocumentName' => 'Document Name',
+                'Document_Remarks' => 'Remarks'
+            ];
+
+            foreach ($request->Number as $index => $Number) {
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'Number' => null,
+                    'ReferenceDocumentName' => null,
+                    'Document_Remarks' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'Number' => $Number,
+                    'ReferenceDocumentName' => $request->ReferenceDocumentName[$index],
+                    'Document_Remarks' => $request->Document_Remarks[$index],
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $incident->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
+
+
             $data5 = new IncidentGrid();
             $data5->incident_grid_id = $incident->id;
             $data5->type = "Product ";
@@ -608,6 +720,60 @@ class IncidentController extends Controller
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->save();
+
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'product_name' => 'Product / Material',
+                'product_stage' => 'Stage',
+                'batch_no' => 'A.R.No. / Batch No'
+            ];
+
+            foreach ($request->product_name as $index => $product_name) {
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'product_name' => null,
+                    'product_stage' => null,
+                    'batch_no' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'product_name' => $product_name,
+                    'product_stage' => $request->product_stage[$index],
+                    'batch_no' => $request->batch_no[$index],
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $incident->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
 
             $Cft = new IncidentCft();
             $Cft->incident_id = $incident->id;
@@ -1006,7 +1172,7 @@ class IncidentController extends Controller
             if (!empty($request->record)){
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-               $history->activity_type = 'Record Number';
+                $history->activity_type = 'Record Number';
                 $history->activity_type = 'Record ';
                 $history->previous = "Null";
                 $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
@@ -1019,7 +1185,8 @@ class IncidentController extends Controller
                 $history->change_from = "Initiator";
                 $history->action_name = 'Create';
                 $history->save();
-            };
+            }
+
              if (!empty ($request->division_id)){
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
@@ -1035,7 +1202,7 @@ class IncidentController extends Controller
                 $history->change_from = "Initiator";
                 $history->action_name = 'Create';
                 $history->save();
-            };
+            }
 
         if (!empty ($request->short_description)){
             $history = new IncidentAuditTrail();
@@ -3300,13 +3467,17 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         $incident->due_date = $request->due_date;
 
         $incident->update();
+
         // grid
-         $data3=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
-                if (!empty($request->IDnumber)) {
-                    $data3->IDnumber = serialize($request->IDnumber);
-                }
+         $data3 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
+        // $data3->incident_id = $incident->id;
+        // $data3->type = "Incident";
+
                 if (!empty($request->facility_name)) {
                     $data3->facility_name = serialize($request->facility_name);
+                }
+                if (!empty($request->IDnumber)) {
+                    $data3->IDnumber = serialize($request->IDnumber);
                 }
 
                 if (!empty($request->Remarks)) {
@@ -3317,7 +3488,78 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 // dd($request->Remarks);
 
 
-            $data4=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
+                // Define an associative array to map the field keys to display names
+                $fieldNames = [
+                    'facility_name' => 'Name',
+                    'IDnumber' => 'ID Number',
+                    'Remarks' => 'Remarks'
+                ];
+
+                // Ensure facility_name is an array before iterating
+            if (is_array($request->facility_name) && !empty($request->facility_name)) {
+                foreach ($request->facility_name as $index => $facility_name) {
+                    // Retrieve previous details for comparison
+                    $previousDetails = [
+                        'facility_name' => unserialize($data3->facility_name)[$index] ?? null,
+                        'IDnumber' => unserialize($data3->IDnumber)[$index] ?? null,
+                        'Remarks' => unserialize($data3->Remarks)[$index] ?? null,
+                    ];
+
+                    // Current fields values
+                    $fields = [
+                        'facility_name' => $facility_name,
+                        'IDnumber' => $request->IDnumber[$index],
+                        'Remarks' => $request->Remarks[$index],
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Ensure null is explicitly stored if no previous value exists
+                        $previousValue = $previousDetails[$key] ?? null;
+
+                        // Log changes for new or updated rows
+                        if (($previousValue != $currentValue || !empty($request->Remarks[$index])) && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = IncidentAuditTrail::where('incident_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
+
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new IncidentAuditTrail();
+                                $history->incident_id = $id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Assign 'Previous' value explicitly as null if it doesn't exist
+                                $history->previous =  'null'; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $data3->status;
+                                $history->change_to = "Not Applicable";
+                                $history->change_from = $data3->status;
+                                $history->action_name = "Update";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            $data4 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
             }
@@ -3330,7 +3572,79 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
             $data4->update();
 
-            $data5=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'ReferenceDocumentName' => 'Document Name',
+                'Number' => 'Document Number',
+                'Document_Remarks' => 'Remarks'
+            ];
+
+            // Ensure ReferenceDocumentName is an array before iterating
+            if (is_array($request->ReferenceDocumentName) && !empty($request->ReferenceDocumentName)) {
+                foreach ($request->ReferenceDocumentName as $index => $ReferenceDocumentName) {
+                    // Retrieve previous details for comparison
+                    $previousDetails = [
+                        'ReferenceDocumentName' => unserialize($data4->ReferenceDocumentName)[$index] ?? null,
+                        'Number' => unserialize($data4->Number)[$index] ?? null,
+                        'Document_Remarks' => unserialize($data4->Document_Remarks)[$index] ?? null,
+                    ];
+
+                    // Current fields values
+                    $fields = [
+                        'ReferenceDocumentName' => $ReferenceDocumentName,
+                        'Number' => $request->Number[$index],
+                        'Document_Remarks' => $request->Document_Remarks[$index],
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Ensure null is explicitly stored if no previous value exists
+                        $previousValue = $previousDetails[$key] ?? null;
+
+                        // Log changes for new or updated rows
+                        if (($previousValue != $currentValue || !empty($request->Document_Remarks[$index])) && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = IncidentAuditTrail::where('incident_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
+
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new IncidentAuditTrail();
+                                $history->incident_id = $id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Assign 'Previous' value explicitly as null if it doesn't exist
+                                $history->previous = 'null'; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $data4->status;
+                                $history->change_to = "Not Applicable";
+                                $history->change_from = $data4->status;
+                                $history->action_name = "Update";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+            $data5 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
             if (!empty($request->product_name)) {
                 $data5->product_name = serialize($request->product_name);
             }
@@ -3342,6 +3656,77 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->update();
+
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'product_name' => 'Product / Material',
+                'product_stage' => 'Stage',
+                'batch_no' => 'A.R.No. / Batch No'
+            ];
+
+            // Ensure product_name is an array before iterating
+            if (is_array($request->product_name) && !empty($request->product_name)) {
+                foreach ($request->product_name as $index => $product_name) {
+                    // Retrieve previous details for comparison
+                    $previousDetails = [
+                        'product_name' => unserialize($data5->product_name)[$index] ?? null,
+                        'product_stage' => unserialize($data5->product_stage)[$index] ?? null,
+                        'batch_no' => unserialize($data5->batch_no)[$index] ?? null,
+                    ];
+
+                    // Current fields values
+                    $fields = [
+                        'product_name' => $product_name,
+                        'product_stage' => $request->product_stage[$index],
+                        'batch_no' => $request->batch_no[$index],
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Ensure null is explicitly stored if no previous value exists
+                        $previousValue = $previousDetails[$key] ?? null;
+
+                        // Log changes for new or updated rows
+                        if (($previousValue != $currentValue || !empty($request->Remarks[$index])) && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = IncidentAuditTrail::where('incident_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
+
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new IncidentAuditTrail();
+                                $history->incident_id = $id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Assign 'Previous' value explicitly as null if it doesn't exist
+                                $history->previous =  'null'; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $data5->status;
+                                $history->change_to = "Not Applicable";
+                                $history->change_from = $data5->status;
+                                $history->action_name = "Update";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+            }
+
+
 
             if($lastIncident->short_description !=$incident->short_description || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -7434,7 +7819,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         if ($request->child_type == "extension") {
             $parent_due_date = "";
             $parent_id = $id;
-            $parent_type = "extension";
+            $parent_type = "Incident";
             $parent_name = $request->parent_name;
 
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
