@@ -196,7 +196,7 @@
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
-                            QA/CQA Head Approval Completed
+                               QA/CQA Head Approval Completed
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -519,11 +519,11 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="reference">Parent Record Number</label>
 
-                                        <!-- Virtual Select Dropdown -->
+
 
                                         <select multiple name="reference[]" data-silent-initial-value-set="true"
                                             id="reference" data-search="false"
@@ -562,7 +562,21 @@
                                         </select>
 
                                     </div>
+                                </div> -->
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Observation on Page No.">Parent Record Number</label>
+
+
+                                        <input type="text" name="reference" maxlength="255"
+                                            value="{{ $showdata->reference }}"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                    </div>
                                 </div>
+
 
 
                                 <div class="col-12">
@@ -3381,6 +3395,28 @@
                                         <div class="static">{{ $showdata->comment }}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel BY">Cancel By</label>
+                                        <div class="static">{{ $showdata->cancel_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel On">Cancel On</label>
+                                        <div class="static">{{ $showdata->cancel_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Cancel Comment</label>
+                                        <div class="static">{{ $showdata->cancel_comment }}</div>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Reviewed by">HOD Initial Review Complete By</label>
@@ -3524,25 +3560,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel BY">Cancel By</label>
-                                        <div class="static">{{ $showdata->cancel_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel On">Cancel On</label>
-                                        <div class="static">{{ $showdata->cancel_on }}</div>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Cancel Comment</label>
-                                        <div class="static">{{ $showdata->cancel_comment }}</div>
-                                    </div>
-                                </div>
 
 
                                 <div class="button-block">

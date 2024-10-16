@@ -299,7 +299,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="originator">Initiator</label>
-                                                <input disabled type="text" value="{{ Auth::user()->name }}">
+                                                <input disabled type="text" value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1184,8 +1184,10 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action-plan-grid">
-                                                    Action Plan<button type="button" name="action-plan-grid"
+                                                <div class="sub-head">Action Plan
+                                                    <button type="button" name="action-plan-grid"
                                                         id="observation_table" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                </div>
                                                 </label>
                                                 <table class="table table-bordered" id="observation">
                                                     <thead>
@@ -1263,14 +1265,14 @@
                                                                 </td>
 
                                                                 {{-- <td>
-    @php
-    $item_status = unserialize($griddata->item_status);
-    $value = isset($item_status[$key]) ? $item_status[$key] : '';
-    @endphp
-    <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
-</td> --}} 
-                                    <td><button type="text"
-                                        class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                @php
+                                                                $item_status = unserialize($griddata->item_status);
+                                                                $value = isset($item_status[$key]) ? $item_status[$key] : '';
+                                                                @endphp
+                                                                <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
+                                                            </td> --}} 
+                                                                <td><button type="text"
+                                                                    class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
 
                                                             </tr>
                                                         @endforeach

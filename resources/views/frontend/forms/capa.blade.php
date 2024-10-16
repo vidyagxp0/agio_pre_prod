@@ -407,7 +407,7 @@
                                         <input readonly type="text" name="parent_record_number"
                                             value="{{ $reference_record }}">
                                         @else
-                                        <input readonly type="text" name="parent_record_number"
+                                        <input type="text" name="parent_record_number_edit"
                                         value="">
                                         @endif
                                     </div>

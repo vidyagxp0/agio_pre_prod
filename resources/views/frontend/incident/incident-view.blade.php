@@ -733,9 +733,9 @@
                                 <button class="button_theme1"> <a class="text-white"
                                         href="{{ url('rcms/incident-audit-trail', $data->id) }}">Audit Trail </a>
                                 </button>
-{{--@php
-dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-@endphp--}}
+                                {{--@php
+                                dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @endphp--}}
                                 @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
@@ -1854,7 +1854,7 @@ dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)
                                                         name="audit-agenda-grid"
                                                         value="audit-agenda-grid" id="ReferenceDocument" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#document-details-field-instruction-modal"
+                                                        data-bs-target="#observation-field-instruction-modal1"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                         (Launch Instruction)
                                                     </span>
@@ -1976,7 +1976,7 @@ dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)
                                                             <button type="button" name="audit-agenda-grid"
                                                                 id="Product_Details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                                             <span class="text-primary" data-bs-toggle="modal"
-                                                                data-bs-target="#product-batch-grid"
+                                                                data-bs-target="#observation-field-instruction-modal2"
                                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                                 (Launch Instruction)
                                                             </span>

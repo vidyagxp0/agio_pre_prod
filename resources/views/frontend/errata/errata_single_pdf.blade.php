@@ -1026,6 +1026,39 @@
                             @endif
                         </td>
                     </tr>
+
+
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-30">
+                            @if ($data->cancel_by)
+                                {{ $data->cancel_by }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-30">
+                            @if ($data->cancel_on)
+                                {{ $data->cancel_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-80">
+                            @if ($data->cancel_comment)
+                                {{ $data->cancel_comment }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+
                     <tr>
                         <th class="w-20">HOD Initial Review Complete By</th>
                         <td class="w-30">
@@ -1236,35 +1269,7 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Cancel By</th>
-                        <td class="w-30">
-                            @if ($data->cancel_by)
-                                {{ $data->cancel_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Cancel On</th>
-                        <td class="w-30">
-                            @if ($data->cancel_on)
-                                {{ $data->cancel_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancel Comment</th>
-                        <td class="w-80">
-                            @if ($data->cancel_comment)
-                                {{ $data->cancel_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                   
 
 
                 </table>
