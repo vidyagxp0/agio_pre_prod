@@ -90,7 +90,7 @@
             cell3.innerHTML =
                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' +
                 currentRowCount +
-                '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
+                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
                 currentRowCount +
                 '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' +
             currentRowCount + '`);checkDate(`scheduled_start_date' + currentRowCount +
@@ -103,7 +103,7 @@
             cell5.innerHTML =
                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
                 currentRowCount +
-                '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
                 currentRowCount +
                 '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' +
             currentRowCount + '`);checkDate(`scheduled_start_date' + currentRowCount +
@@ -246,7 +246,7 @@
                         '"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
                         // '<td><input type="date" name="date[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
                         // '<td><select name="auditorG[]">' +
                         '<option value="">Select a value</option>';
 
@@ -272,7 +272,7 @@
                         // '<td><input type="text" name="qa_comment[]"></td>' +
                         // '<td><input type="text" name="capa_details[]"></td>' +
                         // '<td><input type="date" name="capa_due_date[]"></td>' +
-                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
+                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
 
                         //     '<td><select name="capa_owner[]">' +
                         '<option value="">Select a value</option>';
@@ -284,7 +284,7 @@
                     html += '</select></td>' +
                         //  '<td><input type="text" name="action_taken[]"></td>' +
                         // '<td><input type="date" name="capa_completion_date[]"></td>' +
-                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
+                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
 
                         //     '<td><input type="text" name="status_Observation[]"></td>' +
                         //     '<td><input type="text" name="remark_observation[]"></td>' +
@@ -617,7 +617,7 @@
                                                     <div class="group-input input-date">
                                                         <label for="due-date">Due Date </label>
                                                         <div class="calenderauditee">
-                                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                            
                                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                                         </div>
@@ -648,16 +648,16 @@
                                                     </small></div>
                                                 <div class="calenderauditee">
                                                     <input disabled type="text" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY"
+                                                        placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date"
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage !=1? 'disabled' : '' }}
+                                                        {{ $data->stage !=1? 'disabled' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
                                                 {{-- <input type="text" id="due_date" name="due_date"
-                                                    placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                                    placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                                                 <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
 
                                             </div>
@@ -694,7 +694,7 @@
                                         {{-- <input type="date" name="due_date"> --}}
                                         {{-- <div class="calenderauditee">
                                             <input type="text"  id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"
+                                                placeholder="DD-MM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
                                             <input type="date" name="due_date" id="due_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" />
@@ -1003,14 +1003,14 @@
                                                 <label for="Audit Category">Audit Category</label>
                                                 <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data->Audit_Category == '1') selected @endif
-                                                         value="1">Internal Audit/Self Inspection</option>
-                                                    <option  @if ($data->Audit_Category == '2') selected @endif
-                                                         value="2">Supplier Audit</option>
-                                                    <option @if ($data->Audit_Category == '3') selected @endif
-                                                         value="3">Regulatory Audit</option>
-                                                    <option @if ($data->Audit_Category == '4') selected @endif
-                                                         value="4">Consultant Audit</option>
+                                                    <option @if ($data->Audit_Category == 'Internal Audit/Self Inspection') selected @endif
+                                                         value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
+                                                    <option  @if ($data->Audit_Category == 'Supplier Audit') selected @endif
+                                                         value="Supplier Audit">Supplier Audit</option>
+                                                    <option @if ($data->Audit_Category == 'Regulatory Audit') selected @endif
+                                                         value="Regulatory Audit">Regulatory Audit</option>
+                                                    <option @if ($data->Audit_Category == 'Consultant Audit') selected @endif
+                                                         value="Consultant Audit">Consultant Audit</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1027,7 +1027,7 @@
                                                 <label for="Audit Start Date">Scheduled audit date </label>
                                                 {{-- <input type="date" name="audit_start_date"> --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'sch_audit_start_date')" />
@@ -1166,8 +1166,7 @@
                                                         @endif
                                                     </label>
 
-                                                    <textarea name="Auditee_comment"
-                                                        @if ($data->stage == 2 && in_array(11, $userRoleIds)) required 
+                                                    <textarea name="Auditee_comment"@if ($data->stage == 2 && in_array(11, $userRoleIds)) required 
                                                             @else 
                                                                 readonly @endif
                                                         class="form-control {{ $errors->has('HOD_Remarks') ? 'is-invalid' : '' }}"
@@ -1177,13 +1176,13 @@
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('Auditee_comment') }}
                                                         </div>
-                                                    @endif{{ $data->Auditee_comment }}
+                                                    @endif
                                                     </textarea>
                                                 </div>
                                             @else
                                                 <div class="group-input">
                                                     <label for="External Auditor Details">Auditee Comment</label>
-                                                    <textarea name="Auditee_comment">{{ $data->Auditee_comment }}</textarea>
+                                                    <textarea disabled name="Auditee_comment">{{ $data->Auditee_comment }}</textarea>
                                                 </div>
                                             @endif
 
@@ -1212,7 +1211,7 @@
                                             @else
                                                 <div class="group-input">
                                                     <label for="External Auditor Details">Auditor Comment</label>
-                                                    <textarea name="Auditor_comment">{{ $data->Auditor_comment }}</textarea>
+                                                    <textarea disabled name="Auditor_comment">{{ $data->Auditor_comment }}</textarea>
                                                 </div>
                                             @endif
 
@@ -1468,7 +1467,7 @@
 
                                                             <div class="calenderauditee">
                                                                 <input type="text"
-                                                                    id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_start_date) }}" />
+                                                                    id="audit_schedule_start_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_start_date) }}" />
                                                                 <input type="date" id="audit_schedule_start_date_checkdate" value="{{ $data->audit_schedule_start_date }}" name="audit_schedule_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
                                                                     oninput="handleDateInput(this, 'audit_schedule_start_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                             </div>
@@ -1480,7 +1479,7 @@
                                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --
                                                 <div class="calenderauditee">
                                                     <input type="text"
-                                                        id="audit_schedule_end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
+                                                        id="audit_schedule_end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
                                                     <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
@@ -1522,7 +1521,7 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
-                                                                <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
+                                                                <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
                                                                 <input type="date"  id="scheduled_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
                                                                 "class="hide-input"
                                                                 oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
@@ -1534,7 +1533,7 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                <input type="text"   id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="text"   id="scheduled_end_date{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
                                                                 <input type="date" id="scheduled_end_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
                                                                <td><input type="time" name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -1955,10 +1954,10 @@
                                                     <input type="text" id="audit_start_date" readonly
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                         />
                                                     <input type="date" id="audit_start_date_checkdate"
                                                         name="audit_start_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                 </div>
@@ -1969,12 +1968,12 @@
                                                 <label for="Audit End Date">Audit End Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="audit_end_date" readonly
-                                                        placeholder="DD-MMM-YYYY"
+                                                        placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                         />
                                                     <input type="date" id="audit_end_date_checkdate"
                                                         name="audit_end_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                 </div>
@@ -2024,7 +2023,7 @@
                                                                                         <input type="text"
                                                                                             id="scheduled_start_date{{ $key }}"
                                                                                             readonly
-                                                                                            placeholder="DD-MMM-YYYY"
+                                                                                            placeholder="DD-MM-YYYY"
                                                                                             value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
                                                                                         <input type="date"
                                                                                             id="scheduled_start_date{{ $key }}_checkdate"
@@ -2041,7 +2040,7 @@
                                                                     <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date ">
                                                                             <div class="calenderauditee">
-                                                                        <input type="text"   id="scheduled_end_date{{ $key }}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                        <input type="text"   id="scheduled_end_date{{ $key }}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
                                                                         <input type="date" id="scheduled_end_date{{ $key }}_checkdate" value="{{ unserialize($grid_data->start_date)[$key] }}"  name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="
                                                                                             hide-input"
                                                                                             oninput="handleDateInput(this, `scheduled_end_date{{ $key }}`);checkDate('scheduled_start_date{{ $key }}_checkdate','scheduled_end_date{{ $key }}_checkdate')" />
@@ -2446,7 +2445,7 @@
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                     <div class="calenderauditee">
-                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                         <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
@@ -2458,7 +2457,7 @@
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
                                                     <div class="calenderauditee">
-                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
@@ -2531,7 +2530,7 @@
                             {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data1->date)[$key]) }}"/>
+                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data1->date)[$key]) }}"/>
                                                                         <input type="date" name="date[]" value="{{ $data->date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     {{-- <td> -
@@ -2579,7 +2578,7 @@
                             {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_due_date) }}"/>
+                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->capa_due_date) }}"/>
                                                                         <input type="date" name="capa_due_date[]" value="{{ $data->capa_due_date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     <td> --}}
@@ -2598,7 +2597,7 @@
                             {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_completion_date) }}"/>
+                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->capa_completion_date) }}"/>
                                                                         <input type="date" name="capa_completion_date[]"value="{{ $data->capa_completion_date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
@@ -2744,7 +2743,7 @@
                                                             <!-- <div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date">
                                                                     <div class="calenderauditee">
-                                                                        <input type="text" class="test" name="auditorroles[{{ $loop->index }}][internal_start_date]" value="{{ $item['internal_start_date'] ?? '' }}" id="internal_start_date_{{ $loop->index }}" readonly placeholder="DD-MMM-YYYY" data-original-value="{{ $item['internal_start_date'] ?? '' }}" />
+                                                                        <input type="text" class="test" name="auditorroles[{{ $loop->index }}][internal_start_date]" value="{{ $item['internal_start_date'] ?? '' }}" id="internal_start_date_{{ $loop->index }}" readonly placeholder="DD-MM-YYYY" data-original-value="{{ $item['internal_start_date'] ?? '' }}" />
                                                                         <input type="date" id="internal_start_date_input_{{ $loop->index }}" name="auditorroles[{{ $loop->index }}][internal_start_date]" class="hide-input" oninput="handleDateInput(this, 'internal_start_date_{{ $loop->index }}');checkDate('internal_start_date_checkdate', 'internal_end_date_checkdate')" />
                                                                     </div>
                                                                 </div>
@@ -2757,7 +2756,7 @@
                                                                             type="text"
                                                                             name="auditorroles[{{ $loop->index }}][internal_start_date]"
                                                                             value="{{ isset($item['internal_start_date']) ? \Carbon\Carbon::parse($item['internal_start_date'])->format('d-M-Y') : '' }}"
-                                                                            placeholder="DD-MMM-YYYY"
+                                                                            placeholder="DD-MM-YYYY"
                                                                             readonly />
                                                                             <input type="date"
                                                                             name="auditorroles[{{ $loop->index }}][internal_start_date]"
@@ -2880,7 +2879,7 @@
                                                                                     type="text"
                                                                                     name="Initial[{{ $loop->index }}][closure_date]"
                                                                                     value="{{ isset($item['closure_date']) ? \Carbon\Carbon::parse($item['closure_date'])->format('d-M-Y') : '' }}"
-                                                                                    placeholder="DD-MMM-YYYY" readonly />
+                                                                                    placeholder="DD-MM-YYYY" readonly />
                                                                                      <input type="date"
                                                                                     name="Initial[{{ $loop->index }}][closure_date]"
                                                                                     id="closure_date{{ $loop->index }}_input"
@@ -2901,7 +2900,7 @@
                                                                                     type="text"
                                                                                     name="Initial[{{ $loop->index }}][Actual_date]"
                                                                                     value="{{ isset($item['Actual_date']) ? \Carbon\Carbon::parse($item['Actual_date'])->format('d-M-Y') : '' }}"
-                                                                                    placeholder="DD-MMM-YYYY" readonly />
+                                                                                    placeholder="DD-MM-YYYY" readonly />
                                                                                 <input type="date"
                                                                                     name="Initial[{{ $loop->index }}][Actual_date]"
                                                                                     id="Actual_date{{ $loop->index }}_input"
@@ -3629,7 +3628,7 @@
                                                             <td class="flex text-center">1.9</td>
                                                             <td>
                                                                 Have you any standard practice to cross check the approved
-                                                                status of raw materials before dispensing?{" "}
+                                                                status of raw materials before dispensing?
                                                             </td>
                                                             <td>
                                                                 <div
@@ -3807,7 +3806,6 @@
                                        </div>
 
                                     <div class="col-12">
-                                        {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                         <div class="group-input">
                                             <div class="why-why-chart">
                                                 <table class="table table-bordered">
@@ -3852,7 +3850,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">2.2</td>
-                                                            <td>Is the dispensing area cleaned as per SOP?</td>
+                                                            <td>Equipment cleanliness, check few equipments.</td>
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -3881,7 +3879,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">2.3</td>
-                                                            <td> Check the status label of area and equipment.</td>
+                                                            <td> Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?</td>
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -4564,7 +4562,7 @@
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="remark_37" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_37 }}</textarea>
                                                                 </div>
-                                                            </td>                                                                                                                                                       1
+                                                            </td>                                                                                                                                                       
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">2.25</td>
@@ -5397,18 +5395,13 @@
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
-                                        <label for="Description Deviation">Final Comments1</label>
+                                        <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea   name="Description_Deviation">{{ $data->Description_Deviation }} </textarea>
+                                        <textarea name="Description_Deviation">{{ $data->Description_Deviation }} </textarea>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Comments">QA Comments</label>
-                                        <textarea name="Description_Deviation">{{ $data->Description_Deviation}}</textarea>
-                                    </div>
-                                </div>
-
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Supporting Attachment </label>
@@ -5697,11 +5690,7 @@
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="wtablet_compress_remark_6" style="border-radius: 7px; border: 1.5px solid black;">
-@if ($checklist1 && $checklist1->tablet_compress_remark_6)
-{{ $checklist1->tablet_compress_remark_6 }}
-@endif
-</textarea>
+                                                                    <textarea name="tablet_compress_remark_6" style="border-radius: 7px; border: 1.5px solid black;">@if ($checklist1 && $checklist1->tablet_compress_remark_6){{ $checklist1->tablet_compress_remark_6 }}@endif</textarea>
                                                                 </div>
                                                             </td>
 
@@ -6224,7 +6213,7 @@
                                                             <td class="flex text-center">1.20</td>
                                                             <td>
                                                                 Are all weighing and measuring performed by one qualified
-                                                                person and checked by a second person
+                                                                person and checked by a second person<br>
                                                                 Check the weighing balance record
 
                                                             </td>
@@ -6718,7 +6707,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="tablet_compress_response_32" style="border-radius: 7px; border: 1.5px solid black;">
+                                                                    <textarea name="tablet_compress_remark_32" style="border-radius: 7px; border: 1.5px solid black;">
 @if ($checklist1 && $checklist1->tablet_compress_remark_32)
 {{ $checklist1->tablet_compress_remark_32 }}
 @endif
@@ -6832,8 +6821,11 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="tablet_compress_remark_35" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                </div>
+                                                                    <textarea name="tablet_compress_remark_35" style="border-radius: 7px; border: 1.5px solid black;">
+                                                                        @if ($checklist1 && $checklist1->tablet_compress_remark_35)
+                                                                        {{ $checklist1->tablet_compress_remark_35 }}
+                                                                        @endif
+                                                                        </textarea>                                                                </div>
                                                             </td>
 
                                                         </tr>
@@ -7434,11 +7426,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea  name="tablet_compress_response_final_comment" >
-                                @if ($checklist1 && $checklist1->tablet_compress_response_final_comment)
-                                      {{ $checklist1->tablet_compress_response_final_comment }}
-                                 @endif 
-                                </textarea>
+                                        <textarea  name="tablet_compress_response_final_comment" >@if ($checklist1 && $checklist1->tablet_compress_response_final_comment){{ $checklist1->tablet_compress_response_final_comment }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -7732,7 +7720,11 @@
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="tablet_coating_remark_6" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="tablet_coating_remark_6" style="border-radius: 7px; border: 1.5px solid black;">
+                                                                        @if ($checklist2 && $checklist2->tablet_coating_remark_6)
+                                                                        {{ $checklist2->tablet_coating_remark_6 }}
+                                                                        @endif
+                                                                        </textarea>
                                                                 </div>
                                                             </td>
 
@@ -8163,7 +8155,12 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="tablet_coating_remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    {{-- <textarea name="tablet_coating_remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea> --}}
+                                                                    <textarea name="tablet_coating_remark_17" style="border-radius: 7px; border: 1.5px solid black;">
+                                                                        @if ($checklist2 && $checklist2->tablet_coating_remark_17)
+                                                                        {{ $checklist2->tablet_coating_remark_17 }}
+                                                                        @endif
+                                                                        </textarea>
                                                                 </div>
                                                             </td>
 
@@ -8249,7 +8246,7 @@
                                                             <td class="flex text-center">1.20</td>
                                                             <td>
                                                                 Are all weighing and measuring performed by one qualified
-                                                                person and checked by a second personCheck the weighing
+                                                                person and checked by a second person<br>Check the weighing
                                                                 balance record.
                                                             </td>
                                                             <td>
@@ -9499,7 +9496,7 @@
                                     'Check the in-process equipments cleaning status & records.',
                                     'Are any unplanned process changes (process excursions) documented in the batch record?',
                                     'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                    'Is there a preventive maintenance program for all equipment and status of it?',
+                                    'Is there a preventive maintenance program for all equipment and status of it.',
                                     'Status label of area & equipment available?',
                                     'Have you any proper storage area for primary and secondary packing material?',
                                     'Do you have proper segregation system for keeping product/batch separately?',
@@ -10446,7 +10443,7 @@
                                                             <td class="flex text-center">1.20</td>
                                                             <td>
                                                                 Are all weighing and measuring performed by one qualified
-                                                                person and checked by a second person Check the weighing
+                                                                person and checked by a second person<br> Check the weighing
                                                                 balance record. </td>
                                                             <td>
                                                                 <div
@@ -11431,7 +11428,7 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="capsule_remark_47" id="response"
+                                                                    <select name="capsule_response_47" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         <option value="">Select an Option</option>
                                                                         <option value="Yes"
@@ -11467,8 +11464,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="capsule_remark_48" id="response"
+                                                                    <select name="capsule_response_48" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="">Select an Option</option>
                                                                         <option value="Yes"
                                                                             @if ($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == 'Yes' ? 'selected' : '' }} @endif>
@@ -11575,9 +11573,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea  name="Description_Deviation[]" >
-                    </textarea>
+                                        <textarea  name="Description_Deviation_capsule" >@if ($checklist4 && $checklist4->{"Description_Deviation_capsule"}){{ $checklist4->{"Description_Deviation_capsule"} }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -11866,8 +11862,8 @@
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
-                                                                            name="tablet_capsule_packing_{{ 59 + $index + 1 }}"
-                                                                            id="tablet_capsule_packing_{{ 59 + $index + 1 }}"
+                                                                            name="dispensing_and_manufacturing_{{ 59 + $index + 1 }}"
+                                                                            id="dispensing_and_manufacturing_{{ 59 + $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
                                                                             </option>
@@ -11886,7 +11882,7 @@
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="tablet_capsule_packing_remark_{{ 59 + $index + 1 }}"
+                                                                        <textarea name="dispensing_and_manufacturing_remark_{{ 59 + $index + 1 }}"
                                                                             style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist6 ? $checklist6->$tabletmanufacturingRemark : '' }}</textarea>
                                                                     </div>
                                                                 </td>
@@ -11909,8 +11905,42 @@
 </textarea>
                                     </div>
                                 </div>
-
                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Supporting Attachment11 </label>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list"
+                                                id="dispensing_and_manufacturing_attachment">
+                                                @if ($data->dispensing_and_manufacturing_attachment)
+                                                @foreach (json_decode($data->dispensing_and_manufacturing_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif</div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile"
+                                                    name="dispensing_and_manufacturing_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'dispensing_and_manufacturing_attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Supporting Attachment </label>
                                         <small class="text-primary">Please Attach all relevant or supporting
@@ -11943,7 +11973,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12249,6 +12279,12 @@
                                     'Does QA assure that manufacturing and testing records are reviewed before batches are released for sale?',
                                     'Is there an adequate program for handling complaints, including investigation to determine the causes, corrective actions, verification of the effectiveness of corrective actions, a target time frame for responding; trend analysis, and notification of appropriate parties including management?',
                                     'Is a log maintained for changes to documents and facility?',
+                                    'Does QA have authority to review and approve or reject?<ul>
+                                        <li>Procedures and specifications?</li>
+                                        <li>Process changes impacting on the identity, quality, and purity of the material?</li>
+                                        <li>Raw materials, packaging materials, in-process materials, and product batches?</li>
+                                        <li>New suppliers or subcontractors?</li>
+                                    </ul><br>',
                                 ];
 
                                 // $documentationQuestions = [
@@ -12282,7 +12318,7 @@
                                                             <tr>
                                                                 <td class="flex text-center">
                                                                     {{ 1 . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $ointmentPacking =
@@ -12421,8 +12457,8 @@
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="ointment_packing_attachment">
-                                                @if ($data->ointment_packing_attachment_main)
-                                                    @foreach (json_decode($data->ointment_packing_attachment_main) as $file)
+                                                @if ($data->ointment_packing_attachment)
+                                                    @foreach (json_decode($data->ointment_packing_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
@@ -12440,7 +12476,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="ointment_packing_attachment_main[]"
+                                                    name="ointment_packing_attachment[]"
                                                     oninput="addMultipleFiles(this, 'ointment_packing_attachment')"
                                                     multiple>
                                             </div>
@@ -12946,8 +12982,9 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea  name="quality_control_response_comment" >
-                    </textarea>
+                                        {{-- <textarea  name="quality_control_response_comment" ></textarea> --}}
+                                        <textarea  name="quality_control_response_comment" >@if ($checklist10 && $checklist10->{"quality_control_response_comment"}){{ $checklist10->{"quality_control_response_comment"} }}@endif</textarea>
+
                                     </div>
                                 </div>
 
@@ -13097,7 +13134,9 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="checklist_stores_response_comment" ></textarea>
+                                            {{-- <textarea  name="checklist_stores_response_comment" ></textarea> --}}
+                                            <textarea  name="checklist_stores_response_comment" >@if ($checklist11 && $checklist11->{"checklist_stores_response_comment"}){{ $checklist11->{"checklist_stores_response_comment"} }}@endif</textarea>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -13251,7 +13290,9 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="checklist_hr_response_comment" ></textarea>
+                                            {{-- <textarea  name="checklist_hr_response_comment" ></textarea> --}}
+                                            <textarea  name="checklist_hr_response_comment" >@if ($checklist12 && $checklist12->{"checklist_hr_response_comment"}){{ $checklist12->{"checklist_hr_response_comment"} }}@endif</textarea>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -13573,10 +13614,7 @@
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
                                             <textarea  name="remark_documentation_name_comment" >
-@if ($checklist13 && $checklist13->{"remark_documentation_name_comment"})
-{{ $checklist13->{"remark_documentation_name_comment"} }}
-@endif
-</textarea>
+@if ($checklist13 && $checklist13->{"remark_documentation_name_comment"}){{ $checklist13->{"remark_documentation_name_comment"} }}@endif</textarea>
 
                                         </div>
                                     </div>
@@ -13790,8 +13828,8 @@
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
-                                                                            name="response_documentation_production{{ $index + 1 }}"
-                                                                            id="response_documentation_production{{ $index + 1 }}"
+                                                                            name="response_documentation_production_{{ $index + 1 }}"
+                                                                            id="response_documentation_production_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
                                                                             </option>
@@ -13928,7 +13966,7 @@
                                     'Are any unplanned process changes (process excursions) documented in the batch record?',
                                     'If the product is blended, are there blending parameters and/or homogeneity specifications?',
                                     'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                    'Is there a preventive maintenance program for all equipment and status of it?',
+                                    'Is there a preventive maintenance program for all equipment and status of it.',
                                     'Do you have any SOP for operation of pouch filling and sealing machine?',
                                     'Have you any usage logbook for powder filling and sealing machine.',
                                 ];
@@ -14950,7 +14988,7 @@
                         '<div class="input-date ">' +
                         '<div class="calenderauditee">' +
                         '<input type="text" class="test" id="internal_start_date_' + serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" />' +
+                        '" readonly placeholder="DD-MM-YYYY" />' +
                         '<input type="date" id="internal_start_date_input_' + serialNumber +
                         '" name="auditorroles[' + serialNumber +
                         '][internal_start_date]" class="hide-input" oninput="handleDateInput(this, \'internal_start_date_' +
@@ -15032,7 +15070,7 @@
                         '<div class="calenderauditee">' +
                         '<input type="text" class="test" name="Initial[' + serialNumber +
                         '][closure_date]" id="closure_date' + serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" />' +
+                        '" readonly placeholder="DD-MM-YYYY" />' +
                         '<input type="date" id="closure_dateinput_' + serialNumber + '" name="Initial[' +
                         serialNumber +
                         '][closure_date]" class="hide-input" oninput="handleDateInput(this, \'closure_date' +
@@ -15047,7 +15085,7 @@
                         '<div class="calenderauditee">' +
                         '<input type="text" class="test" name="Initial[' + serialNumber +
                         '][Actual_date]" id="Actual_date' + serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" />' +
+                        '" readonly placeholder="DD-MM-YYYY" />' +
                         '<input type="date" id="Actual_dateinput_' + serialNumber + '" name="Initial[' +
                         serialNumber +
                         '][Actual_date]" class="hide-input" oninput="handleDateInput(this, \'Actual_date' +
