@@ -107,12 +107,12 @@
 
 
         <h1>Induction Training Quiz</h1>
-
         <form action="{{ route('check_answer_induction') }}" method="POST"> <!-- Change to your actual form action -->
             @csrf <!-- Include CSRF token for security -->
+            {{-- {{ dd($inductiontrainingid->id, $inductiontrainingid->name_employee); }} --}}
             <input type="hidden"  name="training_id" value="{{ $inductiontrainingid->id }}">
             <input type="hidden"  name="emp_id" value="{{ $inductiontrainingid->employee_id }}">
-            <input type="hidden"  name="employee_name" value="{{ Helpers::getInitiatorName($inductiontrainingid->name_employee) }}">
+            <input type="hidden"  name="employee_name" value="{{ Helpers::getEmpName($inductiontrainingid->name_employee) }}">
             <input type="hidden"  name="training_type" value="Induction Training">
             <input type="hidden"  name="attempt_count" value="{{ $inductiontrainingid->attempt_count }}">
 
