@@ -275,6 +275,8 @@ Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabInciden
 Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
 Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
+Route::get('/audit_program/{id}',[AuditProgramController::class,'audit_trail_filter_audit_program'])->name('audit_program_filter');
+
 
 //---------------------------Market Complaint  -------------------------//
 

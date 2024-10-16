@@ -782,12 +782,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Audit Category</label>
-                                        <select name="audit_type"
+                                        <select name="Audit_Category"
                                             onchange="otherController(this.value, 'others', 'type_of_audit_req')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="R&D">Scheduled Internal Audit</option>
-                                            <option value="GLP">Unscheduled Internal Audit</option>
-                                            <option value="GCP">Surprise Internal Audit</option>
+                                            <option value="1">Internal Audit/Self Inspection</option>
+                                            <option value="2">Supplier Audit</option>
+                                            <option value="3">Regulatory Audit</option>
+                                            <option value="4">Consultant Audit</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -923,7 +925,7 @@
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
                                                 '<option value="">--Select--</option>' +
-                                                '<option value="Auditee">Lead Auditor</option>' +
+                                                '<option value="Lead Auditor">Lead Auditor</option>' +
                                                 '<option value="Auditor">Auditor</option>' +
                                                 '</select>' +
                                                 '</td>' +

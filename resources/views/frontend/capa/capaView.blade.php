@@ -670,7 +670,21 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <div class="col-12">
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                                @if($data->parent_record_number)
+                                                <input readonly type="text" name="parent_record_number"
+                                                    value="{{ $data->parent_record_number }}">
+                                                @else
+                                                <input type="text" name="parent_record_number_edit"
+                                                value="{{ $data->parent_record_number_edit }}">
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="related_records">Reference Records</label>
 
@@ -709,7 +723,7 @@
                                                         @endif
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-12">
                                             <div class="group-input">
