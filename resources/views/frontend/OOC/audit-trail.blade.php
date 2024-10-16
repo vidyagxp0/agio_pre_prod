@@ -263,7 +263,7 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ Helpers::getdateFormat($review->reviewer_comment_on) }}</td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -316,7 +316,7 @@
                                             <label for="Reviewer Completed on">Reviewer Completed On</label>
                                             <input disabled type="text" class="form-control" name="reviewer_completed_on"
                                                 id="reviewer_completed_on"
-                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                value="{{ $auditCollect ? Helpers::getdateFormat($auditCollect->reviewer_comment_on) : '' }}">
                                         </div>
                                         <input type="hidden" id="type" name="type" value="OutOfCalibration">
                                     </div>

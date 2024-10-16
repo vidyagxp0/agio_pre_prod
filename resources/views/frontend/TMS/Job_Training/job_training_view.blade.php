@@ -329,7 +329,7 @@
                                     <div class="group-input">
                                         <label for="start_date">Start Date</label>
                                         <input id="start_date" type="date" name="start_date"
-                                            value="{{ $jobTraining->start_date }}">
+                                            value="{{ $jobTraining->start_date }}" onchange="setMinEndDate()">
                                     </div>
                                 </div>
 
@@ -337,9 +337,21 @@
                                     <div class="group-input">
                                         <label for="end_date">End Date</label>
                                         <input id="end_date" type="date" name="end_date"
-                                            value="{{ $jobTraining->end_date }}">
+                                            value="{{ $jobTraining->end_date }}" onchange="setMaxStartDate()">
                                     </div>
                                 </div>
+
+                            <script>
+                                function setMinEndDate() {
+                                    var startDate = document.getElementById('start_date').value;
+                                    document.getElementById('end_date').min = startDate; 
+                                }
+
+                                function setMaxStartDate() {
+                                    var endDate = document.getElementById('end_date').value;
+                                    document.getElementById('start_date').max = endDate;
+                                }
+                            </script>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
