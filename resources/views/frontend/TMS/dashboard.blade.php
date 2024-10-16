@@ -142,7 +142,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($employees as $index => $employee)
+                        @foreach ($employees->sortByDesc('id') as $index => $employee)
                         <tr>
                         <td>{{ $index + 1 }}</td>                            
                         <td>
@@ -346,9 +346,13 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                 @endif
                                         </td>
                                         <td>
-                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_training_certificate/{{$employee->id}}';">
-                                            <i class="fa fa-certificate"></i>
-                                        </button>
+                                            @if($temp->stage >=6)
+                                            <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" 
+                                                    onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
+                                                <i class="fa fa-certificate"></i>
+                                            </button>
+                                        @endif 
+                                        
 
 
 

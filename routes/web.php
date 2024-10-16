@@ -64,6 +64,17 @@ use Maatwebsite\Excel\Facades\Excel;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//!---------------- EMP login  ---------------------------//
+Route::group(['middleware' => ['auth:employee']], function () {
+    // All employee authenticated routes here
+    Route::resource('TMS', TMSController::class);
+    Route::get('/logout-employee', [UserLoginController::class, 'logoutEmployee'])->name('logout-employee');
+    Route::get('/tms-training', [TMSController::class, 'TMSTraining'])->name('tms.training');
+});
+
+//!---------------- EMP login  ---------------------------//
+
+Route::resource('TMS', TMSController::class);
 
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::get('/login', [UserLoginController::class, 'userlogin'])->name('login');
@@ -132,7 +143,6 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
    
 
-    Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
     Route::get('training/{id}/', [TMSController::class, 'training']);
     Route::get('trainingQuestion/{id}/', [TMSController::class, 'trainingQuestion']);

@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\TotalLogin;
 use App\Models\User;
+use App\Models\Employee;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+
+
+
+
+
 
 class UserLoginController extends Controller
 {
@@ -107,6 +114,12 @@ class UserLoginController extends Controller
        
         // return redirect('rcms/rcms');
         return redirect('/login');
+    }
+    public function logoutEmployee(Request $request)
+    {
+        Auth::guard('employee')->logout();
+       
+        return redirect('/rcms/employee/login');
     }
 
     public function rcmscheck(Request $request)
@@ -303,4 +316,40 @@ class UserLoginController extends Controller
             return response()->json('Email is required');
         }
     }
+
+    public function employeeLoginForm()
+    {
+        return view('frontend.employee-login');
+    }
+
+    
+
+
+public function employeeLogin(Request $request)
+{
+    $request->validate([
+        'full_employee_id' => 'required',
+        'password' => 'required',
+    ]);
+
+    $employee = Employee::where('full_employee_id', $request->full_employee_id)->first();
+
+    if (!$employee) {
+        toastr()->error('Employee code not registered.');
+        return redirect()->back();
+    }
+
+    if (Hash::check($request->password, $employee->password)) {
+        Auth::guard('employee')->login($employee);
+
+        // return redirect('TMS');
+        return redirect()->route('tms.training');
+    }
+
+    toastr()->error('Login failed. Please check your credentials.');
+    return redirect()->back();
 }
+
+}
+
+
