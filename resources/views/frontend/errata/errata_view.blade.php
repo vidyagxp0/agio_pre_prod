@@ -311,7 +311,7 @@
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="initiator_by"
-                                            value="{{ Auth::user()->name }}"
+                                            value="{{ Helpers::getInitiatorName($showdata->initiator_id) }}"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>

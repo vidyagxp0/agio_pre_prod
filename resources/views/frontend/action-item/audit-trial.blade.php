@@ -170,11 +170,11 @@
 
             <body>
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">                   
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
-                        View
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                         Review
+                    </button>    
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                        View
                     </button>
                     <a  class="button_theme1 text-white" href="{{ route('actionItem.update', $document->id) }}"> Back </a>
                     <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a> 

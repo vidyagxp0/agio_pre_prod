@@ -195,7 +195,7 @@ class CapaController extends Controller
         $capa->Bd_Person = $request->Bd_Person;
         $capa->Production_Person = $request->Production_Person;
         //    $capa->additional_attachments= json_encode($request->additional_attachments);
-        $capa->capa_related_record = implode(',', $request->capa_related_record);
+        // $capa->capa_related_record = implode(',', $request->capa_related_record);
 
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
@@ -323,7 +323,7 @@ class CapaController extends Controller
             }
             $capa->qah_cq_attachment = json_encode($files);
         }
-
+        $capa->parent_record_number = $request->parent_record_number; 
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->hod_remarks = $request->hod_remarks;
@@ -1625,9 +1625,10 @@ class CapaController extends Controller
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-        if ($capa->stage == 1) {
-            $capa->capa_related_record =  implode(',', $request->capa_related_record);
-        }        // $capa->reference_record = $request->reference_record;
+        // if ($capa->stage == 1) {
+        //     $capa->capa_related_record =  implode(',', $request->capa_related_record);
+        // }        // $capa->reference_record = $request->reference_record;
+        $capa->parent_record_number_edit = $request->parent_record_number_edit; 
         $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
@@ -3175,15 +3176,15 @@ class CapaController extends Controller
 
         if (!empty($request->material_name) && is_array($request->material_name)) {
             foreach ($request->material_name as $index => $materialName) {
-                // Retrieve previous details for comparison
+                // Safely unserialize and use fallback to empty array if null
                 $previousDetails = [
-                    'material_name' => unserialize($data1->material_name)[$index] ?? null,
-                    'material_batch_no' => unserialize($data1->material_batch_no)[$index] ?? null,
-                    'material_mfg_date' => unserialize($data1->material_mfg_date)[$index] ?? null,
-                    'material_expiry_date' => unserialize($data1->material_expiry_date)[$index] ?? null,
-                    'material_batch_desposition' => unserialize($data1->material_batch_desposition)[$index] ?? null,
-                    'material_remark' => unserialize($data1->material_remark)[$index] ?? null,
-                    'material_batch_status' => unserialize($data1->material_batch_status)[$index] ?? null
+                    'material_name' => !is_null($data1->material_name) ? unserialize($data1->material_name)[$index] ?? null : null,
+                    'material_batch_no' => !is_null($data1->material_batch_no) ? unserialize($data1->material_batch_no)[$index] ?? null : null,
+                    'material_mfg_date' => !is_null($data1->material_mfg_date) ? unserialize($data1->material_mfg_date)[$index] ?? null : null,
+                    'material_expiry_date' => !is_null($data1->material_expiry_date) ? unserialize($data1->material_expiry_date)[$index] ?? null : null,
+                    'material_batch_desposition' => !is_null($data1->material_batch_desposition) ? unserialize($data1->material_batch_desposition)[$index] ?? null : null,
+                    'material_remark' => !is_null($data1->material_remark) ? unserialize($data1->material_remark)[$index] ?? null : null,
+                    'material_batch_status' => !is_null($data1->material_batch_status) ? unserialize($data1->material_batch_status)[$index] ?? null : null
                 ];
 
                 // Current fields values
@@ -3225,21 +3226,12 @@ class CapaController extends Controller
                             $history->change_to = "Not Applicable";
                             $history->change_from = $data1->status;
                             $history->action_name = "Update";
-                            // Set action name based on whether it's an update or a new entry
-                            // if ($previousValue !== null) {
-                            //     // Log as "Update" if previous value exists and is not null
-                            //     $history->action_name = "Update";
-                            // } else {
-                            //     // If there's no previous value, log as "New"
-                            //     $history->action_name = "New";
-                            // }
                             $history->save();
                         }
                     }
                 }
             }
         }
-
 
 
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
@@ -3480,7 +3472,7 @@ class CapaController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Remarks is yet to be filled!',
+                        'message' => 'HOD Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -5003,6 +4995,8 @@ class CapaController extends Controller
             $record_number = $record;
             $data = Capa::find($id);
             $extension_record = Helpers::getDivisionName($data->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1;
             $relatedRecords = Helpers::getAllRelatedRecords();
             return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record'));
         }
