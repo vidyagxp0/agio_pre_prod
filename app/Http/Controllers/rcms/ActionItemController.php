@@ -1879,7 +1879,7 @@ public function actionmoreinfo(Request $request, $id)
 }
 public function actionItemAuditTrialShow($id)
 {
-    $audit = ActionItemHistory::where('cc_id', $id)->orderByDESC('id')->paginate();
+    $audit = ActionItemHistory::where('cc_id', $id)->orderByDESC('id')->paginate(5);
     $today = Carbon::now()->format('d-m-y');
     $document = ActionItem::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
