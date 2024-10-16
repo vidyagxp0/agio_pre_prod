@@ -5393,25 +5393,25 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Initial Review Comments')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Initial Review Comments';
-            $history->previous = $lastDocument->qa_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA/CQA Initial Review Comments';
+        //     $history->previous = $lastDocument->qa_comments;
+        //     $history->current = $request->qa_review_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
 
         // if ($lastDocument->qa_head != $request->qa_head) {
@@ -12895,7 +12895,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $doc->created_at = $datas->created_at;
             }
         }
-        $data = RcmDocHistory::where('cc_id', $doc->id)->orderByDesc('id')->get();
+        $data = RcmDocHistory::where('cc_id', $doc->id)->orderBy('id')->get();
+        
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
@@ -12907,6 +12908,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 'isRemoteEnabled' => true,
                 'isPhpEnabled' => true,
             ]);
+
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();
