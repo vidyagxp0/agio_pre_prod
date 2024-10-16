@@ -1002,7 +1002,7 @@
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
                                                 <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option @if ($data->Audit_Category == '1') selected @endif
                                                          value="1">Internal Audit/Self Inspection</option>
                                                     <option  @if ($data->Audit_Category == '2') selected @endif
@@ -1106,7 +1106,7 @@
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="inv_attachment1">
+                                                    <div disabled class="file-attachment-list" id="inv_attachment">
                                                         @if ($data->inv_attachment)
                                                             @foreach (json_decode($data->inv_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -1129,7 +1129,9 @@
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="myfile" name="inv_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'inv_attachment1')" multiple>
+                                                            oninput="addMultipleFiles(this, '
+                                                            
+                                                            ')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1951,12 +1953,12 @@
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="audit_start_date" readonly
-                                                        placeholder="DD-MMM-YYYY"
+                                                        placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_start_date_checkdate"
                                                         name="audit_start_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                 </div>
@@ -1972,7 +1974,7 @@
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_end_date_checkdate"
                                                         name="audit_end_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                 </div>
@@ -4001,13 +4003,19 @@
                                                                 </div>
                                                             </td>
 
-                                                            <td style="remark_19">
+                                                            {{-- <td style="remark_19">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_19 }}</textarea>
+                                                                    <textarea name="remark_19" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_19 }}</textarea>
                                                                 </div>
 
 
+                                                            </td> --}}
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="remark_19" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_19 }}</textarea>
+                                                                </div>
                                                             </td>
 
                                                         </tr>
@@ -5389,9 +5397,15 @@
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
-                                        <label for="Description Deviation">Final Comments</label>
+                                        <label for="Description Deviation">Final Comments1</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                         <textarea   name="Description_Deviation">{{ $data->Description_Deviation }} </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Comments">QA Comments</label>
+                                        <textarea name="Description_Deviation">{{ $data->Description_Deviation}}</textarea>
                                     </div>
                                 </div>
 
@@ -13306,7 +13320,7 @@
                                 $questions_visual_inspection = [
                                     'Is status labels displayed on all equipments?',
                                     'Equipment cleanliness, check few equipments.',
-                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – \additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
                                     'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
                                     'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',

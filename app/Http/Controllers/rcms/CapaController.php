@@ -195,7 +195,7 @@ class CapaController extends Controller
         $capa->Bd_Person = $request->Bd_Person;
         $capa->Production_Person = $request->Production_Person;
         //    $capa->additional_attachments= json_encode($request->additional_attachments);
-        $capa->capa_related_record = implode(',', $request->capa_related_record);
+        // $capa->capa_related_record = implode(',', $request->capa_related_record);
 
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
@@ -323,7 +323,7 @@ class CapaController extends Controller
             }
             $capa->qah_cq_attachment = json_encode($files);
         }
-
+        $capa->parent_record_number = $request->parent_record_number; 
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->hod_remarks = $request->hod_remarks;
@@ -1625,9 +1625,10 @@ class CapaController extends Controller
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-        if ($capa->stage == 1) {
-            $capa->capa_related_record =  implode(',', $request->capa_related_record);
-        }        // $capa->reference_record = $request->reference_record;
+        // if ($capa->stage == 1) {
+        //     $capa->capa_related_record =  implode(',', $request->capa_related_record);
+        // }        // $capa->reference_record = $request->reference_record;
+        $capa->parent_record_number_edit = $request->parent_record_number_edit; 
         $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
