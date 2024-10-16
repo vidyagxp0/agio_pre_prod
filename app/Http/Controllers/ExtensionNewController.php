@@ -139,6 +139,7 @@ class ExtensionNewController extends Controller
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->QAapprover_remarks = $request->QAapprover_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        $extensionNew->data_number = $request->data_number;
 
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -220,6 +221,7 @@ class ExtensionNewController extends Controller
         // dd($existingRecord);
         if($existingRecord){
             $extensionNew->count = intval(str_replace('number',1,$existingRecord->count)) + 1;
+            // dd($existingRecord->count);
         } else {
             $extensionNew->count = $count;
         }
@@ -1423,7 +1425,7 @@ class ExtensionNewController extends Controller
                     return back();
                 }
                 if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3)
-                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number')
+                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number' || $extensionNew->data_number == 3 )
                 ){
                 if ($extensionNew->stage == 2) {
                     $extensionNew->stage = "5";

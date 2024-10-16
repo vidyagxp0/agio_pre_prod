@@ -261,7 +261,7 @@
                                 <div class="">In Review</div>
                             @endif
 
-                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
+                            {{-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||  ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
                                 <div class="active">In Approved</div>
                             @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
                                 <div style="display: none" class="active">In Approved</div>
@@ -270,7 +270,20 @@
                             @else
                                 <div class="">In Approved</div>
                             @endif
-                            <div style="display: none" class=""> In CQA Approval</div>
+                            <div style="display: none" class=""> In CQA Approval</div> --}}
+                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
+                                <div class="active">In Approved</div>
+                            @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
+                                <div style="display: none" class="active">In Approved</div>
+                            @elseif($extensionNew->stage == 5 || $extensionNew->count == "number" || $extensionNew->parent_type == 'number' || $extensionNew->count == 3)
+                                <div class="" style="display: none;">In Approved</div>
+                            @else
+                                <div class="">In Approved</div>
+                            @endif
+                            {{-- @if ($extensionNew->parent_type == 'number'|| $extensionNew->count == 3) --}}
+                            <div class="" style="display: none;"> In CQA Approval</div>
+                            {{-- @endif --}}
+
 
                             @if ($extensionNew->stage == 4)
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
@@ -284,13 +297,14 @@
                             @if ( $extensionNew->stage_hide == "stage-6")
                             <div class="active"> In CQA Approval</div>
                             @endif
-                            @if ($extensionNew->stage == 5)
+                            @if ($extensionNew->stage == 5 )
                                 <div class="bg-danger" style="display: none" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
                                 <div class="active" style="border-radius: 0px 20px 20px 0px;"> In CQA Approval</div>
                             @endif
                             @if ($extensionNew->stage >= 6)
                                 <div class="bg-danger" style="display: none">Closed - Reject</div>
                                 <div style="display: none" class=""> In CQA Approval</div>
+
 
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @endif
@@ -302,18 +316,21 @@
             </div>
             <!-- Tab links -->
             <div class="cctab">
-
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review </button>
-                @if( $extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3 || $extensionNew->stage == 4 || $extensionNew->stage == 6)
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
+
+                @if($extensionNew->stage == 3 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
-                @if($extensionNew->stage == 5 || $extensionNew->stage == 6)
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
-                    @endif
+
+                @if($extensionNew->stage == 5 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6"))
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
+                @endif
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
+
+
             <form action="{{ route('extension_new.update', $extensionNew->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -416,9 +433,9 @@
                                             @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
                                             <select name="count" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
                                                 <option value="">--Select Extension Number--</option>
-                                                <option value="number1" @if ($extensionNew->count == 'number1') selected @endif>1</option>
-                                                <option value="number2" @if ($extensionNew->count == 'number2') selected @endif>2</option>
-                                                <option value="number" @if ($extensionNew->count == 'number') selected @endif>3</option>
+                                                <option value="number1" @if ($extensionNew->count == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
+                                                <option value="number2" @if ($extensionNew->count == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
+                                                <option value="number" @if ($extensionNew->count == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
                                             @else
                                                 <select name="count" id="" disabled {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
@@ -537,6 +554,7 @@
                                         @endif
                                     </div>
                                 </div>
+
 
 
 
@@ -860,7 +878,7 @@
                     </div>
                 </div>
                 <!-- Approver-->
-                @if($extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3 || $extensionNew->stage == 4 || $extensionNew->stage == 6)
+                @if( $extensionNew->stage == 3 || $extensionNew->stage == 6)
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -915,7 +933,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -982,7 +1000,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 ||  $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
