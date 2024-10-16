@@ -4954,6 +4954,27 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Initial Review';
+
+                    //$list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
+          //new Monika
+
+
                     // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
                     //     $history->previous = "";
                     // } else {
@@ -5041,6 +5062,27 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
+                //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+
+          //new Monika
+
+
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -5115,6 +5157,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
+
+                //$list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+                //new Monika
+
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -5170,6 +5232,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
+                //$list = Helpers::getQAHeadUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+               //new Monika
+
+
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -5219,6 +5301,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage = 'More Info Required';
                 $history->change_to =   "HOD Final Review";
                 $history->change_from = $lastDocument->status;
+
+                //$list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+               //new Monika
+
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -5276,6 +5378,27 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QA Final Review";
                 $history->change_from = $lastDocument->status;
+
+                //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+
+               //new Monika
+
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -5333,6 +5456,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QAH Closure Approval";
                 $history->change_from = $lastDocument->status;
+
+                //$list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
+                //foreach ($list as $u) {
+                //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                //        $email = Helpers::getUserEmail($u->user_id);
+                //            if ($email !== null) {
+                //            Mail::send(
+                //                'mail.view-mail',
+                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                function ($message) use ($email, $incident) {
+                //                    $message->to($email)
+                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                }
+                //            );
+                //        }
+                //    // }
+                //}
+
+                //new Monika
+
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -5422,6 +5565,25 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $history->stage_id = $incident->stage;
             $history->status = $incident->status;
             $history->save();
+
+            //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+            //foreach ($list as $u) {
+            //    // if($u->q_m_s_divisions_id == $incident->division_id){
+            //        $email = Helpers::getUserEmail($u->user_id);
+            //            if ($email !== null) {
+            //            Mail::send(
+            //                'mail.view-mail',
+            //                ['data' => $incident, 'site' => "view", 'history' => "Cancel", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+            //                function ($message) use ($email, $incident) {
+            //                    $message->to($email)
+            //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+            //                }
+            //            );
+            //        }
+            //    // }
+            //}
+
+          //new Monika
 
             // $list = Helpers::getInitiatorUserList();
             // foreach ($list as $u) {
@@ -5845,22 +6007,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                                }
-                            );
-                        }
-                    // }
-                }
+
+                    //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
                     $incident->update();
                     return back();
                 }
@@ -5917,23 +6081,23 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
                     $history->save();
-               
-                       $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
+
+                //       $list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
+                //        foreach ($list as $u) {
+                //            // if($u->q_m_s_divisions_id == $incident->division_id){
+                //                $email = Helpers::getUserEmail($u->user_id);
+                //                    if ($email !== null) {
+                //                    Mail::send(
+                //                        'mail.view-mail',
+                //                        ['data' => $incident, 'site' => "view", 'history' => "HOD Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                //                        function ($message) use ($email, $incident) {
+                //                            $message->to($email)
+                //                            ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete");
+                //                        }
+                //                    );
+                //                }
+                //    // }
+                //}
 
 
                     $incident->update();
@@ -5996,23 +6160,23 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
-                    $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $incident->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $incident) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+
+                    //$list = Helpers::getQAHeadUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => " QA Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Initial Review Complete");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -6088,22 +6252,22 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->save();
 
 
-                    $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $incident->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $incident) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/Designee Approval Complete");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                    //$list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "QAH/Designee Approval Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/Designee Approval Complete");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -6275,22 +6439,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $incident->division_id){
-                                $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $incident) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required");
-                                        }
-                                    );
-                                }
-                            // }
-                        }
+
+                        //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                        //foreach ($list as $u) {
+                        //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                        //        $email = Helpers::getUserEmail($u->user_id);
+                        //            if ($email !== null) {
+                        //            Mail::send(
+                        //                'mail.view-mail',
+                        //                ['data' => $incident, 'site' => "view", 'history' => " Pending Initiator Update Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                        //                function ($message) use ($email, $incident) {
+                        //                    $message->to($email)
+                        //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  Pending Initiator Update Complete");
+                        //                }
+                        //            );
+                        //        }
+                        //    // }
+                        //}
+
                         $incident->update();
                     }
                     toastr()->success('Document Sent');
@@ -6350,22 +6516,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $incident->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $incident) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+
+                    //$list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => " HOD Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  HOD Final Review Complete");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -6450,22 +6618,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $incident->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $incident) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+
+                    //$list = Helpers::getQAHeadUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "QA Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -6640,22 +6810,58 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $incident->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $incident) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+
+                    //$list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "Approved", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
+                    //$list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "Approved", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
+                    //$list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
+                    //foreach ($list as $u) {
+                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
+                    //        $email = Helpers::getUserEmail($u->user_id);
+                    //            if ($email !== null) {
+                    //            Mail::send(
+                    //                'mail.view-mail',
+                    //                ['data' => $incident, 'site' => "view", 'history' => "Approved", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                function ($message) use ($email, $incident) {
+                    //                    $message->to($email)
+                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                    //                }
+                    //            );
+                    //        }
+                    //    // }
+                    //}
+
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -6749,17 +6955,18 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'HOD Review';
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
@@ -6819,17 +7026,18 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->change_from = $lastDocument->status;
 
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
@@ -6889,22 +7097,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
                     // }
                 }
+
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -6939,22 +7149,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getQAHeadUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/Designee Approval Complete");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
                     // }
                 }
+
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -6988,22 +7200,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
                     // }
                 }
+
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -7035,22 +7249,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $list = Helpers::getCftUserList($incident->division_id); // Notify CFT Person
+
+                $list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $incident->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete");
+                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
                                 }
                             );
                         }
                     // }
                 }
+
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -7060,7 +7276,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = $incident->status;
                 $history->save();
-                toastr()->success('Document Sent');             
+                toastr()->success('Document Sent');
                 return back();
             }
 

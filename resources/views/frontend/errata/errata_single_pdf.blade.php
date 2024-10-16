@@ -784,7 +784,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Date Of Correction of documen</th>
+                        <th class="w-20">Date Of Correction of document</th>
                         <td class="w-80">
                             @if ($data->Date_and_time_of_correction)
                                 {{ $data->Date_and_time_of_correction }}

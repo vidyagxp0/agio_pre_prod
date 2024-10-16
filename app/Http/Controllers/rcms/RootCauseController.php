@@ -3244,6 +3244,7 @@ class RootCauseController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
+       
         return view('frontend.root-cause-analysis.root_cause_analysisView', compact(
             'data'
         ));
@@ -3310,11 +3311,14 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+               
+
                 // $list = Helpers::getHodUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "Acknowledge", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3323,10 +3327,15 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
+
+             
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3383,12 +3392,13 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+                
                 // $list = Helpers::getQAUserList($root->division_id);
-
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3397,16 +3407,18 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
-                //     $list = Helpers::getCQAUsersList($root->division_id);
-
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                //         }
+                //     // }
+                // }
+                // $list = Helpers::getCQAUsersList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3415,9 +3427,13 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
+
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3480,22 +3496,27 @@ class RootCauseController extends Controller
                 $history->save();
 
 
+               
                 // $list = Helpers::getInitiatorUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
 
                 $root->update();
@@ -3553,11 +3574,13 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+              
                 // $list = Helpers::getHodUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "Submit", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3566,10 +3589,12 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3695,11 +3720,13 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+               
                 // $list = Helpers::getQAUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3708,15 +3735,20 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
-                //     $list = Helpers::getCQAUsersList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                
+                // $list = Helpers::getCQAUsersList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3725,9 +3757,12 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3785,11 +3820,15 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+              
+
+
                 // $list = Helpers::getQAHeadUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "Final QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3798,15 +3837,20 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final QA/CQA Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
+                
                 // $list = Helpers::getCQAHeadUsersList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "Final QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3815,10 +3859,12 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final QA/CQA Review Complete Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
+                //         }
+                //     // }
+                // }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3878,11 +3924,15 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
+              
+
+
                 // $list = Helpers::getQAUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3891,15 +3941,20 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
-                //     $list = Helpers::getInitiatorUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                
+                // $list = Helpers::getInitiatorUserList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3908,15 +3963,19 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
-                //     $list = Helpers::getHodUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // $list = Helpers::getHodUserList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
                 //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
@@ -3925,10 +3984,12 @@ class RootCauseController extends Controller
                 //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3982,40 +4043,8 @@ class RootCauseController extends Controller
             }
             $history->save();
 
-            // $list = Helpers::getQAUserList($root->division_id);
-            //         foreach ($list as $u) {
-            //             // if($u->q_m_s_divisions_id == $root->division_id){
-            //                 $email = Helpers::getUserEmail($u->user_id);
-            //                     if ($email !== null) {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                         ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                         function ($message) use ($email, $root) {
-            //                             $message->to($email)
-            //                             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-            //                         }
-            //                     );
-            //                 }
-            //             // }
-            //         }
-
-            // $list = Helpers::getHodUserList($root->division_id);
-            //         foreach ($list as $u) {
-            //             // if($u->q_m_s_divisions_id == $root->division_id){
-            //                 $email = Helpers::getUserEmail($u->user_id);
-            //                     if ($email !== null) {
-            //                     Mail::send(
-            //                         'mail.view-mail',
-            //                         ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                         function ($message) use ($email, $root) {
-            //                             $message->to($email)
-            //                             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-            //                         }
-            //                     );
-            //                 }
-            //             // }
-            //         }
-
+          
+          
 
             $root->update();
             $history = new RootCauseAnalysisHistory();
@@ -4079,23 +4108,30 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+                
+
+
                 // $list = Helpers::getInitiatorUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
+                //         }
+                //     // }
+                // }
+               
 
 
                 $root->update();
@@ -4144,25 +4180,31 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+                
+
                 // $list = Helpers::getHodUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
+               
 
-
-
+              
                 $root->update();
 
 
@@ -4206,41 +4248,50 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+               
+              
+
+                // $list = Helpers::getCQAUsersList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+    
                 // $list = Helpers::getQAUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
-                //     $list = Helpers::getCQAUsersList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $root) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                //                     }
-                //                 );
-                //             }
-                //         // }
-                //     }
-
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
 
@@ -4284,24 +4335,28 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+                
+
                 // $list = Helpers::getInitiatorUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
 
@@ -4345,24 +4400,28 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+              
+
                 // $list = Helpers::getHodUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
 
@@ -4405,41 +4464,51 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
+             
+
+
+
                 // $list = Helpers::getQAUserList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // foreach ($list as $u) {
+             
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
+                //         }
+                //     // }
+                // }
 
-                //     $list = Helpers::getCQAUsersList($root->division_id);
-                //     foreach ($list as $u) {
-                //         // if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //                 if ($email !== null) {
+                // $list = Helpers::getCQAUsersList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $root) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
                 //                     }
                 //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //         // }
-                //     }
-
-
+                //         }
+                //     // }
+                // }
 
                 $root->update();
 

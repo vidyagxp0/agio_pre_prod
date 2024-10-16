@@ -346,19 +346,19 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                 @endif
                                         </td>
                                         <td>
+                                            {{-- @if($temp->stage >=6)
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_training_certificate/{{$employee->id}}';">
+                                            <i class="fa fa-certificate"></i>
+                                        </button>
+                                            @endif --}}
                                             @if($temp->stage >=6)
-                                            <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" 
-                                                    onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
-                                                <i class="fa fa-certificate"></i>
-                                            </button>
-                                        @endif 
-                                        
-
-
-
+                                                <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" 
+                                                        onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
+                                                    <i class="fa fa-certificate"></i>
+                                                </button>
+                                            @endif 
                                         </td>
                                         
-                                    
                                     </tr>
                                 @endif
                                 @endforeach
@@ -421,6 +421,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     <th>My Training Completion date</th>
                                     <th>Preview SOP</th>
                                     <th>Quiz</th>
+                                    <th>Certificate</th>
                                 </tr>
                             </thead>
                             <tbody id="searchTable">
@@ -470,6 +471,20 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             Attempt Quiz
                                         </button> --}}
                                     </td>
+                                    <td>
+                                    @if($temp->stage >=4)
+
+                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
+                                                onclick="window.location.href='/job_training_certificate/{{$temp->id}}';"> 
+                                                <i class="fa fa-certificate"></i>
+                                            </button>
+                                        </td>
+                                    @endif    
+                                    <!-- @foreach ($jobTrainings as $jobTraining) -->
+                                  
+                                        <!-- @endforeach -->
+                                           
+ 
                                                              
                                 </tr>
                                 @endif

@@ -25,6 +25,15 @@
         }
     </style>
 
+
+        @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        @error('emp_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -430,7 +439,12 @@
                                         }
                                     });
                                 </script>
-
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter employee email" required>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12 sub-head">
@@ -451,7 +465,7 @@
                                 <!-- </select>
             </div>
         </div> -->
-                                <div class="col-lg-6">
+                               {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Country">Country</label>
                                         <select name="country" class="form-select country"
@@ -477,7 +491,101 @@
                                             <option selected>Select City</option>
                                         </select>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Country">Country</label>
+                                        <select name="country" class="form-select country" aria-label="Default select example" disabled>
+                                            <option value="India" data-code="IN">India</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="City">State</label>
+                                        <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
+                                            <option value="">Select State/District</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="State/District">City</label>
+                                        <select name="city" class="form-select city" aria-label="Default select example">
+                                            <option value="">Select City</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    var config = {
+                                        cUrl: 'https://api.countrystatecity.in/v1',
+                                        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+                                    };
+                                
+                                    var countrySelect = document.querySelector('.country'),
+                                        stateSelect = document.querySelector('.state'),
+                                        citySelect = document.querySelector('.city');
+                                
+                                    function loadStates() {
+                                        stateSelect.disabled = false;
+                                        stateSelect.innerHTML = '<option value="">Select State</option>';
+                                
+                                        const selectedCountryCode = 'IN'; // Fixed country code for India
+                                
+                                        $.ajax({
+                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                            headers: {
+                                                "X-CSCAPI-KEY": config.ckey
+                                            },
+                                            success: function(data) {
+                                                data.forEach(state => {
+                                                    const option = document.createElement('option');
+                                                    option.value = state.name;
+                                                    option.textContent = state.name;
+                                                    option.dataset.code = state.iso2;
+                                                    stateSelect.appendChild(option);
+                                                });
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error loading states:', error);
+                                            }
+                                        });
+                                    }
+                                
+                                    function loadCities() {
+                                        citySelect.disabled = false;
+                                        citySelect.innerHTML = '<option value="">Select City</option>';
+                                
+                                        const selectedCountryCode = 'IN'; // Fixed country code for India
+                                        const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
+                                
+                                        $.ajax({
+                                            url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                            headers: {
+                                                "X-CSCAPI-KEY": config.ckey
+                                            },
+                                            success: function(data) {
+                                                data.forEach(city => {
+                                                    const option = document.createElement('option');
+                                                    option.value = city.name;
+                                                    option.textContent = city.name;
+                                                    citySelect.appendChild(option);
+                                                });
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error loading cities:', error);
+                                            }
+                                        });
+                                    }
+                                
+                                    $(document).ready(function() {
+                                        loadStates(); // Directly load states for India on page load
+                                    });
+                                </script>
+                                
+    
 
                                 <!-- <script>
                                     var config = {
@@ -542,7 +650,7 @@
                                         loadCountries();
                                     });
                                 </script> -->
-                                <script>
+                               {{-- <script>
                                     var config = {
                                         cUrl: 'https://api.countrystatecity.in/v1',
                                         ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
@@ -611,7 +719,7 @@
                                     $(document).ready(function() {
                                         loadStates(); // Automatically load states for India
                                     });
-                                </script>
+                                </script> --}}
 
                                 <!--
         <div class="col-lg-6">
