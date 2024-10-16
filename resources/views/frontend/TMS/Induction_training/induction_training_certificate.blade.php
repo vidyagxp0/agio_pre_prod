@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+      <!-- Print Button -->
+      <div class="print-button-container text-center">
+        <button onclick="window.print();" class="print-button">Print Certificate</button>
+    </div>
+    
     <div class="pm-certificate-container">
         <div class="outer-border"></div>
         <div class="inner-border"></div>
@@ -214,5 +219,29 @@ body {
     width: 100%;
     margin-top: 20px;
 }
+@media print {
+    body {
+        background: #ccc; /* Maintain body background color */
+    }
+
+    .pm-certificate-container {
+        background-color: #618597 !important; /* Ensures container color is printed */
+        box-shadow: none; /* Remove shadows that may not print well */
+    }
+
+    .outer-border, .inner-border {
+        border-color: #fff !important; /* Make sure borders are printed */
+    }
+
+    /* Ensure all text and background colors print */
+    .bold, .cursive, .sans, .underline, .text-center, .block, .pm-empty-space,
+    .pm-certificate-border, .pm-certificate-logos, .pm-certificate-header,
+    .pm-certificate-body, .pm-certificate-footer, .logo {
+        color-adjust: exact; /* Force colors to print as intended */
+        -webkit-print-color-adjust: exact; /* For WebKit browsers */
+        print-color-adjust: exact; /* Ensures colors are not lost */
+    }
+}
+
 
 </style>

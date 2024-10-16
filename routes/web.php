@@ -68,8 +68,12 @@ use Maatwebsite\Excel\Facades\Excel;
 Route::group(['middleware' => ['auth:employee']], function () {
     // All employee authenticated routes here
     Route::resource('TMS', TMSController::class);
+Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
+
     Route::get('/logout-employee', [UserLoginController::class, 'logoutEmployee'])->name('logout-employee');
     Route::get('/tms-training', [TMSController::class, 'TMSTraining'])->name('tms.training');
+    Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
+
 });
 
 //!---------------- EMP login  ---------------------------//

@@ -319,7 +319,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             }
                                         }
                                     }
-                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
+                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' =>  'PS01', 'result' => 'Pass'])->latest()->first();
                                     // Join the non-null start dates into a comma-separated string
                                     $commaSeparatedStartDates = implode(', ', $dateValue);
                                 @endphp
@@ -442,7 +442,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         }
                                         // Join the non-null start dates into a comma-separated string
                                         $commaSeparatedStartDates = implode(', ', $dateValue);
-                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
+                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PS01', 'result' => 'Pass'])->latest()->first();
                                         
                                 @endphp
                                 @if($temp->stage >= 3)

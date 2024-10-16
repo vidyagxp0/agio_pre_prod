@@ -331,14 +331,15 @@ public function employeeLogin(Request $request)
         'full_employee_id' => 'required',
         'password' => 'required',
     ]);
-
     $employee = Employee::where('full_employee_id', $request->full_employee_id)->first();
-
+    
     if (!$employee) {
         toastr()->error('Employee code not registered.');
         return redirect()->back();
     }
-
+    
+    // dd(Hash::check($request->password, $employee->password));
+    // dd($request->password, $employee->password);
     if (Hash::check($request->password, $employee->password)) {
         Auth::guard('employee')->login($employee);
 
