@@ -1260,6 +1260,10 @@ class JobDescriptionController extends Controller
                     return back();
                 }
             }
+            else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
         } catch (\Throwable $e) {
             return response()->json([
                 'success' => false,
@@ -1268,13 +1272,13 @@ class JobDescriptionController extends Controller
         }
     }
 
-    public function cancelStage(Request $request, $id)
+    public function cancelStages(Request $request, $id)
     {
         try {
 
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $jobTraining = JobTraining::find($id);
-                $lastjobTraining = JobTraining::find($id);
+                $jobTraining = JobDescription::find($id);
+                $lastjobTraining = JobDescription::find($id);
 
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "1";
@@ -1284,7 +1288,7 @@ class JobDescriptionController extends Controller
                     $jobTraining->reject_comment = $request->comment;
 
 
-                    $history = new JobTrainingAudit();
+                    $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->current = $jobTraining->qualified_by;
@@ -1308,7 +1312,7 @@ class JobDescriptionController extends Controller
                     $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
                     $jobTraining->reject_comment = $request->comment;
 
-                    $history = new JobTrainingAudit();
+                    $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->current = $jobTraining->qualified_by;
@@ -1326,6 +1330,9 @@ class JobDescriptionController extends Controller
                     return back();
                 }
               
+            }else {
+                toastr()->error('E-signature Not match');
+                return back();
             }
         } catch (\Throwable $e) {
             return response()->json([

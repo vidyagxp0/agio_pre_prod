@@ -393,7 +393,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" id="" >
+                                    <input type="number" name="total_experience" id="" >
                                 </div>
                             </div>
 
@@ -412,7 +412,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Date of Joining </label>
-                                    <input type="date" name="date_joining" id="">
+                                    <input type="date" name="date_joining" id="" value="{{$mainvalue->joining_date}}" readonly>
                                 </div>
                             </div>
 
@@ -463,13 +463,13 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Experience With Agio Pharma </label>
-                                    <input type="text" name="experience_with_agio" id="" >
+                                    <input type="number" name="experience_with_agio" id="" >
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision" id="repeat_nature">Total Years of Experience </label>
-                                    <input type="text" name="experience_if_any" id="experience" >
+                                    <input type="number" name="experience_if_any" id="experience" >
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -566,11 +566,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
     <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                Exit </a> </button>
+        {{-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                Exit </a> </button> --}}
 
     </div>
-            
+                                </div>      
+                                </div>      
 
 <!-- Activity Log content -->
 <div id="CCForm6" class="inner-block cctabcontent">
@@ -616,11 +617,8 @@ $departments = DB::table('departments')->select('id', 'name')->get();
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard">
-                <button type="button" class="backButton">Back</button>
-            </a>
-            <button type="submit">Submit</button>
-            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            <!-- <button type="submit">Submit</button> -->
+            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                     Exit </a> </button>
         </div>
     </div>

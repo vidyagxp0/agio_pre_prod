@@ -11,6 +11,7 @@ use App\Models\RoleGroup;
 use App\Models\Document;
 use App\Models\Training;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Carbon\Carbon;
@@ -67,8 +68,12 @@ class EmployeeController extends Controller
             $newEmployeeId = '0001';
         }
 
-
         $randomPassword = Str::random(6);
+
+        // Encrypt the random password before storing it
+        $encryptedPassword = Crypt::encryptString($randomPassword);
+
+        // $randomPassword = Str::random(6);
 
         $employee = new Employee();
         $employee->stage = '1';
@@ -100,6 +105,9 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->employee_id = $newEmployeeId;
         $employee->password = bcrypt($randomPassword);
+        $employee->email_password = $encryptedPassword;
+        // $employee->password = $randomPassword;
+
     
         if ($request->input('has_additional_document') === 'Yes' && $request->hasFile('additional_document')) {
             $fileName = time() . '.' . $request->additional_document->extension();
@@ -1951,7 +1959,8 @@ class EmployeeController extends Controller
                 $employee = Employee::find($id);
                 $lastEmployee = Employee::find($id);
 
-                $randomPassword = Str::random(6);
+                $decryptedPassword = Crypt::decryptString($employee->email_password);
+                // $randomPassword = Str::random(6);
 
                 if ($employee->stage == 1) {
                     $employee->stage = "2";
@@ -1974,7 +1983,15 @@ class EmployeeController extends Controller
                     $history->stage = 'Submited';
                     $employee->update();
 
-                    Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'randomPassword' => $randomPassword], function ($message) use ($employee) {
+                    // Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee], function ($message) use ($employee) {
+                    //     $message->to($employee->email)
+                    //         ->subject('Your Employee Credentials');
+                    // });
+
+                
+
+                    // Send the decrypted password via email
+                    Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'decryptedPassword' => $decryptedPassword], function ($message) use ($employee) {
                         $message->to($employee->email)
                             ->subject('Your Employee Credentials');
                     });

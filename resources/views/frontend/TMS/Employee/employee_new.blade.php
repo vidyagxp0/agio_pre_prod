@@ -26,13 +26,13 @@
     </style>
 
 
-        @error('email')
+        <!-- @error('email')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
         @error('emp_id')
             <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        @enderror -->
 
     <script>
         $(document).ready(function() {
@@ -96,7 +96,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
                 <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
                 <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Activity Log</button>
 
             </div>
             <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
@@ -125,8 +125,8 @@
                                                 class="text-danger">*</span></label>
                                         <select name="site_division">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Corporate">Corporate</option>
-                                            <option value="Plant">Plant</option>
+                                            <option value="Corporate" {{ old('site_division') == 'Corporate' ? 'selected' : '' }}>Corporate</option>
+                                            <option value="Plant" {{ old('site_division') == 'Plant' ? 'selected' : '' }}>Plant</option>
                                         </select>
                                         <!-- <input type="text" id="site_division" name="site_division" required> -->
                                     </div>
@@ -145,9 +145,10 @@
                     </div> --}}
                                 {{-- <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="Joining Date">Joining Date</label>
+                            <label for="Joining Date">Joining Date<span
+                            class="text-danger">*</span><label>
                             <div class="calenderauditee">
-                                <input type="text" id="joining_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="text" id="joining_date"  readonly placeholder="DD-MMM-YYYY" />
                                 <input type="date" name="joining_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'joining_date')" />
                 </div>
             </div>
@@ -155,10 +156,11 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Joining Date">Joining Date</label>
+                                        <label for="Joining Date">Joining Date<span
+                                        class="text-danger">*</span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="joining_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="joining_date"
+                                            <input type="text" id="joining_date" value="{{ old('joining_date')}}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="joining_date" value="{{ old('joining_date')}}"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                                 class="hide-input" oninput="handleDateInput(this, 'joining_date')" />
                                         </div>
@@ -167,27 +169,18 @@
 
 
 
-                                <!-- <div class="col-lg-6 new-date-data-field">
-            <div class="group-input input-date">
-                <label for="Actual Start Date">Actual Start Date</label>
-                <div class="calenderauditee">
-                    <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
-                    <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
-                </div>
-            </div>
-        </div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Prefix">Prefix<span class="text-danger">*</span></label>
                                         <select name="prefix" id="prefix-select" required onchange="toggleInputBox()">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="PW">Permanent Workers</option>
-                                            <option value="PS">Permanent Staff</option>
-                                            <option value="OS">Others Separately</option>
+                                            <option value="PW" {{ old('prefix') == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
+                                            <option value="PS" {{ old('prefix') == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
+                                            <option value="OS" {{ old('prefix') == 'OS' ? 'selected' : '' }}>Others Separately</option>
                                         </select>
                                         <div id="other-input" style="display:none; margin-top: 5px;">
                                             <label for="other">Others</label>
-                                            <input type="text" name="other" id="other" style="width: 100%;">
+                                            <input type="text" name="other" id="other" value="{{ old('other') }}" style="width: 100%;">
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +201,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Employee ID">Employee ID</label>
-                                        <input type="number" min="1" name="emp_id" value="">
+                                        <input type="number" min="1" name="emp_id" value="{{ old('emp_id') }}" >
+                                        @if ($errors->has('emp_id'))
+                                            <span style="color: red;">{{ $errors->first('emp_id') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -216,17 +212,17 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="employee_name">Employee Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="employee_name" required>
+                                        <input type="text" name="employee_name" value="{{ old('employee_name') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Gender">Gender</label>
-                                        <select name="gender">
+                                        <select name="gender" value="{{ old('gender') }}">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Other">Other</option>
+                                            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                                            <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -234,7 +230,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                                        <input type="text" name="qualification" required>
+                                        <input type="text" name="qualification" value="{{ old('qualification') }}" required>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -255,13 +251,16 @@
                                         <label for="Department">Department Name<span class="text-danger">*</span></label>
                                         <select name="department" id="department" required onchange="toggleOtherDepartment()">
                                             <option value="">-- Select --</option>
-
+                                            
                                             @foreach (Helpers::getDepartments() as $code => $department)
-                                                <option value="{{ $code }}">{{ $department }}</option>
+                                                <option value="{{ $code }}" {{ old('department') == $code ? 'selected' : '' }}>
+                                                    {{ $department }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -292,35 +291,36 @@
                                         <label for="job_title">Designation<span class="text-danger">*</span></label>
                                         <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Trainee">Trainee</option>
-                                            <option value="Officer">Officer</option>
-                                            <option value="Sr. Officer">Sr. Officer</option>
-                                            <option value="Executive">Executive</option>
-                                            <option value="Sr.executive">Sr. Executive</option>
-                                            <option value="Asst. manager">Asst. Manager </option>
-                                            <option value="Manager">Manager</option>
-                                            <option value="Sr. GM">Sr. GM</option>
-                                            <option value="Sr. manager">Sr. Manager</option>
-                                            <option value="Deputy GM">Deputy GM</option>
-                                            <option value="AGM and GM">AGM and GM</option>
-                                            <option value="Head quality">Head quality</option>
-                                            <option value="VP quality">VP quality</option>
-                                            <option value="Plant head">Plant head</option>
-                                            <option value="other designation">Other Designation</option>
+                                            <option value="Trainee" {{ old('job_title') == 'Trainee' ? 'selected' : '' }}>Trainee</option>
+                                            <option value="Officer" {{ old('job_title') == 'Officer' ? 'selected' : '' }}>Officer</option>
+                                            <option value="Senior Officer" {{ old('job_title') == 'Senior Officer' ? 'selected' : '' }}>Senior Officer</option>
+                                            <option value="Executive" {{ old('job_title') == 'Executive' ? 'selected' : '' }}>Executive</option>
+                                            <option value="Senior Executive" {{ old('job_title') == 'Senior Executive' ? 'selected' : '' }}>Senior Executive</option>
+                                            <option value="Assistant Manager" {{ old('job_title') == 'Assistant Manager' ? 'selected' : '' }}>Assistant Manager</option>
+                                            <option value="Manager" {{ old('job_title') == 'Manager' ? 'selected' : '' }}>Manager</option>
+                                            <option value="Senior General Manager" {{ old('job_title') == 'Senior General Manager' ? 'selected' : '' }}>Senior General Manager</option>
+                                            <option value="Senior Manager" {{ old('job_title') == 'Senior Manager' ? 'selected' : '' }}>Senior Manager</option>
+                                            <option value="Deputy General Manager" {{ old('job_title') == 'Deputy General Manager' ? 'selected' : '' }}>Deputy General Manager</option>
+                                            <option value="Assistant General Manager and General Manager" {{ old('job_title') == 'Assistant General Manager and General Manager' ? 'selected' : '' }}>Assistant General Manager and General Manager</option>
+                                            <option value="Head quality" {{ old('job_title') == 'Head quality' ? 'selected' : '' }}>Head Quality</option>
+                                            <option value="VP Quality" {{ old('job_title') == 'VP Quality' ? 'selected' : '' }}>VP Quality</option>
+                                            <option value="Plant Head" {{ old('job_title') == 'Plant Head' ? 'selected' : '' }}>Plant Head</option>
+                                            <option value="Other Designation" {{ old('job_title') == 'Other Designation' ? 'selected' : '' }}>Other Designation</option>
                                         </select>
                                     </div>
                                 </div>
 
+
                                 <div class="col-lg-6" id="other_department_container" style="display: none;">
                                     <div class="group-input">
                                         <label for="other_department">Other Department</label>
-                                        <input type="text" name="other_department" id="other_department">
+                                        <input type="text" name="other_department" value="{{ old('other_department') }}" id="other_department">
                                     </div>
                                 </div>
                                 <div class="col-lg-6" id="other_designation_container" style="display: none;">
                                     <div class="group-input">
                                         <label for="other_designation">Other Designation</label>
-                                        <input type="text" name="other_designation" id="other_designation">
+                                        <input type="text" name="other_designation" value="{{ old('other_designation') }}" id="other_designation">
                                     </div>
                                 </div>
 
@@ -357,10 +357,10 @@
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)<span
                                                 class="text-danger">*</span></label>
-                                        <select name="experience" id="Experience" required>
+                                        <select name="experience" id="Experience" value="{{ old('experience') }}" required>
                                             <option value="">Select </option>
                                             @for ($i = 1; $i <= 70; $i++)
-                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            <option value="{{ $i }}" {{ old('experience') == $i ? 'selected' : '' }}>{{ $i }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -370,13 +370,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attached CV">Attached CV</label>
-                                        <input type="file" id="myfile" name="attached_cv">
+                                        <input type="file" id="myfile" name="attached_cv" value="{{ old('attached_cv') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Certification/Qualification">Certification/Qualification</label>
-                                        <input type="file" id="myfile" name="certification">
+                                        <input type="file" id="myfile" name="certification" value="{{ old('certification') }}">
                                     </div>
                                 </div>
 
@@ -413,7 +413,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Additional Medical Document">Medical Checkup Report?</label>
-                                        <select name="has_additional_document" id="has_additional_document">
+                                        <select name="has_additional_document" id="has_additional_document" value="{{ old('has_additional_document') }}">
                                             <option value="">--Select--</option>
                                             <option value="No">No</option>
                                             <option value="Yes">Yes</option>
@@ -424,7 +424,7 @@
                                 <div class="col-lg-6" id="medical_attachment" style="display:none;">
                                     <div class="group-input">
                                         <label for="Attached Medical Document">Medical Checkup Attachment</label>
-                                        <input type="file" name="additional_document" id="additional_document">
+                                        <input type="file" name="additional_document" id="additional_document" value="{{ old('additional_document') }}">
                                     </div>
                                 </div>
 
@@ -441,8 +441,12 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter employee email" required>
+                                        <label for="email">Email<span
+                                        class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter employee email" value="{{ old('email') }}" required>
+                                        @if ($errors->has('email'))
+                                            <span style="color: red;">{{ $errors->first('email') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -737,32 +741,32 @@
                                     <div class="group-input">
                                         <div class="group-input">
                                             <label for="Building">Building</label>
-                                            <input type="text" name="building">
+                                            <input type="text" name="building" value="{{ old('building')}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Floor">Floor</label>
-                                        <input type="text" name="floor">
+                                        <input type="text" name="floor" value="{{ old('floor')}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Room">Room</label>
-                                        <input type="text" name="room">
+                                        <input type="text" name="room" value="{{ old('room')}}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Picture">Picture</label>
-                                        <input type="file" id="myfile" name="picture">
+                                        <input type="file" id="myfile" name="picture" value="{{ old('picture')}}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Picture">Specimen Signature </label>
-                                        <input type="file" id="myfile" name="specimen_signature">
+                                        <input type="file" id="myfile" name="specimen_signature" value="{{ old('specimen_signature')}}">
                                     </div>
                                 </div>
 
@@ -789,54 +793,53 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea name="comment"></textarea>
+                                        <textarea name="comment">{{ old('comment') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File Attachment">File Attachment</label>
-                                        <input type="file" id="myfile" name="file_attachment">
+                                        <input type="file" id="myfile" name="file_attachment" value="{{ old('file_attachment') }}">
                                     </div>
                                 </div>
                             </div>
 
                             {{-- <div class="col-12 sub-head">
-    Job Responsibilities
-</div>
-<div class="group-input">
-    <label for="audit-agenda-grid">
-        Job Responsibilities
-        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-            (Launch Instruction)
-        </span>
-    </label>
-    <div class="table-responsive">
-        <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th style="width: 5%;">Sr No.</th>
-                    <th>Job Responsibilities </th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
-                    <td><input type="text" name="jobResponsibilities[0][job]"></td>
-                    <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div> --}}
+                                Job Responsibilities
+                            </div>
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Job Responsibilities
+                                    <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr No.</th>
+                                                <th>Job Responsibilities </th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> --}}
 
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
-                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                        Exit </a> </button>
+                              
                             </div>
 
                         </div>
@@ -844,7 +847,7 @@
                 </div>
 
                 <!-- Tab content -->
-                <div id="CCForm2" class="inner-block cctabcontent">
+                {{-- <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="group-input" id="external-details-grid">
@@ -959,7 +962,7 @@
                                     Exit </a> </button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
 
                 <script>
@@ -987,7 +990,7 @@
 
 
                 <!-- Activity Log content -->
-                <div id="CCForm6" class="inner-block cctabcontent">
+                <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-4">
@@ -1046,23 +1049,85 @@
                                 </div>
                             </div>
 
-
                         </div>
-                        {{-- <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-        Exit </a> </button>
-    </div> --}}
+                    <div class="button-block">
+                    <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
+                    <button type="button" class="backButton">Back</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">Exit </a> </button>
+                    </div> 
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+<script>
+ function openCity(evt, cityName) {
+    var i, cctabcontent, cctablinks;
+    cctabcontent = document.getElementsByClassName("cctabcontent");
+    for (i = 0; i < cctabcontent.length; i++) {
+        cctabcontent[i].style.display = "none";
+    }
+    cctablinks = document.getElementsByClassName("cctablinks");
+    for (i = 0; i < cctablinks.length; i++) {
+        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    // Find the index of the clicked tab button
+    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+    // Update the currentStep to the index of the clicked tab
+    currentStep = index;
+}
+
+const nextButtons = document.querySelectorAll(".nextButton");
+const form = document.getElementById("step-form");
+const stepButtons = document.querySelectorAll(".cctablinks");
+const steps = document.querySelectorAll(".cctabcontent");
+let currentStep = 0;
+
+function nextStep() {
+    // Check if there is a next step
+    if (currentStep < steps.length - 1) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show next step
+        steps[currentStep + 1].style.display = "block";
+
+        // Add active class to next button
+        stepButtons[currentStep + 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep++;
+    }
+}
+
+function previousStep() {
+    // Check if there is a previous step
+    if (currentStep > 0) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show previous step
+        steps[currentStep - 1].style.display = "block";
+
+        // Add active class to previous button
+        stepButtons[currentStep - 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep--;
+    }
+}
+</script>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
