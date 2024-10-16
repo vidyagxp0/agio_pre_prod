@@ -624,7 +624,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="CAPA Team">CAPA Team</label>
                                                 <select {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
@@ -876,7 +876,7 @@
                                                                             value="{{ unserialize($data2->material_remark)[$key] ?? '' }}"
                                                                             {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
-                                                                    <td>
+                                                                    {{-- <td>
                                                                         <select name="material_batch_status[]"
                                                                             class="batch_status"
                                                                             {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
@@ -892,7 +892,25 @@
                                                                                 {{ unserialize($data2->material_batch_status)[$key] == 'quarantine' ? 'selected' : '' }}>
                                                                                 Quarantine</option>
                                                                         </select>
+                                                                    </td> --}}
+                                                                    <td>
+                                                                        <select name="material_batch_status[]"
+                                                                            class="batch_status"
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                                            <option value="">-- Select value --
+                                                                            </option>
+                                                                            <option value="Hold"
+                                                                                {{ (unserialize($data2->material_batch_status)[$key] ?? '') == 'Hold' ? 'selected' : '' }}>
+                                                                                Hold</option>
+                                                                            <option value="Release"
+                                                                                {{ (unserialize($data2->material_batch_status)[$key] ?? '') == 'Release' ? 'selected' : '' }}>
+                                                                                Release</option>
+                                                                            <option value="quarantine"
+                                                                                {{ (unserialize($data2->material_batch_status)[$key] ?? '') == 'quarantine' ? 'selected' : '' }}>
+                                                                                Quarantine</option>
+                                                                        </select>
                                                                     </td>
+
                                                                     <td><button type="button" class="removeRowBtn"
                                                                             {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Remove</button>
                                                                     </td>
