@@ -12657,7 +12657,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         if ($request->revision == "Capa") {
             $old_records = $old_record;
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords'));
+            $Capachild =CC::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords','reference_record'));
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
