@@ -176,6 +176,7 @@ class CapaController extends Controller
         //    $capa->capafileattachement = $request->capafileattachement;
         $capa->investigation = $request->investigation;
         $capa->rcadetails = $request->rcadetails;
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
 
 
 
@@ -1466,6 +1467,7 @@ class CapaController extends Controller
                 ];
 
                 foreach ($fields as $key => $currentValue) {
+                    if (!empty($currentValue)) {
                     // For a store function, there are no previous values to compare, so we only log the current value.
                     $history = new CapaAuditTrial();
                     $history->capa_id = $capa->id;
@@ -1485,6 +1487,7 @@ class CapaController extends Controller
                 }
             }
         }
+    }
 
         $data3 = new CapaGrid();
         $data3->capa_id = $capa->id;
@@ -1604,6 +1607,7 @@ class CapaController extends Controller
         }
         // $capa->initiator_Group= $request->initiator_Group;
 
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
 
         $capa->initiator_group_code = $request->initiator_group_code;
         $capa->severity_level_form = $request->severity_level_form;
