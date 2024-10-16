@@ -20,7 +20,7 @@
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script> --}}
-    
+
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -711,9 +711,212 @@
         </div>
     </div>
 
-    {{-- ============================================
+
+
+   {{--Incident Instruction Model--}}
+
+   {{--Facility/ Equipment/ Instrument/ System Details--}}
+
+    <div class="modal fade" id="observation-field-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    {{--<div class="mb-2">
+                        <strong>Row# (Row Number) :&nbsp;</strong>
+                        This is an automatically generated or manually assigned number for each row of data.
+                    </div>--}}
+                    <div class="mb-2">
+                        <strong>Name :&nbsp;</strong>
+                        Enter the full name or title of the item. Make sure the name is clear, concise, and easily recognizable.
+                    </div>
+                    <div class="mb-2">
+                        <strong>ID Number :&nbsp;</strong>
+                        Use the official or standardized ID number if it exists.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Remarks :&nbsp;</strong>
+                        Provide relevant comments that might include the item's condition, special features, or specific usage instructions. Keep the remarks clear and brief but informative.
+                    </div>
+                    {{--<div class="mb-2">
+                        <strong>Observation Description :&nbsp;</strong>
+                        Detailed description of the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Severity Level :&nbsp;</strong>
+                        The severity level of the observation (e.g., Minor, Major, Critical,
+                        Recommendation).
+                    </div>
+                    <div class="mb-2">
+                        <strong>Area/Process :&nbsp;</strong>
+                        The specific area or process where the observation occurred.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Observation Category :&nbsp;</strong>
+                        The broad category to which the observation belongs (e.g., Documentation,
+                        Equipment, Cleanroom, Data Integrity, etc.).
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Required :&nbsp;</strong>
+                        Specific actions that need to be taken to address the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Due date :&nbsp;</strong>
+                        Deadline for completing the corrective &amp; preventive actions.
+                    </div>
+                    <div>
+                        <strong>Status :&nbsp;</strong>
+                        The current status of the observation (e.g., Open, In Progress, Closed).
+                    </div>--}}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{--Document Details Model--}}
+
+    <div class="modal fade" id="observation-field-instruction-modal1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    {{--<div class="mb-2">
+                        <strong>Row# (Row Number) :&nbsp;</strong>
+                        Ensure that this number is unique for each entry and follows a sequential order as new documents are added.
+                    </div>--}}
+                    <div class="mb-2">
+                        <strong>Document Number :&nbsp;</strong>
+                        Enter the official or system-assigned document number. This could be an internal reference number or a serial number.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Document Name :&nbsp;</strong>
+                        Enter the full name of the document. The name should be clear and descriptive enough to reflect the document's purpose or content.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Remarks :&nbsp;</strong>
+                        Include any important comments about the document, such as its status (draft, approved, under review), the version number, or any important details related to its content. Keep remarks brief but informative.
+                    </div>
+                    {{--<div class="mb-2">
+                        <strong>Observation Description :&nbsp;</strong>
+                        Detailed description of the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Severity Level :&nbsp;</strong>
+                        The severity level of the observation (e.g., Minor, Major, Critical,
+                        Recommendation).
+                    </div>
+                    <div class="mb-2">
+                        <strong>Area/Process :&nbsp;</strong>
+                        The specific area or process where the observation occurred.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Observation Category :&nbsp;</strong>
+                        The broad category to which the observation belongs (e.g., Documentation,
+                        Equipment, Cleanroom, Data Integrity, etc.).
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Required :&nbsp;</strong>
+                        Specific actions that need to be taken to address the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Due date :&nbsp;</strong>
+                        Deadline for completing the corrective &amp; preventive actions.
+                    </div>
+                    <div>
+                        <strong>Status :&nbsp;</strong>
+                        The current status of the observation (e.g., Open, In Progress, Closed).
+                    </div>--}}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{--Product / Material Details--}}
+
+    <div class="modal fade" id="observation-field-instruction-modal2">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    {{--<div class="mb-2">
+                        <strong>Row# (Row Number) :&nbsp;</strong>
+                        Ensure that this number is unique for each entry and follows a sequential order as new documents are added.
+                    </div>--}}
+                    <div class="mb-2">
+                        <strong>Product / Material :&nbsp;</strong>
+                        Enter the official name of the product or material. Make sure the name is clear and specific enough to easily identify what it is.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Stage :&nbsp;</strong>
+                        Specify the current stage of the product or material. Examples include "Raw," "Under Review," "Finished," "Shipped," or "Ready for Packaging.
+                    </div>
+                    <div class="mb-2">
+                        <strong>A.R. No. / Batch No. :&nbsp;</strong>
+                        Enter the unique Analytical Reference (A.R.) number or batch number. This number helps track the product or material through its lifecycle.                    </div>
+                    {{--<div class="mb-2">
+                        <strong>Observation Description :&nbsp;</strong>
+                        Detailed description of the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Severity Level :&nbsp;</strong>
+                        The severity level of the observation (e.g., Minor, Major, Critical,
+                        Recommendation).
+                    </div>
+                    <div class="mb-2">
+                        <strong>Area/Process :&nbsp;</strong>
+                        The specific area or process where the observation occurred.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Observation Category :&nbsp;</strong>
+                        The broad category to which the observation belongs (e.g., Documentation,
+                        Equipment, Cleanroom, Data Integrity, etc.).
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Required :&nbsp;</strong>
+                        Specific actions that need to be taken to address the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Due date :&nbsp;</strong>
+                        Deadline for completing the corrective &amp; preventive actions.
+                    </div>
+                    <div>
+                        <strong>Status :&nbsp;</strong>
+                        The current status of the observation (e.g., Open, In Progress, Closed).
+                    </div>--}}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+   {{-- ============================================
                 WHY WHY CHART INSTRUCTION MODAL
     ============================================= --}}
+
+
     <div class="modal fade" id="observation-field-instruction-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -777,6 +980,7 @@
             </div>
         </div>
     </div>
+
 
     {{-- ============================================
                 MANAGEMENT REVIEW 1 INSTRUCTION MODAL

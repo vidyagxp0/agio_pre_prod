@@ -176,6 +176,7 @@ class CapaController extends Controller
         //    $capa->capafileattachement = $request->capafileattachement;
         $capa->investigation = $request->investigation;
         $capa->rcadetails = $request->rcadetails;
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
 
 
 
@@ -195,7 +196,7 @@ class CapaController extends Controller
         $capa->Bd_Person = $request->Bd_Person;
         $capa->Production_Person = $request->Production_Person;
         //    $capa->additional_attachments= json_encode($request->additional_attachments);
-        $capa->capa_related_record = implode(',', $request->capa_related_record);
+        // $capa->capa_related_record = implode(',', $request->capa_related_record);
 
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
@@ -323,7 +324,7 @@ class CapaController extends Controller
             }
             $capa->qah_cq_attachment = json_encode($files);
         }
-
+        $capa->parent_record_number = $request->parent_record_number; 
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->hod_remarks = $request->hod_remarks;
@@ -1466,6 +1467,7 @@ class CapaController extends Controller
                 ];
 
                 foreach ($fields as $key => $currentValue) {
+                    if (!empty($currentValue)) {
                     // For a store function, there are no previous values to compare, so we only log the current value.
                     $history = new CapaAuditTrial();
                     $history->capa_id = $capa->id;
@@ -1485,6 +1487,7 @@ class CapaController extends Controller
                 }
             }
         }
+    }
 
         $data3 = new CapaGrid();
         $data3->capa_id = $capa->id;
@@ -1604,6 +1607,7 @@ class CapaController extends Controller
         }
         // $capa->initiator_Group= $request->initiator_Group;
 
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
 
         $capa->initiator_group_code = $request->initiator_group_code;
         $capa->severity_level_form = $request->severity_level_form;
@@ -1625,9 +1629,10 @@ class CapaController extends Controller
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-        if ($capa->stage == 1) {
-            $capa->capa_related_record =  implode(',', $request->capa_related_record);
-        }        // $capa->reference_record = $request->reference_record;
+        // if ($capa->stage == 1) {
+        //     $capa->capa_related_record =  implode(',', $request->capa_related_record);
+        // }        // $capa->reference_record = $request->reference_record;
+        $capa->parent_record_number_edit = $request->parent_record_number_edit; 
         $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
