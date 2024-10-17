@@ -7507,7 +7507,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "Deviation";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -7536,12 +7536,14 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $Extensionchild->Extensionchild = $record_number;
            $relatedRecords = Helpers::getAllRelatedRecords();
            $data=Deviation::find($id);
-                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            // $relatedRecords = collect();
+           $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+           $count = Helpers::getChildData($id, $parent_type);
+                    $countData = $count + 1;
+                               // $relatedRecords = collect();
 
 
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
@@ -7552,7 +7554,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
-            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 
             $Capachild->save();
 

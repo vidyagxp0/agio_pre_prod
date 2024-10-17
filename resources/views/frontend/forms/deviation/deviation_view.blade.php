@@ -388,7 +388,7 @@
                         userOptionsHtml + ' </select> </td>' +
                         '<td><input type="text" class="responsibility" name="investigationTeam[' +
                         investigationTeamDataIndex + '][responsibility]"></td>' +
-                        
+
 
                         '<td><input type="text" class="desination_dept" name="investigationTeam[' +
                         investigationTeamDataIndex + '][desination_dept]"></td>' +
@@ -714,9 +714,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#requestCN-moda0l">
                                 Request For Cancellation
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button>
+                            @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                    Child
+                                </button>
+                            @endif
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Deviation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -743,9 +745,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Review Complete
                             </button>
+                            @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif 
+
                             <!--
     @endif -->
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation', 7))
@@ -835,7 +840,7 @@
                                 Child
                             </button>
                             @endif
-                            
+
                         @elseif($data->stage == 12)
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
                                     Reopen
@@ -1090,7 +1095,7 @@
                     <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
-                    
+
 
                     <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
                         style="display: none">Investigation</button>
@@ -3546,7 +3551,7 @@
                     </script> -->
 
 
-                    
+
 
                     <!-- CFT -->
                     <div id="CCForm7" class="inner-block cctabcontent">
@@ -10691,8 +10696,8 @@
                                                 <th style="width: 16%">Designation & Department</th>
                                                 <th style="width: 16%">Responsibility</th>
                                                 <th style="width: 16%">Remarks</th>
-                                             
-                                                
+
+
                                                 <th style="width: 8%">Action</th>
                                             </tr>
                                         </thead>
@@ -10736,7 +10741,7 @@
                                                                 value="{{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}">
                                                         </td>
 
-                                                        
+
                                                         <td><button type="text" class="removeRowBtn"
                                                                 name="Action[]">Remove</button></td>
 
@@ -10761,7 +10766,7 @@
                                                 <td><input type="text" class="remarks"
                                                         name="investigationTeam[0][remarks]"></td>
 
-                                                
+
                                                 <td><button type="text" class="removeRowBtn"
                                                         name="Action[]">Remove</button></td>
                                             @endif
@@ -10800,7 +10805,7 @@
 
 
 
-                        
+
 
 
                         <div class="col-12 mb-4 failure" id="fmea-section">
@@ -10980,12 +10985,12 @@
                                 </select>
                             </td>
 
-                        
+
                             <td><input name="mitigation_proposal_1[]" type="text"
                                     value="{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}"
                                     {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                             </td>
-                          
+
 
 
                 <td><button class="btn btn-dark removeBtn" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button></td>
@@ -11115,12 +11120,12 @@
                 <select name='risk_acceptance3[]' class='risk-acceptance'>
                     <option value=''>-- Select --</option>
                     <option value='Y'>Y</option>
-                    <option value='N'>N</option>                   
+                    <option value='N'>N</option>
                 </select>
             </td>
 
             <td><input name='mitigation_proposal_1[]' type='text'></td>
-            
+
             <td><button class='btn btn-dark' onclick='removeRow(this)'>Remove</button></td>
         `;
     }
@@ -11385,7 +11390,7 @@
                                     }
 
 
-                                    
+
                                 }
 
                                 // Initial check on page load
@@ -12913,7 +12918,7 @@
                                                             <th colspan="1"style="text-align:center;">Risk Control</th>
                                                             <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                             <th colspan="2"style="text-align:center;"></th>
-                                                        </tr> 
+                                                        </tr>
                                             <tr>
                                                 <th>Row #</th>
                                                 <th>Activity</th>
@@ -13550,7 +13555,7 @@
                                 <div class="group-input input-date">
                                     <label for="Audit Schedule End Date">Target Completion Date</label>
                                     <div class="calenderauditee">
-                                       
+
 
                                         <input readonly type="text" id="Capa_reported_date"
                                             value="{{ date('d-M-Y') }}" name="capa_completed_date"
@@ -13645,7 +13650,7 @@
                                         </div>
                                     @else
                                         <div class="group-input">
-                                            <label for="CAPA_Closure_attachment Attachment">CAPA 
+                                            <label for="CAPA_Closure_attachment Attachment">CAPA
                                                 Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -13686,7 +13691,7 @@
                                 </div> --}}
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA_Closure_attachment">CAPA 
+                                        <label for="CAPA_Closure_attachment">CAPA
                                                 Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
@@ -15059,7 +15064,7 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="sub-head"> QA/CQA Final Assessement Complete</div>
                             <div class="col-lg-3">
@@ -16244,13 +16249,20 @@
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
+
                         <div class="group-input">
+
                             @if ($data->stage == 2)
+                                @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="extension">
                                     Extension
                                 </label>
-                            @endif
+                                @endif
+
+                        @endif
+
+
                             @if ($data->stage == 3)
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="extension">
@@ -16286,6 +16298,7 @@
                                     <input type="radio" name="child_type" id="major" value="extension">
                                     Extension
                                 </label>
+
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="rca">
                                     RCA
@@ -16295,12 +16308,14 @@
                                     Action Item
                                 </label>
                             @endif
+
                             @if ($data->stage == 6)
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="extension">
                                     Extension
                                 </label>
                             @endif
+
                             @if ($data->stage == 9)
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="extension">
@@ -16320,6 +16335,7 @@
                                 </label>
                             @endif
                         </div>
+
 
                     </div>
 
