@@ -1147,6 +1147,70 @@ class ManagementReviewController extends Controller
             $data3->remarks = serialize($request->remarks);
         }
         $data3->save();
+        $fieldNames = [
+            'invited_Person' => 'Invited Person	',
+            'designee' => 'Designation',
+            'department' => 'Department',
+            'meeting_Attended' => 'Meeting Attended	',
+            'designee_Name' => 'Designee Name	',
+            'designee_Department' => 'Designee Department/Designation	',
+            'remarks' => 'Remarks'
+        ];
+
+        foreach ($request->invited_Person as $index => $invited_Person) {
+            // Since this is a new entry, there are no previous details
+            $previousDetails = [
+                'invited_Person' => null,
+                'designee' => null,
+                'department' => null,
+                'meeting_Attended' => null,
+                'designee_Name' => null,
+                'designee_Department' => null,
+                'remarks' => null
+            ];
+
+            // Current fields values from the request
+            $fields = [
+                'invited_Person' => $invited_Person,
+                'designee' => $request->designee[$index],
+                'department' => $request->department[$index],
+                'meeting_Attended' => $request->meeting_Attended[$index],
+                'designee_Name' => $request->designee_Name[$index],
+                'designee_Department' => $request->designee_Department[$index],
+                'remarks' => $request->remarks[$index],
+            ];
+
+            foreach ($fields as $key => $currentValue) {
+                // Log changes for new rows (no previous value to compare)
+                if (!empty($currentValue)) {
+                    // Only create an audit trail entry for new values
+                    $history = new ManagementAuditTrial();
+                    $history->ManagementReview_id = $management->id;
+
+                    // Set activity type to include field name and row index using the fieldNames array
+                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                    // Since this is a new entry, 'Previous' value is null
+                    $history->previous = 'null'; // Previous value or 'null'
+
+                    // Assign 'Current' value, which is the new value
+                    $history->current = $currentValue; // New value
+
+                    // Comments and user details
+                    $history->comment = $request->equipment_comments[$index] ?? '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+
+                    // Save the history record
+                    $history->save();
+                }
+            }
+        }
 
         $data4 = new ManagementReviewDocDetails();
         $data4->review_id = $management->id;
@@ -8224,6 +8288,91 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $data3->remarks = serialize($request->remarks);
         }
         $data3->update();
+
+        $fieldNames = [
+            'invited_Person' => 'Invited Person	',
+            'designee' => 'Designation',
+            'department' => 'Department',
+            'meeting_Attended' => 'Meeting Attended',
+            'designee_Name' => 'Designee Name',
+            'designee_Department' => 'Designee Department/Designation',
+            'remarks' => 'Remarks'
+        ];
+
+        // Ensure ReferenceDocumentName is an array before iterating
+        if (is_array($request->invited_Person) && !empty($request->invited_Person)) {
+            foreach ($request->invited_Person as $index => $invited_Person) {
+                // Retrieve previous details for the current index
+                $previousValues = [
+                    'invited_Person' => $previousDetails['invited_Person'][$index] ?? null,
+                    'designee' => $previousDetails['designee'][$index] ?? null,
+                    'department' => $previousDetails['department'][$index] ?? null,
+                    'meeting_Attended' => $previousDetails['meeting_Attended'][$index] ?? null,
+                    'designee_Name' => $previousDetails['designee_Name'][$index] ?? null,
+                    'designee_Department' => $previousDetails['designee_Department'][$index] ?? null,
+                    'remarks' => $previousDetails['remarks'][$index] ?? null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'invited_Person' => $invited_Person,
+                    'designee' => $request->designee[$index],
+                    'department' => $request->department[$index],
+                    'meeting_Attended' => $request->meeting_Attended[$index],
+                    'designee_Name' => $request->designee_Name[$index],
+                    'designee_Department' => $request->designee_Department[$index],
+                    'remarks' => $request->remarks[$index],
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Get the previous value from the previous data
+                    $previousValue = $previousValues[$key] ?? null;
+
+                    // Log changes for new or updated rows only if previous and current values differ
+                    if ($previousValue != $currentValue && !empty($currentValue)) {
+                        // Check if an audit trail entry for this specific row and field already exists
+                        $existingAudit = ManagementAuditTrial::where('ManagementReview_id', $id)
+                            ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                            ->where('previous', $previousValue)
+                            ->where('current', $currentValue)
+                            ->exists();
+
+                        // Only create a new audit trail entry if no existing entry matches
+                        if (!$existingAudit) {
+                            $history = new ManagementAuditTrial();
+                            $history->ManagementReview_id = $id;
+
+                            // Set activity type to include field name and row index using the fieldNames array
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                            // Assign 'Previous' value explicitly as null if it doesn't exist
+                            $history->previous = $previousValue; // Previous value or 'null'
+
+                            // Assign 'Current' value, which is the new value
+                            $history->current = $currentValue; // New value
+
+                            // Comments and user details
+                            $history->comment = $request->equipment_comments[$index] ?? '';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $data3->status;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $data3->status;
+                            if (is_null($previousValue) || $currentValue === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
+                            //$history->action_name = "Update";
+
+                            // Save the history record
+                            $history->save();
+                        }
+                    }
+                }
+            }
+        }
 
         $data4 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"action_item_details")->first();
         $data4->review_id = $management->id;
