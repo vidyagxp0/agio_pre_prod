@@ -1738,10 +1738,10 @@ class ManagementReviewController extends Controller
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
-        // $management->assigned_to = $request->assigned_to;
+        $management->assigned_to = $request->assigned_to;
         // $management->assign_to = implode(',', $request->assign_to);
         // $management->assign_to = explode(',', $management->assign_to ?? '');
-        $management->assign_to = implode(',', $request->assign_to);
+        // $management->assign_to = implode(',', $request->assign_to);
 
 
 
@@ -8290,7 +8290,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $data3->update();
 
         $fieldNames = [
-            'invited_Person' => 'Invited Person	',
+            'invited_Person' => 'Invited Person',
             'designee' => 'Designation',
             'department' => 'Department',
             'meeting_Attended' => 'Meeting Attended',
