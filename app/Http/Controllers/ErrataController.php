@@ -800,6 +800,51 @@ class ErrataController extends Controller
         $newDataGridErrata->identifier = 'details';
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
+
+
+
+
+
+
+
+        if (is_array($request->details)) {
+            foreach ($request->details as $index => $detailsAction) {
+                $lastdetailsAction = $data->details[$index] ?? null;
+                $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
+        
+                // Check if there is a change or an action comment
+                if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = ErrataAuditTrail::where([
+                        'errata_id' => $errata_id, // Corrected to use $errata_id
+                        'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
+                        'previous' => $lastdetailsAction,
+                        'current' => $currentdetailsAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new ErrataAuditTrail();
+                        $history->errata_id = $errata_id; // Manually setting each attribute
+                        $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
+                        $history->previous = $lastdetailsAction;
+                        $history->current = $currentdetailsAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $data->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Not Applicable";
+                        $history->action_name = "Create";
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+        
         //================================================================
 
 
@@ -2957,6 +3002,63 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         $newDataGridErrata->identifier = 'details';
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
+        
+        // Loop through the details data and check for updates or comments
+        if (is_array($request->details)) {
+            foreach ($request->details as $index => $detailsAction) {
+                $lastdetailsAction = $lastData->details[$index] ?? null;
+                $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
+        
+                // Check if there is a change or an action comment
+                if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = ErrataAuditTrail::where([
+                        'errata_id' => $errata_id, // Corrected to use $errata_id
+                        'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
+                        'previous' => $lastdetailsAction,
+                        'current' => $currentdetailsAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new ErrataAuditTrail();
+                        $history->errata_id = $errata_id; // Manually setting each attribute
+                        $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
+                        $history->previous = $lastdetailsAction;
+                        $history->current = $currentdetailsAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastData->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastData->status;
+                        $history->action_name = "Update";
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //================================================================
         toastr()->success("Record is Updated Successfully");
         return back();
