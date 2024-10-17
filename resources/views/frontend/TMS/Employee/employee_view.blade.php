@@ -279,7 +279,7 @@
                                         <input type="date" name="joining_date"
                                             max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $employee->joining_date ?? '' }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'joining_date')" />
+                                            oninput="handleDateInput(this, 'joining_date')"  readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -352,8 +352,8 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_name">Employee Name</label>
-                                    <input type="text" name="employee_name" value="{{ $employee->employee_name }}">
+                                    <label for="employee_name">Employee Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="employee_name" value="{{ $employee->employee_name }}" required>
                                 </div>
                             </div>
 
@@ -391,7 +391,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
+                                    <input type="text" name="qualification" value="{{ $employee->qualification }}" required>
                                 </div>
                             </div>
 
@@ -427,32 +427,29 @@
                                         </option>
                                         <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer
                                         </option>
-                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr.
-                                            Officer</option>
+                                        <option value="Senior Officer" @if ($savedJobTitle == 'Senior Officer') selected @endif>Senior Officer</option>
                                         <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>
                                             Executive</option>
-                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>
-                                            Sr. Executive</option>
-                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>
-                                            Asst. Manager</option>
+                                        <option value="Senior Executive" @if ($savedJobTitle == 'Senior Executive') selected @endif>
+                                        Senior Executive</option>
+                                        <option value="Assistant Manager" @if ($savedJobTitle == 'Assistant Manager') selected @endif>
+                                            Assistant Manager</option>
                                         <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager
                                         </option>
-                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM
+                                        <option value="Senior General Manager" @if ($savedJobTitle == 'Senior General Manager') selected @endif>Senior General Manager
                                         </option>
-                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr.
-                                            Manager</option>
-                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>
-                                            Deputy GM</option>
-                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM
-                                            and GM</option>
-                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>
+                                        <option value="Senior Manager" @if ($savedJobTitle == 'Senior Manager') selected @endif>Senior Manager</option>
+                                        <option value="Deputy General Manager" @if ($savedJobTitle == 'Deputy General Manager') selected @endif>
+                                            Deputy General Manager</option>
+                                        <option value="Assistant General Manager and General Manager" @if ($savedJobTitle == 'Assistant General Manager and General Manager') selected @endif>Assistant General Manager and General Manager</option>
+                                        <option value="Head Quality" @if ($savedJobTitle == 'Head Quality') selected @endif>
                                             Head Quality</option>
-                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP
+                                        <option value="VP Quality" @if ($savedJobTitle == 'VP Quality') selected @endif>VP
                                             Quality</option>
-                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>
+                                        <option value="Plant Head" @if ($savedJobTitle == 'Plant Head') selected @endif>
                                             Plant Head</option>
-                                        <option value="Other designation"
-                                            @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
+                                        <option value="Other Designation"
+                                            @if ($savedJobTitle == 'Other Designation') selected @endif>Other Designation</option>
                                     </select>
                                 </div>
                             </div>

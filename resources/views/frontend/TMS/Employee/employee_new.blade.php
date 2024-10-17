@@ -302,7 +302,7 @@
                                             <option value="Senior Manager" {{ old('job_title') == 'Senior Manager' ? 'selected' : '' }}>Senior Manager</option>
                                             <option value="Deputy General Manager" {{ old('job_title') == 'Deputy General Manager' ? 'selected' : '' }}>Deputy General Manager</option>
                                             <option value="Assistant General Manager and General Manager" {{ old('job_title') == 'Assistant General Manager and General Manager' ? 'selected' : '' }}>Assistant General Manager and General Manager</option>
-                                            <option value="Head quality" {{ old('job_title') == 'Head quality' ? 'selected' : '' }}>Head Quality</option>
+                                            <option value="Head Quality" {{ old('job_title') == 'Head Quality' ? 'selected' : '' }}>Head Quality</option>
                                             <option value="VP Quality" {{ old('job_title') == 'VP Quality' ? 'selected' : '' }}>VP Quality</option>
                                             <option value="Plant Head" {{ old('job_title') == 'Plant Head' ? 'selected' : '' }}>Plant Head</option>
                                             <option value="Other Designation" {{ old('job_title') == 'Other Designation' ? 'selected' : '' }}>Other Designation</option>

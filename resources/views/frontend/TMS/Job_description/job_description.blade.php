@@ -319,7 +319,14 @@ $departments = DB::table('departments')->select('id', 'name')->get();
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Job Description</button>
 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Employee Remarks</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Responsible Person Accept Remarks</button>
+
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Respected Department Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">QA JD Number Remarks</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
         </div>
 
         <form id="auditform" action="{{ route('job_descriptioncreate') }}" method="POST" enctype="multipart/form-data">
@@ -565,54 +572,278 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
     <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
         {{-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                 Exit </a> </button> --}}
 
     </div>
                                 </div>      
-                                </div>      
+                                </div>   
+                                
+                                
+                                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_review" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Attachment</label>
+                                <input type="file" id="myfile" name="qa_review_attachment" value="">
+                                <a href="" target="_blank"></a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_cqa_comment" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Attachment</label>
+                                <input type="file" id="myfile" name="qa_cqa_attachment" value="">
+                                <a href="" target="_blank"></a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="responsible_person_comment" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Attachment</label>
+                                <input type="file" id="myfile" name="responsible_person_attachment" value="">
+                                <a href="" target="_blank"></a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="respected_department_comment" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Attachment</label>
+                                <input type="file" id="myfile" name="respected_department_attachment" value="">
+                                <a href="" target="_blank"></a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="final_review_comment" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Attachment</label>
+                                <input type="file" id="myfile" name="final_review_attachment" value="">
+                                <a href="" target="_blank"></a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>                           
 
 <!-- Activity Log content -->
-<div id="CCForm6" class="inner-block cctabcontent">
+<div id="CCForm7" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Submitted On">Submitted By</label>
                     <div class="static"></div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="group-input">
                     <label for="Submitted On">Submitted On</label>
                     <div class="static"></div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Qualified By">Qualified By</label>
-                    <div class="static"></div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Qualified On">Qualified On</label>
-                    <div class="static"></div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for=" Rejected By">Rejected By</label>
-                    <div class="static"></div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Rejected On">Rejected On</label>
-                    <div class="static"></div>
-                </div>
-            </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Activated On">Submit Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Accept JD Complete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept JD Complete On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept JD Complete Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Accept Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Approval Complete Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send To QA Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Closure Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject Comment</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
 
         </div>
         <div class="button-block">

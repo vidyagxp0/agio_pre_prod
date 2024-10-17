@@ -1274,8 +1274,8 @@ class JobDescriptionController extends Controller
 
     public function cancelStages(Request $request, $id)
     {
+        // dd($request->all());
         try {
-
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $jobTraining = JobDescription::find($id);
                 $lastjobTraining = JobDescription::find($id);
@@ -1285,8 +1285,7 @@ class JobDescriptionController extends Controller
                     $jobTraining->status = "Opened";
                     $jobTraining->reject_by = Auth::user()->name;
                     $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
-                    $jobTraining->reject_comment = $request->comment;
-
+                    $jobTraining->reject_comment = $request->comments;
 
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;
@@ -1301,8 +1300,8 @@ class JobDescriptionController extends Controller
                     $history->action = 'Reject';
                     $history->stage = 'Submited';
                     $history->save();
-
                     $jobTraining->update();
+
                     return back();
                 }
                 if ($jobTraining->stage == 3) {
@@ -1310,7 +1309,7 @@ class JobDescriptionController extends Controller
                     $jobTraining->status = "Opened";
                     $jobTraining->reject_by = Auth::user()->name;
                     $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
-                    $jobTraining->reject_comment = $request->comment;
+                    $jobTraining->reject_comment = $request->comments;
 
                     $history = new JobDescriptionAudit();
                     $history->job_id = $id;

@@ -103,7 +103,7 @@ class EmployeeController extends Controller
         $employee->has_additional_document = $request->has_additional_document;
 
         $employee->email = $request->email;
-        $employee->employee_id = $newEmployeeId;
+        // $employee->employee_id = $newEmployeeId;
         $employee->password = bcrypt($randomPassword);
         $employee->email_password = $encryptedPassword;
         // $employee->password = $randomPassword;

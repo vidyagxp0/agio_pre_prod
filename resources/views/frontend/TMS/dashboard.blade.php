@@ -95,10 +95,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm3')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
-                
+
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">Job Description</button>
 
+                <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                
                 <button class="cctablinks " onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -472,20 +473,15 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         </button> --}}
                                     </td>
                                     <td>
-                                    @if($temp->stage >=4)
-
+                                        
+                                    @if($temp->stage >=5)
                                     <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
                                                 onclick="window.location.href='/job_training_certificate/{{$temp->id}}';"> 
                                                 <i class="fa fa-certificate"></i>
                                             </button>
                                         </td>
                                     @endif    
-                                    <!-- @foreach ($jobTrainings as $jobTraining) -->
-                                  
-                                        <!-- @endforeach -->
-                                           
  
-                                                             
                                 </tr>
                                 @endif
                                 @endforeach
@@ -684,21 +680,26 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <thead>
                             <tr>
                                 <th>Sr. No</th>
-                                <th>Trainer Name</th>
+                                <th>Employee Name</th>
                                 <th>Department</th>
                                 <th>Training Date</th>
                                 <th>Status</th>
+                                <th>Action</th>
                                 <th>Report</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($trainers->sortbyDesc('id') as $trainer)
+                            @foreach ($trainers->sortbyDesc('id') as $index=>$trainer)
                             <tr>
-                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
-                                <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
+                                <td>{{ $index + 1 }}</td>                            
+                                <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td> -->
+                                <td>{{ $trainer->employee_name}}</td>
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
+                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
+
                                 <td>     <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
                                 <i class="fa fa-file-alt"></i>
                                             </button></td>
@@ -719,22 +720,23 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <th>Designation</th>
                                 <th>Department</th>
                                 <th>Qualification Status</th>
+                                <th>Action</th>
                                 <th>Certificate</th>
-                                <!-- <th>Status</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($trainers->sortbyDesc('id') as $trainer)
+                            @foreach ($trainers->sortbyDesc('id') as $index=> $trainer)
 
                             <!-- @if ($trainer->trainer=='Qualified') -->
                             <tr>
-                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
-                                <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
+                                <td>{{ $index + 1 }}</td>                            
+                                <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td> -->
+                                <td>{{ $trainer->employee_name ? $trainer->employee_name : 'NA' }}</td>
                                 <td>{{ $trainer->designation ? $trainer->designation : 'NA' }}</td>
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 {{-- <td>{{ $trainer->trainer ? $trainer->trainer: 'NA' }}</td> --}}
                                 <td>{{ $trainer->status }}</td>
-
+                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
                                 <td>
                                     @if($trainer->initial_attachment)
                                     <a href="{{ asset('upload/' . $trainer->initial_attachment) }}" target="_blank" download>
