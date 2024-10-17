@@ -5976,9 +5976,11 @@ $suitabilityReport->save();
             }
 
             if ($request->revision == "Extension") {
+                $data=LabIncident::find($id);
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
-                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record'));
 
             }
 

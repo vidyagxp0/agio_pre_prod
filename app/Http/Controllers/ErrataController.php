@@ -94,7 +94,8 @@ class ErrataController extends Controller
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;
-        $data->reference  = implode(',', $request->reference);
+        //$data->reference  = implode(',', $request->reference);
+        $data->reference = $request->reference;
         $data->type = "ERRATA";
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
@@ -374,7 +375,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'Parent Record Number';
             $history->previous = "Null";
-            $history->current = implode(',', $request->reference);
+            $history->current =  $data->reference;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1407,16 +1408,16 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'QA Head Aproval Completed By, QA Head Aproval Completed On';
+                $history->activity_type = 'QA/CQA Head Approval Completed By, QA/CQA Head Approval Completed On';
                 if (is_null($lastDocument->qa_head_approval_completed_by) || $lastDocument->qa_head_approval_completed_on == '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->qa_head_approval_completed_by . ' ,' . $lastDocument->qa_head_approval_completed_on;
                 }
-                $history->action = 'QA Head Aproval Complete';
+                $history->action = 'QA/CQA Head Approval Completed';
                 $history->current = $ErrataControl->qa_head_approval_completed_by . ',' . $ErrataControl->qa_head_approval_completed_on;
                 $history->comment = $request->comment;
-                $history->action = 'QA Head Aproval Completed';
+                $history->action = 'QA/CQA Head Approval Completed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1439,10 +1440,10 @@ class ErrataController extends Controller
                 //                 try {
                 //                     Mail::send(
                 //                         'mail.view-mail',
-                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                         function ($message) use ($email, $ErrataControl) {
                 //                             $message->to($email)
-                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                 //                         }
                 //                     );
                 //                 } catch(\Exception $e) {
@@ -1460,10 +1461,10 @@ class ErrataController extends Controller
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                     function ($message) use ($email, $ErrataControl) {
                     //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                     //                     }
                     //                 );
                     //             } catch(\Exception $e) {
@@ -1481,10 +1482,10 @@ class ErrataController extends Controller
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                     function ($message) use ($email, $ErrataControl) {
                     //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                     //                     }
                     //                 );
                     //             } catch(\Exception $e) {
@@ -1502,10 +1503,10 @@ class ErrataController extends Controller
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $ErrataControl) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                 //                     }
                 //                 );
                 //             } catch(\Exception $e) {
@@ -2037,7 +2038,7 @@ class ErrataController extends Controller
         $lastData = errata::find($id);
         $data = errata::find($id);
         $data->division_id = $request->division_id;
-        $data->initiator_id = Auth::user()->id;
+       // $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
 
@@ -2045,7 +2046,8 @@ class ErrataController extends Controller
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;
-        $data->reference = implode(',', $request->reference);
+     //   $data->reference = implode(',', $request->reference);
+        $data->reference = $request->reference;
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
@@ -3030,7 +3032,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                         'Correction Completed',
                         'HOD Review Complete',
                         'Sent To Opened State',
-                        'QA Head Aproval Completed'
+                        'QA/CQA Head Approval Completed'
                     ];
                     $query->whereIn('action', $stage); // Ensure correct activity_type value
                     break;
@@ -3048,7 +3050,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                         'Correction Completed',
                         'HOD Review Complete',
                         'Sent To Opened State',
-                        'QA Head Aproval Completed'
+                        'QA/CQA Head Approval Completed'
                     ];
                     $query->whereIn('action', $user_action);
                     break;

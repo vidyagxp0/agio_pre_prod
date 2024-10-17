@@ -206,7 +206,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Department </th>
-                        <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Department  Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -221,10 +221,10 @@
                         <td class="w-30">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
-                        <th class="w-20">Severity Level </th>
+                        {{-- <th class="w-20">Severity Level </th>
                         <td class="w-30">
                             @if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif
-                        </td>
+                        </td> --}}
 
                     </tr>
                     <tr>
@@ -240,11 +240,11 @@
                         <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit type</th>
-                        <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                        <th class="w-20">If Other</th>
+                        <th class="w-20">Audit Category</th>
+                        <td class="w-30">@if($data->Audit_Category){{ $data->Audit_Category }}@else Not Applicable @endif</td>
+                        {{-- <th class="w-20">If Other</th>
                         <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
-                        
+                         --}}
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -651,8 +651,8 @@
 
                             $questions_documentation = [
                                 "Is status labels displayed on all equipments?",
-                                "Is the dispensing area cleaned as per SOP?",
-                                "Check the status label of area and equipment.",
+                                "Equipment cleanliness, check few equipments.",
+                                "Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?",
                                 "Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?",
                                 "Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?",
                                 "Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?",
@@ -2886,11 +2886,11 @@
                         <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_1_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
-                        <th class="w-20"> Cancelled Comment</th>
+                        <th class="w-20"> Cancel Comment</th>
                         <td class="w-30">{{ $data->cancel_1_comment }}</td>
                     </tr>
                     <tr>
@@ -2935,11 +2935,11 @@
                         <td class="w-30">{{ $data->more_info_3_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By</th>
+                        <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
+                        <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20"> Cancelled Comment</th>
+                        <th class="w-20"> Cancel Comment</th>
                         <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>

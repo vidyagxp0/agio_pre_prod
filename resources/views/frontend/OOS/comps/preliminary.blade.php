@@ -188,7 +188,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Product/Material Name">OOS Cause Identified</label>
+                    <label for="Product/Material Name">OOS/OOT Cause Identified</label>
                     <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
