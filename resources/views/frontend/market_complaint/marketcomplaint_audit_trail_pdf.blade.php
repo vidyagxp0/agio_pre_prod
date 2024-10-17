@@ -166,7 +166,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     MarketComplaint Audit Trial Report
+                     MarketComplaint Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

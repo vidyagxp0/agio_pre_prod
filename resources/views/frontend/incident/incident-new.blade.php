@@ -1015,8 +1015,8 @@ dd($pre);
                                             <option value="0">-- Select --</option>
                                             <option value="Recurring" @if (old('short_description_required') == 'Recurring') selected @endif>
                                                 Yes</option>
-                                            <option value="Non_Recurring"
-                                                @if (old('short_description_required') == 'Non_Recurring') selected @endif>
+                                            <option value="Non-Recurring"
+                                                @if (old('short_description_required') == 'Non-Recurring') selected @endif>
                                                 No</option>
                                         </select>
                                     </div>
@@ -2036,7 +2036,7 @@ dd($pre);
                                             </div>
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)" disabled> Critical</label>
-                                            <label><input type="checkbox" name="classification_by_qa" value="non_critical" onclick="selectOne(this)" disabled> Non-Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="non-critical" onclick="selectOne(this)" disabled> Non-Critical</label>
                                         </div>
                                         </div>
                                     </div>

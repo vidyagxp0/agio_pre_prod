@@ -603,53 +603,7 @@
                 </tr>
 
             </table>
-            <div class="block-head">
-                Response Verification Attachements
-            </div>
-               <div class="border-table">
-                 <table>
-                     <tr class="table_bg">
-                         <th class="w-20">S.N.</th>
-                         <th class="w-60">File </th>
-                     </tr>
-                         @if($data->attach_files2)
-                         @foreach(json_decode($data->attach_files2) as $key => $file)
-                             <tr>
-                                 <td class="w-20">{{ $key + 1 }}</td>
-                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                             </tr>
-                         @endforeach
-                         @else
-                         <tr>
-                             <td class="w-20">1</td>
-                             <td class="w-20">Not Applicable</td>
-                         </tr>
-                     @endif
-    
-                 </table>
-               </div>
-          
 
-     <br>
-
-       
-            <div class="block-head">
-                Response Verification
-             </div>
-
-            <table>
-                <tr>
-                    <th class="w-20">Response Verification Comment</th>
-                    <td class="w-80">
-                        @if ($data->impact)
-                            {{ $data->impact }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-            
             <div class="block-head">
             Response and Summary Attachment
              </div>
@@ -677,6 +631,53 @@
                </div>
 
                <br>
+
+       
+            <div class="block-head">
+                Response Verification
+             </div>
+
+            <table>
+                <tr>
+                    <th class="w-20">Response Verification Comment</th>
+                    <td class="w-80">
+                        @if ($data->impact)
+                            {{ $data->impact }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
+
+                <div class="block-head">
+                Response Verification Attachements
+                </div>
+               <div class="border-table">
+                 <table>
+                     <tr class="table_bg">
+                         <th class="w-20">S.N.</th>
+                         <th class="w-60">File </th>
+                     </tr>
+                         @if($data->attach_files2)
+                         @foreach(json_decode($data->attach_files2) as $key => $file)
+                             <tr>
+                                 <td class="w-20">{{ $key + 1 }}</td>
+                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                             </tr>
+                         @endforeach
+                         @else
+                         <tr>
+                             <td class="w-20">1</td>
+                             <td class="w-20">Not Applicable</td>
+                         </tr>
+                     @endif
+    
+                 </table>
+               </div>
+          
+
+     <br>
 
                <div class="block-head">
                 Activity Log

@@ -97,12 +97,12 @@
                                 Audit Trail
                             </a>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'CAPA', 3))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button> </a>
 
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'CAPA', 4))
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                             </button></a>
@@ -123,7 +123,9 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3  &&
+                        (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
+                            Helpers::check_roles($data->division_id, 'CAPA', 63)))
                               <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                More Info Required
                             </button></a>
@@ -139,7 +141,8 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 &&  (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
+                            Helpers::check_roles($data->division_id, 'CAPA', 64)))
                           <a href="#signature-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approved
                             </button></a>
@@ -153,7 +156,7 @@
                                  More Info Required
                               </button></a>
 
-                        @elseif($data->stage == 5  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5  && Helpers::check_roles($data->division_id, 'CAPA', 3))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
@@ -166,7 +169,7 @@
                                 Child
                             </button></a>
                          
-                        @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'CAPA', 4))
 
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
@@ -180,7 +183,8 @@
                                 Child
                             </button></a>
                            
-                             @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                             @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
+                            Helpers::check_roles($data->division_id, 'CAPA', 66)))
 
                               <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Closure Review Complete
@@ -195,7 +199,8 @@
                                 Child
                             </button></a>
                            
-                            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
+                            Helpers::check_roles($data->division_id, 'CAPA', 65)))
 
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Approval  Complete
@@ -673,7 +678,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                                <label for="RLS Record Number"><b>Reference Records</b></label>
                                                 @if($data->parent_record_number)
                                                 <input readonly type="text" name="parent_record_number"
                                                     value="{{ $data->parent_record_number }}">

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText('comment')->nullable();
             $table->string('user_id');
             $table->string('user_name');
-            $table->string('origin_state');
+            $table->string('origin_state')->nullable();
             $table->string('user_role');
             $table->string('stage')->nullable();
 
