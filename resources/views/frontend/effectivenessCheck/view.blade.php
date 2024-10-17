@@ -307,10 +307,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}"
-                                            name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                        {{--  <div class="static">{{ $data->created_at }}</div>  --}}
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -537,8 +534,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 2 ? '' : 'disabled' }}
-                                                value="{{ $data->acknowledge_Attachment }}" type="file"
+                                            <input {{ $data->stage == 2 ? '' : 'disabled' }} type="file"
                                                 id="myfile" name="acknowledge_Attachment[]"
                                                 oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple>
                                         </div>
@@ -623,8 +619,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input {{ $data->stage == 3 ? '' : 'disabled' }}
-                                            value="{{ $data->Effectiveness_check_Attachment }}" type="file"
+                                        <input {{ $data->stage == 3 ? '' : 'disabled' }} type="file"
                                             id="myfile" name="Effectiveness_check_Attachment[]"
                                             oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
                                     </div>
@@ -753,7 +748,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $data->stage == 4 ? '' : 'disabled' }} value="{{ $data->Attachment }}"
+                                    <input {{ $data->stage == 4 ? '' : 'disabled' }}
                                         type="file" id="myfile" name="Attachment[]"
                                         oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                 </div>
@@ -853,8 +848,7 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input {{ $data->stage == 5 ? '' : 'disabled' }}
-                                value="{{ $data->qa_cqa_review_Attachment }}" type="file" id="myfile"
+                            <input type="file" id="myfile"
                                 name="qa_cqa_review_Attachment[]"
                                 oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')" multiple>
                         </div>
@@ -920,10 +914,8 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input {{ in_array($data->stage, [6, 8]) ? '' : 'disabled' }}
-                                value="{{ $data->qa_cqa_approval_Attachment }}" type="file" id="myfile"
-                                name="qa_cqa_approval_Attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
+                            <input {{ in_array($data->stage, [6, 8]) ? '' : 'disabled' }} type="file" id="myfile"
+                                name="qa_cqa_approval_Attachment[]" oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1116,13 +1108,13 @@
             </div>
 
             <div class="button-block">
-                @if ($data->stage != 0)
+                <!-- @if ($data->stage != 0)
                     <button type="submit" id="ChangesaveButton" class="saveButton"
                         {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
-                @endif
+                @endif -->
 
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="submit">Submit</button>
+                <!-- <button type="submit">Submit</button> -->
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
                 </button>
             </div>

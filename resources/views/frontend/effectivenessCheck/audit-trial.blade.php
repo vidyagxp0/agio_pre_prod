@@ -210,9 +210,14 @@
                                     href="{{ url('rcms/effectiveness/' . $document->id) }}"> Back
                                 </a>
                             </button> 
-                            <button class="button_theme1" onclick="window.print();">
+                            <!-- <button class="button_theme1" onclick="window.print();">
                                 Print
-                            </button>
+                            </button> -->
+                            <!-- <button class="button_theme1" onclick="window.print();">
+                                Exit
+                            </button> -->
+                            <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"style="margin-right: 10px"> Exit
+                            </a> 
                         </div>
                     </div>
                     <div class="modal fade" id="auditViewers">
