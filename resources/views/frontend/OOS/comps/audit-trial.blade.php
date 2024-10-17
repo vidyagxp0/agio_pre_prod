@@ -202,9 +202,10 @@
                                     href="{{ route('oos.oos_view', $document->id) }}"> Back
                                 </a>
                             </button>
-                            <button class="button_theme1" onclick="window.print();">
+                            <button class="button_theme1"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                            {{-- <button class="button_theme1" onclick="window.print();">
                                 Print
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                     <div class="modal fade" id="auditViewers">

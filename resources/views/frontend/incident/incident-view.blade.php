@@ -2786,7 +2786,7 @@
                                                     </div>
                                                     <div class="checkbox-group">
                                                     <input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Critical
-                                                    <input type="checkbox" name="classification_by_qa" value="non_critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'non_critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Non-Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'non-critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Non-Critical
                                                 </div>
                                                 </div>
 
