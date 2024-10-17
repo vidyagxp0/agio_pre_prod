@@ -207,11 +207,12 @@
             View
         </button> 
         <button class="button_theme1">
-            Back
+            <a class="text-white"
+                href="{{ url('rcms/observationshow/' . $document->id) }}"> Back
+            </a>
         </button>
         <button class="button_theme1"><a class="text-white"
-                href="{{ url('rcms/observationshow/' . $document->id) }}"> Exit
-            </a>
+                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
         </button>
     </div>
 </div>
