@@ -1436,7 +1436,7 @@ class ExtensionNewController extends Controller
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
                     // $history->activity_type = 'Activity Log';
-                    $history->activity_type = 'System By, System On';
+                    $history->activity_type = 'Review By, Review On';
                     if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
                         $history->previous = "Null";
                     } else {
