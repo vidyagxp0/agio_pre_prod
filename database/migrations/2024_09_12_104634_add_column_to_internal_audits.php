@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('internal_audits', function (Blueprint $table) {
-            $table->text('Auditor_comment')->nullable();
-            $table->text('Auditee_comment')->nullable();
+            $table->longtext('Auditor_comment')->nullable();
+            $table->longtext('Auditee_comment')->nullable();
             $table->text('auditee_department')->nullable();
         });
     }

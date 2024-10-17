@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\Capa;
+use App\Models\extension_new;
 use Illuminate\Http\Request;
 use App\Models\OOS;
 use App\Models\User;
@@ -79,6 +80,9 @@ class OOSController extends Controller
         $cft = [];
         $revised_date = "";
         $data = OOS::find($id);
+        $micro_count = extension_new::where(['parent_id' => $id, "parent_type" => "OOS Micro"])->count();
+        $chemical_count = extension_new::where(['parent_id' => $id, "parent_type" => "OOS Chemical"])->count();
+        $oot_count = extension_new::where(['parent_id' => $id, "parent_type" => "OOT"])->count();
 
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
@@ -163,7 +167,7 @@ class OOSController extends Controller
         $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','capa_record','check_method_procedure_during_analysis','Results_and_Calculation','check_Instrument_Equipment_Details','check_sample_receiving_vars','old_record','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
+        compact('data', 'old_records','micro_count','chemical_count','oot_count','capa_record','check_method_procedure_during_analysis','Results_and_Calculation','check_Instrument_Equipment_Details','check_sample_receiving_vars','old_record','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
 
     }
 
@@ -456,7 +460,7 @@ class OOSController extends Controller
                     ]);
                 }
                 $changestage->stage = "8";
-                $changestage->status = "P-IA CQAH/QAH Review";
+                $changestage->status = "Phase IA CQAH/QAH Review";
                 $changestage->Phase_IA_QA_Review_Complete_By = Auth::user()->name;
                 $changestage->Phase_IA_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_IA_QA_Review_Complete_Comment = $request->comment;
@@ -475,7 +479,7 @@ class OOSController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IA QA/CQA Review Complete';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-IA CQAH/QAH Review";
+                    $history->change_to =   "Phase IA CQAH/QAH Review";
                     $history->current = $changestage->Phase_IA_QA_Review_Complete_By . ' , ' . $changestage->Phase_IA_QA_Review_Complete_On;
                     if (is_null($lastDocument->Phase_IA_QA_Review_Complete_By) || $lastDocument->Phase_IA_QA_Review_Complete_By === '') {
                         $history->action_name = 'New';
@@ -511,7 +515,7 @@ class OOSController extends Controller
                 //            );
                 //        }
                 //     }
-                // $changestage->update();
+                $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3248,8 +3252,15 @@ class OOSController extends Controller
     public function child(Request $request, $id)
     {
         $cft = [];
+        $Form_type = OOS::where('id', $id)->value('Form_type');
         $parent_id = $id;
-        $parent_type = "OOS Chemical";
+        if ($Form_type === 'OOS_Chemical') {
+            $parent_type = 'OOS Chemical';
+        } elseif ($Form_type === 'OOS_Micro') {
+            $parent_type = 'OOS Micro';
+        } else {
+            $parent_type = 'OOT';
+        }        
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -3270,10 +3281,12 @@ class OOSController extends Controller
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
             $Capachild = OOS::find($id);
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             $Capachild->Capachild = $record_number;
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id','old_records','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('reference_record','parent_id','relatedRecords','old_records','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";

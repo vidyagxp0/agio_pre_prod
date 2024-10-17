@@ -5393,25 +5393,25 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Initial Review Comments')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Initial Review Comments';
-            $history->previous = $lastDocument->qa_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA/CQA Initial Review Comments';
+        //     $history->previous = $lastDocument->qa_comments;
+        //     $history->current = $request->qa_review_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
 
         // if ($lastDocument->qa_head != $request->qa_head) {
@@ -12657,13 +12657,15 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         if ($request->revision == "Capa") {
             $old_records = $old_record;
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords'));
+            $Capachild =CC::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords','reference_record'));
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=CC::find($id);
-                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords'));
         }
         if ($request->revision == "New Document") {
@@ -12893,7 +12895,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $doc->created_at = $datas->created_at;
             }
         }
-        $data = RcmDocHistory::where('cc_id', $doc->id)->orderByDesc('id')->get();
+        $data = RcmDocHistory::where('cc_id', $doc->id)->orderBy('id')->get();
+        
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
@@ -12905,6 +12908,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 'isRemoteEnabled' => true,
                 'isPhpEnabled' => true,
             ]);
+
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();

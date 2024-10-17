@@ -179,10 +179,29 @@
                             </div>
                         </tr>
                     </table>
-
+                    @php
+            $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
+                            ->get(); 
+            $auditCollect = DB::table('audit_reviewers_details')
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id,  'type' => 'audit_program'])
+                            ->latest()
+                            ->first();
+        @endphp
 
                     <table>
+                    @if ($auditCollect)
+                            <div style="color: green; font-weight: 600">The Audit Trail has been reviewed.</div>
+                        @else
+                            <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
+                        @endif
                         <div class="buttons-new">
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                            Review
+                            </button>    
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                View
+                            </button>
                             <a class="text-white" href="{{ url('/rcms/AuditProgramShow/' . $document->id) }}">
                                 <button class="button_theme1">
                                     Back
@@ -221,123 +240,172 @@
 
         </header>
 
-        <div class="inner-block">
-            <div class="division">
-            </div>
-            <div class="second-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
 
+        <div class="modal fade" id="auditReviewer">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
 
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
 
-
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
-
-                        @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $loop->iteration }}</td>
-
-
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name
-                                        :</strong>{{ $dataDemo->activity_type ?: 'Not Applicable' }}</a>
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <div style="margin-top: 5px;" class="imageContainer">
-                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change From :</strong>
-                                        @if ($dataDemo->change_from)
-                                            {{-- Check if the change_from is a date --}}
-                                            @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d/M/Y') }}
+                                <!-- <form action="" method="POST"> -->
+                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                        @csrf
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="group-input">
+                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_by" id="reviewer_completed_by"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_on" id="reviewer_completed_on"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                            </div>
+                                            <input type="hidden" id="type" name="type" value="audit_program">
+                                        </div>
+                                        <div class="modal-footer">
+                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="auditViewers">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                @php
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'audit_program'])
+                                        ->get();
+                                @endphp
+                                <!-- Customer grid view -->
+                                <div class="table-responsive" style="padding: 20px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Review By</th>
+                                                <th>Review On</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Check if reviewer array is empty or null -->
+                                            @if ($reviewer && count($reviewer) > 0)
+                                                <!-- Iterate over stored reviewer and display them -->
+                                                @foreach ($reviewer as $review)
+                                                    <tr>
+                                                        <td>{{ $review->reviewer_comment_by }}</td>
+                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ $review->reviewer_comment }}</td>
+                                                    </tr>
+                                                @endforeach
                                             @else
-                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                                <tr>
+                                                    <td colspan="9">No results available</td>
+                                                </tr>
                                             @endif
-                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
-                                            NULL
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    @else
-                                        <strong>Change From :</strong>
-                                        @if (!empty(strip_tags($dataDemo->previous)))
-                                            {{-- Check if the previous is a date --}}
-                                            @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d/M/Y') }}
-                                            @else
-                                                {!! $dataDemo->previous !!}
-                                            @endif
-                                        @elseif($dataDemo->previous == null)
-                                            Null
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    @endif
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <br>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="imageContainer">
-                                    @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
-                                        @else
-                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
-                                        @endif
-                                    @else
-                                        <strong>Change To :</strong>
-                                        @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
-                                        @else
-                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
-                                        @endif
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type
-                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                    <div class="inner-block">
 
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+<div class="row mb-3">
+    <div class="col-md-3">
+        <label for="typedata">Type</label>
+        <select class="form-control" id="typedata" name="typedata">
+            <option value="">Select Type</option>
+            <option value="cft_review">CFT Review</option>
+            <option value="notification">Notification</option>
+            <option value="business">Business Rules</option>
+            <option value="stage">Stage Change</option>
+            <option value="user_action">User Action</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="user">Perform By</label>
+        <select class="form-control" id="user" name="user">
+            <option value="">Select User</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control" id="from_date" name="from_date">
+    </div>
+    <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" id="to_date" name="to_date">
+    </div>
+</div>
 
-                            </td>
-                    </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
+
+<div class="division">
+</div>
+<div class="second-table">
+    <table>
+        <thead>
+            <tr class="table_bg">
+                <th>S.No</th>
+                <th>Flow Changed From</th>
+                <th>Flow Changed To</th>
+                <th>Data Field</th>
+                <th>Action Type</th>
+                <th>Performer</th>
+            </tr>
+        </thead>
+        <tbody id="audit-data">
+            @include('frontend.audit-program.audit_trail_filter')
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+
+      
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -407,35 +475,95 @@
         </div>
     </div>
     <script type='text/javascript'>
+        // $(document).ready(function() {
+
+        //     $('#auditTable').on('click', '.viewdetails', function() {
+        //         var auditid = $(this).attr('data-id');
+
+        //         if (auditid > 0) {
+
+        //             // AJAX request
+        //             var url = "{{ route('audit-details', [':auditid']) }}";
+        //             url = url.replace(':auditid', auditid);
+
+        //             // Empty modal data
+        //             $('#auditTableinfo').empty();
+
+        //             $.ajax({
+        //                 url: url,
+        //                 dataType: 'json',
+        //                 success: function(response) {
+
+        //                     // Add employee details
+        //                     $('#auditTableinfo').append(response.html);
+
+        //                     // Display Modal
+        //                     $('#activity-modal').modal('show');
+        //                 }
+        //             });
+        //         }
+        //     });
+
+        // });
+
         $(document).ready(function() {
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val();
 
-            $('#auditTable').on('click', '.viewdetails', function() {
-                var auditid = $(this).attr('data-id');
 
-                if (auditid > 0) {
 
-                    // AJAX request
-                    var url = "{{ route('audit-details', [':auditid']) }}";
-                    url = url.replace(':auditid', auditid);
 
-                    // Empty modal data
-                    $('#auditTableinfo').empty();
 
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
 
-                            // Add employee details
-                            $('#auditTableinfo').append(response.html);
+                $.ajax({
+                    url: "{{ route('audit_program_filter', $document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
 
-                            // Display Modal
-                            $('#activity-modal').modal('show');
-                        }
-                    });
-                }
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
             });
-
         });
+
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
+
+            if (auditid > 0) {
+
+                // AJAX request
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        // Add employee details
+                        $('#auditTableinfo').append(response.html);
+
+                        // Display Modal
+                        $('#activity-modal').modal('show');
+                    }
+                });
+            }
+        });
+
     </script>
 @endsection

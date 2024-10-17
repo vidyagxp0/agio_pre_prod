@@ -9,7 +9,7 @@
     <p>Here are your login credentials:</p>
     <ul>
         <li><strong>Employee Code :</strong> {{ $employee->full_employee_id }}</li>
-        <li><strong>Password:</strong> {{ $randomPassword }}</li>
+        <li><strong>Password:</strong> {{ $decryptedPassword }}</li>
     </ul>
     <p>You can use this employee code and password to log in to your account.</p>
     <p>Thank you!</p>

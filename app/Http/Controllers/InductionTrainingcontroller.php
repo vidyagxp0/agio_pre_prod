@@ -381,6 +381,7 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_13 = $request->training_date_13;
         $inductionTraining->training_date_14 = $request->training_date_14;
         $inductionTraining->training_date_15 = $request->training_date_15;
+        // dd($request->training_date_15);
 
         if ($request->hasFile('final_r_attachment')) {
             $file = $request->file('final_r_attachment');
@@ -435,6 +436,7 @@ class InductionTrainingcontroller extends Controller
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
+            // dd($i);
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
@@ -470,7 +472,7 @@ class InductionTrainingcontroller extends Controller
         }
 
         $inductionTraining->trainee_name = $request->trainee_name;
-        $inductionTraining->training_type = $request->training_type;    
+        // $inductionTraining->training_type = $request->training_type;    
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -1005,12 +1007,18 @@ class InductionTrainingcontroller extends Controller
     public function viewrendersopinduction($id){
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
+    // public function viewrendersopinduction(){
+    //     return view('frontend.layout.Tms-Training', compact('id'));
+    // }
 
     
-    public function showCertificate($id)
+    public function showCertificate($employee_id)
     {
-        
-        return view('frontend.TMS.Induction_training.Induction_training_certificate');
+        $employee = \App\Models\Employee::where('employee_id', $employee_id)->first();
+    
+        $induction = \App\Models\Induction_training::where('employee_id', $employee_id)->first();
+    
+        return view('frontend.TMS.Induction_training.Induction_training_certificate', compact('employee', 'induction'));
     }
 
 

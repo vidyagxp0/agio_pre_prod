@@ -7536,7 +7536,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $Extensionchild->Extensionchild = $record_number;
            $relatedRecords = Helpers::getAllRelatedRecords();
            $data=Deviation::find($id);
-                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             // $relatedRecords = collect();
 
 
@@ -7552,9 +7552,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "Action Item";

@@ -727,9 +727,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
@@ -766,16 +768,20 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                         @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Deviation', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Initiator Updated Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                         @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Deviation', 4))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
@@ -795,9 +801,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                         @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
                                 Send to Pending Initiator Update
@@ -805,9 +813,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implementation verification Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                         @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation', 3))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#pending-initiator-update">
@@ -820,9 +830,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
+                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
+                            
                         @elseif($data->stage == 12)
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
                                     Reopen

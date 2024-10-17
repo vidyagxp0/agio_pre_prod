@@ -1,145 +1,247 @@
-
-    <div class="col-lg-12">
-        <div class="button-block">
-            <button type="button" class="printButton" onclick="saveAsPDF()">
-                <i class="fas fa-download"></i> Save as PDF
-            </button>
-        </div>
-     
-        <div class="certificate-container" id="certificate">
-            <h1 class="certificate-title">TRAINING CERTIFICATE</h1>
-            <div class="title-underline"></div> 
-            <div class="certificate-content">
-            <p>This is to certify that Mr./Ms./Mrs.____________________  has undergone Induction and On Job training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.</p>
-
-                <p>Therefore, we certify that Mr./Ms./Mrs. ____________________ is capable of performing his/her assigned duties in the ________________ Department independently.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Induction Training Certificate</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+      <!-- Print Button -->
+      <div class="print-button-container text-center">
+        <button onclick="window.print();" class="print-button">Print Certificate</button>
+    </div>
+    
+    <div class="pm-certificate-container">
+        <div class="outer-border"></div>
+        <div class="inner-border"></div>
+        
+        <div class="pm-certificate-border">
+            <!-- Logos Section -->
+            <div class="pm-certificate-logos text-center">
+                <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="Agio Logo" class="logo logo-left">
+                <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="Vidhya GxP Logo" class="logo logo-right">
             </div>
 
-            <div class="signature-section">
-                <div class="signature">
-                   
-                    Sign / Date: _______________ <br>Head of Department
+            <div class="pm-certificate-header">
+                <div class="pm-certificate-title cursive text-center">
+                    <h2>Certificate of Induction Training</h2>
                 </div>
-                <div class="signature">
-                  
-                    Sign / Date: _______________ <br>Head QA/CQA
+            </div>
+
+            <div class="pm-certificate-body">
+                <div class="pm-certificate-block">
+                    <p class="text-center">
+                        This is to certify that Mr. / Ms. / Mrs. 
+                        <strong>{{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}</strong>
+                        has undergone Induction Training, including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
+                    </p>
+
+                    <p class="text-center">
+                        Therefore, we certify that Mr. / Ms. / Mrs. 
+                        <strong>{{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}</strong> 
+                        is capable of performing his/her assigned duties in the 
+                        <strong>{{ $induction->department }}</strong> Department independently.
+                    </p>
+                </div>       
+
+                <div class="pm-certificate-footer">
+                    <div class="pm-certified text-center">
+                        <span class="bold block">Sign / Date:</span>
+                        <span class="pm-empty-space block underline"></span>
+                        <span class="bold block">HR Head</span>
+                    </div>
+                    <div class="pm-certified text-center">
+                        <span class="bold block">Sign / Date:</span>
+                        <span class="pm-empty-space block underline"></span>
+                        <span class="bold block">Head QA/CQA</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</body>
+</html>
 
 
-    <style>
-    .certificate-container {
-        width: 800px;
-        height: 425px;
-        border: 4px solid #0c0d0d;
-        padding: 18px;
-        background-color: white;
-        position: relative;
-        margin: auto;
-        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
+
+body {
+    padding: 20px 0;
+    background: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.cursive {
+    font-family: 'Pinyon Script', cursive;
+}
+
+.sans {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.block {
+    display: block;
+}
+
+.underline {
+    border-bottom: 1px solid #777;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.pm-empty-space {
+    height: 40px;
+    width: 100%;
+}
+
+.pm-certificate-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background-color: #618597;
+    padding: 30px;
+    color: #333;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+}
+
+.outer-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #fff;
+    pointer-events: none;
+}
+
+.inner-border {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid #fff;
+    pointer-events: none;
+}
+
+.pm-certificate-border {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #E1E5F0;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Logo Styling */
+.pm-certificate-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding-bottom: 20px; */
+}
+
+.logo {
+    max-width: 100px;
+}
+
+.logo-left {
+    transform: scale(0.7);
+    margin-bottom: 14px;
+}
+
+.logo-right {
+    transform: scale(1.8);
+    margin-right: 65px;
+}
+
+.pm-certificate-header {
+    margin-bottom: 10px;
+}
+
+.pm-certificate-title h2 {
+    font-size: 34px;
+}
+
+.pm-certificate-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pm-certificate-block {
+    text-align: center;
+}
+
+.pm-name-text {
+    font-size: 20px;
+}
+
+.pm-earned {
+    margin: 15px 0 20px;
+}
+
+.pm-earned-text {
+    font-size: 20px;
+}
+
+.pm-credits-text {
+    font-size: 15px;
+}
+
+.pm-course-title {
+    margin-bottom: 15px;
+}
+
+.pm-certified {
+    font-size: 12px;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.pm-certificate-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+@media print {
+    body {
+        background: #ccc; /* Maintain body background color */
     }
-    .title-underline {
-            border-top: 2px solid #0c0d0d;
-            width: 60%;
-            margin: 0 auto 35px auto;
-        }
-    
-    .certificate-container h1,
-    .certificate-container h2,
-    .certificate-container p {
-        text-align: center;
+
+    .pm-certificate-container {
+        background-color: #618597 !important; /* Ensures container color is printed */
+        box-shadow: none; /* Remove shadows that may not print well */
     }
 
-    .certificate-title {
-        font-size: 36px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: center;
+    .outer-border, .inner-border {
+        border-color: #fff !important; /* Make sure borders are printed */
     }
 
-    .certificate-content {
-        font-size: 18px;
-        line-height: 1.6;
-        text-align: left;
-        margin: 0 30px;
+    /* Ensure all text and background colors print */
+    .bold, .cursive, .sans, .underline, .text-center, .block, .pm-empty-space,
+    .pm-certificate-border, .pm-certificate-logos, .pm-certificate-header,
+    .pm-certificate-body, .pm-certificate-footer, .logo {
+        color-adjust: exact; /* Force colors to print as intended */
+        -webkit-print-color-adjust: exact; /* For WebKit browsers */
+        print-color-adjust: exact; /* Ensures colors are not lost */
     }
+}
 
-    .signature-section {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 50px;
-    }
 
-    .signature {
-        text-align: center;
-        font-size: 16px;
-    }
-
-  
-
-    @media print {
-        .button-block {
-            display: none !important;
-        }
-
-        body * {
-            visibility: hidden;
-        }
-
-        .certificate-container,
-        .certificate-container * {
-            visibility: visible;
-        }
-
-        .certificate-container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: auto;
-        }
-    }
-
-    .button-block {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-    }
-
-    .printButton {
-        background-color: #2c3e50;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .printButton:hover {
-        background-color: #1a252f;
-    }
-
-    .printButton i {
-        margin-right: 8px;
-    }
 </style>
-
-    <script>
-        async function saveAsPDF() {
-            const { jsPDF } = window.jspdf; 
-            const certificateElement = document.getElementById("certificate");
-            const canvas = await html2canvas(certificateElement);
-            const imgData = canvas.toDataURL("image/png");
-            const pdf = new jsPDF("landscape", "pt", "a4");
-            const imgWidth = 750; 
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-            pdf.save("Trainer_Certificate.pdf");
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

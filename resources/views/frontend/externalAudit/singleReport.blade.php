@@ -462,7 +462,7 @@
 
 
 
-                <table>
+                <!-- <table>
                     <tr>
                         <th class="w-20">CFT review selection</th>
                         <td class="w-80">
@@ -473,7 +473,7 @@
                             @endif
                         </td>
                     </tr>
-                </table>
+                </table> -->
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">

@@ -561,11 +561,11 @@
                 <table>
                     <tr>
                         <th class="w-10">Submit By</th>
-                        <td class="w-20">{{ $data->submitted_by }}</td>
+                        <td class="w-20">@if($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</td>
                         <th class="w-10">Submit On</th>
-                        <td class="w-20">{{ $data->submitted_on }}</td>
+                        <td class="w-20">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
                         <th class="w-10">Submit Comment</th>
-                        <td class="w-30">{{ $data->submitted_comment }}</td>
+                        <td class="w-30">@if($data->submitted_comment){{ $data->submitted_comment }}@else Not Applicable @endif</td>
                     </tr>
 
                     <!-- </table>
@@ -576,11 +576,11 @@
 
                     <tr>
                         <th class="w-10">Cancel By</th>
-                        <td class="w-20">{{ $data->cancelled_by }}</td>
+                        <td class="w-20">@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
                         <th class="w-10">Cancel On</th>
-                        <td class="w-20">{{ $data->cancelled_on }}</td>
+                        <td class="w-20">@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
                         <th class="w-10">Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancelled_comment }}</td>
+                        <td class="w-30">@if($data->cancelled_comment){{ $data->cancelled_comment }}@else Not Applicable @endif</td>
                     </tr>
 
                     <!-- </table>
@@ -591,11 +591,11 @@
 
                     <tr>
                         <th class="w-10">Acknowledge Complete By</th>
-                        <td class="w-20">{{ $data->acknowledgement_by }}</td>
+                        <td class="w-20">@if($data->acknowledgement_by){{ $data->acknowledgement_by }}@else Not Applicable @endif</td>
                         <th class="w-10">Acknowledge Complete On</th>
-                        <td class="w-20">{{ $data->acknowledgement_on }}</td>
+                        <td class="w-20">@if($data->acknowledgement_on){{ $data->acknowledgement_on }}@else Not Applicable @endif</td>
                         <th class="w-10">Acknowledge Complete Comment</th>
-                        <td class="w-30">{{ $data->acknowledgement_comment }}</td>
+                        <td class="w-30">@if($data->acknowledgement_comment){{ $data->acknowledgement_comment }}@else Not Applicable @endif</td>
                     </tr>
                     <!-- </table>
                     <div class="block-head">
@@ -604,11 +604,11 @@
                     <table> -->
                     <tr>
                         <th class="w-10">Complete By</th>
-                        <td class="w-20">{{ $data->work_completion_by }}</td>
+                        <td class="w-20">@if($data->work_completion_by){{ $data->work_completion_by }}@else Not Applicable @endif</td>
                         <th class="w-10">Complete On</th>
-                        <td class="w-20">{{ $data->work_completion_on }}</td>
+                        <td class="w-20">@if($data->work_completion_on){{ $data->work_completion_on }}@else Not Applicable @endif</td>
                         <th class="w-10">Complete Comment</th>
-                        <td class="w-30">{{ $data->work_completion_comment }}</td>
+                        <td class="w-30">@if($data->work_completion_comment){{ $data->work_completion_comment }}@else Not Applicable @endif</td>
                     </tr>
                     <!-- </table>
                     <div class="block-head">
@@ -617,11 +617,11 @@
                     <table> -->
                     <tr>
                         <th class="w-10">Verification Complete By</th>
-                        <td class="w-20">{{ $data->qa_varification_by }}</td>
+                        <td class="w-20">@if($data->qa_varification_by){{ $data->qa_varification_by }}@else Not Applicable @endif</td>
                         <th class="w-10">Verification Complete On</th>
-                        <td class="w-20">{{ $data->qa_varification_on }}</td>
+                        <td class="w-20">@if($data->qa_varification_on){{ $data->qa_varification_on }}@else Not Applicable @endif</td>
                         <th class="w-10">Verification Complete Comment</th>
-                        <td class="w-30">{{ $data->qa_varification_comment }}</td>
+                        <td class="w-30">@if($data->qa_varification_comment){{ $data->qa_varification_comment }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>

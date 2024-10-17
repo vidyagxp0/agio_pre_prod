@@ -140,15 +140,15 @@
                             </a>
                         </button>
                         <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                                    Activate
-                                                </button> -->
+                                                            Activate
+                                                        </button> -->
                         @if ($employee->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Activate
                             </button>
                         @elseif($employee->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send Induction-Training
+                                Send To Induction Training
                             </button>
                         @elseif($employee->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -208,8 +208,7 @@
         <div class="cctab">
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
-            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
-            <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Induction Training</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
         </div>
@@ -260,16 +259,16 @@
 
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Assigned To">Assigned To</label>
-                                                        <select name="assigned_to">
-                                                            <option value="">-- Select --</option>
-                                                            @foreach ($users as $user)
+                                                            <div class="group-input">
+                                                                <label for="Assigned To">Assigned To</label>
+                                                                <select name="assigned_to">
+                                                                    <option value="">-- Select --</option>
+                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}" @if ($user->id == $employee->assigned_to) selected @endif>{{ $user->name }}</option>
     @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -287,14 +286,14 @@
 
 
                             <!-- <div class="col-lg-6 new-date-data-field">
-                                                    <div class="group-input input-date">
-                                                        <label for="Actual Start Date">Actual Start Date</label>
-                                                        <div class="calenderauditee">
-                                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
-                                                            <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                                            <div class="group-input input-date">
+                                                                <label for="Actual Start Date">Actual Start Date</label>
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
+                                                                    <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $employee->start_date ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
 
                             {{-- <div class="col-lg-6">
                         <div class="group-input">
@@ -389,6 +388,13 @@
                                 </div>
                             </div> --}}
 
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="qualification">Qualification<span class="text-danger">*</span></label>
+                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
+                                </div>
+                            </div>
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -401,32 +407,12 @@
 
                                         @foreach (Helpers::getDepartments() as $code => $department)
                                             <option value="{{ $code }}"
-                                                @if ($savedDepartmentId == $code) selected @endif>{{ $department }}</option>
+                                                @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Experience">Experience (No. of Years)</label>
-                                    <select name="experience" id="experience">
-                                        <option>Select </option>
-                                        @for ($experience = 1; $experience <= 70; $experience++)
-                                            <option value="{{ $experience }}"
-                                                @if ($experience == $employee->experience) selected @endif>{{ $experience }}
-                                            </option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-
 
                             @php
                                 $savedJobTitle = old('job_title', $employee->job_title);
@@ -437,21 +423,51 @@
                                     <label for="job_title">Designation<span class="text-danger">*</span></label>
                                     <select name="job_title" id="job_title" required onchange="toggleOtherDesignation()">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee</option>
-                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer</option>
-                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr. Officer</option>
-                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>Executive</option>
-                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>Sr. Executive</option>
-                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>Asst. Manager</option>
-                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager</option>
-                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM</option>
-                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr. Manager</option>
-                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>Deputy GM</option>
-                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM and GM</option>
-                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>Head Quality</option>
-                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP Quality</option>
-                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>Plant Head</option>
-                                        <option value="Other designation" @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
+                                        <option value="Trainee" @if ($savedJobTitle == 'Trainee') selected @endif>Trainee
+                                        </option>
+                                        <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer
+                                        </option>
+                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr.
+                                            Officer</option>
+                                        <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>
+                                            Executive</option>
+                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>
+                                            Sr. Executive</option>
+                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>
+                                            Asst. Manager</option>
+                                        <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager
+                                        </option>
+                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM
+                                        </option>
+                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr.
+                                            Manager</option>
+                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>
+                                            Deputy GM</option>
+                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM
+                                            and GM</option>
+                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>
+                                            Head Quality</option>
+                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP
+                                            Quality</option>
+                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>
+                                            Plant Head</option>
+                                        <option value="Other designation"
+                                            @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Experience">Experience (No. of Years)</label>
+                                    <select name="experience" id="experience">
+                                        <option>Select </option>
+                                        @for ($experience = 1; $experience <= 70; $experience++)
+                                            <option value="{{ $experience }}"
+                                                @if ($experience == $employee->experience) selected @endif>{{ $experience }}
+                                            </option>
+                                        @endfor
                                     </select>
                                 </div>
                             </div>
@@ -467,13 +483,15 @@
                             <div class="col-lg-6" id="other_department_container" style="display: none;">
                                 <div class="group-input">
                                     <label for="other_department">Other Department</label>
-                                    <input type="text" name="other_department" id="other_department" value="{{ old('other_department', $employee->other_department) }}">
+                                    <input type="text" name="other_department" id="other_department"
+                                        value="{{ old('other_department', $employee->other_department) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6" id="other_designation_container" style="display: none;">
                                 <div class="group-input">
                                     <label for="other_designation">Other Designation</label>
-                                    <input type="text" name="other_designation" id="other_designation" value="{{ $employee->other_designation }}">
+                                    <input type="text" name="other_designation" id="other_designation"
+                                        value="{{ $employee->other_designation }}">
                                 </div>
                             </div>
 
@@ -518,9 +536,9 @@
                                     <a href="{{ asset('upload/' . $employee->attached_cv) }}"
                                         target="_blank">{{ $employee->attached_cv }}</a>
                                 </div>
-                            </div> 
+                            </div>
 
-                            {{--<div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="attached_cv">Attached CV</label>
                                     <input type="file" id="myfile" name="attached_cv">
@@ -544,9 +562,9 @@
                                     <a href="{{ asset('upload/' . $employee->certification) }}"
                                         target="_blank">{{ $employee->certification }}</a>
                                 </div>
-                            </div> 
+                            </div>
 
-                            {{--<div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
                                     <input type="file" id="myfile" name="certification">
@@ -558,22 +576,22 @@
                             </div> --}}
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Additional Medical Document">Medical Checkup Report?</label>
-                                                    </div>
-                                                </div>
+                                                            <div class="group-input">
+                                                                <label for="Additional Medical Document">Medical Checkup Report?</label>
+                                                            </div>
+                                                        </div>
 
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Attached Medical Document">Medical Checkup Report?</label>
-                                                        @if ($employee->has_additional_document === 'Yes')
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Attached Medical Document">Medical Checkup Report?</label>
+                                                                @if ($employee->has_additional_document === 'Yes')
     <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
     @endif
-                                                    
-                                                            <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
-                                                       
-                                                    </div>
-                                                </div> -->
+                                                            
+                                                                    <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
+                                                               
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -603,6 +621,14 @@
                                 </div>
                             @endif
 
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ $employee->email }}" readonly>
+                                </div>
+                            </div>
+
 
 
 
@@ -630,7 +656,7 @@
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country"
                                         aria-label="Default select example" disabled>
-                                        <option value="IN" selected>India</option>
+                                        <option value="India" data-code="IN">India</option>
                                     </select>
                                 </div>
                             </div>
@@ -656,18 +682,102 @@
                                 </div>
                             </div>
 
+                            <script>
+                                var config = {
+                                    cUrl: 'https://api.countrystatecity.in/v1',
+                                    ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA==' // Replace with actual key
+                                };
+
+                                var countrySelect = document.querySelector('.country'),
+                                    stateSelect = document.querySelector('.state'),
+                                    citySelect = document.querySelector('.city');
+
+                                // Store the selected state and city from employee data
+                                var selectedState = "{{ $employee->state }}";
+                                var selectedCity = "{{ $employee->city }}";
+
+                                function loadStates() {
+                                    stateSelect.disabled = false;
+                                    stateSelect.innerHTML = '<option value="">Select State</option>';
+
+                                    const selectedCountryCode = 'IN'; // Fixed country code for India
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(state => {
+                                                const option = document.createElement('option');
+                                                option.value = state.name;
+                                                option.textContent = state.name;
+                                                option.dataset.code = state.iso2;
+                                                stateSelect.appendChild(option);
+
+                                                // Preselect state if it matches the employee's state
+                                                if (state.name === selectedState) {
+                                                    option.selected = true;
+                                                    loadCities(); // Load cities if state is already selected
+                                                }
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading states:', error);
+                                        }
+                                    });
+                                }
+
+                                function loadCities() {
+                                    citySelect.disabled = false;
+                                    citySelect.innerHTML = '<option value="">Select City</option>';
+
+                                    const selectedCountryCode = 'IN'; // Fixed country code for India
+                                    const selectedStateCode = stateSelect.options[stateSelect.selectedIndex].dataset.code;
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(city => {
+                                                const option = document.createElement('option');
+                                                option.value = city.name;
+                                                option.textContent = city.name;
+                                                citySelect.appendChild(option);
+
+                                                // Preselect city if it matches the employee's city
+                                                if (city.name === selectedCity) {
+                                                    option.selected = true;
+                                                }
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading cities:', error);
+                                        }
+                                    });
+                                }
+
+                                $(document).ready(function() {
+                                    loadStates(); // Load states on page load
+                                    stateSelect.addEventListener('change', loadCities); // Load cities when state changes
+                                });
+                            </script>
+
+
 
                             <!-- <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="Site Name">Site Name</label>
-                                                        <select name="site_name">
-                                                            <option value="">Enter Your Selection Here</option>
-                                                            <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
-                                                            <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
-                                                         
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                            <div class="group-input">
+                                                                <label for="Site Name">Site Name</label>
+                                                                <select name="site_name">
+                                                                    <option value="">Enter Your Selection Here</option>
+                                                                    <option value="Corporate" @if ($employee->site_name == 'Corporate') selected @endif>Corporate</option>
+                                                                    <option value="Plant" @if ($employee->site_name == 'Plant') selected @endif>Plant</option>
+                                                                 
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -702,7 +812,7 @@
                                 </div>
                             </div>
 
-                           {{-- <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Picture</label>
                                     <input type="file" id="myfile" name="picture">
@@ -723,7 +833,7 @@
                                 </div>
                             </div>
 
-                           {{-- <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Speciman Signature </label>
                                     <input type="file" id="myfile" name="specimen_signature">
@@ -776,7 +886,7 @@
                                 </div>
                             </div>
 
-                            {{--<div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="File Attachment">File Attachment</label>
                                     <input type="file" id="myfile" name="file_attachment">
@@ -832,205 +942,14 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                            <button type="button" class="cctablinks "
-                                onclick="openCity(event, 'CCForm12')">Next</button>
-
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                    Exit </a>
-                            </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
 
                     </div>
                 </div>
             </div>
 
-            <!-- Tab content -->
             <div id="CCForm2" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="group-input" id="external-details-grid">
-                            <label for="audit-agenda-grid">
-                                External Training Details
-                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#observation-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="external-training-table" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 50px;">Sr. No.</th>
-                                            <th>Topic</th>
-
-                                            <th style="width: 200px;">External Training Date</th>
-                                            <th>External Trainer</th>
-
-                                            <th>External Training Agency</th>
-                                            <th style="width: 200px;">Certificate</th>
-                                            <th style="width: 200px;">Supporting Documents</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @if ($external_grid_data && is_array($external_grid_data->data))
-                                            @foreach ($external_grid_data->data as $index => $external_grid)
-                                                <tr>
-                                                    <td><input disabled type="text"
-                                                            name="external_training[{{ $loop->index }}][serial]"
-                                                            value="{{ $loop->index + 1 }}"></td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][topic]"
-                                                            value="{{ $external_grid['topic'] ?? '' }}"></td>
-                                                    <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input class="click_date"
-                                                                        id="date_{{ $loop->index }}_external_training_date"
-                                                                        type="text"
-                                                                        name="external_training[{{ $loop->index }}][external_training_date]"
-                                                                        placeholder="DD-MMM-YYYY"
-                                                                        value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('d-M-Y') : '' }}" />
-                                                                    <input type="date"
-                                                                        name="external_training[{{ $loop->index }}][external_training_date]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('Y-m-d') : '' }}"
-                                                                        id="date_{{ $loop->index }}_external_training_date"
-                                                                        class="hide-input show_date"
-                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_{{ $loop->index }}_external_training_date')" />
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][external_trainer]"
-                                                            value="{{ $external_grid['external_trainer'] ?? '' }}">
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][external_agency]"
-                                                            value="{{ $external_grid['external_agency'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="file"
-                                                            name="external_training[{{ $loop->index }}][certificate]"
-                                                            value="{{ $external_grid['certificate'] ?? '' }}">
-                                                        @if (isset($external_grid['certificate']))
-                                                            <a href="{{ asset($external_grid['certificate']) }}"
-                                                                target="_blank">View Certificate</a>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{-- <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
-                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a> --}}
-                                                        <input type="file" id="myfile"
-                                                            name="external_training[{{ $loop->index }}][supporting_documents]"
-                                                            value="{{ $external_grid['supporting_documents'] ?? '' }}">
-                                                        @if (isset($external_grid['supporting_documents']))
-                                                            <a href="{{ asset('upload/' . $external_grid['supporting_documents']) }}"
-                                                                target="_blank">View Document</a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td><input disabled type="text" name="external_training[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="external_training[0][topic]"></td>
-                                                <td><input type="date"
-                                                        name="external_training[0][external_training_date]"></td>
-                                                <td><input type="text" name="external_training[0][external_trainer]">
-                                                </td>
-                                                <td><input type="text" name="external_training[0][external_agency]">
-                                                </td>
-                                                <td><input type="file" name="external_training[0][certificate]">
-                                                </td>
-                                                <td><input type="file"
-                                                        name="external_training[0][supporting_documents]"></td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="External Comments">External Comments</label>
-                                    <textarea name="external_comment">{{ $employee->external_comment }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="External Attachment">External Attachment</label>
-                                    <input type="file" id="myfile" name="external_attachment"
-                                        value="{{ $employee->external_attachment }}">
-                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}"
-                                        target="_blank">{{ $employee->external_attachment }}</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#details-grid').click(function(e) {
-                                    function generateTableRow(serialNumber) {
-                                        var users = @json($users);
-
-                                        var html =
-                                            '<tr>' +
-                                            '<td><input disabled type="text" name="external_training[' + serialNumber +
-                                            '][serial]" value="' + serialNumber +
-                                            '"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][topic]"></td>' +
-                                            '<td><input type="date" name="external_training[' + serialNumber +
-                                            '][external_training_date]"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][external_trainer]"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][external_agency]"></td>' +
-                                            '<td><input type="file" name="external_training[' + serialNumber +
-                                            '][certificate]"></td>' +
-                                            '<td><input type="file" name="external_training[' + serialNumber +
-                                            '][supproting_documents]"></td>' +
-                                            '</tr>';
-
-                                        // for (var i = 0; i < users.length; i++) {
-                                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                        // }
-
-                                        '</tr>';
-
-                                        return html;
-                                    }
-
-                                    var tableBody = $('#external-training-table tbody');
-                                    var rowCount = tableBody.children('tr').length;
-                                    var newRow = generateTableRow(rowCount + 1);
-                                    tableBody.append(newRow);
-                                });
-                            });
-                        </script>
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
-
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="CCForm12" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
 
@@ -1053,11 +972,9 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
-                        <!-- <a href="/rcms/qms-dashboard"> -->
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
+                        <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                 
                     </div>
                 </div>
             </div>
@@ -1077,7 +994,7 @@
                             <div class="group-input">
                                 <label for="Activated On">Activate On</label>
                                 <div class="static">
-                                    {{ $employee->activated_on}}
+                                    {{ $employee->activated_on }}
                                 </div>
                             </div>
                         </div>
@@ -1149,92 +1066,6 @@
     </div>
 
 
-    <script>
-        var config = {
-            cUrl: 'https://api.countrystatecity.in/v1',
-            ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
-        };
-
-        var countrySelect = document.querySelector('.country'),
-            stateSelect = document.querySelector('.state'),
-            citySelect = document.querySelector('.city');
-
-        function loadCountries() {
-            let apiEndPoint = `${config.cUrl}/countries`;
-
-            $.ajax({
-                url: apiEndPoint,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(country => {
-                        const option = document.createElement('option');
-                        option.value = country.iso2;
-                        option.textContent = country.name;
-                        countrySelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading countries:', error);
-                }
-            });
-        }
-
-        function loadStates() {
-            stateSelect.disabled = false;
-            stateSelect.innerHTML = '<option value="">Select State</option>';
-
-            const selectedCountryCode = countrySelect.value;
-
-            $.ajax({
-                url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(state => {
-                        const option = document.createElement('option');
-                        option.value = state.iso2;
-                        option.textContent = state.name;
-                        stateSelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading states:', error);
-                }
-            });
-        }
-
-        function loadCities() {
-            citySelect.disabled = false;
-            citySelect.innerHTML = '<option value="">Select City</option>';
-
-            const selectedCountryCode = countrySelect.value;
-            const selectedStateCode = stateSelect.value;
-
-            $.ajax({
-                url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.id;
-                        option.textContent = city.name;
-                        citySelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading cities:', error);
-                }
-            });
-        }
-        $(document).ready(function() {
-            loadCountries();
-        });
-    </script>
 
     {{-- Child   --}}
     <div class="modal fade" id="child-modal">
@@ -1338,6 +1169,76 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+
+function openCity(evt, cityName) {
+    var i, cctabcontent, cctablinks;
+    cctabcontent = document.getElementsByClassName("cctabcontent");
+    for (i = 0; i < cctabcontent.length; i++) {
+        cctabcontent[i].style.display = "none";
+    }
+    cctablinks = document.getElementsByClassName("cctablinks");
+    for (i = 0; i < cctablinks.length; i++) {
+        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    // Find the index of the clicked tab button
+    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+    // Update the currentStep to the index of the clicked tab
+    currentStep = index;
+}
+
+const nextButtons = document.querySelectorAll(".nextButton");
+const form = document.getElementById("step-form");
+const stepButtons = document.querySelectorAll(".cctablinks");
+const steps = document.querySelectorAll(".cctabcontent");
+let currentStep = 0;
+
+function nextStep() {
+    // Check if there is a next step
+    if (currentStep < steps.length - 1) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show next step
+        steps[currentStep + 1].style.display = "block";
+
+        // Add active class to next button
+        stepButtons[currentStep + 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep++;
+    }
+}
+
+function previousStep() {
+    // Check if there is a previous step
+    if (currentStep > 0) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show previous step
+        steps[currentStep - 1].style.display = "block";
+
+        // Add active class to previous button
+        stepButtons[currentStep - 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep--;
+    }
+}
+</script>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

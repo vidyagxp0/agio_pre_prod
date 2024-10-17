@@ -142,7 +142,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($employees as $index => $employee)
+                        @foreach ($employees->sortByDesc('id') as $index => $employee)
                         <tr>
                         <td>{{ $index + 1 }}</td>                            
                         <td>
@@ -319,7 +319,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             }
                                         }
                                     }
-                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
+                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' =>  'PS01', 'result' => 'Pass'])->latest()->first();
                                     // Join the non-null start dates into a comma-separated string
                                     $commaSeparatedStartDates = implode(', ', $dateValue);
                                 @endphp
@@ -346,15 +346,19 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                                 @endif
                                         </td>
                                         <td>
+                                            {{-- @if($temp->stage >=6)
                                         <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_training_certificate/{{$employee->id}}';">
                                             <i class="fa fa-certificate"></i>
                                         </button>
-
-
-
+                                            @endif --}}
+                                            @if($temp->stage >=6)
+                                                <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" 
+                                                        onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
+                                                    <i class="fa fa-certificate"></i>
+                                                </button>
+                                            @endif 
                                         </td>
                                         
-                                    
                                     </tr>
                                 @endif
                                 @endforeach
@@ -417,6 +421,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                     <th>My Training Completion date</th>
                                     <th>Preview SOP</th>
                                     <th>Quiz</th>
+                                    <th>Certificate</th>
                                 </tr>
                             </thead>
                             <tbody id="searchTable">
@@ -437,7 +442,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                         }
                                         // Join the non-null start dates into a comma-separated string
                                         $commaSeparatedStartDates = implode(', ', $dateValue);
-                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
+                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PS01', 'result' => 'Pass'])->latest()->first();
                                         
                                 @endphp
                                 @if($temp->stage >= 3)
@@ -466,6 +471,20 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                             Attempt Quiz
                                         </button> --}}
                                     </td>
+                                    <td>
+                                    @if($temp->stage >=4)
+
+                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
+                                                onclick="window.location.href='/job_training_certificate/{{$temp->id}}';"> 
+                                                <i class="fa fa-certificate"></i>
+                                            </button>
+                                        </td>
+                                    @endif    
+                                    <!-- @foreach ($jobTrainings as $jobTraining) -->
+                                  
+                                        <!-- @endforeach -->
+                                           
+ 
                                                              
                                 </tr>
                                 @endif
