@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('internal_audits', function (Blueprint $table) {
-            $table->longtext('Auditor_comment')->nullable();
-            $table->longtext('Auditee_comment')->nullable();
-            $table->text('auditee_department')->nullable();
+        Schema::table('extension_news', function (Blueprint $table) {
+            $table->longtext('stage_hide')->nullable();
         });
     }
 
@@ -27,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('internal_audits', function (Blueprint $table) {
+        Schema::table('extension_news', function (Blueprint $table) {
             //
         });
     }

@@ -22,7 +22,7 @@ return new class extends Migration
                  $table->text("capsule_remark_$i")->nullable();
             }
 
-            $table->string('Description_Deviation')->nullable();
+            $table->string('Description_Deviation_capsule')->nullable();
             $table->longText('file_attach')->nullable();
             $table->timestamps();
         });

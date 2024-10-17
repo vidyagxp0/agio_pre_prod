@@ -523,7 +523,7 @@
                                     <div class="group-input">
                                         <label for="reference">Parent Record Number</label>
 
-                                        
+
 
                                         <select multiple name="reference[]" data-silent-initial-value-set="true"
                                             id="reference" data-search="false"
@@ -568,7 +568,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Parent Record Number</label>
-                                       
+
 
                                         <input type="text" name="reference" maxlength="255"
                                             value="{{ $showdata->reference }}"
@@ -3560,7 +3560,7 @@
                                     </div>
                                 </div>
 
-                               
+
 
 
                                 <div class="button-block">

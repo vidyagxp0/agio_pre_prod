@@ -3737,6 +3737,142 @@ class OOSService
             // $lastOosRecod = OOS::find($id);
             $lastOosRecod = OOS::where('id', $id)->first();
 
+
+            $oos = OOS::findOrFail($id);
+
+            $input['due_date'] = isset($request->due_date) ? $request->due_date : $oos['due_date'];
+            $input['deviation_occured_on_gi'] = isset($request->deviation_occured_on_gi) ? $request->deviation_occured_on_gi : $oos['deviation_occured_on_gi'];
+
+            $file_input_names = [
+                'initial_attachment_gi',
+                'file_attachments_pli',
+                'file_attachments_pII',
+                'supporting_attachment_plic',
+                'supporting_attachments_plir',
+                'attachments_piiqcr',
+                'additional_testing_attachment_atp',
+                'file_attachments_if_any_ooscattach',
+                'conclusion_attachment_ocr',
+                'cq_attachment_ocqr',
+                'disposition_attachment_bd',
+                'reopen_attachment_ro',
+                'addendum_attachment_uaa',
+                'addendum_attachments_uae',
+                'required_attachment_uar',
+                'verification_attachment_uar',
+                'hod_attachment1',
+                'hod_attachment2',
+                'hod_attachment3',
+                'hod_attachment4',
+                'hod_attachment5',
+                'phaseII_attachment',
+                'QA_Head_attachment1',
+                'QA_Head_attachment2',
+                'QA_Head_attachment3',
+                'QA_Head_attachment4',
+                'QA_Head_attachment5',
+                'QA_Head_primary_attachment1',
+                'QA_Head_primary_attachment2',
+                'QA_Head_primary_attachment3',
+                'QA_Head_primary_attachment4',
+                'QA_Head_primary_attachment5',
+                'provide_attachment1',
+                'provide_attachment2',
+                'provide_attachment3',
+                'provide_attachment4',
+                'provide_attachment5',
+            ];
+
+            foreach ($file_input_names as $file_input_name)
+            {
+                // dd($input[$file_input_name]);
+                if (empty($request->file($file_input_name)) && !empty($oos[$file_input_name])) {
+                    // If the request does not contain file data but existing data is present, retain the existing data
+                    $input[$file_input_name] = $oos[$file_input_name];
+                } else {
+                    // If the request contains file data or existing data is not present, upload new files
+                    $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+                }
+
+            }
+
+             // Find the OOS record by ID
+            $oos->update($input);
+
+            $grid_inputs = [
+                'info_product_material',
+                'details_stability',
+                'oos_detail',
+                'checklist_lab_inv',
+                'checklist_IB_inv',
+                'oos_capa',
+                'phase_two_inv',
+                'phase_two_inv1',
+                'ph_meter',
+                'Viscometer',
+                'Melting_Point',
+                'Dis_solution',
+                'HPLC_GC',
+                'General_Checklist',
+                'kF_Potentionmeter',
+                'RM_PM',
+                'analyst_training_procedure',
+                'sample_receiving_var',
+                'method_used_during_analysis',
+                'instrument_equipment_detailss',
+                'result_and_calculation',
+                'Training_records_Analyst_Involved1',
+                'sample_intactness_before_analysis1',
+                'test_methods_Procedure1',
+                'Review_of_Media_Buffer_Standards_prep1',
+                'Checklist_for_Revi_of_Media_Buffer_Stand_prep1',
+                'ccheck_for_disinfectant_detail1',
+                'Checklist_for_Review_of_instrument_equip1',
+                'Checklist_for_Review_of_Training_records_Analyst1',
+                'Checklist_for_Review_of_sampling_and_Transport1',
+                'Checklist_Review_of_Test_Method_proceds1',
+                'Checklist_for_Review_Media_prepara_RTU_medias1',
+                'Checklist_Review_Environment_condition_in_tests1',
+                'review_of_instrument_bioburden_and_waters1',
+                'disinfectant_details_of_bioburden_and_water_tests1',
+                'training_records_analyst_involvedIn_testing_microbial_asssays1',
+                'sample_intactness_before_analysis22',
+                'checklist_for_review_of_test_method_IMA1',
+                'cr_of_media_buffer_st_IMA1',
+                'CR_of_microbial_cultures_inoculation_IMA1',
+                'CR_of_Environmental_condition_in_testing_IMA1',
+                'CR_of_instru_equipment_IMA1',
+                'disinfectant_details_IMA1',
+                'CR_of_training_rec_anaylst_in_monitoring_CIEM1',
+                'Check_for_Sample_details_CIEM1',
+                'Check_for_comparision_of_results_CIEM1',
+                'checklist_for_media_dehydrated_CIEM1',
+                'checklist_for_media_prepara_sterilization_CIEM1',
+                'CR_of_En_condition_in_testing_CIEM1',
+                'check_for_disinfectant_CIEM1',
+                'checklist_for_fogging_CIEM1',
+                'CR_of_test_method_CIEM1',
+                'CR_microbial_isolates_contamination_CIEM1',
+                'CR_of_instru_equip_CIEM1',
+                'Ch_Trend_analysis_CIEM1',
+                'checklist_for_analyst_training_CIMT2',
+                'checklist_for_comp_results_CIMT2',
+                'checklist_for_Culture_verification_CIMT2',
+                'sterilize_accessories_CIMT2',
+                'checklist_for_intrument_equip_last_CIMT2',
+                'disinfectant_details_last_CIMT2',
+                'checklist_for_result_calculation_CIMT2',
+                'oos_conclusion',
+                'oos_conclusion_review',
+                'products_details',
+                'instrument_detail',
+            ];
+
+            foreach ($grid_inputs as $grid_input)
+            {
+                self::update_grid($oos, $request, $grid_input);
+            }
+
             // if($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
             //     return "match nhi ho rhi";
             // } else {
@@ -6411,10 +6547,7 @@ class OOSService
                 }
                 $history->save();
             }
-
-            if ((is_array($lastOosRecod->initial_attachment_gi) ? implode(',', $lastOosRecod->initial_attachment_gi) : $lastOosRecod->initial_attachment_gi) !=  
-            (is_array($request->initial_attachment_gi) ? implode(',', $request->initial_attachment_gi) : $request->initial_attachment_gi) || 
-            !empty($request->initial_attachment_gi_comment)) {
+            if(json_encode($lastOosRecod->initial_attachment_gi) != json_encode($input['initial_attachment_gi'])){
         
             $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                                     ->where('activity_type', 'Initial Attachment')
@@ -6422,9 +6555,9 @@ class OOSService
             
             $history = new OosAuditTrial();
             $history->oos_id = $lastOosRecod->id;
-            $history->previous = is_array($lastOosRecod->initial_attachment_gi) ? implode(',', $lastOosRecod->initial_attachment_gi) : $lastOosRecod->initial_attachment_gi;
+            $history->previous = json_encode($lastOosRecod->initial_attachment_gi);
             $history->activity_type = 'Initial Attachment';
-            $history->current = is_array($request->initial_attachment_gi) ? implode(',', $request->initial_attachment_gi) : $request->initial_attachment_gi;
+            $history->current = json_encode($input['initial_attachment_gi']);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6443,593 +6576,557 @@ class OOSService
             $history->save();
         }
 
-        if ((is_array($lastOosRecod->hod_attachment1) ? implode(',', $lastOosRecod->hod_attachment1) : $lastOosRecod->hod_attachment1) !=  
-        (is_array($request->hod_attachment1) ? implode(',', $request->hod_attachment1) : $request->hod_attachment1) || 
-        !empty($request->hod_attachment1_comment)) {
-    
-        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'HOD Primary Attachment')
-                                ->exists();
+        if(json_encode($lastOosRecod->hod_attachment1) != json_encode($input['hod_attachment1'])){
         
-        $history = new OosAuditTrial();
-        $history->oos_id = $lastOosRecod->id;
-        $history->previous = is_array($lastOosRecod->hod_attachment1) ? implode(',', $lastOosRecod->hod_attachment1) : $lastOosRecod->hod_attachment1;
-        $history->activity_type = 'HOD Primary Attachment';
-        $history->current = is_array($request->hod_attachment1) ? implode(',', $request->hod_attachment1) : $request->hod_attachment1;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastOosRecod->status;
-        $history->stage = $lastOosRecod->stage;
-        $history->change_to = "Not Applicable";
-        $history->change_from = $lastOosRecod->status;
-    
-        if (is_null($lastOosRecod->hod_attachment1) || $lastOosRecod->hod_attachment1 === '') {
-            $history->action_name = "New";
-        } else {
-            $history->action_name = "Update";
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'HOD Primary Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->hod_attachment1);
+            $history->activity_type = 'HOD Primary Attachment';
+            $history->current = json_encode($input['hod_attachment1']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->hod_attachment1) || $lastOosRecod->hod_attachment1 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
         }
-        
-        $history->save();
-    }
+        // dd($input['QA_Head_primary_attachment1']);
 
-    if ((is_array($lastOosRecod->QA_Head_primary_attachment1) ? implode(',', $lastOosRecod->QA_Head_primary_attachment1) : $lastOosRecod->QA_Head_primary_attachment1) !=  
-        (is_array($request->QA_Head_primary_attachment1) ? implode(',', $request->QA_Head_primary_attachment1) : $request->QA_Head_primary_attachment1) || 
-        !empty($request->QA_Head_primary_attachment1_comment)) {
-    
-        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                                ->where('activity_type', 'CQA/QA Head Attachment')
-                                ->exists();
+        if(json_encode($lastOosRecod->QA_Head_primary_attachment1) != json_encode($input['QA_Head_primary_attachment1'])){
         
-        $history = new OosAuditTrial();
-        $history->oos_id = $lastOosRecod->id;
-        $history->previous = is_array($lastOosRecod->QA_Head_primary_attachment1) ? implode(',', $lastOosRecod->QA_Head_primary_attachment1) : $lastOosRecod->QA_Head_primary_attachment1;
-        $history->activity_type = 'CQA/QA Head Attachment';
-        $history->current = is_array($request->QA_Head_primary_attachment1) ? implode(',', $request->QA_Head_primary_attachment1) : $request->QA_Head_primary_attachment1;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastOosRecod->status;
-        $history->stage = $lastOosRecod->stage;
-        $history->change_to = "Not Applicable";
-        $history->change_from = $lastOosRecod->status;
-    
-        if (is_null($lastOosRecod->QA_Head_primary_attachment1) || $lastOosRecod->QA_Head_primary_attachment1 === '') {
-            $history->action_name = "New";
-        } else {
-            $history->action_name = "Update";
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'CQA/QA Head Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_primary_attachment1);
+            $history->activity_type = 'CQA/QA Head Attachment';
+            $history->current = json_encode($input['QA_Head_primary_attachment1']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_primary_attachment1) || $lastOosRecod->QA_Head_primary_attachment1 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
         }
+
+        if(json_encode($lastOosRecod->file_attachments_pli) != json_encode($input['file_attachments_pli'])){
         
-        $history->save();
-    }
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Analyst Interview Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->file_attachments_pli);
+            $history->activity_type = 'Analyst Interview Attachment';
+            $history->current = json_encode($input['file_attachments_pli']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->file_attachments_pli) || $lastOosRecod->file_attachments_pli === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
 
-    if ((is_array($lastOosRecod->file_attachments_pli) ? implode(',', $lastOosRecod->file_attachments_pli) : $lastOosRecod->file_attachments_pli) !=  
-    (is_array($request->file_attachments_pli) ? implode(',', $request->file_attachments_pli) : $request->file_attachments_pli) || 
-    !empty($request->file_attachments_pli_comment)) {
-
-    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'Analyst Interview Attachment')
-                            ->exists();
+        if(json_encode($lastOosRecod->supporting_attachments_plir) != json_encode($input['supporting_attachments_plir'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Supporting Attachments')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->supporting_attachments_plir);
+            $history->activity_type = 'Supporting Attachments';
+            $history->current = json_encode($input['supporting_attachments_plir']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->supporting_attachments_plir) || $lastOosRecod->supporting_attachments_plir === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
     
-    $history = new OosAuditTrial();
-    $history->oos_id = $lastOosRecod->id;
-    $history->previous = is_array($lastOosRecod->file_attachments_pli) ? implode(',', $lastOosRecod->file_attachments_pli) : $lastOosRecod->file_attachments_pli;
-    $history->activity_type = 'Analyst Interview Attachment';
-    $history->current = is_array($request->file_attachments_pli) ? implode(',', $request->file_attachments_pli) : $request->file_attachments_pli;
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastOosRecod->status;
-    $history->stage = $lastOosRecod->stage;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastOosRecod->status;
-
-    if (is_null($lastOosRecod->file_attachments_pli) || $lastOosRecod->file_attachments_pli === '') {
-        $history->action_name = "New";
-    } else {
-        $history->action_name = "Update";
-    }
-    
-    $history->save();
-}
-
-if ((is_array($lastOosRecod->supporting_attachments_plir) ? implode(',', $lastOosRecod->supporting_attachments_plir) : $lastOosRecod->supporting_attachments_plir) !=  
-(is_array($request->supporting_attachments_plir) ? implode(',', $request->supporting_attachments_plir) : $request->supporting_attachments_plir) || 
-!empty($request->supporting_attachments_plir_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Supporting Attachments')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->supporting_attachments_plir) ? implode(',', $lastOosRecod->supporting_attachments_plir) : $lastOosRecod->supporting_attachments_plir;
-$history->activity_type = 'Supporting Attachments';
-$history->current = is_array($request->supporting_attachments_plir) ? implode(',', $request->supporting_attachments_plir) : $request->supporting_attachments_plir;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->supporting_attachments_plir) || $lastOosRecod->supporting_attachments_plir === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->hod_attachment2) ? implode(',', $lastOosRecod->hod_attachment2) : $lastOosRecod->hod_attachment2) !=  
-(is_array($request->hod_attachment2) ? implode(',', $request->hod_attachment2) : $request->hod_attachment2) || 
-!empty($request->hod_attachment2_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IA HOD Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->hod_attachment2) ? implode(',', $lastOosRecod->hod_attachment2) : $lastOosRecod->hod_attachment2;
-$history->activity_type = 'Phase IA HOD Attachment';
-$history->current = is_array($request->hod_attachment2) ? implode(',', $request->hod_attachment2) : $request->hod_attachment2;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->hod_attachment2) || $lastOosRecod->hod_attachment2 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_attachment2) ? implode(',', $lastOosRecod->QA_Head_attachment2) : $lastOosRecod->QA_Head_attachment2) !=  
-(is_array($request->QA_Head_attachment2) ? implode(',', $request->QA_Head_attachment2) : $request->QA_Head_attachment2) || 
-!empty($request->QA_Head_attachment2_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IA CQA/QA Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_attachment2) ? implode(',', $lastOosRecod->QA_Head_attachment2) : $lastOosRecod->QA_Head_attachment2;
-$history->activity_type = 'Phase IA CQA/QA Attachment';
-$history->current = is_array($request->QA_Head_attachment2) ? implode(',', $request->QA_Head_attachment2) : $request->QA_Head_attachment2;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_attachment2) || $lastOosRecod->QA_Head_attachment2 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_primary_attachment2) ? implode(',', $lastOosRecod->QA_Head_primary_attachment2) : $lastOosRecod->QA_Head_primary_attachment2) !=  
-(is_array($request->QA_Head_primary_attachment2) ? implode(',', $request->QA_Head_primary_attachment2) : $request->QA_Head_primary_attachment2) || 
-!empty($request->QA_Head_primary_attachment2_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IA CQAH/QAH Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_primary_attachment2) ? implode(',', $lastOosRecod->QA_Head_primary_attachment2) : $lastOosRecod->QA_Head_primary_attachment2;
-$history->activity_type = 'Phase IA CQAH/QAH Attachment';
-$history->current = is_array($request->QA_Head_primary_attachment2) ? implode(',', $request->QA_Head_primary_attachment2) : $request->QA_Head_primary_attachment2;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_primary_attachment2) || $lastOosRecod->QA_Head_primary_attachment2 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->hod_attachment3) ? implode(',', $lastOosRecod->hod_attachment3) : $lastOosRecod->hod_attachment3) !=  
-(is_array($request->hod_attachment3) ? implode(',', $request->hod_attachment3) : $request->hod_attachment3) || 
-!empty($request->hod_attachment3_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IB HOD Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->hod_attachment3) ? implode(',', $lastOosRecod->hod_attachment3) : $lastOosRecod->hod_attachment3;
-$history->activity_type = 'Phase IB HOD Attachment';
-$history->current = is_array($request->hod_attachment3) ? implode(',', $request->hod_attachment3) : $request->hod_attachment3;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->hod_attachment3) || $lastOosRecod->hod_attachment3 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_attachment3) ? implode(',', $lastOosRecod->QA_Head_attachment3) : $lastOosRecod->QA_Head_attachment3) !=  
-(is_array($request->QA_Head_attachment3) ? implode(',', $request->QA_Head_attachment3) : $request->QA_Head_attachment3) || 
-!empty($request->QA_Head_attachment3_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IB CQA/QA Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_attachment3) ? implode(',', $lastOosRecod->QA_Head_attachment3) : $lastOosRecod->QA_Head_attachment3;
-$history->activity_type = 'Phase IB CQA/QA Attachment';
-$history->current = is_array($request->QA_Head_attachment3) ? implode(',', $request->QA_Head_attachment3) : $request->QA_Head_attachment3;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_attachment3) || $lastOosRecod->QA_Head_attachment3 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_primary_attachment3) ? implode(',', $lastOosRecod->QA_Head_primary_attachment3) : $lastOosRecod->QA_Head_primary_attachment3) !=  
-(is_array($request->QA_Head_primary_attachment3) ? implode(',', $request->QA_Head_primary_attachment3) : $request->QA_Head_primary_attachment3) || 
-!empty($request->QA_Head_primary_attachment3_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IB CQAH/QAH Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_primary_attachment3) ? implode(',', $lastOosRecod->QA_Head_primary_attachment3) : $lastOosRecod->QA_Head_primary_attachment3;
-$history->activity_type = 'Phase IB CQAH/QAH Attachment';
-$history->current = is_array($request->QA_Head_primary_attachment3) ? implode(',', $request->QA_Head_primary_attachment3) : $request->QA_Head_primary_attachment3;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_primary_attachment3) || $lastOosRecod->QA_Head_primary_attachment3 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-      
-
-if ((is_array($lastOosRecod->file_attachments_pII) ? implode(',', $lastOosRecod->file_attachments_pII) : $lastOosRecod->file_attachments_pII) !=  
-(is_array($request->file_attachments_pII) ? implode(',', $request->file_attachments_pII) : $request->file_attachments_pII) || 
-!empty($request->file_attachments_pII_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Manufacturing Operater Interview Details')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->file_attachments_pII) ? implode(',', $lastOosRecod->file_attachments_pII) : $lastOosRecod->file_attachments_pII;
-$history->activity_type = 'Manufacturing Operater Interview Details';
-$history->current = is_array($request->file_attachments_pII) ? implode(',', $request->file_attachments_pII) : $request->file_attachments_pII;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->file_attachments_pII) || $lastOosRecod->file_attachments_pII === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->attachments_piiqcr) ? implode(',', $lastOosRecod->attachments_piiqcr) : $lastOosRecod->attachments_piiqcr) !=  
-(is_array($request->attachments_piiqcr) ? implode(',', $request->attachments_piiqcr) : $request->attachments_piiqcr) || 
-!empty($request->attachments_piiqcr_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'II A Inv. Supporting Attachments')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->attachments_piiqcr) ? implode(',', $lastOosRecod->attachments_piiqcr) : $lastOosRecod->attachments_piiqcr;
-$history->activity_type = 'II A Inv. Supporting Attachments';
-$history->current = is_array($request->attachments_piiqcr) ? implode(',', $request->attachments_piiqcr) : $request->attachments_piiqcr;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->attachments_piiqcr) || $lastOosRecod->attachments_piiqcr === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->hod_attachment4) ? implode(',', $lastOosRecod->hod_attachment4) : $lastOosRecod->hod_attachment4) !=  
-(is_array($request->hod_attachment4) ? implode(',', $request->hod_attachment4) : $request->hod_attachment4) || 
-!empty($request->hod_attachment4_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II A HOD Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->hod_attachment4) ? implode(',', $lastOosRecod->hod_attachment4) : $lastOosRecod->hod_attachment4;
-$history->activity_type = 'Phase II A HOD Attachment';
-$history->current = is_array($request->hod_attachment4) ? implode(',', $request->hod_attachment4) : $request->hod_attachment4;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->hod_attachment4) || $lastOosRecod->hod_attachment4 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_attachment4) ? implode(',', $lastOosRecod->QA_Head_attachment4) : $lastOosRecod->QA_Head_attachment4) !=  
-(is_array($request->QA_Head_attachment4) ? implode(',', $request->QA_Head_attachment4) : $request->QA_Head_attachment4) || 
-!empty($request->QA_Head_attachment4_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II A CQA/QA Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_attachment4) ? implode(',', $lastOosRecod->QA_Head_attachment4) : $lastOosRecod->QA_Head_attachment4;
-$history->activity_type = 'Phase II A CQA/QA Attachment';
-$history->current = is_array($request->QA_Head_attachment4) ? implode(',', $request->QA_Head_attachment4) : $request->QA_Head_attachment4;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_attachment4) || $lastOosRecod->QA_Head_attachment4 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_primary_attachment4) ? implode(',', $lastOosRecod->QA_Head_primary_attachment4) : $lastOosRecod->QA_Head_primary_attachment4) !=  
-(is_array($request->QA_Head_primary_attachment4) ? implode(',', $request->QA_Head_primary_attachment4) : $request->QA_Head_primary_attachment4) || 
-!empty($request->QA_Head_primary_attachment4_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II A QAH/CQAH Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_primary_attachment4) ? implode(',', $lastOosRecod->QA_Head_primary_attachment4) : $lastOosRecod->QA_Head_primary_attachment4;
-$history->activity_type = 'Phase II A QAH/CQAH Attachment';
-$history->current = is_array($request->QA_Head_primary_attachment4) ? implode(',', $request->QA_Head_primary_attachment4) : $request->QA_Head_primary_attachment4;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_primary_attachment4) || $lastOosRecod->QA_Head_primary_attachment4 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->phaseII_attachment) ? implode(',', $lastOosRecod->phaseII_attachment) : $lastOosRecod->phaseII_attachment) !=  
-(is_array($request->phaseII_attachment) ? implode(',', $request->phaseII_attachment) : $request->phaseII_attachment) || 
-!empty($request->phaseII_attachment_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase IIB inv. Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->phaseII_attachment) ? implode(',', $lastOosRecod->phaseII_attachment) : $lastOosRecod->phaseII_attachment;
-$history->activity_type = 'Phase IIB inv. Attachment';
-$history->current = is_array($request->phaseII_attachment) ? implode(',', $request->phaseII_attachment) : $request->phaseII_attachment;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->phaseII_attachment) || $lastOosRecod->phaseII_attachment === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-
-$history->save();
-}
-
-if ((is_array($lastOosRecod->hod_attachment5) ? implode(',', $lastOosRecod->hod_attachment5) : $lastOosRecod->hod_attachment5) !=  
-(is_array($request->hod_attachment5) ? implode(',', $request->hod_attachment5) : $request->hod_attachment5) || 
-!empty($request->hod_attachment5_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II B HOD Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->hod_attachment5) ? implode(',', $lastOosRecod->hod_attachment5) : $lastOosRecod->hod_attachment5;
-$history->activity_type = 'Phase II B HOD Attachment';
-$history->current = is_array($request->hod_attachment5) ? implode(',', $request->hod_attachment5) : $request->hod_attachment5;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->hod_attachment5) || $lastOosRecod->hod_attachment5 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-$history->save();
-}
-
-if ((is_array($lastOosRecod->QA_Head_attachment5) ? implode(',', $lastOosRecod->QA_Head_attachment5) : $lastOosRecod->QA_Head_attachment5) !=  
-(is_array($request->QA_Head_attachment5) ? implode(',', $request->QA_Head_attachment5) : $request->QA_Head_attachment5) || 
-!empty($request->QA_Head_attachment5_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II B CQA/QA Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->QA_Head_attachment5) ? implode(',', $lastOosRecod->QA_Head_attachment5) : $lastOosRecod->QA_Head_attachment5;
-$history->activity_type = 'Phase II B CQA/QA Attachment';
-$history->current = is_array($request->QA_Head_attachment5) ? implode(',', $request->QA_Head_attachment5) : $request->QA_Head_attachment5;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->QA_Head_attachment5) || $lastOosRecod->QA_Head_attachment5 === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-$history->save();
-}
-
-if ((is_array($lastOosRecod->disposition_attachment_bd) ? implode(',', $lastOosRecod->disposition_attachment_bd) : $lastOosRecod->disposition_attachment_bd) !=  
-(is_array($request->disposition_attachment_bd) ? implode(',', $request->disposition_attachment_bd) : $request->disposition_attachment_bd) || 
-!empty($request->disposition_attachment_bd_comment)) {
-
-$lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                        ->where('activity_type', 'Phase II B CQA/QA Attachment')
-                        ->exists();
-
-$history = new OosAuditTrial();
-$history->oos_id = $lastOosRecod->id;
-$history->previous = is_array($lastOosRecod->disposition_attachment_bd) ? implode(',', $lastOosRecod->disposition_attachment_bd) : $lastOosRecod->disposition_attachment_bd;
-$history->activity_type = 'Phase II B CQA/QA Attachment';
-$history->current = is_array($request->disposition_attachment_bd) ? implode(',', $request->disposition_attachment_bd) : $request->disposition_attachment_bd;
-$history->comment = "Not Applicable";
-$history->user_id = Auth::user()->id;
-$history->user_name = Auth::user()->name;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastOosRecod->status;
-$history->stage = $lastOosRecod->stage;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastOosRecod->status;
-
-if (is_null($lastOosRecod->disposition_attachment_bd) || $lastOosRecod->disposition_attachment_bd === '') {
-    $history->action_name = "New";
-} else {
-    $history->action_name = "Update";
-}
-$history->save();
-}
-
+        if(json_encode($lastOosRecod->hod_attachment2) != json_encode($input['hod_attachment2'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IA HOD Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->hod_attachment2);
+            $history->activity_type = 'Phase IA HOD Attachment';
+            $history->current = json_encode($input['hod_attachment2']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->hod_attachment2) || $lastOosRecod->hod_attachment2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_attachment2) != json_encode($input['QA_Head_attachment2'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IA CQA/QA Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_attachment2);
+            $history->activity_type = 'Phase IA CQA/QA Attachment';
+            $history->current = json_encode($input['QA_Head_attachment2']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_attachment2) || $lastOosRecod->QA_Head_attachment2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_primary_attachment2) != json_encode($input['QA_Head_primary_attachment2'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IA CQAH/QAH Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_primary_attachment2);
+            $history->activity_type = 'Phase IA CQAH/QAH Attachment';
+            $history->current = json_encode($input['QA_Head_primary_attachment2']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_primary_attachment2) || $lastOosRecod->QA_Head_primary_attachment2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->hod_attachment3) != json_encode($input['hod_attachment3'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IB HOD Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->hod_attachment3);
+            $history->activity_type = 'Phase IB HOD Attachment';
+            $history->current = json_encode($input['hod_attachment3']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->hod_attachment3) || $lastOosRecod->hod_attachment3 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_attachment3) != json_encode($input['QA_Head_attachment3'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IB CQA/QA Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_attachment3);
+            $history->activity_type = 'Phase IB CQA/QA Attachment';
+            $history->current = json_encode($input['QA_Head_attachment3']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_attachment3) || $lastOosRecod->QA_Head_attachment3 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+        if(json_encode($lastOosRecod->QA_Head_primary_attachment3) != json_encode($input['QA_Head_primary_attachment3'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IB CQAH/QAH Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_primary_attachment3);
+            $history->activity_type = 'Phase IB CQAH/QAH Attachment';
+            $history->current = json_encode($input['QA_Head_primary_attachment3']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_primary_attachment3) || $lastOosRecod->QA_Head_primary_attachment3 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->file_attachments_pII) != json_encode($input['file_attachments_pII'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Manufacturing Operater Interview Details')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->file_attachments_pII);
+            $history->activity_type = 'Manufacturing Operater Interview Details';
+            $history->current = json_encode($input['file_attachments_pII']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->file_attachments_pII) || $lastOosRecod->file_attachments_pII === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->attachments_piiqcr) != json_encode($input['attachments_piiqcr'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'II A Inv. Supporting Attachments')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->attachments_piiqcr);
+            $history->activity_type = 'II A Inv. Supporting Attachments';
+            $history->current = json_encode($input['attachments_piiqcr']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->attachments_piiqcr) || $lastOosRecod->attachments_piiqcr === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->hod_attachment4) != json_encode($input['hod_attachment4'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase II A HOD Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->hod_attachment4);
+            $history->activity_type = 'Phase II A HOD Attachment';
+            $history->current = json_encode($input['hod_attachment4']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->hod_attachment4) || $lastOosRecod->hod_attachment4 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_attachment4) != json_encode($input['QA_Head_attachment4'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase II A CQA/QA Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_attachment4);
+            $history->activity_type = 'Phase II A CQA/QA Attachment';
+            $history->current = json_encode($input['QA_Head_attachment4']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_attachment4) || $lastOosRecod->QA_Head_attachment4 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_primary_attachment4) != json_encode($input['QA_Head_primary_attachment4'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase II A QAH/CQAH Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_primary_attachment4);
+            $history->activity_type = 'Phase II A QAH/CQAH Attachment';
+            $history->current = json_encode($input['QA_Head_primary_attachment4']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_primary_attachment4) || $lastOosRecod->QA_Head_primary_attachment4 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->phaseII_attachment) != json_encode($input['phaseII_attachment'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase IIB inv. Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->phaseII_attachment);
+            $history->activity_type = 'Phase IIB inv. Attachment';
+            $history->current = json_encode($input['phaseII_attachment']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->phaseII_attachment) || $lastOosRecod->phaseII_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+
+        if(json_encode($lastOosRecod->hod_attachment5) != json_encode($input['hod_attachment5'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase II B HOD Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->hod_attachment5);
+            $history->activity_type = 'Phase II B HOD Attachment';
+            $history->current = json_encode($input['hod_attachment5']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->hod_attachment5) || $lastOosRecod->hod_attachment5 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->QA_Head_attachment5) != json_encode($input['QA_Head_attachment5'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Phase II B CQA/QA Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->QA_Head_attachment5);
+            $history->activity_type = 'Phase II B CQA/QA Attachment';
+            $history->current = json_encode($input['QA_Head_attachment5']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->QA_Head_attachment5) || $lastOosRecod->QA_Head_attachment5 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+        if(json_encode($lastOosRecod->disposition_attachment_bd) != json_encode($input['disposition_attachment_bd'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'Disposition Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->disposition_attachment_bd);
+            $history->activity_type = 'Disposition Attachment';
+            $history->current = json_encode($input['disposition_attachment_bd']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->disposition_attachment_bd) || $lastOosRecod->disposition_attachment_bd === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
 
             if ($lastOosRecod->immediate_action !=  $request->immediate_action || !empty($request->immediate_action_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
@@ -8716,141 +8813,7 @@ $history->save();
             }
 
 // ============ audit trail update close =================
-            $oos = OOS::findOrFail($id);
-
-            $input['due_date'] = isset($request->due_date) ? $request->due_date : $oos['due_date'];
-            $input['deviation_occured_on_gi'] = isset($request->deviation_occured_on_gi) ? $request->deviation_occured_on_gi : $oos['deviation_occured_on_gi'];
-
-            $file_input_names = [
-                'initial_attachment_gi',
-                'file_attachments_pli',
-                'file_attachments_pII',
-                'supporting_attachment_plic',
-                'supporting_attachments_plir',
-                'attachments_piiqcr',
-                'additional_testing_attachment_atp',
-                'file_attachments_if_any_ooscattach',
-                'conclusion_attachment_ocr',
-                'cq_attachment_ocqr',
-                'disposition_attachment_bd',
-                'reopen_attachment_ro',
-                'addendum_attachment_uaa',
-                'addendum_attachments_uae',
-                'required_attachment_uar',
-                'verification_attachment_uar',
-                'hod_attachment1',
-                'hod_attachment2',
-                'hod_attachment3',
-                'hod_attachment4',
-                'hod_attachment5',
-                'phaseII_attachment',
-                'QA_Head_attachment1',
-                'QA_Head_attachment2',
-                'QA_Head_attachment3',
-                'QA_Head_attachment4',
-                'QA_Head_attachment5',
-                'QA_Head_primary_attachment1',
-                'QA_Head_primary_attachment2',
-                'QA_Head_primary_attachment3',
-                'QA_Head_primary_attachment4',
-                'QA_Head_primary_attachment5',
-                'provide_attachment1',
-                'provide_attachment2',
-                'provide_attachment3',
-                'provide_attachment4',
-                'provide_attachment5',
-            ];
-
-            foreach ($file_input_names as $file_input_name)
-            {
-                // dd($input[$file_input_name]);
-                if (empty($request->file($file_input_name)) && !empty($oos[$file_input_name])) {
-                    // If the request does not contain file data but existing data is present, retain the existing data
-                    $input[$file_input_name] = $oos[$file_input_name];
-                } else {
-                    // If the request contains file data or existing data is not present, upload new files
-                    $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
-                }
-
-            }
-
-             // Find the OOS record by ID
-
-            $oos->update($input);
-
-            $grid_inputs = [
-                'info_product_material',
-                'details_stability',
-                'oos_detail',
-                'checklist_lab_inv',
-                'checklist_IB_inv',
-                'oos_capa',
-                'phase_two_inv',
-                'phase_two_inv1',
-                'ph_meter',
-                'Viscometer',
-                'Melting_Point',
-                'Dis_solution',
-                'HPLC_GC',
-                'General_Checklist',
-                'kF_Potentionmeter',
-                'RM_PM',
-                'analyst_training_procedure',
-                'sample_receiving_var',
-                'method_used_during_analysis',
-                'instrument_equipment_detailss',
-                'result_and_calculation',
-                'Training_records_Analyst_Involved1',
-                'sample_intactness_before_analysis1',
-                'test_methods_Procedure1',
-                'Review_of_Media_Buffer_Standards_prep1',
-                'Checklist_for_Revi_of_Media_Buffer_Stand_prep1',
-                'ccheck_for_disinfectant_detail1',
-                'Checklist_for_Review_of_instrument_equip1',
-                'Checklist_for_Review_of_Training_records_Analyst1',
-                'Checklist_for_Review_of_sampling_and_Transport1',
-                'Checklist_Review_of_Test_Method_proceds1',
-                'Checklist_for_Review_Media_prepara_RTU_medias1',
-                'Checklist_Review_Environment_condition_in_tests1',
-                'review_of_instrument_bioburden_and_waters1',
-                'disinfectant_details_of_bioburden_and_water_tests1',
-                'training_records_analyst_involvedIn_testing_microbial_asssays1',
-                'sample_intactness_before_analysis22',
-                'checklist_for_review_of_test_method_IMA1',
-                'cr_of_media_buffer_st_IMA1',
-                'CR_of_microbial_cultures_inoculation_IMA1',
-                'CR_of_Environmental_condition_in_testing_IMA1',
-                'CR_of_instru_equipment_IMA1',
-                'disinfectant_details_IMA1',
-                'CR_of_training_rec_anaylst_in_monitoring_CIEM1',
-                'Check_for_Sample_details_CIEM1',
-                'Check_for_comparision_of_results_CIEM1',
-                'checklist_for_media_dehydrated_CIEM1',
-                'checklist_for_media_prepara_sterilization_CIEM1',
-                'CR_of_En_condition_in_testing_CIEM1',
-                'check_for_disinfectant_CIEM1',
-                'checklist_for_fogging_CIEM1',
-                'CR_of_test_method_CIEM1',
-                'CR_microbial_isolates_contamination_CIEM1',
-                'CR_of_instru_equip_CIEM1',
-                'Ch_Trend_analysis_CIEM1',
-                'checklist_for_analyst_training_CIMT2',
-                'checklist_for_comp_results_CIMT2',
-                'checklist_for_Culture_verification_CIMT2',
-                'sterilize_accessories_CIMT2',
-                'checklist_for_intrument_equip_last_CIMT2',
-                'disinfectant_details_last_CIMT2',
-                'checklist_for_result_calculation_CIMT2',
-                'oos_conclusion',
-                'oos_conclusion_review',
-                'products_details',
-                'instrument_detail',
-            ];
-
-            foreach ($grid_inputs as $grid_input)
-            {
-                self::update_grid($oos, $request, $grid_input);
-            }
+            
 
 
 
