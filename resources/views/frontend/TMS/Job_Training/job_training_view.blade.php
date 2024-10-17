@@ -221,7 +221,7 @@
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
 
-            @if ($jobTraining->stage >= 4)
+            @if ($jobTraining->stage >= 5)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif
 
