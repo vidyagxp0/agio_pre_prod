@@ -724,7 +724,7 @@
                                     updateRemoveRowListeners();
                                 </script>
                                 <div class="col-12 sub-head">
-                                    Other type CAPA Details
+                                    Other Type CAPA Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">

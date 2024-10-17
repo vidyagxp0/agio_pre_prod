@@ -347,7 +347,7 @@
                         <th class="w-20">Comments</th>
                         <td class="w-30">
                             @if ($data->comments)
-                                {{ $data->yearly_other }}
+                                {{ $data->comments }}
                             @else
                                 Not Applicable
                             @endif
