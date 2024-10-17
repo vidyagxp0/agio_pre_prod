@@ -221,9 +221,9 @@
             {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> --}}
 
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button> -->
-            @if ($jobTraining->stage >= 7)
+            {{-- @if ($jobTraining->stage >= 7)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
-            @endif
+            @endif --}}
             <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Respected Department Remarks</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA JD Number Remarks</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm10')">Activity Log</button>

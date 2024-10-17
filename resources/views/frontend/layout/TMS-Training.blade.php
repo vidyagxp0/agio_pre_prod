@@ -40,6 +40,11 @@
 <body>
 
     <style>
+        #tms-dashboard {
+    padding: 20px 0px;
+    background: #4274da;
+    min-height: 0 !important;
+}
         #create-record-button {
             display: none;
             margin-left: auto;
@@ -186,12 +191,8 @@
                 </div>
                     <div class="cctab">
 
-                        @if (Helpers::checkRoles(6))
-                    
-                        @endif
-                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
-                        @endif
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
+
                     </div>
 
 
@@ -207,6 +208,9 @@
     
 
     <style>
+
+
+
       .table thead th {
             background-color: #4274daba; 
             color: rgb(2, 2, 2); 
@@ -481,7 +485,7 @@
 
                                 
                                 </td>
-                                @if($temp->stage >=4)
+                                @if($temp->stage >=5)
                                         <td>
                                             <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
                                                 onclick="window.location.href='/job_training_certificate/{{$temp->id}}';"> 
