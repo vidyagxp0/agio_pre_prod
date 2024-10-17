@@ -8398,7 +8398,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 }
                 $history->save();
 
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify CFT Person
                 //         foreach ($list as $u) {
                 //             // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getUserEmail($u->user_id);
@@ -8406,7 +8406,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //             if ($email !== null) {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $changeControl, 'site' => "Ext", 'history' => "Submit", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //                     ['data' => $changeControl, 'site' => "Ext", 'history' => "Submit", 'process' => 'Managment Review', 'comment' => $changeControl->Submited_Comment, 'user' => Auth::user()->name],
                 //                     function ($message) use ($email, $changeControl) {
                 //                         $message->to($email)
                 //                             ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -8416,22 +8416,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //             // }
                 //         }
 
-                // $list = Helpers::getResponsibleUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
-                //      if ($email !== null) {
-                //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -8536,7 +8522,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                //  $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                //  $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);
@@ -8544,7 +8530,24 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      if ($email !== null) {
                 //          Mail::send(
                 //              'mail.view-mail',
-                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "QA Head Review Complete", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "QA Head Review Complete", 'process' => 'Managment Review', 'comment' => $changeControl->qaHeadReviewComplete_Comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
+                //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "QA Head Review Complete", 'process' => 'Managment Review', 'comment' => $changeControl->qaHeadReviewComplete_Comment, 'user' => Auth::user()->name],
                 //              function ($message) use ($email, $changeControl) {
                 //                  $message->to($email)
                 //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete");
@@ -8554,22 +8557,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
-                //      if ($email !== null) {
-                //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8661,7 +8649,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                //  $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                //  $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);
@@ -8669,7 +8657,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      if ($email !== null) {
                 //          Mail::send(
                 //              'mail.view-mail',
-                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "Meeting and Summary Complete", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "Meeting and Summary Complete", 'process' => 'Managment Review', 'comment' => $changeControl->meeting_summary_comment, 'user' => Auth::user()->name],
                 //              function ($message) use ($email, $changeControl) {
                 //                  $message->to($email)
                 //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Meeting and Summary Complete");
@@ -8679,22 +8667,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
-                //      if ($email !== null) {
-                //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -9421,7 +9394,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     }
                         $history->save();
 
-                //         $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                //         $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);
@@ -9429,7 +9402,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      if ($email !== null) {
                 //          Mail::send(
                 //              'mail.view-mail',
-                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "CFT Action Complete", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "CFT Action Complete", 'process' => 'Managment Review', 'comment' => $changeControl->ALLAICompleteby_comment, 'user' => Auth::user()->name],
                 //              function ($message) use ($email, $changeControl) {
                 //                  $message->to($email)
                 //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete");
@@ -9438,26 +9411,25 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
-                        // $list = Helpers::getQAUserList();
-                        // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-                        //         $email = Helpers::getInitiatorEmail($u->user_id);
-                        //         if ($email !== null) {
-                        //             try {
-                        //                 Mail::send(
-                        //                     'mail.view-mail',
-                        //                     ['data' => $changeControl],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Activity Performed By " . Auth::user()->name);
-                        //                     }
-                        //                 );
-                        //             } catch (\Exception $e) {
-                        //                 //log error
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                //  $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "CFT Action Complete", 'process' => 'Managment Review', 'comment' => $changeControl->ALLAICompleteby_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
+
+
                         $changeControl->update();
                     }
                     toastr()->success('Document Sent');
@@ -10214,13 +10186,13 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $id;
-                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                        $history->activity_type = 'CFT HOD Review Completed By, CFT HOD Review Completed On';
                     if(is_null(value: $lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->hodFinaleReviewComplete_by. ' ,' . $lastDocument->hodFinaleReviewComplete_on;
                     }
-                    $history->action='CFT Review Complete';
+                    $history->action='CFT HOD Review Complete';
                     $history->current = $changeControl->hodFinaleReviewComplete_by. ',' . $changeControl->hodFinaleReviewComplete_on;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
@@ -10238,7 +10210,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     }
                         $history->save();
 
-                //         $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                //         $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);
@@ -10246,7 +10218,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      if ($email !== null) {
                 //          Mail::send(
                 //              'mail.view-mail',
-                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "CFT Review Complete", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "CFT HOD Review Complete", 'process' => 'Managment Review', 'comment' => $changeControl->hodFinaleReviewComplete_comment, 'user' => Auth::user()->name],
                 //              function ($message) use ($email, $changeControl) {
                 //                  $message->to($email)
                 //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete");
@@ -10255,26 +10227,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
-                        // $list = Helpers::getQAUserList();
-                        // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-                        //         $email = Helpers::getInitiatorEmail($u->user_id);
-                        //         if ($email !== null) {
-                        //             try {
-                        //                 Mail::send(
-                        //                     'mail.view-mail',
-                        //                     ['data' => $changeControl],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Activity Performed By " . Auth::user()->name);
-                        //                     }
-                        //                 );
-                        //             } catch (\Exception $e) {
-                        //                 //log error
-                        //             }
-                        //         }
-                        //     }
-                        // }
+
                         $changeControl->update();
                     }
                     toastr()->success('Document Sent');
@@ -10384,7 +10337,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                //  $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                //  $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);
@@ -10392,7 +10345,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      if ($email !== null) {
                 //          Mail::send(
                 //              'mail.view-mail',
-                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "QA Verification Complete", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "QA Verification Complete", 'process' => 'Managment Review', 'comment' => $changeControl->QAVerificationComplete_Comment, 'user' => Auth::user()->name],
                 //              function ($message) use ($email, $changeControl) {
                 //                  $message->to($email)
                 //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Verification Complete");
@@ -10455,40 +10408,61 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                 $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                 foreach ($list as $u) {
-                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                     $email = Helpers::getUserEmail($u->user_id);
-                     // dd($email);
-                     if ($email !== null) {
-                         Mail::send(
-                             'mail.view-mail',
-                             ['data' => $changeControl, 'site' => "Ext", 'history' => "Approved", 'process' => 'Managment Review', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                             function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                     ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                             }
-                         );
-                     }
-                     // }
-                 }
-
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //  $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
                 //      if ($email !== null) {
                 //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "Approved", 'process' => 'Managment Review', 'comment' => $changeControl->Approved_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
+
+                //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "Approved", 'process' => 'Managment Review', 'comment' => $changeControl->Approved_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
+
+                //  $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "Approved", 'process' => 'Managment Review', 'comment' => $changeControl->Approved_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
+
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10546,22 +10520,23 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
                 //      if ($email !== null) {
                 //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "More Information Required", 'process' => 'Managment Review', 'comment' => $changeControl->ReturnActivityOpenedstage_Comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10604,22 +10579,23 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                 //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
                 //      if ($email !== null) {
                 //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "More Information Required", 'process' => 'Managment Review', 'comment' => $changeControl->requireactivitydepartment_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10660,22 +10636,23 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                 //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
                 //      if ($email !== null) {
                 //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "More Information Required", 'process' => 'Managment Review', 'comment' => $changeControl->requireactivityHODdepartment_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10715,22 +10692,23 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                  $history->save();
                  $changeControl->update();
 
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                 //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                //  foreach ($list as $u) {
+                //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getUserEmail($u->user_id);
+                //      // dd($email);
                 //      if ($email !== null) {
                 //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $changeControl],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                //              'mail.view-mail',
+                //              ['data' => $changeControl, 'site' => "Ext", 'history' => "More Information Required", 'process' => 'Managment Review', 'comment' => $changeControl->requireactivityQAdepartment_comment, 'user' => Auth::user()->name],
+                //              function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                      ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //              }
+                //          );
+                //      }
+                //      // }
+                //  }
                 toastr()->success('Document Sent');
                 return back();
             }
