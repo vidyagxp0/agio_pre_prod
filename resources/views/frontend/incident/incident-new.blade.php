@@ -1477,9 +1477,9 @@ dd($pre);
                                     <label for="audit-agenda-grid">
                                         Document Details
                                         <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
-
+                                        {{--document-details-field-instruction-modal--}}
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal1"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1577,7 +1577,7 @@ dd($pre);
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#product-batch-grid"
+                                                data-bs-target="#observation-field-instruction-modal2"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>

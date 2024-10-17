@@ -21,7 +21,7 @@ return new class extends Migration
                  $table->text("tablet_coating_remark_$i")->nullable();
             }
 
-            $table->string('tablet_coating_remark_comment')->nullable();
+            $table->longText('tablet_coating_remark_comment')->nullable();
             $table->longText('tablet_coating_supporting_attachment')->nullable();
             $table->timestamps();
         });

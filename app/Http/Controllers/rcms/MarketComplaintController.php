@@ -127,8 +127,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca = $request->interpretation_on_complaint_sample_ifrecieved_ca;
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
-        $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
-        $marketComplaint->qa_head_comment= $request->qa_head_comment;
+        $marketComplaint->qa_cqa_head_comm = $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment = $request->qa_head_comment;
 
 
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
@@ -725,27 +725,27 @@ class MarketComplaintController extends Controller
         // ----------------------------------autid show  fileds ----------------------------------------------------------
 
         $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/MC/" . Helpers::year($marketComplaint->created_at) . "/" . str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $marketComplaint->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
+        $history->market_id = $marketComplaint->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/MC/" . Helpers::year($marketComplaint->created_at) . "/" . str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $marketComplaint->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+        $history->save();
 
 
-            if (!empty ($request->division_id)){
+        if (!empty($request->division_id)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
-            $history->current =Helpers::getDivisionName($marketComplaint->division_id);
+            $history->current = Helpers::getDivisionName($marketComplaint->division_id);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -755,9 +755,8 @@ class MarketComplaintController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-
-           }
-           if (!empty ($request->initiator)){
+        }
+        if (!empty($request->initiator)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator';
@@ -772,10 +771,9 @@ class MarketComplaintController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
+        }
 
-           }
-
-            if (!empty ($request->intiation_date)){
+        if (!empty($request->intiation_date)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Date of Initiation';
@@ -790,59 +788,59 @@ class MarketComplaintController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-            }
+        }
 
 
-            if (!empty ($request->due_date_gi)){
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Due Date';
-                $history->previous = "Null";
-                $history->current =  Helpers::getdateFormat($marketComplaint->due_date_gi);
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $marketComplaint->status;
-                $history->change_to =   "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-                $history->save();
-                }
+        if (!empty($request->due_date_gi)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current =  Helpers::getdateFormat($marketComplaint->due_date_gi);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
-            //     if (!empty ($request->due_date_gi)){
-            //     $history = new MarketComplaintAuditTrial();
-            //     $history->market_id = $marketComplaint->id;
-            //     $history->activity_type = 'Due Date';
-            //     $history->previous = "Null";
-            //     $history->current =Helpers::getdateFormat ($marketComplaint->due_date_gi);
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $marketComplaint->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiator";
-            //     $history->action_name = 'Create';
-            //     $history->save();
-            //    }
+        //     if (!empty ($request->due_date_gi)){
+        //     $history = new MarketComplaintAuditTrial();
+        //     $history->market_id = $marketComplaint->id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = "Null";
+        //     $history->current =Helpers::getdateFormat ($marketComplaint->due_date_gi);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $marketComplaint->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiator";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        //    }
 
-            //        if (!empty($marketComplaint->review_of_stability_study_gi)) {
-            //     $history = new MarketComplaintAuditTrial();
-            //     $history->market_id = $marketComplaint->id;
-            //     $history->activity_type = 'Department Code ';
-            //     $history->previous = "Null";
-            //     $history->current = $marketComplaint->review_of_stability_study_gi;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $marketComplaint->status;
-            //     $history->change_to = "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = "Create";
-            //     $history->save();
-            // }
+        //        if (!empty($marketComplaint->review_of_stability_study_gi)) {
+        //     $history = new MarketComplaintAuditTrial();
+        //     $history->market_id = $marketComplaint->id;
+        //     $history->activity_type = 'Department Code ';
+        //     $history->previous = "Null";
+        //     $history->current = $marketComplaint->review_of_stability_study_gi;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $marketComplaint->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
 
         if (!empty($marketComplaint->review_of_stability_study_gi)) {
             $history = new MarketComplaintAuditTrial();
@@ -2058,8 +2056,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
-        $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
-        $marketComplaint->qa_head_comment= $request->qa_head_comment;
+        $marketComplaint->qa_cqa_head_comm = $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment = $request->qa_head_comment;
 
         // Closure section
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
@@ -2089,8 +2087,7 @@ class MarketComplaintController extends Controller
         // $marketComplaint->initial_attachment_gi = json_encode($files);
 
 
-        if ($request->form_name == 'general-open')
-        {
+        if ($request->form_name == 'general-open') {
 
             // dd($request->Delay_Justification);
             $validator = Validator::make($request->all(), [
@@ -2108,8 +2105,7 @@ class MarketComplaintController extends Controller
         }
 
 
-        if ($request->form_name == 'qa')
-        {
+        if ($request->form_name == 'qa') {
             $validator = Validator::make($request->all(), [
                 'qa_head_comment' => 'required|not_in:0',
 
@@ -2656,26 +2652,26 @@ class MarketComplaintController extends Controller
 
 
 
-                              //first attchment ============================
-                              if (!empty($request->initial_attachment_gi) || !empty($request->deleted_attachments_gi)) {
-                                $existingFiles = json_decode($marketComplaint->initial_attachment_gi, true) ?? [];
-                                        if (!empty($request->deleted_attachments_gi)) {
-                                    $filesToDelete = explode(',', $request->deleted_attachments_gi);
-                                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                                        return !in_array($file, $filesToDelete);
-                                    });
-                                }
-                                $newFiles = [];
-                                if ($request->hasFile('initial_attachment_gi')) {
-                                    foreach ($request->file('initial_attachment_gi') as $file) {
-                                        $name = $request->name . 'initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                                        $file->move(public_path('upload/'), $name);
-                                        $newFiles[] = $name;
-                                    }
-                                }
-                                $allFiles = array_merge($existingFiles, $newFiles);
-                                $marketComplaint->initial_attachment_gi = json_encode($allFiles);
-                            }
+        //first attchment ============================
+        if (!empty($request->initial_attachment_gi) || !empty($request->deleted_attachments_gi)) {
+            $existingFiles = json_decode($marketComplaint->initial_attachment_gi, true) ?? [];
+            if (!empty($request->deleted_attachments_gi)) {
+                $filesToDelete = explode(',', $request->deleted_attachments_gi);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
+            if ($request->hasFile('initial_attachment_gi')) {
+                foreach ($request->file('initial_attachment_gi') as $file) {
+                    $name = $request->name . 'initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->initial_attachment_gi = json_encode($allFiles);
+        }
 
         if ($request->hasFile('initial_attachment_hodsr')) {
             $files = [];
@@ -2689,182 +2685,182 @@ class MarketComplaintController extends Controller
         $marketComplaint->fill($request->except('initial_attachment_hodsr'));
 
 
-       if (!empty($request->initial_attachment_ca) || !empty($request->deleted_initial_attachment_ca)) {
-    $existingFiles = json_decode($marketComplaint->initial_attachment_ca, true) ?? [];
+        if (!empty($request->initial_attachment_ca) || !empty($request->deleted_initial_attachment_ca)) {
+            $existingFiles = json_decode($marketComplaint->initial_attachment_ca, true) ?? [];
 
-    // Handle deleted files
-    if (!empty($request->deleted_initial_attachment_ca)) {
-        $filesToDelete = explode(',', $request->deleted_initial_attachment_ca);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle deleted files
+            if (!empty($request->deleted_initial_attachment_ca)) {
+                $filesToDelete = explode(',', $request->deleted_initial_attachment_ca);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('initial_attachment_ca')) {
-        foreach ($request->file('initial_attachment_ca') as $file) {
-            $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('initial_attachment_ca')) {
+                foreach ($request->file('initial_attachment_ca') as $file) {
+                    $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->initial_attachment_ca = json_encode($allFiles);
         }
-    }
-
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->initial_attachment_ca = json_encode($allFiles);
-}
 
 
-       if (!empty($request->initial_attachment_c) || !empty($request->deleted_initial_attachment_c)) {
-    $existingFiles = json_decode($marketComplaint->initial_attachment_c, true) ?? [];
+        if (!empty($request->initial_attachment_c) || !empty($request->deleted_initial_attachment_c)) {
+            $existingFiles = json_decode($marketComplaint->initial_attachment_c, true) ?? [];
 
-    // Handle deleted files
-    if (!empty($request->deleted_initial_attachment_c)) {
-        $filesToDelete = explode(',', $request->deleted_initial_attachment_c);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle deleted files
+            if (!empty($request->deleted_initial_attachment_c)) {
+                $filesToDelete = explode(',', $request->deleted_initial_attachment_c);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('initial_attachment_c')) {
-        foreach ($request->file('initial_attachment_c') as $file) {
-            $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('initial_attachment_c')) {
+                foreach ($request->file('initial_attachment_c') as $file) {
+                    $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->initial_attachment_c = json_encode($allFiles);
         }
-    }
-
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->initial_attachment_c = json_encode($allFiles);
-}
         $marketComplaint->fill($request->except('initial_attachment_c'));
 
 
 
 
 
-//     if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
-//     $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
+        //     if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
+        //     $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
 
-//     // Handle deleted files
-//     if (!empty($request->deleted_qa_cqa_attachments)) {
-//         $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
-//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-//             return !in_array($file, $filesToDelete);
-//         });
-//     }
+        //     // Handle deleted files
+        //     if (!empty($request->deleted_qa_cqa_attachments)) {
+        //         $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+        //         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+        //             return !in_array($file, $filesToDelete);
+        //         });
+        //     }
 
-//     // Handle new files
-//     $newFiles = [];
-//     if ($request->hasFile('qa_cqa_attachments')) {
-//         foreach ($request->file('qa_cqa_attachments') as $file) {
-//             $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-//             $file->move(public_path('upload/'), $name);
-//             $newFiles[] = $name;
-//         }
-//     }
+        //     // Handle new files
+        //     $newFiles = [];
+        //     if ($request->hasFile('qa_cqa_attachments')) {
+        //         foreach ($request->file('qa_cqa_attachments') as $file) {
+        //             $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $newFiles[] = $name;
+        //         }
+        //     }
 
-//     // Merge existing and new files
-//     $allFiles = array_merge($existingFiles, $newFiles);
-//     $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
-// }
-//     // Handle deleted files
-//     if (!empty($request->deleted_qa_cqa_he_attach)) {
-//         $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
-//         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-//             return !in_array($file, $filesToDelete);
-//         });
-//     }
+        //     // Merge existing and new files
+        //     $allFiles = array_merge($existingFiles, $newFiles);
+        //     $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
+        // }
+        //     // Handle deleted files
+        //     if (!empty($request->deleted_qa_cqa_he_attach)) {
+        //         $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
+        //         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+        //             return !in_array($file, $filesToDelete);
+        //         });
+        //     }
 
-//     // Handle new files
-//     $newFiles = [];
-//     if ($request->hasFile('qa_cqa_he_attach')) {
-//         foreach ($request->file('qa_cqa_he_attach') as $file) {
-//             $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-//             $file->move(public_path('upload/'), $name);
-//             $newFiles[] = $name;
-//         }
-//     }
-       if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach)) {
-       $existingFiles = json_decode($marketComplaint->qa_cqa_head_attach, true) ?? [];
+        //     // Handle new files
+        //     $newFiles = [];
+        //     if ($request->hasFile('qa_cqa_he_attach')) {
+        //         foreach ($request->file('qa_cqa_he_attach') as $file) {
+        //             $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $newFiles[] = $name;
+        //         }
+        //     }
+        if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach)) {
+            $existingFiles = json_decode($marketComplaint->qa_cqa_head_attach, true) ?? [];
 
-    // Handle deleted files
-    if (!empty($request->deleted_qa_cqa_head_attach)) {
-        $filesToDelete = explode(',', $request->deleted_qa_cqa_head_attach);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle deleted files
+            if (!empty($request->deleted_qa_cqa_head_attach)) {
+                $filesToDelete = explode(',', $request->deleted_qa_cqa_head_attach);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('qa_cqa_head_attach')) {
-        foreach ($request->file('qa_cqa_head_attach') as $file) {
-            $name = $request->name . 'qa_cqa_head_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_cqa_head_attach')) {
+                foreach ($request->file('qa_cqa_head_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_head_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->qa_cqa_head_attach = json_encode($allFiles);
         }
-    }
 
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->qa_cqa_head_attach = json_encode($allFiles);
-}
+        if (!empty($request->qa_cqa_he_attach) || !empty($request->deleted_qa_cqa_he_attach)) {
+            $existingFiles = json_decode($marketComplaint->qa_cqa_he_attach, true) ?? [];
 
-  if (!empty($request->qa_cqa_he_attach) || !empty($request->deleted_qa_cqa_he_attach)) {
-       $existingFiles = json_decode($marketComplaint->qa_cqa_he_attach, true) ?? [];
+            // Handle deleted files
+            if (!empty($request->deleted_qa_cqa_he_attach)) {
+                $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    // Handle deleted files
-    if (!empty($request->deleted_qa_cqa_he_attach)) {
-        $filesToDelete = explode(',', $request->deleted_qa_cqa_he_attach);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_cqa_he_attach')) {
+                foreach ($request->file('qa_cqa_he_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('qa_cqa_he_attach')) {
-        foreach ($request->file('qa_cqa_he_attach') as $file) {
-            $name = $request->name . 'qa_cqa_he_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->qa_cqa_he_attach = json_encode($allFiles);
         }
-    }
+        if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
+            $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
 
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->qa_cqa_he_attach = json_encode($allFiles);
-}
-  if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
-       $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
+            // Handle deleted files
+            if (!empty($request->deleted_qa_cqa_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+                $existingFiles = array_filter($existingFiles, function ($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    // Handle deleted files
-    if (!empty($request->deleted_qa_cqa_attachments)) {
-        $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_cqa_attachments')) {
+                foreach ($request->file('qa_cqa_attachments') as $file) {
+                    $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
 
-    // Handle new files
-    $newFiles = [];
-    if ($request->hasFile('qa_cqa_attachments')) {
-        foreach ($request->file('qa_cqa_attachments') as $file) {
-            $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
         }
-    }
-
-    // Merge existing and new files
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
-}
 
 
 
@@ -3017,7 +3013,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = Helpers::getFullDepartmentName($lastmarketComplaint->initiator_group);
-            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group );
+            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group);
             $history->comment = $request->initiator_group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3041,7 +3037,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department Code';
             $history->previous = Helpers::getFullDepartmentName($lastmarketComplaint->initiator_group_code_gi);
-            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group_code_gi );
+            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group_code_gi);
             $history->comment = $request->initiator_group_code_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3898,8 +3894,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'HOD Attachment';
-            $history->previous = str_replace(',', ', ',$lastmarketComplaint->initial_attachment_hodsr);
-            $history->current = str_replace(',', ', ',$marketComplaint->initial_attachment_hodsr);
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->initial_attachment_hodsr);
+            $history->current = str_replace(',', ', ', $marketComplaint->initial_attachment_hodsr);
             $history->comment = $request->initial_attachment_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4213,8 +4209,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Closure Attachment    ';
-            $history->previous = str_replace(',', ', ',$lastmarketComplaint->initial_attachment_c);
-            $history->current = str_replace(',', ', ',$marketComplaint->initial_attachment_c);
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->initial_attachment_c);
+            $history->current = str_replace(',', ', ', $marketComplaint->initial_attachment_c);
             $history->comment = $request->initial_attachment_c_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4233,7 +4229,7 @@ class MarketComplaintController extends Controller
         ///------------------------CFT----------------------------------------------------
 
         /************ CFT Review ************/
-          /*************** Quality Assurance ***************/
+        /*************** Quality Assurance ***************/
         if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
@@ -4247,7 +4243,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
+            if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4267,7 +4263,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+            if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4277,7 +4273,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Quality Assurance Assessment';
+            $history->activity_type = 'Impact Assessment(Quality Assurance)';
             $history->previous = $lastCft->QualityAssurance_assessment;
             $history->current = $request->QualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -4287,7 +4283,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
+            if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4307,19 +4303,19 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
+            if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
             $history->save();
         }
-         if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
+        if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
             $history->activity_type = 'Quality Assurance Attachment';
             $history->previous = $lastCft->Quality_Assurance_attachment;
-            $history->current =implode(',', $request->Quality_Assurance_attachment);
+            $history->current = implode(',', $request->Quality_Assurance_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4327,7 +4323,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
+            if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4337,7 +4333,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Quality Assurance Review By';
+            $history->activity_type = 'Quality Assurance Review Completed By';
             $history->previous = $lastCft->QualityAssurance_by;
             $history->current = $request->QualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -4347,7 +4343,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
+            if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4357,7 +4353,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Quality Assurance Review On';
+            $history->activity_type = 'Quality Assurance Review Completed On';
             $history->previous = $lastCft->QualityAssurance_on;
             $history->current = $request->QualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -4367,7 +4363,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
+            if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4390,7 +4386,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
+            if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4410,7 +4406,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
+            if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4430,7 +4426,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
+            if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4450,7 +4446,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+            if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4462,7 +4458,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Production Tablet Attachment';
             $history->previous = $lastCft->Production_Table_Attachment;
-            $history->current = implode(',',$request->Production_Table_Attachment);
+            $history->current = implode(',', $request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4470,7 +4466,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_Attachment) || $lastCft->Production_Table_Attachment === '') {
+            if (is_null($lastCft->Production_Table_Attachment) || $lastCft->Production_Table_Attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4490,7 +4486,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
+            if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4510,7 +4506,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
+            if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4518,8 +4514,8 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-         /*************** Production Liquid ***************/
-         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
+        /*************** Production Liquid ***************/
+        if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
             $history->activity_type = 'Production Liquid Required ?';
@@ -4532,7 +4528,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
+            if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4552,7 +4548,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
+            if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4572,7 +4568,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
+            if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4592,7 +4588,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
+            if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4604,7 +4600,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Production Liquid/Ointment Attachments';
             $history->previous = $lastCft->ProductionLiquid_attachment;
-            $history->current = implode(',',$request->ProductionLiquid_attachment);
+            $history->current = implode(',', $request->ProductionLiquid_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4612,7 +4608,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+            if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4632,7 +4628,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
+            if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4652,7 +4648,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
+            if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4674,7 +4670,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
+            if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4694,7 +4690,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
+            if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4714,7 +4710,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
+            if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4734,7 +4730,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+            if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4746,7 +4742,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Production Injection Attachment';
             $history->previous = $lastCft->Production_Injection_Attachment;
-            $history->current =implode(',', $request->Production_Injection_Attachment);
+            $history->current = implode(',', $request->Production_Injection_Attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4754,7 +4750,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
+            if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4774,7 +4770,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
+            if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4794,7 +4790,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
+            if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4816,7 +4812,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
+            if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4836,7 +4832,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
+            if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4856,7 +4852,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
+            if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4876,19 +4872,19 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+            if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
             $history->save();
         }
-         if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
+        if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
             $history->activity_type = 'Store Attachments';
             $history->previous = $lastCft->Store_attachment;
-            $history->current =implode(',', $request->Store_attachment);
+            $history->current = implode(',', $request->Store_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4896,7 +4892,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
+            if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4916,7 +4912,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
+            if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4936,7 +4932,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
+            if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4958,7 +4954,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
+            if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4978,7 +4974,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
+            if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4998,7 +4994,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
+            if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5018,7 +5014,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+            if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5070,7 +5066,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Quality Control On';
             $history->previous = $lastCft->Quality_Control_attachment;
-            $history->current =implode(',', $request->Quality_Control_attachment);
+            $history->current = implode(',', $request->Quality_Control_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5078,7 +5074,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
+            if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5100,7 +5096,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
+            if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5120,7 +5116,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
+            if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5140,7 +5136,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
+            if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5160,7 +5156,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+            if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5180,7 +5176,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
+            if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5200,7 +5196,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
+            if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5212,7 +5208,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Research Development attachments';
             $history->previous = $lastCft->ResearchDevelopment_attachment;
-            $history->current =implode(',', $request->ResearchDevelopment_attachment);
+            $history->current = implode(',', $request->ResearchDevelopment_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5220,7 +5216,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
+            if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5242,7 +5238,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
+            if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5262,7 +5258,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
+            if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5282,7 +5278,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
+            if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5302,7 +5298,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+            if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5312,7 +5308,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Engineering Review By';
+            $history->activity_type = 'Engineering Completed By';
             $history->previous = $lastCft->Engineering_by;
             $history->current = $request->Engineering_by;
             $history->comment = "Not Applicable";
@@ -5322,7 +5318,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
+            if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5332,7 +5328,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Engineering Review On';
+            $history->activity_type = 'Engineering Completed On';
             $history->previous = $lastCft->Engineering_on;
             $history->current = $request->Engineering_on;
             $history->comment = "Not Applicable";
@@ -5342,7 +5338,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
+            if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5352,9 +5348,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Engineering Review On';
+            $history->activity_type = 'Engineering Attachments';
             $history->previous = $lastCft->Engineering_attachment;
-            $history->current = implode(',',$request->Engineering_attachment);
+            $history->current = implode(',', $request->Engineering_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5362,7 +5358,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
+            if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5384,7 +5380,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
+            if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5404,7 +5400,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
+            if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5424,7 +5420,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
+            if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5444,7 +5440,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
+            if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5464,7 +5460,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
+            if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5484,7 +5480,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
+            if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5496,7 +5492,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Human Resource Attachments';
             $history->previous = $lastCft->Human_Resource_attachment;
-            $history->current =implode(',', $request->Human_Resource_attachment);
+            $history->current = implode(',', $request->Human_Resource_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5504,7 +5500,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
+            if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5526,7 +5522,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
+            if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5546,7 +5542,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
+            if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5566,7 +5562,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
+            if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5586,7 +5582,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+            if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5606,7 +5602,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
+            if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5626,19 +5622,19 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
+            if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
             $history->save();
         }
-         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+        if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
             $history->activity_type = 'Microbiology Review On';
             $history->previous = $lastCft->Microbiology_attachment;
-            $history->current = implode(',',$request->Microbiology_attachment);
+            $history->current = implode(',', $request->Microbiology_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5646,7 +5642,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
+            if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5658,7 +5654,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->activity_type = 'Regulatory Affair Required';
             $history->previous = $lastCft->RegulatoryAffair_Review;
             $history->current = $request->RegulatoryAffair_Review;
             $history->comment = "Not Applicable";
@@ -5668,7 +5664,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
+            if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5688,7 +5684,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
+            if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5698,7 +5694,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Regulatory Affair Assessment';
+            $history->activity_type = 'Impat Assessment(Regulatory Affair)';
             $history->previous = $lastCft->RegulatoryAffair_assessment;
             $history->current = $request->RegulatoryAffair_assessment;
             $history->comment = "Not Applicable";
@@ -5708,7 +5704,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
+            if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5728,7 +5724,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+            if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5738,7 +5734,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Regulatory Affair Review By';
+            $history->activity_type = 'Regulatory Affair Completed By';
             $history->previous = $lastCft->RegulatoryAffair_by;
             $history->current = $request->RegulatoryAffair_by;
             $history->comment = "Not Applicable";
@@ -5748,7 +5744,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
+            if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5758,7 +5754,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Completed On';
             $history->previous = $lastCft->RegulatoryAffair_on;
             $history->current = $request->RegulatoryAffair_on;
             $history->comment = "Not Applicable";
@@ -5768,7 +5764,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
+            if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5778,9 +5774,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Attachments';
             $history->previous = $lastCft->RegulatoryAffair_attachment;
-            $history->current =implode(',', $request->RegulatoryAffair_attachment);
+            $history->current = implode(',', $request->RegulatoryAffair_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5788,7 +5784,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
+            if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5810,7 +5806,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5830,7 +5826,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5850,7 +5846,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5870,7 +5866,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5890,7 +5886,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5910,7 +5906,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5922,7 +5918,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Attachments';
             $history->previous = $lastCft->CorporateQualityAssurance_attachment;
-            $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
+            $history->current = implode(',', $request->CorporateQualityAssurance_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5930,7 +5926,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
+            if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5952,7 +5948,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
+            if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5972,7 +5968,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
+            if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -5992,7 +5988,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
+            if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6012,7 +6008,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+            if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6032,7 +6028,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
+            if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6052,7 +6048,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
+            if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6064,7 +6060,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Safety Review On';
             $history->previous = $lastCft->Environment_Health_Safety_attachment;
-            $history->current =implode(',', $request->Environment_Health_Safety_attachment);
+            $history->current = implode(',', $request->Environment_Health_Safety_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6072,7 +6068,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
+            if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6094,7 +6090,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
+            if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6114,7 +6110,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
+            if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6134,7 +6130,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
+            if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6154,7 +6150,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
+            if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6174,7 +6170,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
+            if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6194,7 +6190,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
+            if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6207,7 +6203,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Contract Giver Review On';
             $history->previous = $lastCft->ContractGiver_attachment;
-            $history->current = implode(',',$request->ContractGiver_attachment);
+            $history->current = implode(',', $request->ContractGiver_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6215,7 +6211,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
+            if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6236,7 +6232,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_review) || $lastCft->Other1_review === '') {
+            if (is_null($lastCft->Other1_review) || $lastCft->Other1_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6256,7 +6252,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_person) || $lastCft->Other1_person === '') {
+            if (is_null($lastCft->Other1_person) || $lastCft->Other1_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6276,7 +6272,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_Department_person) || $lastCft->Other1_Department_person === '') {
+            if (is_null($lastCft->Other1_Department_person) || $lastCft->Other1_Department_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6296,7 +6292,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_assessment) || $lastCft->Other1_assessment === '') {
+            if (is_null($lastCft->Other1_assessment) || $lastCft->Other1_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6316,7 +6312,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+            if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6336,7 +6332,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_by) || $lastCft->Other1_by === '') {
+            if (is_null($lastCft->Other1_by) || $lastCft->Other1_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6356,7 +6352,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_on) || $lastCft->Other1_on === '') {
+            if (is_null($lastCft->Other1_on) || $lastCft->Other1_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6368,7 +6364,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Other 1 Review On';
             $history->previous = $lastCft->Other1_attachment;
-            $history->current = implode(',',$request->Other1_attachment);
+            $history->current = implode(',', $request->Other1_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6376,7 +6372,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
+            if (is_null($lastCft->Other1_attachment) || $lastCft->Other1_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6399,7 +6395,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_review) || $lastCft->Other2_review === '') {
+            if (is_null($lastCft->Other2_review) || $lastCft->Other2_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6419,7 +6415,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_person) || $lastCft->Other2_person === '') {
+            if (is_null($lastCft->Other2_person) || $lastCft->Other2_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6439,7 +6435,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_Department_person) || $lastCft->Other2_Department_person === '') {
+            if (is_null($lastCft->Other2_Department_person) || $lastCft->Other2_Department_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6459,7 +6455,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
+            if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6479,7 +6475,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+            if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6499,7 +6495,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_by) || $lastCft->Other2_by === '') {
+            if (is_null($lastCft->Other2_by) || $lastCft->Other2_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6519,7 +6515,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_on) || $lastCft->Other2_on === '') {
+            if (is_null($lastCft->Other2_on) || $lastCft->Other2_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6531,7 +6527,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Other 2 Review On';
             $history->previous = $lastCft->Other2_attachment;
-            $history->current =implode(',', $request->Other2_attachment);
+            $history->current = implode(',', $request->Other2_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6539,7 +6535,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
+            if (is_null($lastCft->Other2_attachment) || $lastCft->Other2_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6561,7 +6557,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_review) || $lastCft->Other3_review === '') {
+            if (is_null($lastCft->Other3_review) || $lastCft->Other3_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6581,7 +6577,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_person) || $lastCft->Other3_person === '') {
+            if (is_null($lastCft->Other3_person) || $lastCft->Other3_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6601,7 +6597,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_Department_person) || $lastCft->Other3_Department_person === '') {
+            if (is_null($lastCft->Other3_Department_person) || $lastCft->Other3_Department_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6621,7 +6617,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
+            if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6641,7 +6637,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+            if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6661,7 +6657,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_by) || $lastCft->Other3_by === '') {
+            if (is_null($lastCft->Other3_by) || $lastCft->Other3_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6681,7 +6677,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_on) || $lastCft->Other3_on === '') {
+            if (is_null($lastCft->Other3_on) || $lastCft->Other3_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6693,7 +6689,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Other 3 Review On';
             $history->previous = $lastCft->Other3_attachment;
-            $history->current =implode(',', $request->Other3_attachment);
+            $history->current = implode(',', $request->Other3_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6701,7 +6697,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
+            if (is_null($lastCft->Other3_attachment) || $lastCft->Other3_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6723,7 +6719,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_review) || $lastCft->Other4_review === '') {
+            if (is_null($lastCft->Other4_review) || $lastCft->Other4_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6743,7 +6739,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_person) || $lastCft->Other4_person === '') {
+            if (is_null($lastCft->Other4_person) || $lastCft->Other4_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6763,7 +6759,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_Department_person) || $lastCft->Other4_Department_person === '') {
+            if (is_null($lastCft->Other4_Department_person) || $lastCft->Other4_Department_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6783,7 +6779,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
+            if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6803,7 +6799,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+            if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6823,7 +6819,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_by) || $lastCft->Other4_by === '') {
+            if (is_null($lastCft->Other4_by) || $lastCft->Other4_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6843,7 +6839,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_on) || $lastCft->Other4_on === '') {
+            if (is_null($lastCft->Other4_on) || $lastCft->Other4_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6855,7 +6851,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Other 4 Review On';
             $history->previous = $lastCft->Other4_attachment;
-            $history->current =implode(',', $request->Other4_attachment);
+            $history->current = implode(',', $request->Other4_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6863,7 +6859,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
+            if (is_null($lastCft->Other4_attachment) || $lastCft->Other4_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6886,7 +6882,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_review) || $lastCft->Other5_review === '') {
+            if (is_null($lastCft->Other5_review) || $lastCft->Other5_review === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6906,7 +6902,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_person) || $lastCft->Other5_person === '') {
+            if (is_null($lastCft->Other5_person) || $lastCft->Other5_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6926,7 +6922,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_Department_person) || $lastCft->Other5_Department_person === '') {
+            if (is_null($lastCft->Other5_Department_person) || $lastCft->Other5_Department_person === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6946,7 +6942,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
+            if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6966,7 +6962,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+            if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6986,7 +6982,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_by) || $lastCft->Other5_by === '') {
+            if (is_null($lastCft->Other5_by) || $lastCft->Other5_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -7006,7 +7002,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_on) || $lastCft->Other5_on === '') {
+            if (is_null($lastCft->Other5_on) || $lastCft->Other5_on === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -7018,7 +7014,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $id;
             $history->activity_type = 'Other 5 Review On';
             $history->previous = $lastCft->Other5_attachment;
-            $history->current = implode(',',$request->Other5_attachment);
+            $history->current = implode(',', $request->Other5_attachment);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7026,7 +7022,7 @@ class MarketComplaintController extends Controller
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-             if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
+            if (is_null($lastCft->Other5_attachment) || $lastCft->Other5_attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -7137,13 +7133,12 @@ class MarketComplaintController extends Controller
                 if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                     $marketstat = MarketComplaint::find($id);
                     $marketComplaint = MarketComplaint::find($id);
-            $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
+                    $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
                     $updateCFT = MarketComplaintCft::where('mc_id', $id)->latest()->first();
                     $lastDocument = MarketComplaint::find($id);
                     $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
 
-                    if ($marketstat->stage == 1)
-                     {
+                    if ($marketstat->stage == 1) {
 
                         $marketstat->stage = "2";
                         $marketstat->status = "QA/CQA Head Review";
@@ -7176,6 +7171,23 @@ class MarketComplaintController extends Controller
                         }
                         $history->save();
 
+                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     // dd($email);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
 
                         $marketstat->update();
                         toastr()->success('Document Set');
@@ -7243,25 +7255,22 @@ class MarketComplaintController extends Controller
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        // $list = Helpers::getQAUserList();
+
+                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
                         // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
-                        //         $email = Helpers::getInitiatorEmail($u->user_id);
-                        //         if ($email !== null) {
-                        //             try {
-                        //                 Mail::send(
-                        //                     'mail.view-mail',
-                        //                     ['data' => $marketstat],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Activity Performed By " . Auth::user()->name);
-                        //                     }
-                        //                 );
-                        //             } catch (\Exception $e) {
-                        //                 //log error
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
                         //             }
-                        //         }
+                        //         );
                         //     }
+                        //     // }
                         // }
 
                         $marketstat->update();
@@ -7272,7 +7281,7 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi ) {
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'Preliminary Investigation Tab is yet to be filled!',
@@ -7287,7 +7296,7 @@ class MarketComplaintController extends Controller
                                 'message' => 'CFT Reviews'
                             ]);
                         }
-                         if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                        if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
@@ -7343,25 +7352,22 @@ class MarketComplaintController extends Controller
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        // $list = Helpers::getQAUserList();
+
+                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
                         // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
-                        //         $email = Helpers::getInitiatorEmail($u->user_id);
-                        //         if ($email !== null) {
-                        //             try {
-                        //                 Mail::send(
-                        //                     'mail.view-mail',
-                        //                     ['data' => $marketstat],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Activity Performed By " . Auth::user()->name);
-                        //                     }
-                        //                 );
-                        //             } catch (\Exception $e) {
-                        //                 //log error
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
                         //             }
-                        //         }
+                        //         );
                         //     }
+                        //     // }
                         // }
 
                         $marketstat->update();
@@ -8036,26 +8042,23 @@ class MarketComplaintController extends Controller
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                            // $list = Helpers::getQAUserList();
-                            // foreach ($list as $u) {
-                            //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
-                            //         $email = Helpers::getInitiatorEmail($u->user_id);
-                            //         if ($email !== null) {
-                            //             try {
-                            //                 Mail::send(
-                            //                     'mail.view-mail',
-                            //                     ['data' => $marketstat],
-                            //                     function ($message) use ($email) {
-                            //                         $message->to($email)
-                            //                             ->subject("Activity Performed By " . Auth::user()->name);
-                            //                     }
-                            //                 );
-                            //             } catch (\Exception $e) {
-                            //                 //log error
-                            //             }
-                            //         }
-                            //     }
-                            // }
+
+                        //     $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        //     foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
                             $marketstat->update();
                         }
                         toastr()->success('Document Sent');
@@ -8114,6 +8117,23 @@ class MarketComplaintController extends Controller
                         }
                         $history->save();
 
+                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
+
                         $marketstat->update();
                         toastr()->success('Document Sent');
                         return back();
@@ -8121,8 +8141,6 @@ class MarketComplaintController extends Controller
 
 
                     if ($marketstat->stage == 6) {
-
-
 
                         if (!$marketstat->qa_cqa_head_comm) {
                             Session::flash('swal', [
@@ -8174,6 +8192,23 @@ class MarketComplaintController extends Controller
                             $history->previous = $lastDocument->approve_plan_by . ' ,' . $lastDocument->approve_plan_on;
                         }
                         $history->save();
+
+                        // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -8302,6 +8337,24 @@ class MarketComplaintController extends Controller
                 $history->change_from = $lastDocument->status;;
                 $history->stage = 'In QA Review';
                 $history->save();
+
+                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                //         foreach ($list as $u) {
+                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //             // dd($email);
+                //             if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //                     function ($message) use ($email, $marketstat) {
+                //                         $message->to($email)
+                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             }
+                //             // }
+                //         }
                 $marketstat->update();
 
                 return back();
@@ -8328,6 +8381,26 @@ class MarketComplaintController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'In QA Review';
                 $history->save();
+
+                // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
+                //         foreach ($list as $u) {
+                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //             // dd($email);
+                //             if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //                     function ($message) use ($email, $marketstat) {
+                //                         $message->to($email)
+                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             }
+                //             // }
+                //         }
+
+
                 $marketstat->update();
 
                 return back();
@@ -8335,8 +8408,8 @@ class MarketComplaintController extends Controller
 
             if ($marketstat->stage == 5) {
                 $marketstat->stage = "4";
-                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
-                $marketstat->reject_by ='Not Applicable';
+                $marketstat->status = "CFt Review";
+                $marketstat->reject_by = 'Not Applicable';
                 $marketstat->reject_on = 'Not Applicable';
                 // $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
@@ -8355,6 +8428,43 @@ class MarketComplaintController extends Controller
                 $history->stage = 'CFT Review';
                 $history->save();
                 $marketstat->update();
+
+
+                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                //         foreach ($list as $u) {
+                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //             // dd($email);
+                //             if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //                     function ($message) use ($email, $marketstat) {
+                //                         $message->to($email)
+                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             }
+                //             // }
+                //         }
+
+                        $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                 return back();
             }
@@ -8387,7 +8497,7 @@ class MarketComplaintController extends Controller
 
             if ($marketstat->stage == 3) {
                 $marketstat->stage = "2";
-                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
+                $marketstat->status = "QA/CQA Head Review";
                 $marketstat->more_information_required_by = 'Null';
                 $marketstat->more_information_required_on = 'Null';
                 // $marketstat->more_information_required_comment = $request->comment;
@@ -8433,6 +8543,42 @@ class MarketComplaintController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Opened';
                 $history->save();
+
+                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                //         foreach ($list as $u) {
+                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //             // dd($email);
+                //             if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "Cancel", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                //                     function ($message) use ($email, $marketstat) {
+                //                         $message->to($email)
+                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                     }
+                //                 );
+                //             }
+                //             // }
+                //         }
+
+                        $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                 $marketstat->update();
 
@@ -8528,7 +8674,7 @@ class MarketComplaintController extends Controller
             $relatedRecords = Helpers::getAllRelatedRecords();
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record', 'record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','relatedRecords'));
+            return view('frontend.forms.capa', compact('record', 'record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'relatedRecords'));
         }
     }
 
@@ -8562,14 +8708,14 @@ class MarketComplaintController extends Controller
             $record_number = $record;
             $relatedRecords = Helpers::getAllRelatedRecords();
 
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft','relatedRecords'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
-              $p_record = MarketComplaint::find($id);
-              $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+            $p_record = MarketComplaint::find($id);
+            $data_record = Helpers::getDivisionName($p_record->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
+            return view('frontend.action-item.action-item', compact('record', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             //  return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -8627,7 +8773,7 @@ class MarketComplaintController extends Controller
             $parent_name = "CAPA";
             $actionchild = MarketComplaint::find($id);
             // $p_record = OutOfCalibration::find($id);
-            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+            $data_record = Helpers::getDivisionName($actionchild->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($actionchild->record, 4, '0',  STR_PAD_LEFT);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
@@ -8710,12 +8856,8 @@ class MarketComplaintController extends Controller
         $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
         $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
         $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Report_Approval'])->first();
-         $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+        $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
         $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
-
-
-
-
 
 
 
@@ -8725,7 +8867,7 @@ class MarketComplaintController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data','proposalData','proposal_to_accomplish_investigation', 'data1', 'prductgigrid', 'gitracebilty','marketrproducts','giinvesting','brain','hodteammembers','hodreportapproval'))
+            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data', 'proposalData', 'proposal_to_accomplish_investigation', 'data1', 'prductgigrid', 'gitracebilty', 'marketrproducts', 'giinvesting', 'brain', 'hodteammembers', 'hodreportapproval'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -8984,7 +9126,7 @@ class MarketComplaintController extends Controller
         return response()->json(['html' => $responseHtml]);
     }
 
-    public function AcknoledgmentReport(Request $request,$id)
+    public function AcknoledgmentReport(Request $request, $id)
     {
 
         $data = MarketComplaint::find($id);
@@ -9002,7 +9144,7 @@ class MarketComplaintController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.market_complaint.acknoledgment', compact('data','proposalData','product_materialDetails'))
+            $pdf = PDF::loadview('frontend.market_complaint.acknoledgment', compact('data', 'proposalData', 'product_materialDetails'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -9085,6 +9227,4 @@ class MarketComplaintController extends Controller
             return back();
         }
     }
-
-
 }

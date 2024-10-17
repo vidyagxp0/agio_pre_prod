@@ -782,12 +782,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Audit Category</label>
-                                        <select name="audit_type"
+                                        <select name="Audit_Category"
                                             onchange="otherController(this.value, 'others', 'type_of_audit_req')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="R&D">Scheduled Internal Audit</option>
-                                            <option value="GLP">Unscheduled Internal Audit</option>
-                                            <option value="GCP">Surprise Internal Audit</option>
+                                            <option value="1">Internal Audit/Self Inspection</option>
+                                            <option value="2">Supplier Audit</option>
+                                            <option value="3">Regulatory Audit</option>
+                                            <option value="4">Consultant Audit</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -923,7 +925,7 @@
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
                                                 '<option value="">--Select--</option>' +
-                                                '<option value="Auditee">Lead Auditor</option>' +
+                                                '<option value="Lead Auditor">Lead Auditor</option>' +
                                                 '<option value="Auditor">Auditor</option>' +
                                                 '</select>' +
                                                 '</td>' +
@@ -2677,7 +2679,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            {" "}
+                                                            
                                                             Standard operating procedure for dispensing of raw material is
                                                             displayed?
                                                         </td>
@@ -2706,7 +2708,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                            {" "}
+                                                            
                                                             All the person involve in dispensing having proper gowning?
                                                         </td>
                                                         <td>
@@ -2785,7 +2787,7 @@
                                                         <td class="flex text-center">1.9</td>
                                                         <td>
                                                             Have you any standard practice to cross check the approved
-                                                            status of raw materials before dispensing?{" "}
+                                                            status of raw materials before dispensing?
                                                         </td>
                                                         <td>
                                                             <div
@@ -2975,7 +2977,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.2</td>
-                                                        <td>Is the dispensing area cleaned as per SOP?</td>
+                                                        <td>Equipment cleanliness, check few equipments.</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -3001,7 +3003,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.3</td>
-                                                        <td> Check the status label of area and equipment.</td>
+                                                        <td> Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -6155,7 +6157,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                        Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record.
+                                                        Are all weighing and measuring performed by one qualified person and checked by a second person<br>Check the weighing balance record.
                                                         </td>
                                                         <td>
                                                             <div
@@ -8236,7 +8238,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                            Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record. </td>
+                                                            Are all weighing and measuring performed by one qualified person and checked by a second person<br> Check the weighing balance record. </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -11248,7 +11250,7 @@
                                                                             <tr>
                                                                                 <td class="flex text-center">1.20</td>
                                                                                 <td>
-                                                                                Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
+                                                                                Are all weighing and measuring performed by one qualified person and checked by a second person<br>Check the weighing balance record
                                                                                 </td>
                                                                                 <td>
                                                                                     <div
@@ -13166,10 +13168,12 @@
                                                         <td class="flex text-center">1.42</td>
                                                         <td>
                                                         Does QA have authority to review and approve or reject?
-                                                       a) qweywfewyfweyf
-                                                        ewqfbruewvf
-                                                        rewfew
-                                                        furwf
+                                                        <ul>
+                                                            <li>Procedures and specifications?</li>
+                                                            <li>	Process changes impacting on the identity, quality and purity of the material?</li>
+                                                            <li>	Raw materials, packaging materials, in-process materials, and product batches?</li>
+                                                            <li>	New suppliers or subcontractors?</li>
+                                                        </ul>
 
                                                         </td>
                                                         <td>
@@ -19380,7 +19384,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            {" "}
+                                                            
                                                             Standard operating procedure for dispensing of raw material is
                                                             displayed?
                                                         </td>
@@ -19409,7 +19413,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                            {" "}
+                                                            
                                                             All the person involve in dispensing having proper gowning?
                                                         </td>
                                                         <td>
@@ -19488,7 +19492,7 @@
                                                         <td class="flex text-center">1.9</td>
                                                         <td>
                                                             Have you any standard practice to cross check the approved
-                                                            status of raw materials before dispensing?{" "}
+                                                            status of raw materials before dispensing?
                                                         </td>
                                                         <td>
                                                             <div
@@ -22851,7 +22855,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                        Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
+                                                        Are all weighing and measuring performed by one qualified person and checked by a second person <br>Check the weighing balance record
                                                         </td>
                                                         <td>
                                                             <div

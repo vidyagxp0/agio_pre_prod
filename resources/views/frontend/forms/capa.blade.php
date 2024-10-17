@@ -399,7 +399,21 @@
                                         </div> -
                                     </div>
                                 </div> --}}
-                                <div class="col-6">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input"> 
+                                        <label for="RLS Record Number"><b>Reference Records</b></label>
+                                        @if (!empty($reference_record))
+                                        <input readonly type="text" name="parent_record_number"
+                                            value="{{ $reference_record }}">
+                                        @else
+                                        <input type="text" name="parent_record_number_edit"
+                                        value="">
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">Reference Records</label>
                                         <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
@@ -432,7 +446,7 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                           
                                 <div class="col-12">
                                     <div class="group-input">
