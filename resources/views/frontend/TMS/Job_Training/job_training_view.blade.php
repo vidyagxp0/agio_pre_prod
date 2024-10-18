@@ -1072,146 +1072,315 @@
                                         </button>
                                 </div>
 
-                                <div class="certificate-container">
-                                <h1 class="certificate-title">JOB TRAINING CERTIFICATE</h1>
-                                </br>
-                                <p class="certificate-content">
-                                This is to certify that Mr. / Ms. / Mrs  <strong> {{ $jobTraining->name}}
-                                    
-                                </strong> has undergone On The Job Training</br>including the requirement of cGMP and has shown a good attitude and thorough</br>understanding in thè subject.</br></br>
-                                </p> 
-                                <p class="certificate-content">
-                                Therefore we certify that Mr. Ms. / Mrs. <strong>{{ $jobTraining->name}}</strong>is capable of performing his /her </br>assigned duties in the <strong>{{$jobTraining->department}}</strong> Department </br>indeperndently. 
-                                </p>
-                                <div class="signature-section">
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        Sign / Date: <strong>{{ $jobTraining->evaluation_complete_by }} / {{ \Carbon\Carbon::parse($jobTraining->evaluation_complete_on)->format('d-M-Y') }}</strong> <br>Head of Department 
+                            <div id="certificateContent" class="pm-certificate-container">
+                                <div class="outer-border"></div>
+                                <div class="inner-border"></div>
+
+                                <div class="pm-certificate-border">
+                                    <!-- Logos Section -->
+                                    <div class="pm-certificate-logos text-center">
+                                        <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="Agio Logo" class="logo logo-left">
+                                        <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="Vidhya GxP Logo" class="logo logo-right">
                                     </div>
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        Sign / Date: <strong>{{ $jobTraining->approval_complete_by }}/{{ \Carbon\Carbon::parse($jobTraining->approval_complete_on)->format('d-M-Y') }}</strong> <br>  Head QA/CQA
+
+                                    <div class="pm-certificate-header">
+                                        <div class="pm-certificate-title cursive text-center">
+                                            <h2>Certificate of On The Job Training</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="pm-certificate-body">
+                                        <div class="pm-certificate-block">
+                                            <p class="text-center">
+                                                This is to certify that Mr. / Ms. / Mrs. 
+                                                <strong> {{ $jobTraining->name }}</strong>
+                                                has undergone On The Job Training, including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
+                                            </p>
+
+                                            <p class="text-center">
+                                                Therefore, we certify that Mr. / Ms. / Mrs. 
+                                                <strong> {{ $jobTraining->name }}</strong>
+                                                is capable of performing his/her assigned duties in the 
+                                                <strong>{{ $jobTraining->department }}</strong> Department independently.
+                                            </p>
+                                        </div>
+
+                                        <div class="pm-certificate-footer">
+                                            <div class="pm-certified text-center">
+                                                <span class="bold block">Sign / Date:</span>
+                                                <strong>{{ $jobTraining->evaluation_complete_by }} / {{ \Carbon\Carbon::parse($jobTraining->evaluation_complete_on)->format('d-M-Y') }}</strong>
+                                                <span class="pm-empty-space block underline"></span>
+                                                <span class="bold block">Head of Department</span>
+                                            </div>
+                                            <div class="pm-certified text-center">
+                                                <span class="bold block">Sign / Date:</span>
+                                                <strong>{{ $jobTraining->approval_complete_by }} / {{ \Carbon\Carbon::parse($jobTraining->approval_complete_on)->format('d-M-Y') }}</strong>
+                                                <span class="pm-empty-space block underline"></span>
+                                                <span class="bold block">Head QA/CQA</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                
-                                <div style="margin-top: 40px;" class="button-block">
-                                {{-- <button type="submit" class=" btn btn saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button> --}}
-                                </div>
+                            
+                            <div style="margin-top: 40px;" class="button-block">
+                                <button type="submit" class="btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class="btn btn nextButton">Next</button>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
+            </div>
+            @endif
 
-                @endif
-                <style>
-                    .certificate-container {
-                        width: 800px;
-                        height: 450px;
-                        border: 4px solid #0c0d0d;
-                        padding: 18px;
-                        background-color: white;
-                        position: relative;
-                        margin: auto;
-                        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-                    }
 
-                    .certificate-container h1,
-                    .certificate-container h2,
-                    .certificate-container p {
-                        text-align: center;
-                    }
 
-                    .certificate-title {
-                        font-size: 26px;
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                    }
 
-                    .certificate-content {
-                        line-height: 1.5;
-                        margin: 0 20px;
-                        text-align: left;
-                    }
+                <!-- CSS Styling -->
+            <style>
+              @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
 
-                    .signature-section {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-top: 50px;
-                        margin-left: 50px;
-                        margin-right: 50px;
-                    }
+                .cursive {
+                    font-family: 'Pinyon Script', cursive;
+                }
 
-                    .signature {
-                        text-align: center;
-                        font-size: 14px;
-                    }
+                .sans {
+                    font-family: 'Open Sans', sans-serif;
+                }
 
-                    .signature-line {
-                        margin-top: 40px;
-                        width: 200px;
-                        height: 0;
-                    }
+                .bold {
+                    font-weight: bold;
+                }
 
-                    @media print {
-                        .button-block {
-                            display: none !important;
-                        }
+                .block {
+                    display: block;
+                }
 
-                        body * {
-                            visibility: hidden;
-                        }
+                .underline {
+                    border-bottom: 1px solid #777;
+                    padding: 5px;
+                    margin-bottom: 15px;
+                }
 
-                        .certificate-container,
-                        .certificate-container * {
-                            visibility: visible;
-                        }
+                .text-center {
+                    text-align: center;
+                }
 
-                        .certificate-container {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                        }
-                    }
+                .pm-empty-space {
+                    height: 40px; 
+                    width: 100%;
+                }
 
-                    .button-block {
-                        display: flex;
-                        justify-content: flex-end;
-                        margin-top: 50px;
-                    }
+                .pm-certificate-container {
+                    position: relative;
+                    width: 90%;
+                    max-width: 800px;
+                    background-color: #618597;
+                    padding: 30px;
+                    color: #333;
+                    font-family: 'Open Sans', sans-serif;
+                    box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
+                    margin-top: 35px;
+                   
+                }
+ 
 
-                    .printButton {
-                        background-color: #2c3e50;
-                        color: white;
-                        border: none;
-                        padding: 12px 24px;
-                        font-size: 16px;
-                        cursor: pointer;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
-                        float: right;
-                    }
+                .outer-border {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
+
+                .inner-border {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    right: 10px;
+                    bottom: 10px;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
+
+                .pm-certificate-border {
+                    position: relative;
+                    padding: 20px;
+                    border: 1px solid #E1E5F0;
+                    background-color: rgba(255, 255, 255, 1);
+                }
 
                     .printButton:hover {
                         background-color: #1a252f;
                     }
 
-                    .printButton i {
-                        margin-right: 8px;
-                    }
-                </style>
+                .pm-certificate-logos {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                 
+                }
+
+                .logo {
+                    max-width: 100px;
+                }
+
+                .logo-left {
+                    transform: scale(0.7);
+                    margin-bottom: 14px;
+                }
+
+                .logo-right {
+                    transform: scale(1.8);
+                    margin-right: 65px;
+                }
+
+                .pm-certificate-header {
+                    margin-bottom: 10px;
+                }
+
+                .pm-certificate-title h2 {
+                    font-size: 34px;
+                }
+
+                .pm-certificate-body {
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .pm-certificate-block {
+                    text-align: center;
+                }
+
+                .pm-name-text {
+                    font-size: 20px;
+                }
+
+                .pm-earned {
+                    margin: 15px 0 20px;
+                }
+
+                .pm-earned-text {
+                    font-size: 20px;
+                }
+
+                .pm-credits-text {
+                    font-size: 15px;
+                }
+
+                .pm-course-title {
+                    margin-bottom: 15px;
+                }
+
+                .pm-certified {
+                    font-size: 12px;
+                    width: 300px; 
+                    margin-top: 0; 
+                    text-align: center;
+                }
+
+                .pm-certificate-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center; 
+                    width: 100%;
+                    margin-top: 20px;
+                    flex-wrap: nowrap
+                }
+                @media print {
+                    .print-button {
+                        display: none;
+                    }
+                    .print-button-container {
+                        display: none;
+                    }
+                }
+
+
+                .print-button {
+                    padding: 10px 20px;
+                    background-color: #007bff; 
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin-block-end: 700px;
+                }
+
+
+                @media print {
+                    body {
+                        background: none;
+                        -webkit-print-color-adjust: exact; 
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                    }
+
+                    .pm-certificate-container {
+                        page-break-inside: avoid; 
+                        page-break-after: avoid; 
+                        width: 100%;
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden; 
+                        box-shadow: none; 
+                        background-color: #618597; 
+                        // padding: 30px;
+                        margin: 0 auto; 
+                    }
+
+                    .outer-border, .inner-border {
+                        border-color: #d3d0d0; 
+                    }
+
+                    .print-button, .print-button-container {
+                        display: none; 
+                        
+                    }
+
+                
+                    html, body {
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden;
+                    }
+                }
+
+                </style>
+
+
+             
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
                 <script>
-                        function printCertificate() {
-                        var buttons = document.querySelector(".button-block");
-                        buttons.style.display = 'none';
-                        window.print();
-                        buttons.style.display = 'block';
+                    function downloadCertificate() {
+                        const element = document.querySelector('.pm-certificate-container');
+                        const options = {
+                            margin: 0, // Margin ko adjust karen, yahan 0 set kiya hai
+                            filename: 'Job-Training-certificate.pdf',
+                            html2canvas: { 
+                                scale: 2,
+                                // Allowing the certificate to be centered on the canvas
+                                x: 0,
+                                y: 0
+                            },
+                            jsPDF: { orientation: 'landscape' }
+                        };
+                        html2pdf().from(element).set(options).save();
                     }
                 </script>
-                
+
+
+
+
+
                 <script>
                     document.getElementById("saveForm").addEventListener("click", function(event) {
                         let questionInputs = document.querySelectorAll(".question-input");
