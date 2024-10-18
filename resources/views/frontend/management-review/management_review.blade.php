@@ -1449,13 +1449,13 @@
                                         <div class="calenderauditee">
                                             <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly
-                                            {{ $data->stage != 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
                                                     {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
-                                                    {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
 
@@ -1471,13 +1471,13 @@
                                         <div class="calenderauditee">
 
                                             <input type="text" id="customer_satisfaction_level" readonly
-                                            {{ $data->stage != 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
                                             <input type="date" id="customer_satisfaction_level_checkdate"
                                                 name="customer_satisfaction_level"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 value="{{ $data->customer_satisfaction_level }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'customer_satisfaction_level')" />
                                         </div>
