@@ -333,7 +333,11 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HOD Evaluation</button>
+
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
             <form id="auditform" action="{{ route('trainer.store') }}" method="POST" enctype="multipart/form-data">
@@ -353,12 +357,13 @@
                                 <div class="sub-head">
                                     Trainer Information
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
                                         <input id="trainer_name" type="text" name="trainer_name" maxlength="255">
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="select-state">Name of Employee</label>
@@ -498,6 +503,7 @@
                                     <div class="group-input">
                                         <label for="type">Type of Training</label>
                                         <select name="type" id="type">
+                                            <option value="">--Select--</option>
                                             <option value="technical">Technical</option>
                                             <option value="non-technical">Non-Technical</option>
                                             <option value="safety">Safety</option>
@@ -510,6 +516,7 @@
                                     <div class="group-input">
                                         <label for="evaluation">Evaluation Required</label>
                                         <select name="evaluation">
+                                            <option value="">--Select--</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -913,7 +920,7 @@
 
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                             </div>
@@ -921,45 +928,262 @@
                         </div>
                     </div>
 
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="col-12 sub-head">
+                            Questionaries
+                        </div>
+                        <div class="pt-2 group-input">
+                            <label for="audit-agenda-grid">
+                                Questionaries
+                                <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr No.</th>
+                                            <th>Questions</th>
+                                            <th>Answer Fillup by Employee</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                                <tr>
+                                                    <td><input disabled type="text"
+                                                            name="jobResponsibilities[serial]"
+                                                            value=""></td>
+                                                    <td><input type="text"
+                                                            name="jobResponsibilities[job]"
+                                                            value=""
+                                                            class="question-input">
+                                                    </td>
+                                                    <td><input type="text"
+                                                            name="jobResponsibilities[remarks]"
+                                                            value=""
+                                                            class="answer-input">
+                                                    </td>
+                                                    <td><input type="text"
+                                                            name="jobResponsibilities[comments]"
+                                                            value=""
+                                                            class="answer-input">
+                                                    </td>
+                                                </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton" id="">Save</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        $('#ObservationAdd').click(function(e) {
+                            function generateTableRow(serialNumber) {
+
+                                var html =
+                                    '<tr>' +
+                                    '<td><input disabled type="text" name="jobResponsibilities[' + serialNumber +
+                                    '][serial]" value="' + serialNumber +
+                                    '"></td>' +
+                                    '<td><input type="text" name="jobResponsibilities[' + serialNumber +
+                                    '][job]"></td>' +
+                                    '<td><input type="text" class="Document_Remarks" name="jobResponsibilities[' +
+                                    serialNumber + '][remarks]"></td>' +
+
+
+                                    '</tr>';
+
+                                return html;
+                            }
+
+                            var tableBody = $('#job-responsibilty-table tbody');
+                            var rowCount = tableBody.children('tr').length;
+                            var newRow = generateTableRow(rowCount + 1);
+                            tableBody.append(newRow);
+                        });
+                    });
+                </script>
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="hod_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">HOD Evaluation Attachment</label>
+                                    <input type="file" id="myfile" name="hod_attachment"
+                                        value="">
+                                    <a href=""
+                                        target="_blank"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="qa_final_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">QA/CQA Attachment</label>
+                                    <input type="file" id="myfile" name="qa_final_attachment"
+                                        value="">
+                                    <a href=""
+                                        target="_blank"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
 
 
                     <!-- Activity Log content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted On">Submitted By</label>
+                                        <label for="Submitted On">Submit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submitted On">Submitted On</label>
+                                        <label for="Submitted On">Submit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Comment">Submit Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Update Complete By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Update Complete On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Comment">Update Complete Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Answer Complete By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Answer Complete On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Comment">Answer Complete Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Evaluation Complete By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Submitted On">Evaluation Complete On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Comment">Evaluation Complete Comment</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Qualified By">Qualified By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Qualified On">Qualified On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Qualified On">Qualified Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for=" Rejected By">Rejected By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Rejected On">Rejected On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Qualified On">Rejected Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -970,8 +1194,7 @@
                                 <a href="/rcms/qms-dashboard">
                                     <button type="button" class="backButton">Back</button>
                                 </a>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                         Exit </a> </button>
                             </div>
                         </div>

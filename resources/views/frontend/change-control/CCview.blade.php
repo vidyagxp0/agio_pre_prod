@@ -245,11 +245,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Initial Assessment Complete
                             </button>
-                            @if(Helpers::getChildData($data->id, 'CC') < 3)
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            @endif
+                            
                         {{--  @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Assessment Complete
@@ -282,11 +282,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
-                            @if(Helpers::getChildData($data->id, 'CC') < 3)
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            @endif
+                          
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-modal">
                                 Send to HOD
                             </button>
@@ -320,11 +320,11 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>  --}}
-                            @if(Helpers::getChildData($data->id, 'CC') < 3)
+                          
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                            @endif
+                          
                      @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
@@ -10502,20 +10502,24 @@
                                     <input type="radio" name="revision" id="minor" value="RCA">
                                     RCA
                                 </label>
+                                @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
+                                @endif
                             @endif
                             @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
                                     Capa
                                 </label>
+                                @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
+                                @endif
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Action-Item">
                                     Action Item
@@ -10559,11 +10563,15 @@
                                     RCA
                                 </label>
                             </div>
+
+
                             <div>
+                            @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
+                            @endif    
                             </div>
 
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('responsible');
             $table->string('deadline');
             $table->string('item_status');
+            $table->string('type');
             $table->timestamps();
         });
     }

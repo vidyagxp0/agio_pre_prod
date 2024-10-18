@@ -215,20 +215,20 @@
             
 
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button> -->
-            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">QA/CQA Approval</button>
 
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> -->
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Evaluation</button>
 
-            @if ($jobTraining->stage >= 4)
-            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
+            @if ($jobTraining->stage >= 5)
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Certificate</button>
             @endif
 
-            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">QA/CQA Head Final Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">QA/CQA Head Final Review</button>
             
-            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA Final Approval</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm10')">Activity Log</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">QA Final Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm7')">Activity Log</button>
         </div>
 
         <script>
@@ -329,7 +329,7 @@
                                     <div class="group-input">
                                         <label for="start_date">Start Date</label>
                                         <input id="start_date" type="date" name="start_date"
-                                            value="{{ $jobTraining->start_date }}">
+                                            value="{{ $jobTraining->start_date }}" onchange="setMinEndDate()">
                                     </div>
                                 </div>
 
@@ -337,9 +337,21 @@
                                     <div class="group-input">
                                         <label for="end_date">End Date</label>
                                         <input id="end_date" type="date" name="end_date"
-                                            value="{{ $jobTraining->end_date }}">
+                                            value="{{ $jobTraining->end_date }}" onchange="setMaxStartDate()">
                                     </div>
                                 </div>
+
+                            <script>
+                                function setMinEndDate() {
+                                    var startDate = document.getElementById('start_date').value;
+                                    document.getElementById('end_date').min = startDate; 
+                                }
+
+                                function setMaxStartDate() {
+                                    var endDate = document.getElementById('end_date').value;
+                                    document.getElementById('start_date').max = endDate;
+                                }
+                            </script>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -357,95 +369,95 @@
                                 </div>
 
 
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="revision_purpose">Revision Purpose</label>
-        <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
-            <option value="">----Select---</option>
-            <option value="New" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New</option>
-            <option value="Old" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>Old</option>
-        </select>
-    </div>
-</div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="revision_purpose">Revision Purpose</label>
+                                        <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+                                            <option value="">----Select---</option>
+                                            <option value="New" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New</option>
+                                            <option value="Old" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>Old</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-<!-- Remark Input Field -->
-<div class="col-lg-6" id="remark_container" style="display: {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'block' : 'none' }};">
-    <div class="group-input">
-        <label for="remark">Remark</label>
-        <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here...">{{ isset($jobTraining) ? $jobTraining->remark : '' }}</textarea>
-    </div>
-</div>
-<script>
-    // Function to toggle the remark input based on selection
-    function toggleRemarkInput() {
-        const revisionPurposeSelect = document.getElementById('revision_purpose');
-        const remarkContainer = document.getElementById('remark_container');
+                                <!-- Remark Input Field -->
+                                <div class="col-lg-6" id="remark_container" style="display: {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'block' : 'none' }};">
+                                    <div class="group-input">
+                                        <label for="remark">Remark</label>
+                                        <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here...">{{ isset($jobTraining) ? $jobTraining->remark : '' }}</textarea>
+                                    </div>
+                                </div>
+                                <script>
+                                    // Function to toggle the remark input based on selection
+                                    function toggleRemarkInput() {
+                                        const revisionPurposeSelect = document.getElementById('revision_purpose');
+                                        const remarkContainer = document.getElementById('remark_container');
 
-        // Show the remark input if "Old" is selected, otherwise hide it
-        if (revisionPurposeSelect.value === 'Old') {
-            remarkContainer.style.display = 'block';
-        } else {
-            remarkContainer.style.display = 'none';
-            // Clear the remark input when hiding (optional)
-            document.getElementById('remark').value = '';
-        }
-    }
+                                        // Show the remark input if "Old" is selected, otherwise hide it
+                                        if (revisionPurposeSelect.value === 'Old') {
+                                            remarkContainer.style.display = 'block';
+                                        } else {
+                                            remarkContainer.style.display = 'none';
+                                            // Clear the remark input when hiding (optional)
+                                            document.getElementById('remark').value = '';
+                                        }
+                                    }
 
-    // Call the function on page load to set the initial state
-    document.addEventListener('DOMContentLoaded', function() {
-        toggleRemarkInput(); // Call the function to initialize display based on current selection
-    });
-</script>
+                                    // Call the function on page load to set the initial state
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        toggleRemarkInput(); // Call the function to initialize display based on current selection
+                                    });
+                                </script>
 
 
 
-<div class="col-lg-6" id="evaluationContainer" style="display: none;">
-    <div class="group-input">
-        <label for="evaluation">Evaluation Required</label>
-        <select name="evaluation_required" id="evaluationRequired">
-            <option value="">----Select---</option>
-            <option value="Yes" {{ $jobTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
-            <option value="No" {{ $jobTraining->evaluation_required == 'No' ? 'selected' : '' }}>No</option>
-        </select>
-    </div>
-</div>
+                                <div class="col-lg-6" id="evaluationContainer" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="evaluation">Evaluation Required</label>
+                                        <select name="evaluation_required" id="evaluationRequired">
+                                            <option value="">----Select---</option>
+                                            <option value="Yes" {{ $jobTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="No" {{ $jobTraining->evaluation_required == 'No' ? 'selected' : '' }}>No</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
-        const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const lowerDesignations = ['Trainee', 'Officer', 'Senior Officer', 'Executive', 'Senior Executive'];
+                                        const higherDesignations = ['Assistant Manager', 'Manager','Senior General Manager','Senior Manager', 'Deputy General Manager', 'Assistant General Manager and General Manager', 'Head Quality', 'VP Quality', 'Plant Head'];
 
-        const designationInput = document.getElementById('designation');
-        const evaluationContainer = document.getElementById('evaluationContainer');
-        const evaluationSelect = document.getElementById('evaluationRequired');
-        const questionnaireSection = document.getElementById('questionnaireSection');
+                                        const designationInput = document.getElementById('designation');
+                                        const evaluationContainer = document.getElementById('evaluationContainer');
+                                        const evaluationSelect = document.getElementById('evaluationRequired');
+                                        const questionnaireSection = document.getElementById('questionnaireSection');
 
-        // Check the designation and show/hide the evaluation dropdown
-        function checkDesignation() {
-            const designation = designationInput.value;
+                                        // Check the designation and show/hide the evaluation dropdown
+                                        function checkDesignation() {
+                                            const designation = designationInput.value;
 
-            if (higherDesignations.includes(designation)) {
-                evaluationContainer.style.display = 'block'; // Show evaluation dropdown for higher designations
-            } else {
-                evaluationContainer.style.display = 'none'; // Hide for lower designations
-                questionnaireSection.style.display = 'none'; // Also hide questionnaire section if evaluation is hidden
-                evaluationSelect.value = ''; // Reset evaluation selection
-            }
-        }
+                                            if (higherDesignations.includes(designation)) {
+                                                evaluationContainer.style.display = 'block'; // Show evaluation dropdown for higher designations
+                                            } else {
+                                                evaluationContainer.style.display = 'none'; // Hide for lower designations
+                                                questionnaireSection.style.display = 'none'; // Also hide questionnaire section if evaluation is hidden
+                                                evaluationSelect.value = ''; // Reset evaluation selection
+                                            }
+                                        }
 
-        // Add an event listener to handle evaluation selection
-        evaluationSelect.addEventListener('change', function () {
-            if (this.value === 'Yes') {
-                questionnaireSection.style.display = 'block'; // Show questionnaire if 'Yes' is selected
-            } else {
-                questionnaireSection.style.display = 'none'; // Hide if 'No' is selected
-            }
-        });
+                                        // Add an event listener to handle evaluation selection
+                                        evaluationSelect.addEventListener('change', function () {
+                                            if (this.value === 'Yes') {
+                                                questionnaireSection.style.display = 'block'; // Show questionnaire if 'Yes' is selected
+                                            } else {
+                                                questionnaireSection.style.display = 'none'; // Hide if 'No' is selected
+                                            }
+                                        });
 
-        // Initial check when the page loads
-        checkDesignation();
-    });
-</script>
+                                        // Initial check when the page loads
+                                        checkDesignation();
+                                    });
+                                </script>
 
 
                                 <div class="col-12">
@@ -527,236 +539,236 @@
                               
                                                         </tr>
                                                     @endfor -->
-<tr>
-<td>1</td>
-<td>
-    <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
-        <option value="">---Select Document Name---</option>
-        @foreach ($data as $dat)
-        <option value="{{ $dat->document_name }}" 
-                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                data-sop-id="{{ $dat->id }}"
-                @if(old('subject_1', $jobTraining->subject_1 ?? '') == $dat->document_name) selected @endif>
-            {{ $dat->document_name }}
-        </option>
-        @endforeach
-    </select>
-</td>
-<td>
-    <input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}">
-</td>
-<td>
-    <input type="hidden" name="reference_document_no_1" id="reference_document_no_1" 
-           value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}">
-    <input type="text" id="document_number" 
-           value="{{ old('document_number', $jobTraining->reference_document_no_1 ? 
-           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_1 . '/R' . $jobTraining->major : '') }}" readonly>
-</td>
-<td>
-    <select name="trainer_1" id="trainer_1">
-        <option value="">-- Select --</option>
-        @foreach ($usersDetails as $u)
-        <option value="{{ $u->id }}" @if(old('trainer_1', $jobTraining->trainer_1 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-        @endforeach
-    </select>
-</td>
-<td>
-    <input type="date" name="startdate_1" id="startdate_1" 
-           value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-</td>
-<td>
-    <input type="date" name="enddate_1" id="enddate_1" 
-           value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-</td>
-<td>
-    <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/view/' . $jobTraining->reference_document_no_1 : '#' }}" 
-       id="view_sop" target="_blank" 
-       style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">
-        View SOP
-    </a>
-</td>
+                                                    <tr>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
+                                                            <option value="">---Select Document Name---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->document_name }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    @if(old('subject_1', $jobTraining->subject_1 ?? '') == $dat->document_name) selected @endif>
+                                                                {{ $dat->document_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="type_of_training_1" value="{{ old('type_of_training_1', $jobTraining->type_of_training_1 ?? '') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="reference_document_no_1" id="reference_document_no_1" 
+                                                            value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}">
+                                                        <input type="text" id="document_number" 
+                                                            value="{{ old('document_number', $jobTraining->reference_document_no_1 ? 
+                                                            $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_1 . '/R' . $jobTraining->major : '') }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainer_1" id="trainer_1">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($usersDetails as $u)
+                                                            <option value="{{ $u->id }}" @if(old('trainer_1', $jobTraining->trainer_1 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="startdate_1" id="startdate_1" 
+                                                            value="{{ old('startdate_1', $jobTraining->startdate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="enddate_1" id="enddate_1" 
+                                                            value="{{ old('enddate_1', $jobTraining->enddate_1 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ $jobTraining->reference_document_no_1 ? '/documents/view/' . $jobTraining->reference_document_no_1 : '#' }}" 
+                                                        id="view_sop" target="_blank" 
+                                                        style="display: {{ $jobTraining->reference_document_no_1 ? 'inline' : 'none' }};">
+                                                            View SOP
+                                                        </a>
+                                                    </td>
 
 
 
-<!-- <input type="hidden" name="reference_document_no_1" id="selected_document_id" 
-       value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}"> -->
-       </tr>
+                                                    <!-- <input type="hidden" name="reference_document_no_1" id="selected_document_id" 
+                                                        value="{{ old('reference_document_no_1', $jobTraining->reference_document_no_1 ?? '') }}"> -->
+                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                        <td>2</td>
+                                                    <td>
+                                                        <select name="subject_2" id="sopdocument2" onchange="fetchDocumentDetails2(this)">
+                                                            <option value="">---Select Document Name---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->document_name }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    @if(old('subject_2', $jobTraining->subject_2 ?? '') == $dat->document_name) selected @endif>
+                                                                {{ $dat->document_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="reference_document_no_2" id="reference_document_no_2" 
+                                                            value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}">
+                                                        <input type="text" id="document_number2" 
+                                                            value="{{ old('document_number2', $jobTraining->reference_document_no_2 ? 
+                                                            $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_2 . '/R' . $jobTraining->major : '') }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainer_2" id="trainer_2">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($usersDetails as $u)
+                                                            <option value="{{ $u->id }}" @if(old('trainer_2', $jobTraining->trainer_2 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="startdate_2" id="startdate_2" 
+                                                            value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="enddate_2" id="enddate_2" 
+                                                            value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/view/' . $jobTraining->reference_document_no_2 : '#' }}" 
+                                                        id="view_sop" target="_blank" 
+                                                        style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">
+                                                            View SOP
+                                                        </a>
+                                                    </td>
+                                                    </tr>
 
                                                     <tr>
-                                                    <td>2</td>
-<td>
-    <select name="subject_2" id="sopdocument2" onchange="fetchDocumentDetails2(this)">
-        <option value="">---Select Document Name---</option>
-        @foreach ($data as $dat)
-        <option value="{{ $dat->document_name }}" 
-                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                data-sop-id="{{ $dat->id }}"
-                @if(old('subject_2', $jobTraining->subject_2 ?? '') == $dat->document_name) selected @endif>
-            {{ $dat->document_name }}
-        </option>
-        @endforeach
-    </select>
-</td>
-<td>
-    <input type="text" name="type_of_training_2" value="{{ old('type_of_training_2', $jobTraining->type_of_training_2 ?? '') }}">
-</td>
-<td>
-    <input type="hidden" name="reference_document_no_2" id="reference_document_no_2" 
-           value="{{ old('reference_document_no_2', $jobTraining->reference_document_no_2 ?? '') }}">
-    <input type="text" id="document_number2" 
-           value="{{ old('document_number2', $jobTraining->reference_document_no_2 ? 
-           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_2 . '/R' . $jobTraining->major : '') }}" readonly>
-</td>
-<td>
-    <select name="trainer_2" id="trainer_2">
-        <option value="">-- Select --</option>
-        @foreach ($usersDetails as $u)
-        <option value="{{ $u->id }}" @if(old('trainer_2', $jobTraining->trainer_2 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-        @endforeach
-    </select>
-</td>
-<td>
-    <input type="date" name="startdate_2" id="startdate_2" 
-           value="{{ old('startdate_2', $jobTraining->startdate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-</td>
-<td>
-    <input type="date" name="enddate_2" id="enddate_2" 
-           value="{{ old('enddate_2', $jobTraining->enddate_2 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-</td>
-<td>
-    <a href="{{ $jobTraining->reference_document_no_2 ? '/documents/view/' . $jobTraining->reference_document_no_2 : '#' }}" 
-       id="view_sop" target="_blank" 
-       style="display: {{ $jobTraining->reference_document_no_2 ? 'inline' : 'none' }};">
-        View SOP
-    </a>
-</td>
-</tr>
+                                                    <td>3</td>
+                                                    <td>
+                                                        <select name="subject_3" id="sopdocument3" onchange="fetchDocumentDetails3(this)">
+                                                            <option value="">---Select Document Name---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->document_name }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    @if(old('subject_3', $jobTraining->subject_3 ?? '') == $dat->document_name) selected @endif>
+                                                                {{ $dat->document_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
+                                                    <td>
+                                                        <input type="hidden" name="reference_document_no_3" id="reference_document_no_3" 
+                                                            value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}">
+                                                        <input type="text" id="document_number3" 
+                                                            value="{{ old('document_number3', $jobTraining->reference_document_no_3 ? 
+                                                            $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_3 . '/R' . $jobTraining->major : '') }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainer_3" id="trainer_3">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($usersDetails as $u)
+                                                            <option value="{{ $u->id }}" @if(old('trainer_3', $jobTraining->trainer_3 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td>
+                                                        <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/view/' . $jobTraining->reference_document_no_3 : '#' }}" 
+                                                        id="view_sop3" target="_blank" 
+                                                        style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">
+                                                            View SOP
+                                                        </a>
+                                                    </td>
+                                                    </tr>
 
-<tr>
-<td>3</td>
-<td>
-    <select name="subject_3" id="sopdocument3" onchange="fetchDocumentDetails3(this)">
-        <option value="">---Select Document Name---</option>
-        @foreach ($data as $dat)
-        <option value="{{ $dat->document_name }}" 
-                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                data-sop-id="{{ $dat->id }}"
-                @if(old('subject_3', $jobTraining->subject_3 ?? '') == $dat->document_name) selected @endif>
-            {{ $dat->document_name }}
-        </option>
-        @endforeach
-    </select>
-</td>
-<td><input type="text" name="type_of_training_3" value="{{ old('type_of_training_3', $jobTraining->type_of_training_3 ?? '') }}"></td>
-<td>
-    <input type="hidden" name="reference_document_no_3" id="reference_document_no_3" 
-           value="{{ old('reference_document_no_3', $jobTraining->reference_document_no_3 ?? '') }}">
-    <input type="text" id="document_number3" 
-           value="{{ old('document_number3', $jobTraining->reference_document_no_3 ? 
-           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_3 . '/R' . $jobTraining->major : '') }}" readonly>
-</td>
-<td>
-    <select name="trainer_3" id="trainer_3">
-        <option value="">-- Select --</option>
-        @foreach ($usersDetails as $u)
-        <option value="{{ $u->id }}" @if(old('trainer_3', $jobTraining->trainer_3 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-        @endforeach
-    </select>
-</td>
-<td><input type="date" name="startdate_3" id="startdate_3" value="{{ old('startdate_3', $jobTraining->startdate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td><input type="date" name="enddate_3" id="enddate_3" value="{{ old('enddate_3', $jobTraining->enddate_3 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td>
-    <a href="{{ $jobTraining->reference_document_no_3 ? '/documents/view/' . $jobTraining->reference_document_no_3 : '#' }}" 
-       id="view_sop3" target="_blank" 
-       style="display: {{ $jobTraining->reference_document_no_3 ? 'inline' : 'none' }};">
-        View SOP
-    </a>
-</td>
-</tr>
+                                                    <tr>
+                                                    <td>4</td>
+                                                    <td>
+                                                        <select name="subject_4" id="sopdocument4" onchange="fetchDocumentDetails4(this)">
+                                                            <option value="">---Select Document Name---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->document_name }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    @if(old('subject_4', $jobTraining->subject_4 ?? '') == $dat->document_name) selected @endif>
+                                                                {{ $dat->document_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
+                                                    <td>
+                                                        <input type="hidden" name="reference_document_no_4" id="reference_document_no_4" 
+                                                            value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}">
+                                                        <input type="text" id="document_number4" 
+                                                            value="{{ old('document_number4', $jobTraining->reference_document_no_4 ? 
+                                                            $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_4 . '/R' . $jobTraining->major : '') }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainer_4" id="trainer_4">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($usersDetails as $u)
+                                                            <option value="{{ $u->id }}" @if(old('trainer_4', $jobTraining->trainer_4 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td>
+                                                        <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/view/' . $jobTraining->reference_document_no_4 : '#' }}" 
+                                                        id="view_sop4" target="_blank" 
+                                                        style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">
+                                                            View SOP
+                                                        </a>
+                                                    </td>
+                                                    </tr>
 
-<tr>
-<td>4</td>
-<td>
-    <select name="subject_4" id="sopdocument4" onchange="fetchDocumentDetails4(this)">
-        <option value="">---Select Document Name---</option>
-        @foreach ($data as $dat)
-        <option value="{{ $dat->document_name }}" 
-                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                data-sop-id="{{ $dat->id }}"
-                @if(old('subject_4', $jobTraining->subject_4 ?? '') == $dat->document_name) selected @endif>
-            {{ $dat->document_name }}
-        </option>
-        @endforeach
-    </select>
-</td>
-<td><input type="text" name="type_of_training_4" value="{{ old('type_of_training_4', $jobTraining->type_of_training_4 ?? '') }}"></td>
-<td>
-    <input type="hidden" name="reference_document_no_4" id="reference_document_no_4" 
-           value="{{ old('reference_document_no_4', $jobTraining->reference_document_no_4 ?? '') }}">
-    <input type="text" id="document_number4" 
-           value="{{ old('document_number4', $jobTraining->reference_document_no_4 ? 
-           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_4 . '/R' . $jobTraining->major : '') }}" readonly>
-</td>
-<td>
-    <select name="trainer_4" id="trainer_4">
-        <option value="">-- Select --</option>
-        @foreach ($usersDetails as $u)
-        <option value="{{ $u->id }}" @if(old('trainer_4', $jobTraining->trainer_4 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-        @endforeach
-    </select>
-</td>
-<td><input type="date" name="startdate_4" id="startdate_4" value="{{ old('startdate_4', $jobTraining->startdate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td><input type="date" name="enddate_4" id="enddate_4" value="{{ old('enddate_4', $jobTraining->enddate_4 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td>
-    <a href="{{ $jobTraining->reference_document_no_4 ? '/documents/view/' . $jobTraining->reference_document_no_4 : '#' }}" 
-       id="view_sop4" target="_blank" 
-       style="display: {{ $jobTraining->reference_document_no_4 ? 'inline' : 'none' }};">
-        View SOP
-    </a>
-</td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>
-    <select name="subject_5" id="sopdocument5" onchange="fetchDocumentDetails5(this)">
-        <option value="">---Select Document Name---</option>
-        @foreach ($data as $dat)
-        <option value="{{ $dat->document_name }}" 
-                data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                data-sop-id="{{ $dat->id }}"
-                @if(old('subject_5', $jobTraining->subject_5 ?? '') == $dat->document_name) selected @endif>
-            {{ $dat->document_name }}
-        </option>
-        @endforeach
-    </select>
-</td>
-<td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
-<td>
-    <input type="hidden" name="reference_document_no_5" id="reference_document_no_5" 
-           value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}">
-    <input type="text" id="document_number5" 
-           value="{{ old('document_number5', $jobTraining->reference_document_no_5 ? 
-           $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_5 . '/R' . $jobTraining->major : '') }}" readonly>
-</td>
-<td>
-    <select name="trainer_5" id="trainer_5">
-        <option value="">-- Select --</option>
-        @foreach ($usersDetails as $u)
-        <option value="{{ $u->id }}" @if(old('trainer_5', $jobTraining->trainer_5 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
-        @endforeach
-    </select>
-</td>
-<td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-<td>
-    <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/view/' . $jobTraining->reference_document_no_5 : '#' }}" 
-       id="view_sop5" target="_blank" 
-       style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">
-        View SOP
-    </a>
-</td>
-</tr>
+                                                    <tr>
+                                                    <td>5</td>
+                                                    <td>
+                                                        <select name="subject_5" id="sopdocument5" onchange="fetchDocumentDetails5(this)">
+                                                            <option value="">---Select Document Name---</option>
+                                                            @foreach ($data as $dat)
+                                                            <option value="{{ $dat->document_name }}" 
+                                                                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                    data-sop-id="{{ $dat->id }}"
+                                                                    @if(old('subject_5', $jobTraining->subject_5 ?? '') == $dat->document_name) selected @endif>
+                                                                {{ $dat->document_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="type_of_training_5" value="{{ old('type_of_training_5', $jobTraining->type_of_training_5 ?? '') }}"></td>
+                                                    <td>
+                                                        <input type="hidden" name="reference_document_no_5" id="reference_document_no_5" 
+                                                            value="{{ old('reference_document_no_5', $jobTraining->reference_document_no_5 ?? '') }}">
+                                                        <input type="text" id="document_number5" 
+                                                            value="{{ old('document_number5', $jobTraining->reference_document_no_5 ? 
+                                                            $jobTraining->sop_type_short . '/' . $jobTraining->department_id . '/000' . $jobTraining->reference_document_no_5 . '/R' . $jobTraining->major : '') }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainer_5" id="trainer_5">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($usersDetails as $u)
+                                                            <option value="{{ $u->id }}" @if(old('trainer_5', $jobTraining->trainer_5 ?? '') == $u->id) selected @endif>{{ $u->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="date" name="startdate_5" id="startdate_5" value="{{ old('startdate_5', $jobTraining->startdate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td><input type="date" name="enddate_5" id="enddate_5" value="{{ old('enddate_5', $jobTraining->enddate_5 ?? '') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                    <td>
+                                                        <a href="{{ $jobTraining->reference_document_no_5 ? '/documents/view/' . $jobTraining->reference_document_no_5 : '#' }}" 
+                                                        id="view_sop5" target="_blank" 
+                                                        style="display: {{ $jobTraining->reference_document_no_5 ? 'inline' : 'none' }};">
+                                                            View SOP
+                                                        </a>
+                                                    </td>
+                                                    </tr>
 
                                                 </tbody>
                                             </table>
@@ -765,607 +777,212 @@
                                 </div>
                             </div>
 
-                            <!-- <script>
-                                function fetchDocumentDetails(selectElement) {
-                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
-                                    
-                                    var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    document.getElementById('document_number').value = documentNumber;
-
-                                    var sopAnchor = document.getElementById('view_sop');
-                                    if (documentId) {
-                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
-                                        sopAnchor.style.display = 'inline';
-                                    } else {
-                                        sopAnchor.style.display = 'none';
-                                    }
-                                }
-
-                                function fetchDocumentDetails2(selectElement) {
-                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
-                                    
-                                    var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    document.getElementById('document_number1').value = documentNumber;
-
-                                    var sopAnchor = document.getElementById('view_sop1');
-                                    if (documentId) {
-                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
-                                        sopAnchor.style.display = 'inline';
-                                    } else {
-                                        sopAnchor.style.display = 'none';
-                                    }
-                                }
-
-                                function fetchDocumentDetails3(selectElement) {
-                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
-                                    
-                                    var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    document.getElementById('document_number2').value = documentNumber;
-
-                                    var sopAnchor = document.getElementById('view_sop2');
-                                    if (documentId) {
-                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
-                                        sopAnchor.style.display = 'inline';
-                                    } else {
-                                        sopAnchor.style.display = 'none';
-                                    }
-                                }
-
-                                function fetchDocumentDetails4(selectElement) {
-                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
-                                    
-                                    var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    document.getElementById('document_number3').value = documentNumber;
-
-                                    var sopAnchor = document.getElementById('view_sop3');
-                                    if (documentId) {
-                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
-                                        sopAnchor.style.display = 'inline';
-                                    } else {
-                                        sopAnchor.style.display = 'none';
-                                    }
-                                }
-
-                                function fetchDocumentDetails5(selectElement) {
-                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                                    var documentNumber = selectedOption.getAttribute('data-doc-number');
-                                    
-                                    var documentId = selectedOption.getAttribute('data-sop-link');
-
-                                    document.getElementById('document_number4').value = documentNumber;
-
-                                    var sopAnchor = document.getElementById('view_sop4');
-                                    if (documentId) {
-                                        sopAnchor.href = `/documents/viewpdf/${documentId}`;
-                                        sopAnchor.style.display = 'inline';
-                                    } else {
-                                        sopAnchor.style.display = 'none';
-                                    }
-                                }
-                            </script> -->
+                          
 
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                      
-
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    
                             </div>
                         </div>
                     </div>
 
                 </div>
-<script>
-  function fetchDocumentDetails(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                <script>
+                     function fetchDocumentDetails(selectElement) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-    document.getElementById('reference_document_no_1').value = documentId;
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-sop-id');
+                        document.getElementById('reference_document_no_1').value = documentId;
 
-    document.getElementById('document_number').value = documentNumber;
+                        document.getElementById('document_number').value = documentNumber;
 
-    var sopAnchor = document.getElementById('view_sop');
-    if (documentId) {
-        sopAnchor.href = '/documents/view/' + documentId;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
+                        var sopAnchor = document.getElementById('view_sop');
+                        if (documentId) {
+                            sopAnchor.href = '/documents/view/' + documentId;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
 
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
-}
+                        console.log("Document Number (displayed):", documentNumber);
+                        console.log("Document ID (stored):", documentId);
+                    }
 
-document.addEventListener("DOMContentLoaded", function() {
-    var existingDocId = document.getElementById('reference_document_no_1').value;
-    var selectElement = document.getElementById('sopdocument');
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var existingDocId = document.getElementById('reference_document_no_1').value;
+                        var selectElement = document.getElementById('sopdocument');
 
-    if (existingDocId) {
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.getAttribute('data-sop-id') == existingDocId) {
-                selectElement.selectedIndex = i;
-                fetchDocumentDetails(selectElement);
-                break;
-            }
-        }
-    }
-});
-</script>
-
-<script>
-   function fetchDocumentDetails2(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-
-    // Update the hidden input field with document ID
-    document.getElementById('reference_document_no_2').value = documentId;
-
-    // Update the document number input field with full document number
-    document.getElementById('document_number2').value = documentNumber;
-
-    // Update the "View SOP" link
-    var sopAnchor = document.getElementById('view_sop2'); // Corrected to view_sop2
-    if (documentId) {
-        sopAnchor.href = '/documents/view/' + documentId;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
-
-    console.log("Document Number (displayed):", documentNumber);
-    console.log("Document ID (stored):", documentId);
-}
-
-// Load the document details based on the existing job training record (if any)
-document.addEventListener("DOMContentLoaded", function() {
-    var existingDocId = document.getElementById('reference_document_no_2').value;
-    var selectElement = document.getElementById('sopdocument2');
-
-    if (existingDocId) {
-        // Find the corresponding option based on the existing document ID
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.getAttribute('data-sop-id') == existingDocId) {
-                selectElement.selectedIndex = i; // Select the option
-                fetchDocumentDetails2(selectElement); // Call the correct function
-                break;
-            }
-        }
-    }
-});
-
-</script>
-
-<script>
-    function fetchDocumentDetails3(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-    
-    document.getElementById('reference_document_no_3').value = documentId;
-    document.getElementById('document_number3').value = documentNumber;
-
-    var sopAnchor = document.getElementById('view_sop3');
-    if (documentId) {
-        sopAnchor.href = '/documents/view/' + documentId;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    var existingDocId = document.getElementById('reference_document_no_3').value;
-    var selectElement = document.getElementById('sopdocument3');
-
-    if (existingDocId) {
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.getAttribute('data-sop-id') == existingDocId) {
-                selectElement.selectedIndex = i;
-                fetchDocumentDetails3(selectElement);
-                break;
-            }
-        }
-    }
-});
-</script>
-
-<script>
-    function fetchDocumentDetails4(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-    
-    document.getElementById('reference_document_no_4').value = documentId;
-    document.getElementById('document_number4').value = documentNumber;
-
-    var sopAnchor = document.getElementById('view_sop4');
-    if (documentId) {
-        sopAnchor.href = '/documents/view/' + documentId;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    var existingDocId = document.getElementById('reference_document_no_4').value;
-    var selectElement = document.getElementById('sopdocument4');
-
-    if (existingDocId) {
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.getAttribute('data-sop-id') == existingDocId) {
-                selectElement.selectedIndex = i;
-                fetchDocumentDetails4(selectElement);
-                break;
-            }
-        }
-    }
-});
-</script>
-
-<script>
-  function fetchDocumentDetails5(selectElement) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-sop-id');
-    
-    document.getElementById('reference_document_no_5').value = documentId;
-    document.getElementById('document_number5').value = documentNumber;
-
-    var sopAnchor = document.getElementById('view_sop5');
-    if (documentId) {
-        sopAnchor.href = '/documents/view/' + documentId;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    var existingDocId = document.getElementById('reference_document_no_5').value;
-    var selectElement = document.getElementById('sopdocument5');
-
-    if (existingDocId) {
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.getAttribute('data-sop-id') == existingDocId) {
-                selectElement.selectedIndex = i;
-                fetchDocumentDetails5(selectElement);
-                break;
-            }
-        }
-    }
-});
-</script>
-
-
-<!-- <div id="CCForm2" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" name="name_employee_disabled" disabled>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}" 
-                                                {{ $employee->id == old('name_employee', $jobTraining->name_employee) ? 'selected' : '' }}
-                                                data-name="{{ $employee->employee_name }}">
-                                                {{ $employee->employee_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="name_employee" value="{{ old('name_employee', $jobTraining->name_employee) }}">
-                                    @error('employee_id')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 3) disabled @endif>
-                                </div>
-                            </div>
-              
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="end_date">Effective Date </label>
-                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" >
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="employee_id">Employee ID </label>
-                                    <input disabled type="text" name="employee_id" value="{{ $jobTraining->empcode }}" id="employee_ids" readonly>
-
-
-                                    
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="department_location">Department</label>
-                                    <select  name="new_department">
-                                            <option value="">-- Select Dept --</option>
-                                
-                                            @php
-                                                $savedDepartmentId = old('new_department', $jobTraining->new_department);
-                                            @endphp
-
-                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                <option value="{{ $code }}"
-                                                    @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="designation">Designation </label>
-                                    <input type="text" name="designation" id="designees" value="{{ $jobTraining->designation }}"  readonly>
-                                </div>
-                            </div>
-                            <input type="hidden" name="employee_name" id="employee_name">
-
-                            <div class="col-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Qualification </label>
-                                    <input id="qualifications" type="text" name="qualification" value="{{ $jobTraining->qualification }}" readonly>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input" id="repeat_nature">
-                                    <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" @if($jobTraining->stage != 2) disabled @endif>
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="date_joining_displays" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" value="{{ $jobTraining->date_joining }}" >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <script>
-
-                                document.getElementById('select-state').addEventListener('change', function() {
-                                    var selectedOption = this.options[this.selectedIndex];
-                                    var employeeId = selectedOption.value;
-                                    var employeeName = selectedOption.getAttribute('data-name');
-
-                                    if (employeeId) {
-                                        fetch(`/employees/${employeeId}`)
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                document.getElementById('employee_ids').value = data.full_employee_id;
-                                                document.getElementById('departments').value = data.department;
-                                                document.getElementById('designees').value = data.job_title;
-                                                document.getElementById('experience').value = data.experience;
-                                                document.getElementById('qualifications').value = data.qualification;
-                                                document.getElementById('date_joinings').value = data.joining_date;
-                                                document.getElementById('date_joining_displays').value = formatDate(data.joining_date);
-                                            });
-                                        document.getElementById('employee_name').value = employeeName;
-                                    } else {
-                                        // Reset fields if no employee is selected
-                                        document.getElementById('employee_ids').value = '';
-                                        document.getElementById('departments').value = '';
-                                        document.getElementById('designees').value = '';
-                                        document.getElementById('experience').value = '';
-                                        document.getElementById('qualifications').value = '';
-                                        document.getElementById('employee_name').value = '';
-                                        document.getElementById('date_joinings').value = '';
-                                        document.getElementById('date_joining_displays').value = '';
-                                    }
-                                });
-
-
-                                function formatDate(dateString) {
-                                    const date = new Date(dateString);
-                                    const options = {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: '2-digit'
-                                    };
-                                    return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                        if (existingDocId) {
+                            for (var i = 0; i < selectElement.options.length; i++) {
+                                var option = selectElement.options[i];
+                                if (option.getAttribute('data-sop-id') == existingDocId) {
+                                    selectElement.selectedIndex = i;
+                                    fetchDocumentDetails(selectElement);
+                                    break;
                                 }
-                            </script>
+                            }
+                        }
+                    });
+                </script>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="For Revision">Experience With Agio Pharma </label>
-                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" @if($jobTraining->stage != 2) disabled @endif>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="For Revision">Total Years of Experience </label>
-                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
-                                </div>
-                            </div>
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="For Revision">Reason For Revision </label>
-                                    <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
-                                </div>
-                            </div> --}}
+                <script>
+                    function fetchDocumentDetails2(selectElement) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-                            <div class="col-lg-6">
-    <div class="group-input">
-        <label for="jd_type">Job Description Status</label>
-        <select id="jd_type" name="jd_type" required>
-            <option value="">Select...</option>
-            <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
-            <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
-        </select>
-    </div>
-</div>
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-sop-id');
 
-<div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
-    <div class="group-input">
-        <label for="reason_for_revision">Reason for Revision</label>
-        <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
-    </div>
-</div>
+                        // Update the hidden input field with document ID
+                        document.getElementById('reference_document_no_2').value = documentId;
 
-<script>
-    // Initialize visibility of the revision reason field based on the current status
-    document.addEventListener('DOMContentLoaded', function() {
-        var statusSelect = document.getElementById('jd_type');
-        var selectedValue = statusSelect.value;
+                        // Update the document number input field with full document number
+                        document.getElementById('document_number2').value = documentNumber;
 
-        // Show or hide the reason for revision field based on selection
-        if (selectedValue === 'old') {
-            document.getElementById('revision_reason_div').style.display = 'block';
-        } else {
-            document.getElementById('revision_reason_div').style.display = 'none';
-        }
-    });
+                        // Update the "View SOP" link
+                        var sopAnchor = document.getElementById('view_sop2'); // Corrected to view_sop2
+                        if (documentId) {
+                            sopAnchor.href = '/documents/view/' + documentId;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
 
-    document.getElementById('jd_type').addEventListener('change', function() {
-        var selectedValue = this.value;
+                        console.log("Document Number (displayed):", documentNumber);
+                        console.log("Document ID (stored):", documentId);
+                    }
 
-        // Show or hide the reason for revision field based on selection
-        if (selectedValue === 'old') {
-            document.getElementById('revision_reason_div').style.display = 'block';
-        } else {
-            document.getElementById('revision_reason_div').style.display = 'none';
-            document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
-        }
-    });
-</script>
+                    // Load the document details based on the existing job training record (if any)
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var existingDocId = document.getElementById('reference_document_no_2').value;
+                        var selectElement = document.getElementById('sopdocument2');
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="For Revision">Delegate</label>
-                                    <select name="delegate" id="hod">
-                                            <option value="">-- Select Delegate --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $user->id == old('delegate', $jobTraining->delegate) ? 'selected' : '' }}>
-                                                    {{ $user->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                </div>
-                            </div>
-               
-                    <div class="col-12 sub-head">
-                        Job Responsibilities
-                    </div>
-                    <div class="pt-2 group-input">
-                        <label for="audit-agenda-grid">
-                            Job Responsibilities
-                            <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 5%;">Sr No.</th>
-                                        <th>Job Responsibilities </th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($employee_grid_data && is_array($employee_grid_data->data))
-                                    @foreach ($employee_grid_data->data as $index => $employee_grid)
-                                    <tr>
-                                        <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
-                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" @if($jobTraining->stage != 2) disabled @endif></td>
-                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" @if($jobTraining->stage != 2) disabled @endif></td>
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr>
-                                        <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
-                                        <td><input type="text" name="jobResponsibilities[0][job]" @if($jobTraining->stage != 2) disabled @endif></td>
-                                        <td><input type="text" name="jobResponsibilities[0][remarks]" @if($jobTraining->stage != 2) disabled @endif></td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> 
+                        if (existingDocId) {
+                            // Find the corresponding option based on the existing document ID
+                            for (var i = 0; i < selectElement.options.length; i++) {
+                                var option = selectElement.options[i];
+                                if (option.getAttribute('data-sop-id') == existingDocId) {
+                                    selectElement.selectedIndex = i; // Select the option
+                                    fetchDocumentDetails2(selectElement); // Call the correct function
+                                    break;
+                                }
+                            }
+                        }
+                    });
 
-                    {{-- <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Submitted By">Reporting Authority: </label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Submitted On">Responsible Person/s in absence </label>
-                            <div class="static"></div>
-                        </div>
-                    </div> 
+                </script>
 
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Submitted By">Accepted by (Employee): </label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Submitted On">Authorized by (Head QA/CQA):  </label>
-                            <div class="static"></div>
-                        </div>
-                    </div>--}}
+                <script>
+                        function fetchDocumentDetails3(selectElement) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-            </div>
-            <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-            </div>
-        </div>
-        </div> -->
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-sop-id');
+                        
+                        document.getElementById('reference_document_no_3').value = documentId;
+                        document.getElementById('document_number3').value = documentNumber;
 
- 
+                        var sopAnchor = document.getElementById('view_sop3');
+                        if (documentId) {
+                            sopAnchor.href = '/documents/view/' + documentId;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
+                    }
 
-                <div id="CCForm3" class="inner-block cctabcontent">
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var existingDocId = document.getElementById('reference_document_no_3').value;
+                        var selectElement = document.getElementById('sopdocument3');
+
+                        if (existingDocId) {
+                            for (var i = 0; i < selectElement.options.length; i++) {
+                                var option = selectElement.options[i];
+                                if (option.getAttribute('data-sop-id') == existingDocId) {
+                                    selectElement.selectedIndex = i;
+                                    fetchDocumentDetails3(selectElement);
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+                <script>
+                        function fetchDocumentDetails4(selectElement) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-sop-id');
+                        
+                        document.getElementById('reference_document_no_4').value = documentId;
+                        document.getElementById('document_number4').value = documentNumber;
+
+                        var sopAnchor = document.getElementById('view_sop4');
+                        if (documentId) {
+                            sopAnchor.href = '/documents/view/' + documentId;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var existingDocId = document.getElementById('reference_document_no_4').value;
+                        var selectElement = document.getElementById('sopdocument4');
+
+                        if (existingDocId) {
+                            for (var i = 0; i < selectElement.options.length; i++) {
+                                var option = selectElement.options[i];
+                                if (option.getAttribute('data-sop-id') == existingDocId) {
+                                    selectElement.selectedIndex = i;
+                                    fetchDocumentDetails4(selectElement);
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+                <script>
+                    function fetchDocumentDetails5(selectElement) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-sop-id');
+                        
+                        document.getElementById('reference_document_no_5').value = documentId;
+                        document.getElementById('document_number5').value = documentNumber;
+
+                        var sopAnchor = document.getElementById('view_sop5');
+                        if (documentId) {
+                            sopAnchor.href = '/documents/view/' + documentId;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var existingDocId = document.getElementById('reference_document_no_5').value;
+                        var selectElement = document.getElementById('sopdocument5');
+
+                        if (existingDocId) {
+                            for (var i = 0; i < selectElement.options.length; i++) {
+                                var option = selectElement.options[i];
+                                if (option.getAttribute('data-sop-id') == existingDocId) {
+                                    selectElement.selectedIndex = i;
+                                    fetchDocumentDetails5(selectElement);
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+
+                {{-- <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1386,12 +1003,12 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1412,216 +1029,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div id="questionsContainer" class="container">
-                                <div>
-                                    <!-- Questions will be dynamically injected here -->
-                                </div>
-                            </div>
-
-                            
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const selectedDocumentId = document.getElementById('sopdocument').value;
-        if (selectedDocumentId) {
-            fetchQuestions(selectedDocumentId); // Document select hote hi questions fetch kare
-        }
-    });
-
-    // Questions fetch kare aur quiz ko handle kare
-    function fetchQuestions(documentId) {
-        if (documentId) {
-            fetch(`/fetch-questions/${documentId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const questionsContainer = document.getElementById('questionsContainer');
-                    questionsContainer.innerHTML = ''; // Pehle ke questions clear kare
-
-                    if (data.length > 0) {
-                        window.quizData = data; // Globally save kare questions ko
-                        data.forEach((question, index) => {
-                            const questionBlock = `
-                                <div class="question-block">
-                                    <p><strong>Q${index + 1}: ${question.question}</strong></p>
-                                    <ul>
-                                        ${Object.entries(question.options).map(([key, option]) => `
-                                            <li>
-                                                <label>
-                                                    <input type="${question.answer_type === 'multiple' ? 'checkbox' : 'radio'}" 
-                                                        name="question_${question.id}" 
-                                                        value="${key}">
-                                                    ${option}
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            `;
-                            questionsContainer.innerHTML += questionBlock;
-                        });
-
-                        // Submit button add kare
-                        questionsContainer.innerHTML += `
-                            <div class="quiz-buttons">
-                                <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
-                            </div>
-                        `;
-
-                        // Submit button event listener add kare
-                        document.getElementById('submit-btn').addEventListener('click', submitQuiz);
-                    } else {
-                        questionsContainer.innerHTML = '<p>No questions available for this document.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching questions:', error);
-                    document.getElementById('questionsContainer').innerHTML = '<p>Error fetching questions.</p>';
-                });
-        } else {
-            document.getElementById('questionsContainer').innerHTML = ''; // Clear questions if no document selected
-        }
-    }
-
-    // Quiz submit kare aur result calculate kare
-    // function submitQuiz() {
-    //     const userAnswers = [];
-
-    //     // User answers ko collect kare
-    //     quizData.forEach(question => {
-    //         const questionId = `question_${question.id}`;
-    //         const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
-    //         const answers = [...answerElements].map(input => input.value);
-    //         userAnswers.push(answers);
-    //     });
-
-    //     calculateResults(userAnswers);
-    // }
-    function submitQuiz() {
-    const userAnswers = [];
-
-    // User answers ko collect kare
-    quizData.forEach(question => {
-        const questionId = `question_${question.id}`;
-        const answerElements = document.querySelectorAll(`input[name="${questionId}"]:checked`);
-        const answers = [...answerElements].map(input => input.value);
-        userAnswers.push({ questionId: question.id, answers: answers });
-    });
-
-    // Answers ko server par bhejne ke liye
-    saveAnswers(userAnswers);
-}
-
-function saveAnswers(userAnswers) {
-    fetch('/save-answers', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token
-        },
-        body: JSON.stringify({ answers: userAnswers })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            calculateResults(userAnswers); // Result calculate karne ke liye
-        } else {
-            alert('Error saving answers.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-
-    // Result ko calculate kare aur display kare
-    function calculateResults(userAnswers) {
-    let marks = 0;
-
-    quizData.forEach((question, index) => {
-        const correctAnswer = question.answer;
-        const userAnswer = userAnswers[index]?.answers;
-
-        if (typeof correctAnswer === 'string') {
-            if (correctAnswer.toLowerCase() === userAnswer[0]?.toLowerCase()) {
-                marks++;
-            }
-        } else if (Array.isArray(correctAnswer)) {
-            if (arraysEqual(correctAnswer, userAnswer)) {
-                marks++;
-            }
-        } else {
-            if (correctAnswer == userAnswer[0]) {
-                marks++;
-            }
-        }
-    });
-
-    displaySummary(marks);
-    evaluatePassingCriteria(marks);
-}
-
-
-    // Marks ko display kare
-    function displaySummary(marks) {
-        const totalQuestions = quizData.length;
-        alert(`You scored ${marks} out of ${totalQuestions}`);
-    }
-
-    // Passing criteria ko evaluate kare aur next steps show kare
-    function evaluatePassingCriteria(marks) {
-                                   // Calculate passing marks
-var passing = @json($quize ? $quize->passing : 0); // Use 0 or a default value if quize or passing is null
-var totalQuestions = quizData.length;
-var percentageRequired = (passing / 100) * totalQuestions;
-
-console.log("Marks Scored:", marks);
-console.log("Passing Marks:", percentageRequired);
-
-if (marks >= percentageRequired) {
-    var btnsElement = document.querySelector(".btns");
-    var button = document.createElement("button");
-    button.id = "complete-training";
-    button.setAttribute("data-bs-toggle", "modal");
-    button.setAttribute("data-bs-target", "#trainee-sign");
-    button.textContent = "Complete Training";
-
-    // Append button to the btnsElement
-    btnsElement.appendChild(button);
-} else {
-    alert("You did not pass the quiz.");
-}
-
-    }
-
-    // Helper function to compare arrays for multiple choice answers
-    function arraysEqual(arr1, arr2) {
-        return Array.isArray(arr1) &&
-            Array.isArray(arr2) &&
-            arr1.length === arr2.length &&
-            arr1.every((val, index) => val === arr2[index]);
-    }
-</script>
-
-                        
-  
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
 
-                <div id="CCForm6" class="inner-block cctabcontent">
+                <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1642,20 +1056,20 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
-                @if ($jobTraining->stage >= 4)
-                    <div id="CCForm7" class="inner-block cctabcontent">
+                @if ($jobTraining->stage >= 5)
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
                                 <div class="button-block">
-                                    <button type="button" class="printButton" onclick="printCertificate()">
-                                        <i class="fas fa-print"></i>Print
-                                    </button>
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i>Print
+                                        </button>
                                 </div>
 
                                 <div class="certificate-container">
@@ -1682,8 +1096,8 @@ if (marks >= percentageRequired) {
                             </div>
                 
                                 <div style="margin-top: 40px;" class="button-block">
-                                <button type="submit" class=" btn btn saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
+                                {{-- <button type="submit" class=" btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -1692,135 +1106,103 @@ if (marks >= percentageRequired) {
 
                 @endif
                 <style>
+                    .certificate-container {
+                        width: 800px;
+                        height: 450px;
+                        border: 4px solid #0c0d0d;
+                        padding: 18px;
+                        background-color: white;
+                        position: relative;
+                        margin: auto;
+                        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+                    }
 
-           .certificate-container {
-            width: 800px;
-            height: 425px;
-            border: 4px solid #0c0d0d;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+                    .certificate-container h1,
+                    .certificate-container h2,
+                    .certificate-container p {
+                        text-align: center;
+                    }
 
-        
-        }
-        .certificate-container h1, .certificate-container h2, .certificate-container p {
-            text-align: center;
-        }
-        .certificate-title {
- 
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .certificate-subtitle {
-            /* font-size: 18px;
-            color: #555; */
-            font-size: 24px;
-            margin-bottom: 40px;
-        }
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-       
-        .certificate-content {
-            /* font-size: 18px; */
-            line-height: 1.5;
-            margin: 0 20px;
-            text-align: left;
-        }
-        .signature-section {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 50px;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
-        .signature {
-            text-align: center;
-            font-size: 16px;
-        }
+                    .certificate-title {
+                        font-size: 26px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
 
-        .signature-line {
-            margin-top: 40px;
-            /* border-top: 1px solid #000; */
-            width: 200px;
-            height: 0;
-        }
-          
-        @media print {
-            .button-block {
-                display: none !important; 
-            }
+                    .certificate-content {
+                        line-height: 1.5;
+                        margin: 0 20px;
+                        text-align: left;
+                    }
 
-            body * {
-                visibility: hidden;
-            }
+                    .signature-section {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 50px;
+                        margin-left: 50px;
+                        margin-right: 50px;
+                    }
 
-            #CCForm4, #CCForm4 * {
-                visibility: visible;
-            }
+                    .signature {
+                        text-align: center;
+                        font-size: 14px;
+                    }
 
-            #CCForm4 {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-        }
-        .button-block {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 50px;
-        }
+                    .signature-line {
+                        margin-top: 40px;
+                        width: 200px;
+                        height: 0;
+                    }
 
-        .printButton {
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            float: right; 
-        }
+                    @media print {
+                        .button-block {
+                            display: none !important;
+                        }
 
-        .printButton:hover {
-            background-color: #1a252f;
-        }
+                        body * {
+                            visibility: hidden;
+                        }
 
-        .printButton i {
-            margin-right: 8px; 
-        }
+                        .certificate-container,
+                        .certificate-container * {
+                            visibility: visible;
+                        }
 
-        @media print {
-    .button-block {
-        display: none !important; 
-    }
+                        .certificate-container {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                        }
+                    }
 
-    body * {
-        visibility: hidden;
-    }
+                    .button-block {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-top: 50px;
+                    }
 
-    .certificate-container, .certificate-container * {
-        visibility: visible;
-    }
+                    .printButton {
+                        background-color: #2c3e50;
+                        color: white;
+                        border: none;
+                        padding: 12px 24px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        float: right;
+                    }
 
-    .certificate-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-}
+                    .printButton:hover {
+                        background-color: #1a252f;
+                    }
 
-            </style>
-
-
+                    .printButton i {
+                        margin-right: 8px;
+                    }
+                </style>
+                
                 <script>
                         function printCertificate() {
                         var buttons = document.querySelector(".button-block");
@@ -1828,8 +1210,8 @@ if (marks >= percentageRequired) {
                         window.print();
                         buttons.style.display = 'block';
                     }
-
                 </script>
+                
                 <script>
                     document.getElementById("saveForm").addEventListener("click", function(event) {
                         let questionInputs = document.querySelectorAll(".question-input");
@@ -1857,7 +1239,7 @@ if (marks >= percentageRequired) {
 
 
 
-                <div id="CCForm8" class="inner-block cctabcontent">
+                <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1878,14 +1260,14 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
                 </div>
 
 
-                <div id="CCForm9" class="inner-block cctabcontent">
+                <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1906,12 +1288,12 @@ if (marks >= percentageRequired) {
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
-                <div id="CCForm10" class="inner-block cctabcontent">
+                <div id="CCForm7" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-lg-4">

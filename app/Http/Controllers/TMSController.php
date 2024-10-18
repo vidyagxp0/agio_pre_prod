@@ -981,4 +981,126 @@ class TMSController extends Controller
 
         return view('frontend.TMS.training-overall-status',compact('trainingStatus','sops','training','trainingUsers'));
     }
+
+
+
+
+
+public function TMSTraining(Request $request)
+    {
+      
+         
+            // return dd(Helpers::checkRoles(6));
+            $inductionTraining = Induction_training::get();  
+            $jobTraining = JobDescription::get();      
+            $jobTrainings = JobTraining::get();
+                $documents = DocumentTraining::where('trainer', Auth::guard('employee')->user()->employee_name)->with('root_document')->orderByDesc('id')->get();
+               if($documents){
+                   foreach($documents as $temp){
+    
+                    $temp->training = Document::find($temp->document_id);
+                    if($temp->training){
+                        $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                        $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                        // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                        // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
+                        $temp->division_name = Helpers::getDivisionName( $temp->training->division_id);
+                        $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
+                        $temp->major = $temp->training->major;
+                        $temp->minor = $temp->training->minor;
+    
+    
+                    }
+    
+    
+                }
+               }
+    
+                $due = DocumentTraining::where('trainer',Auth::guard('employee')->user()->employee_name)->where('status',"Past-due")->orderByDesc('id')->get();
+                if(!empty($due)){
+                    foreach($due as $temp){
+                    $temp->training = Document::find($temp->document_id);
+                    if($temp->training){
+                    $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                    $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                    // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                    $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                    }
+                }
+    
+                }
+    
+                $pending = DocumentTraining::where('trainer',Auth::guard('employee')->user()->employee_name)->where('status',"Pending")->orderByDesc('id')->get();
+                if($pending){
+                    foreach($pending as $temp){
+    
+                    $temp->training = Document::find($temp->document_id);
+                     if($temp->training){
+                    $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                    $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                    // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                    $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                     }
+                }
+    
+    
+                }
+    
+                $complete = DocumentTraining::where('trainer',Auth::guard('employee')->user()->employee_name)->where('status',"Complete")->orderByDesc('id')->get();
+                if($complete){
+                     foreach($complete as $temp){
+    
+                    $temp->training = Document::find($temp->document_id);
+                     if($temp->training){
+                    $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                    $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                    // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                    $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                     }
+                }
+                }
+    
+                $documents2 =[];
+                    $train = [];
+                    $useDocFromJobTraining = JobTraining::where('employee_id' , Auth::guard('employee')->user()->full_employee_id)->get();
+                    $useDocFromInductionTraining = Induction_training::where('employee_id' , Auth::guard('employee')->user()->full_employee_id)->get();
+                        $training = Training::all();
+                        foreach($training as $temp){
+                        $data = explode(',',$temp->trainees);
+                        if(count($data) > 0){
+                            foreach($data as $datas){
+                                if($datas == Auth::user()->id){
+                                    array_push($train,$temp);
+                                }
+                            }
+                        }
+                    }
+    
+                    if(count($train)>0){
+                        foreach($train as $temp){
+                            $explode = explode(',',$temp->sops);
+                            foreach($explode as $data_temp){
+                                $doc = Document::find($data_temp);
+                                array_push($documents2,$doc);
+                            }
+                        }
+                    }
+                    if(!empty($documents2)){
+                        foreach($documents2 as $temp){
+                            if($temp){
+                                $temp->traningstatus = DocumentTraining::where('document_id',$temp->id)->first();
+            
+                            }
+                        }
+                    }
+                
+    
+                $employees = Employee::get();
+                // dd($employees);
+    
+                $trainers = TrainerQualification::get();
+                return view('frontend.layout.TMS-Training', compact('useDocFromJobTraining', 'useDocFromInductionTraining', 'documents2','documents','due','pending','complete', 'employees', 'trainers', 'inductionTraining', 'jobTrainings'));
+           
+
+    }
 }

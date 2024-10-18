@@ -50,47 +50,6 @@ class JobTrainingController extends Controller
         return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees'));
     }
 
-//     public function index()
-// {
-//     // All documents
-//     $data = Document::all();
-
-//     // Fetch questions for each document
-//     $documentQuestions = [];
-//     foreach ($data as $document) {
-//         $document_training = DocumentTraining::where('document_id', $document->id)->first();
-//         if ($document_training) {
-//             $training = Training::find($document_training->training_plan);
-//             if ($training && $training->training_plan_type == "Read & Understand with Questions") {
-//                 $quize = Quize::find($training->quize);
-//                 $questions = explode(',', $quize->question);
-//                 $question_list = [];
-
-//                 foreach ($questions as $question_id) {
-//                     $question = Question::find($question_id);
-//                     if ($question) {
-//                         $json_options = unserialize($question->options);
-//                         $options = [];
-//                         foreach ($json_options as $key => $value) {
-//                             $options[chr(97 + $key)] = $value; // Format options
-//                         }
-//                         $question->options = $options;
-//                         $question_list[] = $question;
-//                     }
-//                 }
-//                 $documentQuestions[$document->id] = $question_list;
-//             }
-//         }
-//     }
-
-//     $hods = User::all();
-//     $delegate = User::all();
-//     $jobTraining = JobTraining::all();
-//     $employees = Employee::all();
-
-//     return view('frontend.TMS.Job_Training.job_training', compact('jobTraining', 'data', 'hods', 'delegate', 'employees', 'documentQuestions'));
-// }
-
 
 public function fetchQuestions($id)
 {
@@ -862,6 +821,21 @@ public function trainingQuestions($id){
         return view('frontend.TMS.on_the_job_training_detail', compact('id'));
     }
 
+
+    public function showJobCertificate($id)
+    {        
+        $jobTraining = \App\Models\JobTraining::where('id', $id)->first();
+        
+        if (!$jobTraining) {
+            return redirect()->back()->with('error', 'No training data found for this employee.');
+        }
+    
+        $employee = \App\Models\Employee::where('employee_id', $jobTraining->employee_id)->first();
+    
+        return view('frontend.TMS.Job_Training.job_training_certificate', compact('jobTraining', 'employee'));
+    }
+    
+
     public function viewPdf($id)
     {
 
@@ -957,14 +931,11 @@ public function trainingQuestions($id){
 
     public function questionshow($sopids, $onthejobid){
         $onthejobid = JobTraining::find($onthejobid);
-        // $onthejobid->attempt_count = $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1;
         $onthejobid->attempt_count = $onthejobid->attempt_count == -1 ? 0 : ( $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1);
 
         $onthejobid->save();
-        // Convert the sopids string to an array and trim any extra whitespace
         $sopids = array_map('trim', explode(',', $sopids));
 
-        // Fetch all questions based on cleaned sopids
         $questions = Question::whereIn('document_id', $sopids)
         ->inRandomOrder() // Randomize the order
         ->take(10)        // Limit to 10 records
@@ -1020,7 +991,7 @@ public function checkAnswerOTJ(Request $request)
 
     if($request->attempt_count == 0 || $result == 'Pass'){
         $induction = JobTraining::find($request->training_id);
-        $induction->stage = 3;
+        $induction->stage = 4;
         $induction->status = "Evaluation";
         $induction->update();
     }
