@@ -210,9 +210,12 @@
                                      href="{{ url('rcms/devshow/' . $document->id) }}"> Back
                                  </a>
                              </button>
-                             <button class="button_theme1" onclick="window.print();">
+                             {{-- <button class="button_theme1" onclick="window.print();">
                                  Print
-                             </button>
+                             </button> --}}
+                             <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
+                                Exit
+                        </a> </button>
                          </div>
                      </div>
 
