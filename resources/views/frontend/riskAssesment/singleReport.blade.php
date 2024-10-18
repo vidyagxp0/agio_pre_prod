@@ -652,12 +652,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
+                        {{-- @php
                             $measurement_1 = unserialize($failure_mode->risk_factor);
                             $measurement_2 = unserialize($failure_mode->problem_cause);
                             $measurement_3 = unserialize($failure_mode->existing_risk_control);
                             $row_number = 1;
-                        @endphp
+                        @endphp --}}
+                        @if (!empty($data->risk_factor))
+                            @php
+                                $riskFactors = @unserialize($data->risk_factor); // Suppress warnings and errors
+                                $riskElements = @unserialize($data->risk_element);
+                                $problemCauses = @unserialize($data->problem_cause);
+                            @endphp
+
+                            @if (is_array($riskFactors) && !empty($riskFactors))
+                                @foreach ($riskFactors as $key => $riskFactor)
+                                    <tr>
+                                        <td class="w-10">{{ $key + 1 }}</td>
+                                        <td class="w-30">{{ $riskFactor }}</td>
+                                        <td class="w-30">{{ $riskElements[$key] ?? null }}</td>
+                                        <td class="w-30">{{ $problemCauses[$key] ?? null }}</td>
+                                        {{-- <td class="w-30">{{ unserialize($data->existing_risk_control)[$key] ?? null }} --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4">No risk factors available or data could not be unserialized.</td>
+                                </tr>
+                            @endif
+                        @endif
 
                         {{-- @for ($i = 0; $i < count($measurement_1); $i++)
                             <tr>
@@ -689,7 +713,7 @@
                             $row_number = 1; // Reset row number
                         @endphp
 
-                        {{-- @for ($i = 0; $i < count($measurement_4); $i++)
+                        @for ($i = 0; $i < count($measurement_4); $i++)
                             <tr>
                                 <td class="w-10">{{ $row_number++ }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
@@ -697,7 +721,7 @@
                                 <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
                             </tr>
-                        @endfor --}}
+                        @endfor
                     </tbody>
                 </table>
 

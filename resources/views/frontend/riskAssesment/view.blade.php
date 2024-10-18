@@ -625,23 +625,13 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
 
-                                                    <option {{ $data->type == 'Business Risk' ? 'selected' : '' }}
-                                                        value="Business Risk">Business Risk</option>
-                                                    <option {{ $data->type == 'Custumer Related' ? 'selected' : '' }}
-                                                        value="Custumer Related">Customer-Related Risk(Complaint)
-                                                    </option>
-                                                    <option {{ $data->type == 'Opportunity' ? 'selected' : '' }}
-                                                        value="Opportunity">Opportunity
-                                                    </option>
-                                                    <option {{ $data->type == 'Market' ? 'selected' : '' }}
-                                                        value="Market">Market</option>
-                                                    <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }}
-                                                        value="Operational Risk">Operational Risk</option>
-                                                    <option {{ $data->type == 'Strategic Rick' ? 'selected' : '' }}
-                                                        value="Strategic Risk">Strategic Risk</option>
-                                                    <option {{ $data->type == 'Other Data' ? 'selected' : '' }}
-                                                        value="Other Data">
-                                                        Other</option>
+                                                    <option {{ $data->type == 'Business Risk' ? 'selected' : '' }} value="Business Risk">Business Risk</option>
+                                                    <option {{ $data->type == 'Customer Related' ? 'selected' : '' }} value="Customer Related">Customer-Related Risk(Complaint) </option>
+                                                    <option {{ $data->type == 'Opportunity' ? 'selected' : '' }} value="Opportunity">Opportunity</option>
+                                                    <option {{ $data->type == 'Market' ? 'selected' : '' }} value="Market">Market</option>
+                                                    <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational Risk">Operational Risk</option>
+                                                    <option {{ $data->type == 'Strategic Rick' ? 'selected' : '' }} value="Strategic Risk">Strategic Risk</option>
+                                                    <option {{ $data->type == 'Other Data' ? 'selected' : '' }} value="Other Data"> Other</option>
                                                 </select>
                                             </div>
                                         </div>
