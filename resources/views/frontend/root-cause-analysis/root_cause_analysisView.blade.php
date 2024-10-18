@@ -359,9 +359,9 @@
                                     <div class="">Final QA/CQA Review </div>
                                 @endif
                                 @if ($data->stage >= 7)
-                                    <div class="active">QAH/CQAH Final Review</div>
+                                    <div class="active">QAH/CQAH Final Approval</div>
                                 @else
-                                    <div class="">QAH/CQAH Final Review</div>
+                                    <div class="">QAH/CQAH Final Approval</div>
                                 @endif
                                 @if ($data->stage >= 8)
                                     <div class="bg-danger">Closed - Done</div>
