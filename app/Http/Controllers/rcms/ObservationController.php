@@ -247,6 +247,8 @@ if(!empty($request->attach_files2)){
 
         $data1 = new ObservationGrid();
         $data1->observation_id = $data->id;
+        $data1->type = "Action_Plan";
+
         if (!empty($request->action)) {
             $data1->action = serialize($request->action);
         }
@@ -262,6 +264,73 @@ if(!empty($request->attach_files2)){
         $data1->save();
 
 
+        // ----------------------------------------------------------------------------------------
+
+            // Define an associative array to map the field keys to display names
+
+        $data1 = new ObservationGrid();
+        $data1->observation_id = $data->id;
+        $data1->type = "Action_Plan";
+
+        $fieldNames = [
+            'action' => 'Action',
+            'responsible' => 'Responsible',
+            'item_status' => 'Item Status',
+            'deadline' => 'Deadline'
+        ];
+
+        foreach ($request->action as $index => $action) {
+            // Since this is a new entry, there are no previous details
+            $previousDetails = [
+                'action' => null,
+                'responsible' => null,
+                'item_status' => null,
+                'deadline' => null,
+            ];
+
+            // Current fields values from the request
+            $fields = [
+                'action' => $action,
+                'responsible' => Helpers::getInitiatorName($request->responsible[$index]),
+                'item_status' => $request->item_status[$index],
+                'deadline' => Helpers::getdateFormat($request->deadline[$index]),
+            ];
+
+            foreach ($fields as $key => $currentValue) {
+                // Log changes for new rows (no previous value to compare)
+                if (!empty($currentValue)) {
+                    // Only create an audit trail entry for new values
+                    $history = new AuditTrialObservation();
+                    $history->observation_id = $data->id;
+
+                    // Set activity type to include field name and row index using the fieldNames array
+                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                    // Since this is a new entry, 'Previous' value is null
+                    $history->previous = 'null'; // Previous value or 'null'
+
+                    // Assign 'Current' value, which is the new value
+                    $history->current = $currentValue; // New value
+
+                    // Comments and user details
+                    $history->comment = 'NA';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+
+                    // Save the history record
+                    $history->save();
+                }
+            }
+        }
+
+        // ----------------------------------------------------------------------------------------
+
+
         $observation_id = $data->id;
         $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
         $observationSingleGrid->obs_id = $observation_id;
@@ -269,11 +338,108 @@ if(!empty($request->attach_files2)){
         $observationSingleGrid->data = $request->observation;
         $observationSingleGrid->save();
 
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where([
+            'obs_id' => $observation_id,
+            'identifier' => 'observation'
+        ])->firstOrCreate([
+            'obs_id' => $observation_id,
+            'identifier' => 'observation',
+        ]);
+        
+        // Save the data from the request
+        $observationSingleCorrect->data = $request->observation;
+        $observationSingleCorrect->save();
+        
+        // Initialize a manual counter for observation actions
+        $actionCounter = 0;
+
+        // Loop through the observation data and create audit trail entries for new actions
+        if (is_array($request->observation)) {
+            foreach ($request->observation as $observationAction) {
+                $currentObservationAction = $observationAction['non_compliance'] ?? null;
+
+                // Check if the preventive action is not empty
+                if (!empty($currentObservationAction)) {
+                    // Increment the manual counter only for non-empty preventive actions
+                    $actionCounter++;
+        
+                    // Create a new audit trail entry for each preventive action
+                    $history = new AuditTrialObservation();
+                    $history->Observation_id = $observation_id;
+                    $history->activity_type = "Observation" . ' (' . $actionCounter . ')';
+                    $history->previous = null; // Since it's a new entry, there is no previous action
+                    $history->current = $currentObservationAction;
+                    $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+        
+                    // Save the audit trail entry
+                    $history->save();
+                }
+            }
+        }
+
+
+
         $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
         $observationSingleResponse->obs_id = $observation_id;
         $observationSingleResponse->identifier = 'response';
         $observationSingleResponse->data = $request->response;
         $observationSingleResponse->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where([
+            'obs_id' => $observation_id,
+            'identifier' => 'response'
+        ])->firstOrCreate([
+            'obs_id' => $observation_id,
+            'identifier' => 'response',
+        ]);
+        
+        // Save the data from the request
+        $observationSingleCorrect->data = $request->response;
+        $observationSingleCorrect->save();
+        
+        // Initialize a manual counter for response actions
+        $actionCounter = 0;
+        
+        // Loop through the response data and create audit trail entries for new actions
+        if (is_array($request->response)) {
+            foreach ($request->response as $responseAction) {
+                $currentResponseAction = $responseAction['response_detail'] ?? null;
+                
+                // Check if the preventive action is not empty
+                if (!empty($currentResponseAction)) {
+                    // Increment the manual counter only for non-empty preventive actions
+                    $actionCounter++;
+        
+                    // Create a new audit trail entry for each preventive action
+                    $history = new AuditTrialObservation();
+                    $history->Observation_id = $observation_id;
+                    $history->activity_type = "Response Action" . ' (' . $actionCounter . ')';
+                    $history->previous = null; // Since it's a new entry, there is no previous action
+                    $history->current = $currentResponseAction;
+                    $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+        
+                    // Save the audit trail entry
+                    $history->save();
+                }
+            }
+        }
+
+
         
         $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
         $observationSingleCorrect->obs_id = $observation_id;
@@ -281,11 +447,107 @@ if(!empty($request->attach_files2)){
         $observationSingleCorrect->data = $request->corrective;
         $observationSingleCorrect->save();
 
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where([
+            'obs_id' => $observation_id,
+            'identifier' => 'corrective'
+        ])->firstOrCreate([
+            'obs_id' => $observation_id,
+            'identifier' => 'corrective',
+        ]);
+        
+        // Save the data from the request
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+        
+        // Initialize a manual counter for corrective actions
+        $actionCounter = 0;
+        
+        // Loop through the corrective data and create audit trail entries for new actions
+        if (is_array($request->corrective)) {
+            foreach ($request->corrective as $correctiveAction) {
+                $currentCorrectiveAction = $correctiveAction['corrective_action'] ?? null;
+        
+                // Check if the preventive action is not empty
+                if (!empty($currentCorrectiveAction)) {
+                    // Increment the manual counter only for non-empty preventive actions
+                    $actionCounter++;
+        
+                    // Create a new audit trail entry for each preventive action
+                    $history = new AuditTrialObservation();
+                    $history->Observation_id = $observation_id;
+                    $history->activity_type = "Corrective Action" . ' (' . $actionCounter . ')';
+                    $history->previous = null; // Since it's a new entry, there is no previous action
+                    $history->current = $currentCorrectiveAction;
+                    $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+        
+                    // Save the audit trail entry
+                    $history->save();
+                }
+            }
+        }
+
+
         $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
         $observationSingleCorrect->obs_id = $observation_id;
         $observationSingleCorrect->identifier = 'preventive';
         $observationSingleCorrect->data = $request->preventive;
         $observationSingleCorrect->save();
+
+
+        $observationSingleCorrect = ObseravtionSingleGrid::where([
+            'obs_id' => $observation_id,
+            'identifier' => 'preventive'
+        ])->firstOrCreate([
+            'obs_id' => $observation_id,
+            'identifier' => 'preventive',
+        ]);
+        
+        // Save the data from the request
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
+        
+        // Initialize a manual counter for preventive actions
+        $actionCounter = 0;
+        
+        // Loop through the preventive data and create audit trail entries for new actions
+        if (is_array($request->preventive)) {
+            foreach ($request->preventive as $preventiveAction) {
+                $currentPreventiveAction = $preventiveAction['preventive_action'] ?? null;
+        
+                // Check if the preventive action is not empty
+                if (!empty($currentPreventiveAction)) {
+                    // Increment the manual counter only for non-empty preventive actions
+                    $actionCounter++;
+        
+                    // Create a new audit trail entry for each preventive action
+                    $history = new AuditTrialObservation();
+                    $history->Observation_id = $observation_id;
+                    $history->activity_type = "Preventive Action" . ' (' . $actionCounter . ')';
+                    $history->previous = null; // Since it's a new entry, there is no previous action
+                    $history->current = $currentPreventiveAction;
+                    $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+        
+                    // Save the audit trail entry
+                    $history->save();
+                }
+            }
+        }
+        
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -729,10 +991,9 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
-    }
+}
 
 
     public function observationupdate(Request $request, $id)
@@ -965,23 +1226,122 @@ if(!empty($request->attach_files2)){
 
         // $data->status = 'Opened';
         // $data->stage = 1;
-        $data->update();
+        
 
-        $data1 = ObservationGrid::find($id);
-        $data1->observation_id = $data->id;
-        if (!empty($request->action)) {
-            $data1->action = serialize($request->action);
+        // $data1 = ObservationGrid::find($id);
+        // $data1->observation_id = $data->id;
+        // $data1->type = "Action_Plan";
+
+//  ------------------------------------------------------------------------------------------------------------------   
+// Update the $data model instance
+$data->update();    
+
+
+$data1 = ObservationGrid::where('observation_id', $id)->where('type', "Action_Plan")->first();
+
+// Safely unserialize and use fallback to empty array if null
+$previousDetails = [
+    'action' => !is_null($data1->action) ? unserialize($data1->action) : null ,
+    'responsible' => !is_null($data1->responsible) ? unserialize($data1->responsible) : null,
+    'deadline' => !is_null($data1->deadline) ? unserialize($data1->deadline) : null,
+    'item_status' => !is_null($data1->item_status) ? unserialize($data1->item_status) : null,
+];
+
+    // Serialize fields if they are not empty
+    if (!empty($request->action)) {
+        $data1->action = serialize($request->action);
+    }
+    if (!empty($request->responsible)) {
+        $data1->responsible = serialize($request->responsible);
+    }
+    if (!empty($request->item_status)) {
+        $data1->item_status = serialize($request->item_status);
+    }
+    if (!empty($request->deadline)) {
+        $data1->deadline = serialize($request->deadline);
+    }
+
+    // Save the $data1 model instance
+    $data1->update();
+
+
+
+
+
+
+
+// Define the mapping of database fields to the descriptive field names
+$fieldNames = [
+    'action' => 'Action',
+    'responsible' => 'Responsible',
+    'deadline' => 'Deadline',
+    'item_status' => 'Item Status',
+];
+
+if (is_array($request->action) && !empty($request->action)) {
+    foreach ($request->action as $index => $action) {
+
+        $previousValues = [
+            'action' => isset($previousDetails['action'][$index]) ? $previousDetails['action'][$index] : null,
+            
+            'responsible' => isset($previousDetails['responsible'][$index]) ? Helpers::getInitiatorName($previousDetails['responsible'][$index]) : null,
+            
+            'deadline' => isset($previousDetails['deadline'][$index]) ? Helpers::getdateFormat($previousDetails['deadline'][$index]) : null,
+            
+            'item_status' => isset($previousDetails['item_status'][$index]) ? $previousDetails['item_status'][$index] : null,
+
+            // 'action' => $previousDetails['action'][$index] ?? null,
+            // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
+            // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
+            // 'item_status' => $previousDetails['item_status'][$index] ?? null,
+        ];
+        
+
+
+        // Current field values
+        $fields = [
+            'action' => $action,
+            'responsible' => Helpers::getInitiatorName($request->responsible[$index]),
+            'deadline' => Helpers::getdateFormat($request->deadline[$index]),
+            'item_status' => $request->item_status[$index],
+        ];
+
+        foreach ($fields as $key => $currentValue) {
+            $previousValue = $previousValues[$key] ?? null;
+
+            // Log changes if the current value is different from the previous one
+            if ($previousValue != $currentValue && !empty($currentValue)) {
+                // Check if an audit trail entry for this specific row and field already exists
+                $existingAudit = AuditTrialObservation::where('observation_id', $id)
+                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                    ->where('previous', $previousValue)
+                    ->where('current', $currentValue)
+                    ->exists();
+
+                // Only create a new audit trail entry if no existing entry matches
+                if (!$existingAudit) {
+                    $history = new AuditTrialObservation();
+                    $history->observation_id = $id;
+                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                    $history->previous = $previousValue; // Use the previous value
+                    $history->current = $currentValue; // New value
+                    $history->comment = 'NA'; // Use comments if available
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Not Applicable"; // Adjust if needed
+                    $history->change_from = $lastDocument->status; // Adjust if needed
+                    $history->action_name = "Update";
+                    $history->save();
+                }
+            }
         }
-        if (!empty($request->responsible)) {
-            $data1->responsible = serialize($request->responsible);
-        }
-        if (!empty($request->item_status)) {
-            $data1->item_status = serialize($request->item_status);
-        }
-        if (!empty($request->deadline)) {
-            $data1->deadline = serialize($request->deadline);
-        }
-        $data1->update();
+    }
+}
+
+        // ------------------------------------------------------------------------------------------------------------------
+
 
         $observation_id = $data->id;
         $observationSingleGrid = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
@@ -990,6 +1350,66 @@ if(!empty($request->attach_files2)){
         $observationSingleGrid->data = $request->observation;
         $observationSingleGrid->save();
 
+
+        $observationSingleCorrect = ObseravtionSingleGrid::firstOrNew([
+            'obs_id' => $observation_id,
+            'identifier' => 'observation'
+        ]);
+        
+        // Update the data from the request
+        $observationSingleCorrect->data = $request->observation;
+        $observationSingleCorrect->save();
+
+        $actionCounter = 0;
+        
+        // Loop through the observation data and check for updates or comments
+        if (is_array($request->observation)) {
+            foreach ($request->observation as $index => $observationAction) {
+                $lastObservationAction = $lastDocument->observation[$index] ?? null;
+                $currentObservationAction = $observationAction['non_compliance'];
+
+                $actionCounter++;
+        
+                // Check if there is a change or an action comment
+                if ($lastObservationAction != $currentObservationAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = AuditTrialObservation::where([
+                        'Observation_id' => $id,
+                        'activity_type' => "Observation" . ' (' . ($actionCounter) . ')',
+                        'previous' => $lastObservationAction,
+                        'current' => $currentObservationAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new AuditTrialObservation();
+                        $history->Observation_id = $id;
+                        $history->activity_type = "Observation" . ' (' . ($actionCounter) . ')';
+                        $history->previous = $lastObservationAction;
+                        $history->current = $currentObservationAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = "Update";
+                        // Determine if this is a new entry or an update
+                        // if (is_null($lastObservationAction) || $lastObservationAction === '') {
+                        //     $history->action_name = "New";
+                        // } else {
+                        //     $history->action_name = "Update";
+                        // }
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+
+
         
         $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
         $observationSingleResponse->obs_id = $observation_id;
@@ -997,17 +1417,197 @@ if(!empty($request->attach_files2)){
         $observationSingleResponse->data = $request->response;
         $observationSingleResponse->save();
 
+
+
+        $observationSingleCorrect = ObseravtionSingleGrid::firstOrNew([
+            'obs_id' => $observation_id,
+            'identifier' => 'response'
+        ]);
+        
+        // Update the data from the request
+        $observationSingleCorrect->data = $request->response;
+        $observationSingleCorrect->save();
+
+        $actionCounter = 0;
+        
+        // Loop through the response data and check for updates or comments
+        if (is_array($request->response)) {
+            foreach ($request->response as $index => $responseAction) {
+                $lastResponseAction = $lastDocument->response[$index] ?? null;
+                $currentResponseAction = $responseAction['response_detail'];
+
+                $actionCounter++;
+        
+                // Check if there is a change or an action comment
+                if ($lastResponseAction != $currentResponseAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = AuditTrialObservation::where([
+                        'Observation_id' => $id,
+                        'activity_type' => "Response Action" . ' (' . ($actionCounter) . ')',
+                        'previous' => $lastResponseAction,
+                        'current' => $currentResponseAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new AuditTrialObservation();
+                        $history->Observation_id = $id;
+                        $history->activity_type = "Corrective Action" . ' (' . ($actionCounter) . ')';
+                        $history->previous = $lastResponseAction;
+                        $history->current = $currentResponseAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = "Update";
+                        // Determine if this is a new entry or an update
+                        // if (is_null($lastResponseAction) || $lastResponseAction === '') {
+                        //     $history->action_name = "New";
+                        // } else {
+                        //     $history->action_name = "Update";
+                        // }
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+
+
+
         $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
         $observationSingleCorrect->obs_id = $observation_id;
         $observationSingleCorrect->identifier = 'corrective';
         $observationSingleCorrect->data = $request->corrective;
         $observationSingleCorrect->save();
 
+
+        $observationSingleCorrect = ObseravtionSingleGrid::firstOrNew([
+            'obs_id' => $observation_id,
+            'identifier' => 'corrective'
+        ]);
+        
+        // Update the data from the request
+        $observationSingleCorrect->data = $request->corrective;
+        $observationSingleCorrect->save();
+
+        $actionCounter = 0;
+        
+        // Loop through the corrective data and check for updates or comments
+        if (is_array($request->corrective)) {
+            foreach ($request->corrective as $index => $correctiveAction) {
+                $lastCorrectiveAction = $lastDocument->corrective[$index] ?? null;
+                $currentCorrectiveAction = $correctiveAction['corrective_action'];
+
+                $actionCounter++;
+        
+                // Check if there is a change or an action comment
+                if ($lastCorrectiveAction != $currentCorrectiveAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = AuditTrialObservation::where([
+                        'Observation_id' => $id,
+                        'activity_type' => "Corrective Action" . ' (' . ($actionCounter) . ')',
+                        'previous' => $lastCorrectiveAction,
+                        'current' => $currentCorrectiveAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new AuditTrialObservation();
+                        $history->Observation_id = $id;
+                        $history->activity_type = "Corrective Action" . ' (' . ($actionCounter) . ')';
+                        $history->previous = $lastCorrectiveAction;
+                        $history->current = $currentCorrectiveAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = "Update";
+                        // Determine if this is a new entry or an update
+                        // if (is_null($lastCorrectiveAction) || $lastCorrectiveAction === '') {
+                        //     $history->action_name = "New";
+                        // } else {
+                        //     $history->action_name = "Update";
+                        // }
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+
+
         $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
         $observationSingleCorrect->obs_id = $observation_id;
         $observationSingleCorrect->identifier = 'preventive';
         $observationSingleCorrect->data = $request->preventive;
         $observationSingleCorrect->save();
+
+        $observationSingleCorrect = ObseravtionSingleGrid::firstOrNew([
+            'obs_id' => $observation_id,
+            'identifier' => 'preventive'
+        ]);
+        
+        // Update the data from the request
+        $observationSingleCorrect->data = $request->preventive;
+        $observationSingleCorrect->save();
+
+        $actionCounter = 0;
+        
+        // Loop through the preventive data and check for updates or comments
+        if (is_array($request->preventive)) {
+            foreach ($request->preventive as $index => $preventiveAction) {
+                $lastPreventiveAction = $lastDocument->preventive[$index] ?? null;
+                $currentPreventiveAction = $preventiveAction['preventive_action'];
+
+                $actionCounter++;
+        
+                // Check if there is a change or an action comment
+                if ($lastPreventiveAction != $currentPreventiveAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = AuditTrialObservation::where([
+                        'Observation_id' => $id,
+                        'activity_type' => "Preventive Action" . ' (' . ($actionCounter) . ')',
+                        'previous' => $lastPreventiveAction,
+                        'current' => $currentPreventiveAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new AuditTrialObservation();
+                        $history->Observation_id = $id;
+                        $history->activity_type = "Preventive Action" . ' (' . ($actionCounter) . ')';
+                        $history->previous = $lastPreventiveAction;
+                        $history->current = $currentPreventiveAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = "Update";
+                        // Determine if this is a new entry or an update
+                        // if (is_null($lastPreventiveAction) || $lastPreventiveAction === '') {
+                        //     $history->action_name = "New";
+                        // } else {
+                        //     $history->action_name = "Update";
+                        // }
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
 
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
@@ -1522,7 +2122,36 @@ if(!empty($request->attach_files2)){
                     $history->action_name = 'Update';
                 }
 
-                // $list = Helpers::getLeadAuditorUsersList($changestage->division_code); // Notify CFT Person
+                // $list = Helpers::getLeadAuditeeUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Opened";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1601,6 +2230,35 @@ if(!empty($request->attach_files2)){
 
 
                 //     $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1619,6 +2277,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1637,6 +2324,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+
+                    // $userIds = collect($list)->pluck('user_id')->toArray();
+                    // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    // $userId = $users->pluck('id')->implode(',');
+                    // if(!empty($users)){
+                    //     try {
+                    //         $history = new AuditTrialObservation();
+                    //         $history->Observation_id = $id;
+                    //         $history->activity_type = "Not Applicable";
+                    //         $history->previous = "Not Applicable";
+                    //         $history->current = "Not Applicable";
+                    //         $history->action = 'Notification';
+                    //         $history->comment = "";
+                    //         $history->user_id = Auth::user()->id;
+                    //         $history->user_name = Auth::user()->name;
+                    //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    //         $history->origin_state = "Not Applicable";
+                    //         $history->change_to = "Not Applicable";
+                    //         $history->change_from = "Pending Response";
+                    //         $history->stage = "";
+                    //         $history->action_name = "";
+                    //         $history->mailUserId = $userId;
+                    //         $history->role_name = "Initiator";
+                    //         $history->save();
+                    //     } catch (\Throwable $e) {
+                    //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //     }
+                    // }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1711,6 +2427,35 @@ if(!empty($request->attach_files2)){
                     }
                 
                 //     $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1729,6 +2474,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1747,6 +2521,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1798,9 +2601,9 @@ if(!empty($request->attach_files2)){
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changestage->submitted_by;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = "";
+                // $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
                 $history->action = 'Response Reviewed';
                 $history->user_id = Auth::user()->id;
@@ -1824,6 +2627,35 @@ if(!empty($request->attach_files2)){
                 }
 
                 // $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Response Verification";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1842,6 +2674,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Response Verification";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1860,6 +2721,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Response Verification";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1877,6 +2767,35 @@ if(!empty($request->attach_files2)){
                 // }
 
                 // $list = Helpers::getLeadAuditeeUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Response Verification";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1894,6 +2813,35 @@ if(!empty($request->attach_files2)){
                 // }
 
                 // $list = Helpers::getLeadAuditorUsersList($changestage->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Response Verification";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changestage->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1934,6 +2882,35 @@ if(!empty($request->attach_files2)){
                 $changeControl->cancel_comment = $request->comment;
 
                 // $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Opened";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1952,6 +2929,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Opened";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -1970,6 +2976,35 @@ if(!empty($request->attach_files2)){
 
 
                 // $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
+
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new AuditTrialObservation();
+                //         $history->Observation_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Opened";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "Initiator";
+                //         $history->save();
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -2028,6 +3063,35 @@ if(!empty($request->attach_files2)){
                 $history->save();
 
                 // $list = Helpers::getLeadAuditorUsersList($changeControl->division_code); // Notify CFT Person
+
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new AuditTrialObservation();
+                //             $history->Observation_id = $id;
+                //             $history->activity_type = "Not Applicable";
+                //             $history->previous = "Not Applicable";
+                //             $history->current = "Not Applicable";
+                //             $history->action = 'Notification';
+                //             $history->comment = "";
+                //             $history->user_id = Auth::user()->id;
+                //             $history->user_name = Auth::user()->name;
+                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //             $history->origin_state = "Not Applicable";
+                //             $history->change_to = "Not Applicable";
+                //             $history->change_from = "Pending Response";
+                //             $history->stage = "";
+                //             $history->action_name = "";
+                //             $history->mailUserId = $userId;
+                //             $history->role_name = "Initiator";
+                //             $history->save();
+                //         } catch (\Throwable $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+
                 //      foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -2126,23 +3190,60 @@ if(!empty($request->attach_files2)){
                 } else {
                     $history->action_name = 'Update';
                 }
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+        //         $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+        //         foreach ($list as $u) {
+        //        // if($u->q_m_s_divisions_id == $changestage->division_id){
+        //            $email = Helpers::getUserEmail($u->user_id);
+        //                if ($email !== null) {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $changestage, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+        //                    function ($message) use ($email, $changestage) {
+        //                        $message->to($email)
+        //                        ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
+        //                    }
+        //                );
+        //            }
+        //        // }
+        //         }
+
+
+        //    $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+        //         foreach ($list as $u) {
+        //        // if($u->q_m_s_divisions_id == $changestage->division_id){
+        //            $email = Helpers::getUserEmail($u->user_id);
+        //                if ($email !== null) {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $changestage, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+        //                    function ($message) use ($email, $changestage) {
+        //                        $message->to($email)
+        //                        ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
+        //                    }
+        //                );
+        //            }
+        //        // }
+        //     }
+
+
+        //    $list = Helpers::getCQAUsersList($changestage->division_code); // Notify CFT Person
+        //         foreach ($list as $u) {
+        //        // if($u->q_m_s_divisions_id == $changestage->division_id){
+        //            $email = Helpers::getUserEmail($u->user_id);
+        //                if ($email !== null) {
+        //                Mail::send(
+        //                    'mail.view-mail',
+        //                    ['data' => $changestage, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+        //                    function ($message) use ($email, $changestage) {
+        //                        $message->to($email)
+        //                        ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
+        //                    }
+        //                );
+        //            }
+        //        // }
+        //    }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2171,10 +3272,12 @@ if(!empty($request->attach_files2)){
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
         $relatedRecords = Helpers::getAllRelatedRecords();
+        $Capachild = Observation::find($id);
+        $reference_record = Helpers::getDivisionName($Capachild->division_code ) . '/' . 'OBS' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
         // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
         }
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

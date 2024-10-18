@@ -931,14 +931,11 @@ public function trainingQuestions($id){
 
     public function questionshow($sopids, $onthejobid){
         $onthejobid = JobTraining::find($onthejobid);
-        // $onthejobid->attempt_count = $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1;
         $onthejobid->attempt_count = $onthejobid->attempt_count == -1 ? 0 : ( $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1);
 
         $onthejobid->save();
-        // Convert the sopids string to an array and trim any extra whitespace
         $sopids = array_map('trim', explode(',', $sopids));
 
-        // Fetch all questions based on cleaned sopids
         $questions = Question::whereIn('document_id', $sopids)
         ->inRandomOrder() // Randomize the order
         ->take(10)        // Limit to 10 records

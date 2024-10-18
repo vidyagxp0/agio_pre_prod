@@ -4487,7 +4487,7 @@ class RiskManagementController extends Controller
 
 
 
-        if ($lastCft->Production_Table_Attachment != $Cft->Production_Table_Attachment) {
+        if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $request->id;
             $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
@@ -4672,7 +4672,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_attachment != $Cft->ProductionLiquid_attachment) {
+        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Production Liquid Attachment';
@@ -4855,7 +4855,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->Production_Injection_Attachment != $Cft->Production_Injection_Attachment) {
+        if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Production Injection Attachment';
@@ -5040,7 +5040,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->Store_attachment != $Cft->Store_attachment) {
+        if ($lastCft->Store_attachment != $request->Store_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Store Attachment';
@@ -5197,7 +5197,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->Quality_Control_attachment != $Cft->Quality_Control_attachment) {
+        if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Quality Control Attachment';
@@ -5354,7 +5354,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->ResearchDevelopment_attachment != $Cft->ResearchDevelopment_attachment) {
+        if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Research & Development Attachment';
@@ -5538,7 +5538,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Engineering_attachment != $Cft->Engineering_attachment) {
+        if ($lastCft->Engineering_attachment != $request->Engineering_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Engineering Attachment';
@@ -5723,7 +5723,7 @@ class RiskManagementController extends Controller
         }
 
 
-        if ($lastCft->Human_Resource_attachment != $Cft->Human_Resource_attachment) {
+        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Human Resource Attachment';
@@ -5906,7 +5906,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->Microbiology_attachment != $Cft->Microbiology_attachment) {
+        if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Microbiology Attachment';
@@ -6082,7 +6082,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_attachment != $Cft->RegulatoryAffair_attachment) {
+        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Regulatory Affair Attachment';
@@ -6269,7 +6269,7 @@ class RiskManagementController extends Controller
         }
 
 
-        if ($lastCft->CorporateQualityAssurance_attachment != $Cft->CorporateQualityAssurance_attachment) {
+        if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Corporate Quality Assurance Attachment';
@@ -6445,7 +6445,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_attachment != $Cft->Environment_Health_Safety_attachment) {
+        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
             $history->activity_type = 'Environment Health Safety Attachment';
@@ -6650,7 +6650,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastCft->Other1_attachment != $Cft->Other1_attachment && $Cft->Other1_attachment != null) {
+        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Other 1 Attachment';
@@ -6814,7 +6814,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other2_attachment != $Cft->Other2_attachment && $Cft->Other2_attachment != null) {
+        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Other 2 Attachment';
@@ -6977,7 +6977,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other3_attachment != $Cft->Other3_attachment && $Cft->Other3_attachment != null) {
+        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Other 3 Attachment';
@@ -7141,7 +7141,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other4_attachment != $Cft->Other4_attachment && $Cft->Other4_attachment != null) {
+        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Other 4 Attachment';
@@ -7305,7 +7305,7 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other5_attachment != $Cft->Other5_attachment && $Cft->Other5_attachment != null) {
+        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Other 5 Attachment';

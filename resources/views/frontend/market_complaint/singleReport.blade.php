@@ -222,7 +222,9 @@
 
                         {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Division Code</th>
-                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                        {{-- <td class="w-30"> {{ Helpers::getDivisionName(id()->get('division')) }}</td> --}}
+                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
@@ -669,7 +671,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Manufacturer Name Address</th>
+                        <th class="w-20">Manufacturer Name & Address</th>
                         <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
@@ -2547,7 +2549,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>    
+                                <tr>
                                     <th class="w-20">Other's 1 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -2583,7 +2585,7 @@
                                     </td>
                                 </tr>
                             </table>
-                         </div>  
+                         </div>
                     </div>
                 <div class="border-table">
                     <div class="block-head">
@@ -2612,7 +2614,7 @@
 
                             </table>
                         </div>
-                
+
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
@@ -2668,7 +2670,7 @@
                                         </div>
                                     </td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                     <th class="w-20">Other's 2 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -2707,7 +2709,7 @@
                         </div>
                     <div class="border-table">
                         <div class="block-head">
-                            
+
                         Other's 2 Attachments
                             </div>
                             <table>
@@ -2790,7 +2792,7 @@
                                     </td>
 
                                     </tr>
-                                    <tr> 
+                                    <tr>
 
                                     <th class="w-20">Other's 3 Feedback</th>
                                     <td class="w-80" colspan="5">
@@ -2911,7 +2913,7 @@
                                         </div>
                                     </td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                     <th class="w-20">Other's 4 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -3031,7 +3033,7 @@
                                         </div>
                                     </td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                     <th class="w-20">Other's 5 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -3095,10 +3097,10 @@
 
                             </table>
                         </div>
-                   
-           
 
-       
+
+
+
 
             <div class="block">
                 <div class="block-head">

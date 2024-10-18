@@ -1844,6 +1844,73 @@ class MarketComplaintController extends Controller
         }
 
 
+            //----------------- logic for showing grid data in audit trail -----------------------//
+
+    $SummaryUpdate = $marketComplaint->id;
+
+    // Fetch existing summary response data
+    $existingSummaryData = MarketComplaintGrids::where(['mc_id' => $SummaryUpdate, 'identifer' => 'ProductDetails'])->first();
+    $existingSummaryDataArray = $existingSummaryData ? $existingSummaryData->data : [];
+
+    // Save the new summary response data
+
+    if (!empty($request->SummaryResponse)) {
+        $summaryShow = MarketComplaintGrids::firstOrNew(['mc_id' => $SummaryUpdate, 'identifer' => 'ProductDetails']);
+        $summaryShow->mc_id = $SummaryUpdate;
+        $summaryShow->identifer = 'ProductDetails';
+        $summaryShow->data = $request->SummaryResponse;
+        $summaryShow->save();
+
+
+
+          // Define the mapping of field keys to more descriptive names
+          $fieldNames = [
+            'info_product_name' => 'Product Name',
+            'info_batch_no' => 'Batch No.',
+            'info_mfg_date' => 'Mfg Date',
+            'info_expiry_date' => 'Expiry Date',
+            'info_batch_size' => 'Batch Size',
+            'info_pack_size' => 'Pack Size',
+            'info_dispatch_quantity' => 'Dispatch Quantity',
+            'info_remarks' => 'Remark',
+        ];
+
+        // Track audit trail changes
+        if (is_array($request->SummaryResponse)) {
+            foreach ($request->SummaryResponse as $index => $newSummary) {
+                $previousSummary = $existingSummaryDataArray[$index] ?? [];
+
+                // Track changes for each field
+                $fieldsToTrack = ['info_product_name', 'info_batch_no', 'info_mfg_date', 'info_batch_size', 'info_pack_size','info_dispatch_quantity','info_remarks'];
+               dd($fieldsToTrack);
+                foreach ($fieldsToTrack as $field) {
+                    $oldValue = $previousSummary[$field] ?? 'Null';
+                    $newValue = $newSummary[$field] ?? 'Null';
+
+                    // If there's a change, add an entry to the audit trail
+                    if ($oldValue !== $newValue) {
+                        $auditTrail = new MarketComplaintAuditTrial();
+                        $auditTrail->mc_id = $SummaryUpdate;
+                        $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
+
+                        $auditTrail->previous = $oldValue;
+                        $auditTrail->current = $newValue;
+                        $auditTrail->comment = "";
+                        $auditTrail->user_id = Auth::user()->id;
+                        $auditTrail->user_name = Auth::user()->name;
+                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $auditTrail->origin_state = $marketComplaint->status;
+                        $auditTrail->change_to = "Not Applicable";
+                        $auditTrail->change_from = $marketComplaint->status;
+                        $auditTrail->action_name = $oldValue == 'Null' ? "Add" : "Update";
+                        $auditTrail->save();
+                    }
+                }
+            }
+
+               }
+    }
+
 
         // ====================================================audit show end creatre ========================================
         // -----------------------------------------------------grid storing data
@@ -2740,9 +2807,6 @@ class MarketComplaintController extends Controller
         $marketComplaint->fill($request->except('initial_attachment_c'));
 
 
-
-
-
         //     if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
         //     $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
 
@@ -2861,11 +2925,6 @@ class MarketComplaintController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $marketComplaint->qa_cqa_attachments = json_encode($allFiles);
         }
-
-
-
-
-
 
 
         // -------------------------audit show conditon--codestart----------------------------------
@@ -7031,6 +7090,86 @@ class MarketComplaintController extends Controller
         }
 
 
+//----------------- logic for showing grid data in audit trail -----------------------//
+
+$data1 = MarketComplaintGrids::where('mc_id', $id)->where('identifer', "ProductDetails")->first();
+
+$data1->mc_id = $marketComplaint->id;
+$data1->identifer = "ProductDetails";
+
+// Define the mapping of database fields to the descriptive field names
+$fieldNames = [
+    'info_product_name' => 'Product Name',
+    'info_batch_no' => 'Batch No',
+    'info_mfg_date' => 'Mfg Date',
+    'info_expiry_date' => 'Expiry Date',
+    'info_batch_size' => 'Batch Size',
+    'info_pack_size' => 'Pack Size',
+    'info_dispatch_quantity' => 'Dispatch Quantity',
+    'info_remarks' => 'Remarks',
+];
+
+if (!empty($request->productsgi) && is_array($request->productsgi)) {
+    foreach ($request->productsgi as $index => $product) {
+        // Safely unserialize and use fallback to empty array if null
+        $previousDetails = [
+            'info_product_name' => $data1->info_product_name[$index] ?? null,
+            'info_batch_no' => $data1->info_batch_no[$index] ?? null,
+            'info_mfg_date' => $data1->info_mfg_date[$index] ?? null,
+            'info_expiry_date' => $data1->info_expiry_date[$index] ?? null,
+            'info_batch_size' => $data1->info_batch_size[$index] ?? null,
+            'info_pack_size' => $data1->info_pack_size[$index] ?? null,
+            'info_dispatch_quantity' => $data1->info_dispatch_quantity[$index] ?? null,
+            'info_remarks' => $data1->info_remarks[$index] ?? null
+        ];
+
+
+        // Current fields values
+        $fields = [
+            'info_product_name' => $product['info_product_name'],
+            'info_batch_no' => $product['info_batch_no'],
+            'info_mfg_date' => Helpers::getdateFormat($product['info_mfg_date']),
+            'info_expiry_date' => Helpers::getdateFormat($product['info_expiry_date']),
+            'info_batch_size' => $product['info_batch_size'],
+            'info_pack_size' => $product['info_pack_size'],
+            'info_dispatch_quantity' => $product['info_dispatch_quantity'],
+            'info_remarks' => $product['info_remarks'],
+        ];
+
+        foreach ($fields as $key => $currentValue) {
+            $previousValue = $previousDetails[$key];
+
+            // Log changes if the current value is different from the previous one
+            if (($previousValue != $currentValue || !empty($request->material_comment[$index])) && !empty($currentValue)) {
+                // Check if an audit trail entry for this specific row and field already exists
+                $existingAudit = MarketComplaintAuditTrial::where('mc_id', $id)
+                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                    ->where('previous', $previousValue)
+                    ->where('current', $currentValue)
+                    ->exists();
+
+                // Only create a new audit trail entry if no existing entry matches
+                if (!$existingAudit) {
+                    $history = new MarketComplaintAuditTrial();
+                    $history->mc_id = $id;
+                    // Set activity type to use the field name from the mapping
+                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                    $history->previous = $previousValue; // Previous value
+                    $history->current = $currentValue; // New value
+                    $history->comment = $request->material_comment[$index] ?? '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $data1->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $data1->status;
+                    $history->action_name = "Update";
+                    $history->save();
+                }
+            }
+        }
+    }
+}
 
 
         // -------------------------end audit show conditon end code ----------------------------------
@@ -8562,23 +8701,23 @@ class MarketComplaintController extends Controller
                 //             // }
                 //         }
 
-                        $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                            // dd($email);
-                            if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                                    function ($message) use ($email, $marketstat) {
-                                        $message->to($email)
-                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            }
-                            // }
-                        }
+                        // $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     // dd($email);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
 
                 $marketstat->update();
 
@@ -8673,8 +8812,10 @@ class MarketComplaintController extends Controller
         if ($request->revision == "capa-child") {
             $relatedRecords = Helpers::getAllRelatedRecords();
             // return "test";
+            $Capachild = MarketComplaint::find($id);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record', 'record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'relatedRecords'));
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.capa', compact('record', 'record_number','reference_record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'relatedRecords'));
         }
     }
 

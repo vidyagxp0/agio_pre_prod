@@ -1998,20 +1998,20 @@ $Checklist_Capsule->save();
       $string = 'remark_powder_manufacturing_filling_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
-  for ($i = 1; $i <= 6; $i++)
+  for ($i = 1; $i <= 8; $i++)
   {
       $string = 'response_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
  
-  for ($i = 1; $i <= 6; $i++)
+  for ($i = 1; $i <= 8; $i++)
   {
-      $string = 'powder_response_packing_'. $i;
+      $string = 'remark_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
   for ($i = 1; $i <= 6; $i++)
   {
-      $string = 'response_packing_'. $i;
+      $string = 'powder_response_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
   for ($i = 1; $i <= 6; $i++)

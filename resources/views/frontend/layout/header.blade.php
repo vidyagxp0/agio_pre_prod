@@ -93,57 +93,38 @@
                         </form>
                     </div>
                     <div class="icon-grid">
-                        <!-- <div class="icon-drop">
-                            <div class="icon">
-                                <i class="fa-solid fa-user-gear"></i>
-                                <i class="fa-solid fa-angle-down"></i>
+                       
+                        
+                        @if(Auth::guard('employee')->user())
+                            <div class="icon-drop">
+                                <div class="icon">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                        {{ Auth::guard('employee')->user()->employee_name }}
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </div>
+                                <div class="icon-block small-block">
+                                    <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
+                                    <div><a href="{{ route('logout-employee') }}">Log Out</a></div>
+                                </div>
                             </div>
-                            <div class="icon-block">
-                                <div><a id="/form-division">Quality Management System</a></div>
-                                <div><a data-bs-toggle="modal" data-bs-target="#import-export-modal">
-                                        Import/Export Terms
-                                    </a></div>
-                                <div><a href="#">MedDRA</a></div>
-                                <div><a href="#">Report Duplicate Translate Terms</a></div>
-                                <div><a href="#">Spellcheck Languages</a></div>
-                                <div><a href="#">Spellcheck Settings</a></div>
-                                <div><a href="#">Translate Terms</a></div>
-                                <div><a href="/designate-proxy">Designate Proxy</a></div>
-                            </div>
-                        </div> -->
-                        <div class="icon-drop">
-                            <div class="icon">
-                                <i class="fa-solid fa-user-tie"></i>
-                                @if (Auth::user())
-                                    {{ Auth::user()->name }}
-                                @else
-                                    Amit Guru
-                                @endif
-                                <i class="fa-solid fa-angle-down"></i>
-                            </div>
-                            <div class="icon-block small-block">
-                                <!-- <div class="image">
+                        @else                        
+                            <div class="icon-drop">
+                                <div class="icon">
+                                    <i class="fa-solid fa-user-tie"></i>
                                     @if (Auth::user())
-                                        @if (Helpers::checkRoles(3))
-<img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
-                                                class="w-100 h-100">
-@else
-<img src="{{ asset('user/images/login.jpg') }}" alt="..."
-                                                class="w-100 h-100">
-@endif
-@else
-<img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
-                                            class="w-100 h-100">
+                                        {{ Auth::user()->name }}
+                                    @else
+                                        Amit Guru
                                     @endif
-
-                                </div> -->
-                                <!-- <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div> -->
-                                <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
-                                <!-- <div><a href="#">Help</a></div> -->
-                                <div><a href="/helpdesk-personnel">Helpdesk Personel</a></div>
-                                <div><a href="{{ route('logout') }}">Log Out</a></div>
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </div>
+                                <div class="icon-block small-block">
+                                    <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
+                                    <div><a href="/helpdesk-personnel">Helpdesk Personel</a></div>
+                                    <div><a href="{{ route('logout') }}">Log Out</a></div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -179,17 +160,11 @@
                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                             </div>
                         @endif
-                        {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
-                            <div>
-                                <a href="{{ route('change-control.index') }}">Change Control</a>
-                            </div>
-                        @endif --}}
+                       
                     @endif
 
 
-                    {{-- <div class="notification">
-                        <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
-                    </div> --}}
+                  
                     <div id="create-record-button">
                         <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
                                 Record</button> </a>

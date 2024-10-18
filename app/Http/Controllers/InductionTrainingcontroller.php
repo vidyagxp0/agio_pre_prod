@@ -1007,22 +1007,20 @@ class InductionTrainingcontroller extends Controller
     public function viewrendersopinduction($id){
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
-
-    
-    // public function showCertificate($id)
-    // {   
-    //     return view('frontend.TMS.Induction_training.Induction_training_certificate', compact('id'));
+    // public function viewrendersopinduction(){
+    //     return view('frontend.layout.Tms-Training', compact('id'));
     // }
 
-
+    
     public function showCertificate($employee_id)
-{
-    $employee = \App\Models\Employee::where('employee_id', $employee_id)->first();
+    {
+        $employee = \App\Models\Employee::where('employee_id', $employee_id)->first();
+    
+        $induction = \App\Models\Induction_training::where('employee_id', $employee_id)->first();
+    
+        return view('frontend.TMS.Induction_training.Induction_training_certificate', compact('employee', 'induction'));
+    }
 
-    $induction = \App\Models\Induction_training::where('employee_id', $employee_id)->first();
-
-    return view('frontend.TMS.Induction_training.Induction_training_certificate', compact('employee', 'induction'));
-}
 
 
     public function inductionquestionshow($sopids, $inductiontrainingid){

@@ -287,8 +287,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr. Executive'];
-        const higherDesignations = ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head'];
+        const lowerDesignations = ['Trainee', 'Officer', 'Senior Officer', 'Executive', 'Senior Executive'];
+        const higherDesignations = ['Assistant Manager', 'Manager','Senior General Manager','Senior Manager', 'Deputy General Manager', 'Assistant General Manager and General Manager', 'Head quality', 'VP quality', 'Plant head'];
 
         const designationInput = document.getElementById('designee');
         const evaluationContainer = document.getElementById('evaluationContainer');
@@ -562,7 +562,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
     <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
         <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                 Exit </a> </button> -->
 
@@ -990,7 +990,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>                                    
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             </div>
                         </div>
                     </div>
@@ -1016,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>                                    
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             </div>
                         </div>
                     </div>
@@ -1042,7 +1042,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>                                    
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                             </div>
                         </div>
                     </div>
