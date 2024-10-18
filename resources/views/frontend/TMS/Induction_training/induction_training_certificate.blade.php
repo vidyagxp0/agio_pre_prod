@@ -37,11 +37,16 @@
                 <div class="pm-certificate-footer">
                     <div class="pm-certified text-center">
                         <span class="bold block">Sign / Date:</span>
+                        <strong>{{ $induction->evaluation_complete_by }} /
+                        {{ \Carbon\Carbon::parse($induction->evaluation_complete_on)->format('d-M-Y') }}
+                        </strong>
                         <span class="pm-empty-space block underline"></span>
                         <span class="bold block">HR Head</span>
                     </div>
                     <div class="pm-certified text-center">
                         <span class="bold block">Sign / Date:</span>
+                        <strong>{{ $induction->approval_complete_by }} /
+                            {{ \Carbon\Carbon::parse($induction->approval_complete_on)->format('d-M-Y') }}</strong>
                         <span class="pm-empty-space block underline"></span>
                         <span class="bold block">Head QA/CQA</span>
                     </div>
