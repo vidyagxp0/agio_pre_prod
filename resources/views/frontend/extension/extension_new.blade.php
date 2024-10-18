@@ -262,7 +262,7 @@
                                             <input readonly type="text" name="related_records"
                                                 value="{{ $extension_record }}">
                                         @else
-                                            <input readonly type="text" name="related_records" value="">
+                                            <input type="text" name="related_records_edits" value="">
                                         @endif
                                     </div>
 
