@@ -54,6 +54,90 @@
             margin-bottom: 20px;
         }
     </style>
+    <script>
+        $(document).ready(function() {
+            let trainingPlanIndex = 1;
+
+            $('#addTrainingPlan').click(function(e) {
+                function generateTableRow(serialNumber) {
+
+                    var documents = @json($documents); 
+                    var documentOptionsHtml = '<option value="">-- Select --</option>';
+                    documents.forEach(document => {
+                        documentOptionsHtml += `<option value="${document.id}">${document.document_name}</option>`;
+                    });
+
+                    var users = @json($documents); 
+                    var usersOptionsHtml = '<option value="">-- Select --</option>';
+                    users.forEach(document => {
+                        usersOptionsHtml += `<option value="${user.id}">${user.name}</option>`;
+                    });
+
+                    
+
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                            '<td><input type="text" name="trainingPlanData[' + documentPlanIndex + '][trainingTopic]"></td>' +
+                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][DocumentPlan]">' +
+                            documentgOptionsHtml + '</select></td>' + 
+                            '<td><input type="text" class="sops" name="trainingPlanData[' + documentPlanIndex + '][DocType]" readonly></td>' +
+                            '<td><input type="text" class="schedule-date" name="trainingPlanData[' + documentPlanIndex + '][DocNo]" readonly></td>' +
+                            '<td><select name="trainingPlanData[' + documentgPlanIndex + '][trainingIdentification]">' +
+                                '<option value="">-- Select --</option>' +
+                                '<option value="Read & Understand">Read & Understand</option>' +
+                                '<option value="Read & Understand With Questions">Read & Understand With Questions</option>' +
+                                '<option value="Classroom Training">Classroom Training</option>' +
+                            '</select></td>' +
+                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][trainees]">' +
+                            documentgOptionsHtml + '</select></td>' + 
+                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][DueDate]">' +
+                            documentgOptionsHtml + '</select></td>' + 
+                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][trainer]">' +
+                            documentgOptionsHtml + '</select></td>' + 
+                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+
+                    trainingPlanIndex++;
+                    return html;
+                }
+
+                var tableBody = $('#addTrainingPlanTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+
+                tableBody.find('.training-select').last().change(function() {
+                    var trainingId = $(this).val();
+                    var row = $(this).closest('tr');
+
+                    if (trainingId) {
+                        $.ajax({
+                            url: '/get-training-details/' + trainingId,
+                            method: 'GET',
+                            success: function(response) {
+                                row.find('.sops').val(response.sop_numbers.join(', '));
+
+                                row.find('.schedule-date').val(response.created_at);
+
+                                var employeeSelect = row.find('.employee-select');
+                                employeeSelect.empty();
+                                employeeSelect.append('<option value="">Select a value</option>');
+                                $.each(response.users, function(index, user) {
+                                    employeeSelect.append('<option value="' + user.id + '">' + user.name + '</option>');
+                                });
+                            },
+                            error: function() {
+                                alert('Failed to fetch training details.');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+
+    </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -317,15 +401,21 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Initiator Updated Completed
                             </button>
-                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>  --}}
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                            Training Required
+                            </button>
                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
+
+                        @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Training Complete
+                            </button>
                           
-                     @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                     @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
@@ -338,7 +428,7 @@
 
 
 
-                @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Send For Final QA/CQA Head Approval
                             </button>
@@ -346,7 +436,7 @@
                                 More Information Required
                             </button>
 
-                @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Closure Approved
                             </button>
@@ -354,13 +444,7 @@
                                 More Information Required
                             </button>
 
-               @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-
-
-
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
-                                Child
-                            </button> -->
+               @elseif($data->stage == 14 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
                             <button class="button_theme1" id="childButton" data-bs-toggle="modal" data-bs-target="#child_effective_ness" style="display: none;">
                                 Child
@@ -434,18 +518,24 @@
                             @endif
 
                             @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Pending Training Completion</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Pending Training Completion</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
                             @endif
 
-                            @if ($data->stage >= 11)
+                            @if ($data->stage >= 12)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
                             @endif
 
-                            @if ($data->stage >= 12)
+                            @if ($data->stage >= 13)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
@@ -453,7 +543,7 @@
 
 
 
-                            @if ($data->stage >= 13)
+                            @if ($data->stage >= 14)
                                 <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>

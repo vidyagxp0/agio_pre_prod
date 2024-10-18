@@ -203,6 +203,7 @@
                                     Review
                                 </button>
                             @endif
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
                             </button>
@@ -213,9 +214,7 @@
                             <!-- <button class="button_theme1" onclick="window.print();">
                                 Print
                             </button> -->
-                            <!-- <button class="button_theme1" onclick="window.print();">
-                                Exit
-                            </button> -->
+                            
                             <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"style="margin-right: 10px"> Exit
                             </a> 
                         </div>

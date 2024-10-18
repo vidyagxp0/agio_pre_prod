@@ -473,6 +473,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+            Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
+            Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
             
 
         }
