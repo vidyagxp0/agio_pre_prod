@@ -962,7 +962,7 @@
     
     <div class="inner-block">
         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-            QAH/CQAH/designee Final Approval Comment
+            QAH/CQAH/designee Final Approval Comments
 
 </label>
         <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -975,7 +975,7 @@
     </div>
     <div class="border-table">
         <div class="block-head">
-            QAH/CQAH/designee Final Approval Attachment
+            QAH/CQAH/designee Final Approval Attachments
 
         </div>
         <table>
@@ -1110,9 +1110,9 @@ Not Applicable
 
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Risk Factor</th>
-                            <th class="w-30">Risk element</th>
-                            <th class="w-30">Probable cause of risk element</th>
+                            <th class="w-30">Activity</th>
+                            <th class="w-30">Possible Risk/Failure (Identified Risk)</th>
+                            <th class="w-30">Consequences of Risk/Potential Causes</th>
                             {{-- <th class="w-30">Existing Risk Controls</th> --}}
                         </tr>
                         {{-- @if ($data->root_cause_initial_attachment)
@@ -1130,7 +1130,7 @@ Not Applicable
                                     <td class="w-30">{{ $riskFactor }}</td>
                                     <td class="w-30">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
                                     <td class="w-30">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
-                                    <td class="w-30">{{ unserialize($data->existing_risk_control)[$key] ?? null }}
+                                    {{-- <td class="w-30">{{ unserialize($data->existing_risk_control)[$key] ?? null }} --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -1144,10 +1144,10 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Initial Severity</th>
-                            <th class="w-30">Initial Probability</th>
-                            <th class="w-30">Initial Detectability</th>
-                            <th class="w-30">Initial RPN</th>
+                            <th class="w-30">Severity (S)</th>
+                            <th class="w-30">Probability (P)</th>
+                            <th class="w-30">Detection (D)</th>
+                            <th class="w-30">RPN</th>
                         </tr>
                         @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
@@ -1167,17 +1167,16 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Risk Acceptance (Y/N)</th>
-                            <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk elements
-                                having RPN>4)</th>
-                            <th class="w-30">Residual Severity</th>
-                            <th class="w-30">Residual Probability</th>
+                            {{-- <th class="w-30">Risk Acceptance (Y/N)</th> --}}
+                            <th class="w-30">Control Measures recommended/ Risk mitigation proposed</th>
+                            <th class="w-30">Severity (S)</th>
+                            <th class="w-30">Probability (P)</th>
                         </tr>
                         @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                 <tr>
                                     <td class="w-10">{{ $key + 1 }}</td>
-                                    <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}</td>
+                                    {{-- <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}</td> --}}
                                     <td class="w-30">{{ unserialize($data->risk_control_measure)[$key] }}</td>
                                     <td class="w-30">{{ unserialize($data->residual_severity)[$key] }}</td>
                                     <td class="w-30">{{ unserialize($data->residual_probability)[$key] }}</td>
@@ -1191,11 +1190,11 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Residual Detectability</th>
-                            <th class="w-30">Residual RPN</th>
+                            <th class="w-30">Detection (D)</th>
+                            <th class="w-30">Risk Level (RPN)</th>
+                            <th class="w-30">Category of Risk Level (Low, Medium and High)</th>
                             <th class="w-30">Risk Acceptance (Y/N)</th>
-                            <th class="w-30">Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)
-                            </th>
+                            <th class="w-30">Traceability document </th>
                         </tr>
                         @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
@@ -1203,6 +1202,7 @@ Not Applicable
                                     <td class="w-10">{{ $key + 1 }}</td>
                                     <td class="w-30">{{ unserialize($data->residual_detectability)[$key] }}</td>
                                     <td class="w-30">{{ unserialize($data->residual_rpn)[$key] }}</td>
+                                    <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}</td>
                                     <td class="w-30">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
                                     <td class="w-30">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
                                 </tr>
@@ -1950,7 +1950,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         <th class="w-20">
-                                            Cancelled Comments</th>
+                                            Cancel comment</th>
                                         <td class="w-30">
                                             @if ($data->cancel_comment)
                                                 {{ $data->cancel_comment }}

@@ -1232,7 +1232,9 @@ if(!empty($request->attach_files2)){
         // $data1->observation_id = $data->id;
         // $data1->type = "Action_Plan";
 
-//  ------------------------------------------------------------------------------------------------------------------       
+//  ------------------------------------------------------------------------------------------------------------------   
+// Update the $data model instance
+$data->update();    
 
 
 $data1 = ObservationGrid::where('observation_id', $id)->where('type', "Action_Plan")->first();
@@ -1263,8 +1265,7 @@ $previousDetails = [
     $data1->update();
 
 
-// Update the $data model instance
-$data->update();
+
 
 
 
@@ -1281,11 +1282,20 @@ if (is_array($request->action) && !empty($request->action)) {
     foreach ($request->action as $index => $action) {
 
         $previousValues = [
-            'action' => $previousDetails['action'][$index] ?? null,
-            'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
-            'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
-            'item_status' => $previousDetails['item_status'][$index] ?? null,
+            'action' => isset($previousDetails['action'][$index]) ? $previousDetails['action'][$index] : null,
+            
+            'responsible' => isset($previousDetails['responsible'][$index]) ? Helpers::getInitiatorName($previousDetails['responsible'][$index]) : null,
+            
+            'deadline' => isset($previousDetails['deadline'][$index]) ? Helpers::getdateFormat($previousDetails['deadline'][$index]) : null,
+            
+            'item_status' => isset($previousDetails['item_status'][$index]) ? $previousDetails['item_status'][$index] : null,
+
+            // 'action' => $previousDetails['action'][$index] ?? null,
+            // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
+            // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
+            // 'item_status' => $previousDetails['item_status'][$index] ?? null,
         ];
+        
 
 
         // Current field values
@@ -1315,13 +1325,13 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
                     $history->previous = $previousValue; // Use the previous value
                     $history->current = $currentValue; // New value
-                    $history->comment = $request->comments[$index] ?? 'NA'; // Use comments if available
+                    $history->comment = 'NA'; // Use comments if available
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    // $history->origin_state = $data1->status;
+                    $history->origin_state = $lastDocument->status;
                     $history->change_to = "Not Applicable"; // Adjust if needed
-                    $history->change_from = $data1->status; // Adjust if needed
+                    $history->change_from = $lastDocument->status; // Adjust if needed
                     $history->action_name = "Update";
                     $history->save();
                 }

@@ -1672,24 +1672,114 @@ class AuditeeController extends Controller
             $history->save();
         }
 
-
         $Summary = $internalAudit->id;
 
+        // First Grid - Summary Response
         if (!empty($request->SummaryResponse)) {
-        $summaryDetails = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Summary Response'])->firstOrNew();
-        $summaryDetails->summary_id = $Summary;
-        $summaryDetails->identifier = 'Summary Response';
-        $summaryDetails->data = $request->SummaryResponse;
-        $summaryDetails->save();
+            $summaryDetails = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Summary Response'])->firstOrNew();
+            $summaryDetails->summary_id = $Summary;
+            $summaryDetails->identifier = 'Summary Response';
+            $summaryDetails->data = $request->SummaryResponse;
+            $summaryDetails->save();
+        
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'observation' => 'Observation',
+                'response' => 'Response',
+                'reference_id' => 'CAPA / Child action Reference If Any',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ];
+        
+            // Track audit trail changes
+            if (is_array($request->SummaryResponse)) {
+                foreach ($request->SummaryResponse as $index => $newSummary) {
+                    $previousSummary = $existingSummaryDataArray[$index] ?? [];
+        
+                    // Track changes for each field
+                    $fieldsToTrack = ['observation', 'response', 'reference_id', 'status', 'remarks'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousSummary[$field] ?? 'Null';
+                        $newValue = $newSummary[$field] ?? 'Null';
+        
+                        // If there's a change, add an entry to the audit trail
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new AuditTrialExternal();
+                            $auditTrail->ExternalAudit_id = $Summary;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $internalAudit->status;
+                            $auditTrail->change_to = "Opened";
+                            $auditTrail->change_from = "Initiation";
+                            $auditTrail->action_name = 'Create';
+                            $auditTrail->save();  // Save the audit trail for each change
+                        }
+                    }
+                }
+            }
         }
-
+        
+        // Second Grid - Auditors
         if (!empty($request->AuditorNew)) {
             $AuditorsNew = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
             $AuditorsNew->summary_id = $Summary;
             $AuditorsNew->identifier = 'Auditors';
             $AuditorsNew->data = $request->AuditorNew;
             $AuditorsNew->save();
+        
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'auditornew' => 'Auditor Name',
+                'regulatoryagency' => 'Regulatory Agency',
+                'designation' => 'Designation',
+                'remarks' => 'Remarks'
+            ];
+        
+            // Track audit trail changes
+            if (is_array($request->AuditorNew)) {
+                foreach ($request->AuditorNew as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+        
+                    // Track changes for each field
+                    $fieldsToTrack = ['auditornew', 'regulatoryagency', 'designation', 'remarks'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+        
+                        // If there's a change, add an entry to the audit trail
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new AuditTrialExternal();
+                            $auditTrail->ExternalAudit_id = $Summary;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $internalAudit->status;
+                            $auditTrail->change_to = "Opened";
+                            $auditTrail->change_from = "Initiation";
+                            $auditTrail->action_name = 'Create';
+                            $auditTrail->save();  // Save the audit trail for each change
+                        }
+                    }
+                }
             }
+        }
+        
+
+
+
+
+
+
+
 
 
         toastr()->success("Record is Create Successfully");
@@ -3514,7 +3604,7 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'QA/CQA Head Approval Attachments';
-            $history->previous =  str_replace(',', ', ', $llastDocumentastData->qa_cqa_attach); $lastDocument->qa_cqa_attach;
+            $history->previous =  str_replace(',', ', ', $lastDocument->qa_cqa_attach); $lastDocument->qa_cqa_attach;
             $history->current =  str_replace(',', ', ', $internalAudit->qa_cqa_attach);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
@@ -3670,6 +3760,7 @@ $existingSummaryData = SummaryGrid::where(['summary_id' => $SummaryUpdate, 'iden
 $existingSummaryDataArray = $existingSummaryData ? $existingSummaryData->data : [];
 
 // Save the new summary response data
+
 if (!empty($request->SummaryResponse)) {
     $summaryShow = SummaryGrid::firstOrNew(['summary_id' => $SummaryUpdate, 'identifier' => 'Summary Response']);
     $summaryShow->summary_id = $SummaryUpdate;

@@ -1846,59 +1846,69 @@ class MarketComplaintController extends Controller
 
             //----------------- logic for showing grid data in audit trail -----------------------//
 
-        // Create a new CapaGrid instance for storing the new data
-        $data1 = new MarketComplaintGrids();
-        $data1->mc_id = $marketComplaint->id;
-        $data1->identifer = "ProductDetails";
+    $SummaryUpdate = $marketComplaint->id;
 
-        // Define the mapping of database fields to the descriptive field names
-        $fieldNames = [
+    // Fetch existing summary response data
+    $existingSummaryData = MarketComplaintGrids::where(['mc_id' => $SummaryUpdate, 'identifer' => 'ProductDetails'])->first();
+    $existingSummaryDataArray = $existingSummaryData ? $existingSummaryData->data : [];
+
+    // Save the new summary response data
+
+    if (!empty($request->SummaryResponse)) {
+        $summaryShow = MarketComplaintGrids::firstOrNew(['mc_id' => $SummaryUpdate, 'identifer' => 'ProductDetails']);
+        $summaryShow->mc_id = $SummaryUpdate;
+        $summaryShow->identifer = 'ProductDetails';
+        $summaryShow->data = $request->SummaryResponse;
+        $summaryShow->save();
+
+
+
+          // Define the mapping of field keys to more descriptive names
+          $fieldNames = [
             'info_product_name' => 'Product Name',
             'info_batch_no' => 'Batch No.',
             'info_mfg_date' => 'Mfg Date',
             'info_expiry_date' => 'Expiry Date',
             'info_batch_size' => 'Batch Size',
             'info_pack_size' => 'Pack Size',
-            'info_dispatch_quantity' => 'Dispatch quantity',
+            'info_dispatch_quantity' => 'Dispatch Quantity',
             'info_remarks' => 'Remark',
         ];
 
-        // If the material name and other data fields are not empty and is an array, loop through the data
-        if (!empty($request->productsgi) && is_array($request->productsgi)) {
-            foreach ($request->productsgi as $index => $info_product_name) {
-                // Current fields values for new data
-                $fields = [
-                    'info_product_name' => $info_product_name,
-                    'info_batch_no' => $request->info_batch_no[$index],
-                    'info_mfg_date' => Helpers::getdateFormat($request->info_mfg_date[$index]),
-                    'info_expiry_date' => Helpers::getdateFormat($request->info_expiry_date[$index]),
-                    'info_batch_size' => $request->info_batch_size[$index],
-                    'info_pack_size' => $request->info_pack_size[$index],
-                    'info_dispatch_quantity' => $request->info_dispatch_quantity[$index],
-                    'info_remarks' => $request->info_remarks[$index],
-                ];
+        // Track audit trail changes
+        if (is_array($request->SummaryResponse)) {
+            foreach ($request->SummaryResponse as $index => $newSummary) {
+                $previousSummary = $existingSummaryDataArray[$index] ?? [];
 
-                foreach ($fields as $key => $currentValue) {
-                    if (!empty($currentValue)) {
-                    // For a store function, there are no previous values to compare, so we only log the current value.
-                    $history = new MarketComplaintAuditTrial();
-                    $history->mc_id = $marketComplaint->id;
-                    // Set activity type to use the field name from the mapping
-                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-                    $history->previous = null; // No previous value in create/store function
-                    $history->current = $currentValue; // New value
-                    $history->comment = $request->material_comment[$index] ?? '';
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Opened";
-                    $history->change_from = "Initiation";
-                    $history->action_name = "Create"; // Since it's a new record, set action as 'New'
-                    $history->save();
+                // Track changes for each field
+                $fieldsToTrack = ['info_product_name', 'info_batch_no', 'info_mfg_date', 'info_batch_size', 'info_pack_size','info_dispatch_quantity','info_remarks'];
+               dd($fieldsToTrack);
+                foreach ($fieldsToTrack as $field) {
+                    $oldValue = $previousSummary[$field] ?? 'Null';
+                    $newValue = $newSummary[$field] ?? 'Null';
+
+                    // If there's a change, add an entry to the audit trail
+                    if ($oldValue !== $newValue) {
+                        $auditTrail = new MarketComplaintAuditTrial();
+                        $auditTrail->mc_id = $SummaryUpdate;
+                        $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
+
+                        $auditTrail->previous = $oldValue;
+                        $auditTrail->current = $newValue;
+                        $auditTrail->comment = "";
+                        $auditTrail->user_id = Auth::user()->id;
+                        $auditTrail->user_name = Auth::user()->name;
+                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $auditTrail->origin_state = $marketComplaint->status;
+                        $auditTrail->change_to = "Not Applicable";
+                        $auditTrail->change_from = $marketComplaint->status;
+                        $auditTrail->action_name = $oldValue == 'Null' ? "Add" : "Update";
+                        $auditTrail->save();
+                    }
                 }
             }
-        }
+
+               }
     }
 
 
@@ -8691,23 +8701,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 //             // }
                 //         }
 
-                        $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
-                        foreach ($list as $u) {
-                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                            // dd($email);
-                            if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                                    function ($message) use ($email, $marketstat) {
-                                        $message->to($email)
-                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            }
-                            // }
-                        }
+                        // $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                        //     $email = Helpers::getUserEmail($u->user_id);
+                        //     // dd($email);
+                        //     if ($email !== null) {
+                        //         Mail::send(
+                        //             'mail.view-mail',
+                        //             ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                        //             function ($message) use ($email, $marketstat) {
+                        //                 $message->to($email)
+                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                        //             }
+                        //         );
+                        //     }
+                        //     // }
+                        // }
 
                 $marketstat->update();
 
