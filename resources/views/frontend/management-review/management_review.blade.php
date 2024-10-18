@@ -466,7 +466,7 @@
                                                 <label for="Initiator Group"><b>Initiator Department<span
                                                     class="text-danger">*</span></b></label>
                                                 <select name="initiator_Group"
-                                                {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     id="initiator_group">
                                                     <option value="">-- Select --</option>
                                                     @foreach (Helpers::getDepartments() as $key => $value)
@@ -481,7 +481,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Department</b></label>
                                                 <select name="initiator_Group"
-                                                     {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     id="initiator_group">
                                                     <option value="">-- Select --</option>
                                                     @foreach (Helpers::getDepartments() as $key => $value)
@@ -531,7 +531,7 @@
 
                                         <input name="short_description" id="docname" type="text" maxlength="255"
                                             required value="{{ $data->short_description }}"
-                                             {{ $data->stage != 1 ? 'disabled' : '' }} />
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
 
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
                                     </div>
@@ -545,7 +545,7 @@
                                             @endif
                                         </label>
                                         <select required name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()" {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                            onchange="toggleReviewPeriod()" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option required value="">Select Type</option>
                                             <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
                                                 Monthly
@@ -564,7 +564,7 @@
                                             <span class="text-danger">*</span>
                                         @endif</label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required
-                                             {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select Month</option>
                                             <option @if ($data->review_period_monthly == 'January') selected @endif value="January">
                                                 January</option>
@@ -603,7 +603,7 @@
                                             <span class="text-danger">*</span>
                                         @endif</label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
-                                            required  {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                            required {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif
                                                 value="January to June">
@@ -761,7 +761,7 @@
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                             <input type="date" id="start_date_checkdate"
-                                                 {{ $data->stage != 1 ? 'disabled' : '' }} required
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}required
                                                 name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->start_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -1127,7 +1127,7 @@
                                 </label>
 
                                 <!-- Disabled select for stages 0 or 2 -->
-                                <select id="assign_to" name="assign_to[]" {{ $data->stage != 2 ? 'disabled' : '' }} multiple>
+                                <select id="assign_to" name="assign_to[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} multiple>
                                     <option value="">Select a value</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
