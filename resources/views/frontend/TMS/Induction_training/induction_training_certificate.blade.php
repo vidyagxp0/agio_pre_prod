@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Induction Training Certificate</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+
       <!-- Print Button -->
-      <div class="print-button-container text-center">
-        <button onclick="window.print();" class="print-button">Print Certificate</button>
-    </div>
-    
+    <div>
     <div class="pm-certificate-container">
         <div class="outer-border"></div>
         <div class="inner-border"></div>
@@ -61,9 +49,11 @@
             </div>
         </div>
     </div>
-</body>
-</html>
 
+    </div>
+    <div class="print-button-container text-center">
+        <button onclick="downloadCertificate()" class="print-button">Download Certificate</button>
+    </div>
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
@@ -75,6 +65,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin-left: 170px;
 }
 
 .cursive {
@@ -104,7 +95,7 @@ body {
 }
 
 .pm-empty-space {
-    height: 40px;
+    /* height: 40px; */
     width: 100%;
 }
 
@@ -116,7 +107,7 @@ body {
     padding: 30px;
     color: #333;
     font-family: 'Open Sans', sans-serif;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
 }
 
 .outer-border {
@@ -146,12 +137,12 @@ body {
     background-color: rgba(255, 255, 255, 1);
 }
 
-/* Logo Styling */
+
 .pm-certificate-logos {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding-bottom: 20px; */
+  
 }
 
 .logo {
@@ -209,39 +200,96 @@ body {
 
 .pm-certified {
     font-size: 12px;
-    width: 300px;
-    margin-top: 20px;
+    width: 300px; 
+    margin-top: 0; 
+    text-align: center;
 }
 
 .pm-certificate-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center; 
     width: 100%;
     margin-top: 20px;
+    flex-wrap: nowrap
 }
 @media print {
+    .print-button {
+        display: none;
+    }
+    .print-button-container {
+        display: none;
+    }
+}
+
+
+.print-button {
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-block-end: 700px;
+}
+
+
+@media print {
     body {
-        background: #ccc; /* Maintain body background color */
+        background: none;
+        -webkit-print-color-adjust: exact; 
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
 
     .pm-certificate-container {
-        background-color: #618597 !important; /* Ensures container color is printed */
-        box-shadow: none; /* Remove shadows that may not print well */
+        page-break-inside: avoid; 
+        page-break-after: avoid; 
+        width: 100%;
+        height: auto; 
+        max-height: 100vh; 
+        overflow: hidden; 
+        box-shadow: none; 
+        background-color: #618597; 
+        padding: 30px;
+        margin: 0 auto; 
     }
 
     .outer-border, .inner-border {
-        border-color: #fff !important; /* Make sure borders are printed */
+        border-color: #d3d0d0; 
     }
 
-    /* Ensure all text and background colors print */
-    .bold, .cursive, .sans, .underline, .text-center, .block, .pm-empty-space,
-    .pm-certificate-border, .pm-certificate-logos, .pm-certificate-header,
-    .pm-certificate-body, .pm-certificate-footer, .logo {
-        color-adjust: exact; /* Force colors to print as intended */
-        -webkit-print-color-adjust: exact; /* For WebKit browsers */
-        print-color-adjust: exact; /* Ensures colors are not lost */
+    .print-button, .print-button-container {
+        display: none; 
+        
+    }
+
+   
+    html, body {
+        height: auto; 
+        max-height: 100vh; 
+        overflow: hidden;
     }
 }
 
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+
+<script>
+    function downloadCertificate() {
+        const element = document.querySelector('.pm-certificate-container');
+        const options = {
+            margin: 19,
+           
+            filename: 'Induction-training-certificate.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { orientation: 'landscape' }
+        };
+        html2pdf().from(element).set(options).save();
+    }
+</script>
