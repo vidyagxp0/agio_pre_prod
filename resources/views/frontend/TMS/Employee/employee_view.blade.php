@@ -208,8 +208,7 @@
         <div class="cctab">
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
-            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
-            <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Induction Training</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
         </div>
@@ -280,7 +279,7 @@
                                         <input type="date" name="joining_date"
                                             max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $employee->joining_date ?? '' }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'joining_date')" />
+                                            oninput="handleDateInput(this, 'joining_date')"  readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -353,8 +352,8 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_name">Employee Name</label>
-                                    <input type="text" name="employee_name" value="{{ $employee->employee_name }}">
+                                    <label for="employee_name">Employee Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="employee_name" value="{{ $employee->employee_name }}" required>
                                 </div>
                             </div>
 
@@ -392,7 +391,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="qualification">Qualification<span class="text-danger">*</span></label>
-                                    <input type="text" name="qualification" value="{{ $employee->qualification }}">
+                                    <input type="text" name="qualification" value="{{ $employee->qualification }}" required>
                                 </div>
                             </div>
 
@@ -428,32 +427,29 @@
                                         </option>
                                         <option value="Officer" @if ($savedJobTitle == 'Officer') selected @endif>Officer
                                         </option>
-                                        <option value="Sr. Officer" @if ($savedJobTitle == 'Sr. Officer') selected @endif>Sr.
-                                            Officer</option>
+                                        <option value="Senior Officer" @if ($savedJobTitle == 'Senior Officer') selected @endif>Senior Officer</option>
                                         <option value="Executive" @if ($savedJobTitle == 'Executive') selected @endif>
                                             Executive</option>
-                                        <option value="Sr.executive" @if ($savedJobTitle == 'Sr.executive') selected @endif>
-                                            Sr. Executive</option>
-                                        <option value="Asst. manager" @if ($savedJobTitle == 'Asst. manager') selected @endif>
-                                            Asst. Manager</option>
+                                        <option value="Senior Executive" @if ($savedJobTitle == 'Senior Executive') selected @endif>
+                                        Senior Executive</option>
+                                        <option value="Assistant Manager" @if ($savedJobTitle == 'Assistant Manager') selected @endif>
+                                            Assistant Manager</option>
                                         <option value="Manager" @if ($savedJobTitle == 'Manager') selected @endif>Manager
                                         </option>
-                                        <option value="Sr.GM" @if ($savedJobTitle == 'Sr.GM') selected @endif>Sr. GM
+                                        <option value="Senior General Manager" @if ($savedJobTitle == 'Senior General Manager') selected @endif>Senior General Manager
                                         </option>
-                                        <option value="Sr. manager" @if ($savedJobTitle == 'Sr. manager') selected @endif>Sr.
-                                            Manager</option>
-                                        <option value="Deputy GM" @if ($savedJobTitle == 'Deputy GM') selected @endif>
-                                            Deputy GM</option>
-                                        <option value="AGM and GM" @if ($savedJobTitle == 'AGM and GM') selected @endif>AGM
-                                            and GM</option>
-                                        <option value="Head quality" @if ($savedJobTitle == 'Head quality') selected @endif>
+                                        <option value="Senior Manager" @if ($savedJobTitle == 'Senior Manager') selected @endif>Senior Manager</option>
+                                        <option value="Deputy General Manager" @if ($savedJobTitle == 'Deputy General Manager') selected @endif>
+                                            Deputy General Manager</option>
+                                        <option value="Assistant General Manager and General Manager" @if ($savedJobTitle == 'Assistant General Manager and General Manager') selected @endif>Assistant General Manager and General Manager</option>
+                                        <option value="Head Quality" @if ($savedJobTitle == 'Head Quality') selected @endif>
                                             Head Quality</option>
-                                        <option value="VP quality" @if ($savedJobTitle == 'VP quality') selected @endif>VP
+                                        <option value="VP Quality" @if ($savedJobTitle == 'VP Quality') selected @endif>VP
                                             Quality</option>
-                                        <option value="Plant head" @if ($savedJobTitle == 'Plant head') selected @endif>
+                                        <option value="Plant Head" @if ($savedJobTitle == 'Plant Head') selected @endif>
                                             Plant Head</option>
-                                        <option value="Other designation"
-                                            @if ($savedJobTitle == 'Other designation') selected @endif>Other Designation</option>
+                                        <option value="Other Designation"
+                                            @if ($savedJobTitle == 'Other Designation') selected @endif>Other Designation</option>
                                     </select>
                                 </div>
                             </div>
@@ -943,205 +939,14 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                            <button type="button" class="cctablinks "
-                                onclick="openCity(event, 'CCForm12')">Next</button>
-
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                    Exit </a>
-                            </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
 
                     </div>
                 </div>
             </div>
 
-            <!-- Tab content -->
             <div id="CCForm2" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="group-input" id="external-details-grid">
-                            <label for="audit-agenda-grid">
-                                External Training Details
-                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#observation-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="external-training-table" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 50px;">Sr. No.</th>
-                                            <th>Topic</th>
-
-                                            <th style="width: 200px;">External Training Date</th>
-                                            <th>External Trainer</th>
-
-                                            <th>External Training Agency</th>
-                                            <th style="width: 200px;">Certificate</th>
-                                            <th style="width: 200px;">Supporting Documents</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @if ($external_grid_data && is_array($external_grid_data->data))
-                                            @foreach ($external_grid_data->data as $index => $external_grid)
-                                                <tr>
-                                                    <td><input disabled type="text"
-                                                            name="external_training[{{ $loop->index }}][serial]"
-                                                            value="{{ $loop->index + 1 }}"></td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][topic]"
-                                                            value="{{ $external_grid['topic'] ?? '' }}"></td>
-                                                    <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input class="click_date"
-                                                                        id="date_{{ $loop->index }}_external_training_date"
-                                                                        type="text"
-                                                                        name="external_training[{{ $loop->index }}][external_training_date]"
-                                                                        placeholder="DD-MMM-YYYY"
-                                                                        value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('d-M-Y') : '' }}" />
-                                                                    <input type="date"
-                                                                        name="external_training[{{ $loop->index }}][external_training_date]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('Y-m-d') : '' }}"
-                                                                        id="date_{{ $loop->index }}_external_training_date"
-                                                                        class="hide-input show_date"
-                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_{{ $loop->index }}_external_training_date')" />
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][external_trainer]"
-                                                            value="{{ $external_grid['external_trainer'] ?? '' }}">
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="external_training[{{ $loop->index }}][external_agency]"
-                                                            value="{{ $external_grid['external_agency'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="file"
-                                                            name="external_training[{{ $loop->index }}][certificate]"
-                                                            value="{{ $external_grid['certificate'] ?? '' }}">
-                                                        @if (isset($external_grid['certificate']))
-                                                            <a href="{{ asset($external_grid['certificate']) }}"
-                                                                target="_blank">View Certificate</a>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{-- <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
-                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a> --}}
-                                                        <input type="file" id="myfile"
-                                                            name="external_training[{{ $loop->index }}][supporting_documents]"
-                                                            value="{{ $external_grid['supporting_documents'] ?? '' }}">
-                                                        @if (isset($external_grid['supporting_documents']))
-                                                            <a href="{{ asset('upload/' . $external_grid['supporting_documents']) }}"
-                                                                target="_blank">View Document</a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td><input disabled type="text" name="external_training[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="external_training[0][topic]"></td>
-                                                <td><input type="date"
-                                                        name="external_training[0][external_training_date]"></td>
-                                                <td><input type="text" name="external_training[0][external_trainer]">
-                                                </td>
-                                                <td><input type="text" name="external_training[0][external_agency]">
-                                                </td>
-                                                <td><input type="file" name="external_training[0][certificate]">
-                                                </td>
-                                                <td><input type="file"
-                                                        name="external_training[0][supporting_documents]"></td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="External Comments">External Comments</label>
-                                    <textarea name="external_comment">{{ $employee->external_comment }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="External Attachment">External Attachment</label>
-                                    <input type="file" id="myfile" name="external_attachment"
-                                        value="{{ $employee->external_attachment }}">
-                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}"
-                                        target="_blank">{{ $employee->external_attachment }}</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $('#details-grid').click(function(e) {
-                                    function generateTableRow(serialNumber) {
-                                        var users = @json($users);
-
-                                        var html =
-                                            '<tr>' +
-                                            '<td><input disabled type="text" name="external_training[' + serialNumber +
-                                            '][serial]" value="' + serialNumber +
-                                            '"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][topic]"></td>' +
-                                            '<td><input type="date" name="external_training[' + serialNumber +
-                                            '][external_training_date]"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][external_trainer]"></td>' +
-                                            '<td><input type="text" name="external_training[' + serialNumber +
-                                            '][external_agency]"></td>' +
-                                            '<td><input type="file" name="external_training[' + serialNumber +
-                                            '][certificate]"></td>' +
-                                            '<td><input type="file" name="external_training[' + serialNumber +
-                                            '][supproting_documents]"></td>' +
-                                            '</tr>';
-
-                                        // for (var i = 0; i < users.length; i++) {
-                                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                        // }
-
-                                        '</tr>';
-
-                                        return html;
-                                    }
-
-                                    var tableBody = $('#external-training-table tbody');
-                                    var rowCount = tableBody.children('tr').length;
-                                    var newRow = generateTableRow(rowCount + 1);
-                                    tableBody.append(newRow);
-                                });
-                            });
-                        </script>
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
-
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="CCForm12" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
 
@@ -1164,11 +969,9 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
-                        <!-- <a href="/rcms/qms-dashboard"> -->
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                Exit </a> </button>
+                        <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                 
                     </div>
                 </div>
             </div>
@@ -1363,6 +1166,76 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+
+function openCity(evt, cityName) {
+    var i, cctabcontent, cctablinks;
+    cctabcontent = document.getElementsByClassName("cctabcontent");
+    for (i = 0; i < cctabcontent.length; i++) {
+        cctabcontent[i].style.display = "none";
+    }
+    cctablinks = document.getElementsByClassName("cctablinks");
+    for (i = 0; i < cctablinks.length; i++) {
+        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    // Find the index of the clicked tab button
+    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+    // Update the currentStep to the index of the clicked tab
+    currentStep = index;
+}
+
+const nextButtons = document.querySelectorAll(".nextButton");
+const form = document.getElementById("step-form");
+const stepButtons = document.querySelectorAll(".cctablinks");
+const steps = document.querySelectorAll(".cctabcontent");
+let currentStep = 0;
+
+function nextStep() {
+    // Check if there is a next step
+    if (currentStep < steps.length - 1) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show next step
+        steps[currentStep + 1].style.display = "block";
+
+        // Add active class to next button
+        stepButtons[currentStep + 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep++;
+    }
+}
+
+function previousStep() {
+    // Check if there is a previous step
+    if (currentStep > 0) {
+        // Hide current step
+        steps[currentStep].style.display = "none";
+
+        // Show previous step
+        steps[currentStep - 1].style.display = "block";
+
+        // Add active class to previous button
+        stepButtons[currentStep - 1].classList.add("active");
+
+        // Remove active class from current button
+        stepButtons[currentStep].classList.remove("active");
+
+        // Update current step
+        currentStep--;
+    }
+}
+</script>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

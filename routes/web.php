@@ -289,6 +289,8 @@ Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabInciden
 Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
 Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
+Route::get('/audit_program/{id}',[AuditProgramController::class,'audit_trail_filter_audit_program'])->name('audit_program_filter');
+
 
 //---------------------------Market Complaint  -------------------------//
 
@@ -376,6 +378,7 @@ Route::get('job_description',[JobDescriptionController::class ,'index'])->name('
 Route::get('job_description/show/{id}',[JobDescriptionController::class ,'edit'])->name('job_description_view');
 Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])->name('job_descriptioncreate');
 Route::put('job_descriptionupdate/{id}', [JobDescriptionController::class, 'update'])->name('job_descriptionupdate');
+Route::post('tms/jobDescription/cancelstages/{id}',[JobDescriptionController::class ,'cancelStages']);
 
 
 

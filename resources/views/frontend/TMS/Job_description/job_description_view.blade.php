@@ -211,22 +211,22 @@
 
         <div class="cctab">
             <!-- <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button> -->
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
+            <button class="cctablinks active"  onclick="openCity(event, 'CCForm2')">Job Description</button>
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Employee Remarks</button>
 
             <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Responsible Person Accept Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Responsible Person Accept Remarks</button>
 
             {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Questionaries</button> --}}
 
-            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button> -->
+            {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Evaluation</button> --}}
             {{-- @if ($jobTraining->stage >= 7)
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Certificate</button>
             @endif --}}
-            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Respected Department Remarks</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm9')">QA JD Number Remarks</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm10')">Activity Log</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Respected Department Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm7')">QA JD Number Remarks</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Activity Log</button>
 
 
         </div>
@@ -347,7 +347,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input" id="repeat_nature">
                                     <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" >
+                                    <input type="number" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" >
                                 </div>
                             </div>
 
@@ -417,13 +417,13 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Experience With Agio Pharma </label>
-                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" >
+                                    <input type="number" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" >
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Total Years of Experience </label>
-                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" >
+                                    <input type="number" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" >
                                 </div>
                             </div>
                             {{-- <div class="col-lg-6">
@@ -434,49 +434,49 @@
                             </div> --}}
 
                             <div class="col-lg-6">
-    <div class="group-input">
-        <label for="jd_type">Job Description Status</label>
-        <select id="jd_type" name="jd_type" >
-            <option value="">Select...</option>
-            <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
-            <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
-        </select>
-    </div>
-</div>
+                                <div class="group-input">
+                                    <label for="jd_type">Job Description Status</label>
+                                    <select id="jd_type" name="jd_type" >
+                                        <option value="">Select...</option>
+                                        <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
+                                        <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
+                                    </select>
+                                </div>
+                            </div>
 
-<div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
-    <div class="group-input">
-        <label for="reason_for_revision">Reason for Revision</label>
-        <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
-    </div>
-</div>
+                            <div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
+                                <div class="group-input">
+                                    <label for="reason_for_revision">Reason for Revision</label>
+                                    <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
+                                </div>
+                            </div>
 
-<script>
-    // Initialize visibility of the revision reason field based on the current status
-    document.addEventListener('DOMContentLoaded', function() {
-        var statusSelect = document.getElementById('jd_type');
-        var selectedValue = statusSelect.value;
+                            <script>
+                                // Initialize visibility of the revision reason field based on the current status
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var statusSelect = document.getElementById('jd_type');
+                                    var selectedValue = statusSelect.value;
 
-        // Show or hide the reason for revision field based on selection
-        if (selectedValue === 'old') {
-            document.getElementById('revision_reason_div').style.display = 'block';
-        } else {
-            document.getElementById('revision_reason_div').style.display = 'none';
-        }
-    });
+                                    // Show or hide the reason for revision field based on selection
+                                    if (selectedValue === 'old') {
+                                        document.getElementById('revision_reason_div').style.display = 'block';
+                                    } else {
+                                        document.getElementById('revision_reason_div').style.display = 'none';
+                                    }
+                                });
 
-    document.getElementById('jd_type').addEventListener('change', function() {
-        var selectedValue = this.value;
+                                document.getElementById('jd_type').addEventListener('change', function() {
+                                    var selectedValue = this.value;
 
-        // Show or hide the reason for revision field based on selection
-        if (selectedValue === 'old') {
-            document.getElementById('revision_reason_div').style.display = 'block';
-        } else {
-            document.getElementById('revision_reason_div').style.display = 'none';
-            document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
-        }
-    });
-</script>
+                                    // Show or hide the reason for revision field based on selection
+                                    if (selectedValue === 'old') {
+                                        document.getElementById('revision_reason_div').style.display = 'block';
+                                    } else {
+                                        document.getElementById('revision_reason_div').style.display = 'none';
+                                        document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
+                                    }
+                                });
+                            </script>
 
 
 
@@ -567,10 +567,7 @@
             </div>
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                        Exit </a> </button> -->
-
+                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             </div>
         </div>
         </div>
@@ -598,7 +595,7 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
@@ -624,31 +621,12 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div id="questionsContainer" class="container">
-                                <div>
-                                    <!-- Questions will be dynamically injected here -->
-                                </div>
-                            </div>
-                        
-  
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -669,57 +647,11 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- @if ($jobTraining->stage >= 3)
-                    <div id="CCForm7" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i> Print
-                                        </button>
-                                    </div>
-                                    <div class="certificate-container">
-                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
-
-                                        <div class="certificate-description"><br><br>
-                                            This is to certify that Mr./Ms./Mrs. <strong>{{$jobTraining->name}}</strong>.
-                                            has undergone On Job training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
-                                        </div>
-
-                                        <div class="certificate-description">
-                                            Therefore we certify that Mr. Ms. / Mrs. <strong>{{$jobTraining->name}}</strong>.
-                                            is capable of performing his/her assigned duties in the <strong>{{$jobTraining->department}}</strong> Department independently.
-                                        </div>
-
-                                        <div class="date-container">
-                                        <div class="signature-block">
-                                            <strong>Sign/Date:</strong>_________
-                                            <div>HR Department</div>
-                                        </div>
-
-                                        <div>
-                                                <strong>Sign/Date:</strong>_________
-                                                <div class="signature">Head QA/CQA<div></div></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div style="margin-top: 40px;" class="button-block">
-                                <button type="submit" class=" btn btn saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif -->
-
+    
     <style>
                 .certificate-container {
                 width: 685px;
@@ -843,7 +775,7 @@
     </script>
 
 
-                <div id="CCForm8" class="inner-block cctabcontent">
+                <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -864,12 +796,12 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
-                <div id="CCForm9" class="inner-block cctabcontent">
+                <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -890,12 +822,12 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>                                    
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
-                <div id="CCForm10" class="inner-block cctabcontent">
+                <div id="CCForm8" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-lg-4">
@@ -1067,6 +999,75 @@
 
     </div>
     </div>
+    <script>
+
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
 
     <style>
         #step-form>div {
@@ -1292,7 +1293,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('tms/jobTraining/cancelstage', $jobTraining->id) }}" method="POST">
+                <form action="{{ url('tms/jobDescription/cancelstages', $jobTraining->id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">

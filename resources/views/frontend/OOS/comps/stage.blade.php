@@ -16,12 +16,12 @@
 <div class="inner-block state-block">
     <div class="d-flex justify-content-between align-items-center">
     <div class="main-head">Record Workflow </div>
-        @if ($data->Form_type == 'OOT')
         <div class="d-flex" style="gap:20px;">
             @php
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
+           
              <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
              @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
@@ -130,121 +130,6 @@
  
                 
         </div>
-        @else
-        <div class="d-flex" style="gap:20px;">
-            @php
-            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-            @endphp
-             <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
-             @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-             @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-             @elseif($data->stage == 3 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
- 
-             @elseif($data->stage == 4 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
- 
-             @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA HOD Review Complete </button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA QA Review Complete</button>
-                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal">Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Not Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-
-             @elseif($data->stage == 23 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-
-             @elseif($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB HOD Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB CQA/QA Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">Phse IB Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Assignable Cause Not Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-
-             @elseif($data->stage == 24 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-
-             @elseif($data->stage == 13 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 14 && (in_array(61, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A HOD Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 15 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A CQA/QA Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 16 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">Phase II A Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Assignable Cause Not Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-
-             @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-
-             @elseif($data->stage == 17 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 18 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B HOD Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 19 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B CQA/QA Review Complete</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 20 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
-             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable/Not Applicable</button>
-             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
-             @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
-             </a> </button>
-             <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
-             </a> </button>
-             @endif
-             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit</a> </button>
- 
-                
-        </div>
-        @endif
     </div>
                   
 <div class="modal fade" id="signature-modal">
@@ -598,9 +483,12 @@
                         <label style="display: flex; align-items: baseline;" for="major">
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item
                         </label>
+                        @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
+                        @else
                         <label style="display: flex; align-items: baseline;" for="major">
                             <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
-                    </label>
+                        </label>
+                        @endif
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -697,9 +585,12 @@
                         <label style="display: flex; align-items: baseline;" for="major">
                                 <input style="width: 10px;" type="radio" name="child_type" value="Resampling">Resampling
                         </label>   
+                        @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
+                        @else
                         <label style="display: flex; align-items: baseline;" for="major">
                             <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
-                    </label>  
+                        </label>
+                        @endif 
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -722,13 +613,12 @@
                     @csrf
                     
                     <div class="group-input">
-                        {{-- <label for="root-item">
-                            <input type="radio" name="revision" id="root-item" value="Extension">
-                            Extension
-                        </label> --}}
+                        @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
+                        @else
                         <label style="display: flex; align-items: baseline;" for="major">
                             <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
-                    </label> 
+                        </label>
+                        @endif
                     </div>
                     
                     <div class="modal-footer">

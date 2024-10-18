@@ -169,15 +169,38 @@
                                         @if(!empty($countData))
                                         <input id="docname" type="text" value="{{ $countData }}" readonly>
                                         @else
-                                        <select name="count" id="">
+                                        <select name="data_number" id="countSelect">
                                                 <option value="">--Select Extension Number--</option>
-                                                <option value="number1">1</option>
-                                                <option value="number2">2</option>
-                                                <option value="number">3</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
                                                 </select>
                                         @endif
                                     </div>
                                 </div>
+                                <style>
+                                    .hide-input{
+                                        display: none;
+                                    }
+                                </style>
+                                @if (!empty($parent_type))
+                                <input type="text" class="hide-input" name="parent_type" value="{{ $parent_type }}">
+                                @else
+                                <input type="text" class="hide-input" name="parent_type" id="parentTypeInput" value="">
+                                @endif
+                                <script>
+                                    document.getElementById('countSelect').addEventListener('change', function() {
+                                        var selectedValue = this.value;
+                                        var parentTypeInput = document.getElementById('parentTypeInput');
+
+                                        // Check if the selected value is '3'
+                                        if (selectedValue == "3") {
+                                            parentTypeInput.value = "number";  // Set value if 3 is selected
+                                        } else {
+                                            parentTypeInput.value = "";  // Clear value if any other option is selected
+                                        }
+                                    });
+                                </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Assigned To">HOD Review </label>

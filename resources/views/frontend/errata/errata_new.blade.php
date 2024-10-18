@@ -20,6 +20,13 @@
             display: none;
         }
     </style>
+    <script>
+    $(document).ready(function() {
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    });
+</script>
 
     <div class="form-field-head">
         {{-- <div class="pr-id">
@@ -53,7 +60,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
-            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     @if (!empty($parent_id))
@@ -266,26 +273,7 @@
                                     //     : explode(',', $showdata->reference_document);
                                 @endphp
 
-                                <!-- <div class="">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Reference Recores">Refrence Documents </label>
-                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                    id="">
-                                                                                                                                    {{-- <option value="">--Select---</option> --}}
-                                                                                                                                    @foreach ($old_record as $new)
-    <option value="{{ $new->id }}">
-                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                        {{-- {{ Helpers::recordFormat($new->record) }} --}}
-                                                                                                                                    </option>
-    @endforeach
-                                                                                                                                        {{-- <option
-                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
-                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
-                                            </option> --}}
-                                                                                                                                </select>
-                                                                                                                            </div>
-                                                                                                                        </div> -->
-                                {{-- <div class="">
+                                    {{-- <div class="">
                                     <div class="group-input">
                                         <label for="Reference Recores">Refrence Documents </label>
 
@@ -301,7 +289,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="reference">Parent Record Number</label>
                                         <select multiple name="reference[]" placeholder="Select Parent Record Number"
@@ -333,6 +321,15 @@
                                         @error('reference')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Observation on Page No.">Parent Record Number
+                                           </label>
+                                        <input  type="text" name="reference" maxlength="255">  
+                                      
                                     </div>
                                 </div>
 
@@ -553,7 +550,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms /qms-dashboard') }}">
                                         Exit </a> </button>
@@ -591,7 +588,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1812,7 +1809,7 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="backButton on-submit-disable-button" onclick="previousStep()">Back</button>
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -1851,7 +1848,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2041,7 +2038,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2086,7 +2083,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2132,7 +2129,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2179,7 +2176,7 @@
 
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2218,6 +2215,28 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel BY">Cancel By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel On"> Cancel On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Cancel Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Reviewed by">HOD Initial Review Complete By</label>
@@ -2361,31 +2380,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel BY">Cancel By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancel On"> Cancel On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Cancel Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
+                               
 
 
 
                                 <div class="button-block">
-                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                    {{-- <button type="submit" class="saveButton on-submit-disable-button">Save</button> --}}
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     {{-- <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
 

@@ -94,7 +94,8 @@ class ErrataController extends Controller
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;
-        $data->reference  = implode(',', $request->reference);
+        //$data->reference  = implode(',', $request->reference);
+        $data->reference = $request->reference;
         $data->type = "ERRATA";
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
@@ -374,7 +375,7 @@ class ErrataController extends Controller
             $history->errata_id = $data->id;
             $history->activity_type = 'Parent Record Number';
             $history->previous = "Null";
-            $history->current = implode(',', $request->reference);
+            $history->current =  $data->reference;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -799,6 +800,51 @@ class ErrataController extends Controller
         $newDataGridErrata->identifier = 'details';
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
+
+
+
+
+
+
+
+        if (is_array($request->details)) {
+            foreach ($request->details as $index => $detailsAction) {
+                $lastdetailsAction = $data->details[$index] ?? null;
+                $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
+        
+                // Check if there is a change or an action comment
+                if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = ErrataAuditTrail::where([
+                        'errata_id' => $errata_id, // Corrected to use $errata_id
+                        'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
+                        'previous' => $lastdetailsAction,
+                        'current' => $currentdetailsAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new ErrataAuditTrail();
+                        $history->errata_id = $errata_id; // Manually setting each attribute
+                        $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
+                        $history->previous = $lastdetailsAction;
+                        $history->current = $currentdetailsAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $data->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Not Applicable";
+                        $history->action_name = "Create";
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+        
         //================================================================
 
 
@@ -1407,16 +1453,16 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'QA Head Aproval Completed By, QA Head Aproval Completed On';
+                $history->activity_type = 'QA/CQA Head Approval Completed By, QA/CQA Head Approval Completed On';
                 if (is_null($lastDocument->qa_head_approval_completed_by) || $lastDocument->qa_head_approval_completed_on == '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->qa_head_approval_completed_by . ' ,' . $lastDocument->qa_head_approval_completed_on;
                 }
-                $history->action = 'QA Head Aproval Complete';
+                $history->action = 'QA/CQA Head Approval Completed';
                 $history->current = $ErrataControl->qa_head_approval_completed_by . ',' . $ErrataControl->qa_head_approval_completed_on;
                 $history->comment = $request->comment;
-                $history->action = 'QA Head Aproval Completed';
+                $history->action = 'QA/CQA Head Approval Completed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1439,10 +1485,10 @@ class ErrataController extends Controller
                 //                 try {
                 //                     Mail::send(
                 //                         'mail.view-mail',
-                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                         ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                         function ($message) use ($email, $ErrataControl) {
                 //                             $message->to($email)
-                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                             ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                 //                         }
                 //                     );
                 //                 } catch(\Exception $e) {
@@ -1460,10 +1506,10 @@ class ErrataController extends Controller
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                     function ($message) use ($email, $ErrataControl) {
                     //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                     //                     }
                     //                 );
                     //             } catch(\Exception $e) {
@@ -1481,10 +1527,10 @@ class ErrataController extends Controller
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                     //                     function ($message) use ($email, $ErrataControl) {
                     //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                    //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                     //                     }
                     //                 );
                     //             } catch(\Exception $e) {
@@ -1502,10 +1548,10 @@ class ErrataController extends Controller
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA Head Aproval Complete", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "QA/CQA Head Approval Completed", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                     function ($message) use ($email, $ErrataControl) {
                 //                         $message->to($email)
-                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Aproval Complete Performed");
+                //                         ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Head Approval Completed Performed");
                 //                     }
                 //                 );
                 //             } catch(\Exception $e) {
@@ -2037,7 +2083,7 @@ class ErrataController extends Controller
         $lastData = errata::find($id);
         $data = errata::find($id);
         $data->division_id = $request->division_id;
-        $data->initiator_id = Auth::user()->id;
+       // $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
 
@@ -2045,7 +2091,8 @@ class ErrataController extends Controller
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;
-        $data->reference = implode(',', $request->reference);
+     //   $data->reference = implode(',', $request->reference);
+        $data->reference = $request->reference;
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
@@ -2955,6 +3002,63 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         $newDataGridErrata->identifier = 'details';
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
+        
+        // Loop through the details data and check for updates or comments
+        if (is_array($request->details)) {
+            foreach ($request->details as $index => $detailsAction) {
+                $lastdetailsAction = $lastData->details[$index] ?? null;
+                $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
+        
+                // Check if there is a change or an action comment
+                if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
+                    // Check if an existing audit trail entry already exists for this action
+                    $existingHistory = ErrataAuditTrail::where([
+                        'errata_id' => $errata_id, // Corrected to use $errata_id
+                        'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
+                        'previous' => $lastdetailsAction,
+                        'current' => $currentdetailsAction
+                    ])->first();
+        
+                    // If no existing history, create a new entry
+                    if (!$existingHistory) {
+                        $history = new ErrataAuditTrail();
+                        $history->errata_id = $errata_id; // Manually setting each attribute
+                        $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
+                        $history->previous = $lastdetailsAction;
+                        $history->current = $currentdetailsAction;
+                        $history->comment = $request->action_taken_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastData->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastData->status;
+                        $history->action_name = "Update";
+        
+                        // Save the audit trail entry
+                        $history->save();
+                    }
+                }
+            }
+        }
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //================================================================
         toastr()->success("Record is Updated Successfully");
         return back();
@@ -3030,7 +3134,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                         'Correction Completed',
                         'HOD Review Complete',
                         'Sent To Opened State',
-                        'QA Head Aproval Completed'
+                        'QA/CQA Head Approval Completed'
                     ];
                     $query->whereIn('action', $stage); // Ensure correct activity_type value
                     break;
@@ -3048,7 +3152,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                         'Correction Completed',
                         'HOD Review Complete',
                         'Sent To Opened State',
-                        'QA Head Aproval Completed'
+                        'QA/CQA Head Approval Completed'
                     ];
                     $query->whereIn('action', $user_action);
                     break;

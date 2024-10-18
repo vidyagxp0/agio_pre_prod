@@ -13,6 +13,24 @@
         }
     </style>
     <style>
+        textarea.note-codable {
+            display: none !important;
+        }
+
+        header {
+            display: none;
+        }
+        .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
+    </style>
+    <style>
         .progress-bars div {
             flex: 1 1 auto;
             border: 1px solid grey;
@@ -743,9 +761,9 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="hod_attachment1[]"
+                                        <input  {{ $data->stage == 2 ? '' : 'readonly' }} type="file" id="myfile" name="hod_attachment1[]"
                                             oninput="addMultipleFiles(this, 'hod_attachment1')"
-                                            {{ $data->stage == 2 ? '' : 'readonly' }} multiple>
+                                            multiple>
                                     </div>
                                 </div>
                             </div>
@@ -9590,6 +9608,23 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
     <script>
         $(document).on('click', '.removeRowBtn', function() {

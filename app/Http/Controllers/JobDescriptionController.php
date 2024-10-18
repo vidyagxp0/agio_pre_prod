@@ -1260,6 +1260,10 @@ class JobDescriptionController extends Controller
                     return back();
                 }
             }
+            else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
         } catch (\Throwable $e) {
             return response()->json([
                 'success' => false,
@@ -1268,23 +1272,22 @@ class JobDescriptionController extends Controller
         }
     }
 
-    public function cancelStage(Request $request, $id)
+    public function cancelStages(Request $request, $id)
     {
+        // dd($request->all());
         try {
-
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $jobTraining = JobTraining::find($id);
-                $lastjobTraining = JobTraining::find($id);
+                $jobTraining = JobDescription::find($id);
+                $lastjobTraining = JobDescription::find($id);
 
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "1";
                     $jobTraining->status = "Opened";
                     $jobTraining->reject_by = Auth::user()->name;
                     $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
-                    $jobTraining->reject_comment = $request->comment;
+                    $jobTraining->reject_comment = $request->comments;
 
-
-                    $history = new JobTrainingAudit();
+                    $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->current = $jobTraining->qualified_by;
@@ -1297,8 +1300,8 @@ class JobDescriptionController extends Controller
                     $history->action = 'Reject';
                     $history->stage = 'Submited';
                     $history->save();
-
                     $jobTraining->update();
+
                     return back();
                 }
                 if ($jobTraining->stage == 3) {
@@ -1306,9 +1309,9 @@ class JobDescriptionController extends Controller
                     $jobTraining->status = "Opened";
                     $jobTraining->reject_by = Auth::user()->name;
                     $jobTraining->reject_on = Carbon::now()->format('d-m-Y');
-                    $jobTraining->reject_comment = $request->comment;
+                    $jobTraining->reject_comment = $request->comments;
 
-                    $history = new JobTrainingAudit();
+                    $history = new JobDescriptionAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->current = $jobTraining->qualified_by;
@@ -1326,6 +1329,9 @@ class JobDescriptionController extends Controller
                     return back();
                 }
               
+            }else {
+                toastr()->error('E-signature Not match');
+                return back();
             }
         } catch (\Throwable $e) {
             return response()->json([

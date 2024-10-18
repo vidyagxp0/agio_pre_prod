@@ -515,7 +515,7 @@ class Helpers
         }
     }
 
-    
+
     public static function getLeadAuditeeUsersList($division = null){
         if (!$division) {
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '11'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
@@ -571,7 +571,7 @@ class Helpers
     public static function getUserEmail($id){
         $email = null;
         try {
-            $email  = User::find($id)->email;            
+            $email  = User::find($id)->email;
         } catch (\Exception $e) {
             \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
         }
@@ -1069,7 +1069,7 @@ class Helpers
                 }
             }
         } catch (\Exception $e) {
-            
+
         }
         return is_array($res) ? '' : $res;
     }
@@ -1361,6 +1361,13 @@ class Helpers
         ->where('parent_id', $id)
         ->count();
        }
+       elseif($parent_type == 'Incident')
+       {
+        $count = extension_new::where('parent_type', 'Incident')
+        ->where('parent_id', $id)
+        ->count();
+       }
+
 
         return $count;
     }
@@ -1481,7 +1488,7 @@ class Helpers
         return $relatedRecords;
     }
 
-    public static function extensionCount($count) { 
+    public static function extensionCount($count) {
         switch ($count) {
             case 'number1':
                 $count = 1;
@@ -1494,7 +1501,7 @@ class Helpers
                 break;
         }
         return $count;
-    }  
+    }
           public static function checkControlAccess()
         {
     // Retrieve the user's roles
@@ -1511,7 +1518,7 @@ public static function getEmpNameByCode($code){
     return   Employee::where('full_employee_id',$code)->value('employee_name');
 }
 
-    
+
 
 }
 

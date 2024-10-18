@@ -2052,9 +2052,9 @@
 
 
                                     <div style="margin-top: 40px;" class="button-block">
-                                        <button type="submit" class="btn btn saveButton">Save</button>
+                                        {{-- <button type="submit" class="btn btn saveButton">Save</button>
                                         <button type="button" id="ChangeNextButton"
-                                            class="btn btn nextButton">Next</button>
+                                            class="btn btn nextButton">Next</button> --}}
                                     </div>
                                 </div>
                             </div>

@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('internal_audits', function (Blueprint $table) {
-            $table->longtext('Auditor_comment')->nullable();
-            $table->longtext('Auditee_comment')->nullable();
-            $table->text('auditee_department')->nullable();
+        Schema::table('i_a_checklist_manufacturing_fillings', function (Blueprint $table) {
+            //
+            for ($i = 7; $i <= 8; $i++) {
+                $table->text("response_packing_$i")->nullable();
+                 $table->text("remark_packing_$i")->nullable();
+            }
         });
     }
 
@@ -27,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('internal_audits', function (Blueprint $table) {
+        Schema::table('i_a_checklist_manufacturing_fillings', function (Blueprint $table) {
             //
         });
     }
