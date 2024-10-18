@@ -50,7 +50,8 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
-
+    Route::get('/employee/login', [UserLoginController::class, 'employeeLoginForm'])->name('employee.login');
+    Route::post('/employee/login', [UserLoginController::class, 'employeeLogin'])->name('employee.login.submit');
 
 
     // Route::middleware(['rcms'])->group(

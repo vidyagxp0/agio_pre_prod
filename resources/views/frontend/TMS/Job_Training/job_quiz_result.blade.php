@@ -93,7 +93,7 @@
             <p>Better luck next time!</p>
         </div>
     @endif
-    <button type="button"> <a class="text-white" href="{{ url('TMS') }}"> Go Back to Home </a> </button>
+    <button type="button"> <a class="text-white" href="{{ route('tms.training') }}"> Go Back to Home </a> </button>
     {{-- <button onclick="{{url("TMS") }}"></button> --}}
 </div>
 

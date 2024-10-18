@@ -372,6 +372,13 @@ class Helpers
     {
         return   User::where('id',$id)->value('name');
     }
+
+    public static function getEmpName($id)
+    {
+        return   Employee::where('id',$id)->value('employee_name');
+    }
+
+
     public static function record($id)
     {
         return   str_pad($id, 4, '0', STR_PAD_LEFT);

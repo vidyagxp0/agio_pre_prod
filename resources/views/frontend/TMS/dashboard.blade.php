@@ -95,10 +95,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm3')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
-                
+
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">Job Description</button>
 
+                <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                
                 <button class="cctablinks " onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -142,7 +143,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($employees as $index => $employee)
+                        @foreach ($employees->sortByDesc('id') as $index => $employee)
                         <tr>
                         <td>{{ $index + 1 }}</td>                            
                         <td>
@@ -265,236 +266,6 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 </style>
           
             <div id="CCForm2" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-            <div class="heading-tms">Induction Training</div>
-            <br>
-            @php
-                        // Convert the array to a collection
-                        $documentsCollection = collect($useDocFromInductionTraining);
-
-                        // Set the current page from the URL or default to 1
-                        $currentPage = request()->get('page', 1);
-
-                        // Number of items per page
-                        $perPage = 5;
-
-                        // Slice the collection to get only the items for the current page
-                        $paginatedData = $documentsCollection->forPage($currentPage, $perPage);
-
-                        // Calculate total pages based on the total number of items and perPage limit
-                        $totalPages = ceil($documentsCollection->count() / $perPage);
-                    @endphp
-
-                    <div>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Emp Code</th>
-                                    <th>Employee Name</th>
-                                    <th>Designation</th>
-                                    <th>SOP No.</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Remaining Attempts</th>
-                                    <th>Training Completion date</th>
-                                    <th>Preview SOP</th>
-                                    <th>Quiz</th>
-                                    <th>Certificate</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody id="searchTable">
-                            @foreach ($paginatedData as $temp)
-                                @php
-                                    $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
-                                    $dateValue = []; // Initialize an empty array to store dates
-
-                                    if ($temp) {
-                                        foreach ($getSOPNo as $key => $document) {
-                                            // Construct the corresponding startdate column name
-                                            $startDateColumn = 'document_number_' .($key + 1); // This will create document_number_1, document_number_2, etc.
-
-                                            // Check if the start date exists and is not null
-                                            if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
-                                                $dateValue[] = $temp->$startDateColumn; // Add the date to the array
-                                            }
-                                        }
-                                    }
-                                    $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
-                                    // Join the non-null start dates into a comma-separated string
-                                    $commaSeparatedStartDates = implode(', ', $dateValue);
-                                @endphp
-                                @if($temp->stage >= 2)
-                                    <tr>
-                                        <td>{{ $temp->employee_id }}</td>
-                                        <td>{{ Helpers::getEmpNameByCode($temp->employee_id) }}</td>
-                                        <td>{{ $temp->designation }}</td>
-                                        <td>{{ $commaSeparatedStartDates }}</td>
-                                        <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
-                                        <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
-                                        <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
-                                        <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at): "-" }}</td>
-                                        <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
-                                        <td>
-                                                @if ($inductionResult && $inductionResult->result == "Pass")
-                                                    Pass
-                                                @elseif($temp->attempt_count <= 0)
-                                                    Attempts completed (Failed)
-                                                @else
-                                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                                        Attempt Quiz
-                                                    </button>
-                                                @endif
-                                        </td>
-                                        <td>
-                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_training_certificate/{{$employee->id}}';">
-                                            <i class="fa fa-certificate"></i>
-                                        </button>
-
-
-
-                                        </td>
-                                        
-                                    
-                                    </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <!-- Pagination Links -->
-                        <nav>
-                            <ul class="pagination justify-content-center">
-                                <!-- Previous Page Link -->
-                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage - 1 }}">Previous</a>
-                                </li>
-
-                                <!-- Page Number Links -->
-                                @for ($page = 1; $page <= $totalPages; $page++)
-                                    <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
-                                        <a class="page-link" href="?page={{ $page }}">{{ $page }}</a>
-                                    </li>
-                                @endfor
-
-                                <!-- Next Page Link -->
-                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage + 1 }}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
-            <div class="heading-tms">On The Job Training</div>
-            <br>
-                   @php
-                        // Convert the array to a collection
-                        $documentsCollection = collect($useDocFromJobTraining);
-
-                        // Set the current page from the URL or default to 1
-                        $currentPage = request()->get('page', 1);
-
-                        // Number of items per page
-                        $perPage = 5;
-
-                        // Slice the collection to get only the items for the current page
-                        $paginatedData = $documentsCollection->forPage($currentPage, $perPage);
-
-                        // Calculate total pages based on the total number of items and perPage limit
-                        $totalPages = ceil($documentsCollection->count() / $perPage);
-
-                    @endphp
-
-                    <div>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Emp Code</th>
-                                    <th>Employee Name</th>
-                                    <th>SOP No.</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Remaining Attempts</th>
-                                    <th>My Training Completion date</th>
-                                    <th>Preview SOP</th>
-                                    <th>Quiz</th>
-                                </tr>
-                            </thead>
-                            <tbody id="searchTable">
-                                @foreach ($paginatedData as $temp)
-                                @php
-                                    $getSOPNo = ['reference_document_no_1', 'reference_document_no_2', 'reference_document_no_3', 'reference_document_no_4', 'reference_document_no_5'];
-                                    $dateValue = null; // Variable to store the date
-                                if ($temp) {
-                                            foreach ($getSOPNo as $key => $subject) {
-                                                // Construct the corresponding startdate column name
-                                                $startDateColumn = 'reference_document_no_' . ($key + 1); // This will create startdate_1, startdate_2, etc.
-
-                                                // Check if the start date exists and is not null
-                                                if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
-                                                    $dateValue[] = $temp->$startDateColumn; // Add the date to the array
-                                                }
-                                            }
-                                        }
-                                        // Join the non-null start dates into a comma-separated string
-                                        $commaSeparatedStartDates = implode(', ', $dateValue);
-                                        $jobTrainingResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "On The Job Training", 'emp_id' => 'PW1', 'result' => 'Pass'])->latest()->first();
-                                        
-                                @endphp
-                                @if($temp->stage >= 3)
-                                <tr>
-                                    <td>{{ $temp->employee_id }}</td>
-                                    <td>{{ $temp->name }}</td>
-                                    <td>{{ $commaSeparatedStartDates }}</td>
-                                    <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
-                                    <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
-                                    <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
-                                    <td>{{ $jobTrainingResult ? Helpers::getdateFormat1($jobTrainingResult->created_at): "-" }}</td>
-                                    <td><a href="{{ url('job_training-details', $commaSeparatedStartDates) }}"><i class="fa-solid fa-eye"></i></a></td>
-                                    
-                                    <td>
-                                        @if ($jobTrainingResult && $jobTrainingResult->result == "Pass")
-                                                    Pass
-                                                @elseif($temp->attempt_count <= 0)
-                                                    Attempts completed (Failed)
-                                                @else
-                                                    <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                                        Attempt Quiz
-                                                    </button>
-                                                @endif
-
-                                        {{-- <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/on_the_job_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                            Attempt Quiz
-                                        </button> --}}
-                                    </td>
-                                                             
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <!-- Pagination Links -->
-                        <nav>
-                            <ul class="pagination justify-content-center">
-                                <!-- Previous Page Link -->
-                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage - 1 }}">Previous</a>
-                                </li>
-
-                                <!-- Page Number Links -->
-                                @for ($page = 1; $page <= $totalPages; $page++)
-                                    <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
-                                        <a class="page-link" href="?page={{ $page }}">{{ $page }}</a>
-                                    </li>
-                                @endfor
-
-                                <!-- Next Page Link -->
-                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage + 1 }}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
             <div class="heading-tms">SOP Training</div>
                    <br>
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -665,21 +436,26 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <thead>
                             <tr>
                                 <th>Sr. No</th>
-                                <th>Trainer Name</th>
+                                <th>Employee Name</th>
                                 <th>Department</th>
                                 <th>Training Date</th>
                                 <th>Status</th>
+                                <th>Action</th>
                                 <th>Report</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($trainers->sortbyDesc('id') as $trainer)
+                            @foreach ($trainers->sortbyDesc('id') as $index=>$trainer)
                             <tr>
-                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
-                                <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
+                                <td>{{ $index + 1 }}</td>                            
+                                <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td> -->
+                                <td>{{ $trainer->employee_name}}</td>
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
+                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
+
                                 <td>     <button type="button" class="view-report-btn" onclick="window.location.href='{{ url('rcms/trainer_report/' . $trainer->id) }}'">
                                 <i class="fa fa-file-alt"></i>
                                             </button></td>
@@ -700,22 +476,23 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <th>Designation</th>
                                 <th>Department</th>
                                 <th>Qualification Status</th>
+                                <th>Action</th>
                                 <th>Certificate</th>
-                                <!-- <th>Status</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($trainers->sortbyDesc('id') as $trainer)
+                            @foreach ($trainers->sortbyDesc('id') as $index=> $trainer)
 
                             <!-- @if ($trainer->trainer=='Qualified') -->
                             <tr>
-                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
-                                <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
+                                <td>{{ $index + 1 }}</td>                            
+                                <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td> -->
+                                <td>{{ $trainer->employee_name ? $trainer->employee_name : 'NA' }}</td>
                                 <td>{{ $trainer->designation ? $trainer->designation : 'NA' }}</td>
                                 <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 {{-- <td>{{ $trainer->trainer ? $trainer->trainer: 'NA' }}</td> --}}
                                 <td>{{ $trainer->status }}</td>
-
+                                <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
                                 <td>
                                     @if($trainer->initial_attachment)
                                     <a href="{{ asset('upload/' . $trainer->initial_attachment) }}" target="_blank" download>
