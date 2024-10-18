@@ -1903,13 +1903,27 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->Facility = $request->Facility;
 
 
-        $deviation->Immediate_Action = implode(',', $request->Immediate_Action);
-        $deviation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $deviation->Product_Details_Required = $request->Product_Details_Required;
+        // Ensure Immediate_Action is an array before using implode
+$deviation->Immediate_Action = is_array($request->Immediate_Action)
+? implode(',', $request->Immediate_Action)
+: $request->Immediate_Action;
 
+        // $deviation = is_array($lastDeviation->Immediate_Action) ? implode(',', $lastDeviation->Immediate_Action) : $lastDeviation->Immediate_Action;
+        // $deviation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        // Ensure Immediate_Action is an array before using implode
+$deviation->Immediate_Action = is_array($request->Immediate_Action)
+? implode(',', $request->Immediate_Action)
+: $request->Immediate_Action;
 
-        $deviation->HOD_Remarks = $request->HOD_Remarks;
-        $deviation->Pending_initiator_update = $request->Pending_initiator_update;
+// Ensure Preliminary_Impact is an array before using implode
+$deviation->Preliminary_Impact = is_array($lastDeviation->Preliminary_Impact)
+? implode(',', $lastDeviation->Preliminary_Impact)
+: $lastDeviation->Preliminary_Impact;
+
+$deviation->Product_Details_Required = $request->Product_Details_Required;
+$deviation->HOD_Remarks = $request->HOD_Remarks;
+$deviation->Pending_initiator_update = $request->Pending_initiator_update;
+
 
          $deviation->hod_final_review = $request->hod_final_review;
 
@@ -1925,7 +1939,12 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->QAInitialRemark = $request->QAInitialRemark;
         $deviation->Investigation_Summary = $request->Investigation_Summary;
         // $deviation->discb_deviat = $request->discb_deviat;
-        $deviation->discb_deviat = implode(',', $request->discb_deviat);
+        // $deviation->discb_deviat = implode(',', $request->discb_deviat);
+        // Ensure Immediate_Action is an array before using implode
+        $deviation->discb_deviat = is_array($request->discb_deviat)
+        ? implode(',', $request->discb_deviat)
+        : $request->discb_deviat;
+
         $deviation->Impact_assessment = $request->Impact_assessment;
         $deviation->Root_cause = $request->Root_cause;
 

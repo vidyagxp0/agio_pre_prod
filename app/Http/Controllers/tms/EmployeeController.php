@@ -68,7 +68,7 @@ class EmployeeController extends Controller
             $newEmployeeId = '0001';
         }
 
-        $randomPassword = Str::random(6);
+        $randomPassword = "Agio_emp";
 
         // Encrypt the random password before storing it
         $encryptedPassword = Crypt::encryptString($randomPassword);
@@ -1959,7 +1959,7 @@ class EmployeeController extends Controller
                 $employee = Employee::find($id);
                 $lastEmployee = Employee::find($id);
 
-                $decryptedPassword = Crypt::decryptString($employee->email_password);
+                $decryptedPassword = "Agio_emp";
                 // $randomPassword = Str::random(6);
 
                 if ($employee->stage == 1) {
@@ -1989,12 +1989,11 @@ class EmployeeController extends Controller
                     // });
 
                 
-
                     // Send the decrypted password via email
-                    Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'decryptedPassword' => $decryptedPassword], function ($message) use ($employee) {
-                        $message->to($employee->email)
-                            ->subject('Your Employee Credentials');
-                    });
+                    // Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'decryptedPassword' => $decryptedPassword], function ($message) use ($employee) {
+                    //     $message->to($employee->email)
+                    //         ->subject('Your Employee Credentials');
+                    // });
 
                     toastr()->success('Employee Sent Successflly !');
 

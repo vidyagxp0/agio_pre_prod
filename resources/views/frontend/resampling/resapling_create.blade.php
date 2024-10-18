@@ -244,8 +244,8 @@
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
-                                            <optio value="">Select Initiation Department</option>
-                                                <option value="CQA" >Corporate Quality Assurance</option>
+                                                <option value="">-- Select --</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
                                                 <option value="QA" >Quality Assurance</option>
                                                 <option value="QC" >Quality Control</option>
                                                 <option value="QM" >Quality Control (Microbiology department)</option>
@@ -452,6 +452,7 @@
 
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>

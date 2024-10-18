@@ -734,14 +734,16 @@
                                                 : null;
                                         @endphp
                                         {{-- Format the date as desired --}}
-                                        <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
+                                        <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8? 'readonly' : '' }}
                                             value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
 
                                         <input type="date" name="due_date_gi" id="due_date_gi" class="hide-input"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->due_date_gi ?? '' }}"
                                             oninput="handleDateInput(this, 'due_date_display')"
-                                            @if (!in_array($data->stage, [1, 2, 3])) readonly @endif />
+                                            {{ $data->stage !=1 ? 'readonly' : '' }} />
+
+
                                     </div>
                                 </div>
                             </div>
@@ -766,9 +768,6 @@
                                     display: none;
                                 }
                             </style>
-
-
-
 
 
 
