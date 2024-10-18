@@ -591,17 +591,14 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Due Date"> Due Date</label>
-                                               
-                                                <div class="calenderauditee">
-                                                    <input disabled type="text" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
-                                                    <input type="date" name="due_date"
-                                                        {{ $data->stage == 0 || $data->stage > 1 ? 'disabled' : '' }}
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                <label for="Audit Schedule Start Date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                    reason in "Due Date Extension Justification" data field.</small></div>
+                                                 <div class="calenderauditee">                                     
+                                                    <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
+                                                    <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                                    oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -2713,7 +2710,7 @@
                                     
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QAH/CQAH/designee Final Approval Attachment</label>
+                                            <label for="comments">QAH/CQAH/designee Final Approval Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">

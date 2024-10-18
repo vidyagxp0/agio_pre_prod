@@ -1070,7 +1070,7 @@ class RootCauseController extends Controller
         if (!empty($request->qa_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QA/CQA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Attachment';
             $history->previous = "Null";
             $history->current =  $root->qa_final_attachments;
             $history->comment = "Not Applicable";
@@ -1087,7 +1087,7 @@ class RootCauseController extends Controller
         if (!empty($request->qah_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QAH/CQAH/designee Final Approval Comment ';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Comments ';
             $history->previous = "Null";
             $history->current =  $root->qah_final_comments;
             $history->comment = "Not Applicable";
@@ -2730,7 +2730,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QA/CQA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Attachment';
             $history->previous = $lastDocument->qa_final_attachments;
             $history->current = $root->qa_final_attachments;
             $history->comment = $request->comment;
@@ -2752,7 +2752,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QAH/CQAH/designee Final Approval Comment';
+            $history->activity_type = 'QAH/CQAH/designee Final Approval Comments';
             $history->previous = $lastDocument->qah_final_comments;
             $history->current = $root->qah_final_comments;
             $history->comment = $request->comment;

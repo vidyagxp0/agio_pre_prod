@@ -218,22 +218,14 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date </label>
-                                        {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div> --}}
+                                        <label for="Audit Schedule Start Date">Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date"  placeholder="DD-MM-YYYY"
-                                                value="" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')"
-                                                value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                         </div>
 
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
                                     </div>
                                 </div>
 
@@ -1940,7 +1932,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">QAH/CQAH/designee Final Approval Attachment</label>
+                                        <label for="Inv Attachments">QAH/CQAH/designee Final Approval Attachments</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
