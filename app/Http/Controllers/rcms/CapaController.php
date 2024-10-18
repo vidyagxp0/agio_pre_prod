@@ -5002,7 +5002,8 @@ class CapaController extends Controller
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1;
             $relatedRecords = Helpers::getAllRelatedRecords();
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record'));
+            // $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record', 'countData'));
         }
     }
 

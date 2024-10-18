@@ -11658,7 +11658,7 @@
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person?<br> Check the weighing balance record.',
                                     'All the person working in manufacturing area having proper gowning?',
                                     'Is there any procedure for cleaning of PLM?',
                                     'Is there any procedure for cleaning of wax melting vessel?',
@@ -11720,8 +11720,7 @@
                                                         @foreach ($dispensingAndManufacturingQuestions as $index => $question)
                                                             <tr>
                                                                 <td class="flex text-center">1.{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
+                                                                <td>{!! $question !!}</td>                                                                <td>
                                                                     @php
                                                                         $tabletmanufacturingProperty =
                                                                             'dispensing_and_manufacturing_' .
@@ -11784,7 +11783,7 @@
                                                         @foreach ($manufdocumentationQuestions as $index => $question)
                                                             <tr>
                                                                 <td class="flex text-center">1.{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $tabletmanufacturingProperty =
@@ -12012,7 +12011,7 @@
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
                                   
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person?<br> Check the weighing balance record.',
                                     'All the person working in packing area having proper gowning?',
                                     'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
                                     'Does each equipment have written instructions for maintenance that includes a schedule for maintenance?',
@@ -12072,8 +12071,8 @@
                                                             <tr>
                                                                 <td class="flex text-center">
                                                                     {{ 1 . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
+                                                                    <td>{!! $question !!}</td>
+                                                                    <td>
                                                                     @php
                                                                         $liquidOintmentsResponse =
                                                                             'liquid_ointments_response_' . ($index + 1);
@@ -12279,12 +12278,17 @@
                                     'Does QA assure that manufacturing and testing records are reviewed before batches are released for sale?',
                                     'Is there an adequate program for handling complaints, including investigation to determine the causes, corrective actions, verification of the effectiveness of corrective actions, a target time frame for responding; trend analysis, and notification of appropriate parties including management?',
                                     'Is a log maintained for changes to documents and facility?',
-                                    'Does QA have authority to review and approve or reject?<ul>
-                                        <li>Procedures and specifications?</li>
-                                        <li>Process changes impacting on the identity, quality, and purity of the material?</li>
-                                        <li>Raw materials, packaging materials, in-process materials, and product batches?</li>
-                                        <li>New suppliers or subcontractors?</li>
-                                    </ul><br>',
+                                    'Does QA have authority to review and approve or reject?
+                                        <br>a)Procedures and specifications?
+                                        <br>b)Process changes impacting on the identity, quality, and purity of the material?
+                                        <br>c)Raw materials, packaging materials, in-process materials, and product batches?
+                                        <br>d)New suppliers or subcontractors?
+                                    <br>',
+                                    'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
+                                    'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented?  Is their effectiveness verified in subsequent audits?',
+                                    'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
+                                    'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
+                                    'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?',
                                 ];
 
                                 // $documentationQuestions = [
@@ -12498,28 +12502,40 @@
                             @php
                                 $checklistEngineering = [
                                     'Is there a master list of all equipment that specifies those requiring maintenance and/or calibration?',
-                                    'Are written procedures available for set-up of equipment?',
-                                    'Are written procedures available for maintenance of equipment?',
-                                    'Are written procedures available for cleaning of equipment?',
-                                    'Are written procedures available for calibration of manufacturing equipment?',
-                                    'Are written procedures available for calibration of control instruments?',
-                                    'Are records kept for the sequence of products manufactured on particular equipment?',
-                                    'Are records kept for maintenance and cleaning logs?',
-                                    'Are records kept for calibration of manufacturing equipment?',
-                                    'Are records kept for calibration of control instruments?',
+                                   'Are written procedures available for:<br>
+                                                            a)	Set-up of equipment<br>
+                                                            b)	Maintenance of equipment<br>
+                                                            c)	Cleaning of equipment<br>
+                                                            d)	Calibration of manufacturing equipment<br>
+                                                            e)	Calibration of control instruments',
+                                    'Are records kept for:<br>
+                                                            a)	The sequence of products manufactured on particular equipment<br>
+                                                            b)	Maintenance and cleaning logs<br>
+                                                            c)	Calibration of manufacturing equipment<br>
+                                                            d)	Calibration of control instruments',
                                     'Is equipment designed to prevent adulteration of product with lubricants, coolants, fuel, metal fragments, or other extraneous materials?',
                                     'Are holding, conveying and manufacturing systems designed and constructed so as to allow them to be maintained in a sanitary condition?',
-                                    'Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?',
-                                    'Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?',
-                                    'If water is purified for use in the process, is the purification system periodically sanitized and appropriately maintained?',
-                                    'Does a SOP specify that equipment cannot be used if it is beyond the calibration due date, and describe actions to be taken if equipment is used that is found to have been beyond the due date or is found to be out of calibration time?',
-                                    'Are there SOPs for calibration of critical equipment, and measuring and testing instruments?',
-                                    'Do SOPs assign responsibilities; include schedules; describe methods; equipment, and materials to be used, including calibration over actual range of use and standards traceable to national standards; and include specifications and tolerances?',
-                                    'Is calibrated equipment labeled with date of calibration and date of next calibration is due?',
-                                    'Is equipment in use observed to be within calibration dating?',
-                                    'Are periodic verifications performed on critical production scales (e.g., for raw material dispensing or portable scales) to assure that they remain within calibration in the time between full calibrations?',
-                                    'Are records maintained for maintenance and calibration operations?',
-                                    'Is there any standard procedure for maintenance and calibration operations?',
+                                    'Is equipment installed with sufficient clearance to allow access to both the equipment and the surrounding area for cleaning and maintenance operations?',
+                                    'Are freezers equipped with thermometers or other temperature sensing devices / recorders, and with automatic temperature controls and automatic alarms?	',
+                                    'Is equipment operated in a manner that will prevent contamination and cross-contamination and will ensure product integrity?	',
+                                    'If equipment and instruments malfunction or are determined to be defective, are they immediately taken out of use?	',
+                                    'If calibration operations are performed in-house, do SOPs specify proper handling and storage conditions for the traceable standards?	',
+                                    ' a)Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
+                                                            <br> b)Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?',
+                                    'If water is purified for use in the process, is the purification system periodically sanitized and appropriately maintained?	',
+                                    'Does a SOP specify that equipment cannot be used if it is beyond the calibration due date, and describe actions to be taken if equipment is used that is found to have been beyond the due date or is found to be out of calibration time?	',
+                                    '	a) Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
+                                                             <br> b) Do SOPs assign responsibilities; include
+                                                             schedules; describe methods; equipment, and
+                                                             materials to be used, including calibration over
+                                                             actual range of use and standards traceable to
+                                                             national standards; and include specifications
+                                                             and tolerances?',
+                                    'Is calibrated equipment labeled with date of calibration and date of next calibration is due?	',
+                                    'Is equipment in use observed to be within calibration dating?	',
+                                    'Are periodic verifications performed on critical production scales (e.g., for raw material dispensing or portable scales) to assure that they remain within calibration in the time between full calibrations?	',
+                                    'Are records maintained for maintenance and calibration operations?	',
+                                    'Is there any standard procedure for maintenance and calibration operations?	',
                                     'Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly.',
                                     'Do you maintain the filter cleaning record?',
                                 ];
@@ -12560,8 +12576,7 @@
                                                             <tr>
                                                                 <td class="flex text-center">
                                                                     {{ 1 . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
+                                                                    <td>{!! $question !!}</td>                                                                <td>
                                                                     @php
                                                                         $engineeringresponce =
                                                                             'engineering_response_' . ($index + 1);
@@ -12813,25 +12828,26 @@
                                             'Are the complete index and a complete set of applicable SOPs available in the department?',
                                             'Are the index & annexure current?',
                                             'Are training records of the employees working in the department up-to-date?',
-                                            'Is Job Description of the employees working in the department up-to-date?',
-                                            // "Have the employees undergone training in the following areas?",
-                                            'cGLP (Related: SOP for Good Laboratory Practices)',
-                                            'SOPs',
-                                            'Analytical Techniques',
-                                            'EU_GMP',
+                                            'Is Job Description of the employees working in the department up-to-date?	',
+                                           ' Have the employees undergone training in the following areas?
+                                                         
+                                                         <br>a)cGLP (Related: SOP for Good Laboratory Practices)
+                                                         <br>b)SOP’s
+                                                         <br>c)Analytical Techniques
+                                                         <br>d)EU GMP',
                                             'Is Training Calendar of the employees working in the department up-to-date?',
                                             'Is an up-to-date organizational chart of the Quality Control Department available?',
                                             'Are all employees following the garments SOP, including where necessary masks & gloves?',
                                             'Is the laboratory neat and orderly with sufficient space for equipment and operations?',
                                             'Is the good housekeeping followed?',
                                             'Are the laboratory instruments/equipment qualified?',
-                                            // "Are all reagents and solutions",
-                                            'Clearly labeled with their proper name?',
-                                            'Labeled with the date of receipt and/or expiration date?',
-                                            // "Are prepared solutions labeled with the",
-                                            'Name of the person who prepared them?',
-                                            'Date of preparation?',
-                                            'Expiration date?',
+                                           ' Are all reagents and solutions                    
+                                                                <br>a)	Clearly, labeled with their proper name?
+                                                                <br>b)Labeled with the date of receipt and/or expiration date?',
+                                              'Are prepared solutions labeled with the                                                
+                                                                <br>a)Name of the person who prepared them?
+                                                                <br>b)Date of preparation?
+                                                                <br>c)Expiration date?',
                                             'Is there any written procedure available for status labeling?',
                                             'Is the area qualified? Have any modification in the facility in the last 6 months?',
                                             'Are the entire area log books updated?',
@@ -12873,8 +12889,8 @@
                                             'Are statistical sampling plans used to assure that the samples are representative of the lot?',
                                             'Are sampled containers labeled with sampler’s name and date of sampling?',
                                             'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
-                                            'Are raw materials approved before being used in production?',
-                                            'Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
+                                            'a)Are raw materials approved before being used in production?
+                                          <br>b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
                                             'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
                                             'Is raw materials identification test performed on every batch and receipt?',
                                             'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
@@ -12887,7 +12903,13 @@
                                             'If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?',
                                             'Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?',
                                             'Is the stability protocol available?',
-                                            'Are these stability chambers available to carryout stability of the product at',
+                                            'Are these stability chambers available to carryout stability of the product at
+                                                            
+                                                                <br>a)25°C / 60% Rh
+                                                                <br>b)30°C / 75% Rh
+                                                                <br>c)40°C / 75% Rh
+                                                                <br>d)30°C / 65% Rh
+                                                                <br>e)Stand By Chamber',
                                             'Do you keep both hard copy and electronic copy of temperature/Rh monitoring?',
                                             'Are the stability results reviewed by a qualified, experienced person?',
                                             'Is stability study in primary pack done for different products?',
@@ -12906,12 +12928,14 @@
                                             'Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms? Are equipment ID numbers recorded for each analysis?',
                                             'Are data and calculations checked by a second person and countersigned?',
                                             'Are Material safety data sheet (MSDS) of chemical which are used is available?',
-                                            'Microbiological Laboratories',
-                                            'Are positive and negative controls used for testing? Are their results recorded?',
-                                            'Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?',
-                                            'Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?',
-                                            'Are isolates from microbiological testing identified if appropriate?',
-                                            'Is each lot of microbial ID systems checked with positive and negative controls?',
+                                            'Microbiological Laboratories
+                                                            
+                                                            <br>a)Are positive and negative controls used for testing? Are their results recorded?
+                                                            <br>b)Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
+                                                            <br>c)Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
+                                                            <br>d)Are isolates from microbiological testing identified if appropriate?
+                                                            <br>e)Is each lot of microbial ID systems checked with positive and negative controls?',
+                                                        
                                         ];
                                     @endphp
 
@@ -12931,8 +12955,8 @@
                                                         @foreach ($checklistqualitycontrol as $index => $question)
                                                             <tr>
                                                                 <td class="flex text-center">
-                                                                    {{ 3 . '.' . ($index + 1) }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                    {{ 1 . '.' . ($index + 1) }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $qualitycontrol =
@@ -13045,7 +13069,9 @@
                                     'Are sampled containers labeled with sampler’s name and date of sampling?',
                                     'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
                                     'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing, and is periodic monitoring performed?',
-                                    'Are raw materials approved before being used in production?',
+                                    'a)Are raw materials approved before being used in production?<br> b)
+                                    
+b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
                                     'If raw materials are accepted on certificates of analysis, is at least an identification test performed (where safe) on every batch and receipt?',
                                     'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
                                     'Is there any material in reject area? Check the record of the same.',
@@ -13087,8 +13113,8 @@
                                                     <tbody>
                                                         @foreach ($questions_stores as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $checkliststores =
@@ -13245,7 +13271,7 @@
                                                     <tbody>
                                                         @foreach ($questions_hr as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
@@ -13378,7 +13404,7 @@
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person<br> Check the weighing balance record',
                                     'All the person working in manufacturing area having proper gowning?',
                                     'Is the Mfg tank calibrated?',
                                     'Check the CIP-SIP system in place and verify the records.',
@@ -13407,7 +13433,7 @@
                                     'Check for WFI hose pipe status and water hold up.',
                                     'Check for the status labeling in the area and, material randomly',
                                     'Check the in-process equipments cleaning status & records.',
-                                    'Have you any SOP regarding Hold time of material during staging?',
+                                    'Are any unplanned process changes (process excursions) documented in the batch record?',
                                 ];
 
                                 $questions_documentation = [
@@ -13441,8 +13467,10 @@
                                                     <tbody>
                                                         @foreach ($questions_dispensing as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">
+                                                                    {{ '1.' . ($index + 1) }}
+                                                                </td>     
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_dispensing_name =
@@ -13503,7 +13531,11 @@
                                                     <tbody>
                                                         @foreach ($questions_visual_inspection as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                                                {{-- <td class="flex text-center">{{ $index + 1 }}</td> --}}
+                                                                <td class="flex text-center">
+                                                                    {{ '2.' . ($index + 1) }}
+                                                                </td>
+                                                                
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
@@ -13566,8 +13598,10 @@
                                                     <tbody>
                                                         @foreach ($questions_documentation as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">
+                                                                    {{ '3.' . ($index + 1) }}
+                                                                </td>                                                             
+                                                                   <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_documentation_name =
@@ -13668,7 +13702,7 @@
                         <div id="CCForm20" class="inner-block cctabcontent">
                             @php
                                 $questions_injection_packing = [
-                                    'Is status labels displayed on all equipments/machines?',
+                                    'Is status labels displayed on all equipments?',
                                     'Equipment cleanliness, check few equipments.',
                                     'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
@@ -13691,7 +13725,7 @@
                                     
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
                                    
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person<br>Check the weighing balance record ',
                                     
                                     
                                     'All the person working in manufacturing area having proper gowning?',
@@ -13749,8 +13783,8 @@
                                                     <tbody>
                                                         @foreach ($questions_injection_packing as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_injection_name =
@@ -13814,7 +13848,7 @@
                                                     <tbody>
                                                         @foreach ($questions_documentation as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
@@ -13944,7 +13978,7 @@
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person? <br>Check the weighing balance record',
                                     'Are the sieves & screen kept in proper place with proper label?',
                                     'Is the pressure differential of every particular area within limit?',
                                     'All the person working in manufacturing area having proper gowning?',
@@ -13982,7 +14016,7 @@
                                     'Have you any standard procedure for removal of scrap?',
                                 ];
                                 $powder_questions_packing_manufacturing = [
-                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
+                                    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
                                     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
                                     'Is the batch record is on line up to the current stage of a process?',
                                     'In process carried out as per the written instruction describe in batch record?',
@@ -14012,8 +14046,8 @@
                                                     <tbody>
                                                         @foreach ($questions_powder_manufacturing_filling as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_name_manufacturingnew =
@@ -14079,13 +14113,13 @@
                                                     <tbody>
                                                         @foreach ($questions_packing_manufacturing as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">{{'2.' . $index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_name_manufacturing =
                                                                             'response_packing_' . ($index + 1);
-                                                                        $remark_name_manufacturing =
+                                                                        $powder_remark_name_manufacturing =
                                                                             'remark_packing_' . ($index + 1);
                                                                     @endphp
                                                                     <div
@@ -14112,9 +14146,10 @@
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_packing_{{ $index + 1 }}" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist15 ? $checklist15->$remark_name_manufacturing : '' }}</textarea>
+                                                                        <textarea name="remark_packing_{{ $index + 1 }}" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist15 ? $checklist15->$powder_remark_name_manufacturing : '' }}</textarea>
                                                                     </div>
                                                                 </td>
+                                                                
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -14141,7 +14176,7 @@
                                                     <tbody>
                                                         @foreach ($powder_questions_packing_manufacturing as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                                                <td class="flex text-center">{{ '3.' .$index + 1 }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
@@ -14277,11 +14312,8 @@
                                     'Can comparative study be carried out with market sample?',
                                     'Have non-compendial methods been validated, including accuracy, linearity, ruggedness and comparison with compendial methods or have compendial methods (Official) been verified to function properly in the company’s laboratories with proper documentation / SOP of same available?',
                                     'Are FPS/STP available for finished product?',
-                                    'Are technology transfer SOP/documents available?',
-                                    // "Are stability study carried out for the product at",
-                                    '25°C / 60% RH',
-                                    '30°C / 70% RH',
-                                    '40°C / 75% RH',
+                                    'Are technology transfer SOP/ documents available ?	',
+                                   ' Are stability study carried out for the product at <br>a) 25°C / 60% RH <br> (b) 30°C / 70% RH<br> (C) 40°C / 75% RH',
                                     'Are the stability results reviewed by a qualified, experienced person?',
                                     'Is stability study in primary pack done for different products?',
                                     'Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
@@ -14316,8 +14348,8 @@
                                                     <tbody>
                                                         @foreach ($questions_analytical_research_development as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
+                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_name_analytical_research =
@@ -14446,19 +14478,19 @@
                                     'Is Lic Copy available?',
                                     'Are refer current pharmacopoeia at the time of development?',
                                     'Can Market sample/Generic Sample Study to be done?',
-                                    'Can tooling and change part availability to be checked before initiating development?',
-                                    'Can validation be performed for IH products?',
+                                    'Can tooling and change part availability to be check before initiating development?',
+                                    'Can validation to be performed for IH products?',
                                     'Is MFR-RM BOM available?',
                                     'Is PDR available (Product development Report)?',
                                     'Is FD involved in the change control process?',
-                                    'Is Technology transfer SOP available?',
-                                    'Can separate file be prepared for each product?',
-                                    'Can comparative study be carried out with market sample?',
+                                    'Is Technology transfer SOP Was available?',
+                                    'Can separate file to be prepared for each product?',
+                                    'Can comparative study to be carried out with market sample?',
                                     'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
-                                    'Are these stability chambers available to carry out stability of the product at -',
-                                    '25°C / 60% Rh',
-                                    '30°C / 65% Rh',
-                                    '40°C / 75% Rh',
+                                    'Are these stability chambers available to carryout stability of the product at -<br>
+                                                            a)	25°C / 60% Rh<br>
+                                                            b)	30°C / 65% Rh<br>
+                                                            c)	40°C / 75% Rh',
                                     'Do you keep both hard copy and electronic copy of temperature/RH monitoring?',
                                     'Are the stability results reviewed by a qualified, experienced person?',
                                     'Is stability study in primary pack done for different products?',
@@ -14488,9 +14520,8 @@
                                                     <tbody>
                                                         @foreach ($questions_formulation_research_development as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ $index + 1 }}</td>
-                                                                <td>{{ $question }}</td>
-                                                                <td>
+                                                                <td class="flex text-center">{{ '1.' . $index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>                                                                <td>
                                                                     @php
                                                                         $response_name_formulation =
                                                                             'response_formulation_research_development_' .

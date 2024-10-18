@@ -496,13 +496,13 @@
                             <div class="sub-head">
                                 Trainer Information
                             </div>
-                           <div class="col-lg-6">
+                           {{-- <div class="col-lg-6">
                                  <div class="group-input">
                                     <label for="trainer">Trainer Name</label>
                                      <input id="trainer_name" type="text" name="trainer_name" maxlength="255"
                                         value="{{ $trainer->trainer_name }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-lg-6">
@@ -528,8 +528,8 @@
                                     <select name="department">
                                         <option>-- Select --</option>
                                         {{-- @foreach ($departments as $department)
-                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
-                        @endforeach --}}
+                                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
+                                        @endforeach --}}
 
 
 
@@ -569,35 +569,37 @@
                                             {{ $trainer->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
                                         <option value="Officer"
                                             {{ $trainer->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
-                                        <option value="Sr. Officer"
-                                            {{ $trainer->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer
+                                        <option value="Senior Officer"
+                                            {{ $trainer->designation == 'Senior Officer' ? 'selected' : '' }}>Senior Officer
                                         </option>
                                         <option value="Executive"
                                             {{ $trainer->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
-                                        <option value="Sr.executive"
-                                            {{ $trainer->designation == 'Sr.executive' ? 'selected' : '' }}>Sr. Executive
+                                        <option value="Senior Executive"
+                                            {{ $trainer->designation == 'Senior Executive' ? 'selected' : '' }}>Senior Executive
                                         </option>
-                                        <option value="Asst. manager"
-                                            {{ $trainer->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager
+                                        <option value="Assistant Manager"
+                                            {{ $trainer->designation == 'Assistant Manager' ? 'selected' : '' }}>Assistant Manager
                                         </option>
                                         <option value="Manager"
                                             {{ $trainer->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
-                                        <option value="Sr. manager"
-                                            {{ $trainer->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager
+                                        <option value="Senior General Manager" {{ $trainer->designation == 'Senior General Manager' ? 'selected' : '' }}>Senior General Manager
+                                            </option>    
+                                        <option value="Senior Manager"
+                                            {{ $trainer->designation == 'Senior Manager' ? 'selected' : '' }}>Senior Manager
                                         </option>
-                                        <option value="Deputy GM"
-                                            {{ $trainer->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
-                                        <option value="AGM and GM"
-                                            {{ $trainer->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM
+                                        <option value="Deputy General Manager"
+                                            {{ $trainer->designation == 'Deputy General Manager' ? 'selected' : '' }}>Deputy General Manager</option>
+                                        <option value="Assistant General Manager and General Manager"
+                                            {{ $trainer->designation == 'Assistant General Manager and General Manager' ? 'selected' : '' }}>Assistant General Manager and General Manager
                                         </option>
-                                        <option value="Head quality"
-                                            {{ $trainer->designation == 'Head quality' ? 'selected' : '' }}>Head quality
+                                        <option value="Head Quality"
+                                            {{ $trainer->designation == 'Head Quality' ? 'selected' : '' }}>Head Quality
                                         </option>
-                                        <option value="VP quality"
-                                            {{ $trainer->designation == 'VP quality' ? 'selected' : '' }}>VP quality
+                                        <option value="VP Quality"
+                                            {{ $trainer->designation == 'VP Quality' ? 'selected' : '' }}>VP Quality
                                         </option>
-                                        <option value="Plant head"
-                                            {{ $trainer->designation == 'Plant head' ? 'selected' : '' }}>Plant head
+                                        <option value="Plant Head"
+                                            {{ $trainer->designation == 'Plant Head' ? 'selected' : '' }}>Plant Head
                                         </option>
                                     </select>
                                 </div>
@@ -899,18 +901,6 @@
                                 </div>
                             </div>
 
-                            <div class="">
-                                <div class="group-input">
-                                    <label for="trainingQualificationStatus">Qualification Status</label>
-                                    <select name="trainer" id="trainingQualificationStatus">
-                                        <option>-- Select --</option>
-                                        <option value="Qualified" @if ($trainer->trainer == 'Qualified') selected @endif>
-                                            Qualified</option>
-                                        <option value="Not Qualified" @if ($trainer->trainer == 'Not Qualified') selected @endif>
-                                            Not Qualified</option>
-                                    </select>
-                                </div>
-                            </div>
 
                             <div class="sub-head">Evaluation Criteria</div>
 
@@ -1095,6 +1085,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="">
+                            <div class="group-input">
+                                <label for="trainingQualificationStatus">Qualification Status</label>
+                                <select name="trainer" id="trainingQualificationStatus">
+                                    <option>-- Select --</option>
+                                    <option value="Qualified" @if ($trainer->trainer == 'Qualified') selected @endif>
+                                        Qualified</option>
+                                    <option value="Not Qualified" @if ($trainer->trainer == 'Not Qualified') selected @endif>
+                                        Not Qualified</option>
+                                </select>
+                            </div>
+                        </div>
+                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Q_comment">Qualification Comments</label>
@@ -1171,7 +1175,7 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -1210,21 +1214,25 @@
                                                     <td><input disabled type="text"
                                                             name="jobResponsibilities[{{ $loop->index }}][serial]"
                                                             value="{{ $loop->index + 1 }}"></td>
-                                                    <td><input type="text"
-                                                            name="jobResponsibilities[{{ $loop->index }}][job]"
-                                                            value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}"
-                                                            class="question-input">
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="jobResponsibilities[{{ $loop->index }}][remarks]"
-                                                            value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}"
-                                                            class="answer-input">
-                                                    </td>
-                                                    <td><input type="text"
-                                                            name="jobResponsibilities[{{ $loop->index }}][comments]"
-                                                            value="{{ array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}"
-                                                            class="answer-input">
-                                                    </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                    name="jobResponsibilities[{{ $loop->index }}][job]"
+                                                                    value="{{ is_array($employee_grid) && array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}"
+                                                                    class="question-input">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                    name="jobResponsibilities[{{ $loop->index }}][remarks]"
+                                                                    value="{{ is_array($employee_grid) && array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}"
+                                                                    class="answer-input">
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="text"
+                                                                    name="jobResponsibilities[{{ $loop->index }}][comments]"
+                                                                    value="{{ is_array($employee_grid) && array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}"
+                                                                    class="answer-input">
+                                                            </td>
                                                 </tr>
                                             @endforeach
                                         @else
@@ -1252,7 +1260,7 @@
                         <div class="button-block">
                             <button type="submit" class="saveButton" id="">Save</button>
 
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
@@ -1308,7 +1316,7 @@
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
                         </div>
                     </div>
@@ -1337,13 +1345,13 @@
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
                         </div>
                     </div>
                 </div>
 
-                @if ($trainer->stage >= 5)
+                {{-- @if ($trainer->stage >= 5)
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1392,133 +1400,152 @@
                             </div>
                         </div>
                     </div>
+                @endif --}}
+
+                @if ($trainer->stage >= 5)
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="button-block">
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i>Print
+                                        </button>
+                                    </div>
+                                    <div class="certificate-container">
+                                    <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
+                                        <p class="certificate-content">
+                                            This is to certify that Mr. / Ms. / Mrs. <strong>{{$trainer->employee_name}}</strong> 
+                                            has appropriate Qualification / skill / thorough knowledge/ and experience in the 
+                                            <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> section/Department for more than
+                                            <strong>{{$trainer->experience_if_any}}</strong> years, and hence is declared as the trainer of 
+                                            <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> Department.
+                                        </p>
+                                        <div class="signature-section">
+                                            <div class="signature">
+                                                <!-- <div class="signature-line"></div> -->
+                                                Sign / Date: _______________ <br>Head of Department
+                                            </div>
+                                            <div class="signature">
+                                                <!-- <div class="signature-line"></div> -->
+                                                Sign / Date: <span>{{$trainer->qualified_by}} / {{$trainer->qualified_on }}</span>QA/CQA Head 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 40px;" class="button-block">
+                                    {{-- <button type="submit" class=" btn btn saveButton">Save</button>
+                                    <button type="button" id="ChangeNextButton"
+                                        class=" btn btn nextButton">Next</button> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
 
-                <style>
-                    .certificate-container {
-                        width: 685px;
-                        height: 500px;
-                        border: 4px solid #3d6186;
-                        padding: 18px;
-                        background-color: white;
-                        position: relative;
-                        margin: auto;
-                        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .certificate-title {
-                        font-size: 30px;
-                        font-weight: bold;
-                        color: #677078;
-                        display: flex;
-                        justify-content: center;
-                    }
-
-                    .certificate-subtitle {
-                        font-size: 18px;
-                        color: #555;
-                    }
-
-                    .certificate-description {
-                        margin-top: 30px;
-                        font-size: 18px;
-                        color: #333;
-                    }
-
-                    .date-container {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-top: 60px;
-                        font-size: 18px;
-                    }
-
-                    .signature-container {
-                        position: absolute;
-                        bottom: 40px;
-                        right: 50px;
-                        text-align: center;
-                        font-size: 18px;
-                        color: #333;
-                    }
-
-                    @media print {
-                        .button-block {
-                            display: none !important;
-                        }
-
-                        body * {
-                            visibility: hidden;
-                        }
-
-                        #CCForm4,
-                        #CCForm4 * {
-                            visibility: visible;
-                        }
-
-                        #CCForm4 {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                        }
-                    }
-
-                    .button-block {
-                        display: flex;
-                        justify-content: flex-end;
-                        margin-top: 50px;
-                    }
-
-                    .printButton {
-                        background-color: #2c3e50;
-                        color: white;
-                        border: none;
-                        padding: 12px 24px;
-                        font-size: 16px;
-                        cursor: pointer;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
-                        float: right;
-                    }
-
-                    .printButton:hover {
-                        background-color: #1a252f;
-                    }
-
-                    .printButton i {
-                        margin-right: 8px;
-                    }
-
-                    @media print {
-                        .button-block {
-                            display: none !important;
-                        }
-
-                        body * {
-                            visibility: hidden;
-                        }
-
-                        .certificate-container,
-                        .certificate-container * {
-                            visibility: visible;
-                        }
-
+                    <style>
                         .certificate-container {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
+                            width: 100%; /* Ensure it takes full width when printed */
+                            max-width: 685px; /* For regular view */
+                            height: auto;
+                            border: 4px solid #3d6186;
+                            padding: 18px;
+                            background-color: white;
+                            margin: auto;
+                            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+                            position: relative;
+                            page-break-inside: avoid; /* Avoid breaking the certificate into multiple pages */
                         }
-                    }
-                </style>
+
+                        .certificate-title {
+                            font-size: 30px;
+                            font-weight: bold;
+                            color: #677078;
+                            text-align: center; /* Align title to the center */
+                        }
+
+                        .certificate-content {
+                            font-size: 18px;
+                            color: #333;
+                            text-align: justify;
+                            margin-top: 20px;
+                        }
+
+                        .signature-section {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 40px;
+                        }
+
+                        .signature {
+                            text-align: center;
+                            font-size: 18px;
+                        }
+
+                        .signature-line {
+                            width: 200px;
+                            border-top: 1px solid black;
+                            margin-bottom: 10px;
+                        }
+
+                        .button-block {
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-top: 30px;
+                        }
+
+                        .printButton, .saveButton, .nextButton {
+                            background-color: #2c3e50;
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease;
+                            margin-left: 10px;
+                        }
+
+                        .printButton:hover, .saveButton:hover, .nextButton:hover {
+                            background-color: #1a252f;
+                        }
+
+                        @media print {
+                            .button-block {
+                                display: none !important; /* Hide all buttons on print */
+                            }
+
+                            body {
+                                visibility: hidden;
+                            }
+
+                            .certificate-container, .certificate-container * {
+                                visibility: visible;
+                            }
+
+                            .certificate-container {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                            }
+
+                            .signature-section {
+                                page-break-inside: avoid; /* Avoid breaking signatures across pages */
+                            }
+                        }
+                    </style>
 
                 <script>
+                    // function printCertificate() {
+                    //     var buttons = document.querySelector(".button-block");
+                    //     buttons.style.display = 'none';
+                    //     window.print();
+                    //     buttons.style.display = 'block';
+                    // }
                     function printCertificate() {
-                        var buttons = document.querySelector(".button-block");
-                        buttons.style.display = 'none';
                         window.print();
-                        buttons.style.display = 'block';
                     }
                 </script>
                 <!-- Activity Log content -->

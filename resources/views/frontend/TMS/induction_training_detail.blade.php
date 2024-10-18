@@ -1,4 +1,4 @@
-@extends('frontend.layout.main')
+{{-- @extends('frontend.layout.main') --}}
 @section('container')
 
 @php
@@ -10,4 +10,3 @@
     <iframe id="theFrame" width="100%" height="800" src="{{ url('documents/viewpdf/' . trim($singleId)) }}#toolbar=0"></iframe>
 @endforeach
 
-@endsection

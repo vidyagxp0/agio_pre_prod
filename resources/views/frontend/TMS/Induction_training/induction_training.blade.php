@@ -1091,7 +1091,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <label for="training_type">Type of Training</label>
                                     <select name="training_type" id="training_type" onchange="handleTrainingTypeChange()">
                                         <option value="">-- Select --</option>
-                                        <option value="self-reading">Self-Reading</option>
+                                        <option value="Self-Reading">Self-Reading</option>
                                         {{-- <option value="classroom">Classroom</option>
                                         <option value="hands-on">Hands-On</option>
                                         <option value="virtual">Virtual</option> --}}
@@ -1099,19 +1099,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="trainer_name">Trainer Name</label>
-                                    <select id="trainer_name" name="trainee_name">
-                                        <option value="">-- Select Trainer --</option>
-                                        <option value="trainer_1">Trainer 1</option>
-                                        <option value="trainer_2">Trainer 2</option>
-                                        <option value="trainer_3">Trainer 3</option>
-                                        <option value="trainer_4">Trainer 4</option>
-                                        <option value="trainer_5">Trainer 5</option>
-                                    </select>
-                                </div> 
-                            </div> --}}
 
                             <div class="col-md-6">
                                 <div class="group-input">

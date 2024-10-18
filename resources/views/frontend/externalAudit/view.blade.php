@@ -275,7 +275,7 @@
                                     $valuesArray[] = $value;
                                 }
                             }
-                            $cftCompleteUser = DB::table('external_audit_c_f_t_responses')
+                            $CompleteUser = DB::table('external_audit_c_f_t_responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
                                 ->where('external_audit_id', $data->id)
                                 ->where('cft_user_id', Auth::user()->id)
@@ -335,8 +335,8 @@
                                 (Helpers::check_roles($data->division_id, 'External Audit', 5) ||
                                     Helpers::check_roles($data->division_id, 'External Audit', 18))) ||
                                 in_array(Auth::user()->id, $valuesArray))
-                            <!-- @if (!$cftCompleteUser)
-    -->
+                            @if (!$CompleteUser)
+   
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -345,8 +345,8 @@
                                 CFT Review Complete
                             </button>
 
-                            <!--
-    @endif  -->
+                            
+    @endif 
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}

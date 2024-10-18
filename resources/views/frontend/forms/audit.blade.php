@@ -4304,7 +4304,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.2</td>
-                                                        <td>1.2	Equipment cleanliness, check few equipments.</td>
+                                                        <td>Equipment cleanliness, check few equipments.</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -4774,7 +4774,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                            Are all weighing and measuring performed by one qualified person and checked by a second person
+                                                            Are all weighing and measuring performed by one qualified person and checked by a second person<br>
                                                             Check the weighing balance record
 
                                                         </td>
@@ -13168,12 +13168,11 @@
                                                         <td class="flex text-center">1.42</td>
                                                         <td>
                                                         Does QA have authority to review and approve or reject?
-                                                        <ul>
-                                                            <li>Procedures and specifications?</li>
-                                                            <li>	Process changes impacting on the identity, quality and purity of the material?</li>
-                                                            <li>	Raw materials, packaging materials, in-process materials, and product batches?</li>
-                                                            <li>	New suppliers or subcontractors?</li>
-                                                        </ul>
+                                                            <br>a)Procedures and specifications?
+                                                            <br>b)	Process changes impacting on the identity, quality and purity of the material?
+                                                            <br>c)	Raw materials, packaging materials, in-process materials, and product batches?
+                                                            <br>d)	New suppliers or subcontractors?
+                                                        
 
                                                         </td>
                                                         <td>
@@ -13516,20 +13515,37 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.2</td>
-                                                        <td>Are written procedures available for:
+                                                        <td>Are written procedures available for:<br>
+                                                            a)	Set-up of equipment<br>
+                                                            b)	Maintenance of equipment<br>
+                                                            c)	Cleaning of equipment<br>
+                                                            d)	Calibration of manufacturing equipment<br>
+                                                            e)	Calibration of control instruments
+
 
                                                             </td>
-                                                        <td>
-
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-
-                                                        </td>
-
-                                                        </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            {{--    <td>
+                                                                <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="flex text-center">1.2.1</td>
                                                         <td>
                                                             	Set-up of equipment
@@ -13548,7 +13564,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="where_will_not_be"></textarea> - <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -13575,7 +13591,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="where_will_not_be"></textarea> --<td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -13602,7 +13618,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="where_will_not_be"></textarea> -- <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -13629,7 +13645,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="where_will_not_be"></textarea> --<td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -13655,7 +13671,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="where_will_not_be"></textarea> -- <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -13663,131 +13679,39 @@
                                                         </td>
 
                                                         </td>
-                                                    </tr>
+                                                    </tr> --}}
                                                     <tr>
                                                         <td class="flex text-center">1.3</td>
-                                                        <td> Are records kept for:
+                                                        <td> Are records kept for:<br>
+                                                            a)	The sequence of products manufactured on particular equipment<br>
+                                                            b)	Maintenance and cleaning logs<br>
+                                                            c)	Calibration of manufacturing equipment<br>
+                                                            d)	Calibration of control instruments
+
 
                                                             </td>
-                                                        <td>
-
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-
-                                                        </td>
-
-                                                        </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            {{--    <td>
+                                                                <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
                                                     </tr>
-                                                    <tr>
-                                                        <td class="flex text-center">1.3.1</td>
-                                                        <td>
-                                                            	The sequence of products manufactured on particular equipment
-
-
-                                                            </td>
-                                                        <td>
-                                                            <div
-                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                    <option value="N/A">N/A</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                            <div
-                                                                style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                            </div>
-                                                        </td>
-
-                                                        </td>
-                                                    </tr> <tr>
-                                                        <td class="flex text-center">1.3.2</td>
-                                                        <td>
-                                                            	Maintenance and cleaning logs
-
-                                                            </td>
-                                                        <td>
-                                                            <div
-                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                    <option value="N/A">N/A</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                            <div
-                                                                style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                            </div>
-                                                        </td>
-
-                                                        </td>
-                                                    </tr> <tr>
-                                                        <td class="flex text-center">1.3.3</td>
-                                                        <td>
-                                                            	Calibration of manufacturing equipment
-
-                                                            </td>
-                                                        <td>
-                                                            <div
-                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                    <option value="N/A">N/A</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                            <div
-                                                                style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                            </div>
-                                                        </td>
-
-                                                        </td>
-                                                    </tr> <tr>
-                                                        <td class="flex text-center">1.3.4</td>
-                                                        <td>
-                                                            	Calibration of control instruments
-                                                            </td>
-                                                        <td>
-                                                            <div
-                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                    <option value="N/A">N/A</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        {{--    <td>
-                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                            <div
-                                                                style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                            </div>
-                                                        </td>
-
-                                                        </td>
-                                                    </tr>
+                                                   
                                                     <tr>
                                                         <td class="flex text-center">1.4</td>
                                                         <td>Is equipment designed to prevent adulteration of product with lubricants, coolants, fuel, metal fragments, or other extraneous materials? </td>
@@ -13843,7 +13767,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                        cleaning and maintenance operations?
+                                                            Is equipment installed with sufficient clearance to allow access to both the equipment and the surrounding area for cleaning and maintenance operations?
 
                                                         </td>
                                                         <td>
@@ -13975,7 +13899,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                            Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
+                                                            a)Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
+                                                            <br> b)Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?
+
 
 
                                                         </td>
@@ -14001,7 +13927,7 @@
 
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="flex text-center">1.11.1</td>
                                                         <td>
 
@@ -14021,7 +13947,7 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="who_will_not_be"></textarea> -<td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -14029,7 +13955,7 @@
                                                         </td>
 
                                                         </td>
-                                                    </tr>
+                                                    </tr> --}}
 
                                                     <tr>
                                                         <td class="flex text-center">1.12</td>
@@ -14088,8 +14014,13 @@
                                                     <tr>
                                                         <td class="flex text-center">1.14</td>
                                                         <td>
-                                                          	Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
-
+                                                          	a) Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
+                                                             <br> b) Do SOPs assign responsibilities; include
+                                                             schedules; describe methods; equipment, and
+                                                             materials to be used, including calibration over
+                                                             actual range of use and standards traceable to
+                                                             national standards; and include specifications
+                                                             and tolerances?
 
 
                                                         </td>
@@ -14113,7 +14044,7 @@
                                                         </td>
 
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="flex text-center">1.14.1</td>
                                                         <td>
 
@@ -14145,7 +14076,7 @@
                                                             </div>
                                                         </td>
 
-                                                    </tr>
+                                                    </tr> --}}
 
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
@@ -14764,12 +14695,11 @@
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
                                                             Have the employees undergone training in the following areas?
-                                                            <ul>
-                                                                <li>cGLP (Related: SOP for Good Laboratory Practices)</li>
-                                                                <li>SOP’s</li>
-                                                                <li>Analytical Techniques</li>
-                                                                <li>EU GMP</li>
-                                                            </ul>
+                                                         
+                                                                <br>a)cGLP (Related: SOP for Good Laboratory Practices)
+                                                                <br>b)SOP’s
+                                                                <br>c)Analytical Techniques
+                                                                <br>d)EU GMP
 
                                                         </td>
                                                         <td>
@@ -15084,10 +15014,10 @@
                                                         <td>
 
                                                             Are all reagents and solutions
-                                                            <ul>
-                                                                <li>	Clearly, labeled with their proper name?</li>
-                                                                <li>Labeled with the date of receipt and/or expiration date?</li>
-                                                            </ul>
+                                                            
+                                                                <br>a)	Clearly, labeled with their proper name?
+                                                                <br>b)Labeled with the date of receipt and/or expiration date?
+                                                            
 
                                                         <td>
                                                             <div
@@ -15159,11 +15089,10 @@
                                                         <td>
                                                             Are prepared solutions labeled with the
 
-                                                            <ul>
-                                                                <li>Name of the person who prepared them?</li>
-                                                                <li>Date of preparation?</li>
-                                                                <li>Expiration date?</li>
-                                                            </ul>
+                                                          
+                                                                <br>a)Name of the person who prepared them?
+                                                                <br>b)Date of preparation?
+                                                                <br>c)Expiration date?
 
                                                         </td>
                                                         <td>
@@ -16352,7 +16281,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.55</td>
                                                         <td>
-                                                            		Are raw materials approved before being used in production?
+                                                            		a)Are raw materials approved before being used in production?
+                                                                    <br> b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
+
 
 
 
@@ -16377,7 +16308,7 @@
                                                         </td>
 
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="flex text-center">1.55.1</td>
                                                         <td>
 
@@ -16404,7 +16335,7 @@
                                                             </div>
                                                         </td>
 
-                                                    </tr>
+                                                    </tr> --}}
 
                                                     <tr>
                                                         <td class="flex text-center">1.56</td>
@@ -16749,13 +16680,13 @@
                                                         <td>
 
                                                             Are these stability chambers available to carryout stability of the product at
-                                                            <ul>
-                                                                <li>25°C / 60% Rh</li>
-                                                                <li>30°C / 75% Rh</li>
-                                                                <li>40°C / 75% Rh</li>
-                                                                <li>30°C / 65% Rh</li>
-                                                                <li>Stand By Chamber</li>
-                                                            </ul>
+                                                            
+                                                                <br>a)25°C / 60% Rh
+                                                                <br>b)30°C / 75% Rh
+                                                                <br>c)40°C / 75% Rh
+                                                                <br>d)30°C / 65% Rh
+                                                                <br>e)Stand By Chamber
+                                                            
                                                         
 
 
@@ -17402,13 +17333,13 @@
                                                         <td>
 
                                                             Microbiological Laboratories
-                                                            <ul>
-                                                                <li>Are positive and negative controls used for testing? Are their results recorded?</li>
-                                                                <li>Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?</li>
-                                                                <li>Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?</li>
-                                                                <li>Are isolates from microbiological testing identified if appropriate?</li>
-                                                                <li>Is each lot of microbial ID systems checked with positive and negative controls?</li>
-                                                            </ul>
+                                                            
+                                                                <br>a)Are positive and negative controls used for testing? Are their results recorded?
+                                                                <br>b)Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
+                                                                <br>c)Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
+                                                                <br>d)Are isolates from microbiological testing identified if appropriate?
+                                                                <br>e)Is each lot of microbial ID systems checked with positive and negative controls?
+                                                            
 
 
                                                         </td>
@@ -17846,8 +17777,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                        a)Are raw materials approved before being used in production?
-                                                        </td>
+                                                            a)Are raw materials approved before being used in production?
+                                                            <br> b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
+                                                </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -20151,7 +20083,7 @@
 
                                                     <tr>
                                                         <td class="flex text-center">2.20</td>
-                                                        <td>Are all weighing and measuring performed by one qualified person and checked by a second person
+                                                        <td>Are all weighing and measuring performed by one qualified person and checked by a second person<br>
                                                             Check the weighing balance record
                                                             </td>
                                                         <td>
@@ -20822,7 +20754,7 @@
 
                                                     <tr>
                                                         <td class="flex text-center">2.49</td>
-                                                        <td>Have you any SOP regarding Hold time of material during staging?</td>
+                                                        <td>Are any unplanned process changes (process excursions) documented in the batch record?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -21547,8 +21479,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.19</td>
                                                         <td>
-                                                        Are all weighing and measuring performed by one qualified person and checked by a second person
-
+                                                            Are all weighing and measuring performed by one qualified person and checked by a second person<br>
+                                                            Check the weighing balance record 
+                                                            
 
                                                         </td>
                                                         <td>
@@ -23745,7 +23678,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="flex text-center">3.1</td>
-                                                        <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch manufacturing record.</td>
+                                                        <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record.</td>
                                                         <td>
 
                                                             <div
@@ -24282,14 +24215,26 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
-                                                        <td>Are stability study carried out for the product at a) 25°C / 60% RH  (b) 30°C / 70% RH (C) 40°C / 75% RH
+                                                        <td>Are stability study carried out for the product at <br>a) 25°C / 60% RH <br> (b) 30°C / 70% RH<br> (C) 40°C / 75% RH
                                                             </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td style="vertical-align: middle;">
-
-                                                        </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
                                                     </tr>
                                                     {{-- <tr>
                                                         <td class="flex text-center">1.13.1</td>
@@ -24796,7 +24741,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                        Can tooling and change part availability to be check before initiating development?
+                                                            Can tooling and change part availability to be check before initiating development?
                                                         </td>
                                                         <td>
                                                             <div
@@ -24927,7 +24872,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                        Is Technology transfer SOP was available?
+                                                            Is Technology transfer SOP was available?
                                                         </td>
                                                         <td>
                                                             <div
@@ -25031,19 +24976,35 @@
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
-                                                        Are these stability chambers available to carryout stability of the product at -
-
+                                                            Are these stability chambers available to carryout stability of the product at -<br>
+                                                            a)	25°C / 60% Rh<br>
+                                                            b)	30°C / 65% Rh<br>
+                                                            c)	40°C / 75% Rh
+                                                            
 
                                                         </td>
                                                         <td>
-
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
                                                         </td>
                                                         <td style="vertical-align: middle;">
-
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
                                                         </td>
 
+
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="flex text-center">1.15.1</td>
                                                         <td>
 
@@ -25125,7 +25086,7 @@
                                                             </div>
                                                         </td>
 
-                                                    </tr>
+                                                    </tr> --}}
                                                     <tr>
                                                         <td class="flex text-center">1.16</td>
                                                         <td>

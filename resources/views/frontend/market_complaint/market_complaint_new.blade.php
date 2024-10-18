@@ -515,23 +515,28 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="complaint_dat" name="complaint_reported_on_gi"
-                                                placeholder="Select Due Date" value="" />
+                                                placeholder="Select Due Date" value="" readonly />
                                         </div>
                                         <script>
                                             $(document).ready(function() {
                                                 $("#complaint_dat").datepicker({
                                                     dateFormat: "dd-M-yy",
-                                                    // Do not set a default date, let the user select it
                                                     onClose: function(dateText, inst) {
                                                         if (!dateText) {
                                                             $(this).val(''); // Ensure input stays empty if no date is selected
                                                         }
                                                     }
                                                 });
+
+                                                // Prevent manual typing by setting the field to readonly
+                                                $("#complaint_dat").on('keydown', function(e) {
+                                                    e.preventDefault();
+                                                });
                                             });
                                         </script>
                                     </div>
                                 </div>
+
 
 
                                 {{-- <script>
@@ -626,7 +631,7 @@
                                                                         <!-- Hidden date input field for actual date handling -->
                                                                         <input type="date"
                                                                             name="serial_number_gi[0][info_mfg_date]"
-                                                                            min="{{ today()->subDays(1000)->format('Y-m-d') }}"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                             {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} value=""
                                                                             id="date_0_date_input"
                                                                             class="hide-input show_date"
@@ -703,7 +708,7 @@
                                                     serialNumber +
                                                     '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
                                                     serialNumber +
-                                                    '][info_mfg_date]" min="{{ today()->subDays(1000)->format('Y-m-d') }}" value="" id="date_' +
+                                                    '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
                                                     serialNumber +
                                                     '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
                                                     serialNumber + '_info_mfg_date\')" /> </div></div></div> </td>' +

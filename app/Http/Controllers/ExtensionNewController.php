@@ -692,6 +692,7 @@ class ExtensionNewController extends Controller
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->QAapprover_remarks = $request->QAapprover_remarks;
         // $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        $extensionNew->data_number = null;
 
         //////////////
 
@@ -1449,9 +1450,9 @@ class ExtensionNewController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Approved";
+                    $history->change_to =   "In In CQA Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Approved';
+                    $history->stage = 'In In CQA Approval';
                     if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
                         $history->action_name = 'New';
                     } else {

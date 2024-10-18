@@ -64,6 +64,21 @@ use Maatwebsite\Excel\Facades\Excel;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//!---------------- EMP login  ---------------------------//
+Route::group(['middleware' => ['auth:employee']], function () {
+    // All employee authenticated routes here
+    Route::resource('TMS', TMSController::class);
+Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
+
+    Route::get('/logout-employee', [UserLoginController::class, 'logoutEmployee'])->name('logout-employee');
+    Route::get('/tms-training', [TMSController::class, 'TMSTraining'])->name('tms.training');
+    Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
+
+});
+
+//!---------------- EMP login  ---------------------------//
+
+Route::resource('TMS', TMSController::class);
 
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::get('/login', [UserLoginController::class, 'userlogin'])->name('login');
@@ -132,7 +147,6 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
    
 
-    Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
     Route::get('training/{id}/', [TMSController::class, 'training']);
     Route::get('trainingQuestion/{id}/', [TMSController::class, 'trainingQuestion']);
@@ -364,6 +378,7 @@ Route::get('job_description',[JobDescriptionController::class ,'index'])->name('
 Route::get('job_description/show/{id}',[JobDescriptionController::class ,'edit'])->name('job_description_view');
 Route::post('job_descriptioncreate', [JobDescriptionController::class, 'store'])->name('job_descriptioncreate');
 Route::put('job_descriptionupdate/{id}', [JobDescriptionController::class, 'update'])->name('job_descriptionupdate');
+Route::post('tms/jobDescription/cancelstages/{id}',[JobDescriptionController::class ,'cancelStages']);
 
 
 
@@ -389,6 +404,7 @@ Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail'
 Route::get('job_training-details/{id}', [JobTrainingController::class, 'viewrendersop']);
 Route::get('question_training/{id}', [JobTrainingController::class, 'questionrendersop']);
 Route::get('on_the_job_question_training/{id}/{job_id}', [JobTrainingController::class, 'questionshow']);
+Route::get('job_training_certificate/{id}', [JobTrainingController::class, 'showJobCertificate']);
 
 Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'])->name('check_answer_otj');
 Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
