@@ -8269,6 +8269,15 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $data2->update();
 
         $data3 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"management_review_participants")->first();
+        $previousDetails = [
+            'invited_Person' => !is_null($data3->invited_Person) ? unserialize($data3->invited_Person) : null,
+            'designee' => !is_null($data3->designee) ? unserialize($data3->designee) : null,
+            'department' => !is_null($data3->department) ? unserialize($data3->department) : null,
+            'meeting_Attended' => !is_null($data3->meeting_Attended) ? unserialize($data3->meeting_Attended) : null,
+            'designee_Name' => !is_null($data3->designee_Name) ? unserialize($data3->designee_Name) : null,
+            'designee_Department' => !is_null($data3->designee_Department) ? unserialize($data3->designee_Department) : null,
+            'remarks' => !is_null($data3->remarks) ? unserialize($data3->remarks) : null,
+        ];
         $data3->review_id = $management->id;
         $data3->type = "management_review_participants";
         if (!empty($request->invited_Person)) {
