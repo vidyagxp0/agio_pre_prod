@@ -1796,7 +1796,7 @@
                                                 <label for="root_cause">
                                                     Summary Response <span class="text-danger">*</span>
                                                     <button type="button"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                         name="audit-incident-grid" id="IncidentAdd">+</button>
                                                     <span class="text-primary"
                                                         data-bs-toggle="modal"
@@ -1827,42 +1827,42 @@
                                                                 <td disabled>{{ $serialNumber++ }}</td>
                                                                 <td>
                                                                     <input type="text"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][observation]"
                                                                         value="{{ $oogrid['observation'] }}"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][response]"
                                                                         value="{{ $oogrid['response'] }}"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][reference_id]"
                                                                         value="{{ $oogrid['reference_id'] }}"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][status]"
                                                                         value="{{ $oogrid['status'] }}"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][remarks]"
                                                                         value="{{ $oogrid['remarks'] }}"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <button class="removeRowBtn"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
+                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1924,17 +1924,17 @@
                                                             '<tr>' +
                                                             '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
                                                             '"></td>' +
-                                                            '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
+                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
                                                             investdetails + '][observation]" value=""></td>' +
-                                                            '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
+                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
                                                             investdetails + '][response]" value=""></td>' +
-                                                            '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[' +
+                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[' +
                                                             investdetails + '][reference_id]" value=""></td>' +
-                                                            '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
+                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
                                                             investdetails + '][status]" value=""></td>' +
-                                                            '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
+                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
                                                             investdetails + '][remarks]" value=""></td>' +
-                                                            '<td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>' +
+                                                            '<td><button class="removeRowBtn"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>' +
 
                                                             '</tr>';
                                                         investdetails++; // Increment the row number here
@@ -2068,7 +2068,7 @@
                                                         <div>Add</div>
                                                         <!-- Keep the ID of the input file as 'myfile' -->
                                                         <input type="file" id="myfile" name="myfile[]"
-                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'myfile-list')" multiple>
                                                     </div>
                                                 </div>

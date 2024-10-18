@@ -22,6 +22,14 @@
             width: 10%;
         }
 
+        .w-5 {
+            width: 5%;
+        }
+
+        .w-15 {
+            width: 15%;
+        }
+
         .w-20 {
             width: 20%;
         }
@@ -145,6 +153,11 @@
         .table_bg {
             background: #4274da57;
         }
+
+        .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
     </style>
 
     <body>
@@ -191,18 +204,26 @@
             </table>
         </footer>
 
+        {{--<table class="allow-wb" style="table-layout: fixed; width: 700px;" >
+            <tr class="table_bg">
+                <th class='w-30' style="word-break: break-all;">Field History</th>
+                <th class='w-10'>Date Performed</th>
+                <th class='w-10'>Person Responsible</th>
+                <th class='w-10'>Change Type</th>--}}
+
+
         <div class="inner-block">
 
             <div class="second-table">
-                <table>
+                <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                     <thead>
                         <tr class="table_bg">
-                            <th>S.No</th>
-                            <th>Flow Changed From</th>
-                            <th>Flow Changed To</th>
-                            <th>Data Field</th>
-                            <th>Action Type</th>
-                            <th>Performer</th>
+                            <th class='w-8'>S.No</th>
+                            <th class='w-15'>Flow Changed From</th>
+                            <th class='w-15'>Flow Changed To</th>
+                            <th class='w-30' style="word-break: break-all;">Data Field</th>
+                            <th class='w-15'>Action Type</th>
+                            <th class='w-15'>Performer</th>
                         </tr>
                     </thead>
 

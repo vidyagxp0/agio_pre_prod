@@ -1776,7 +1776,7 @@ class IncidentController extends Controller
         if (!empty($request->review_of_verific)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Review Of Incident And Verfication Of Effectivess Of Correction';
+            $history->activity_type = 'Review Of Incident And Verfication Of Effectiveness Of Correction';
             $history->previous = "Null";
             $history->current = $incident->review_of_verific;
             $history->comment = "Not Applicable";
@@ -3096,7 +3096,8 @@ class IncidentController extends Controller
             // }
 
 
-        $Cft->save();
+                $Cft->save();
+
                 $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                 $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                 // Define the column names
@@ -3741,7 +3742,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $data3->status;
                                 $history->change_to = "Not Applicable";
-                                $history->change_from = $data3->status;
+                                $history->change_from = $lastIncident->status;
                                 if (is_null($previousValue) || $currentValue === '') {
                                     $history->action_name = 'New';
                                 } else {
@@ -3840,7 +3841,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $data4->status;
                                 $history->change_to = "Not Applicable";
-                                $history->change_from = $data4->status;
+                                $history->change_from = $lastIncident->status;
                                 if (is_null($previousValue) || $currentValue === '') {
                                     $history->action_name = 'New';
                                 } else {
@@ -3939,7 +3940,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                     $history->origin_state = $data5->status;
                                     $history->change_to = "Not Applicable";
-                                    $history->change_from = $data5->status;
+                                    $history->change_from = $lastIncident->status;
                                     if (is_null($previousValue) || $currentValue === '') {
                                         $history->action_name = 'New';
                                     } else {
@@ -3956,7 +3957,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 }
 
 
-            if($lastIncident->short_description !=$incident->short_description || !empty($request->comment)) {
+            if($lastIncident->short_description != $incident->short_description || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Short Description')
                                 ->exists();
@@ -3976,7 +3977,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->short_description_required !=$incident->short_description_required || !empty($request->comment)) {
+            if($lastIncident->short_description_required != $incident->short_description_required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Repeat Incident')
                                 ->exists();
@@ -4056,7 +4057,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->comment)) {
+            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Initiator Group')
                                 ->exists();
@@ -4076,7 +4077,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->comment)) {
+            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Initiator Group')
                                 ->exists();
@@ -4096,7 +4097,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->immediate_correction !=$incident->immediate_correction || !empty($request->comment)) {
+            if($lastIncident->immediate_correction != $incident->immediate_correction || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Immediate Corrective Action')
                                 ->exists();
@@ -4116,7 +4117,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->product_quality_imapct !=$incident->product_quality_imapct || !empty($request->comment)) {
+            if($lastIncident->product_quality_imapct != $incident->product_quality_imapct || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Product Quality Impact')
                                 ->exists();
@@ -4295,7 +4296,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-            if($lastIncident->qa_head_attachments !=$incident->qa_head_attachments || !empty($request->comment)) {
+            if($lastIncident->qa_head_attachments != $incident->qa_head_attachments || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'HOD Final Review Attachments')
                                 ->exists();
@@ -4396,7 +4397,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             //    $history->save();
             //}
 
-            if($lastIncident->incident_reported_date !=$incident->incident_reported_date || !empty($request->comment)) {
+            if($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Incident Reported On')
                                 ->exists();
@@ -4417,7 +4418,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->audit_type !=$incident->audit_type || !empty($request->audit_type_comment)) {
+            if($lastIncident->audit_type != $incident->audit_type || !empty($request->audit_type_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Incident Related To')
                                 ->exists();
@@ -4437,7 +4438,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Delay_Justification !=$incident->Delay_Justification || !empty($request->Delay_Justification_comment)) {
+            if($lastIncident->Delay_Justification != $incident->Delay_Justification || !empty($request->Delay_Justification_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Delay Justification')
                                 ->exists();
@@ -4478,7 +4479,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Facility_Equipment !=$incident->Facility_Equipment || !empty($request->comment)) {
+            if($lastIncident->Facility_Equipment != $incident->Facility_Equipment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Facility/ Equipment/ Instrument/ System Details Required')
                                 ->exists();
@@ -4499,7 +4500,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->Document_Details_Required !=$incident->Document_Details_Required || !empty($request->comment)) {
+            if($lastIncident->Document_Details_Required != $incident->Document_Details_Required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Document Details Required')
                                 ->exists();
@@ -4519,7 +4520,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Product_Details_Required !=$incident->Product_Details_Required || !empty($request->comment)) {
+            if($lastIncident->Product_Details_Required != $incident->Product_Details_Required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Product / Material details Required')
                                 ->exists();
@@ -4561,7 +4562,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
 
-             if($lastIncident->investigation !=$incident->investigation || !empty($request->comment)) {
+             if($lastIncident->investigation != $incident->investigation || !empty($request->comment)) {
                  $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                  ->where('activity_type', 'Immediate Action')
                                  ->exists();
@@ -4602,7 +4603,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             // }
 
 
-            if($lastIncident->HOD_Remarks !=$incident->HOD_Remarks || !empty($request->comment)) {
+            if($lastIncident->HOD_Remarks != $incident->HOD_Remarks || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'HOD Remark')
                                 ->exists();
@@ -4622,7 +4623,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->incident_category !=$incident->incident_category || !empty($request->comment)) {
+            if($lastIncident->incident_category != $incident->incident_category || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'HOD Remarks')
                                 ->exists();
@@ -4642,7 +4643,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->incident_category !=$incident->incident_category || !empty($request->comment)) {
+            if($lastIncident->incident_category != $incident->incident_category || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'HOD Remarks')
                                 ->exists();
@@ -4662,7 +4663,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Justification_for_categorization !=$incident->Justification_for_categorization || !empty($request->comment)) {
+            if($lastIncident->Justification_for_categorization != $incident->Justification_for_categorization || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Justification for Categorization')
                                 ->exists();
@@ -4682,7 +4683,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Justification_for_categorization !=$incident->Justification_for_categorization || !empty($request->comment)) {
+            if($lastIncident->Justification_for_categorization != $incident->Justification_for_categorization || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Justification for Categorization')
                                 ->exists();
@@ -4702,7 +4703,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Investigation_required !=$incident->Investigation_required || !empty($request->comment)) {
+            if($lastIncident->Investigation_required != $incident->Investigation_required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Investigation Required')
                                 ->exists();
@@ -4722,7 +4723,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Investigation_Details !=$incident->Investigation_Details || !empty($request->comment)) {
+            if($lastIncident->Investigation_Details != $incident->Investigation_Details || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Investigation Details')
                                 ->exists();
@@ -4742,7 +4743,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Investigation_Details !=$incident->Investigation_Details || !empty($request->comment)) {
+            if($lastIncident->Investigation_Details != $incident->Investigation_Details || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Investigation Details')
                                 ->exists();
@@ -4762,7 +4763,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Customer_notification !=$incident->Customer_notification || !empty($request->comment)) {
+            if($lastIncident->Customer_notification != $incident->Customer_notification || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Customer Notification')
                                 ->exists();
@@ -4783,7 +4784,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->customers !=$incident->customers || !empty($request->comment)) {
+            if($lastIncident->customers != $incident->customers || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Customers')
                                 ->exists();
@@ -4803,7 +4804,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->QAInitialRemark !=$incident->QAInitialRemark || !empty($request->comment)) {
+            if($lastIncident->QAInitialRemark != $incident->QAInitialRemark || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Initial Review Remarks')
                                 ->exists();
@@ -4823,7 +4824,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Initial_attachment !=$incident->Initial_attachment || !empty($request->comment)) {
+            if($lastIncident->Initial_attachment != $incident->Initial_attachment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Initial Review Attachments')
                                 ->exists();
@@ -4843,7 +4844,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Investigation_Summary !=$incident->Investigation_Summary || !empty($request->comment)) {
+            if($lastIncident->Investigation_Summary != $incident->Investigation_Summary || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Investigation Summary')
                                 ->exists();
@@ -4864,7 +4865,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->Impact_assessment !=$incident->Impact_assessment || !empty($request->comment)) {
+            if($lastIncident->Impact_assessment != $incident->Impact_assessment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Impact Assessment')
                                 ->exists();
@@ -4884,7 +4885,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Root_cause !=$incident->Root_cause || !empty($request->comment)) {
+            if($lastIncident->Root_cause != $incident->Root_cause || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Root Cause')
                                 ->exists();
@@ -4904,7 +4905,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->CAPA_Rquired !=$incident->CAPA_Rquired || !empty($request->comment)) {
+            if($lastIncident->CAPA_Rquired != $incident->CAPA_Rquired || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'CAPA Rquired')
                                 ->exists();
@@ -4924,7 +4925,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->CAPA_Rquired !=$incident->CAPA_Rquired || !empty($request->comment)) {
+            if($lastIncident->CAPA_Rquired != $incident->CAPA_Rquired || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'CAPA Rquired')
                                 ->exists();
@@ -4965,7 +4966,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->CAPA_Description !=$incident->CAPA_Description || !empty($request->comment)) {
+            if($lastIncident->CAPA_Description != $incident->CAPA_Description || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'CAPA Description')
                                 ->exists();
@@ -5226,7 +5227,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->review_of_verific !=$incident->review_of_verific || !empty($request->comment)) {
+            if($lastIncident->review_of_verific != $incident->review_of_verific || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Review Of Incident And Verfication Of Effectivess Of Correction')
                                 ->exists();
@@ -5245,7 +5246,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-            if($lastIncident->Recommendations !=$incident->Recommendations || !empty($request->comment)) {
+            if($lastIncident->Recommendations != $incident->Recommendations || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Recommendations')
                                 ->exists();
@@ -5264,7 +5265,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-            if($lastIncident->Impact_Assessmenta !=$incident->Impact_Assessmenta || !empty($request->comment)) {
+            if($lastIncident->Impact_Assessmenta != $incident->Impact_Assessmenta || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Impact Assessment')
                                 ->exists();
@@ -5284,7 +5285,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->qa_head_deginee_comment !=$incident->qa_head_deginee_comment || !empty($request->comment)) {
+            if($lastIncident->qa_head_deginee_comment != $incident->qa_head_deginee_comment || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Head/Designee approval comment')
                                 ->exists();
@@ -5328,7 +5329,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
 
-            if($lastIncident->hod_attachments !=$incident->hod_attachments || !empty($request->comment)) {
+            if($lastIncident->hod_attachments != $incident->hod_attachments || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'HOD Attachments')
                                 ->exists();
@@ -5348,7 +5349,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->qa_final_review !=$incident->qa_final_review || !empty($request->comment)) {
+            if($lastIncident->qa_final_review != $incident->qa_final_review || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'QA Final Review Comments')
                                 ->exists();

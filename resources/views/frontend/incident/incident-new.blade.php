@@ -2311,11 +2311,9 @@ dd($pre);
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton on-submit-disable-button">Save1</button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
@@ -2591,10 +2589,8 @@ dd($pre);
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton on-submit-disable-button">Save</button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
@@ -2916,9 +2912,8 @@ dd($pre);
                         </div>
                         <div class="button-block">
                             {{-- <button type="submit" class="saveButton">Save</button> --}}
-                            <a href="/rcms/qms-dashboard">
-                                <button type="button" class="backButton">Back</button>
-                            </a>
+                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
                             {{-- <button type="submit">Submit</button> --}}
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
