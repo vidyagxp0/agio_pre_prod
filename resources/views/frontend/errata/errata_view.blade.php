@@ -834,7 +834,7 @@
                         </div>
                     </div>
                     <!-- -----------Tab-2------------ -->
-                    <div id="CCForm2" class="inner-block cctabcontent" >
+                    <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                       
                             <div class="row">
@@ -845,11 +845,11 @@
                                                     class="text-danger">*</span></label>
                                         @else
                                             <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label>
-                                       
+                                        @endif
                                         {{-- <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
-                                        readonly>{{ $showdata->HOD_Remarks }}</textarea>
-                                        @endif
+                                            {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            >{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
 
@@ -880,11 +880,12 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                            
+                                         
+
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2215,7 +2216,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label> --}}
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{$showdata->stage == 1 || $showdata->stage == 2  ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
@@ -2248,7 +2249,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')"
                                                     {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
@@ -2395,7 +2396,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="Approval Comment">Approval Comment</label> --}}
                                         <textarea class="summernote" name="Approval_Comment" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
+                                            {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'readonly' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -2427,7 +2428,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     type="file" id="Approval_Attachments"
                                                     name="Approval_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
@@ -2466,7 +2467,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Approval_Attachments"
                                                     name="Approval_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2712,10 +2713,10 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY"
-                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
                                                 value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
                                             <input type="date" name="Date_and_time_of_correction" class="hide-input"
-                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
                                                 oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                         </div>
                                     </div>
@@ -2753,8 +2754,8 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks"> Remarks</label>
                                         <textarea class="summernote" name="Remarks" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Remarks }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                         >{{ $showdata->Remarks }}</textarea>
                                     </div>
                                 </div>
 
@@ -2825,7 +2826,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Initiator_Attachments"
                                                     name="Initiator_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2939,7 +2940,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Comment">HOD Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
                                     </div>
                                 </div>
 
@@ -3009,7 +3010,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
                                             </div>
                                         </div>
@@ -3120,7 +3121,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Comment">QA Comment</label>
                                         <textarea class="summernote" name="QA_Comment1" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->QA_Comment1 }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->QA_Comment1 }}</textarea>
                                     </div>
                                 </div>
 
@@ -3202,7 +3203,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="Closure Comments">Closure Comments</label> --}}
                                         <textarea class="summernote" name="Closure_Comments" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
                                     </div>
                                 </div>
 
@@ -3273,7 +3274,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Closure_Attachments"
                                                     name="Closure_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>
                                         </div>
