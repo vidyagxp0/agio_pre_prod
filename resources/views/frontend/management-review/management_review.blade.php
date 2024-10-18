@@ -463,7 +463,8 @@
                                     <div class="col-md-12">
                                         @if ($data->stage == 1)
                                             <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department</b></label>
+                                                <label for="Initiator Group"><b>Initiator Department<span
+                                                    class="text-danger">*</span></b></label>
                                                 <select name="initiator_Group"
                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
                                                     id="initiator_group">
@@ -478,8 +479,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department<span
-                                                            class="text-danger">*</span></b></label>
+                                                <label for="Initiator Group"><b>Initiator Department</b></label>
                                                 <select name="initiator_Group"
                                                      {{ $data->stage != 1 ? 'disabled' : '' }}
                                                     id="initiator_group">
@@ -493,7 +493,7 @@
                                                 </select>
                                             </div>
                                         @endif
-                                        @error('HOD_Remarks')
+                                        @error('initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -539,14 +539,20 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="type">Type <span class="text-danger">*</span></label>
+                                        <label for="type">Type
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
                                         <select required name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()"  {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                            onchange="toggleReviewPeriod()" {{ $data->stage != 1 ? 'disabled' : '' }}>
                                             <option required value="">Select Type</option>
                                             <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
-                                                Monthly</option>
+                                                Monthly
+                                            </option>
                                             <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
-                                                Six Monthly</option>
+                                                Six Monthly
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -554,7 +560,9 @@
                                 <!-- Review Period for Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period<span class="text-danger">*</span></label>
+                                        <label for="review_period">Review Period @if ($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required
                                              {{ $data->stage != 1 ? 'disabled' : '' }}>
                                             <option value="">Select Month</option>
@@ -591,7 +599,9 @@
                                 <!-- Review Period for Six Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period<span class="text-danger">*</span></label>
+                                        <label for="review_period">Review Period @if ($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
                                             required  {{ $data->stage != 1 ? 'disabled' : '' }}>
                                             <option value="">Select Period</option>
@@ -744,8 +754,9 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Proposed Scheduled Start Date <span
-                                                class="text-danger">*</span></label>
+                                        <label for="Audit Start Date">Proposed Scheduled Start Date @if ($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
@@ -1105,34 +1116,31 @@
                                 @enderror
                             </div>
                             @php
+                            $assignedUsers = !empty($data->assign_to) ? explode(',', $data->assign_to) : [];
+                        @endphp
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="assign_to">Invite Person Notify
+                                    @if ($data->stage == 2)
+                                        <span class="text-danger">*</span>
+                                    @endif
+                                </label>
 
-                                $assignedUsers = explode(',', $data->assign_to ?? '');
+                                <!-- Disabled select for stages 0 or 2 -->
+                                <select id="assign_to" name="assign_to[]" {{ $data->stage != 2 ? 'disabled' : '' }} multiple>
+                                    <option value="">Select a value</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                            @endphp
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
-
-                                    <!-- Disabled select for stages 0 or 2 -->
-                                    <select id="assign_to" name="assign_to[]" {{ $data->stage != 2 ? 'disabled' : '' }} multiple>
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}"
-                                                {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-
-                                    @error('assign_to')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-
-
-                                </div>
-
+                                @error('assign_to')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
+                        </div>
 
 
                             {{-- <div class="col-12">
@@ -1435,8 +1443,9 @@
                             <div class="row">
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Meeting Start Date <span
-                                                class="text-danger">*</span></label>
+                                        <label for="Audit Start Date">Meeting Start Date @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
                                         <div class="calenderauditee">
                                             <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly
@@ -1456,8 +1465,9 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit End Date">Meeting End Date <span
-                                                class="text-danger">*</span></label>
+                                        <label for="Audit End Date">Meeting End Date  @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
                                         <div class="calenderauditee">
 
                                             <input type="text" id="customer_satisfaction_level" readonly

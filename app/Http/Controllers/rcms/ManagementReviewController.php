@@ -1691,18 +1691,18 @@ class ManagementReviewController extends Controller
     {
 
          $form_progress = null;
-        if (!$request->short_description) {
-            toastr()->error("Short description is required");
-            return redirect()->back();
-        }
-         if (!$request->summary_recommendation) {
-            toastr()->error("Type is required");
-            return redirect()->back();
-        }
-         if (!$request->start_date) {
-            toastr()->error("Proposed Scheduled Start Date is required");
-            return redirect()->back();
-        }
+        // if (!$request->short_description) {
+        //     toastr()->error("Short description is required");
+        //     return redirect()->back();
+        // }
+        //  if (!$request->summary_recommendation) {
+        //     toastr()->error("Type is required");
+        //     return redirect()->back();
+        // }
+        //  if (!$request->start_date) {
+        //     toastr()->error("Proposed Scheduled Start Date is required");
+        //     return redirect()->back();
+        // }
         // if (!$request->assign_to) {
         //     toastr()->error("Invite Person Notify is required");
         //     return redirect()->back();
@@ -1738,10 +1738,15 @@ class ManagementReviewController extends Controller
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
-        $management->assigned_to = $request->assigned_to;
+        // $management->assign_to = $request->assign_to;
         // $management->assign_to = implode(',', $request->assign_to);
         // $management->assign_to = explode(',', $management->assign_to ?? '');
-        // $management->assign_to = implode(',', $request->assign_to);
+        if (is_array($request->assign_to)) {
+            $management->assign_to = implode(',', $request->assign_to);
+        } else {
+            $management->assign_to = null; // Or handle it according to your logic
+        }
+
 
 
 
