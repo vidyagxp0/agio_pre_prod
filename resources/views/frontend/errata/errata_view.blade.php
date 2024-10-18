@@ -834,8 +834,9 @@
                         </div>
                     </div>
                     <!-- -----------Tab-2------------ -->
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    <div id="CCForm2" class="inner-block cctabcontent" >
                         <div class="inner-block-content">
+                      
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
@@ -844,11 +845,11 @@
                                                     class="text-danger">*</span></label>
                                         @else
                                             <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label>
-                                        @endif
+                                       
                                         {{-- <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->HOD_Remarks }}</textarea>
+                                        readonly>{{ $showdata->HOD_Remarks }}</textarea>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -879,6 +880,7 @@
                                                     @endforeach
                                                 @endif
                                             </div>
+                                            
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
@@ -976,6 +978,7 @@
                                         </a> </button>
                                 </div>
                             </div>
+                     
                         </div>
                     </div>
 
