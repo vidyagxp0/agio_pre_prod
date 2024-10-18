@@ -3548,7 +3548,7 @@ class RootCauseController extends Controller
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Submited By,Submited On';
+                $history->activity_type = 'Submit By,Submit On';
                 $history->previous = "Investigation in Progress";
                 $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
