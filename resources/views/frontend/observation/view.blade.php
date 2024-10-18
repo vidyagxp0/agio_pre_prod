@@ -1195,9 +1195,9 @@
                                                             <th style="width: 20px;">S.No.</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
-                                                            <th>Deadline</th>
-                                                            <th>Item Status</th>
-                                                            <th style="width: 15%">Action Button</th>
+                                                            <th>Target Completion Date</th>
+                                                            <th>Action Status</th>
+                                                            <th style="width: 15%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
