@@ -4835,25 +4835,25 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($areChangeClosureAttachSame != true) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'List Of Attachments')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'List Of Attachments';
-        //     $history->previous = $lastclosure->attach_list;
-        //     $history->current = $closure->attach_list;
-        //     $history->comment = "";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastclosure->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if ($areChangeClosureAttachSame != true) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'List Of Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'List Of Attachments';
+            $history->previous =str_replace(',', ', ', $lastclosure->attach_list);
+            $history->current =str_replace(',', ', ', $closure->attach_list);
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastclosure->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
         /************** Attachment Code Ends **************/
         if ($lastDocument->If_Others != $openState->If_Others) {
@@ -5393,25 +5393,25 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'QA/CQA Initial Review Comments';
-        //     $history->previous = $lastDocument->qa_comments;
-        //     $history->current = $request->qa_review_comments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA/CQA Initial Review Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA/CQA Initial Review Comments';
+            $history->previous = $lastDocument->qa_comments;
+            $history->current = $request->qa_review_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
 
         // if ($lastDocument->qa_head != $request->qa_head) {
@@ -5757,27 +5757,27 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
 
 
-        if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Initial Review Comments')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Initial Review Comments';
-            $history->previous = $review->qa_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA/CQA Initial Review Comments';
+        //     $history->previous = $review->qa_comments;
+        //     $history->current = $request->qa_review_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
-        if ($lastDocument->ra_tab_comments != $Cft->ra_tab_comments && $Cft->ra_tab_comments != null) {
+        if ($lastDocument->ra_tab_comments != $request->ra_tab_comments && $request->ra_tab_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'RA Approval Comment')
                 ->exists();
@@ -5785,7 +5785,7 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
             $history->cc_id = $id;
             $history->activity_type = 'RA Approval Comment';
             $history->previous = $lastDocument->ra_tab_comments;
-            $history->current = $Cft->ra_tab_comments;
+            $history->current = $request->ra_tab_comments;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8584,8 +8584,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Final Review Attachments';
-            $history->previous = $lastCft->hod_final_review_attach;
-            $history->current = $Cft->hod_final_review_attach;
+            $history->previous =str_replace(',', ', ',  $lastCft->hod_final_review_attach);
+            $history->current =str_replace(',', ', ',  $Cft->hod_final_review_attach);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

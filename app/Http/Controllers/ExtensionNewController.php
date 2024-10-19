@@ -140,6 +140,7 @@ class ExtensionNewController extends Controller
         $extensionNew->QAapprover_remarks = $request->QAapprover_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
         $extensionNew->data_number = $request->data_number;
+        $extensionNew->related_records_edits = $request->related_records_edits;
 
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -693,7 +694,7 @@ class ExtensionNewController extends Controller
         $extensionNew->QAapprover_remarks = $request->QAapprover_remarks;
         // $extensionNew->file_attachment_approver = $request->file_attachment_approver;
         $extensionNew->data_number = null;
-
+        $extensionNew->related_records_edits = $request->related_records_edits;
         //////////////
 
         $files = is_array($request->existing_file_attachment_extension) ? $request->existing_file_attachment_extension : null;
@@ -1169,9 +1170,8 @@ class ExtensionNewController extends Controller
             }
             $history->save();
         }
-
-
-        toastr()->success("Record is created Successfully");
+      
+        toastr()->success("Record is updated Successfully");
         return redirect()->back();
     }
 
@@ -1246,27 +1246,30 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    $history->activity_type = 'More Info Required By, More Info Required On';
-                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
-                    }
-                    $history->current = $extensionNew->more_info_review_by . ' , ' . $extensionNew->more_info_review_on;
+                    $history->activity_type = 'Not Applicable';
+                    // if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_review_by . ' , ' . $lastDocument->more_info_review_on;
+                    // }
+                    // $history->current = $extensionNew->more_info_review_by . ' , ' . $extensionNew->more_info_review_on;
+                    $history->previous = 'Not Applicable';
+                    $history->current = 'Not Applicable';
                     $history->action = 'More Info Required';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Review';
-                    if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    $history->stage = 'Opened';
+                    // if (is_null($lastDocument->more_info_review_by) || $lastDocument->more_info_review_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
 
                     $extensionNew->update();
@@ -1284,13 +1287,16 @@ class ExtensionNewController extends Controller
 
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
-                    $history->activity_type = 'More Info Required By, More Info Required On';
-                    if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_inapproved_by . ' , ' . $lastDocument->more_info_inapproved_on;
-                    }
-                    $history->current = $extensionNew->more_info_inapproved_by . ' , ' . $extensionNew->more_info_inapproved_on;
+                    $history->activity_type = 'Not Applicable';
+                    // $history->activity_type = 'More Info Required By, More Info Required On';
+                    // if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_inapproved_by . ' , ' . $lastDocument->more_info_inapproved_on;
+                    // }
+                    // $history->current = $extensionNew->more_info_inapproved_by . ' , ' . $extensionNew->more_info_inapproved_on;
+                    $history->previous = 'Not Applicable';
+                    $history->current = 'Not Applicable';
                     $history->action = 'More Info Required';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1300,11 +1306,12 @@ class ExtensionNewController extends Controller
                     $history->change_to =   "In Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'In Review';
-                    if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
+                    // $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
 
                     $extensionNew->update();

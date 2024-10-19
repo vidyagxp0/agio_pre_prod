@@ -331,7 +331,9 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
 
-                @if($extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                @if ($extensionNew->data_number == 3)
+                <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
+                @elseif($extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
 
@@ -371,7 +373,7 @@
                                         <input disabled type="text" name="site_location" id="site_location"
                                             value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}">
                                         <input type="hidden" name="site_location_code" id="site_location_code"
-                                            value="{{ session()->get('division') }}">
+                                            value="{{ $extensionNew->site_location_code }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
@@ -561,8 +563,8 @@
                                             <input readonly type="text" name="related_records"
                                                 value="{{ $extensionNew->related_records }}">
                                         @else
-                                            <input type="text" name="related_records"
-                                                value="{{ $extensionNew->related_records }}">
+                                            <input type="text" name="related_records_edits"
+                                                value="{{ $extensionNew->related_records_edits }}">
                                         @endif
                                     </div>
                                 </div>

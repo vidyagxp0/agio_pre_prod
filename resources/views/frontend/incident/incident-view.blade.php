@@ -780,17 +780,16 @@
                                         Child
                                     </button>
                                     @endif
-                                @elseif(
-                                    $data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                            Pending Initiator Update Complete
-                                            </button>
-                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                            More Info Required
-                                        </button>
-                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                            Child
-                                        </button>
+                                @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                        Pending Initiator Update Complete
+                                    </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                        More Info Required
+                                    </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                        Child
+                                    </button>
                                 @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Final Review Complete
@@ -1357,7 +1356,7 @@
 
                                             <div class="col-lg-6 new-time-data-field">
                                                 <div class="group-input input-time">
-                                                    <label for="incident_time">Incident Observed On (Time) <span
+                                                    <label for="incident_time">Incident Observed On (Time)<span
                                                             class="text-danger">*</span></label>
                                                     <input type="time"
                                                         name="incident_time"
@@ -1382,7 +1381,7 @@
                                             <div class="col-lg-6 new-time-data-field">
                                                 <div
                                                     class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                                    <label for="incident_time">Delay Justification <span
+                                                    <label for="incident_time">Delay Justification<span
                                                             class="text-danger">*</span></label>
                                                     <textarea id="Delay_Justification" name="Delay_Justification" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
                                                 </div>
@@ -1410,7 +1409,7 @@
 
                                             <div class="col-6 new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="severity-level">Incident Reported On <span
+                                                    <label for="severity-level">Incident Reported On<span
                                                             class="text-danger">*</span></label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="incident_reported_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}/>
@@ -1504,7 +1503,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="audit type">Incident Related To <span
+                                                    <label for="audit type">Incident Related To<span
                                                             class="text-danger">*</span></label>
                                                     <select multiple name="audit_type[]" id="audit_type" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
@@ -1572,7 +1571,7 @@
                                             <div class="col-lg-6" id="others_block"
                                                 @if (strpos($data->audit_type, 'Anyother(specify)')) style="display: none" @endif>
                                                 <div class="group-input">
-                                                    <label for="others">Others <span id="asteriskInOther"
+                                                    <label for="others">Others<span id="asteriskInOther"
                                                             style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <input type="text" class="otherrr" name="others"
@@ -1629,7 +1628,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
+                                                    <label for="search">QA Reviewer<span class="text-danger"></span> </label>
 
                                                     <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">--Select--</option>
@@ -1988,7 +1987,7 @@
                                                                     <tr>
                                                                         <th style="width: 4%">Row#</th>
                                                                         <th style="width: 12%">Product / Material</th>
-                                                                        <th style="width: 16%"> Stage</th>
+                                                                        <th style="width: 16%">Stage</th>
                                                                         <th style="width: 16%">A.R.No. / Batch No</th>
                                                                         <th style="width: 8%">Action</th>
                                                                     </tr>
@@ -2164,7 +2163,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="audit_file" name="Audit_file[]" oninput="addMultipleFiles(this, 'Audit_file')" multiple {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                            <input type="file" id="audit_file" name="Audit_file[]" oninput="addMultipleFiles(this, 'Audit_file')" multiple {{ $data->stage == 1 ? '' : 'disabled' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2408,7 +2407,7 @@
 
                                                                     type="file" id="hod_attachments"
                                                                     name="hod_attachments[]"
-                                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2438,6 +2437,8 @@
                                                 </div>
                                                 Save
                                             </button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                            class="backButton" onclick="previousStep()">Back</button>
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
                                                 type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 class="nextButton" onclick="nextStep()">Next</button>
@@ -3191,6 +3192,8 @@
                                         </div>
                                         Save
                                     </button>
+                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
                                             type="button"
                                             class="nextButton" onclick="nextStep()">Next</button>
@@ -6920,6 +6923,8 @@
                                 </div>
                                 Save
                             </button>
+                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                            class="backButton" onclick="previousStep()">Back</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
                                 type="button"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 class="nextButton" onclick="nextStep()">Next</button>
@@ -7384,11 +7389,9 @@
                         </div>
 
                         <div class="button-block">
-                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
+                            <button style="justify-content: center; width: 4rem; margin-left: 1px;" type="submit"
                                 class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
-                            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                <button type="button" class="backButton">Back</button>
-                            </a>
+                                <button type="button" class="backButton" style="justify-content: center; width: 4rem; margin-left: 1px;">Back</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
                                 class="nextButton" onclick="nextStep()">Next</button>
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
