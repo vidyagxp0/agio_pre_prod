@@ -9186,7 +9186,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
-                                            <textarea name="qa_cqa_comment" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->qa_cqa_comment }}</textarea>
+                                            <textarea name="qa_cqa_comment" {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }}>{{ $data->qa_cqa_comment }}</textarea>
                                         </div>
                                     </div>
 
@@ -9222,7 +9222,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="qa_cqa_attach[]"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                                 </div>
                                             </div>
