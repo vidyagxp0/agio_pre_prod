@@ -2866,7 +2866,9 @@ class CCController extends Controller
         $lastcft_teamName = implode(', ', $reviewer_Names);
 
 
-        $openState->reviewer_person_value =  implode(',', $request->reviewer_person_value);
+        $openState->reviewer_person_value =  is_array($request->reviewer_person_value) 
+        ? implode(',', $request->reviewer_person_value) 
+        : $request->reviewer_person_value;
         $capa_teamIdsArray = explode(',', $openState->reviewer_person_value);
         $reviewer_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
         $Cft_teamNamesString = implode(', ', $reviewer_teamNames);
