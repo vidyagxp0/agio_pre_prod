@@ -178,11 +178,12 @@
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                              </button></a>
-                           
+                             @if(Helpers::getChildData($data->id, 'CAPA') < 3)
                              <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button></a>
-                           
+                             @endif
+
                              @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 66)))
 
@@ -193,12 +194,12 @@
                              <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                   More Info Required
                                </button></a>
-                             
+                               @if(Helpers::getChildData($data->id, 'CAPA') < 3)
                                <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                           
+                           @endif
                             @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65)))
 
@@ -210,10 +211,11 @@
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                            </button></a>
-                          
+                           @if(Helpers::getChildData($data->id, 'CAPA') < 3)
                            <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                             Child
                         </button></a>
+                        @endif
                        
                            @elseif($data->stage == 9&& (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            @if(Helpers::getChildData($data->id, 'CAPA') < 3)
@@ -850,36 +852,36 @@
                                                                 <tr>
                                                                     <td><input disabled type="text"
                                                                             name="serial_number[]"
-                                                                            value="{{ $key + 1 }}"></td>
+                                                                            value="{{ $key + 1 }}" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}></td>
                                                                     <td><input type="text" name="material_name[]"
                                                                             value="{{ $material_name }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_batch_no[]"
                                                                             value="{{ unserialize($data2->material_batch_no)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_mfg_date[]"
                                                                             class="material_mfg_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_mfg_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_expiry_date[]"
                                                                             class="material_expiry_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_expiry_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_batch_desposition[]"
                                                                             value="{{ unserialize($data2->material_batch_desposition)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_remark[]"
                                                                             value="{{ unserialize($data2->material_remark)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                     </td>
                                                                     {{-- <td>
                                                                         <select name="material_batch_status[]"
@@ -901,7 +903,7 @@
                                                                     <td>
                                                                         <select name="material_batch_status[]"
                                                                             class="batch_status"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
                                                                             <option value="">-- Select value --
                                                                             </option>
                                                                             <option value="Hold"
@@ -917,7 +919,7 @@
                                                                     </td>
 
                                                                     <td><button type="button" class="removeRowBtn"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Remove</button>
+                                                                        {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>Remove</button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -955,21 +957,44 @@
 
                                                 // Function to initialize the jQuery datepicker on input fields
                                                 function initializeDatepicker() {
-                                                    $('.material_mfg_date, .material_expiry_date').datepicker({
-                                                        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
-                                                        changeMonth: true,
-                                                        changeYear: true,
-                                                        showButtonPanel: true,
-                                                        onClose: function(dateText, inst) {
-                                                            if (dateText) {
-                                                                $(this).val($.datepicker.formatDate('dd-M-yy', new Date(dateText)));
-                                                            } else {
-                                                                $(this).attr('placeholder',
-                                                                'DD-MMM-YYYY'); // Reset the placeholder if the date is cleared
-                                                            }
-                                                        }
-                                                    });
-                                                }
+    $('.material_mfg_date, .material_expiry_date').datepicker({
+        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        onClose: function(dateText, inst) {
+            if (dateText) {
+                // Format the date correctly when closed
+                const dateObj = $(this).datepicker('getDate');
+                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
+            } else {
+                $(this).val(''); // Clear the input if no date is selected
+                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
+            }
+        },
+        beforeShow: function() {
+            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
+        }
+    });
+
+    // Prevent manual text entry
+    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
+        e.preventDefault(); // Disable text input
+    });
+
+    // Optional: To clear the field when clicking outside
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
+            $(this).val(''); // Clear input if not clicked
+        }
+    });
+}
+
+// Call the function to initialize the datepicker
+$(document).ready(function() {
+    initializeDatepicker();
+});
+
 
                                                 // Add a new row when the + button is clicked
                                                 $('#material').click(function(e) {
@@ -2449,6 +2474,7 @@
                             @csrf
 
                             <div class="modal-body">
+                                @if(Helpers::getChildData($data->id, 'CAPA') < 3)
                                 <div class="group-input">
 
                                     <label for="major">
@@ -2458,6 +2484,7 @@
 
 
                                 </div>
+                                @endif
 
                             </div>
 
