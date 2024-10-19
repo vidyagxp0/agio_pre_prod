@@ -112,6 +112,8 @@
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="site_location_code"
                                             value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"
+                                            value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
@@ -164,17 +166,17 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Extension Number">
-                                            Extension Number
+                                            Extension Number <span class="text-danger">*</span>
                                         </label>
                                         @if(!empty($countData))
                                         <input id="docname" type="text" value="{{ $countData }}" readonly>
                                         @else
-                                        <select name="data_number" id="countSelect">
+                                        <select name="data_number" id="countSelect" required>
                                                 <option value="">--Select Extension Number--</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
-                                                </select>
+                                        </select>
                                         @endif
                                     </div>
                                 </div>

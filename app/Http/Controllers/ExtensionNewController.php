@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use PDF;
+use Illuminate\Support\Facades\Session;
+
 
 class ExtensionNewController extends Controller
 {
@@ -113,6 +115,7 @@ class ExtensionNewController extends Controller
 
         $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
         $extensionNew->site_location_code = $request->site_location_code;
+        $extensionNew->division_id = $request->division_id;
         $extensionNew->initiator = Auth::user()->id;
         $extensionNew->record = $request->record;
         // dd($request->record_number);
@@ -235,7 +238,7 @@ class ExtensionNewController extends Controller
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName(session()->get('division')) . "/Ext/" . Helpers::year($extensionNew->created_at) . "/" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT);
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -252,7 +255,7 @@ class ExtensionNewController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($extensionNew->site_location_code);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -269,7 +272,7 @@ class ExtensionNewController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($extensionNew->initiation_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1436,6 +1439,23 @@ class ExtensionNewController extends Controller
                 || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number' || $extensionNew->data_number == 3 )
                 ){
                 if ($extensionNew->stage == 2) {
+                    if (empty($extensionNew->reviewer_remarks))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'HOD Review Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for In CQA Approval state'
+                        ]);
+                    }
                     $extensionNew->stage = "5";
                     $extensionNew->status = "In CQA Approval";
                     $extensionNew->submit_by_review = Auth::user()->name;
@@ -1492,6 +1512,23 @@ class ExtensionNewController extends Controller
             }
                 else{
                     if ($extensionNew->stage == 2) {
+                            if (empty($extensionNew->reviewer_remarks))
+                            {
+                                Session::flash('swal', [
+                                    'type' => 'warning',
+                                    'title' => 'Mandatory Fields!',
+                                    'message' => 'HOD Review Tab is yet to be filled'
+                                ]);
+            
+                                return redirect()->back();
+                            }
+                             else {
+                                Session::flash('swal', [
+                                    'type' => 'success',
+                                    'title' => 'Success',
+                                    'message' => 'Sent for In Approved state'
+                                ]);
+                            }
                     $extensionNew->stage = "3";
                     $extensionNew->status = "In Approved";
                     $extensionNew->submit_by_review = Auth::user()->name;
@@ -1567,7 +1604,23 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
         if ($extensionNew->stage == 3) {
+                if (empty($extensionNew->approver_remarks))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA/CQA Approval Tab is yet to be filled'
+                    ]);
 
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for In CQA Approval state'
+                    ]);
+                }
             $extensionNew->stage = "4";
             $extensionNew->status = "Closed - Reject";
 
@@ -1683,6 +1736,23 @@ class ExtensionNewController extends Controller
                 }
 
                 if ($extensionNew->stage == 5) {
+                    if (empty($extensionNew->QAapprover_remarks))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'CQA Approval Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Closed - Done state'
+                        ]);
+                    }
 
                     $extensionNew->stage = "6";
                     $extensionNew->status = "Closed - Done";
@@ -1756,7 +1826,23 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 3) {
-
+                    if (empty($extensionNew->approver_remarks))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA/CQA Approval Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for In CQA Approval state'
+                        ]);
+                    }
                     $extensionNew->stage = "6";
                     $extensionNew->status = "Closed - Done";
 
@@ -1768,12 +1854,12 @@ class ExtensionNewController extends Controller
                     $history = new ExtensionNewAuditTrail();
                     $history->extension_id = $id;
                     $history->activity_type = 'Approved By, Approved On';
-                    if (is_null($lastDocument->cqa_approval_by) || $lastDocument->cqa_approval_by === '') {
+                    if (is_null($lastDocument->submit_by_approved) || $lastDocument->submit_by_approved === '') {
                         $history->previous = "Null";
                     } else {
-                        $history->previous = $lastDocument->cqa_approval_by . ' , ' . $lastDocument->cqa_approval_on;
+                        $history->previous = $lastDocument->submit_by_approved . ' , ' . $lastDocument->submit_on_approved;
                     }
-                    $history->current = $extensionNew->cqa_approval_by . ' , ' . $extensionNew->cqa_approval_on;
+                    $history->current = $extensionNew->submit_by_approved . ' , ' . $extensionNew->submit_on_approved;
                     $history->action = 'Approved';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1783,7 +1869,7 @@ class ExtensionNewController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Closed - Done';
-                    if (is_null($lastDocument->cqa_approval_by) || $lastDocument->cqa_approval_by === '') {
+                    if (is_null($lastDocument->submit_by_approved) || $lastDocument->submit_by_approved === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
