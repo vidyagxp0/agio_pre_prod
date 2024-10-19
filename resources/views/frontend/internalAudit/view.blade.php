@@ -30,7 +30,32 @@
             border-radius: 5px;
             margin-bottom: 11px;
         }
+        .swal-modal {
+            scale: 0.7 !important;
+        }
+
+        .whyblock-bottom {
+            margin-bottom: 10px;
+        }
+
+        .swal-icon {
+            scale: 0.8 !important;
+        }
     </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+        @if (Session::has('swal'))
+            <script>
+                swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                    "{{ Session::get('swal')['type'] }}")
+            </script>
+        @endif
     <script>
         $(document).ready(function() {
             let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
@@ -197,8 +222,15 @@
                     var html =
                         '<tr>' +
                         '<td>' + serialNumber + '</td>' +
-                        '<td><input type="text" name="AuditorNew[' + investdetails +
-                        '][auditornew]" value=""></td>' +
+                        // '<td><input type="text" name="AuditorNew[' + investdetails +
+                        // '][auditornew]" value=""></td>' +
+                        '<td><select id="select-state" name="AuditorNew[' + investdetails + '][auditornew]">' +
+                                    '<option value="">Select a value</option>';
+
+                            for (var i = 0; i < users.length; i++) {
+                                html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                            }
+                            html += '</select></td>'+
                         '<td><input type="text" name="AuditorNew[' + investdetails +
                         '][regulatoryagency]" value=""></td>' +
                         '<td>' +
@@ -513,7 +545,7 @@
                         </button>
 
                         <button class="cctablinks" style="display:none;" id="button13"
-                            onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing &
+                            onclick="openCity(event, 'CCForm19')">Checklist - Production (   Dispensing &
                             Manufacturing)
                         </button>
 
@@ -594,12 +626,10 @@
                                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Auditee Department Head
-                                                    {{-- @if ($data->user)
-                                                        {{ $data->user->name }}
-                                                    @endif --}}
+                                                  
 
                                                 </label>
                                                 <select
@@ -609,6 +639,24 @@
                                                         <option value="{{ $value->id }}"
                                                             @if ($data->assign_to == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Auditee Department Head">Auditee Department Head
+                                                    @if ($data->stage == 1)
+                                                        <span class="text-danger">*</span>
+                                                    @endif
+                                                </label>
+                                                <select name="assign_to" class="assign_to" id="assign_to" {{ $data->stage != 1 ? 'readonly' : '' }}>
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($users as $key =>$user)
+                                                        <option value="{{ $user->name }}"
+                                                            @if ($user->name == $data->assign_to) selected @endif>
+                                                            {{ $user->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1001,7 +1049,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <select name="Audit_Category" >
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data->Audit_Category == 'Internal Audit/Self Inspection') selected @endif
                                                          value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
@@ -1036,67 +1084,81 @@
                                         </div>
 
 
-                                        <div class="col-12">
-                                            <div class="group-input" id="IncidentRow">
-                                                <label for="root_cause">
-                                                    Auditors
-                                                    <button type="button" name="audit-incident-grid"
-                                                        id="IncidentAddAuditor">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
+                                            <div class="col-12">
+                                                <div class="group-input" id="IncidentRow">
+                                                    <label for="root_cause">
+                                                        Auditors
+                                                        <button type="button" name="audit-incident-grid"
+                                                            id="IncidentAddAuditor">+</button>
+                                                        <span class="text-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#observation-field-instruction-modal"
+                                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                            (Launch Instruction)
+                                                        </span>
+                                                    </label>
 
-                                                <table class="table table-bordered"
-                                                    id="onservation-incident-tableAuditors">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Auditor No</th>
-                                                            <th>Auditor Name</th>
-                                                            <th>Department</th>
-                                                            <th>Designation</th>
-                                                            <th>Remarks</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @php
-                                                            $serialNumber = 1;
-                                                        @endphp
-                                                        @foreach ($auditorview->data as $audditor)
+                                                    <table class="table table-bordered"
+                                                        id="onservation-incident-tableAuditors">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $serialNumber++ }}</td>
-                                                                <td><input type="text"
-                                                                        name="AuditorNew[{{ $loop->index }}][auditornew]"
-                                                                        value="{{ $audditor['auditornew'] }}"></td>
-                                                                <td><input type="text"
-                                                                        name="AuditorNew[{{ $loop->index }}][regulatoryagency]"
-                                                                        value="{{ $audditor['regulatoryagency'] }}"></td>
-                                                                <td>
-                                                                    <select
-                                                                        name="AuditorNew[{{ $loop->index }}][designation]"
-                                                                        class="form-select">
-                                                                        <option value="">--Select--</option>
-                                                                        <option value="Lead Auditor"
-                                                                            {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
-                                                                            Lead Auditor</option>
-                                                                        <option value="Auditor"
-                                                                            {{ $audditor['designation'] == 'Auditor' ? 'selected' : '' }}>
-                                                                            Auditor</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input type="text"
-                                                                        name="AuditorNew[{{ $loop->index }}][remarks]"
-                                                                        value="{{ $audditor['remarks'] }}"></td>
-                                                                <td><button class="removeRowBtn">Remove</button></td>
+                                                                <th>Row #</th>
+                                                                <th>Auditor Name</th>
+                                                                <th>Department</th>
+                                                                <th>Designation</th>
+                                                                <th>Remarks</th>
+                                                                <th>Action</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php
+                                                                $serialNumber = 1;
+                                                            @endphp
+                                                            @foreach ($auditorview->data as $audditor)
+                                                                <tr>
+                                                                    <td>{{ $serialNumber++ }}</td>
+                                                                    
+                                                                            <td> 
+
+                                                                                <select id="select-state"
+                                                                                        placeholder="Select..."
+                                                                                        name="AuditorNew[{{ $loop->index }}][auditornew]" >
+                                                                                    <option value="">-Select-</option>
+                                                                                    @foreach ($users as $value)
+                                                                                        <option value="{{ $value->id }}"
+                                                                                            {{ isset($audditor['auditornew']) && $audditor['auditornew'] == $value->id ? 'selected' : '' }}>
+                                                                                            {{ $value->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </td>
+                                                                            
+
+                                                                    <td><input type="text"
+                                                                            name="AuditorNew[{{ $loop->index }}][regulatoryagency]"
+                                                                            value="{{ $audditor['regulatoryagency'] }}"></td>
+                                                                    <td>
+                                                                        <select
+                                                                            name="AuditorNew[{{ $loop->index }}][designation]"
+                                                                            class="form-select">
+                                                                            <option value="">--Select--</option>
+                                                                            <option value="Lead Auditor"
+                                                                                {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
+                                                                                Lead Auditor</option>
+                                                                            <option value="Auditor"
+                                                                                {{ $audditor['designation'] == 'Auditor' ? 'selected' : '' }}>
+                                                                                Auditor</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="text"
+                                                                            name="AuditorNew[{{ $loop->index }}][remarks]"
+                                                                            value="{{ $audditor['remarks'] }}"></td>
+                                                                    <td><button class="removeRowBtn">Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
 
 
 
@@ -1157,7 +1219,7 @@
                                                 <textarea  name="Auditee_comment"></textarea>
                                             </div>
                                         </div> --}}
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             @if ($data->stage == 2)
                                                 <div class="group-input">
                                                     <label for="Auditee Comment">Auditee Comment
@@ -1186,6 +1248,27 @@
                                                 </div>
                                             @endif
 
+                                        </div> --}}
+                                        <div class="col-md-12">
+                                            <div class="group-input">
+                                                <label for="Production Tablet feedback">Auditee Comment  
+                                                    @if ($data->stage == 2)
+                                                        <span class="text-danger">*</span>
+                                                    @endif
+                                                </label>
+                                                <div>
+                                                    <small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small>
+                                                </div>
+                                               
+                                                <textarea class="summernote Auditee_comment"
+                                                    name="Auditee_comment" id="summernote-18"
+                                                    @if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
+                                                        readonly
+                                                    @endif
+                                                >{{ $data->Auditee_comment }}</textarea>
+                                            </div>
                                         </div>
 
                                         {{-- <div class="col-12">
@@ -1195,7 +1278,7 @@
                                             </div>
                                         </div> --}}
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             @if ($data->stage == 2)
                                                 <div class="group-input">
                                                     <label for="Auditee Comment">Auditor Comment
@@ -1215,7 +1298,33 @@
                                                 </div>
                                             @endif
 
+                                        </div> --}}
+                                        <div class="col-md-12">
+                                            <div class="group-input">
+                                                <label for="Production Tablet feedback">Auditor Comment  
+                                                    @if ($data->stage == 2)
+                                                        <span class="text-danger">*</span>
+                                                    @endif
+                                                </label>
+                                                <div>
+                                                    <small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small>
+                                                </div>
+                                                <textarea class="summernote Auditor_comment"
+                                                name="Auditor_comment" id="summernote-18"
+                                             @if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)readonly
+                                             @endif>{{ $data->Auditor_comment}}</textarea>
+                                            </div>
                                         </div>
+                                        
+                                                {{-- <textarea class="summernote Auditor_comment"
+                                                          name="Auditor_comment " id="summernote-18"
+                                                          {{-- @if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)
+                                                              readonly
+                                                          @endif> -->{{ $data->Auditor_comment }}</textarea> --}}
+                                          
+                                        
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Inv Attachments">Acknowledment Attachment</label>
@@ -2001,6 +2110,7 @@
                                                             <th>Remarks</th>
                                                         </tr>
                                                     </thead>
+
                                                     <tbody>
                                                         @if ($grid_data)
                                                             @if (!empty($grid_data->area_of_audit))
@@ -9496,7 +9606,7 @@
                                     'Check the in-process equipments cleaning status & records.',
                                     'Are any unplanned process changes (process excursions) documented in the batch record?',
                                     'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
-                                    'Is there a preventive maintenance program for all equipment and status of it.',
+                                    'Is there an preventive maintenance program for all equipment and status of it.',
                                     'Status label of area & equipment available?',
                                     'Have you any proper storage area for primary and secondary packing material?',
                                     'Do you have proper segregation system for keeping product/batch separately?',
@@ -11782,9 +11892,9 @@
                                                     <tbody>
                                                         @foreach ($manufdocumentationQuestions as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">1.{{ $index + 1 }}</td>
-                                                                <td>{!! $question !!}</td>
-                                                                <td>
+                                                                <td class="flex text-center">2.{{ $index + 1 }}</td>
+                                                                <td>{!! $question !!}</td>                                                                <td>
+                                                                    <td>
                                                                     @php
                                                                         $tabletmanufacturingProperty =
                                                                             'dispensing_and_manufacturing_' .
@@ -12890,7 +13000,7 @@
                                             'Are sampled containers labeled with sampler’s name and date of sampling?',
                                             'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
                                             'a)Are raw materials approved before being used in production?
-                                          <br>b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
+                                            <br>b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
                                             'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
                                             'Is raw materials identification test performed on every batch and receipt?',
                                             'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
@@ -13069,9 +13179,8 @@
                                     'Are sampled containers labeled with sampler’s name and date of sampling?',
                                     'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
                                     'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing, and is periodic monitoring performed?',
-                                    'a)Are raw materials approved before being used in production?<br> b)
-                                    
-b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
+                                    'a)Are raw materials approved before being used in production?<br>
+                                    b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
                                     'If raw materials are accepted on certificates of analysis, is at least an identification test performed (where safe) on every batch and receipt?',
                                     'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
                                     'Is there any material in reject area? Check the record of the same.',
@@ -13086,9 +13195,9 @@ b)Are appropriate controls exercised to assure that they are not used in a batch
                                     'Check the Scoops / Spatula usage log sheet.',
                                     'Is there clean the area of Finished Goods store? Check the record for last 3 months.',
                                     'Check the Temperature and RH data of the Finished goods store. Check last 3 month records.',
-                                    'Do you have any record of the temperature of freeze?',
+                                    'Do you have any record of the temperature of freeze?<br>Check the temperature record of last 3 days.',
                                     'Is there any separate location / separate method to identify the stage of raw materials?',
-                                    'Do you have any details record of dispatch for all finished goods?',
+                                    'Do you have any details record of dispatch for all finish goods?',
                                     'Have you any standard practice for dispatch of finished goods?',
                                 ];
                             @endphp
@@ -13536,7 +13645,7 @@ b)Are appropriate controls exercised to assure that they are not used in a batch
                                                                     {{ '2.' . ($index + 1) }}
                                                                 </td>
                                                                 
-                                                                <td>{{ $question }}</td>
+                                                                <td>{!! $question !!}</td>
                                                                 <td>
                                                                     @php
                                                                         $response_injection_name =
@@ -14307,18 +14416,18 @@ b)Are appropriate controls exercised to assure that they are not used in a batch
                                     'Regarding in house raw materials, do you receive method of analysis from manufacturer?',
                                     'Do you receive working standards along with COA from manufacturer?',
                                     'Can market / Generic sample study to be done?',
-                                    'Do you document method development analytical reports?',
+                                    'Do you documented method development analytical reports?',
                                     'Can separate file to be prepared for each product?',
-                                    'Can comparative study be carried out with market sample?',
-                                    'Have non-compendial methods been validated, including accuracy, linearity, ruggedness and comparison with compendial methods or have compendial methods (Official) been verified to function properly in the company’s laboratories with proper documentation / SOP of same available?',
+                                    'Can comparative study to be carried out with market sample?',
+                                    'Have non- compendial methods be validated, including accuracy, linearity, ruggedness and comparison with compendial methods or have  compendial methods (Official) been verified to function properly in the company’s laboratories with proper documentation / SOP of same available ?',
                                     'Are FPS/STP available for finished product?',
                                     'Are technology transfer SOP/ documents available ?	',
                                    ' Are stability study carried out for the product at <br>a) 25°C / 60% RH <br> (b) 30°C / 70% RH<br> (C) 40°C / 75% RH',
-                                    'Are the stability results reviewed by a qualified, experienced person?',
+                                    'Are the stability results are reviewed by a qualified, experienced person? ',
                                     'Is stability study in primary pack done for different products?',
                                     'Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
                                     'Are instruments calibrated & labeled with date calibrated and date next calibration is due?',
-                                    'Are daily or monthly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
+                                    'Are daily of monthly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
                                     'Check for compliance of stability data and its summary',
                                     'Check for analytical reports?',
                                     'Are data and calculations checked by a second person & countersigned?',
