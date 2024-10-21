@@ -1787,6 +1787,12 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
 
+        // $deviation->capa_root_cause = $request->capa_root_cause;
+        // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
+        // $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
+        // $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+
+
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
         {
@@ -1952,6 +1958,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $deviation->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $deviation->Immediate_Action_Take;
                 $deviation->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $deviation->Corrective_Action_Details;
                 $deviation->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $deviation->Preventive_Action_Details;
+
                 $deviation->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $deviation->capa_completed_date;
                 $deviation->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $deviation->Interim_Control;
                 $deviation->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $deviation->Corrective_Action_Taken;

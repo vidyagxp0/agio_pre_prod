@@ -8819,7 +8819,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             // return "test";
             $Capachild = MarketComplaint::find($id);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.capa', compact('record', 'record_number','reference_record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'relatedRecords'));
         }
     }
@@ -8909,12 +8909,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
             $Capachild = MarketComplaint::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record', 'parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+            return view('frontend.forms.capa', compact('parent_id','reference_record', 'parent_record', 'parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
             $actionchild = MarketComplaint::find($id);

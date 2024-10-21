@@ -1094,7 +1094,7 @@
                                         Facility/ Equipment/ Instrument/ System Details
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modalDEV"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1187,7 +1187,7 @@
                                         <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
 
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal1"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1288,8 +1288,8 @@
                                             Product/Batch Details
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#product-batch-grid"
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal2"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -5799,19 +5799,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">Submit By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">Submit On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit comment">Submit Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5821,19 +5821,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Review Complete By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On">HOD Review Complete On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Review Comment">HOD Review Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5841,19 +5841,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Request For Cancellation By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Request For Cancellation On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Approved Comments">Request For Cancellation Comment :-</label>
-                                        <div class=""></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5863,21 +5863,21 @@
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
                                             :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On
                                             :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Comment">QA/CQA Initial Review Complete
                                             Comment:-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5886,19 +5886,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">CFT Review Complete Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5907,19 +5907,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">CFT Review Not Required On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">CFT Review Not Required Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5928,21 +5928,21 @@
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Complete By">QA/CQA Final Assessement Complete By
                                             :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On
                                             :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Comment">QA/CQA Final Assessement Complete Comment
                                             :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="sub-head"> Approved</div>
@@ -5950,19 +5950,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Approved By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Approved On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approved Comment">Approved Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5972,19 +5972,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">Initiator Update Complete Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
@@ -5996,77 +5996,77 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">HOD Final Review Complete Comment :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Implementation Verification Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Implementation Verification Complete By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Implementation Verification Complete On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="Approved Comment">Implementation Verification Complete Comment
                                             :-</label>
-                                        <div class=""></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Closure Approved</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Closure Approved By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Closure Approved On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Approved Comment">Closure Approved Comment :-</label>
-                                        <div class=""></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Cancel</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Cancel By :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Cancel On :-</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="Approved Comment">Cancel Comment :-</label>
-                                        <div class=""></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 

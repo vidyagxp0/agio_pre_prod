@@ -515,8 +515,8 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -556,7 +556,7 @@
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -782,13 +782,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Audit Category</label>
-                                        <select name="Audit_Category"
-                                            onchange="otherController(this.value, 'others', 'type_of_audit_req')">
+                                        <select name="Audit_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Internal Audit/Self Inspection</option>
-                                            <option value="2">Supplier Audit</option>
-                                            <option value="3">Regulatory Audit</option>
-                                            <option value="4">Consultant Audit</option>
+                                            <option value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
+                                            <option value="Supplier Audit">Supplier Audit</option>
+                                            <option value="Regulatory Audit">Regulatory Audit</option>
+                                            <option value="Consultant Audit">Consultant Audit</option>
 
                                         </select>
                                     </div>
@@ -892,7 +891,15 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
-                                                    <td><input type="text" name="AuditorNew[0][auditornew]"></td>
+                                                    {{-- <td><input type="text" name="AuditorNew[0][auditornew]"></td> --}}
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..." name="AuditorNew[0][auditornew]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" name="AuditorNew[0][regulatoryagency]"></td>
                                                     <td>
                                                         <select name="AuditorNew[0][designation]" class="form-select">
@@ -920,7 +927,14 @@
                                             var html =
                                                 '<tr>' +
                                                 '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
-                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                                                // '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                                                                        '<td><select id="select-state" name="AuditorNew[' + investdetails + '][auditornew]">' +
+                                                            '<option value="">Select a value</option>';
+
+                                                    for (var i = 0; i < users.length; i++) {
+                                                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                    }
+                                                    html += '</select></td>'+
                                                 '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
@@ -18135,7 +18149,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.26</td>
-                                                        <td>Do you have any record of the temperature of freeze?</td>
+                                                        <td>Do you have any record of the temperature of freeze?<br>
+                                                            Check the temperature record of last 3 days.
+                                                            </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -24504,7 +24520,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.22</td>
-                                                        <td>Is any checklist for the dossier requirement?  </td>
+                                                        <td>Is there any checklist for the dossier requirement?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
