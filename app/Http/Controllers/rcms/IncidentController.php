@@ -3970,10 +3970,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -3990,10 +3990,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4030,10 +4030,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4050,10 +4050,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4070,10 +4070,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4090,9 +4090,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
@@ -4110,9 +4110,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
@@ -4130,10 +4130,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4290,10 +4290,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
             if($lastIncident->qa_head_attachments != $incident->qa_head_attachments || !empty($request->comment)) {
@@ -4309,10 +4309,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4329,10 +4329,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4349,10 +4349,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4410,10 +4410,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4431,10 +4431,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4451,10 +4451,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4472,10 +4472,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4492,10 +4492,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4513,10 +4513,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4533,10 +4533,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4553,10 +4553,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4575,10 +4575,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                  $history->user_id = Auth::user()->id;
                  $history->user_name = Auth::user()->name;
                  $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                 $history->origin_state= $lastIncident->status;
-                 $history->change_to= "Not Applicable";
-                 $history->change_from= $lastIncident->status;
-                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                 $history->origin_state = $lastIncident->status;
+                 $history->change_to = "Not Applicable";
+                 $history->change_from = $lastIncident->status;
+                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                  $history->save();
              }
 
@@ -4616,10 +4616,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4636,10 +4636,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4656,10 +4656,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4676,10 +4676,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4696,10 +4696,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4716,10 +4716,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4736,10 +4736,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4756,10 +4756,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4776,10 +4776,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4797,10 +4797,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4817,10 +4817,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4837,10 +4837,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4857,10 +4857,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
+                $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4878,10 +4878,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4898,10 +4898,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4918,10 +4918,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4938,10 +4938,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4959,10 +4959,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -4979,10 +4979,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5000,10 +5000,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5020,10 +5020,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5040,10 +5040,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5060,10 +5060,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
+                $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5080,10 +5080,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5140,10 +5140,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5160,10 +5160,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5180,10 +5180,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5229,21 +5229,21 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->review_of_verific != $incident->review_of_verific || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Review Of Incident And Verfication Of Effectivess Of Correction')
+                                ->where('activity_type', 'Review Of Incident And Verfication Of Effectiveness Of Correction')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Review Of Incident And Verfication Of Effectivess Of Correction';
+                $history->activity_type = 'Review Of Incident And Verfication Of Effectiveness Of Correction';
                 $history->previous =  $lastIncident->review_of_verific;
                 $history->current = $incident->review_of_verific;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
             if($lastIncident->Recommendations != $incident->Recommendations || !empty($request->comment)) {
@@ -5259,10 +5259,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
             if($lastIncident->Impact_Assessmenta != $incident->Impact_Assessmenta || !empty($request->comment)) {
@@ -5278,10 +5278,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5298,10 +5298,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5319,14 +5319,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-
-
 
 
             if($lastIncident->hod_attachments != $incident->hod_attachments || !empty($request->comment)) {
@@ -5342,10 +5340,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5362,10 +5360,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5382,10 +5380,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
-                $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5404,10 +5402,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state= $lastIncident->status;
+                $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
-                $history->change_from= $lastIncident->status;
-                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
 
@@ -5441,7 +5439,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $data->dev_completed_on = $request->dev_completed_on;
             $data->save();
 
-            toastr()->success('Record is Update Successfully');
+            toastr()->success('Record is Updated Successfully');
             return back();
         }
     }
