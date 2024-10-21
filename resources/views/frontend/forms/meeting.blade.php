@@ -5647,152 +5647,152 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Submit By</label>
-                                        <div class="static">
+                                        <div class="">Not Applicable
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Submit On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Submit Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Head Review Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Head Review Complete On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Head Review Complete Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Meeting and Summary Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Meeting and Summary Complete On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Meeting and Summary Complete Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT Action Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT Action Complete On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT Action Complete Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT HOD Review Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT HOD Review Complete On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">CFT HOD Review Complete Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Verification Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Verification Complete On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Verification Complete Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Approved By</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Approved On</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Approved Comment</label>
-                                        <div class="static"></div>
+                                        <div class="">Not Applicable</div>
                                     </div>
                                 </div>
 

@@ -3471,20 +3471,20 @@
 
                         <div class="group-input">
                             <label for="Initiator Group">Submit By : </label>
-                            <div class="static">{{ $ooc->submitted_by }}</div>
+                             <div class="date"> @if( $ooc->submitted_by ) {{$ooc->submitted_by }}  @else Not Applicable @endif </div> 
                         </div>
                     </div>
 
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Submit On: </label>
-                            <div class="static">{{ $ooc->submitted_on }}</div>
+                            <div class="date">@if( $ooc->submitted_on ) {{$ooc->submitted_on }}  @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="comment">Submit Comment : </label>
-                            <div class="static">{{ $ooc->comment }}</div>
+                            <div class="date">@if( $ooc->comment ){{ $ooc->comment }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3494,7 +3494,7 @@
 
                         <div class="group-input">
                             <label for="Initiator Group">HOD Primary Review Complete By: </label>
-                            <div class="static">{{ $ooc->initial_phase_i_investigation_completed_by }}</div>
+                            <div class="date">@if( $ooc->initial_phase_i_investigation_completed_by ){{ $ooc->initial_phase_i_investigation_completed_by }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3503,14 +3503,14 @@
 
                         <div class="group-input input-date">
                             <label for="OOC Logged On">HOD Primary Review Complete On: </label>
-                            <div class="static">{{ $ooc->initial_phase_i_investigation_completed_on }}</div>
+                            <div class="date">@if($ooc->initial_phase_i_investigation_completed_on ) {{ $ooc->initial_phase_i_investigation_completed_on }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="hod_review_occ_comment">HOD Primary Review Complete Comment: </label>
-                            <div class="static">{{ $ooc->initial_phase_i_investigation_comment }}</div>
+                            <div class="date"> @if( $ooc->initial_phase_i_investigation_comment ){{ $ooc->initial_phase_i_investigation_comment }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3523,7 +3523,7 @@
                         <div class="group-input">
 
                             <label for="Initiator Group">QA Head Primary Review Complete By:</label>
-                            <div class="static">{{ $ooc->assignable_cause_f_completed_by }}</div>
+                            <div class="date">@if( $ooc->assignable_cause_f_completed_by ){{ $ooc->assignable_cause_f_completed_by }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3531,13 +3531,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">QA Head Primary Review Complete On: </label>
-                            <div class="static">{{ $ooc->assignable_cause_f_completed_on }}</div>
+                            <div class="date">@if( $ooc->assignable_cause_f_completed_on ){{ $ooc->assignable_cause_f_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="qa_intial_review_ooc_comment">QA Head Primary Review Complete Comment:</label>
-                            <div class="static">{{ $ooc->assignable_cause_f_completed_comment }}</div>
+                            <div class="date">@if( $ooc->assignable_cause_f_completed_comment ){{ $ooc->assignable_cause_f_completed_comment }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="sub-head col-lg-12">
@@ -3546,7 +3546,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IA Investigation By : </label>
-                            <div class="static">{{ $ooc->cause_f_completed_by }}</div>
+                            <div class="date">@if( $ooc->assignable_cause_f_completed_comment ) {{$ooc->cause_f_completed_by }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3554,13 +3554,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IA Investigation On : </label>
-                            <div class="static">{{ $ooc->cause_f_completed_on }}</div>
+                            <div class="date">@if( $ooc->cause_f_completed_on ) {{$ooc->cause_f_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IA Investigation Comment : </label>
-                            <div class="static">{{ $ooc->cause_f_completed_comment }}</div>
+                            <div class="date">@if( $ooc->cause_f_completed_comment ) {{$ooc->cause_f_completed_comment }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3573,7 +3573,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IA HOD Review Complete By : </label>
-                            <div class="static">{{ $ooc->obvious_r_completed_by }}</div>
+                            <div class="date">@if( $ooc->obvious_r_completed_by ) {{$ooc->obvious_r_completed_by }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3581,13 +3581,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IA HOD Review Complete On : </label>
-                            <div class="static">{{ $ooc->obvious_r_completed_on }}</div>
+                            <div class="date">@if( $ooc->obvious_r_completed_on ) {{$ooc->obvious_r_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IA HOD Review Complete Comment : </label>
-                            <div class="static">{{ $ooc->cause_i_ncompleted_comment }}</div>
+                            <div class="date">@if( $ooc->cause_i_ncompleted_comment ) {{$ooc->cause_i_ncompleted_comment }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3597,7 +3597,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IA QA Review Complete By : </label>
-                            <div class="static">{{ $ooc->cause_i_completed_by }}</div>
+                            <div class="date">@if( $ooc->cause_i_completed_by ) {{$ooc->cause_i_completed_by }} @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3605,13 +3605,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
-                            <div class="static">{{ $ooc->cause_i_completed_on }}</div>
+                            <div class="date">@if( $ooc->cause_i_completed_on ) {{$ooc->cause_i_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IA QA Review Complete Comment : </label>
-                            <div class="static">{{ $ooc->correction_ooc_comment }}</div>
+                            <div class="date">@if( $ooc->correction_ooc_comment ) {{$ooc->correction_ooc_comment }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3623,7 +3623,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Assignable Cause Found By : </label>
-                            <div class="static">{{ $ooc->approved_ooc_completed_by }}</div>
+                            <div class="date">@if( $ooc->approved_ooc_completed_by ) {{$ooc->approved_ooc_completed_by }} @else Not Applicable @endif</div>
 
 
                         </div>
@@ -3633,7 +3633,7 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Assignable Cause Found On : </label>
-                            <div class="static">{{ $ooc->approved_ooc_completed_on }}</div>
+                            <div class="date">@if( $ooc->approved_ooc_completed_on ) {{$ooc->approved_ooc_completed_on }} @else Not Applicable @endif</div>
 
 
 
@@ -3644,7 +3644,7 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Assignable Cause Found Comment : </label>
-                            <div class="static">{{ $ooc->approved_ooc_comment }}</div>
+                            <div class="date">@if( $ooc->approved_ooc_comment ) {{$ooc->approved_ooc_comment }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3655,7 +3655,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Assignable Cause Not Found By : </label>
-                            <div class="static">{{ $ooc->correction_r_completed_by }}</div>
+                            <div class="date">@if( $ooc->correction_r_completed_by ) {{$ooc->correction_r_completed_by }} @else Not Applicable @endif</div>
 
 
                         </div>
@@ -3665,14 +3665,14 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Assignable Cause Not Found On : </label>
-                            <div class="static">{{ $ooc->correction_r_completed_on }}</div>
+                            <div class="date">@if( $ooc->correction_r_completed_on ) {{$ooc->correction_r_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Assignable Cause Not Found Comment : </label>
-                            <div class="static">{{ $ooc->correction_r_ncompleted_comment }}</div>
-
+                            <div class="date">@if( $ooc->correction_r_ncompleted_comment ) {{$ooc->correction_r_ncompleted_comment }} @else Not Applicable @endif</div>
+                            
                         </div>
                     </div>
                     <div class="sub-head col-lg-12">
@@ -3680,7 +3680,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IB Investigation By : </label>
-                            <div class="static">{{ $ooc->correction_ooc_completed_by }}</div>
+                            <div class="date">@if( $ooc->correction_ooc_completed_by ) {{$ooc->correction_ooc_completed_by }} @else Not Applicable @endif</div>
 
 
                         </div>
@@ -3690,17 +3690,17 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IB Investigation On : </label>
-                            <div class="static">{{ $ooc->correction_ooc_completed_on }}</div>
+                            <div class="date">@if( $ooc->correction_ooc_completed_on ) {{$ooc->correction_ooc_completed_on }} @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IB Investigation Comment : </label>
-                            <div class="static">{{ $ooc->correction_ooc_comment }}</div>
+                            <div class="date">@if( $ooc->correction_ooc_comment ) {{$ooc->correction_ooc_comment }} @else Not Applicable @endif</div>
 
                         </div>
                     </div>
-
+                    
 
                     <div class="sub-head col-lg-12">
                         Phase IB HOD Review Complete
@@ -3709,7 +3709,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
-                            <div class="static">{{ $ooc->Phase_IB_HOD_Review_Completed_BY }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_HOD_Review_Completed_BY ) {{$ooc->Phase_IB_HOD_Review_Completed_BY }} @else Not Applicable @endif</div>
 
 
                         </div>
@@ -3719,13 +3719,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
-                            <div class="static">{{ $ooc->Phase_IB_HOD_Review_Completed_ON }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_HOD_Review_Completed_ON ) {{$ooc->Phase_IB_HOD_Review_Completed_ON }}  @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IB HOD Review Complete Comment : </label>
-                            <div class="static">{{ $ooc->Phase_IB_HOD_Review_Completed_Comment }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_HOD_Review_Completed_Comment ) {{$ooc->Phase_IB_HOD_Review_Completed_Comment }}  @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3736,7 +3736,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Phase IB QA Review Complete By : </label>
-                            <div class="static">{{ $ooc->Phase_IB_QA_Review_Complete_12_by }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_by ) {{$ooc->Phase_IB_QA_Review_Complete_12_by }}  @else Not Applicable @endif</div>
 
 
                         </div>
@@ -3746,13 +3746,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Phase IB QA Review Complete On : </label>
-                            <div class="static">{{ $ooc->Phase_IB_QA_Review_Complete_12_on }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_on ) {{$ooc->Phase_IB_QA_Review_Complete_12_on }}  @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IB QA Review Complete Comment : </label>
-                            <div class="static">{{ $ooc->Phase_IB_QA_Review_Complete_12_comment }}</div>
+                            <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_comment ) {{$ooc->Phase_IB_QA_Review_Complete_12_comment }}  @else Not Applicable @endif</div> 
 
                         </div>
                     </div>
@@ -3763,7 +3763,7 @@
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Approved By : </label>
-                            <div class="static">{{ $ooc->P_IB_Assignable_Cause_Found_by }}</div>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_by ) {{$ooc->P_IB_Assignable_Cause_Found_by }}  @else Not Applicable @endif</div>
                         </div>
                     </div>
 
@@ -3771,13 +3771,13 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Approved On : </label>
-                            <div class="static">{{ $ooc->P_IB_Assignable_Cause_Found_on }}</div>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_on ) {{$ooc->P_IB_Assignable_Cause_Found_on }}  @else Not Applicable @endif</div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Approved Comment : </label>
-                            <div class="static">{{ $ooc->P_IB_Assignable_Cause_Found_comment }}</div>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_comment ) {{$ooc->P_IB_Assignable_Cause_Found_comment }}  @else Not Applicable @endif</div>
 
                         </div>
                     </div>
@@ -3788,20 +3788,20 @@
 
                         <div class="group-input">
                             <label for="Initiator Group">Cancel By : </label>
-                            <div class="static">{{ $ooc->cancelled_by }}</div>
+                            <div class="date">@if( $ooc->cancelled_by ) {{$ooc->cancelled_by }}  @else Not Applicable @endif </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Cancel On : </label>
-                            <div class="static">{{ $ooc->cancelled_on }}</div>
+                            <div class="date">@if( $ooc->cancelled_on ) {{$ooc->cancelled_on }}  @else Not Applicable @endif </div>
                         </div>
                     </div>
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="comment">Cancel Comment : </label>
-                            <div class="static">{{ $ooc->cancell_comment }}</div>
+                            <div class="date"> @if( $ooc->cancell_comment ) {{$ooc->cancell_comment }}  @else Not Applicable @endif </div>
                         </div>
                     </div>
 

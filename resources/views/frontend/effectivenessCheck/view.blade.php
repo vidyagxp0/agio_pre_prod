@@ -44,6 +44,9 @@
         .swal-icon {
             scale: 0.8 !important;
         }
+        .new-head{
+            margin-bottom: 20px;
+        }
     </style>
 
     @if (Session::has('swal'))
@@ -307,10 +310,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}"
-                                            name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                        {{--  <div class="static">{{ $data->created_at }}</div>  --}}
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -537,8 +537,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 2 ? '' : 'disabled' }}
-                                                value="{{ $data->acknowledge_Attachment }}" type="file"
+                                            <input {{ $data->stage == 2 ? '' : 'disabled' }} type="file"
                                                 id="myfile" name="acknowledge_Attachment[]"
                                                 oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple>
                                         </div>
@@ -623,8 +622,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input {{ $data->stage == 3 ? '' : 'disabled' }}
-                                            value="{{ $data->Effectiveness_check_Attachment }}" type="file"
+                                        <input {{ $data->stage == 3 ? '' : 'disabled' }} type="file"
                                             id="myfile" name="Effectiveness_check_Attachment[]"
                                             oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
                                     </div>
@@ -753,7 +751,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $data->stage == 4 ? '' : 'disabled' }} value="{{ $data->Attachment }}"
+                                    <input {{ $data->stage == 4 ? '' : 'disabled' }}
                                         type="file" id="myfile" name="Attachment[]"
                                         oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                 </div>
@@ -853,8 +851,7 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input {{ $data->stage == 5 ? '' : 'disabled' }}
-                                value="{{ $data->qa_cqa_review_Attachment }}" type="file" id="myfile"
+                            <input type="file" id="myfile"
                                 name="qa_cqa_review_Attachment[]"
                                 oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')" multiple>
                         </div>
@@ -920,10 +917,8 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input {{ in_array($data->stage, [6, 8]) ? '' : 'disabled' }}
-                                value="{{ $data->qa_cqa_approval_Attachment }}" type="file" id="myfile"
-                                name="qa_cqa_approval_Attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
+                            <input {{ in_array($data->stage, [6, 8]) ? '' : 'disabled' }} type="file" id="myfile"
+                                name="qa_cqa_approval_Attachment[]" oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -946,169 +941,194 @@
                 <div class="col-12 sub-head">
                     Activity Log
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Submit by"><b>Submit by</b></label>
-                        <div class="static">{{ $data->submit_by }}</div>
+                        @if( $data->submit_by ) {{ $data->submit_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->submit_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head ">
                     <div class="group-input">
                         <label for="Submit On"><b>Submit On</b></label>
-                        <div class="static">{{ $data->submit_on }}</div>
-                    </div>
+                        @if( $data->submit_on ) {{ $data->submit_on }}  @else Not Applicable @endif
+                                         </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head ">
                     <div class="group-input">
                         <label for="Submit On"><b>Submit Comment</b></label>
-                        <div class="static">{{ $data->submit_comment }}</div>
+                        @if( $data->submit_comment ) {{ $data->submit_comment }}  @else Not Applicable @endif
+                        
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete By"><b>Cancel By</b></label>
-                        <div class="static">{{ $data->closed_cancelled_by }}</div>
+                        @if( $data->closed_cancelled_by ) {{ $data->closed_cancelled_by }}  @else Not Applicable @endif
+                       
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Cancel On</b></label>
-                        <div class="static">{{ $data->closed_cancelled_on }}</div>
+                        @if( $data->closed_cancelled_on ) {{ $data->closed_cancelled_on }}  @else Not Applicable @endif
+                        
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Cancel Comment</b></label>
-                        <div class="static">{{ $data->closed_cancelled_comment }}</div>
+                        @if( $data->closed_cancelled_comment ) {{ $data->closed_cancelled_comment }}  @else Not Applicable @endif
+                        
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Acknowledge Complete by"><b>Acknowledge Complete by</b></label>
-                        <div class="static">{{ $data->work_complition_by }}</div>
+                        @if( $data->work_complition_by ) {{ $data->work_complition_by }}  @else Not Applicable @endif
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Acknowledge Complete by"><b>Acknowledge Complete On</b></label>
-                        <div class="static">{{ $data->work_complition_on }}</div>
+                        @if( $data->work_complition_on ) {{ $data->work_complition_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->work_complition_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Acknowledge Complete by"><b>Acknowledge Complete Comment</b></label>
-                        <div class="static">{{ $data->work_complition_comment }}</div>
+                        @if( $data->work_complition_comment ) {{ $data->work_complition_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b> Complete By</b></label>
-                        <div class="static">{{ $data->effectiveness_check_complete_by }}</div>
+                        @if( $data->effectiveness_check_complete_by ) {{ $data->effectiveness_check_complete_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effectiveness_check_complete_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete On"><b> Complete On</b></label>
-                        <div class="static">{{ $data->effectiveness_check_complete_on }}</div>
+                        @if( $data->effectiveness_check_complete_on ) {{ $data->effectiveness_check_complete_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effectiveness_check_complete_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete On"><b> Complete Comment</b></label>
-                        <div class="static">{{ $data->effectiveness_check_complete_comment }}</div>
+                        @if( $data->effectiveness_check_complete_comment ) {{ $data->effectiveness_check_complete_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effectiveness_check_complete_comment }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b>HOD Review Complete By</b></label>
-                        <div class="static">{{ $data->hod_review_complete_by }}</div>
+                        @if( $data->hod_review_complete_by ) {{ $data->hod_review_complete_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->hod_review_complete_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete On"><b>HOD Review Complete On</b></label>
-                        <div class="static">{{ $data->hod_review_complete_on }}</div>
+                        @if( $data->hod_review_complete_on ) {{ $data->hod_review_complete_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->hod_review_complete_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete On"><b>HOD Review Complete Comment</b></label>
-                        <div class="static">{{ $data->hod_review_complete_comment }}</div>
+                        @if( $data->hod_review_complete_comment ) {{ $data->hod_review_complete_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->hod_review_complete_comment }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective By"><b>Not Effective By</b></label>
-                        <div class="static">{{ $data->qa_review_complete_by }}</div>
+                        @if( $data->qa_review_complete_by ) {{ $data->qa_review_complete_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->qa_review_complete_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective On"><b>Not Effective On</b></label>
-                        <div class="static">{{ $data->qa_review_complete_on }}</div>
+                        @if( $data->qa_review_complete_on ) {{ $data->qa_review_complete_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->qa_review_complete_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Not Effective On"><b>Not Effective Comment</b></label>
-                        <div class="static">{{ $data->qa_review_complete_comment }}</div>
+                        @if( $data->qa_review_complete_comment ) {{ $data->qa_review_complete_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->qa_review_complete_comment }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective by"><b>Effective By</b></label>
-                        <div class="static">{{ $data->effective_by }}</div>
+                        @if( $data->effective_by ) {{ $data->effective_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective On"><b>Effective On</b></label>
-                        <div class="static">{{ $data->effective_on }}</div>
+                        @if( $data->effective_on ) {{ $data->effective_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Effective On"><b>Effective Comment</b></label>
-                        <div class="static">{{ $data->effective_comment }}</div>
+                        @if( $data->effective_comment ) {{ $data->effective_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_comment }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
-                        <div class="static">{{ $data->not_effective_approval_complete_by }}</div>
+                        @if( $data->not_effective_approval_complete_by ) {{ $data->not_effective_approval_complete_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->not_effective_approval_complete_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete On</b></label>
-                        <div class="static">{{ $data->not_effective_approval_complete_on }}</div>
+                        @if( $data->not_effective_approval_complete_on ) {{ $data->not_effective_approval_complete_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->not_effective_approval_complete_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete
                                 Comment</b></label>
-                        <div class="static">{{ $data->not_effective_approval_complete_comment }}</div>
+                    @if( $data->not_effective_approval_complete_comment ) {{ $data->not_effective_approval_complete_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->not_effective_approval_complete_comment }}</div> --}}
                     </div>
                 </div>
 
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
-                        <div class="static">{{ $data->effective_approval_complete_by }}</div>
+                        @if( $data->effective_approval_complete_by ) {{ $data->effective_approval_complete_by }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_approval_complete_by }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Effective Approval Complete On</b></label>
-                        <div class="static">{{ $data->effective_approval_complete_on }}</div>
+                        @if( $data->effective_approval_complete_on ) {{ $data->effective_approval_complete_on }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_approval_complete_on }}</div> --}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Effective Approval Complete Comment</b></label>
-                        <div class="static">{{ $data->effective_approval_complete_comment }}</div>
+                        @if( $data->effective_approval_complete_comment ) {{ $data->effective_approval_complete_comment }}  @else Not Applicable @endif
+                        {{-- <div class="static">{{ $data->effective_approval_complete_comment }}</div> --}}
                     </div>
                 </div>
 
@@ -1116,19 +1136,61 @@
             </div>
 
             <div class="button-block">
-                @if ($data->stage != 0)
+                <!-- @if ($data->stage != 0)
                     <button type="submit" id="ChangesaveButton" class="saveButton"
                         {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
-                @endif
+                @endif -->
 
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="submit">Submit</button>
+                <!-- <button type="submit">Submit</button> -->
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
                 </button>
             </div>
         </div>
 
     </div>
+    {{-- <style>
+
+     
+        .group-input {
+            /* background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 6px; */
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+       
+        .button-block {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .saveButton, .backButton, .exitButton {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .saveButton {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+        }
+        .backButton {
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+        }
+        .exitButton {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+        .exitButton a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style> --}}
     </form>
     </div>
     </div>

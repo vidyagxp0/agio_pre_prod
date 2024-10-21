@@ -675,7 +675,7 @@
                 <div>
                     <table>
                         <tr>  
-                            <th class="w-20">CAPA QA/CQA Review Comment</th>
+                            <th class="w-20"> QA/CQA Review Comment </th>
                             <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>                   
                         </tr> 
                     </table>
@@ -925,7 +925,7 @@
 
                                 </table>
                             </div>
-                            <div class="block-head">
+                            {{-- <div class="block-head">
                                 Extension Justification
                              </div>
 
@@ -935,7 +935,7 @@
                                         <td class="w-80">
                                             {{ $data->due_date_extension }}</td>
                                 </tr>
-                            </table>
+                            </table> --}}
 
                         <div class="block">
                             <div class="block-head">
@@ -1037,12 +1037,12 @@
                                     <td class="w-30">  @if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">QAH/CQA Approval Completed By</th>
+                                    <th class="w-20">QAH/CQA Head Approval Complete By</th>
                                     <td class="w-30"> @if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">QAH/CQA Approval Completed On</th>
+                                    <th class="w-20">  QAH/CQA Head Approval Complete On</th>
                                     <td class="w-30"> @if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
-                                        QAH/CQA Approval Completed Comment</th>
+                                        QAH/CQA Head Approval Complete Comment</th>
                                     <td class="w-30"> @if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
                                 </tr>
             
