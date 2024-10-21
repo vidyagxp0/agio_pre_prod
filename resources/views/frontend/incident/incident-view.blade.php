@@ -2116,7 +2116,7 @@
                                                 @enderror
                                             </div>
 
-{{--
+        {{--
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Immediate Action">Immediate Action (if any) <span
@@ -4070,19 +4070,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">Submit By :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->submit_by }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">Submit On :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->submit_on }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="submit comment">Submit Comment :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->submit_comment }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
 
@@ -4090,19 +4102,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->HOD_Initial_Review_Complete_By }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On">HOD Initial Review Complete On :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->HOD_Initial_Review_Complete_On }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="HOD Review Comments">HOD Initial Review Complete Comment :-</label>
-                                        <div class="">{{ $data->HOD_Initial_Review_Comments }}</div>
+                                        @if ($data->send_cft_by)
+                                        <div class="static">{{ $data->HOD_Initial_Review_Comments }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-3">
@@ -4153,19 +4177,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QA Initial Review Complete Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-3">
@@ -4195,19 +4231,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QAH_Designee_Approval_Complete_By }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QAH_Designee_Approval_Complete_On }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->QAH_Designee_Approval_Complete_Comments }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
 
@@ -4215,19 +4263,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Pending Initiator Update Complete By">Pending Initiator Update Complete By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Pending_Review_Complete_By }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Pending_Review_Complete_On }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="CFT Review Comments">Pending Initiator Update Complete Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->Pending_Review_Comments }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-3">
@@ -4257,19 +4317,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By"> HOD Final Review Complete By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_By }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On"> HOD Final Review Complete On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_On }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments">HOD Final Review Complete Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{--@php
@@ -4279,19 +4351,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By"> QA Final Review Complete By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_Final_Review_Complete_By}}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On"> QA Final Review Complete On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_Final_Review_Complete_On}}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments"> QA Final Review Complete Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->QA_Final_Review_Comments}}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-3">
@@ -4346,19 +4430,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By">Approved By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_head_approved_by }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On">Approved On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->QA_head_approved_on }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                        <label for="QA Final Review Comments">Approved Comment :-</label>
+                                    <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                        <label for="QA Final Review Comments">Approved Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="">{{ $data->QA_head_approved_comment }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-3">
@@ -4473,19 +4569,31 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">cancel By:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Cancelled_by }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="cancelled on">cancel On:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Cancelled_on }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit on">Cancel Comment:-</label>
+                                        @if ($data->send_cft_by)
                                         <div class="static">{{ $data->Cancelled_cmt }}</div>
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -6408,637 +6516,6 @@
                     </div>
                 </div>
 
-                <div id="CCForm11" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-12 sub-head"></div>
-                            {{-- @if ($qrmExtension && $qrmExtension->qrm_proposed_due_date)
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Proposed Due Date">Proposed Due Date</label>
-                                        <input name="qrm_proposed_due_date" id="qrm_proposed_due_date"
-                                            value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}" disabled>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Proposed Due Date">Proposed Due Date</label>
-                                        <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
-                                    </div>
-                                </div>
-                            @endif --}}
-
-                            <div class="col-12 mb-4">
-                                <div class="group-input">
-                                    <label for="agenda">
-                                        Failure Mode and Effect Analysis
-                                        <button type="button" name="agenda" id="risk-assessment-risk-management">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#failure_mode_and_effect_analysis"
-                                            style="font-size: 0.8rem; font-weight: 400;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" style="width: 200%"
-                                            id="risk-assessment-risk-management_details">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>Risk Factor</th>
-                                                    <th>Risk element </th>
-                                                    <th>Probable cause of risk element</th>
-                                                    <th>Existing Risk Controls</th>
-                                                    <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                                    <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                                    <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                                    <th>Initial RPN</th>
-                                                    <th>Risk Acceptance (Y/N)</th>
-                                                    <th>Proposed Additional Risk control measure (Mandatory for Risk
-                                                        elements having RPN>4)</th>
-                                                    <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                                    <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                                    <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                                    <th>Residual RPN</th>
-                                                    <th>Risk Acceptance (Y/N)</th>
-                                                    <th>Mitigation proposal (Mention either CAPA reference number, IQ,
-                                                        OQ or
-                                                        PQ)</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @if ($grid_data_qrms && is_array($grid_data_qrms))
-                                                    @foreach ($grid_data_qrms as $grid_data_qrms)
-                                                        <tr>
-
-                                                            <td><input disabled type="text"name="serial[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ $key + 1 }}"></td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][risk_factor]"
-                                                                    value="{{ isset($grid_data_qrms['risk_factor']) ? $grid_data_qrms['risk_factor'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][risk_element]"
-                                                                    value="{{ isset($grid_data_qrms['risk_element']) ? $grid_data_qrms['risk_element'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][probale_of_risk_element]"
-                                                                    value="{{ isset($grid_data_qrms['probale_of_risk_element']) ? $grid_data_qrms['probale_of_risk_element'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][existing_risk_control]"
-                                                                    value="{{ isset($grid_data_qrms['existing_risk_control']) ? $grid_data_qrms['existing_risk_control'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][initial_severity]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][initial_probability]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][initial_detectability]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][initial_rpn]"
-                                                                    value="{{ isset($grid_data_qrms['initial_rpn']) ? $grid_data_qrms['initial_rpn'] : '' }}">
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="n"
-                                                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
-                                                                        N</option>
-                                                                    <option value="y"
-                                                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
-                                                                        Y</option>
-                                                            </td>
-
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][proposed_additional_risk_control]"
-                                                                    value="{{ isset($grid_data_qrms['proposed_additional_risk_control']) ? $grid_data_qrms['proposed_additional_risk_control'] : '' }}">
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][residual_severity]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][residual_probability]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][residual_detectability]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="1"
-                                                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '1' ? 'selected' : '' }}>
-                                                                        1</option>
-                                                                    <option value="2"
-                                                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '2' ? 'selected' : '' }}>
-                                                                        2</option>
-                                                                    <option value="3"
-                                                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '3' ? 'selected' : '' }}>
-                                                                        3</option>
-                                                                </select>
-                                                            </td>
-
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][residual_rpn]"
-                                                                    value="{{ isset($grid_data_qrms['residual_rpn']) ? $grid_data_qrms['residual_rpn'] : '' }}">
-                                                            </td>
-
-                                                            <td>
-                                                                <select
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]"
-                                                                    id="">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="n"
-                                                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
-                                                                        N</option>
-                                                                    <option value="y"
-                                                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
-                                                                        Y</option>
-                                                            </td>
-
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="failure_mode_qrms[{{ $loop->index }}][mitigation_proposal]"
-                                                                    value="{{ isset($grid_data_qrms['mitigation_proposal']) ? $grid_data_qrms['mitigation_proposal'] : '' }}">
-                                                            </td>
-
-                                                            <td><input type="text" class="Action" name=""></td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    <!-- <td><input disabled type="text" name="failure_mode_qrms[0][serial]" value=""></td> -->
-                                                    <td><input disabled type="text"name="serial[]"
-                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                            value="{{ $key + 1 }}"></td>
-                                                    <td><input type="text" class="numberDetail"
-                                                            name="failure_mode_qrms[0][risk_factor]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][risk_element]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][probale_of_risk_element]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][existing_risk_control]"></td>
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][initial_severity]" id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_severity']=='1' ? 'selected' : '' ))>
-                                                                1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_severity']=='2' ? 'selected' : '' ))>
-                                                                2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_severity']=='3' ? 'selected' : '' ))>
-                                                                3</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][initial_probability]" id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_probability']=='1' ? 'selected' : ''
-                                                                ))>1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_probability']=='2' ? 'selected' : ''
-                                                                ))>2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_probability']=='3' ? 'selected' : ''
-                                                                ))>3</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][initial_detectability]"
-                                                            id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_detectability']=='1' ? 'selected'
-                                                                : '' ))>1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_detectability']=='2' ? 'selected'
-                                                                : '' ))>2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['initial_detectability']=='3' ? 'selected'
-                                                                : '' ))>3</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][initial_rpn]"></td>
-
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][risk_acceptance]" id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="n" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected' : '' ))>N
-                                                            </option>
-                                                            <option value="y" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected' : '' ))>Y
-                                                            </option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][proposed_additional_risk_control]"></td>
-
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][residual_severity]" id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_severity']=='1' ? 'selected' : ''
-                                                                ))>1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_severity']=='2' ? 'selected' : ''
-                                                                ))>2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_severity']=='3' ? 'selected' : ''
-                                                                ))>3</option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][residual_probability]"
-                                                            id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_probability']=='1' ? 'selected' : ''
-                                                                ))>1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_probability']=='2' ? 'selected' : ''
-                                                                ))>2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_probability']=='3' ? 'selected' : ''
-                                                                ))>3</option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][residual_detectability]"
-                                                            id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="1" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_detectability']=='1' ? 'selected'
-                                                                : '' ))>1</option>
-                                                            <option value="2" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_detectability']=='2' ? 'selected'
-                                                                : '' ))>2</option>
-                                                            <option value="3" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['residual_detectability']=='3' ? 'selected'
-                                                                : '' ))>3</option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][residual_rpn]"></td>
-
-                                                    <td>
-                                                        <select name="failure_mode_qrms[0][risk_acceptance]" id="">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="n" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected' : '' ))>N
-                                                            </option>
-                                                            <option value="y" ($grid_data_qrms &&
-                                                                isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected' : '' ))>Y
-                                                            </option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="failure_mode_qrms[0][mitigation_proposal]"></td>
-
-                                                    <td><input type="text" class="Action" name=""></td>
-                                                @endif
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Investigation Summary">Conclusion</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Conclusion" id="summernote-8" value="{{ $data->Conclusion }}">{{ $data->Conclusion }}
-                        </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Investigation Summary">Identified Risk</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Identified_Risk" value="{{ $data->Identified_Risk }}" id="summernote-8">{{ $data->Identified_Risk }}
-                        </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Severity Rate">Severity Rate</label>
-                                    <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="negligible" @if ($data->severity_rate == 'negligible') selected @endif>
-                                            Negligible</option>
-                                        <option value="moderate" @if ($data->severity_rate == 'moderate') selected @endif>Moderate
-                                        </option>
-                                        <option value="major" @if ($data->severity_rate == 'major') selected @endif>Major
-                                        </option>
-                                        <option value="fatal" @if ($data->severity_rate == 'fatal') selected @endif>Fatal
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Occurrence">Occurrence</label>
-                                    <select name="Occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="extremely_unilikely" @if ($data->Occurrence == 'extremely_unilikely') selected @endif>
-                                            Extremely Unlikely</option>
-                                        <option value="rare" @if ($data->Occurrence == 'rare') selected @endif>Rare</option>
-                                        <option value="unlikely" @if ($data->Occurrence == 'unlikely') selected @endif>Unlikely
-                                        </option>
-                                        <option value="likely" @if ($data->Occurrence == 'likely') selected @endif>Likely
-                                        </option>
-                                        <option value="very_likely" @if ($data->Occurrence == 'very_likely') selected @endif>Very
-                                            Likely</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Detection">Detection</label>
-                                    <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="impossible" @if ($data->detection == 'impossible') selected @endif>
-                                            Impossible</option>
-                                        <option value="rare" @if ($data->detection == 'rare') selected @endif>Rare</option>
-                                        <option value="unlikely" @if ($data->detection == 'unlikely') selected @endif>Unlikely
-                                        </option>
-                                        <option value="likely" @if ($data->detection == 'likely') selected @endif>Likely
-                                        </option>
-                                        <option value="very_likely" @if ($data->detection == 'very_likely') selected @endif>Very
-                                            Likely</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RPN">RPN</label>
-                                    <div><small class="text-primary">Auto - Calculated</small></div>
-                                    <input type="text" name="rpn" id="analysisRPN" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="col-12 sub-head"></div>
-                            <div class="col-12 mb-4">
-                                <div class="group-input">
-                                    <label for="agenda">
-                                        Risk Matrix
-                                        <button type="button" name="agenda" id="risk_matrix_details">+</button>
-                                        <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;"
-                                            data-bs-toggle="modal" data-bs-target="#risk_matrix">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" style="width: 150%"
-                                            id="risk_matrix_details_details">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr.No #</th>
-                                                    <th>Risk Assessment</th>
-                                                    <th>Review Schedule</th>
-                                                    <th>Actual Reviewed On</th>
-                                                    <th>Recorded By Sign and Date</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms))
-                                                    @foreach ($grid_data_matrix_qrms as $grid_data_matrix_qrms)
-                                                        <tr>
-
-                                                            <!-- <td> <input disabled type="text" name="matrix_qrms[{{ $loop->index }}][serial]" value="1">  </td> -->
-                                                            <td><input disabled type="text"name="serial[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ $key + 1 }}">
-                                                            </td>
-
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="matrix_qrms[{{ $loop->index }}][risk_Assesment]"
-                                                                    value="{{ isset($grid_data_matrix_qrms['risk_Assesment']) ? $grid_data_matrix_qrms['risk_Assesment'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="matrix_qrms[{{ $loop->index }}][review_schedule]"
-                                                                    value="{{ isset($grid_data_matrix_qrms['review_schedule']) ? $grid_data_matrix_qrms['review_schedule'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="matrix_qrms[{{ $loop->index }}][actual_reviewed]"
-                                                                    value="{{ isset($grid_data_matrix_qrms['actual_reviewed']) ? $grid_data_matrix_qrms['actual_reviewed'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="matrix_qrms[{{ $loop->index }}][recorded_by]"
-                                                                    value="{{ isset($grid_data_matrix_qrms['recorded_by']) ? $grid_data_matrix_qrms['recorded_by'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="matrix_qrms[{{ $loop->index }}][remark]"
-                                                                    value="{{ isset($grid_data_matrix_qrms['remark']) ? $grid_data_matrix_qrms['remark'] : '' }}">
-                                                            </td>
-
-                                                            <td><input type="text" class="Action" name=""></td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    {{-- <td><input disabled type="text"name="serial[]"
-                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td> --}}
-
-                                                    <td><input type="text" class="numberDetail"
-                                                            name="matrix_qrms[0][risk_Assesment]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="matrix_qrms[0][review_schedule]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="matrix_qrms[0][actual_reviewed]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="matrix_qrms[0][recorded_by]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="matrix_qrms[0][remark]"></td>
-
-                                                    <td><input type="text" class="Action" name="" disabled></td>
-                                                @endif
-
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <script>
-                            function calculateRiskAnalysis(selectElement) {
-                                // Get the row containing the changed select element
-                                let row = selectElement.closest('tr');
-
-                                // Get values from select elements within the row
-                                let R = parseFloat(document.getElementById('analysisR').value) || 0;
-                                let P = parseFloat(document.getElementById('analysisP').value) || 0;
-                                let N = parseFloat(document.getElementById('analysisN').value) || 0;
-
-                                // Perform the calculation
-                                let result = R * P * N;
-
-                                // Update the result field within the row
-                                document.getElementById('analysisRPN').value = result;
-                            }
-                        </script>
-
-
-                        {{-- <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="classification_by_qa">CAPA Require ? </label>
-                                <select @if ($data->stage == 3) required @endif name="capa_require"
-                                    id="capa_require" @if ($data->stage == 4) disabled @endif>
-                                    <option value="0">-- Select --</option>
-                                    <option @if ($data->capa_require == 'yes') selected @endif value="yes">Yes</option>
-                                    <option @if ($data->capa_require == 'no') selected @endif value="no">No</option>
-                                    <option @if ($data->capa_require == 'na') selected @endif value="na">NA </option>
-                                </select>
-                            </div>
-                            @error('capa_require')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
-
-
-                        <div class="button-block">
-                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
-                                class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
-                            <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                <button type="button" class="backButton">Back</button>
-                            </a>
-                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
-                                class="nextButton" onclick="nextStep()">Next</button>
-                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
-                                    href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                            @if (
-                                $data->stage == 2 ||
-                                    $data->stage == 3 ||
-                                    $data->stage == 4 ||
-                                    $data->stage == 5 ||
-                                    $data->stage == 6 ||
-                                    $data->stage == 7)
-                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                    class="button  launch_extension" data-bs-toggle="modal"
-                                    data-bs-target="#launch_extension">
-                                    Launch Extension
-                                </a> --}}
-                            @endif
-                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                            data-bs-target="#effectivenss_extension">
-                                                            Launch Effectiveness Check
-                                                        </a> -->
-                        </div>
-                    </div>
-                </div>
-
-
                 <!-- capa update -->
                 <div id="CCForm10" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -7366,7 +6843,7 @@
                             </div>
 
                             <div class="button-block">
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
                                     type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                     id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
                                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
@@ -7375,7 +6852,7 @@
                                     </div>
                                     Save
                                 </button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
                                     <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         class="backButton">Back</button>
                                 </a>

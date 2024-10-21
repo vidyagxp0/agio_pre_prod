@@ -478,8 +478,8 @@
                             <th class="w-20" style="width: 25px;">S.No.</th>
                             <th class="w-20">Action</th>
                             <th class="w-20">Responsible</th>
-                            <th class="w-20">Deadline</th>
-                            <th class="w-20">Item Status</th>
+                            <th class="w-20">Target Completion Date</th>
+                            <th class="w-20">Action Status</th>
                         </tr>
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
