@@ -460,43 +460,29 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                    <div class="col-md-12">
-                                        @if ($data->stage == 1)
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department<span
-                                                    class="text-danger">*</span></b></label>
-                                                <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach (Helpers::getDepartments() as $key => $value)
-                                                        <option value="{{ $key }}"
-                                                            @if ($data->initiator_Group == $key) selected @endif>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        @else
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department</b></label>
-                                                <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach (Helpers::getDepartments() as $key => $value)
-                                                        <option value="{{ $key }}"
-                                                            @if ($data->initiator_Group == $key) selected @endif>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Department<span class="text-danger">*</span></b></label>
+                                        <select name="initiator_Group" id="initiator_group"
+                                            @if ($data->stage != 1) disabled @endif>
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    @if ($data->initiator_Group == $key) selected @endif>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="initiator_Group" value="{{ $data->initiator_Group }}">
                                         @endif
-                                        @error('initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
+                                    @error('initiator_Group')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
 
 
                                     <div class="col-lg-6">
@@ -523,162 +509,117 @@
 
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short_Description">Short Description<span
-                                                class="text-danger">*</span></label>
-                                        <span id="rchars">255</span> characters remaining
+                               <div class="col-12">
+    <div class="group-input">
+        <label for="Short_Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255</span> characters remaining
 
-                                        <input name="short_description" id="docname" type="text" maxlength="255"
-                                            required value="{{ $data->short_description }}"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'readonly' : '' }} />
+        <input name="short_description" id="docname" type="text" maxlength="255" required
+            value="{{ $data->short_description }}"
+            @if ($data->stage != 1) readonly @endif />
 
-                                        <p id="docnameError" style="color:red">**Short Description is required</p>
-                                    </div>
-                                </div>
+        @if ($data->stage != 1)
+            <!-- Hidden field to retain the value if input is readonly -->
+            <input type="hidden" name="short_description" value="{{ $data->short_description }}">
+        @endif
+
+        <p id="docnameError" style="color:red">**Short Description is required</p>
+    </div>
+</div>
 
 
-                                @if ($data->stage == 1)
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="type">Type
-                                            @if ($data->stage == 1)
-                                                <span class="text-danger">*</span>
-                                            @endif
-                                        </label>
-                                        <select required name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()" >
-                                            <option required value="">Select Type</option>
-                                            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
-                                                Monthly
-                                            </option>
-                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
-                                                Six Monthly
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                @else
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="type">Type
-                                            @if ($data->stage == 1)
-                                                <span class="text-danger">*</span>
-                                            @endif
-                                        </label>
-                                        <select  readonly name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()" >
-                                            <option  value="">Select Type</option>
-                                            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
-                                                Monthly
-                                            </option>
-                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
-                                                Six Monthly
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                @endif
+
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="type">Type
+            @if ($data->stage == 1)
+                <span class="text-danger">*</span>
+            @endif
+        </label>
+        <select name="summary_recommendation" id="summary_recommendation"
+            onchange="toggleReviewPeriod()"
+            @if ($data->stage != 1) disabled @endif required>
+            <option value="">Select Type</option>
+            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
+                Monthly
+            </option>
+            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
+                Six Monthly
+            </option>
+        </select>
+
+        @if ($data->stage != 1)
+            <!-- Hidden field to retain the value if select is disabled -->
+            <input type="hidden" name="summary_recommendation" value="{{ $data->summary_recommendation }}">
+        @endif
+    </div>
+</div>
+
+
 
                                 <!-- Review Period for Monthly (initially hidden) -->
-                                @if ($data->stage == 1)
+
                                 <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
+                                        <label for="review_period">Review Period
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required
-                                       >
+                                            @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Month</option>
-                                            <option @if ($data->review_period_monthly == 'January') selected @endif value="January">
-                                                January</option>
-                                            <option @if ($data->review_period_monthly == 'February') selected @endif value="February">
-                                                February</option>
-                                            <option @if ($data->review_period_monthly == 'March') selected @endif value="March">
-                                                March</option>
-                                            <option @if ($data->review_period_monthly == 'April') selected @endif value="April">
-                                                April</option>
-                                            <option @if ($data->review_period_monthly == 'May') selected @endif value="May">May
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'June') selected @endif value="June">June
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'July') selected @endif value="July">July
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'August') selected @endif value="August">
-                                                August</option>
-                                            <option @if ($data->review_period_monthly == 'September') selected @endif value="September">
-                                                September</option>
-                                            <option @if ($data->review_period_monthly == 'October') selected @endif value="October">
-                                                October</option>
-                                            <option @if ($data->review_period_monthly == 'November') selected @endif value="November">
-                                                November</option>
-                                            <option @if ($data->review_period_monthly == 'December') selected @endif value="December">
-                                                December</option>
+                                            <option @if ($data->review_period_monthly == 'January') selected @endif value="January">January</option>
+                                            <option @if ($data->review_period_monthly == 'February') selected @endif value="February">February</option>
+                                            <option @if ($data->review_period_monthly == 'March') selected @endif value="March">March</option>
+                                            <option @if ($data->review_period_monthly == 'April') selected @endif value="April">April</option>
+                                            <option @if ($data->review_period_monthly == 'May') selected @endif value="May">May</option>
+                                            <option @if ($data->review_period_monthly == 'June') selected @endif value="June">June</option>
+                                            <option @if ($data->review_period_monthly == 'July') selected @endif value="July">July</option>
+                                            <option @if ($data->review_period_monthly == 'August') selected @endif value="August">August</option>
+                                            <option @if ($data->review_period_monthly == 'September') selected @endif value="September">September</option>
+                                            <option @if ($data->review_period_monthly == 'October') selected @endif value="October">October</option>
+                                            <option @if ($data->review_period_monthly == 'November') selected @endif value="November">November</option>
+                                            <option @if ($data->review_period_monthly == 'December') selected @endif value="December">December</option>
                                         </select>
-                                        <span id="monthly_error" style="color: red; display: none;">Please select a
-                                            month</span>
+
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="review_period_monthly" value="{{ $data->review_period_monthly }}">
+                                        @endif
+
+                                        <span id="monthly_error" style="color: red; display: none;">Please select a month</span>
                                     </div>
                                 </div>
-                                @else
-                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="review_period">Review Period @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
-                                        <select name="review_period_monthly" id="review_period_monthly_select" readonly
-                                       >
-                                            <option value="">Select Month</option>
-                                            <option @if ($data->review_period_monthly == 'January') selected @endif value="January">
-                                                January</option>
-                                            <option @if ($data->review_period_monthly == 'February') selected @endif value="February">
-                                                February</option>
-                                            <option @if ($data->review_period_monthly == 'March') selected @endif value="March">
-                                                March</option>
-                                            <option @if ($data->review_period_monthly == 'April') selected @endif value="April">
-                                                April</option>
-                                            <option @if ($data->review_period_monthly == 'May') selected @endif value="May">May
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'June') selected @endif value="June">June
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'July') selected @endif value="July">July
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'August') selected @endif value="August">
-                                                August</option>
-                                            <option @if ($data->review_period_monthly == 'September') selected @endif value="September">
-                                                September</option>
-                                            <option @if ($data->review_period_monthly == 'October') selected @endif value="October">
-                                                October</option>
-                                            <option @if ($data->review_period_monthly == 'November') selected @endif value="November">
-                                                November</option>
-                                            <option @if ($data->review_period_monthly == 'December') selected @endif value="December">
-                                                December</option>
-                                        </select>
-                                        <span id="monthly_error" style="color: red; display: none;">Please select a
-                                            month</span>
-                                    </div>
-                                </div>
-                                @endif
+
+
 
                                 <!-- Review Period for Six Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select"
-                                            required {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                        <label for="review_period">Review Period
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" required
+                                            @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
-                                            <option @if ($data->review_period_six_monthly == 'January to June') selected @endif
-                                                value="January to June">
+                                            <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
                                                 January to June
                                             </option>
-                                            <option @if ($data->review_period_six_monthly == 'July to December') selected @endif
-                                                value="July to December">
+                                            <option @if ($data->review_period_six_monthly == 'July to December') selected @endif value="July to December">
                                                 July to December
                                             </option>
                                         </select>
-                                        <span id="six_monthly_error" style="color: red; display: none;">Please select a
-                                            six-month period</span>
+
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="review_period_six_monthly" value="{{ $data->review_period_six_monthly }}">
+                                        @endif
+
+                                        <span id="six_monthly_error" style="color: red; display: none;">Please select a six-month period</span>
                                     </div>
                                 </div>
 
@@ -817,20 +758,32 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Proposed Scheduled Start Date @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
+                                        <label for="Audit Start Date">Proposed Scheduled Start Date
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
+
                                             <input type="date" id="start_date_checkdate"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}required
-                                                name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                value="{{ $data->start_date }}" class="hide-input"
+                                                name="start_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ $data->start_date }}"
+                                                class="hide-input"
+                                                @if($data->stage != 1) disabled @endif
+                                                required
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+
+                                            @if($data->stage != 1)
+                                                <!-- Hidden field to retain the value if date input is disabled -->
+                                                <input type="hidden" name="start_date" value="{{ $data->start_date }}">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -1181,29 +1134,38 @@
                             @php
                             $assignedUsers = !empty($data->assign_to) ? explode(',', $data->assign_to) : [];
                         @endphp
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="assign_to">Invite Person Notify
-                                    @if ($data->stage == 2)
-                                        <span class="text-danger">*</span>
-                                    @endif
-                                </label>
+                      <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="assign_to">Invite Person Notify
+                                @if ($data->stage == 2)
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
 
-                                <!-- Disabled select for stages 0 or 2 -->
-                                <select id="assign_to" name="assign_to[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} multiple>
-                                    <option value="">Select a value</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <!-- Disabled select for stages not equal to 1 -->
+                            <select id="assign_to" name="assign_to[]"
+                                @if ($data->stage != 2) disabled @endif multiple>
+                                <option value="">Select a value</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                                @error('assign_to')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            @if ($data->stage != 2)
+                                <!-- Hidden fields to retain selected values when select is disabled -->
+                                @foreach ($assignedUsers as $assignedUser)
+                                    <input type="hidden" name="assign_to[]" value="{{ $assignedUser }}">
+                                @endforeach
+                            @endif
+
+                            @error('assign_to')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
+                    </div>
+
 
 
                             {{-- <div class="col-12">
