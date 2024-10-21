@@ -290,6 +290,10 @@
                             Child
                         </button>
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Risk Assessment', 42))
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Information Required
+                        </button>
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             In Approval
                         </button>
@@ -622,54 +626,53 @@
                                         </script>
 
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Type..">Type</label>
-                                                <select name="type" id="type"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">Enter Your Selection Here</option>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Type..">Type</label>
+                                            <select name="type" id="type"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <option value="">Enter Your Selection Here</option>
 
-                                                    <option {{ $data->type == 'Business Risk' ? 'selected' : '' }} value="Business Risk">Business Risk</option>
-                                                    <option {{ $data->type == 'Customer Related' ? 'selected' : '' }} value="Customer Related">Customer-Related Risk(Complaint) </option>
-                                                    <option {{ $data->type == 'Opportunity' ? 'selected' : '' }} value="Opportunity">Opportunity</option>
-                                                    <option {{ $data->type == 'Market' ? 'selected' : '' }} value="Market">Market</option>
-                                                    <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational Risk">Operational Risk</option>
-                                                    <option {{ $data->type == 'Strategic Rick' ? 'selected' : '' }} value="Strategic Risk">Strategic Risk</option>
-                                                    <option {{ $data->type == 'Other Data' ? 'selected' : '' }} value="Other Data"> Other</option>
-                                                </select>
-                                            </div>
+                                                <option {{ $data->type == 'Business Risk' ? 'selected' : '' }} value="Business Risk">Business Risk</option>
+                                                <option {{ $data->type == 'Customer Related' ? 'selected' : '' }} value="Customer Related">Customer-Related Risk (Complaint)</option>
+                                                <option {{ $data->type == 'Opportunity' ? 'selected' : '' }} value="Opportunity">Opportunity</option>
+                                                <option {{ $data->type == 'Market' ? 'selected' : '' }} value="Market">Market</option>
+                                                <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational Risk">Operational Risk</option>
+                                                <option {{ $data->type == 'Strategic Risk' ? 'selected' : '' }} value="Strategic Risk">Strategic Risk</option>
+                                                <option {{ $data->type == 'Other Data' ? 'selected' : '' }} value="Other Data"> Other</option>
+                                            </select>
                                         </div>
+                                    </div>
 
+                                    <div id="typeOfError" class="group-input col-6" style="display:none;">
+                                        <label for="otherFieldsUser">Other(Type)</label>
+                                        <input type="text" name="other_type" class="form-control"
+                                            value="{{ old('other_type', $data->other_type ?? '') }}" />
+                                    </div>
 
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                        <div id="typeOfError" class="group-input col-6" style="display:none;">
-                                            <label for="otherFieldsUser">Other(Type)</label>
-                                            <input type="text" name="other_type" class="form-control"
-                                                value="{{ old('other_type', $data->other_type ?? '') }}" />
-                                        </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Initially hide the field
+                                            $('#typeOfError').hide();
 
-                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-                                        <script>
-                                            $(document).ready(function() {
-                                                // Initially hide the field
-                                                $('#typeOfError').hide();
-
-                                                $('select[name=type]').change(function() {
-                                                    const selectedVal = $(this).val();
-                                                    if (selectedVal === 'Other_data') {
-                                                        $('#typeOfError').show();
-                                                    } else {
-                                                        $('#typeOfError').hide();
-                                                    }
-                                                });
-
-                                                // Optionally, check the current value when the page loads in case of form errors
-                                                if ($('select[name=type]').val() === 'Other_data') {
+                                            $('select[name=type]').change(function() {
+                                                const selectedVal = $(this).val();
+                                                if (selectedVal === 'Other Data') { // Corrected value check
                                                     $('#typeOfError').show();
+                                                } else {
+                                                    $('#typeOfError').hide();
                                                 }
                                             });
-                                        </script>
+
+                                            // Optionally, check the current value when the page loads in case of form errors
+                                            if ($('select[name=type]').val() === 'Other Data') { // Corrected value check
+                                                $('#typeOfError').show();
+                                            }
+                                        });
+                                    </script>
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">

@@ -10702,8 +10702,14 @@ class RiskManagementController extends Controller
         if (!empty($data)) {
             $users = User::all();
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
-            $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
+            // $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
             // dd($failure_mode);
+        // $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->first();
+        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->latest()->first();
+        //  dd($riskEffectAnalysis);
+
+
+
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
             $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
@@ -10713,7 +10719,7 @@ class RiskManagementController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','data1', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'failure_mode', 'action_plan', 'users', 'mitigation'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','data1', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'riskEffectAnalysis', 'action_plan', 'users', 'mitigation'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
