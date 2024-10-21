@@ -639,6 +639,11 @@
 
                 <div class="block-head"> Failure Mode And Effect Analysis </div>
 
+
+
+                <!-------------------- new data -->
+
+
                 <table>
 
 
@@ -653,20 +658,23 @@
                     </thead>
                     <tbody>
                         @php
-                            $measurement_1 = unserialize($failure_mode->risk_factor);
-                            $measurement_2 = unserialize($failure_mode->problem_cause);
-                            $measurement_3 = unserialize($failure_mode->existing_risk_control);
+                            // Unserialize data and ensure it's an array
+                            $measurement_1 = is_array(unserialize($riskEffectAnalysis->risk_factor)) ? unserialize($riskEffectAnalysis->risk_factor) : [];
+                            $measurement_2 = is_array(unserialize($riskEffectAnalysis->problem_cause)) ? unserialize($riskEffectAnalysis->problem_cause) : [];
+                            $measurement_3 = is_array(unserialize($riskEffectAnalysis->existing_risk_control)) ? unserialize($riskEffectAnalysis->existing_risk_control) : [];
                             $row_number = 1;
                         @endphp
 
-                        {{-- @for ($i = 0; $i < count($measurement_1); $i++)
-                            <tr>
-                                <td class="w-10">{{ $row_number++ }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-                            </tr>
-                        @endfor --}}
+                        <tbody>
+                            @for ($i = 0; $i < count($measurement_1); $i++)
+                                <tr>
+                                    <td class="w-10">{{ $row_number++ }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
+                                </tr>
+                            @endfor
+                        </tbody>
                     </tbody>
                 </table>
 
@@ -682,14 +690,15 @@
                     </thead>
                     <tbody>
                         @php
-                            $measurement_4 = unserialize($failure_mode->initial_severity);
-                            $measurement_5 = unserialize($failure_mode->initial_probability);
-                            $measurement_6 = unserialize($failure_mode->initial_detectability);
-                            $measurement_7 = unserialize($failure_mode->initial_rpn);
+                            // Unserialize data and ensure each is an array
+                            $measurement_4 = is_array(unserialize($riskEffectAnalysis->initial_severity)) ? unserialize($riskEffectAnalysis->initial_severity) : [];
+                            $measurement_5 = is_array(unserialize($riskEffectAnalysis->initial_detectability)) ? unserialize($riskEffectAnalysis->initial_detectability) : [];
+                            $measurement_6 = is_array(unserialize($riskEffectAnalysis->initial_probability)) ? unserialize($riskEffectAnalysis->initial_probability) : [];
+                            $measurement_7 = is_array(unserialize($riskEffectAnalysis->initial_rpn)) ? unserialize($riskEffectAnalysis->initial_rpn) : [];
                             $row_number = 1; // Reset row number
                         @endphp
 
-                        {{-- @for ($i = 0; $i < count($measurement_4); $i++)
+                        @for ($i = 0; $i < count($measurement_4); $i++)
                             <tr>
                                 <td class="w-10">{{ $row_number++ }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
@@ -697,8 +706,9 @@
                                 <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
                             </tr>
-                        @endfor --}}
+                        @endfor
                     </tbody>
+
                 </table>
 
                 <table>
@@ -714,11 +724,11 @@
                     </thead>
                     <tbody>
                         @php
-                            $measurement_8 = unserialize($failure_mode->risk_control_measure);
-                            $measurement_9 = unserialize($failure_mode->residual_severity);
-                            $measurement_10 = unserialize($failure_mode->residual_probability);
-                            $measurement_11 = unserialize($failure_mode->residual_detectability);
-                            $measurement_12 = unserialize($failure_mode->residual_rpn);
+                            $measurement_8 = unserialize($riskEffectAnalysis->risk_control_measure);
+                            $measurement_9 = unserialize($riskEffectAnalysis->residual_severity);
+                            $measurement_10 = unserialize($riskEffectAnalysis->residual_probability);
+                            $measurement_11 = unserialize($riskEffectAnalysis->residual_detectability);
+                            $measurement_12 = unserialize($riskEffectAnalysis->residual_rpn);
                             $row_number = 1; // Reset row number
                         @endphp
 
@@ -758,42 +768,29 @@
                     </thead>
 
                     <tbody>
-                        {{-- @php
-                        $measurement_13 = unserialize($failure_mode->risk_acceptance);
-                        $measurement_14 = unserialize($failure_mode->mitigation_proposal);
-                        $measurement_15 = unserialize($failure_mode->risk_acceptance2);
-                        $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
-                        $row_number = 1;
-                    @endphp --}}
-
                         @php
-                            $measurement_13 = unserialize($failure_mode->risk_acceptance);
-                            $measurement_14 = unserialize($failure_mode->mitigation_proposal);
-                            $measurement_15 = unserialize($failure_mode->risk_acceptance2);
+                            // Unserialize data and ensure each variable is an array
+                            $measurement_13 = is_array(unserialize($riskEffectAnalysis->risk_acceptance)) ? unserialize($riskEffectAnalysis->risk_acceptance) : [];
+                            $measurement_14 = is_array(unserialize($riskEffectAnalysis->risk_acceptance2)) ? unserialize($riskEffectAnalysis->risk_acceptance2) : [];
+                            $measurement_15 = is_array(unserialize($riskEffectAnalysis->mitigation_proposal)) ? unserialize($riskEffectAnalysis->mitigation_proposal) : [];
 
-                            // Ensure each variable is an array; if not, set it to an empty array
-                            $measurement_13 = is_array($measurement_13) ? $measurement_13 : [];
-                            $measurement_14 = is_array($measurement_14) ? $measurement_14 : [];
-                            $measurement_15 = is_array($measurement_15) ? $measurement_15 : [];
-
-                            // Now you can safely use count() since all variables are arrays
+                            // Calculate the maximum count of all arrays
                             $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
+
+                            // Reset row number
                             $row_number = 1;
                         @endphp
-
 
                         @for ($i = 0; $i < $max_count; $i++)
                             <tr>
                                 <td class="w-10">{{ $row_number++ }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}
-                                </td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}
-                                </td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}
-                                </td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
                             </tr>
                         @endfor
                     </tbody>
+
                 </table>
 
 
