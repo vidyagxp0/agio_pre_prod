@@ -1175,9 +1175,9 @@
                                                 onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                         </label>
                                         <div class="instruction">
-                                            <small class="text-primary">
+                                            {{-- <small class="text-primary">
                                                 Refer Attached Performance Evaluation Grid
-                                            </small>
+                                            </small> --}}
                                         </div>
                                         <table class="table table-bordered" id="management_review_participants">
                                             <thead>

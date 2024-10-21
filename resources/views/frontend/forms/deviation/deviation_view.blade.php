@@ -1020,7 +1020,7 @@
                     submitForm();
                 });
 
-                $('#ChangesaveButton04').click(function() {
+                $('#ChangesaveButton0411').click(function() {
                     document.getElementById('formNameField').value = 'capa';
                     submitForm();
                 });
@@ -1679,7 +1679,7 @@
                                                 name="audit-agenda-grid"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 value="audit-agenda-grid" id="ObservationAdd">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modalDEV"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1829,7 +1829,7 @@
                                                 name="audit-agenda-grid"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 value="audit-agenda-grid" id="ReferenceDocument">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal1"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1959,7 +1959,7 @@
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="Product_Details">+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#product-batch-grid"
+                                                        data-bs-target="#observation-field-instruction-modal2"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                         (Launch Instruction)
                                                     </span>
@@ -3592,16 +3592,20 @@
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes') selected @endif
+                                                {{-- <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                     value='yes'>
-                                                    Yes</option>
+                                                    Yes</option> --}}
+                                                    <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
                                                 <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                     value='na'>
                                                     NA</option>
-                                            </select>
+                                                    {{-- <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
+                                            </select> --}}
+                                        </select>
 
                                         </div>
                                     </div>
@@ -3793,15 +3797,13 @@
                                             <select name="Production_Table_Review" disabled
                                                 id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes') selected @endif
-                                                    value='yes'>
-                                                    Yes</option>
+                                                <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Table_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Production_Table_Review == 'na') selected @endif
+                                                        value='na'>
+                                                        NA</option>
                                             </select>
 
                                         </div>
@@ -4000,9 +4002,10 @@
                                                 <option @if ($data1->Production_Injection_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Production_Injection_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4181,9 +4184,7 @@
                                                 <option @if ($data1->Production_Injection_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4382,9 +4383,10 @@
                                                 <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4563,9 +4565,7 @@
                                                 <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4754,9 +4754,10 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Human_Resource_review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Human_Resource_review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4926,9 +4927,7 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Human_Resource_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5111,9 +5110,10 @@
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5309,9 +5309,7 @@
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5503,9 +5501,10 @@
                                                 <option @if ($data1->Store_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Store_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Store_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5677,9 +5676,7 @@
                                                 <option @if ($data1->Store_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Store_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5858,9 +5855,10 @@
                                                 <option @if ($data1->Engineering_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Engineering_review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Engineering_review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6037,9 +6035,7 @@
                                                 <option @if ($data1->Engineering_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Engineering_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6215,9 +6211,10 @@
                                                 <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6401,9 +6398,7 @@
                                                 <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6585,9 +6580,10 @@
                                             <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
                                                 No
                                             </option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
+                                            {{-- <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
                                                 NA
-                                            </option>
+                                            </option> --}}
+                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -6769,9 +6765,10 @@
                                                 <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6956,9 +6953,7 @@
                                                 <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -7142,9 +7137,10 @@
                                                 <option @if ($data1->Quality_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Quality_review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Quality_review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -7327,9 +7323,7 @@
                                                 <option @if ($data1->Quality_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Quality_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -7505,9 +7499,10 @@
                                                 <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Microbiology_Review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Microbiology_Review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -7684,9 +7679,7 @@
                                                 <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Microbiology_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -7864,9 +7857,10 @@
                                                 <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Environment_Health_review == 'na') selected @endif
+                                                {{-- <option @if ($data1->Environment_Health_review == 'na') selected @endif
                                                     value='na'>
-                                                    NA</option>
+                                                    NA</option> --}}
+                                                    <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -8051,9 +8045,7 @@
                                                 <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Environment_Health_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -8241,8 +8233,9 @@
                                                     value='yes'>Yes</option>
                                                 <option @if ($data1->ContractGiver_Review == 'no') selected @endif
                                                     value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
+                                                {{-- <option @if ($data1->ContractGiver_Review == 'na') selected @endif
+                                                    value='na'>NA</option> --}}
+                                                    <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
                                             </select>
                                         </div>
                                     </div>
@@ -8378,8 +8371,7 @@
                                                     value='yes'>Yes</option>
                                                 <option @if ($data1->ContractGiver_Review == 'no') selected @endif
                                                     value='no'>No</option>
-                                                <option @if ($data1->ContractGiver_Review == 'na') selected @endif
-                                                    value='na'>NA</option>
+                                                    <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
                                             </select>
                                         </div>
                                     </div>
@@ -10681,7 +10673,7 @@
                                     <button type="button" name="audit-agenda-grid"
                                         id="investigationTeamAdd">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#investigationTeamDetailTable"
+                                        data-bs-target="#observation-field-instruction-modalITAR"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                         (Launch Instruction)
                                     </span>
@@ -10813,6 +10805,11 @@
         <label for="agenda">
             Failure Mode and Effect Analysis
             <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+            <span class="text-primary" data-bs-toggle="modal"
+            data-bs-target="#observation-field-instruction-modalInferenceFMEA"
+            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            (Launch Instruction)
+        </span>
         </label>
         <div class="table-responsive failure">
             <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management_2">
@@ -11276,6 +11273,11 @@
                                     Inference
                                     <button type="button"
                                         onclick="addInference('Inference')"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modalInference"
+                                        style="font-size: 0.8rem; font-weight: 400;">
+                                        (Launch Instruction)
+                                    </span>
                                 </label>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="Inference">
@@ -11316,10 +11318,10 @@
                                                                     {{ $inference_type == 'Methods' ? 'selected' : '' }}>
                                                                     Methods</option>
                                                                 <option value="Environment"
-                                                                    {{ $inference_type == 'Environment' ? 'selected' : '' }}>
+                                                                    {{ $inference_type == 'Mother Environment' ? 'selected' : '' }}>
                                                                     Mother Environment</option>
                                                                 <option value="Manpower"
-                                                                    {{ $inference_type == 'Manpower' ? 'selected' : '' }}>
+                                                                    {{ $inference_type == 'Man' ? 'selected' : '' }}>
                                                                     Man</option>
                                                                 <option value="Machine"
                                                                     {{ $inference_type == 'Machine' ? 'selected' : '' }}>
@@ -11414,7 +11416,7 @@
 
                                 var cell2 = newRow.insertCell(1);
                                 cell2.innerHTML =
-                                    "<select  name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Environment'>Environment</option><option value='Manpower'>Manpower</option><option value='Machine'>Machine</option></select>";
+                                    "<select  name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Mother Environment'>Mother Environment</option><option value='Man'>Man</option><option value='Machine'>Machine</option></select>";
 
                                 var cell3 = newRow.insertCell(2);
                                 cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
@@ -12905,6 +12907,11 @@
                                     <button type="button" name="agenda"
                                         onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
                                         {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modalInferenceFMEA"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
                                 </label>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" style="width: 200%"
@@ -13349,490 +13356,165 @@
                     <div class="inner-block-content">
                         <div class="row">
 
-                            <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                                                                                                                                        <label for="CAPA_Number"><b>CAPA No</b></label>
-                                                                                                                                                                                                                                                                                        <input disabled type="text" name="capa_number">
-                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                </div> -->
-                            <!-- <div class="col-lg-12">
-                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                    <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                    <select name="Other1_Department_person"
-                                                                                                                                                                                                                                                                                                     @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                                                                                                                                                                                                                                                                        <option value="0">-- Select --</option>
-                                                                                                                                                                                                                                                                                                        <option @if ($data1->Other1_Department_person == 'Production') selected @endif
-                                                                                                                                                                                                                                                                                                            value="Production">Production</option>
-                                                                                                                                                                                                                                                                                                        <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
-                                                                                                                                                                                                                                                                                                           value="Warehouse"> Warehouse</option>
-                                                                                                                                                                                                                                                                                                        <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
-                                                                                                                                                                                                                                                                                                                        value="Project management">Project management</option>
-
-                                                                                                                                                                                                                                                                                                    </select>
-
-                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                            </div> -->
-                            <!-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group"><b>Name of the Department</b></label>
-                                    <select name="department_capa" id="department_capa"
-                                        @if ($data->stage == 4) disabled @endif id="department_capa"
-                                        value="{{ $data->department_capa }}">
-
-                                        <option value="">-- Select --</option>
-                                        <option value="Corporate Quality Assurance"
-                                            @if ($data->department_capa == 'Corporate Quality Assurance') selected @endif>
-                                            Corporate Quality Assurance</option>
-                                        <option value="Quality Assurance"
-                                            @if ($data->department_capa == 'Quality Assurance') selected @endif>
-                                            Quality Assurance</option>
-                                        <option value="Quality " @if ($data->department_capa == 'Quality ') selected @endif>
-                                            Quality Control</option>
-                                        <option value="Quality Control (Microbiology department)"
-                                            @if ($data->department_capa == 'Quality Control (Microbiology department)') selected @endif>
-                                            Quality Control (Microbiology department)</option>
-                                        <option value="Production General"
-                                            @if ($data->department_capa == 'Production General') selected @endif>
-                                            Production General</option>
-                                        <option value="Production Liquid Orals"
-                                            @if ($data->department_capa == 'Production Liquid Orals') selected @endif>
-                                            Production Liquid Orals</option>
-                                        <option value="Production Tablet and Powder"
-                                            @if ($data->department_capa == 'Production Tablet and Powder') selected @endif>
-                                            Production Tablet and Powder</option>
-                                        <option value="Production External (Ointment, Gels, Creams and Liquid)"
-                                            @if ($data->department_capa == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
-                                            Production External (Ointment, Gels, Creams and Liquid)</option>
-                                        <option value="Production Capsules"
-                                            @if ($data->department_capa == 'Production Capsules') selected @endif>
-                                            Production Capsules</option>
-                                        <option value="Production Injectable"
-                                            @if ($data->department_capa == 'Production Injectable') selected @endif>
-                                            Production Injectable</option>
-                                        <option value="Engineering" @if ($data->departmEngineeringt_capa == 'EN') selected @endif>
-                                            Engineering</option>
-                                        <option value="Human Resource"
-                                            @if ($data->department_capa == 'Human Resource') selected @endif>
-                                            Human Resource</option>
-                                        <option value="Store" @if ($data->department_capa == 'Store') selected @endif>
-                                            Store</option>
-                                        <option value="Electronic Data Processing"
-                                            @if ($data->department_capa == 'Electronic Data Processing') selected @endif>
-                                            Electronic Data Processing</option>
-                                        <option value="Formulation Development"
-                                            @if ($data->department_capa == 'Formulation Development') selected @endif>
-                                            Formulation Development</option>
-                                        <option value="AL" @if ($data->department_capa == 'AL') selected @endif>
-                                            Analytical research and Development Laboratory</option>
-                                        <option value="Packaging Development"
-                                            @if ($data->department_capa == 'Packaging Development') selected @endif>
-                                            Packaging Development</option>
-                                        <option value="Purchase Department"
-                                            @if ($data->department_capa == 'Purchase Department') selected @endif>
-                                            Purchase Department</option>
-                                        <option value="Document Cell"
-                                            @if ($data->department_capa == 'Document Cell') selected @endif>
-                                            Document Cell</option>
-                                        <option value="Regulatory Affairs"
-                                            @if ($data->department_capa == 'Regulatory Affairs') selected @endif>
-                                            Regulatory Affairs</option>
-                                        <option value="Pharmacovigilance"
-                                            @if ($data->department_capa == 'Pharmacovigilance') selected @endif>
-                                            Pharmacovigilance</option>
-                                    </select>
-                                    @error('department_capa')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                <div class="group-input input-date">
-                                    <label for="Deviation category">Source of CAPA</label>
-                                    <select name="source_of_capa" id="Deviation_category"
-                                        @if ($data->stage == 4) disabled @endif id="Deviation_category"
-                                        value="{{ $data->source_of_capa }}">
-                                        <option value="0">-- Select -- </option>
-                                        <option @if ($data->source_of_capa == 'Deviation') selected @endif value="Deviation">
-                                            Deviation
-                                        </option>
-                                        <option @if ($data->source_of_capa == 'OS/OT') selected @endif value="OS/OT">OS/OT
-                                        </option>
-                                        <option @if ($data->source_of_capa == 'Audit_Obs') selected @endif value="Audit_Obs">
-                                            Audit
-                                            Observation</option>
-                                        <option @if ($data->source_of_capa == 'Complaint') selected @endif value="Complaint">
-                                            Complaint
-                                        </option>
-                                        <option @if ($data->source_of_capa == 'Product_Recall') selected @endif
-                                            value="Product_Recall">
-                                            Product Recall</option>
-                                        <option @if ($data->source_of_capa == 'Returned_Goods') selected @endif
-                                            value="Returned_Goods">
-                                            Returned Goods</option>
-                                        <option @if ($data->source_of_capa == 'APQR') selected @endif value="APQR">APQR
-                                        </option>
-                                        <option @if ($data->source_of_capa == 'Management_Review_Action_Plan') selected @endif
-                                            value="Management_Review_Action_Plan">Management Review Action Plan</option>
-                                        <option @if ($data->source_of_capa == 'Investigation') selected @endif
-                                            value="Investigation">
-                                            Investigation</option>
-                                        <option @if ($data->source_of_capa == 'Internal_Review') selected @endif
-                                            value="Internal_Review">
-                                            Internal Review</option>
-                                        <option @if ($data->source_of_capa == 'Quality_Risk_Assessment') selected @endif
-                                            value="Quality_Risk_Assessment">Quality Risk Assessment</option>
-                                        <option value="Others">Others</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6" id="capa_others_block" style="display: none">
-                                <div class="group-input">
-                                    <label for="others">Others <span id="asteriskInviothers" style="display: none"
-                                            class="text-danger">*</span></label>
-                                    <input type="text" id="others" name="capa_others" class="others">
-                                </div>
-                            </div>
-
-                            <script>
-                                $('select[name=source_of_capa]').change(function() {
-                                    $(this).val() == 'Others' ? $('#capa_others_block').fadeIn() : $('#capa_others_block').fadeOut()
-                                })
-                            </script>
-
-                            <div class="col-lg-6" id="others_block">
-                                <div class="group-input">
-                                    <label for="others">Source Document</label>
-                                    <input type="text" id="source_doc" name="source_doc"
-                                        value="{{ $data->source_doc }}" class="source_doc">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description_of_Discrepancy">Description of Discrepancy </label>
-                                    <textarea class="tiny" name="Description_of_Discrepancy" id="Description_of_Discrepancy" value="">{{ $data->Description_of_Discrepancy }}</textarea>
-                                </div>
-                            </div> -->
+                            <!-- Root Cause -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Root_Cause">Root Cause</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="capa_root_cause" id="capa_root_cause">{{ $data->capa_root_cause }}</textarea>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="tiny" name="capa_root_cause" id="capa_root_cause">{{ old('capa_root_cause', $data->capa_root_cause) }}</textarea>
                                 </div>
                             </div>
+
+                            <!-- Immediate Action Taken -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Immediate_Action_Take" id="Immediate_Action_Take">{{ $data->Immediate_Action_Take }}</textarea>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="tiny" name="Immediate_Action_Take" id="Immediate_Action_Take">{{ old('Immediate_Action_Take', $data->Immediate_Action_Take) }}</textarea>
                                 </div>
                             </div>
+
+                            <!-- Corrective Action Details -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Corrective_Action_Details">Corrective Action Details</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Corrective_Action_Details" id="Corrective_Action_Details" value="">{{ $data->Corrective_Action_Details }}</textarea>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="tiny" name="Corrective_Action_Details" id="Corrective_Action_Details">{{ old('Corrective_Action_Details', $data->Corrective_Action_Details) }}</textarea>
                                 </div>
                             </div>
+
+                            <!-- Preventive Action Details -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Preventive_Action_Details">Preventive Action Details</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Preventive_Action_Details" id="Preventive_Action_Details" value="">{{ $data->Preventive_Action_Details }}</textarea>
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Audit Schedule End Date">Target Completion Date</label>
-                                    <div class="calenderauditee">
-
-
-                                        <input readonly type="text" id="Capa_reported_date"
-                                            value="{{ date('d-M-Y') }}" name="capa_completed_date"
-                                            style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))" />
-                                        <input type="date" value="{{ $data->capa_completed_date }}"
-                                            name="capa_completed_date"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            value="" oninput="handleDateInput(this, 'Capa_reported_date')" />
-                                    </div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="tiny" name="Preventive_Action_Details" id="Preventive_Action_Details">{{ old('Preventive_Action_Details', $data->Preventive_Action_Details) }}</textarea>
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-3">
+                            <!-- CAPA Closure Attachment -->
+                            <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Interim_Control">Interim Control(If Any)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Interim_Control" id="Interim_Control" value="">{{ $data->Interim_Control }}</textarea>
-                                </div>
-                            </div>
-                            <div class="sub-head">
-                                CAPA Implementation
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Corrective_Action_Taken">Corrective Action Taken</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Corrective_Action_Taken" id="Corrective_Action_Taken" value="">{{ $data->Corrective_Action_Taken }}</textarea>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Preventive_action_Taken">Preventive Action Taken</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Preventive_action_Taken" id="Preventive_action_Taken" value="">{{ $data->Preventive_action_Taken }}</textarea>
-                                </div>
-                            </div>
-                            <div class="sub-head">
-                                CAPA Closure
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="CAPA_Closure_Comments">CAPA Closure Comments</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require
-                                            completion</small></div>
-                                    <textarea class="" name="CAPA_Closure_Comments" id="CAPA_Closure_Comments" value="">{{ $data->CAPA_Closure_Comments }}</textarea>
-                                </div> -->
-
-                                {{-- <div class="col-lg-12">
-                                    @if ($data->stage == 7)
-                                        <div class="group-input">
-                                            <label for="CAPA_Closure_attachment Attachment">CAPA
-                                                Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="CAPA_Closure_attachment">
-                                                    @if ($data->CAPA_Closure_attachment)
-                                                        @foreach (json_decode($data->CAPA_Closure_attachment) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="CAPA_Closure_attachment"
-                                                        name="CAPA_Closure_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'CAPA_Closure_attachment')"
-                                                        value=""
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}
-                                                        multiple>
-                                                </div>
-                                            </div>
+                                    <label for="CAPA_Closure_attachment">CAPA Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="CAPA_Closure_attachment">
+                                            @if ($data->CAPA_Closure_attachment)
+                                                @foreach(json_decode($data->CAPA_Closure_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_CAPA_Closure_attachment[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
                                         </div>
-                                    @else
-                                        <div class="group-input">
-                                            <label for="CAPA_Closure_attachment Attachment">CAPA
-                                                Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="CAPA_Closure_attachment">
-                                                    @if ($data->CAPA_Closure_attachment)
-                                                        @foreach (json_decode($data->CAPA_Closure_attachment) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="CAPA_Closure_attachment"
-                                                        name="CAPA_Closure_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'CAPA_Closure_attachment')"
-                                                        value=""
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-
-
-                                </div> --}}
-                                    <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="CAPA_Closure_attachment">CAPA
-                                                Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="CAPA_Closure_attachment">
-                                                @if ($data->CAPA_Closure_attachment)
-                                                    @foreach(json_decode($data->CAPA_Closure_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                            </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                            </a>
-                                                            <input type="hidden" name="existing_CAPA_Closure_attachment[]" value="{{ $file }}">
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="CAPA_Closure_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'CAPA_Closure_attachment')" multiple>
-                                            </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="CAPA_Closure_attachment[]"
+                                                   {{ in_array($data->stage, [0, 8]) ? 'disabled' : '' }}
+                                                   oninput="addMultipleFiles(this, 'CAPA_Closure_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Hidden field to keep track of files to be deleted -->
-                                <input type="hidden" id="deleted_CAPA_Closure_attachment" name="deleted_CAPA_Closure_attachment" value="">
+                            <!-- Hidden Field for Deleted Attachments -->
+                            <input type="hidden" id="deleted_CAPA_Closure_attachment" name="deleted_CAPA_Closure_attachment" value="">
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                            <!-- File Removal and Addition Script -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
 
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
 
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
-
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_CAPA_Closure_attachment');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
                                                 }
-                                            });
+
+                                                // Track deleted files
+                                                const deletedFilesInput = document.getElementById('deleted_CAPA_Closure_attachment');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
                                         });
                                     });
+                                });
 
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
 
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
 
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
 
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#';  // Adjust for preview functionality
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
 
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
 
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
 
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
+                                        fileListContainer.appendChild(fileContainer);
                                     }
-                                </script>
-                            </div>
+                                }
+                            </script>
 
+                            <!-- Form Buttons -->
                             <div class="button-block">
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                    type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                    id="ChangesaveButton04" class=" saveAuditFormBtn d-flex"
-                                    style="align-items: center;">
-                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                                        role="status">
+                                <button type="submit"
+                                        class="saveAuditFormBtn d-flex"
+                                        id="ChangesaveButton0411"
+                                        style="justify-content: center; width: 4rem; margin-left: 1px;"
+                                        {{ in_array($data->stage, [0, 12]) ? 'disabled' : '' }}>
+                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
                                     Save
                                 </button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                {{-- <a href="/rcms/qms-dashboard"
-                                style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                    class="backButton">Back</button>
-                            </a> --}}
-
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
-                                    class="nextButton" onclick="nextStep()">Next</button>
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                    type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                                @if (
-                                    $data->stage == 2 ||
-                                        $data->stage == 3 ||
-                                        $data->stage == 4 ||
-                                        $data->stage == 5 ||
-                                        $data->stage == 6 ||
-                                        $data->stage == 7)
-                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> --}}
-                                @endif
-                                <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                    </a> -->
+                                <button type="button" class="nextButton" onclick="nextStep()" style="justify-content: center; width: 4rem; margin-left: 1px;">Next</button>
+                                <button type="button" style="justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
+
+
                 <!-- investigation and capa -->
                 <!-- <div id="CCForm3" class="inner-block cctabcontent">
                                                                                                                                                                                                                                                                                     <div class="inner-block-content">
@@ -14945,19 +14627,20 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
-                                    <div class="static">{{ $data->submit_by }}</div>
+                                    <div class="">{{ $data->submit_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit on">Submit On :-</label>
-                                    <div class="static">{{ $data->submit_on }}</div>
+                                    <div class="">{{ $data->submit_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="submit comment">Submit Comment :-</label>
-                                    <div class="">{{ $data->submit_comment }}</div>
+                                    <div class="">{{ $data->submit_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -14965,61 +14648,59 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Review Complete By :-</label>
-                                    <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
+                                    <div class="">{{ $data->HOD_Review_Complete_By ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete On">HOD Review Complete On :-</label>
-                                    <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
+                                    <div class="">{{ $data->HOD_Review_Complete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style=" ">
+                                <div class="group-input">
                                     <label for="HOD Review Comments">HOD Review Complete Comment :-</label>
-                                    <div class="">{{ $data->HOD_Review_Comments }}</div>
+                                    <div class="">{{ $data->HOD_Review_Comments ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="sub-head">Request For Cancellation</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By">Request For Cancellation By :-</label>
-                                    <div class="static">{{ $data->pending_Cancel_by }}</div>
+                                    <div class="">{{ $data->pending_Cancel_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Request For Cancellation On :-</label>
-                                    <div class="static">{{ $data->pending_Cancel_on }}</div>
+                                    <div class="">{{ $data->pending_Cancel_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="Approved Comments">Request For Cancellation Comment :-</label>
-                                    <div class="">{{ $data->pending_Cancel_comment }}</div>
+                                    <div class="">{{ $data->pending_Cancel_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
-
 
                             <div class="sub-head">QA/CQA Initial Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
+                                    <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By :-</label>
+                                    <div class="">{{ $data->QA_Initial_Review_Complete_By ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
+                                    <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On :-</label>
+                                    <div class="">{{ $data->QA_Initial_Review_Complete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Complete Comment:-</label>
-                                    <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Complete Comment :-</label>
+                                    <div class="">{{ $data->QA_Initial_Review_Comments ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -15027,88 +14708,79 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                    <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
+                                    <div class="">{{ $data->CFT_Review_Complete_By ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                    <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
+                                    <div class="">{{ $data->CFT_Review_Complete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="CFT Review Comments">CFT Review Complete Comment :-</label>
-                                    <div class="">{{ $data->CFT_Review_Comments }}</div>
+                                    <div class="">{{ $data->CFT_Review_Comments ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
-
-                             <div class="sub-head">CFT Review Not Required</div>
+                            <div class="sub-head">CFT Review Not Required</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
-                                    <div class="static">{{ $data->cft_review_not_req_by }}</div>
+                                    <div class="">{{ $data->cft_review_not_req_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Not Required On">CFT Review Not Required On :-</label>
-                                    <div class="static">{{ $data->cft_review_not_req_on }}</div>
+                                    <div class="">{{ $data->cft_review_not_req_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="CFT Review Comments">CFT Review Not Required Comment :-</label>
-                                    <div class="">{{ $data->cft_review_not_req_comment }}</div>
+                                    <div class="">{{ $data->cft_review_not_req_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
-
-
-                            <div class="sub-head"> QA/CQA Final Assessement Complete</div>
+                            <div class="sub-head">QA/CQA Final Assessement Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete By"> QA/CQA Final Assessement Complete By
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
+                                    <label for="QA/CQA Final Review Complete By">QA/CQA Final Assessement Complete By :-</label>
+                                    <div class="">{{ $data->QA_Final_Review_Complete_By ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
+                                    <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On :-</label>
+                                    <div class="">{{ $data->QA_Final_Review_Complete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Assessement Complete Comment :-</label>
-                                    <div class="">{{ $data->QA_Final_Review_Comments }}</div>
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="QA/CQA Final Review Comments">QA/CQA Final Assessement Complete Comment :-</label>
+                                    <div class="">{{ $data->QA_Final_Review_Comments ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="sub-head">Approved</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete By">Approved By
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_head_approved_by }}</div>
+                                    <label for="QA/CQA Final Review Complete By">Approved By :-</label>
+                                    <div class="">{{ $data->QA_head_approved_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA/CQA Final Review Complete On">Approved On
-                                        :-</label>
-                                    <div class="static">{{ $data->QA_head_approved_on }}</div>
+                                    <label for="QA/CQA Final Review Complete On">Approved On :-</label>
+                                    <div class="">{{ $data->QA_head_approved_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="QA/CQA Final Review Comments">Approved
-                                        Comment
-                                        :-</label>
-                                    <div class="">{{ $data->QA_head_approved_comment }}</div>
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="QA/CQA Final Review Comments">Approved Comment :-</label>
+                                    <div class="">{{ $data->QA_head_approved_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -15116,40 +14788,39 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Initiator Update Completed By :-</label>
-                                    <div class="static">{{ $data->pending_initiator_approved_by }}</div>
+                                    <div class="">{{ $data->pending_initiator_approved_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete On">Initiator Update Completed On :-</label>
-                                    <div class="static">{{ $data->pending_initiator_approved_on }}</div>
+                                    <div class="">{{ $data->pending_initiator_approved_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">Initiator Update Completed Comment :-</label>
-                                    <div class="">{{ $data->pending_initiator_approved_comment }}</div>
+                                    <div class="">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
-
 
                             <div class="sub-head">HOD Final Review Complete</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By">HOD Final Review Complete By :-</label>
-                                    <div class="static">{{ $data->Hod_final_by }}</div>
+                                    <div class="">{{ $data->Hod_final_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">HOD Final Review Complete On :-</label>
-                                    <div class="static">{{ $data->Hod_final_on }}</div>
+                                    <div class="">{{ $data->Hod_final_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="Approved Comments">HOD Final Review Complete Comment :-</label>
-                                    <div class="">{{ $data->Hod_final_comment }}</div>
+                                    <div class="">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -15157,20 +14828,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By">Implementation Verification Complete By :-</label>
-                                    <div class="static">{{ $data->QA_final_approved_by }}</div>
+                                    <div class="">{{ $data->QA_final_approved_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Implementation Verification Complete On :-</label>
-                                    <div class="static">{{ $data->QA_final_approved_on }}</div>
+                                    <div class="">{{ $data->QA_final_approved_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                    <label for="Approved Comments">Implementation Verification Complete Comment
-                                        :-</label>
-                                    <div class="">{{ $data->QA_final_approved_comment }}</div>
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="Approved Comments">Implementation Verification Complete Comment :-</label>
+                                    <div class="">{{ $data->QA_final_approved_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -15178,68 +14848,52 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By">Closure Approved By :-</label>
-                                    <div class="static">{{ $data->Close_by }}</div>
+                                    <div class="">{{ $data->Close_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Closure Approved On :-</label>
-                                    <div class="static">{{ $data->Close_on }}</div>
+                                    <div class="">{{ $data->Close_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="Approved Comments">Closure Approved Comment :-</label>
-                                    <div class="">{{ $data->Close_comment }}</div>
+                                    <div class="">{{ $data->Close_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="sub-head">Cancel</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By">Cancel By :-</label>
-                                    <div class="static">{{ $data->cancelled_by }}</div>
+                                    <div class="">{{ $data->cancelled_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Cancel On :-</label>
-                                    <div class="static">{{ $data->cancelled_on }}</div>
+                                    <div class="">{{ $data->cancelled_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                                     <label for="Approved Comments">Cancel Comment :-</label>
-                                    <div class="">{{ $data->cancelled_comment }}</div>
+                                    <div class="">{{ $data->cancelled_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                     <div class="button-block">
-                        {{-- <button
-                        type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
-                        class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
-                        <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                            role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        Save
-                    </button> --}}
-                        {{-- <a href="/rcms/qms-dashboard">
-                        <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                            class="backButton">Back</button>
-                    </a> --}}
-
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
-                        {{-- <button --}}
-                        {{-- type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Submit</button> --}}
-                        <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}> <a
-                                href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="button" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                            <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                        </button>
                     </div>
                 </div>
+
             </div>
 
         </div>

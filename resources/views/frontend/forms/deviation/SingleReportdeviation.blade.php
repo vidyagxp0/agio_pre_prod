@@ -3112,7 +3112,7 @@
 
                     <div class="border-table">
                             <div class="block-head">
-                           
+
                         QA/CQA Head/ Designee Approval attachment
                             </div>
                             <table>
@@ -3396,7 +3396,7 @@
                                                     <td class="w-20">
                                                         {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : 'Unknown User' }}
                                                     </td>
-                                                     
+
                                                     <td class="w-20">{{ $investigation_item['desination_dept'] }}
                                                     </td>
 
@@ -3492,8 +3492,8 @@
                                                                     {{ $inference_type == 'Measurement' ? 'Measurement' : '' }}
                                                                     {{ $inference_type == 'Materials' ? 'Materials' : '' }}
                                                                     {{ $inference_type == 'Methods' ? 'Methods' : '' }}
-                                                                    {{ $inference_type == 'Environment' ? 'Environment' : '' }}
-                                                                    {{ $inference_type == 'Manpower' ? 'Manpower' : '' }}
+                                                                    {{ $inference_type == 'Mother Environment' ? 'Mother Environment' : '' }}
+                                                                    {{ $inference_type == 'Man' ? 'Man' : '' }}
                                                                     {{ $inference_type == 'Machine' ? 'Machine' : '' }}
                                                                 </td>
                                                                 <td>{{ $inference_remarks[$key] ?? '' }}</td>
@@ -3506,7 +3506,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
 
 
@@ -3545,7 +3545,7 @@
                 <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
                 <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
             </tr>
-        @endfor 
+        @endfor
     </tbody>
 </table>
 
@@ -3576,7 +3576,7 @@
                 <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
                 <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
             </tr>
-        @endfor 
+        @endfor
     </tbody>
 </table>
 
@@ -3643,7 +3643,7 @@
         $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
         $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
         $row_number = 1;
-    @endphp 
+    @endphp
 
         @php
             $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
@@ -3687,7 +3687,7 @@
 
 
 
-                            
+
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
@@ -4146,7 +4146,7 @@
                                         <th class="w-30">Activity</th>
                                         <th class="w-30">Possible Risk/Failure (Identified Risk)</th>
                                         <th class="w-30">Consequences of Risk/Potential Causes</th>
-                                
+
                                     </tr>
                                     {{-- @if ($data->root_cause_initial_attachment)
                                 @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
@@ -4165,7 +4165,7 @@
                                                     {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
                                                 <td class="w-30">
                                                     {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
-                                              
+
                                             </tr>
                                         @endforeach
                                     @else
@@ -4194,7 +4194,7 @@
                                                 <td class="w-30">
                                                     {{ unserialize($riskEffectAnalysis->initial_probability)[$key] }}</td>
                                                 <td class="w-30">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] }}</td>
-                                               
+
                                             </tr>
                                         @endforeach
                                     @else
@@ -4209,7 +4209,7 @@
                                         <th class="w-30">Severity (S)</th>
                                         <th class="w-30">Probability (P)</th>
                                         <th class="w-30">Detection (D)</th>
-                                      
+
 
                                     </tr>
                                     @if (!empty($riskEffectAnalysis->risk_factor))
@@ -4238,14 +4238,14 @@
                                         <th class="w-30">Category of Risk Level (Low, Medium and High)</th>
                                         <th class="w-30">Risk Acceptance (Y/N)</th>
                                         <th class="w-30">Traceability document</th>
-                                      
+
 
                                     </tr>
                                     @if (!empty($riskEffectAnalysis->risk_factor))
                                         @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                             <tr>
                                                 <td class="w-10">{{ $key + 1 }}</td>
-                                                
+
                                                 <td class="w-30">
                                                     {{ unserialize($riskEffectAnalysis->residual_rpn)[$key] }}</td>
                                                 <td class="w-30">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] }}
@@ -5006,7 +5006,7 @@
                         <th class="w-20">CFT Review Not Required Comment</th>
                         <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
                     </tr>
-                  
+
                     <tr>
                         <th class="w-20">QA/CQA Final Assessement Complete By</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
@@ -5028,7 +5028,7 @@
                     <tr>
                         <th class="w-20">Approved Comments</th>
                         <td class="w-30">{{ $data->Approved_Comments }}</td>
-                    </tr> 
+                    </tr>
                     <!-- <tr>
                         <th class="w-20">QA/CQA Head/Manager Designee Approva By</th>
                         <td class="w-30">{{ $data->QA_head_approved_by }}</td>
