@@ -2626,18 +2626,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">Submit By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit on">Submit On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">Submit Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2651,18 +2654,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="HOD Initial Review Complete On">HOD Initial Review Complete On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="HOD Initial Review Complete On">HOD Initial Review Complete Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2695,6 +2701,7 @@ dd($pre);
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QA Initial Review Complete By
                                         :-</label>
+                                        Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2702,6 +2709,7 @@ dd($pre);
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete On
                                         :-</label>
+                                        Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2710,6 +2718,7 @@ dd($pre);
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete Comment
                                         :-</label>
+                                        Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2719,18 +2728,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
+                                    Not Applicable
                                     <div class=""></div>
                                 </div>
                             </div>
@@ -2740,6 +2752,7 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">Pending Initiator Update Complete By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2747,12 +2760,14 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2781,18 +2796,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">HOD Final Review Complete Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2814,18 +2832,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Final Review Complete On"> QA Final Review Complete Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2834,18 +2855,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved By"> Approved By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Approved On">Approved On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Approved On">Approved Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2894,18 +2918,21 @@ dd($pre);
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submit by">cancel By :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">cancel On :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="cancelled on">cancel Comment :-</label>
+                                    Not Applicable
                                     <div class="static"></div>
                                 </div>
                             </div>

@@ -3595,7 +3595,7 @@
                                                 {{-- <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                     value='yes'>
                                                     Yes</option> --}}
-                                                    <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+                                                    <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>Yes</option>
 
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
@@ -3797,7 +3797,7 @@
                                             <select name="Production_Table_Review" disabled
                                                 id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+                                                <option @if ($data1->Production_Table_Review == 'yes' ) selected @endif value='yes'>Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
@@ -6567,7 +6567,7 @@
 
                                     });
                                 </script>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                             <span class="text-danger">*</span></label>
@@ -6580,9 +6580,23 @@
                                             <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
                                                 No
                                             </option>
-                                            {{-- <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
-                                                NA
-                                            </option> --}}
+
+                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
+                                            @if ($data->stage == 3)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
+                                            @if ($data->stage != 3) disabled @endif>
+                                            <option value="">-- Select --</option>
+                                            <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">Yes</option>
+                                            <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">No</option>
                                             <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
                                         </select>
                                     </div>
@@ -10800,7 +10814,7 @@
 
 
 
-                        <div class="col-12 mb-4 failure" id="fmea-section">
+<div class="col-12 mb-4 failure" id="fmea-section">
     <div class="group-input failure">
         <label for="agenda">
             Failure Mode and Effect Analysis

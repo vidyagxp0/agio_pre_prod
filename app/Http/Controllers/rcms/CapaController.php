@@ -978,7 +978,7 @@ class CapaController extends Controller
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA QA/CQA Review Comment';
+            $history->activity_type = 'QA/CQA Review Comment';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments;
             $history->comment = "Not Applicable";
@@ -1140,22 +1140,22 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->due_date_extension)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Due Date Extension Justification';
-            $history->previous = "Null";
-            $history->current = $capa->due_date_extension;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
+        // if (!empty($capa->due_date_extension)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $capa->id;
+        //     $history->activity_type = 'Due Date Extension Justification';
+        //     $history->previous = "Null";
+        //     $history->current = $capa->due_date_extension;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $capa->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
 
 
 
@@ -2341,28 +2341,28 @@ class CapaController extends Controller
             }
             $history->save();
         }
-        if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Due Date Extension Justification';
-            $history->previous = $lastDocument->due_date_extension;
-            $history->current = $capa->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
+        // if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Due Date Extension Justification';
+        //     $history->previous = $lastDocument->due_date_extension;
+        //     $history->current = $capa->due_date_extension;
+        //     $history->comment = $request->due_date_extension_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
 
-            if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
         /////////////////////HOD Final REview////////////////
 
         if ($lastDocument->hod_final_review != $capa->hod_final_review || !empty($request->hod_final_review_comment)) {
@@ -2601,7 +2601,7 @@ class CapaController extends Controller
         if ($lastDocument->capa_qa_comments != $capa->capa_qa_comments || !empty($request->capa_qa_comments_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'CAPA QA/CQA Review Comment';
+            $history->activity_type = 'QA/CQA Review Comment';
             $history->previous = $lastDocument->capa_qa_comments;
             $history->current = $capa->capa_qa_comments;
             $history->comment = $request->capa_qa_comments_comment;
@@ -3165,80 +3165,81 @@ class CapaController extends Controller
 
         // Assuming you already have $data1 containing the previous data and $request contains the new data
         $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
-        // $previousValue = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
 
-        $data1->capa_id = $capa->id;
-        $data1->type = "Product_Details";
+$data1->capa_id = $capa->id;
+$data1->type = "Product_Details";
 
-        // Define the mapping of database fields to the descriptive field names
-        $fieldNames = [
-            'material_name' => 'Product / Material Name',
-            'material_batch_no' => 'Product / Material Batch No./Lot No./AR No.',
-            'material_mfg_date' => 'Product / Material Manufacturing Date',
-            'material_expiry_date' => 'Product / Material Date of Expiry',
-            'material_batch_desposition' => 'Product Batch Disposition Decision',
-            'material_remark' => 'Product Remark',
-            'material_batch_status' => 'Product Batch Status',
+// Define the mapping of database fields to the descriptive field names
+$fieldNames = [
+    'material_name' => 'Product / Material Name',
+    'material_batch_no' => 'Product / Material Batch No./Lot No./AR No.',
+    'material_mfg_date' => 'Product / Material Manufacturing Date',
+    'material_expiry_date' => 'Product / Material Date of Expiry',
+    'material_batch_desposition' => 'Product Batch Disposition Decision',
+    'material_remark' => 'Product Remark',
+    'material_batch_status' => 'Product Batch Status',
+];
+
+if (!empty($request->material_name) && is_array($request->material_name)) {
+    foreach ($request->material_name as $index => $materialName) {
+        // Safely unserialize and use fallback to empty array if null
+        $previousDetails = [
+            'material_name' => !is_null($data1->material_name) ? unserialize($data1->material_name)[$index] ?? null : null,
+            'material_batch_no' => !is_null($data1->material_batch_no) ? unserialize($data1->material_batch_no)[$index] ?? null : null,
+            'material_mfg_date' => !is_null($data1->material_mfg_date) ? unserialize($data1->material_mfg_date)[$index] ?? null : null,
+            'material_expiry_date' => !is_null($data1->material_expiry_date) ? unserialize($data1->material_expiry_date)[$index] ?? null : null,
+            'material_batch_desposition' => !is_null($data1->material_batch_desposition) ? unserialize($data1->material_batch_desposition)[$index] ?? null : null,
+            'material_remark' => !is_null($data1->material_remark) ? unserialize($data1->material_remark)[$index] ?? null : null,
+            'material_batch_status' => !is_null($data1->material_batch_status) ? unserialize($data1->material_batch_status)[$index] ?? null : null
         ];
 
-        if (!empty($request->material_name) && is_array($request->material_name)) {
-            foreach ($request->material_name as $index => $materialName) {
-                // Safely unserialize and use fallback to empty array if null
-                $previousDetails = [
-                    'material_name' => !is_null($data1->material_name) ? unserialize($data1->material_name)[$index] ?? null : null,
-                    'material_batch_no' => !is_null($data1->material_batch_no) ? unserialize($data1->material_batch_no)[$index] ?? null : null,
-                    'material_mfg_date' => !is_null($data1->material_mfg_date) ? unserialize($data1->material_mfg_date)[$index] ?? null : null,
-                    'material_expiry_date' => !is_null($data1->material_expiry_date) ? unserialize($data1->material_expiry_date)[$index] ?? null : null,
-                    'material_batch_desposition' => !is_null($data1->material_batch_desposition) ? unserialize($data1->material_batch_desposition)[$index] ?? null : null,
-                    'material_remark' => !is_null($data1->material_remark) ? unserialize($data1->material_remark)[$index] ?? null : null,
-                    'material_batch_status' => !is_null($data1->material_batch_status) ? unserialize($data1->material_batch_status)[$index] ?? null : null
-                ];
+        // Current fields values with null checks for request fields
+        $fields = [
+            'material_name' => $materialName,
+            'material_batch_no' => $request->material_batch_no[$index] ?? null,
+            'material_mfg_date' => isset($request->material_mfg_date[$index]) ? Helpers::getdateFormat($request->material_mfg_date[$index]) : null,
+            'material_expiry_date' => isset($request->material_expiry_date[$index]) ? Helpers::getdateFormat($request->material_expiry_date[$index]) : null,
+            'material_batch_desposition' => $request->material_batch_desposition[$index] ?? null,
+            'material_remark' => $request->material_remark[$index] ?? null,
+            'material_batch_status' => $request->material_batch_status[$index] ?? null,
+        ];
 
-                // Current fields values
-                $fields = [
-                    'material_name' => $materialName,
-                    'material_batch_no' => $request->material_batch_no[$index],
-                    'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
-                    'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
-                    'material_batch_desposition' => $request->material_batch_desposition[$index],
-                    'material_remark' => $request->material_remark[$index],
-                    'material_batch_status' => $request->material_batch_status[$index],
-                ];
+        foreach ($fields as $key => $currentValue) {
+            $previousValue = $previousDetails[$key];
 
-                foreach ($fields as $key => $currentValue) {
-                    $previousValue = $previousDetails[$key];
+            // Log changes if the current value is different from the previous one
+            if (($previousValue != $currentValue || !empty($request->material_comment[$index])) && !empty($currentValue)) {
+                // Check if an audit trail entry for this specific row and field already exists
+                $existingAudit = CapaAuditTrial::where('capa_id', $id)
+                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                    ->where('previous', $previousValue)
+                    ->where('current', $currentValue)
+                    ->exists();
 
-                    // Log changes if the current value is different from the previous one
-                    if (($previousValue != $currentValue || !empty($request->material_comment[$index])) && !empty($currentValue)) {
-                        // Check if an audit trail entry for this specific row and field already exists
-                        $existingAudit = CapaAuditTrial::where('capa_id', $id)
-                            ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
-                            ->where('previous', $previousValue)
-                            ->where('current', $currentValue)
-                            ->exists();
-
-                        // Only create a new audit trail entry if no existing entry matches
-                        if (!$existingAudit) {
-                            $history = new CapaAuditTrial();
-                            $history->capa_id = $id;
-                            // Set activity type to use the field name from the mapping
-                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-                            $history->previous = $previousValue; // Previous value
-                            $history->current = $currentValue; // New value
-                            $history->comment = $request->material_comment[$index] ?? '';
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $data1->status;
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = $data1->status;
-                            $history->action_name = "Update";
-                            $history->save();
-                        }
-                    }
+                // Only create a new audit trail entry if no existing entry matches
+                if (!$existingAudit) {
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    // Set activity type to use the field name from the mapping
+                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                    $history->previous = $previousValue; // Previous value
+                    $history->current = $currentValue; // New value
+                    $history->comment = $request->material_comment[$index] ?? '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $data1->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $data1->status;
+                    $history->action_name = "Update";
+                    $history->save();
                 }
             }
         }
+    }
+}
+
+        
 
 
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
@@ -3575,7 +3576,7 @@ class CapaController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'CAPA QA/CQA Review Comment is yet to be filled!',
+                        'message' => 'QA/CQA Review Comment is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -4011,8 +4012,8 @@ class CapaController extends Controller
                 $capa->qah_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'QAH/CQA Approval Completed By,QAH/CQA Approval Completed On';
-                $history->action = 'QAH/CQA Approval Completed';
+                $history->activity_type = 'QAH/CQA Head Approval Complete By, QAH/CQA Head Approval Complete On';
+                $history->action = 'QAH/CQA Head Approval Complete';
                 $history->previous = "";
                 $history->current = $capa->completed_by;
                 $history->comment = $request->comment;
