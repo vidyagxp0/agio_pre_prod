@@ -5144,23 +5144,23 @@
 
                                     });
                                 </script>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
-                                            <span class="text-danger">*</span></label>
-                                        <select @if ($data->stage == 3)  @endif
-                                            name="Quality_Assurance_Review" id="Quality_Assurance_Review"
-                                            @if ($data->stage == 4) disabled @endif>
-                                            <option value="">-- Select --</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">
-                                                Yes</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
-                                                No
-                                            </option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
-                                        </select>
-                                    </div>
+                               <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
+                                        @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
+                                        @if ($data->stage != 3) disabled @endif>
+                                        <option value="">-- Select --</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">Yes</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">No</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                    </select>
                                 </div>
+                            </div>
+
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
@@ -6924,7 +6924,7 @@
 
 
                                 @if ($data->stage == 3 || $data->stage == 4)
-                                    <div class="sub-head Other1_review">
+                                    <div class="sub-head ">
                                         Other's 1 ( Additional Person Review From Departments If Required)
                                     </div>
                                     <script>
@@ -7037,12 +7037,12 @@
 
                                             <div class="group-input">
                                                 <label for="Department1">Other's 1 Department
-                                                    <span id="asteriskod5"
+                                                    <span id="asterisko1"
                                                         style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <select name="Other1_Department_person"
-                                                    @if ($data->stage == 4) disabled @endif
+                                                @if ($data->stage != 3) disabled @endif
                                                     id="Other1_Department_person">
                                                     <option value="">-- Select --</option>
                                                     @foreach (Helpers::getDepartments() as $key => $name)
@@ -7052,6 +7052,14 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                            @endif
+                                            @error('Other1_Department_person')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
                                             </div>
 
                                         </div>
@@ -7264,7 +7272,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other2_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other2_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7273,6 +7281,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7476,7 +7488,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other3_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7485,6 +7497,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7691,7 +7707,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other4_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7700,6 +7716,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7905,7 +7925,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other5_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other5_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7914,6 +7934,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8036,7 +8060,7 @@
                                         <div class="group-input">
                                             <label for="Review Required1"> Other's 1 Review Required? </label>
                                             <select disabled
-                                                name="Other1_review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                name="Other1_review"
                                                 id="Other1_review" value="{{ $data1->Other1_review }}">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Other1_review == 'yes') selected @endif
@@ -8095,24 +8119,29 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 Other1_reviews">
+                                    <div class="col-lg-12 ">
                                         <div class="group-input">
                                             <label for="Department1">Other's 1 Department
-                                                <span id="asteriskod1"
-                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span>
+
                                             </label>
                                             <select name="Other1_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach (Helpers::getDepartments() as $key => $name)
-                                                    <option value="{{ $key }}"
-                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                        {{ $name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                                @if ($data->stage != 3) disabled @endif
+                                                    id="Other1_Department_person">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $name)
+                                                        <option value="{{ $key }}"
+                                                            @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                            {{ $name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                            @endif
+                                            @error('Other1_Department_person')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
@@ -8261,7 +8290,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other2_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other2_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8270,6 +8299,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8430,7 +8463,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other3_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8439,6 +8472,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8559,6 +8596,7 @@
                                                     <option {{ $data1->Other4_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
+
                                             </select>
 
                                         </div>
@@ -8572,7 +8610,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other4_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8581,6 +8619,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8740,7 +8782,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other5_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other5_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8749,6 +8791,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
