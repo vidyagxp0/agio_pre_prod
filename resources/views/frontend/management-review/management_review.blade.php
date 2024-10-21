@@ -460,43 +460,29 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                    <div class="col-md-12">
-                                        @if ($data->stage == 1)
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department<span
-                                                    class="text-danger">*</span></b></label>
-                                                <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach (Helpers::getDepartments() as $key => $value)
-                                                        <option value="{{ $key }}"
-                                                            @if ($data->initiator_Group == $key) selected @endif>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        @else
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department</b></label>
-                                                <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">-- Select --</option>
-                                                    @foreach (Helpers::getDepartments() as $key => $value)
-                                                        <option value="{{ $key }}"
-                                                            @if ($data->initiator_Group == $key) selected @endif>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Department<span class="text-danger">*</span></b></label>
+                                        <select name="initiator_Group" id="initiator_group"
+                                            @if ($data->stage != 1) disabled @endif>
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    @if ($data->initiator_Group == $key) selected @endif>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="initiator_Group" value="{{ $data->initiator_Group }}">
                                         @endif
-                                        @error('initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
+                                    @error('initiator_Group')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
 
 
                                     <div class="col-lg-6">
@@ -514,7 +500,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <label for="Short Description">Short Description <span
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         class="text-danger">*</span></label>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc"  {{ $data->stage != 1 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc"  {{ $data->stage != 1 ? 'readonly' : '' }}>{{ $data->short_description }}</textarea>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </div>
                                                                                                                                                                                                                                                                                                                                                                                  </div> -->
 
@@ -523,99 +509,117 @@
 
 
 
-                                <div class="col-12">
+                               <div class="col-12">
+    <div class="group-input">
+        <label for="Short_Description">Short Description<span class="text-danger">*</span></label>
+        <span id="rchars">255</span> characters remaining
+
+        <input name="short_description" id="docname" type="text" maxlength="255" required
+            value="{{ $data->short_description }}"
+            @if ($data->stage != 1) readonly @endif />
+
+        @if ($data->stage != 1)
+            <!-- Hidden field to retain the value if input is readonly -->
+            <input type="hidden" name="short_description" value="{{ $data->short_description }}">
+        @endif
+
+        <p id="docnameError" style="color:red">**Short Description is required</p>
+    </div>
+</div>
+
+
+
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="type">Type
+            @if ($data->stage == 1)
+                <span class="text-danger">*</span>
+            @endif
+        </label>
+        <select name="summary_recommendation" id="summary_recommendation"
+            onchange="toggleReviewPeriod()"
+            @if ($data->stage != 1) disabled @endif required>
+            <option value="">Select Type</option>
+            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
+                Monthly
+            </option>
+            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
+                Six Monthly
+            </option>
+        </select>
+
+        @if ($data->stage != 1)
+            <!-- Hidden field to retain the value if select is disabled -->
+            <input type="hidden" name="summary_recommendation" value="{{ $data->summary_recommendation }}">
+        @endif
+    </div>
+</div>
+
+
+
+                                <!-- Review Period for Monthly (initially hidden) -->
+
+                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="Short_Description">Short Description<span
-                                                class="text-danger">*</span></label>
-                                        <span id="rchars">255</span> characters remaining
-
-                                        <input name="short_description" id="docname" type="text" maxlength="255"
-                                            required value="{{ $data->short_description }}"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
-
-                                        <p id="docnameError" style="color:red">**Short Description is required</p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="type">Type
+                                        <label for="review_period">Review Period
                                             @if ($data->stage == 1)
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <select required name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                            <option required value="">Select Type</option>
-                                            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
-                                                Monthly
-                                            </option>
-                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
-                                                Six Monthly
-                                            </option>
+                                        <select name="review_period_monthly" id="review_period_monthly_select" required
+                                            @if ($data->stage != 1) disabled @endif>
+                                            <option value="">Select Month</option>
+                                            <option @if ($data->review_period_monthly == 'January') selected @endif value="January">January</option>
+                                            <option @if ($data->review_period_monthly == 'February') selected @endif value="February">February</option>
+                                            <option @if ($data->review_period_monthly == 'March') selected @endif value="March">March</option>
+                                            <option @if ($data->review_period_monthly == 'April') selected @endif value="April">April</option>
+                                            <option @if ($data->review_period_monthly == 'May') selected @endif value="May">May</option>
+                                            <option @if ($data->review_period_monthly == 'June') selected @endif value="June">June</option>
+                                            <option @if ($data->review_period_monthly == 'July') selected @endif value="July">July</option>
+                                            <option @if ($data->review_period_monthly == 'August') selected @endif value="August">August</option>
+                                            <option @if ($data->review_period_monthly == 'September') selected @endif value="September">September</option>
+                                            <option @if ($data->review_period_monthly == 'October') selected @endif value="October">October</option>
+                                            <option @if ($data->review_period_monthly == 'November') selected @endif value="November">November</option>
+                                            <option @if ($data->review_period_monthly == 'December') selected @endif value="December">December</option>
                                         </select>
+
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="review_period_monthly" value="{{ $data->review_period_monthly }}">
+                                        @endif
+
+                                        <span id="monthly_error" style="color: red; display: none;">Please select a month</span>
                                     </div>
                                 </div>
 
-                                <!-- Review Period for Monthly (initially hidden) -->
-                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="review_period">Review Period @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
-                                        <select name="review_period_monthly" id="review_period_monthly_select" required
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                            <option value="">Select Month</option>
-                                            <option @if ($data->review_period_monthly == 'January') selected @endif value="January">
-                                                January</option>
-                                            <option @if ($data->review_period_monthly == 'February') selected @endif value="February">
-                                                February</option>
-                                            <option @if ($data->review_period_monthly == 'March') selected @endif value="March">
-                                                March</option>
-                                            <option @if ($data->review_period_monthly == 'April') selected @endif value="April">
-                                                April</option>
-                                            <option @if ($data->review_period_monthly == 'May') selected @endif value="May">May
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'June') selected @endif value="June">June
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'July') selected @endif value="July">July
-                                            </option>
-                                            <option @if ($data->review_period_monthly == 'August') selected @endif value="August">
-                                                August</option>
-                                            <option @if ($data->review_period_monthly == 'September') selected @endif value="September">
-                                                September</option>
-                                            <option @if ($data->review_period_monthly == 'October') selected @endif value="October">
-                                                October</option>
-                                            <option @if ($data->review_period_monthly == 'November') selected @endif value="November">
-                                                November</option>
-                                            <option @if ($data->review_period_monthly == 'December') selected @endif value="December">
-                                                December</option>
-                                        </select>
-                                        <span id="monthly_error" style="color: red; display: none;">Please select a
-                                            month</span>
-                                    </div>
-                                </div>
+
 
                                 <!-- Review Period for Six Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select"
-                                            required {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                        <label for="review_period">Review Period
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" required
+                                            @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
-                                            <option @if ($data->review_period_six_monthly == 'January to June') selected @endif
-                                                value="January to June">
+                                            <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
                                                 January to June
                                             </option>
-                                            <option @if ($data->review_period_six_monthly == 'July to December') selected @endif
-                                                value="July to December">
+                                            <option @if ($data->review_period_six_monthly == 'July to December') selected @endif value="July to December">
                                                 July to December
                                             </option>
                                         </select>
-                                        <span id="six_monthly_error" style="color: red; display: none;">Please select a
-                                            six-month period</span>
+
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="review_period_six_monthly" value="{{ $data->review_period_six_monthly }}">
+                                        @endif
+
+                                        <span id="six_monthly_error" style="color: red; display: none;">Please select a six-month period</span>
                                     </div>
                                 </div>
 
@@ -686,7 +690,7 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
-                                        <select  {{ $data->stage != 1 ? 'disabled' : '' }}
+                                        <select  {{ $data->stage != 1 ? 'readonly' : '' }}
                                             name="type">
                                             <option value="0">-- Select type --</option>
                                             <option @if ($data->type == 'Other') selected @endif value="Other">
@@ -714,7 +718,7 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
-                                        <select  {{ $data->stage != 1 ? 'disabled' : '' }}
+                                        <select  {{ $data->stage != 1 ? 'readonly' : '' }}
                                             name="priority_level">
                                             <option @if ($data->priority_level == 'High') selected @endif value="High">
                                                 High
@@ -732,7 +736,7 @@
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                            <input type="date"  id="start_date_checkdate"  {{ $data->stage != 1 ? 'disabled' : '' }} value="{{ $data->start_date}} "
+                                            <input type="date"  id="start_date_checkdate"  {{ $data->stage != 1 ? 'readonly' : '' }} value="{{ $data->start_date}} "
                                             name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -743,10 +747,10 @@
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
                                         {{-- <input type="text" name="end_date"
-                                             {{ $data->stage != 1 ? 'disabled' : '' }}> --}}
+                                             {{ $data->stage != 1 ? 'readonly' : '' }}> --}}
                                 {{-- <div class="calenderauditee">
                                                 <input type="text" id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                <input type="date"  id="end_date_checkdate"  {{ $data->stage != 1 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date }} "
+                                                <input type="date"  id="end_date_checkdate"  {{ $data->stage != 1 ? 'readonly' : '' }} name="end_date" value="{{ $data->end_date }} "
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -754,20 +758,32 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Start Date">Proposed Scheduled Start Date @if ($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif</label>
+                                        <label for="Audit Start Date">Proposed Scheduled Start Date
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
+
                                             <input type="date" id="start_date_checkdate"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}required
-                                                name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                value="{{ $data->start_date }}" class="hide-input"
+                                                name="start_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ $data->start_date }}"
+                                                class="hide-input"
+                                                @if($data->stage != 1) disabled @endif
+                                                required
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+
+                                            @if($data->stage != 1)
+                                                <!-- Hidden field to retain the value if date input is disabled -->
+                                                <input type="hidden" name="start_date" value="{{ $data->start_date }}">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -776,7 +792,7 @@
                                             <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                             <input type="date" id="end_date_checkdate"
-                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                 name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->end_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -786,7 +802,7 @@
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attendees">Attendess</label>
-                                        <textarea name="attendees"  {{ $data->stage != 1 ? 'disabled' : '' }}>{{ $data->attendees }}</textarea>
+                                        <textarea name="attendees"  {{ $data->stage != 1 ? 'readonly' : '' }}>{{ $data->attendees }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -812,7 +828,7 @@
                                                 @foreach (unserialize($agenda->topic) as $key => $temps)
                                                     <tr>
                                                         <td><input disabled type="text" name="serial_number[]"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
 
                                                         <td>
@@ -821,11 +837,11 @@
                                                                     <div class="calenderauditee">
                                                                         <input type="text"
                                                                             id="date{{ $key }}"
-                                                                             {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                             {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                             readonly placeholder="DD-MMM-YYYY"
                                                                             value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
                                                                         <input type="date" name="date[]"
-                                                                             {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                             {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                             value="{{ unserialize($agenda->date)[$key] ?? null }}"
                                                                             class="hide-input"
@@ -835,15 +851,15 @@
                                                             </div>
                                                         </td>
                                                         <td><input type="text" name="topic[]"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
                                                         </td>
                                                         <td><input type="text" name="responsible[]"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 value="{{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time" name="start_time[]"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 value="{{ unserialize($agenda->start_time)[$key] ? unserialize($agenda->start_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time"
@@ -851,12 +867,12 @@
                                                                 value="{{ unserialize($agenda->end_time)[$key] ? unserialize($agenda->end_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="comment[]"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 value="{{ unserialize($agenda->comment)[$key] ? unserialize($agenda->comment)[$key] : '' }}">
                                                         </td>
                                                         <td>
                                                             <button type="button"
-                                                                 {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                                 {{ $data->stage != 1 ? 'readonly' : '' }}
                                                                 class="removeRow">remove
 
                                                             </button>
@@ -870,7 +886,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <textarea name="description"  {{ $data->stage != 1 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                        <textarea name="description"  {{ $data->stage != 1 ? 'readonly' : '' }}>{{ $data->description }}</textarea>
                                     </div>
                                 </div>
 
@@ -903,7 +919,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="audit_file_attachment" name="inv_attachment[]"
-                                                     {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                     {{ $data->stage != 1 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>
                                         </div>
@@ -938,7 +954,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="inv_attachment" name="inv_attachment[]"
-                                                     {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                     {{ $data->stage != 1 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
@@ -993,7 +1009,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                     {{ $data->stage != 1 ? 'disabled' : '' }}
+                                                     {{ $data->stage != 1 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1073,7 +1089,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
-                                     {{ $data->stage != 1 ? 'disabled' : '' }}>Save</button>
+                                     {{ $data->stage != 1 ? 'readonly' : '' }}>Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -1118,29 +1134,38 @@
                             @php
                             $assignedUsers = !empty($data->assign_to) ? explode(',', $data->assign_to) : [];
                         @endphp
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="assign_to">Invite Person Notify
-                                    @if ($data->stage == 2)
-                                        <span class="text-danger">*</span>
-                                    @endif
-                                </label>
+                      <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="assign_to">Invite Person Notify
+                                @if ($data->stage == 2)
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
 
-                                <!-- Disabled select for stages 0 or 2 -->
-                                <select id="assign_to" name="assign_to[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} multiple>
-                                    <option value="">Select a value</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <!-- Disabled select for stages not equal to 1 -->
+                            <select id="assign_to" name="assign_to[]"
+                                @if ($data->stage != 2) disabled @endif multiple>
+                                <option value="">Select a value</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                                @error('assign_to')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            @if ($data->stage != 2)
+                                <!-- Hidden fields to retain selected values when select is disabled -->
+                                @foreach ($assignedUsers as $assignedUser)
+                                    <input type="hidden" name="assign_to[]" value="{{ $assignedUser }}">
+                                @endforeach
+                            @endif
+
+                            @error('assign_to')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
+                    </div>
+
 
 
                             {{-- <div class="col-12">
@@ -1211,7 +1236,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                            {{ $data->stage != 2 ? 'disabled' : '' }}
+                                            {{ $data->stage != 2 ? 'readonly' : '' }}
                                                 oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
@@ -1441,6 +1466,7 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                @if ($data->stage == 3)
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Start Date">Meeting Start Date @if ($data->stage == 3)
@@ -1449,20 +1475,44 @@
                                         <div class="calenderauditee">
                                             <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+
                                                 placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
                                                     {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
 
                                         </div>
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Start Date">Meeting Start Date @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
+                                        <div class="calenderauditee">
+                                            <!-- Disabled state for stage 0 or 8 -->
+                                            <input type="text" id="external_supplier_performance" readonly
 
+                                                placeholder="DD-MMM-YYYY" required
+                                                value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
+                                            <input readonly type="date" id="external_supplier_performance_checkdate"
+                                                name="external_supplier_performance"
+                                                    {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
+
+                                                value="{{ $data->external_supplier_performance }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if ($data->stage == 3)
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit End Date">Meeting End Date  @if ($data->stage == 3)
@@ -1471,18 +1521,41 @@
                                         <div class="calenderauditee">
 
                                             <input type="text" id="customer_satisfaction_level" readonly
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+
                                                 placeholder="DD-MMM-YYYY" required
                                                 value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
                                             <input type="date" id="customer_satisfaction_level_checkdate"
                                                 name="customer_satisfaction_level"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+
                                                 value="{{ $data->customer_satisfaction_level }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'customer_satisfaction_level')" />
                                         </div>
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit End Date">Meeting End Date  @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif</label>
+                                        <div class="calenderauditee">
+
+                                            <input type="text" id="customer_satisfaction_level" readonly
+
+                                                placeholder="DD-MMM-YYYY" required
+                                                value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
+                                            <input readonly type="date" id="customer_satisfaction_level_checkdate"
+                                                name="customer_satisfaction_level"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
+                                                value="{{ $data->customer_satisfaction_level }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'customer_satisfaction_level')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
 
 
                                 <script>
@@ -1500,7 +1573,7 @@
                                     <div class="group-input">
                                         <label for="Short_Description">Meeting Start Time</label>
                                         <input name="budget_estimates" id="docname" type="time"
-                                        {{ $data->stage != 3 ? 'disabled' : '' }}
+                                        {{ $data->stage != 3 ? 'readonly' : '' }}
                                             value="{{ $data->budget_estimates }}">
                                     </div>
                                 </div>
@@ -1509,7 +1582,7 @@
                                     <div class="group-input">
                                         <label for="completion_of_previous_tasks">Meeting End Time</label>
                                         <input name="completion_of_previous_tasks" id="docname" type="time"
-                                        {{ $data->stage != 3 ? 'disabled' : '' }}
+                                        {{ $data->stage != 3 ? 'readonly' : '' }}
                                             value="{{ $data->completion_of_previous_tasks }}">
                                     </div>
                                 </div>
@@ -1523,9 +1596,9 @@
                                             onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
-                                        <small class="text-primary">
+                                        {{-- <small class="text-primary">
                                             Refer Attached Performance Evaluation Grid
-                                        </small>
+                                        </small> --}}
                                     </div>
                                     <table class="table table-bordered" id="management_review_participants">
                                         <thead>
@@ -1546,34 +1619,34 @@
                                             @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
                                                 <tr>
                                                     <td><input disabled type="text" name="serial_number[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ $key + 1 }}"></td>
                                                     <td><input type="text" name="invited_Person[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="department[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="meeting_Attended[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee_Name[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee_Department[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="remarks[]"
-                                                           {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                           {{ $data->stage != 3 ? 'readonly' : '' }}
                                                             value="{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}">
                                                     </td>
                                                     <td>
@@ -1811,8 +1884,7 @@
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
-                                                    Yes</option>
+                                                <option @if ($data1->Production_Table_Review == 'yes' ) selected @endif value='yes'>Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                     No</option>
                                                 <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
@@ -2035,8 +2107,7 @@
                                                 ?</label>
                                             <select name="Production_Table_Review" disabled id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
-                                                    Yes</option>
+                                                <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                     No</option>
                                                 <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
@@ -2253,8 +2324,7 @@
                                                     Yes</option>
                                                 <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -2462,8 +2532,7 @@
                                                     Yes</option>
                                                 <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Injection_Review == 'na') selected @endif value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -2678,8 +2747,7 @@
                                                     Yes</option>
                                                 <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -2878,9 +2946,7 @@
                                                 <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -3090,9 +3156,7 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Human_Resource_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -3282,9 +3346,7 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Human_Resource_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -3487,9 +3549,7 @@
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -3706,9 +3766,7 @@
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -3918,9 +3976,7 @@
                                                 <option @if ($data1->Store_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Store_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4111,9 +4167,7 @@
                                                 <option @if ($data1->Store_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Store_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4308,9 +4362,7 @@
                                                 <option @if ($data1->Engineering_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Engineering_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4506,9 +4558,7 @@
                                                 <option @if ($data1->Engineering_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Engineering_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4701,9 +4751,7 @@
                                                 <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -4907,9 +4955,7 @@
                                                 <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5098,25 +5144,23 @@
 
                                     });
                                 </script>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
-                                            <span class="text-danger">*</span></label>
-                                        <select @if ($data->stage == 3)  @endif
-                                            name="Quality_Assurance_Review" id="Quality_Assurance_Review"
-                                            @if ($data->stage == 4) disabled @endif>
-                                            <option value="">-- Select --</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">
-                                                Yes</option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">
-                                                No
-                                            </option>
-                                            <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
-                                                NA
-                                            </option>
-                                        </select>
-                                    </div>
+                               <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
+                                        @if ($data->stage == 3)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
+                                        @if ($data->stage != 3) disabled @endif>
+                                        <option value="">-- Select --</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value="yes">Yes</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value="no">No</option>
+                                        <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                    </select>
                                 </div>
+                            </div>
+
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
@@ -5313,9 +5357,7 @@
                                                 <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5521,9 +5563,7 @@
                                                 <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->ProductionLiquid_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5727,9 +5767,7 @@
                                                 <option @if ($data1->Quality_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Quality_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -5932,9 +5970,7 @@
                                                 <option @if ($data1->Quality_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Quality_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6130,9 +6166,7 @@
                                                 <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Microbiology_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6328,9 +6362,7 @@
                                                 <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Microbiology_Review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6526,9 +6558,7 @@
                                                 <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Environment_Health_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6733,9 +6763,7 @@
                                                 <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Environment_Health_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option>
+                                                    <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
                                             </select>
 
                                         </div>
@@ -6896,7 +6924,7 @@
 
 
                                 @if ($data->stage == 3 || $data->stage == 4)
-                                    <div class="sub-head Other1_review">
+                                    <div class="sub-head ">
                                         Other's 1 ( Additional Person Review From Departments If Required)
                                     </div>
                                     <script>
@@ -7009,12 +7037,12 @@
 
                                             <div class="group-input">
                                                 <label for="Department1">Other's 1 Department
-                                                    <span id="asteriskod5"
+                                                    <span id="asterisko1"
                                                         style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
                                                 </label>
                                                 <select name="Other1_Department_person"
-                                                    @if ($data->stage == 4) disabled @endif
+                                                @if ($data->stage != 3) disabled @endif
                                                     id="Other1_Department_person">
                                                     <option value="">-- Select --</option>
                                                     @foreach (Helpers::getDepartments() as $key => $name)
@@ -7024,6 +7052,14 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                            @endif
+                                            @error('Other1_Department_person')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
                                             </div>
 
                                         </div>
@@ -7236,7 +7272,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other2_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other2_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7245,6 +7281,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7448,7 +7488,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other3_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7457,6 +7497,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7663,7 +7707,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other4_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7672,6 +7716,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -7877,7 +7925,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other5_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other5_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -7886,6 +7934,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8008,7 +8060,7 @@
                                         <div class="group-input">
                                             <label for="Review Required1"> Other's 1 Review Required? </label>
                                             <select disabled
-                                                name="Other1_review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                name="Other1_review"
                                                 id="Other1_review" value="{{ $data1->Other1_review }}">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Other1_review == 'yes') selected @endif
@@ -8067,24 +8119,29 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 Other1_reviews">
+                                    <div class="col-lg-12 ">
                                         <div class="group-input">
                                             <label for="Department1">Other's 1 Department
-                                                <span id="asteriskod1"
-                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span>
+
                                             </label>
                                             <select name="Other1_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
-                                                <option value="">-- Select --</option>
-                                                @foreach (Helpers::getDepartments() as $key => $name)
-                                                    <option value="{{ $key }}"
-                                                        @if ($data1->Other1_Department_person == $key) selected @endif>
-                                                        {{ $name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                                @if ($data->stage != 3) disabled @endif
+                                                    id="Other1_Department_person">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $name)
+                                                        <option value="{{ $key }}"
+                                                            @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                            {{ $name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                            @endif
+                                            @error('Other1_Department_person')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
@@ -8233,7 +8290,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other2_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other2_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8242,6 +8299,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8402,7 +8463,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other3_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8411,6 +8472,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8531,6 +8596,7 @@
                                                     <option {{ $data1->Other4_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
+
                                             </select>
 
                                         </div>
@@ -8544,7 +8610,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other4_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8553,6 +8619,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -8712,7 +8782,7 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select name="Other5_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
+                                            @if ($data->stage != 3) disabled @endif
                                                 id="Other5_Department_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach (Helpers::getDepartments() as $key => $name)
@@ -8721,6 +8791,10 @@
                                                         {{ $name }}
                                                     </option>
                                                 @endforeach
+                                                @if ($data->stage != 3)
+                                                <!-- Hidden field to retain the value if select is disabled -->
+                                                <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -13710,173 +13784,148 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Submit By</label>
-                                    <div class="static">{{ $data->Submited_by }}</div>
+                                    <label for="Submit By">Submit By</label>
+                                    <div class="">{{ $data->Submited_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Submit On</label>
-                                    <div class="static">{{ $data->Submited_on }}</div>
+                                    <label for="Submit On">Submit On</label>
+                                    <div class="">{{ $data->Submited_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Submit Comment</label>
-                                    <div class="static">{{ $data->Submited_Comment }}</div>
-                                </div>
-                            </div>
-                            {{-- <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Completed By">Completed By</label>
-                                    <div class="static">{{ $data->completed_by }}</div>
+                                    <label for="Submit Comment">Submit Comment</label>
+                                    <div class="">{{ $data->Submited_Comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed On">Completed On</label>
-                                    <div class="static">{{ $data->completed_on }}</div>
+                                    <label for="QA Head Review Complete By">QA Head Review Complete By</label>
+                                    <div class="">{{ $data->qaHeadReviewComplete_By ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Comment</label>
-                                    <div class="static">{{ $data->Completed_Comment }}</div>
-                                </div>
-                            </div> --}}
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Completed By">QA Head Review Complete By</label>
-                                    <div class="static">{{ $data->qaHeadReviewComplete_By }}</div>
+                                    <label for="QA Head Review Complete On">QA Head Review Complete On</label>
+                                    <div class="">{{ $data->qaHeadReviewComplete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">QA Head Review Complete On</label>
-                                    <div class="static">{{ $data->qaHeadReviewComplete_On }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Completed By">QA Head Review Complete Comment</label>
-                                    <div class="static">{{ $data->qaHeadReviewComplete_Comment }}</div>
+                                    <label for="QA Head Review Complete Comment">QA Head Review Complete Comment</label>
+                                    <div class="">{{ $data->qaHeadReviewComplete_Comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Meeting and Summary Complete By</label>
-                                    <div class="static">{{ $data->meeting_summary_by }}</div>
+                                    <label for="Meeting and Summary Complete By">Meeting and Summary Complete By</label>
+                                    <div class="">{{ $data->meeting_summary_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Meeting and Summary Complete On</label>
-                                    <div class="static">{{ $data->meeting_summary_on }}</div>
+                                    <label for="Meeting and Summary Complete On">Meeting and Summary Complete On</label>
+                                    <div class="">{{ $data->meeting_summary_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Meeting and Summary Complete Comment</label>
-                                    <div class="static">{{ $data->meeting_summary_comment }}</div>
+                                    <label for="Meeting and Summary Complete Comment">Meeting and Summary Complete Comment</label>
+                                    <div class="">{{ $data->meeting_summary_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT Action Complete By</label>
-                                    <div class="static">{{ $data->ALLAICompleteby_by }}</div>
+                                    <label for="CFT Action Complete By">CFT Action Complete By</label>
+                                    <div class="">{{ $data->ALLAICompleteby_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT Action Complete On</label>
-                                    <div class="static">{{ $data->ALLAICompleteby_on }}</div>
+                                    <label for="CFT Action Complete On">CFT Action Complete On</label>
+                                    <div class="">{{ $data->ALLAICompleteby_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT Action Complete Comment</label>
-                                    <div class="static">{{ $data->ALLAICompleteby_comment }}</div>
+                                    <label for="CFT Action Complete Comment">CFT Action Complete Comment</label>
+                                    <div class="">{{ $data->ALLAICompleteby_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT HOD Review Complete By</label>
-                                    <div class="static">{{ $data->hodFinaleReviewComplete_by }}</div>
+                                    <label for="CFT HOD Review Complete By">CFT HOD Review Complete By</label>
+                                    <div class="">{{ $data->hodFinaleReviewComplete_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT HOD Review Complete On</label>
-                                    <div class="static">{{ $data->hodFinaleReviewComplete_on }}</div>
+                                    <label for="CFT HOD Review Complete On">CFT HOD Review Complete On</label>
+                                    <div class="">{{ $data->hodFinaleReviewComplete_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">CFT HOD Review Complete Comment</label>
-                                    <div class="static">{{ $data->hodFinaleReviewComplete_comment }}</div>
+                                    <label for="CFT HOD Review Complete Comment">CFT HOD Review Complete Comment</label>
+                                    <div class="">{{ $data->hodFinaleReviewComplete_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">QA Verification Complete By</label>
-                                    <div class="static">{{ $data->QAVerificationComplete_by }}</div>
+                                    <label for="QA Verification Complete By">QA Verification Complete By</label>
+                                    <div class="">{{ $data->QAVerificationComplete_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">QA Verification Complete On</label>
-                                    <div class="static">{{ $data->QAVerificationComplete_On }}</div>
+                                    <label for="QA Verification Complete On">QA Verification Complete On</label>
+                                    <div class="">{{ $data->QAVerificationComplete_On ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">QA Verification Complete Comment</label>
-                                    <div class="static">{{ $data->QAVerificationComplete_Comment }}</div>
+                                    <label for="QA Verification Complete Comment">QA Verification Complete Comment</label>
+                                    <div class="">{{ $data->QAVerificationComplete_Comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Approved By</label>
-                                    <div class="static">{{ $data->Approved_by }}</div>
+                                    <label for="Approved By">Approved By</label>
+                                    <div class="">{{ $data->Approved_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Approved On</label>
-                                    <div class="static">{{ $data->Approved_on }}</div>
+                                    <label for="Approved On">Approved On</label>
+                                    <div class="">{{ $data->Approved_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Completed By">Approved Comment</label>
-                                    <div class="static">{{ $data->Approved_comment }}</div>
+                                    <label for="Approved Comment">Approved Comment</label>
+                                    <div class="">{{ $data->Approved_comment ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
-
-
-
-
-
                         </div>
                         <div class="button-block">
-
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a>
+                            <button type="button">
+                                <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a>
                             </button>
                         </div>
                     </div>
                 </div>
+
 
         </div>
         </form>

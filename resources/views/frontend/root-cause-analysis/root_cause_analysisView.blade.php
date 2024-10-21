@@ -359,9 +359,9 @@
                                     <div class="">Final QA/CQA Review </div>
                                 @endif
                                 @if ($data->stage >= 7)
-                                    <div class="active">QAH/CQAH Final Review</div>
+                                    <div class="active">QAH/CQAH Final Approval</div>
                                 @else
-                                    <div class="">QAH/CQAH Final Review</div>
+                                    <div class="">QAH/CQAH Final Approval</div>
                                 @endif
                                 @if ($data->stage >= 8)
                                     <div class="bg-danger">Closed - Done</div>
@@ -2761,35 +2761,50 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="acknowledge_by">Acknowledge By</label>
-                                            <div class="static">{{ $data->acknowledge_by }}</div>
+                                            <div class="">
+                                                @if ($data->acknowledge_by )
+                                                {{ $data->acknowledge_by }}
+                                                @else Not Applicable 
+                                                @endif
+                                               </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="acknowledge_on">Acknowledge On</label>
-                                            <div class="static">{{ $data->acknowledge_on }}</div>
+                                            <div class="">
+                                                @if ($data->acknowledge_on )
+                                                {{ $data->acknowledge_on }}
+                                                @else Not Applicable 
+                                                @endif
+                                               </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="ack_comments"> Acknowledge Comment</label>
-                                            <div class="static">{{ $data->ack_comments }}</div>
+                                            <div class="">
+                                                @if ($data->ack_comments )
+                                                {{ $data->ack_comments }}
+                                                @else Not Applicable 
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Mgr.more Info Reqd By">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->More_Info_ack_by }}</div>
+                                            <div class="">{{ $data->More_Info_ack_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_ack_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->More_Info_ack_on }}</div>
+                                            <div class="">{{ $data->More_Info_ack_on }}</div>
                                         </div>
                                     </div>
 
@@ -2797,40 +2812,59 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_ack_comment">Comments</label>
-                                            <div class="static">{{ $data->More_Info_ack_comment }}</div>
+                                            <div class="">{{ $data->More_Info_ack_comment }}</div>
                                         </div>
                                     </div> --}}
                           
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
-                                            <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
+                                            <div class="">
+                                                @if ($data->HOD_Review_Complete_By )
+                                                {{ $data->HOD_Review_Complete_By }}
+                                                @else Not Applicable 
+                                                @endif
+                                                {{ $data->HOD_Review_Complete_By }}</div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="HOD_Review_Complete_On">HOD Review Complete On</label>
-                                            <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
+                                            <div class="">
+                                                @if ($data->HOD_Review_Complete_On )
+                                                {{ $data->HOD_Review_Complete_On }}
+                                                @else Not Applicable 
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="Comments"> HOD Review Complete Comment</label>
-                                            <div class="static">{{ $data->HOD_Review_Complete_Comment }}</div>
+                                            <div class="">
+                                                @if ($data->HOD_Review_Complete_Comment )
+                                                {{ $data->HOD_Review_Complete_Comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
+
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hrc_by">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->More_Info_hrc_by }}</div>
+                                            <div class="">{{ $data->More_Info_hrc_by }}</div>
                                         </div>
                                     </div>
+                                    0
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hrc_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->More_Info_hrc_on }}</div>
+                                            <div class="">{{ $data->More_Info_hrc_on }}</div>
                                         </div>
                                     </div>
 
@@ -2838,39 +2872,51 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hrc_comment">Comment</label>
-                                            <div class="static">{{ $data->More_Info_hrc_comment }}</div>
+                                            <div class="">{{ $data->More_Info_hrc_comment }}</div>
                                         </div>
                                     </div> --}}
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
-                                            <div class="static">{{ $data->QQQA_Review_Complete_By }}</div>
+                                            <div class="">
+                                                @if ($data->QQQA_Review_Complete_By )
+                                                {{ $data->QQQA_Review_Complete_By }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
-                                            <div class="static">{{ $data->QQQA_Review_Complete_On }}</div>
+                                            <div class="">
+                                                @if ($data->QQQA_Review_Complete_On )
+                                                {{ $data->QQQA_Review_Complete_On }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="Comment"> QA/CQA Review Complete Comment</label>
-                                            <div class="static">{{ $data->QAQQ_Review_Complete_comment }}</div>
+                                            <div class="">
+                                                @if ($data->QAQQ_Review_Complete_comment )
+                                                {{ $data->QAQQ_Review_Complete_comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_qac_by">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->More_Info_qac_by }}</div>
+                                            <div class="">{{ $data->More_Info_qac_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_qac_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->More_Info_qac_on }}</div>
+                                            <div class="">{{ $data->More_Info_qac_on }}</div>
                                         </div>
                                     </div>
 
@@ -2878,163 +2924,209 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_qac_comment">Comment</label>
-                                            <div class="static">{{ $data->More_Info_qac_comment }}</div>
+                                            <div class="">{{ $data->More_Info_qac_comment }}</div>
                                         </div>
                                     </div> --}}
                                     <div class="col-lg-4">
-                                        <div class="group-input">
+                                        <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="submitted_by">Submit By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="">
+                                                @if ($data->submitted_by )
+                                                {{ $data->submitted_by }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="submitted_on">Submit On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="">  @if ($data->submitted_on )
+                                                {{ $data->submitted_on }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Comment"> Submit Comment</label>
-                                            <div class="static">{{ $data->qa_comments_new }}</div>
+                                            <div class="">  @if ($data->qa_comments_new )
+                                                {{ $data->qa_comments_new }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_sub_by">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->More_Info_sub_by }}</div>
+                                            <div class="">{{ $data->More_Info_sub_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_sub_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->More_Info_sub_on }}</div>
+                                            <div class="">{{ $data->More_Info_sub_on }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_sub_comment">Comments</label>
-                                            <div class="static">{{ $data->More_Info_sub_comment }}</div>
+                                            <div class="">{{ $data->More_Info_sub_comment }}</div>
                                         </div>
                                     </div> --}}
                                 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
-                                            <div class="static">{{ $data->HOD_Final_Review_Complete_By }}</div>
+                                            <div class="">  @if ($data->HOD_Final_Review_Complete_By )
+                                                {{ $data->HOD_Final_Review_Complete_By }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
-                                            <div class="static">{{ $data->HOD_Final_Review_Complete_On }}</div>
+                                            <div class="">  @if ($data->HOD_Final_Review_Complete_On )
+                                                {{ $data->HOD_Final_Review_Complete_On }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Comments"> HOD Final Review Complete Comment</label>
-                                            <div class="static">{{ $data->HOD_Final_Review_Complete_Comment }}</div>
+                                            <div class="">  @if ($data->HOD_Final_Review_Complete_Comment )
+                                                {{ $data->HOD_Final_Review_Complete_Comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hfr_by">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->More_Info_hfr_by }}</div>
+                                            <div class="">{{ $data->More_Info_hfr_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hfr_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->More_Info_hfr_on }}</div>
+                                            <div class="">{{ $data->More_Info_hfr_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More_Info_hfr_comment">Comments</label>
-                                            <div class="static">{{ $data->More_Info_hfr_comment }}</div>
+                                            <div class="">{{ $data->More_Info_hfr_comment }}</div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete
                                                 By</label>
-                                            <div class="static">{{ $data->Final_QA_Review_Complete_By }}</div>
+                                            <div class="">  @if ($data->Final_QA_Review_Complete_By )
+                                                {{ $data->Final_QA_Review_Complete_By }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete
                                                 On</label>
-                                            <div class="static">{{ $data->Final_QA_Review_Complete_On }}</div>
+                                            <div class="">  @if ($data->Final_QA_Review_Complete_On )
+                                                {{ $data->Final_QA_Review_Complete_On }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Comments"> Final QA/CQA Review Complete Comment</label>
-                                            <div class="static">{{ $data->Final_QA_Review_Complete_Comment }}</div>
+                                            <div class="">  @if ($data->Final_QA_Review_Complete_Comment )
+                                                {{ $data->Final_QA_Review_Complete_Comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="qA_review_complete_by">More Info Req.
                                                 By</label>
-                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
+                                            <div class="">{{ $data->qA_review_complete_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="qA_review_complete_on">More Info Req.
                                                 On</label>
-                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
+                                            <div class="">{{ $data->qA_review_complete_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="qA_review_complete_comment">Comments</label>
-                                            <div class="static">{{ $data->qA_review_complete_comment }}</div>
+                                            <div class="">{{ $data->qA_review_complete_comment }}</div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
-                                            <div class="static">{{ $data->evaluation_complete_by }}</div>
+                                            <div class="">  @if ($data->evaluation_complete_by )
+                                                {{ $data->evaluation_complete_by }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="evaluation_complete_on">QAH/CQAH Closure On</label>
-                                            <div class="static">{{ $data->evaluation_complete_on }}</div>
+                                            <div class="">  @if ($data->evaluation_complete_on )
+                                                {{ $data->evaluation_complete_on }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="evalution_Closure_comment"> QAH/CQAH Closure Comment</label>
-                                            <div class="static">{{ $data->evalution_Closure_comment }}</div>
+                                            <div class="">  @if ($data->evalution_Closure_comment )
+                                                {{ $data->evalution_Closure_comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Cancelled By">Cancel By</label>
-                                            <div class="static">{{ $data->cancelled_by }}</div>
+                                            <div class="">  @if ($data->cancelled_by )
+                                                {{ $data->cancelled_by }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Cancelled On">Cancel On</label>
-                                            <div class="static">{{ $data->cancelled_on }}</div>
+                                            <div class="">  @if ($data->cancelled_on )
+                                                {{ $data->cancelled_on }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="Comments"> Cancel Comment</label>
-                                            <div class="static">{{ $data->cancel_comment }}</div>
+                                            <div class="">  @if ($data->cancel_comment )
+                                                {{ $data->cancel_comment }}
+                                                @else Not Applicable 
+                                                @endif</div>
                                         </div>
                                     </div>
                                 </div>

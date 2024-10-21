@@ -405,7 +405,7 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
-                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
+                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklisthtfutrdcfyjtfu6trfrtu - Production (Tablet Dispensing & Tablet Granulation)</button>
                      <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
                      <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
                      <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
@@ -515,8 +515,8 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -556,7 +556,7 @@
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -782,13 +782,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Audit Category</label>
-                                        <select name="Audit_Category"
-                                            onchange="otherController(this.value, 'others', 'type_of_audit_req')">
+                                        <select name="Audit_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Internal Audit/Self Inspection</option>
-                                            <option value="2">Supplier Audit</option>
-                                            <option value="3">Regulatory Audit</option>
-                                            <option value="4">Consultant Audit</option>
+                                            <option value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
+                                            <option value="Supplier Audit">Supplier Audit</option>
+                                            <option value="Regulatory Audit">Regulatory Audit</option>
+                                            <option value="Consultant Audit">Consultant Audit</option>
 
                                         </select>
                                     </div>
@@ -892,7 +891,15 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
-                                                    <td><input type="text" name="AuditorNew[0][auditornew]"></td>
+                                                    {{-- <td><input type="text" name="AuditorNew[0][auditornew]"></td> --}}
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..." name="AuditorNew[0][auditornew]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" name="AuditorNew[0][regulatoryagency]"></td>
                                                     <td>
                                                         <select name="AuditorNew[0][designation]" class="form-select">
@@ -920,7 +927,14 @@
                                             var html =
                                                 '<tr>' +
                                                 '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
-                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                                                // '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                                                                        '<td><select id="select-state" name="AuditorNew[' + investdetails + '][auditornew]">' +
+                                                            '<option value="">Select a value</option>';
+
+                                                    for (var i = 0; i < users.length; i++) {
+                                                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                    }
+                                                    html += '</select></td>'+
                                                 '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
@@ -985,13 +999,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditee Comment</label>
-                                        <textarea disabled name="Auditee_comment"></textarea>
+                                        <textarea  name="Auditee_comment"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditor Comment</label>
-                                        <textarea disabled name="Auditor_comment"></textarea>
+                                        <textarea  name="Auditor_comment"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -2981,7 +2995,7 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response-15" id="response"
+                                                                <select name="response_15" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
@@ -4225,8 +4239,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -6954,8 +6967,8 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                            </textarea>
+                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
+                                            
                                     </div>
                                 </div>
 
@@ -7701,8 +7714,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea></textarea>
+                                        
                                 </div>
                             </div>
 
@@ -8998,8 +9011,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea></textarea>
+                                        
                                 </div>
                             </div>
 
@@ -10707,8 +10720,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
+                                       
                                 </div>
                             </div>
 
@@ -12075,8 +12088,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
+                                       
                                 </div>
                             </div>
 
@@ -13436,8 +13449,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
+                                       
                                 </div>
                             </div>
 
@@ -14540,8 +14553,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
+                                        
                                 </div>
                             </div>
 
@@ -17465,8 +17478,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
+                                        
                                 </div>
                             </div>
 
@@ -18135,7 +18148,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.26</td>
-                                                        <td>Do you have any record of the temperature of freeze?</td>
+                                                        <td>Do you have any record of the temperature of freeze?<br>
+                                                            Check the temperature record of last 3 days.
+                                                            </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -18232,8 +18247,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
+                                        
                                 </div>
                             </div>
 
@@ -19162,8 +19177,8 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
+                                       
                                 </div>
                             </div>
 
@@ -20963,8 +20978,8 @@
                                                         <div class="group-input">
                                                             <label for="Description Deviation">Final Comments</label>
                                                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                                                </textarea>
+                                                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
+                                                                
                                                         </div>
                                                     </div>
 
@@ -22247,8 +22262,8 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Final Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
+                                   
                             </div>
                         </div>
 
@@ -23851,8 +23866,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                            </textarea>
+                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
                                     </div>
                                 </div>
 
@@ -24504,7 +24518,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.22</td>
-                                                        <td>Is any checklist for the dossier requirement?  </td>
+                                                        <td>Is there any checklist for the dossier requirement?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -24560,8 +24574,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -25227,8 +25240,7 @@
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
                                 </div>
                             </div>
 

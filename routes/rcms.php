@@ -152,7 +152,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             //----------------------------------------------By Pankaj-----------------------
 
-            Route::post('audit', [InternalauditController::class, 'create'])->name('createInternalAudit');
+            Route::post('audit', action: [InternalauditController::class, 'create'])->name('createInternalAudit');
             Route::get('internalAuditShow/{id}', [InternalauditController::class, 'internalAuditShow'])->name('showInternalAudit');
             Route::post('update/{id}', [InternalauditController::class, 'update'])->name('updateInternalAudit');
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
@@ -473,6 +473,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+            Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
+            Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
             
 
         }

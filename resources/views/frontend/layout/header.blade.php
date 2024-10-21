@@ -93,8 +93,8 @@
                         </form>
                     </div>
                     <div class="icon-grid">
-                       
-                        
+
+
                         @if(Auth::guard('employee')->user())
                             <div class="icon-drop">
                                 <div class="icon">
@@ -107,7 +107,7 @@
                                     <div><a href="{{ route('logout-employee') }}">Log Out</a></div>
                                 </div>
                             </div>
-                        @else                        
+                        @else
                             <div class="icon-drop">
                                 <div class="icon">
                                     <i class="fa-solid fa-user-tie"></i>
@@ -160,11 +160,11 @@
                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                             </div>
                         @endif
-                       
+
                     @endif
 
 
-                  
+
                     <div id="create-record-button">
                         <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
                                 Record</button> </a>
@@ -685,12 +685,232 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="observation-field-instruction-modalInference">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Type:&nbsp;</strong>
+                        Specify the type of inference or conclusion. Ensure the type is clearly stated and easily identifiable.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Remarks:&nbsp;</strong>
+                        Provide relevant comments that explain the inference. This could include reasoning, observations, or any significant notes. Keep the remarks clear and informative.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="observation-field-instruction-modalInferenceFMEA">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Activity:&nbsp;</strong>
+                        Describe the specific activity or process being analyzed. Ensure the activity is clearly identified.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Possible Risk/Failure (Identified Risk):&nbsp;</strong>
+                        Identify the potential risks or failures associated with the activity. Be specific and thorough in identifying the possible failure modes.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Consequences of Risk/Potential Causes:&nbsp;</strong>
+                        Detail the consequences of the identified risks and the potential causes of failure. This helps in understanding the severity and impact of the risk.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Severity (S):&nbsp;</strong>
+                        Rate the severity of the consequences, where a higher score indicates a more severe impact.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Probability (P):&nbsp;</strong>
+                        Assess the likelihood of the identified risk or failure occurring. The probability score reflects how often the failure might happen.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Detection (D):&nbsp;</strong>
+                        Evaluate the likelihood that the failure will be detected before it occurs. A lower detection score means better detection mechanisms.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>RPN (Risk Priority Number):&nbsp;</strong>
+                        Calculate the Risk Priority Number (RPN) by multiplying Severity, Probability, and Detection scores. The RPN helps prioritize risks for mitigation.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Control Measures recommended/ Risk mitigation proposed:&nbsp;</strong>
+                        Suggest control measures or risk mitigation strategies that can reduce the severity, likelihood, or detection issues related to the identified risk.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Severity (S) after control measures:&nbsp;</strong>
+                        Rate the severity after implementing the recommended control measures.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Probability (P) after control measures:&nbsp;</strong>
+                        Re-assess the probability after risk mitigation strategies are applied.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Detection (D) after control measures:&nbsp;</strong>
+                        Evaluate the detection likelihood after control measures have been implemented.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Risk Level (RPN) after control measures:&nbsp;</strong>
+                        Recalculate the RPN after applying the control measures to evaluate the effectiveness of the mitigation efforts.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Category of Risk Level (Low, Medium, High):&nbsp;</strong>
+                        Categorize the risk level after calculating the revised RPN. Use categories such as Low, Medium, or High based on the RPN value.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Risk Acceptance (Y/N):&nbsp;</strong>
+                        Indicate whether the remaining risk is acceptable after applying the control measures. Answer with Yes (Y) or No (N).
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Traceability document:&nbsp;</strong>
+                        Mention any supporting traceability documents or references used in this analysis.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="observation-field-instruction-modalITAR">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Investigation team and Responsibilities</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Investigation Team:&nbsp;</strong>
+                        Enter the full name or title of the investigation team member(s). Ensure the name(s) are clear, concise, and easily recognizable.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Designation & Department :&nbsp;</strong>
+                        Specify the designation and department of the investigation team member(s). Use official or standardized titles where possible.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Responsibility:&nbsp;</strong>
+                        Clearly define the specific role or responsibility of the investigation team member(s) in the context of the investigation.
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Remarks:&nbsp;</strong>
+                        Provide any relevant comments related to the investigation or the team's involvement. Keep remarks clear and concise, including any special instructions or conditions.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 
    {{--Incident Instruction Model--}}
 
    {{--Facility/ Equipment/ Instrument/ System Details--}}
+
+   <div class="modal fade" id="observation-field-instruction-modalDEV">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Explanation of Data Fields</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                {{--<div class="mb-2">
+                    <strong>Row# (Row Number) :&nbsp;</strong>
+                    This is an automatically generated or manually assigned number for each row of data.
+                </div>--}}
+                <div class="mb-2">
+                    <strong>Related To :&nbsp;</strong>
+                    Enter the full name or title of the item. Make sure the name is clear, concise, and easily recognizable.
+                </div>
+                <div class="mb-2">
+                    <strong>ID Number :&nbsp;</strong>
+                    Use the official or standardized ID number if it exists.
+                </div>
+                <div class="mb-2">
+                    <strong>Remarks :&nbsp;</strong>
+                    Provide relevant comments that might include the item's condition, special features, or specific usage instructions. Keep the remarks clear and brief but informative.
+                </div>
+                {{--<div class="mb-2">
+                    <strong>Observation Description :&nbsp;</strong>
+                    Detailed description of the observation.
+                </div>
+                <div class="mb-2">
+                    <strong>Severity Level :&nbsp;</strong>
+                    The severity level of the observation (e.g., Minor, Major, Critical,
+                    Recommendation).
+                </div>
+                <div class="mb-2">
+                    <strong>Area/Process :&nbsp;</strong>
+                    The specific area or process where the observation occurred.
+                </div>
+                <div class="mb-2">
+                    <strong>Observation Category :&nbsp;</strong>
+                    The broad category to which the observation belongs (e.g., Documentation,
+                    Equipment, Cleanroom, Data Integrity, etc.).
+                </div>
+                <div class="mb-2">
+                    <strong>CAPA Required :&nbsp;</strong>
+                    Specific actions that need to be taken to address the observation.
+                </div>
+                <div class="mb-2">
+                    <strong>CAPA Due date :&nbsp;</strong>
+                    Deadline for completing the corrective &amp; preventive actions.
+                </div>
+                <div>
+                    <strong>Status :&nbsp;</strong>
+                    The current status of the observation (e.g., Open, In Progress, Closed).
+                </div>--}}
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <div class="modal fade" id="observation-field-instruction-modal">
         <div class="modal-dialog modal-dialog-centered">

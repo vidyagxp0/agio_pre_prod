@@ -4229,7 +4229,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->risk_ana_attach != $data->risk_ana_attach) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Information Attachment';
+            $history->activity_type = 'Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->risk_ana_attach);
             $history->current = str_replace(',', ', ', $data->risk_ana_attach);
             $history->comment = $request->risk_ana_attach_comment;
@@ -4282,7 +4282,7 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'CFT Reviewer Selection';
-            $history->previous = Helpers::getInitiatorName($data->reviewer_person_value);
+            $history->previous = Helpers::getInitiatorName($lastDocument->reviewer_person_value);
             $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -4380,7 +4380,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->hod_design_attach != $data->hod_design_attach) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'HOD Attachment';
+            $history->activity_type = 'Hod/Designee Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->hod_design_attach);
             $history->current = str_replace(',', ', ', $data->hod_design_attach);
             $history->comment = $request->comment;
@@ -4595,7 +4595,7 @@ class RiskManagementController extends Controller
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Liquid Review Required';
+            $history->activity_type = 'Production Liquid/External preparation Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -7364,7 +7364,7 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? "Update" : "New";
+            $history->action_name = $lastDocument ? "Update" : "New";
             $history->save();
         }
 
@@ -7436,7 +7436,7 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocument ? "Update" : "New";
+            $history->action_name = $lastDocument ? "New" : "Update";
             $history->save();
         }
 
@@ -9014,6 +9014,7 @@ class RiskManagementController extends Controller
     public function show($id)
     {
         $data = RiskManagement::find($id);
+        // dd($data);
         $userData = User::all();
         $data1 = RiskManagmentCft::where('risk_id', $id)->latest()->first();
         // return $data1->Production_Review;
@@ -10695,12 +10696,20 @@ class RiskManagementController extends Controller
     public static function singleReport($id)
     {
         $data = RiskManagement::find($id);
+
         $data1 =  RiskManagmentCft::where('risk_id', $id)->first();
         // dd($data);
         if (!empty($data)) {
             $users = User::all();
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
-            $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
+            // $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
+            // dd($failure_mode);
+        // $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->first();
+        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->latest()->first();
+        //  dd($riskEffectAnalysis);
+
+
+
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
             $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
@@ -10710,7 +10719,7 @@ class RiskManagementController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','data1', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'failure_mode', 'action_plan', 'users', 'mitigation'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','data1', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'riskEffectAnalysis', 'action_plan', 'users', 'mitigation'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

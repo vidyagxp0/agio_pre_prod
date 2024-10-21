@@ -3548,7 +3548,7 @@ class RootCauseController extends Controller
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Submited By,Submited On';
+                $history->activity_type = 'Submit By,Submit On';
                 $history->previous = "Investigation in Progress";
                 $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
@@ -3786,7 +3786,7 @@ class RootCauseController extends Controller
                     ]);
                 }
                 $root->stage = "7";
-                $root->status = "QAH/CQAH Final Review";
+                $root->status = "QAH/CQAH Final Approval";
                 $root->Final_QA_Review_Complete_By = Auth::user()->name;
                 $root->Final_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->Final_QA_Review_Complete_Comment = $request->comment;
@@ -3802,11 +3802,11 @@ class RootCauseController extends Controller
                 $history->action = 'Final QA/CQA Review Complete';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to =   "QAH/CQAH Final Review";
+                $history->change_to =   "QAH/CQAH Final Approval";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
 
-                $history->stage = 'QAH/CQAH Final Review';
+                $history->stage = 'QAH/CQAH Final Approval';
                 if (is_null($lastDocument->Final_QA_Review_Complete_By) || $lastDocument->Final_QA_Review_Complete_By === '') {
                     $history->previous = "";
                 } else {
@@ -4621,7 +4621,9 @@ class RootCauseController extends Controller
             $record = $record_number;
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords'));
+            $Capachild = RootCauseAnalysis::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);       
+            return view('frontend.forms.capa', compact('record_number','due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
         }
 
         if ($request->revision == "Action-Item") {

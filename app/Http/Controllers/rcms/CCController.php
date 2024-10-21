@@ -10562,22 +10562,17 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
 
             if ($changeControl->stage == 9) {
                 $changeControl->stage = "10";
-                $changeControl->status = "HOD Final Review";
-
-
+                $changeControl->status = "Pending Training Completion";
 
                 $comments->initiator_update_complete_by = Auth::user()->name;
                 $comments->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
                 $comments->initiator_update_complete_comment = $request->comments;
-
                 $comments->save();
-
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                $lastDocument = ChangeControlComment::find($id);
-                $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
+                $history->activity_type = 'Training Required By, Training Required On';
                 if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
                     $history->previous = "NULL";
                 } else {
@@ -10590,7 +10585,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     $history->action_name = 'Update';
                 }
 
-                $history->action = 'Initiator Updated Complete';
+                $history->action = 'Pending Training Completion';
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -10623,93 +10618,89 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 }
 
                 $changeControl->update();
-
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
                 toastr()->success('Sent to HOD Final Review');
                 return back();
             }
 
-
-
             // if ($changeControl->stage == 9) {
-            //     $changeControl->stage = "10";
-            //     $changeControl->status = "HOD Final Review";
+            //     $changeControl->stage = "11";
+            //     $changeControl->status = "";
 
-            //    // Update the comment fields
-            // $comment->initiator_update_complete_by = Auth::user()->name;
-            // $comment->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
-            // $comment->initiator_update_complete_comment = $request->comments;
-            // $comment->save(); // Save the updated comment to the database
+            //     $comments->cc_id = $id;
 
-            // // Save the history
-
+            //     $comments->HOD_finalReview_complete_by = Auth::user()->name;
+            //     $comments->HOD_finalReview_complete_on = Carbon::now()->format('d-M-Y');
+            //     $comments->HOD_finalReview_complete_comment = $request->comments;
+            //     $comments->save();
             //     $history = new RcmDocHistory();
             //     $history->cc_id = $id;
-
             //     $lastDocument = ChangeControlComment::find($id);
-            //     $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
-            //     if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
+            //     $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
+            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_by === '') {
             //         $history->previous = "NULL";
             //     } else {
-            //         $history->previous = $lastDocument->initiator_update_complete_by . ' , ' . $lastDocument->initiator_update_complete_on;
+            //         $history->previous = $lastDocument->HOD_finalReview_complete_by . ' , ' . $lastDocument->HOD_finalReview_complete_on;
             //     }
-            //     $history->current = $comment->initiator_update_complete_by . ' , ' . $comment->initiator_update_complete_on;
-            //     if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_on === '') {
+            //     $history->current = $comments->HOD_finalReview_complete_by . ' , ' . $comments->HOD_finalReview_complete_on;
+            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_on === '') {
             //         $history->action_name = 'New';
             //     } else {
             //         $history->action_name = 'Update';
             //     }
 
-            //     $history->action = 'Initiator Updated Complete';
+            //     $history->action = 'HOD Final Review Complete';
             //     $history->comment = $request->comments;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to = "HOD Final Review";
+            //     $history->change_to = "Implementation Verification by QA";
             //     $history->change_from = $lastDocument->status;
             //     $history->stage = 'Plan Proposed';
             //     $history->save();
 
+            //     $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getUserEmail($u->user_id);
+            //                 if ($email !== null) {
+            //                     try {
+            //                         Mail::send(
+            //                             'mail.view-mail',
+            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                             function ($message) use ($email, $changeControl) {
+            //                                 $message->to($email)
+            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+            //                             }
+            //                         );
+            //                     } catch(\Exception $e) {
+            //                         info('Error sending mail', [$e]);
+            //                     }
+            //             }
+            //         // }
+            //     }
 
+            //     $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getUserEmail($u->user_id);
+            //                 if ($email !== null) {
+            //                     try {
+            //                         Mail::send(
+            //                             'mail.view-mail',
+            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                             function ($message) use ($email, $changeControl) {
+            //                                 $message->to($email)
+            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+            //                             }
+            //                         );
+            //                     } catch(\Exception $e) {
+            //                         info('Error sending mail', [$e]);
+            //                     }
+            //             }
+            //         // }
+            //     }
 
-            //     //  $list = Helpers::getHodUserList();
-            //     //     foreach ($list as $u) {
-            //     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //     //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //     //              if ($email !== null) {
-            //     //               Mail::send(
-            //     //                   'mail.view-mail',
-            //     //                    ['data' => $changeControl],
-            //     //                 function ($message) use ($email) {
-            //     //                     $message->to($email)
-            //     //                         ->subject("Document is Send By".Auth::user()->name);
-            //     //                 }
-            //     //               );
-            //     //             }
-            //     //      }
-            //     //   }
-
-            //     $comment->update();
             //     $changeControl->update();
             //     $history = new CCStageHistory();
             //     $history->type = "Change-Control";
@@ -10731,9 +10722,12 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
             //     $history->status = $changeControl->status;
             //     $history->save();
             //     // Helpers::hodMail($changeControl);
-            //     toastr()->success('Sent to HOD Final Review');
+            //     toastr()->success('Sent to Implementation Verification by QA');
             //     return back();
             // }
+
+
+            
             if ($changeControl->stage == 10) {
                 $changeControl->stage = "11";
                 $changeControl->status = "Implementation Verification by QA";
@@ -10744,9 +10738,9 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 $comments->HOD_finalReview_complete_on = Carbon::now()->format('d-M-Y');
                 $comments->HOD_finalReview_complete_comment = $request->comments;
                 $comments->save();
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
-                $lastDocument = ChangeControlComment::find($id);
                 $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
                 if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_by === '') {
                     $history->previous = "NULL";
@@ -10814,25 +10808,6 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 }
 
                 $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
                 // Helpers::hodMail($changeControl);
                 toastr()->success('Sent to Implementation Verification by QA');
                 return back();
@@ -10965,10 +10940,6 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
             toastr()->error('E-signature Not match');
             return back();
         }
-
-
-
-
     }
 
 
@@ -11033,52 +11004,12 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     $history->change_to = "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    $history->save();
-
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                    $history->save();                
                     $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->comments = $request->comments;
-                    $history->status = $changeControl->status;
-                    $history->save();
-
-                    $history = new CCStageHistory();
-                    $history->type = "Activity-log";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->comments = $request->comments;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    // Helpers::hodMail($changeControl);
                     toastr()->success('Sent to Pending Initiator Update');
                     return back();
 
             }
-
-
-
 
             if ($changeControl->stage == 9) {
                 if (is_null($updateCFT->intial_update_comments))
@@ -11100,107 +11031,74 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     ]);
                 }
                 $changeControl->stage = "10";
-                $changeControl->status = "HOD Final Review";
+                $changeControl->status = "Pending Training Completion";
 
-
-                $comments->cc_id =$id;
-                $comments->initiator_update_complete_by = Auth::user()->name;
-                $comments->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
-                $comments->initiator_update_complete_comment = $request->comments;
-
-                $comments->save();
-
+                $changeControl->Training_required_by = Auth::user()->name;
+                $changeControl->Training_required_on = Carbon::now()->format('d-M-Y');
+                $changeControl->Training_required_comment = $request->comments;
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
-                if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
+                $history->activity_type = 'Training Required By, Training Required On';
+                if (is_null($lastDocument->Training_required_by) || $lastDocument->Training_required_by === '') {
                     $history->previous = "NULL";
                 } else {
-                    $history->previous = $lastDocument->initiator_update_complete_by . ' , ' . $lastDocument->initiator_update_complete_on;
+                    $history->previous = $lastDocument->Training_required_by . ' , ' . $lastDocument->Training_required_on;
                 }
-                $history->current = $comments->initiator_update_complete_by . ' , ' . $comments->initiator_update_complete_on;
-                if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_on === '') {
+                $history->current = $changeControl->Training_required_by . ' , ' . $changeControl->Training_required_on;
+                if (is_null($lastDocument->Training_required_by) || $lastDocument->Training_required_on === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
 
-                $history->action = 'Initiator Updated Complete';
+                $history->action = 'Training Required';
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "HOD Final Review";
+                $history->change_to = "Pending Training Completion";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-
                 $changeControl->update();
-
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
                 toastr()->success('Sent to HOD Final Review');
                 return back();
             }
 
+             if ($changeControl->stage == 10) {
+                    $changeControl->stage = "11";
+                    $changeControl->status = "HOD Final Review";
 
-
-
-
-
-
-             if ($changeControl->stage == 9) {
-                    $changeControl->stage = "10";
-                    $changeControl->status = "QA/CQA Closure Approval";
-
-                    $changeControl->sentFor_final_approval_by = Auth::user()->name;
-                    $changeControl->sentFor_final_approval_on = Carbon::now()->format('d-M-Y');
-                    $changeControl->sentFor_final_approval_comment = $request->comments;
+                    $changeControl->Training_complete_by = Auth::user()->name;
+                    $changeControl->Training_complete_on = Carbon::now()->format('d-M-Y');
+                    $changeControl->Training_complete_comment = $request->comments;
 
                     $history = new RcmDocHistory();
                     $history->cc_id = $id;
 
-                    $history->activity_type = 'Approved By, Approved On';
-                    if (is_null($lastDocument->sentFor_final_approval_by) || $lastDocument->sentFor_final_approval_by === '') {
+                    $history->activity_type = 'Training Complete By, Training Complete On';
+                    if (is_null($lastDocument->Training_complete_by) || $lastDocument->Training_complete_by === '') {
                         $history->previous = "NULL";
                     } else {
-                        $history->previous = $lastDocument->sentFor_final_approval_by . ' , ' . $lastDocument->sentFor_final_approval_on;
+                        $history->previous = $lastDocument->Training_complete_by . ' , ' . $lastDocument->Training_complete_on;
                     }
-                    $history->current = $changeControl->sentFor_final_approval_by . ' , ' . $changeControl->sentFor_final_approval_on;
-                    if (is_null($lastDocument->sentFor_final_approval_by) || $lastDocument->sentFor_final_approval_on === '') {
+                    $history->current = $changeControl->Training_complete_by . ' , ' . $changeControl->Training_complete_on;
+                    if (is_null($lastDocument->Training_complete_by) || $lastDocument->Training_complete_on === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';
                     }
 
-                    $history->action = 'Send For Final Approval';
+                    $history->action = 'Training Complete';
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "QA/CQA Closure Approval";
+                    $history->change_to = "HOD Final Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -11221,33 +11119,11 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     //      }
                     //   }
                     $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->comments = $request->comments;
-                    $history->status = $changeControl->status;
-                    $history->save();
-
-                    $history = new CCStageHistory();
-                    $history->type = "Activity-log";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->comments = $request->comments;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    // Helpers::hodMail($changeControl);
                     toastr()->success('Sent to QA/CQA Closure Approval');
                     return back();
             }
 
-
-
-            if ($changeControl->stage == 10) {
+            if ($changeControl->stage == 11) {
                 if (is_null($updateCFT->hod_final_review_comment))
                 {
                     Session::flash('swal', [
@@ -11266,7 +11142,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                         'message' => 'Document Sent'
                     ]);
                 }
-                $changeControl->stage = "11";
+                $changeControl->stage = "12";
                 $changeControl->status = "Implementation verification by QA/CQA";
                 $changeControl->closure_approved_by = Auth::user()->name;
                 $changeControl->closure_approved_on = Carbon::now()->format('d-M-Y');
@@ -11315,31 +11191,11 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 //      }
                 //   }
                 $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
                 toastr()->success('Sent to Closed Done');
                 return back();
         }
 
-        if ($changeControl->stage == 11) {
+        if ($changeControl->stage == 12) {
             if (is_null($updateCFT->implementation_verification_comments))
             {
                 Session::flash('swal', [
@@ -11358,7 +11214,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     'message' => 'Document Sent'
                 ]);
             }
-            $changeControl->stage = "12";
+            $changeControl->stage = "13";
             $changeControl->status = "QA/CQA Closure Approval";
             $comments->cc_id =$id;
             $comments->send_for_final_qa_head_approval = Auth::user()->name;
@@ -11409,35 +11265,11 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
             //      }
             //   }
             $changeControl->update();
-            $history = new CCStageHistory();
-            $history->type = "Change-Control";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->comments = $request->comments;
-            $history->status = $changeControl->status;
-            $history->save();
-
-            $history = new CCStageHistory();
-            $history->type = "Activity-log";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->comments = $request->comments;
-            $history->status = $changeControl->status;
-            $history->save();
-            // Helpers::hodMail($changeControl);
             toastr()->success('Sent to Closed Done');
             return back();
     }
-
-
-
-
-
-    if ($changeControl->stage == 12) {
+    
+    if ($changeControl->stage == 13) {
         if (is_null($changeControl->qa_closure_comments))
         {
             Session::flash('swal', [
@@ -11456,7 +11288,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 'message' => 'Document Sent'
             ]);
         }
-        $changeControl->stage = "13";
+        $changeControl->stage = "14";
         $changeControl->status = "Closed Done";
 
         $comments->cc_id =$id;
@@ -11510,26 +11342,6 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
         //      }
         //   }
         $changeControl->update();
-        $history = new CCStageHistory();
-        $history->type = "Change-Control";
-        $history->doc_id = $id;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->stage_id = $changeControl->stage;
-        $history->comments = $request->comments;
-        $history->status = $changeControl->status;
-        $history->save();
-
-        $history = new CCStageHistory();
-        $history->type = "Activity-log";
-        $history->doc_id = $id;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->stage_id = $changeControl->stage;
-        $history->comments = $request->comments;
-        $history->status = $changeControl->status;
-        $history->save();
-        // Helpers::hodMail($changeControl);
         toastr()->success('Sent to Closed Done');
         return back();
 }
@@ -12506,6 +12318,56 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
         }
     }
 
+
+    public function TrainingRequired(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);           
+
+            $changeControl->stage = "11";
+            $changeControl->status = "Opened";
+            $changeControl->initiator_update_complete_by	 = Auth::user()->name;
+            $changeControl->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
+            $changeControl->initiator_update_complete_comment = $request->comments;
+
+            $history = new RcmDocHistory();
+            $history->cc_id = $id;
+
+            $history->activity_type = 'Initiator Update complete By,  Initiator Update complete On';
+            if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
+                $history->previous = "NULL";
+            } else {
+                $history->previous = $lastDocument->initiator_update_complete_by . ' , ' . $lastDocument->initiator_update_complete_on;
+            }
+            $history->current = $changeControl->initiator_update_complete_by . ' , ' . $changeControl->initiator_update_complete_on;
+            if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_on === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
+            $history->action = 'Initiator Update complete';
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Opened";
+            $history->change_from = $lastDocument->status;
+            $history->save();
+            $changeControl->update();
+        
+            toastr()->success('Document Sent');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
     public function sendToInitialQA(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -13178,5 +13040,34 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
         $due_date = $formattedDate->format('d-M-Y');
 
         return view("frontend.forms.effectiveness-check", compact('due_date','parent_record','parent_id','parent_type', 'parent_name', 'record_number'));
+    }
+
+    public function getDocumentDetail($documentId)
+    {
+        $docdetail = Document::where('id', $documentId)->first();
+
+        // $sopIds = explode(',', $docdetail->sops);
+        // $sops = Document::whereIn('id', $sopIds)->get();
+
+        // $sopNumbers = $sops->map(function ($sop) {
+        //     return $sop->sop_type_short . '/' . 
+        //            $sop->department_id . '/000' . 
+        //            $sop->id . '/R' . 
+        //            $sop->major;
+        // });
+
+        if ($training) {
+            return response()->json([
+                'sop_type' => $docdetail->sop_type,
+                'doc_number' => $docdetail->id,
+                'created_at' => $training->created_at->format('d-M-Y'),
+            ]);
+        }
+
+        return response()->json([
+            'sop_type' => [],
+            'doc_number' => '',
+            'created_at' => '',
+        ]);
     }
 }
