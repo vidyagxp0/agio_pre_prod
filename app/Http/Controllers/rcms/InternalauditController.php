@@ -61,6 +61,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
+        // dd($internalAudit->assign_to);
         $internalAudit->due_date = $request->due_date;
         // dd($internalAudit->due_date);
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
@@ -84,7 +85,7 @@ class InternalauditController extends Controller
         $internalAudit->QA_Comments= $request->QA_Comments;
         $internalAudit->Others= $request->Others;
         $internalAudit->Auditor_comment = $request->Auditor_comment;
-        $internalAudit->Auditee_comment = $request->Auditee_comment;
+               $internalAudit->Auditee_comment = $request->Auditee_comment;
         $internalAudit->auditee_department = $request->auditee_department;
 
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
@@ -1508,7 +1509,7 @@ $newDataGridInitialClosure->save();
         // dd($internalAudit->Initiator_Group);
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
-        // dd($internalAudit->Auditee_comment);
+        // dd($internalAudit->Auditor_comment);
         $internalAudit->auditee_department = $request->auditee_department;
         $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
 
@@ -3844,22 +3845,22 @@ if ($areIniAttachmentsSame2 != true) {
 
 
         $internalAudit->update();
-         $Summary = $internalAudit->id;
+        $Summary = $internalAudit->id;
         $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
         $AuditorsNew->auditor_id = $Summary;
         $AuditorsNew->identifier = 'Auditors';
         $AuditorsNew->data = $request->AuditorNew;
         $AuditorsNew->update();
-
         
-  $internal_id = $internalAudit->id;
-  $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
-//   dd($newDataGridInternalAudits);
-  $newDataGridInternalAudits->io_id = $internal_id;
+        
+        $internal_id = $internalAudit->id;
+        $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+        //   dd($newDataGridInternalAudits);
+        $newDataGridInternalAudits->io_id = $internal_id;
   $newDataGridInternalAudits->identifier = 'observations';
   $newDataGridInternalAudits->data = $request->observations;
   $newDataGridInternalAudits->save();
-
+  
   $internal_id = $internalAudit->id;
   $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
   $newDataGridInternalAuditRoles->io_id = $internal_id;
@@ -3873,118 +3874,119 @@ if ($areIniAttachmentsSame2 != true) {
   $newDataGridInitialClosure->identifier = 'Initial';
   $newDataGridInitialClosure->data = $request->Initial;
   $newDataGridInitialClosure->save();
+  
+  
+  
+  $ia_id = $internalAudit->id;
+  // dd($request->all());
+  
+    // $validatedData = $request->validate([
+    //   'auditAssessmentChecklist' => 'required|array',
+    //         'auditAssessmentChecklist.*.response' => 'nullable|string',
+    //         'auditAssessmentChecklist.*.remarks' => 'nullable|string',
 
+    //         'auditPersonnelChecklist' => 'required|array',
+    //         'auditPersonnelChecklist.*.response' => 'nullable|string',
+    //         'auditPersonnelChecklist.*.remarks' => 'nullable|string',
 
-
-        $ia_id = $internalAudit->id;
-        // dd($request->all());
-
-        $validatedData = $request->validate([
-            'auditAssessmentChecklist' => 'required|array',
-            'auditAssessmentChecklist.*.response' => 'nullable|string',
-            'auditAssessmentChecklist.*.remarks' => 'nullable|string',
-
-            'auditPersonnelChecklist' => 'required|array',
-            'auditPersonnelChecklist.*.response' => 'nullable|string',
-            'auditPersonnelChecklist.*.remarks' => 'nullable|string',
-
-            'auditfacilityChecklist' => 'required|array',
-            'auditfacilityChecklist.*.response' => 'nullable|string',
-            'auditfacilityChecklist.*.remarks' => 'nullable|string',
+    //         'auditfacilityChecklist' => 'required|array',
+    //         'auditfacilityChecklist.*.response' => 'nullable|string',
+    //         'auditfacilityChecklist.*.remarks' => 'nullable|string',
             
-            'auditMachinesChecklist' => 'required|array',
-            'auditMachinesChecklist.*.response' => 'nullable|string',
-            'auditMachinesChecklist.*.remarks' => 'nullable|string',
+    //         'auditMachinesChecklist' => 'required|array',
+    //         'auditMachinesChecklist.*.response' => 'nullable|string',
+    //         'auditMachinesChecklist.*.remarks' => 'nullable|string',
             
-            'auditProductionChecklist' => 'required|array',
-            'auditProductionChecklist.*.response' => 'nullable|string',
-            'auditProductionChecklist.*.remarks' => 'nullable|string',
+    //         'auditProductionChecklist' => 'required|array',
+    //         'auditProductionChecklist.*.response' => 'nullable|string',
+    //         'auditProductionChecklist.*.remarks' => 'nullable|string',
             
-            'auditMaterialsChecklist' => 'required|array',
-            'auditMaterialsChecklist.*.response' => 'nullable|string',
-            'auditMaterialsChecklist.*.remarks' => 'nullable|string',
+    //         'auditMaterialsChecklist' => 'required|array',
+    //         'auditMaterialsChecklist.*.response' => 'nullable|string',
+    //         'auditMaterialsChecklist.*.remarks' => 'nullable|string',
 
-            'auditQualityControlChecklist' => 'required|array',
-            'auditQualityControlChecklist.*.response' => 'nullable|string',
-            'auditQualityControlChecklist.*.remarks' => 'nullable|string',
+    //         'auditQualityControlChecklist' => 'required|array',
+    //         'auditQualityControlChecklist.*.response' => 'nullable|string',
+    //         'auditQualityControlChecklist.*.remarks' => 'nullable|string',
         
-            'auditQualityAssuranceChecklist' => 'required|array',
-            'auditQualityAssuranceChecklist.*.response' => 'nullable|string',
-            'auditQualityAssuranceChecklist.*.remarks' => 'nullable|string',
+    //         'auditQualityAssuranceChecklist' => 'required|array',
+    //         'auditQualityAssuranceChecklist.*.response' => 'nullable|string',
+    //         'auditQualityAssuranceChecklist.*.remarks' => 'nullable|string',
             
-            'auditPackagingChecklist' => 'required|array',
-            'auditPackagingChecklist.*.response' => 'nullable|string',
-            'auditPackagingChecklist.*.remarks' => 'nullable|string',
+    //         'auditPackagingChecklist' => 'required|array',
+    //         'auditPackagingChecklist.*.response' => 'nullable|string',
+    //         'auditPackagingChecklist.*.remarks' => 'nullable|string',
             
-            'auditSheChecklist' => 'required|array',
-            'auditSheChecklist.*.response' => 'nullable|string',
-            'auditSheChecklist.*.remarks' => 'nullable|string',
+    //         'auditSheChecklist' => 'required|array',
+    //         'auditSheChecklist.*.response' => 'nullable|string',
+    //         'auditSheChecklist.*.remarks' => 'nullable|string',
             
-        ]);
-
+    //     ]);
+        
+        // dd("test");
         // dd($validatedData);
         
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
         // dd($auditAssessmentGrid);
         $auditAssessmentGrid->ia_id = $ia_id;
         $auditAssessmentGrid->identifier = 'auditAssessmentChecklist';
-        $auditAssessmentGrid->data = $validatedData['auditAssessmentChecklist'];
+        $auditAssessmentGrid->data = 'auditAssessmentChecklist';
         // dd($auditAssessmentGrid);
         $auditAssessmentGrid->save();
 
         $auditPersonnelGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
         $auditPersonnelGrid->ia_id = $ia_id;
         $auditPersonnelGrid->identifier = 'auditPersonnelChecklist';
-        $auditPersonnelGrid->data = $validatedData['auditPersonnelChecklist'];
+        $auditPersonnelGrid->data = 'auditPersonnelChecklist';
         // dd($auditPersonnelGrid);
         $auditPersonnelGrid->save();
 
         $auditfacilityGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
         $auditfacilityGrid->ia_id = $ia_id;
         $auditfacilityGrid->identifier = 'auditfacilityChecklist';
-        $auditfacilityGrid->data = $validatedData['auditfacilityChecklist'];
+        $auditfacilityGrid->data = 'auditfacilityChecklist';
         $auditfacilityGrid->save();
 
         $auditMachinesGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
         $auditMachinesGrid->ia_id = $ia_id;
         $auditMachinesGrid->identifier = 'auditMachinesChecklist';
-        $auditMachinesGrid->data = $validatedData['auditMachinesChecklist'];
+        $auditMachinesGrid->data = 'auditMachinesChecklist';
         $auditMachinesGrid->save();
 
         $auditProductionGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
         $auditProductionGrid->ia_id = $ia_id;
         $auditProductionGrid->identifier = 'auditProductionChecklist';
-        $auditProductionGrid->data =  $validatedData['auditProductionChecklist'];
+        $auditProductionGrid->data =  'auditProductionChecklist';
         $auditProductionGrid->save();
 
         $auditMaterialsGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
         $auditMaterialsGrid->ia_id = $ia_id;
         $auditMaterialsGrid->identifier = 'auditMaterialsChecklist';
-        $auditMaterialsGrid->data =  $validatedData['auditMaterialsChecklist'];;
+        $auditMaterialsGrid->data =  'auditMaterialsChecklist';
         $auditMaterialsGrid->save();
 
         $auditQualityGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
         $auditQualityGrid->ia_id = $ia_id;
         $auditQualityGrid->identifier = 'auditQualityControlChecklist';
-        $auditQualityGrid->data =  $validatedData['auditQualityControlChecklist'];
+        $auditQualityGrid->data =  'auditQualityControlChecklist';
         $auditQualityGrid->save();
 
         $auditQualityAssuranceGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
         $auditQualityAssuranceGrid->ia_id = $ia_id;
         $auditQualityAssuranceGrid->identifier = 'auditQualityAssuranceChecklist';
-        $auditQualityAssuranceGrid->data =  $validatedData['auditQualityAssuranceChecklist'];
+        $auditQualityAssuranceGrid->data =  'auditQualityAssuranceChecklist';
         $auditQualityAssuranceGrid->save();
 
         $auditPackagingGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditPackagingGrid->ia_id = $ia_id;
         $auditPackagingGrid->identifier = 'auditPackagingChecklist';
-        $auditPackagingGrid->data = $validatedData['auditPackagingChecklist'];
+        $auditPackagingGrid->data = 'auditPackagingChecklist';
         $auditPackagingGrid->save();
 
         $auditsheGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
         $auditsheGrid->ia_id = $ia_id;
         $auditsheGrid->identifier = 'auditSheChecklist';
-        $auditsheGrid->data = $validatedData['auditSheChecklist'];
+        $auditsheGrid->data = 'auditSheChecklist';
         $auditsheGrid->save();  
 
         $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();        
@@ -4032,7 +4034,7 @@ if ($areIniAttachmentsSame2 != true) {
             $data3->remark = serialize($request->remark);
         }
         // dd($data3);
-        $data3->update();
+        $data3->save();
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
 
@@ -4128,7 +4130,7 @@ if ($areIniAttachmentsSame2 != true) {
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
-     //   dd($grid_data);
+    //    dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
         $auditornew = InternalAudit::where('id', $id)->first();
@@ -4149,7 +4151,8 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
-        // dd($auditorview);
+        // foreach($auditorview as $ss)
+        // return $auditorview;
 
 
             // dd($gridcomment);
@@ -4226,61 +4229,60 @@ if ($areIniAttachmentsSame2 != true) {
                 
             if ($changeControl->stage == 2) 
             {
-                if ($changeControl->stage == 2 && Helpers::check_roles($changeControl->division_id, "Internal Audit", 18)) 
-                {
-                    $changeControl->stage = 3; 
-                    $changeControl->status = "Audit";
-                    $changeControl->audit_preparation_completed_by = Auth::user()->name;
-                    $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
-                    $changeControl->acknowledge_commnet = $request->comment;
-                    $history = new InternalAuditTrial();
-                                $history->InternalAudit_id = $id;
-                                $history->activity_type = 'Acknowledgement By, Acknowledgement On';
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->previous = "Not Applicable";
-                                } else {
-                                    $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
-                                }
-                                $history->current = $changeControl->audit_preparation_completed_by . ' , ' . $changeControl->audit_preparation_completed_on;
-                                $history->action='Acknowledgement';
-                                // $history->current = $changeControl->audit_preparation_completed_by;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = " Audit";
-                                $history->change_from = $lastDocument->status;
-                                $history->stage = " Audit";
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->save();
-                    //             $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
+                // if ($changeControl->stage == 2 && Helpers::check_roles($changeControl->division_id, "Internal Audit", 18)) 
+                // {
+                //     $changeControl->stage = 3; 
+                //     $changeControl->status = "Audit";
+                //     $changeControl->audit_preparation_completed_by = Auth::user()->name;
+                //     $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
+                //     $changeControl->acknowledge_commnet = $request->comment;
+                //     $history = new InternalAuditTrial();
+                //                 $history->InternalAudit_id = $id;
+                //                 $history->activity_type = 'Acknowledgement By, Acknowledgement On';
+                //                 if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
+                //                     $history->previous = "Not Applicable";
+                //                 } else {
+                //                     $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
+                //                 }
+                //                 $history->current = $changeControl->audit_preparation_completed_by . ' , ' . $changeControl->audit_preparation_completed_on;
+                //                 $history->action='Acknowledgement';
+                //                 // $history->current = $changeControl->audit_preparation_completed_by;
+                //                 $history->comment = $request->comment;
+                //                 $history->user_id = Auth::user()->id;
+                //                 $history->user_name = Auth::user()->name;
+                //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //                 $history->origin_state = $lastDocument->status;
+                //                 $history->change_to = " Audit";
+                //                 $history->change_from = $lastDocument->status;
+                //                 $history->stage = " Audit";
+                //                 if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
+                //                     $history->action_name = 'New';
+                //                 } else {
+                //                     $history->action_name = 'Update';
+                //                 }
+                //                 $history->save();
+                //     //             $list = Helpers::getAuditManagerUserList();
+                //     //     foreach ($list as $u) {
+                //     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //     //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //     //              if ($email !== null) {
 
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
-                    $changeControl->update();
-                    toastr()->success('Document Sent');
-                    return back();
-                } 
-                else if(($changeControl->stage == 2)){
-                    // dd(!$changeControl->Auditee_comment || !$changeControl->Auditor_comment);
+                //     //               Mail::send(
+                //     //                   'mail.view-mail',
+                //     //                    ['data' => $changeControl],
+                //     //                 function ($message) use ($email) {
+                //     //                     $message->to($email)
+                //     //                         ->subject("Document sent ".Auth::user()->name);
+                //     //                 }
+                //     //               );
+                //     //             }
+                //     //      }
+                //     //   }
+                //     $changeControl->update();
+                //     toastr()->success('Document Sent');
+                //     return back();
+                // } 
+             if(($changeControl->stage == 2)){
                     if (!$changeControl->Auditee_comment || !$changeControl->Auditor_comment) {
                                            
                                 Session::flash('swal', [
