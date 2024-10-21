@@ -4941,154 +4941,127 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-30">{{ $data->submit_by }}</td>
+                        <td class="w-30">{{ $data->submit_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-30">{{ $data->submit_on }}</td>
-
+                        <td class="w-30">{{ $data->submit_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Submit Comment</th>
-                        <td class="w-30">{{ $data->submit_comment }}</td>
+                        <td class="w-30">{{ $data->submit_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">HOD Review Complete By</th>
-                        <td class="w-30">{{ $data->HOD_Review_Complete_By }}</td>
+                        <td class="w-30">{{ $data->HOD_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">HOD Review Complete On</th>
-                        <td class="w-30">{{ $data->HOD_Review_Complete_On }}</td>
-
+                        <td class="w-30">{{ $data->HOD_Review_Complete_On ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">HOD Review Comment</th>
-                        <td class="w-30">{{ $data->HOD_Review_Comments }}</td>
+                        <td class="w-30">{{ $data->HOD_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Request For Cancellation By</th>
-                        <td class="w-30">{{ $data->pending_Cancel_by }}</td>
+                        <td class="w-30">{{ $data->pending_Cancel_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Request For Cancellation On</th>
-                        <td class="w-30">{{ $data->pending_Cancel_on }}</td>
-
+                        <td class="w-30">{{ $data->pending_Cancel_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Request For Cancellation Comment</th>
-                        <td class="w-30">{{ $data->pending_Cancel_comment }}</td>
+                        <td class="w-30">{{ $data->pending_Cancel_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Initial Review Complete by</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">QA/CQA Initial Review Complete By</th>
+                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">QA/CQA Initial Review Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
-
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA/CQA Initial Review Comment</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
+                        <td class="w-30">{{ $data->QA_Initial_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
-
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
+                        <td class="w-30">{{ $data->CFT_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">CFT Review Complete On</th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
-
+                        <td class="w-30">{{ $data->CFT_Review_Complete_On ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Comment</th>
-                        <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
+                        <td class="w-30">{{ $data->CFT_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Not Required By</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_by}}</td>
+                        <td class="w-30">{{ $data->cft_review_not_req_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">CFT Review Not Required On</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_on }}</td>
-
+                        <td class="w-30">{{ $data->cft_review_not_req_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Not Required Comment</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">QA/CQA Final Assessement Complete By</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
-                        <th class="w-20">QA/CQA Final Assessement Complete On</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
-
+                        <td class="w-30">{{ $data->cft_review_not_req_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Final Assessement Complete Comment</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
+                        <th class="w-20">QA/CQA Final Assessment Complete By</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By ?? 'Not Applicable' }}</td>
+                        <th class="w-20">QA/CQA Final Assessment Complete On</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Final Assessment Complete Comment</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->Approved_By }}</td>
-                        <th class="w-20">Approved ON</th>
-                        <td class="w-30">{{ $data->Approved_On }}</td>
-
+                        <td class="w-30">{{ $data->Approved_By ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">{{ $data->Approved_On ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved Comments</th>
-                        <td class="w-30">{{ $data->Approved_Comments }}</td>
+                        <td class="w-30">{{ $data->Approved_Comments ?? 'Not Applicable' }}</td>
                     </tr>
-                    <!-- <tr>
-                        <th class="w-20">QA/CQA Head/Manager Designee Approva By</th>
-                        <td class="w-30">{{ $data->QA_head_approved_by }}</td>
-                        <th class="w-20">QA/CQA Head/Manager Designee Approva ON</th>
-                        <td class="w-30">{{ $data->QA_head_approved_on }}</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA/CQA Head/Manager Designee Approva Comment</th>
-                        <td class="w-30">{{ $data->QA_head_approved_comment }}</td>
-                    </tr> -->
                     <tr>
                         <th class="w-20">Initiator Update Completed By</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_by }}</td>
-                        <th class="w-20">Initiator Update Completed ON</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_on }}</td>
-
+                        <td class="w-30">{{ $data->pending_initiator_approved_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Initiator Update Completed On</th>
+                        <td class="w-30">{{ $data->pending_initiator_approved_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Update Completed Comment</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_comment }}</td>
+                        <td class="w-30">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation verification Complete By</th>
-                        <td class="w-30">{{ $data->Hod_final_by }}</td>
-                        <th class="w-20">Implementation verification Complete On</th>
-                        <td class="w-30">{{ $data->Hod_final_on }}</td>
-
+                        <th class="w-20">Implementation Verification Complete By</th>
+                        <td class="w-30">{{ $data->Hod_final_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Implementation Verification Complete On</th>
+                        <td class="w-30">{{ $data->Hod_final_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation verification Complete Comment</th>
-                        <td class="w-30">{{ $data->Hod_final_comment }}</td>
+                        <th class="w-20">Implementation Verification Complete Comment</th>
+                        <td class="w-30">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Closure Approved By</th>
-                        <td class="w-30">{{ $data->Close_by }}</td>
+                        <td class="w-30">{{ $data->Close_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Closure Approved On</th>
-                        <td class="w-30">{{ $data->Close_on }}</td>
-
+                        <td class="w-30">{{ $data->Close_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Closure Approved Comment</th>
-                        <td class="w-30">{{ $data->Close_comment }}</td>
+                        <td class="w-30">{{ $data->Close_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ $data->cancelled_on }}</td>
-
+                        <td class="w-30">{{ $data->cancelled_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancelled_comment }}</td>
+                        <td class="w-30">{{ $data->cancelled_comment ?? 'Not Applicable' }}</td>
                     </tr>
-
-
-
                 </table>
             </div>
+
         </div>
 
     </div>
