@@ -4621,7 +4621,9 @@ class RootCauseController extends Controller
             $record = $record_number;
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords'));
+            $Capachild = RootCauseAnalysis::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);       
+            return view('frontend.forms.capa', compact('record_number','due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
         }
 
         if ($request->revision == "Action-Item") {
