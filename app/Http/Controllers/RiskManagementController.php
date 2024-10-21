@@ -9166,6 +9166,14 @@ class RiskManagementController extends Controller
 
                     $riskAssement->stage = "3";
                     $riskAssement->status = "CFT Review";
+                    $stage = new RiskAssesmentCftResponce();
+                    $stage->risk_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
                     $riskAssement->evaluated_by = Auth::user()->name;
                     $riskAssement->evaluated_on = Carbon::now()->format('d-M-Y');
                     $riskAssement->cft_comments = $request->comment;

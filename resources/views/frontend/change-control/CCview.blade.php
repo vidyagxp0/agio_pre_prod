@@ -1325,7 +1325,8 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
-                                            <textarea name="hod_assessment_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                    
+                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
 
@@ -1353,7 +1354,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="hod_assessment_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'hod_assessment_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1604,7 +1605,7 @@
                                                     <label for="Microbiology-Person">CFT Reviewer Person </label>
                                                     <select multiple name="reviewer_person_value[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="reviewer_person_value"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        data-silent-initial-value-set="true" id="reviewer_person_value"  {{   $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
@@ -1624,7 +1625,7 @@
                                             {{--  <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="cft_reviewer">Related Records</label>
-                                                    <select{{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    <select{{ $data->stage == 0  $data->stage == 13 ? 'disabled' : '' }}
                                                         multiple id="cft_reviewer" name="cft_reviewer[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true">
@@ -1651,7 +1652,7 @@
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
                                                         risks.</span> -->
-                                                    <select name="severity_level1" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->severity_level1 == 'minor') selected @endif
                                                             value="minor">Minor</option>
@@ -1692,7 +1693,7 @@
                                             <label for="related_records">Related Records</label>
 
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 8  ? 'disabled' : '' }}>
+                                                data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 13  ? 'disabled' : '' }}>
 
                                                  @if (!empty($relatedRecords))
                                                         @foreach ($relatedRecords as $records)
@@ -1753,7 +1754,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_head')" multiple>
                                             </div>
                                         </div>
@@ -8874,7 +8875,7 @@
                                                         @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     </label>
                                                     <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                                                            {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
                                                         <option value="">--Select--</option>
                                                         <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
                                                         <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
@@ -8886,7 +8887,7 @@
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     <select name="QA_CQA_person" class="QA_CQA_person"
-                                                        id="QA_CQA_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        id="QA_CQA_person" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
@@ -8900,7 +8901,7 @@
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
 
@@ -8928,7 +8929,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_final_attach[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
                                             </div>
                                         </div>
@@ -9026,7 +9027,7 @@
                                                     @if($data->stage==6) <span class="text-danger">*</span>@endif
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ra_tab_comments" id="summernote-18">{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
+                                                        <textarea class="tiny" name="ra_tab_comments" id="summernote-18" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
                                                     </div>
                                                 </div>
 
@@ -9054,7 +9055,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="RA_attachment_second[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'RA_attachment_second')" multiple>
                                             </div>
                                         </div>
@@ -9148,7 +9149,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments
                                             @if($data->stage == 7) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
+                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
                                         </div>
 
 
@@ -9176,7 +9177,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_attach[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                             </div>
                                         </div>
@@ -9328,7 +9329,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments"> Initiator Update Comments @if($data->stage == 9) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="intial_update_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
+                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
 
@@ -9356,7 +9357,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="intial_update_attach[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'intial_update_attach')" multiple>
                                             </div>
                                         </div>
@@ -9449,7 +9450,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Final Review Comments @if($data->stage == 10) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="hod_final_review_comment" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
+                                            <textarea name="hod_final_review_comment" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
                                         </div>
 
 
@@ -9477,7 +9478,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="hod_final_review_attach[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'hod_final_review_attach')" multiple>
                                             </div>
                                         </div>
@@ -9567,11 +9568,11 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments @if($data->stage == 11) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="implementation_verification_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
+                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <textarea name="feedback" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $approcomments->feedback }}</textarea>
+                                            <textarea name="feedback" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $approcomments->feedback }}</textarea>
                                         </div>
 
                                         <div class="col-12">
@@ -9598,7 +9599,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="tran_attach[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'tran_attach')" multiple>
                                             </div>
                                         </div>
@@ -9768,7 +9769,7 @@
 
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
-                                    <textarea name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
+                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
 
@@ -9777,7 +9778,7 @@
                                     <div class="group-input">
                                         <label for="effect_check">Effectiveness check required</label>
                                         <select name="effect_check" class="effect_check" id="effect_check"
-                                            {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
                                             <option value="">--Select--</option>
                                             <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
                                             <option @if ($cc_cfts->effect_check == 'No') selected @endif value="No">No</option>
@@ -9808,7 +9809,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attach_list[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'attach_list')" multiple>
                                             </div>
                                         </div>

@@ -256,27 +256,31 @@
                                 Cancel
                             </button>
 
-                            @elseif(
+                            {{-- @elseif(
                                 ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
-                                    in_array(Auth::user()->id, $valuesArray))
-                                <!-- @if (!$cftCompleteUser)
-        -->
+                                    in_array(Auth::user()->id, $valuesArray)) --}}
+                                    @elseif(
+                            ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                                     <!-- @if (!$cftCompleteUser)
+    -->
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Review Complete
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button> --}}
-
-                        <!--
+                                      <!--
     @endif -->
+
+
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             Request More Info
                         </button>
+
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA/CQA Review Complete

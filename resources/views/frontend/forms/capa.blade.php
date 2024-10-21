@@ -581,21 +581,43 @@
 
                                         // Initialize datepicker on input fields
                                         function initializeDatepicker() {
-                                            $('.material_mfg_date, .material_expiry_date').datepicker({
-                                                dateFormat: 'dd-M-yy', // Format like '10 Oct 2024'
-                                                changeMonth: true,
-                                                changeYear: true,
-                                                showButtonPanel: true,
-                                                onClose: function(dateText, inst) {
-                                                    if (dateText) {
-                                                        $(this).val($.datepicker.formatDate('dd-M-yy', new Date(dateText)));
-                                                    } else {
-                                                        $(this).attr('placeholder',
-                                                        'DD-MMM-YYYY'); // Set the placeholder back if the date is cleared
-                                                    }
-                                                }
-                                            });
-                                        }
+    $('.material_mfg_date, .material_expiry_date').datepicker({
+        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        onClose: function(dateText, inst) {
+            if (dateText) {
+                // Format the date correctly when closed
+                const dateObj = $(this).datepicker('getDate');
+                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
+            } else {
+                $(this).val(''); // Clear the input if no date is selected
+                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
+            }
+        },
+        beforeShow: function() {
+            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
+        }
+    });
+
+    // Prevent manual text entry
+    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
+        e.preventDefault(); // Disable text input
+    });
+
+    // Optional: To clear the field when clicking outside
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
+            $(this).val(''); // Clear input if not clicked
+        }
+    });
+}
+
+// Call the function to initialize the datepicker
+$(document).ready(function() {
+    initializeDatepicker();
+});
 
                                         // Add a new row
                                         $('#material').click(function(e) {
