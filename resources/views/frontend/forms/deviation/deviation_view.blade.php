@@ -10814,7 +10814,7 @@
 
 
 
-                        <div class="col-12 mb-4 failure" id="fmea-section">
+<div class="col-12 mb-4 failure" id="fmea-section">
     <div class="group-input failure">
         <label for="agenda">
             Failure Mode and Effect Analysis
