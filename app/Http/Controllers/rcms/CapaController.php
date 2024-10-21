@@ -525,7 +525,10 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $capa->due_date;
+            // $history->current = $capa->due_date;
+           
+            $history->current = Helpers::getdateFormat($capa->due_date);
+           
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
