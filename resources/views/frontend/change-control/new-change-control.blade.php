@@ -155,7 +155,7 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Head/Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Head / Designee Approval</button>
 
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button> -->
 
@@ -184,9 +184,15 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="group-input">
+                                    <!-- <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" placeholder="Record Number" readonly>
+                                    </div> -->
+                                   
+                                    <div class="group-input">
+                                        <label for="Record Number">Record Number</label>
+                                        <input disabled type="text" name="record"
+                                            value=" {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -553,7 +559,7 @@
                                             <option value="complaint">Complaint</option>
                                             <option value="regulatory">Regulatory</option>
                                             <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
+                                            <option value="Continuous_improvement">Continuous Improvement</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
@@ -862,7 +868,7 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
                                     <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers" data-search="false"
@@ -875,7 +881,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="col-lg-6">
                                 <div class="group-input">
@@ -884,7 +890,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="severity-level">Classifiaction of Changes</label>
                                     <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
@@ -1186,7 +1192,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet/Capsule/Powder Required ?</label>
+                                        <label for="Production Tablet"> Production Tablet/Capsule/Powder Review Required ?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1284,7 +1290,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid">Production Liquid/Ointment Required?</label>
+                                        <label for="Production Liquid">Production Liquid/Ointment Review Required?</label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1381,7 +1387,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection">Production Injection Required ? </label>
+                                        <label for="Production Injection">Production Injection Review Required ? </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1480,7 +1486,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store Required ?</label>
+                                        <label for="Store">Store Review Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1599,7 +1605,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Required ?</label>
+                                        <label for="Quality Control Person">Quality Control Review Required ?</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
@@ -1681,7 +1687,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development">Research & Development Required ?</label>
+                                        <label for="Research Development">Research & Development Review Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1776,7 +1782,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Required ?</label>
+                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -1885,7 +1891,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Administration Review Required">Human Resource
+                                        <label for="Administration Review Required">Human Resource Review
                                             Required ?</label>
                                         <select name="Human_Resource_review" id="Human_Resource_review" disabled>
                                             <option value="">-- Select --</option>
@@ -1988,7 +1994,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Microbiology"> Microbiology Required ?</label>
+                                        <label for="Microbiology"> Microbiology Review Required ?</label>
                                         <select name="Microbiology_Review" id="Microbiology_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2086,7 +2092,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
+                                        <label for="RegulatoryAffair"> Regulatory Affair Review Required ?</label>
                                         <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2183,7 +2189,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required ?</label>
+                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Review Required ?</label>
                                         <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2388,7 +2394,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Information Technology Review Required"> Information Technology Required ?</label>
+                                        <label for="Information Technology Review Required"> Information Technology Review Required ?</label>
                                         <select name=" Information_Technology_review" id=" Information_Technology_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2498,7 +2504,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Contract Giver"> Contract Giver Required ? </label>
+                                        <label for="Contract Giver"> Contract Giver Review Required ? </label>
                                         <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -3505,7 +3511,7 @@
                                             <textarea name="effective_check_plan"></textarea>
                                         </div>
                                     </div> --}}
-                            <div class="col-12 sub-head">
+                            <!-- <div class="col-12 sub-head">
                                 Extension Justification
                             </div>
                             <div class="col-12">
@@ -3514,7 +3520,7 @@
                                     <div><small class="text-primary">Please Mention justification if due date is
                                             crossed</small></div>
                                     <textarea name="due_date_extension"></textarea>
-                                </div>
+                                </div> -->
                             </div>
                         <!-- </div> -->
                         <div class="button-block">
@@ -3588,15 +3594,15 @@
                 <div id="CCForm16" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                            QA/CQA Head/Manager Designee Approval
+                            QA/CQA Head / Designee Approval
                             </div>
                             <div class="group-input">
-                                <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments</label>
+                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comment</label>
                                 <textarea name="hod_assessment_comments" readonly></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa-eval-attach">QA/CQA Head/Manager Designee Approval Attachments</label>
+                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>
@@ -4038,19 +4044,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="submit by">Submit By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="submit on">Submit On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                <label for="submit comment">Submit Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4058,19 +4064,40 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="HOD Review Complete By">HOD Assessment Complete By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="HOD Review Complete On">HOD Assessment Complete On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style=" ">
                                <label for="HOD Review Comments">HOD Assessment Complete Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
+                           </div>
+                       </div>
+
+                       <div class="sub-head">Cancel</div>
+                      
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete By">Cancel By :-</label>
+                               <div class="">Not Applicable</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-3">
+                           <div class="group-input">
+                               <label for="HOD Review Complete On">Cancel On :-</label>
+                               <div class="">Not Applicable</div>
+                           </div>
+                       </div>
+                       <div class="col-lg-6">
+                           <div class="group-input" style=" ">
+                               <label for="HOD Review Comments">Cancel Comment :-</label>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4099,19 +4126,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Initial Review Complete By">QA/CQA Initial Assessment Complete By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Initial Review Complete On">QA/CQA Initial Assessment Complete On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                <label for="QA Initial Review Comments">QA/CQA Initial Review Comment:-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4139,19 +4166,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete By">CFT Assessment Complete By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete On">CFT Assessment Complete On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="CFT Review Comments">CFT Assessment Complete Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4180,19 +4207,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete By">RA Approval Required By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete On">RA Approval Required On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="CFT Review Comments">RA Approval Required Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4203,19 +4230,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete By">RA Approval Complete By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="CFT Review Complete On">RA Approval Complete On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="CFT Review Comments"> RA Approval Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4225,19 +4252,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete On"> QA/CQAFinal Review Complete On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="QA Final Review Comments"> QA/CQA Final Review Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4247,30 +4274,49 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete By">  Approved  By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete On">  Approved  On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="QA Final Review Comments"> Approved Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
-
+                       <div class="sub-head">Rejected</div>
+                      
+                      <div class="col-lg-3">
+                          <div class="group-input">
+                              <label for="HOD Review Complete By">Rejected By :-</label>
+                              <div class="">Not Applicable</div>
+                          </div>
+                      </div>
+                      <div class="col-lg-3">
+                          <div class="group-input">
+                              <label for="HOD Review Complete On">Rejected On :-</label>
+                              <div class="">Not Applicable</div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="group-input" style=" ">
+                              <label for="HOD Review Comments">Cancel Comment :-</label>
+                              <div class="">Not Applicable</div>
+                          </div>
+                      </div>
                      
                    <div class="sub-head">Initiator Updated Completed</div>
                    
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
-                           <div class="static">
+                           <div class="">Not Applicable
                             
                            </div>
                        </div>
@@ -4279,7 +4325,7 @@
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
-                           <div class="static">
+                           <div class="">Not Applicable
                         
                            </div>
                        </div>
@@ -4288,7 +4334,7 @@
                    <div class="col-lg-6">
                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                            <label for="QA Final Review Comments">Initiator Updated Completed Comment :-</label>
-                           <div class="">
+                           <div class="">Not Applicable
                               
                            </div>
                        </div>
@@ -4301,19 +4347,19 @@
                   <div class="col-lg-3">
                       <div class="group-input">
                           <label for="QA Final Review Complete By">  HOD Final Review Complete  By :-</label>
-                          <div class="static"></div>
+                          <div class="">Not Applicable</div>
                       </div>
                   </div>
                   <div class="col-lg-3">
                       <div class="group-input">
                           <label for="QA Final Review Complete On">  HOD Final Review Complete  On :-</label>
-                          <div class="static"></div>
+                          <div class="">Not Applicable</div>
                       </div>
                   </div>
                   <div class="col-lg-6">
                       <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                           <label for="QA Final Review Comments"> HOD Final Review Complete Comment :-</label>
-                          <div class=""></div>
+                          <div class="">Not Applicable</div>
                       </div>
                   </div>
 
@@ -4323,19 +4369,19 @@
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete By">Send For Final QA/CQA Head Approval By :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="QA Final Review Complete On">Send For Final QA/CQA Head Approval On :-</label>
-                               <div class="static"></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
                        <div class="col-lg-6">
                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comment :-</label>
-                               <div class=""></div>
+                               <div class="">Not Applicable</div>
                            </div>
                        </div>
 
@@ -4346,7 +4392,7 @@
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete By">Closure Approved By :-</label>
-                           <div class="static">
+                           <div class="">Not Applicable
                             
                            </div>
                        </div>
@@ -4354,13 +4400,13 @@
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete On">Closure Approved On :-</label>
-                           <div class="static"></div>
+                           <div class="">Not Applicable</div>
                        </div>
                    </div>
                    <div class="col-lg-6">
                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                            <label for="QA Final Review Comments">Closure Approved Comment :-</label>
-                           <div class=""></div>
+                           <div class="">Not Applicable</div>
                        </div>
                    </div>
 
