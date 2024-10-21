@@ -211,7 +211,7 @@
             <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                 <thead>
                     <tr class="table_bg">
-                        <th class="w-5">S.No</th>
+                        <th class="w-6">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
                         <th class="w-30">Data Field</th>

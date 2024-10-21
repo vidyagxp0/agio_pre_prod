@@ -1502,23 +1502,36 @@
                                             <div class="sub-head">Report Issued</div>
                                         </div>
 
-                                        
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel By">Report Issued By</label>
+                                                <label for="Comment">Report Issued By</label>
+                                                @if ($data->report_issued_by)
                                                 <div class="static">{{ $data->report_issued_by }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel By">Report Issued On</label>
+                                                <label for="Comment">Report Issued On</label>
+                                                @if ($data->report_issued_on)
                                                 <div class="static">{{ $data->report_issued_on }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancel By">Report Issued Comment</label>
+                                                <label for="Comment">Report Issued Comment</label>
+                                                @if ($data->report_issued_comment)
                                                 <div class="static">{{ $data->report_issued_comment }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
 
@@ -1529,20 +1542,32 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Cancel By</label>
+                                                @if ($data->cancel_by)
                                                 <div class="static">{{ $data->cancel_by }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel On">Cancel On</label>
+                                                @if ($data->cancel_on)
                                                 <div class="static">{{ $data->cancel_on }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">Cancel Comment</label>
-                                                <div class="Date">{{ $data->cancel_comment }}</div>
+                                                @if ($data->cancel_comment)
+                                                <div class="static">{{ $data->cancel_comment }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
 
@@ -1553,19 +1578,31 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
+                                                @if ($data->more_info_required_by)
                                                 <div class="static">{{ $data->more_info_required_by }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required On">More Info Required On</label>
+                                                @if ($data->more_info_required_on)
                                                 <div class="static">{{ $data->more_info_required_on }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">More Info Required Comment</label>
-                                                <div class="Date">{{ $data->more_info_required_comment }}</div>
+                                                @if ($data->more_info_required_comment)
+                                                <div class="static">{{ $data->more_info_required_comment }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
 
@@ -1576,19 +1613,31 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Reject CAPA Plan By">CAPA Plan Proposed By</label>
+                                                @if ($data->complete_By)
                                                 <div class="static">{{ $data->complete_By }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
+                                                @if ($data->complete_on)
                                                 <div class="static">{{ $data->complete_on }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">CAPA Plan Proposed Comment</label>
-                                                <div class="Date">{{ $data->complete_comment }}</div>
+                                                @if ($data->complete_comment)
+                                                <div class="static">{{ $data->complete_comment }}</div>
+                                                @else
+                                                    Not Applicable
+                                                @endif
                                             </div>
                                         </div>
 
@@ -1600,20 +1649,32 @@
                                             <div class="group-input">
                                                 <label for="QA Approval Without CAPA By">No CAPA's Required
                                                     By</label>
-                                                <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
+                                                    @if ($data->qa_approval_without_capa_by)
+                                                    <div class="static">{{ $data->qa_approval_without_capa_by }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="No CAPA's Required On">No CAPA's Required
                                                     On</label>
-                                                <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
+                                                    @if ($data->qa_approval_without_capa_on)
+                                                    <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">No CAPA's Required Comment</label>
-                                                <div class="Date">{{ $data->qa_approval_without_capa_comment }}</div>
+                                                    @if ($data->qa_approval_without_capa_comment)
+                                                    <div class="static">{{ $data->qa_approval_without_capa_comment }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                             </div>
                                         </div>
 
@@ -1626,7 +1687,11 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA Approval On">Response Reviewed By</label>
-                                                <div class="static">{{ $data->Final_Approval_by }}</div>
+                                                    @if ($data->Final_Approval_by)
+                                                    <div class="static">{{ $data->Final_Approval_by }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                                 <!-- <div class="static">{{ $data->Final_Approval_By }}</div> -->
                                             </div>
                                         </div>
@@ -1634,13 +1699,21 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Response Reviewed By">Response Reviewed On</label>
-                                                <div class="static">{{ $data->Final_Approval_on }}</div>
+                                                    @if ($data->Final_Approval_on)
+                                                    <div class="static">{{ $data->Final_Approval_on }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">Response Reviewed Comment</label>
-                                                <div class="Date">{{ $data->Final_Approval_comment }}</div>
+                                                    @if ($data->Final_Approval_comment)
+                                                    <div class="static">{{ $data->Final_Approval_comment }}</div>
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
                                             </div>
                                         </div>
 
