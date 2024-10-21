@@ -152,7 +152,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             //----------------------------------------------By Pankaj-----------------------
 
-            Route::post('audit', [InternalauditController::class, 'create'])->name('createInternalAudit');
+            Route::post('audit', action: [InternalauditController::class, 'create'])->name('createInternalAudit');
             Route::get('internalAuditShow/{id}', [InternalauditController::class, 'internalAuditShow'])->name('showInternalAudit');
             Route::post('update/{id}', [InternalauditController::class, 'update'])->name('updateInternalAudit');
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
