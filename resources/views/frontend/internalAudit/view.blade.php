@@ -1265,7 +1265,7 @@
                                                 <textarea class="summernote Auditee_comment"
                                                     name="Auditee_comment" id="summernote-18"
                                                     @if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
-                                                        readonly
+                                                       
                                                     @endif
                                                 >{{ $data->Auditee_comment }}</textarea>
                                             </div>

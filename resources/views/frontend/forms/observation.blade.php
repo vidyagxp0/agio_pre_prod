@@ -906,19 +906,19 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Report Issued By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Report Issued On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Report Issued Comment</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
@@ -929,20 +929,20 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Cancel By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel On">Cancel On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">Cancel Comment</label>
-                                                <div class="Date"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
@@ -953,19 +953,19 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required On">More Info Required On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">More Info Required Comment</label>
-                                                <div class="Date"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
@@ -976,19 +976,19 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Reject CAPA Plan By">CAPA Plan Proposed By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">CAPA Plan Proposed Comment</label>
-                                                <div class="Date"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
@@ -999,19 +999,19 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA Approval Without CAPA By">No CAPA's Required By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="No CAPA's Plan Proposed On">No CAPA's Required On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">No CAPA's Required Comment</label>
-                                                <div class="Date"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
@@ -1024,20 +1024,20 @@
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA Approval On">Response Reviewed By</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Response Reviewed By">Response Reviewed On</label>
-                                                <div class="static"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">Response Reviewed Comment</label>
-                                                <div class="Date"></div>
+                                                <div class="static">Not Applicable</div>
                                             </div>
                                         </div>
 
