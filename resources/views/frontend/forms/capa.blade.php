@@ -939,7 +939,7 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> CAPA QA/CQA Review Comment
+                    <label for="Comments">  QA/CQA Review Comment 
                     </label>
                     <textarea name="capa_qa_comments"></textarea>
                 </div>
@@ -1093,7 +1093,7 @@ $(document).ready(function() {
                                         <textarea name="effective_check_plan"></textarea>
                                     </div>
                                 </div> -->
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
                                 <div class="col-12">
@@ -1104,7 +1104,8 @@ $(document).ready(function() {
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
+                            </div> 
                             <div class="button-block">
                                 <button type="submit" class="on-submit-disable-button">Save</button>
                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1456,63 +1457,63 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Propose Plan By</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed On">Propose Plan On</label>
                                     <input type="hidden" name="plan_proposed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By"> Propose Plan Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled By">Cancel By</label>
                                     <input type="hidden" name="cancelled_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled On">Cancel On</label>
                                     <input type="hidden" name="cancelled_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Cancel Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Approved By">HOD Review Complete By</label>
                                     <input type="hidden" name="hod_review_completed_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="HOD Review Completed On">HOD Review Complete On</label>
                                     <input type="hidden" name="hod_review_completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">HOD Review Complete Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1534,21 +1535,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Completed By">QA/CQA Review Complete By</label>
                                     <input type="hidden" name="qa_review_completed_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed On"> QA/CQA Review Complete On</label>
                                     <input type="hidden" name="qa_review_completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">QA/CQA Review Complete Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1570,21 +1571,21 @@ $(document).ready(function() {
                                     <label for="Approved By">Approved By</label>
                                     <input type="hidden" name="approved_by">
 
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Approved On"> Approved On</label>
                                     <input type="hidden" name="approved_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Approved Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1605,21 +1606,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Rejected By">Completed By</label>
                                     <input type="hidden" name="completed_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="completed On">Completed On</label>
                                     <input type="hidden" name="completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1640,21 +1641,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Rejected By">HOD Final Review Completed By</label>
                                     <input type="hidden" name="hod_final_review_completed_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">HOD Final Review Completed On</label>
                                     <input type="hidden" name="hod_final_review_completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">HOD Final Review Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1675,21 +1676,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">QA/CQA Closure Review Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1708,23 +1709,25 @@ $(document).ready(function() {
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By">QAH/CQA Approval Completed By</label>
+                                    <label for="QA More Info Required By">
+                                        QAH/CQA Head Approval Complete By
+                                    </label>
                                     <input type="hidden" name="qah_approval_completed_by">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA QA/CQA Approval Completed On">QAH/CQA Approval Completed On</label>
+                                    <label for="QA QA/CQA Approval Completed On">QAH/CQA Head Approval Complete On</label>
                                     <input type="hidden" name="qah_approval_completed_on">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">QAH/CQA Approval Completed Comment</label>
+                                    <label for="Plan Proposed By">  QAH/CQA Head Approval Complete Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static"></div>
+                                    <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">

@@ -1014,7 +1014,7 @@ class ErrataController extends Controller
                 $ErrataControl->status = "QA/CQA Initial Review";
                 $ErrataControl->review_completed_by = Auth::user()->name;
                 $ErrataControl->review_completed_on = Carbon::now()->format('d-M-Y');
-                $ErrataControl->comment = $request->review_completed_comment;
+                $ErrataControl->review_completed_comment = $request->comment;
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;

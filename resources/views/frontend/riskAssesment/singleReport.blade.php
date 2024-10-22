@@ -644,7 +644,8 @@
                 <!-------------------- new data -->
 
 
-                <table>
+               <div class="border-table">
+                 <table>
 
 
                     <thead>
@@ -677,6 +678,7 @@
                         </tbody>
                     </tbody>
                 </table>
+               </div>
 
                 <table>
                     <thead>
