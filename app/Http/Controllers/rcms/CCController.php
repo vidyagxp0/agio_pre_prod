@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\AdditionalInformation;
-use App\Models\{CC,ChangeControlCftResponse};
+use App\Models\{CC,ChangeControlCftResponse, Document, TrainingGrid};
 use App\Models\RecordNumber;
 use App\Models\CCStageHistory;
 use App\Models\ChangeClosure;
@@ -46,6 +46,7 @@ class CCController extends Controller
     {
 
         $riskData = RiskLevelKeywords::all();
+        $documents = Document::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -65,7 +66,7 @@ class CCController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.change-control.new-change-control', compact("riskData", "record_number", "due_date"));
+        return view('frontend.change-control.new-change-control', compact("riskData",'documents', "record_number", "due_date"));
     }
 
     public function index()
@@ -83,6 +84,8 @@ class CCController extends Controller
     {
 
         $riskData = RiskLevelKeywords::all();
+        $users = User::all();
+        $documents = Document::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $preRiskAssessment = RiskManagement::all();
@@ -106,7 +109,7 @@ class CCController extends Controller
         $cft = User::get();
         $pre = CC::all();
 
-        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre"));
+        return view('frontend.change-control.new-change-control', compact("riskData",'users', 'documents',"preRiskAssessment", "due_date", "hod", "cft", "pre"));
     }
 
     public function store(Request $request)
@@ -726,6 +729,33 @@ class CCController extends Controller
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
 
+
+
+        $trainingPlanData = $request->trainingPlanData;    
+        foreach ($trainingPlanData as $index => $plan) {
+            if (isset($plan['file']) && $plan['file'] instanceof \Illuminate\Http\UploadedFile) {
+                $file = $plan['file'];
+                $fileName = "CC" . '-file-' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload'), $fileName);
+                $trainingPlanData[$index]['file_path'] = $fileName;
+            } else {
+                $trainingPlanData[$index]['file_path'] = null;
+            }
+        }
+    
+        $trainingPlanDataJson = json_encode($trainingPlanData);    
+        $trainingGrid = new TrainingGrid();
+        $trainingGrid->cc_id = $openState->id;
+        $trainingGrid->identifier = 'TrainingPlan';
+        $trainingGrid->data = $trainingPlanDataJson;
+        $trainingGrid->save();
+
+
+        // $trainingGrid = TrainingGrid::where(['cc_id' => $openState->id, "identifier" => "TrainingPlan"])->firstOrCreate();
+        // $trainingGrid->cc_id = $openState->id;
+        // $trainingGrid->data = $request->trainingPlanData;
+        // $trainingGrid->identifier = "TrainingPlan";
+        // $trainingGrid->save();
 
         $doocumentDetail = Docdetail::where(['cc_id' => $openState->id])->firstOrCreate();
         $doocumentDetail->cc_id = $openState->id;
@@ -2545,6 +2575,10 @@ class CCController extends Controller
         $preRiskAssessment = RiskManagement::all();
         $due_date_extension = $data->due_date_extension;
 
+        $trainingGrid = TrainingGrid::where(['cc_id' => $id, 'identifier' => "TrainingPlan"])->first();
+        $trainingPlanData = json_decode($trainingGrid->data, true);
+        $documents = Document::all();
+        $users = User::all();
 
         $due_date_extension = $data->due_date_extension;
         $impactassement   =  table_cc_impactassement::where('cc_id', $id)->get();
@@ -2572,6 +2606,10 @@ class CCController extends Controller
             "cc_lid",
             "pre",
             "previousRelated",
+            "trainingPlanData",
+            "documents",
+            "users",
+            "trainingGrid",
         "relatedRecords"
         ));
     }
@@ -3691,6 +3729,45 @@ class CCController extends Controller
         $documentDataGrid->other_comment = $request->other_comment;
         $documentDataGrid->supervisor_comment = $request->supervisor_comment;
         $documentDataGrid->update();
+
+        // $trainingPlanData = $request->trainingPlanData;
+        // foreach ($trainingPlanData as $index => $plan) {
+        //     if (isset($plan['file']) && $plan['file'] instanceof \Illuminate\Http\UploadedFile) {
+        //         $file = $plan['file'];
+        //         $fileName = "CC" . '-file-' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload'), $fileName);
+        //         $trainingPlanData[$index]['file_path'] = $fileName;
+        //     } else {
+        //         $trainingPlanData[$index]['file_path'] = $plan['file_path'] ?? null;
+        //     }
+        // }
+        // $trainingGrid = TrainingGrid::where(['cc_id' => $id, "identifier" => "TrainingPlan"])->firstOrCreate();
+        // $trainingGrid->data = $trainingPlanData;
+        // $trainingGrid->save();
+
+        $trainingPlanData = $request->trainingPlanData;
+
+foreach ($trainingPlanData as $index => $plan) {
+    if (isset($plan['file']) && $plan['file'] instanceof \Illuminate\Http\UploadedFile) {
+        $file = $plan['file'];
+        $fileName = "CC" . '-file-' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('upload'), $fileName);
+        $trainingPlanData[$index]['file_path'] = $fileName;
+
+        if (!empty($plan['existing_file']) && file_exists(public_path('upload/' . $plan['existing_file']))) {
+            unlink(public_path('upload/' . $plan['existing_file']));
+        }
+    } else {
+        $trainingPlanData[$index]['file_path'] = $plan['existing_file'] ?? null;
+    }
+}
+
+$trainingPlanDataJson = $trainingPlanData;
+$trainingGrid = TrainingGrid::where(['cc_id' => $id, "identifier" => "TrainingPlan"])->firstOrCreate();;
+$trainingGrid->data = $trainingPlanDataJson;
+$trainingGrid->save();
+
+
 
         $affectedDocumentDetail = Docdetail::where(['cc_id' => $openState->id, 'identifier' =>'AffectedDocDetail'])->firstOrCreate();
         $affectedDocumentDetail->cc_id = $openState->id;
@@ -13041,9 +13118,10 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
     public function getDocumentDetail($documentId)
     {
-        $docdetail = Document::where('id', $documentId)->first();
+        $documents = Document::find($documentId);
+        // dd($documents);
 
-        // $sopIds = explode(',', $docdetail->sops);
+        // $sopIds = explode(',', $documents->sops);
         // $sops = Document::whereIn('id', $sopIds)->get();
 
         // $sopNumbers = $sops->map(function ($sop) {
@@ -13053,11 +13131,11 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         //            $sop->major;
         // });
 
-        if ($training) {
+        if ($documents) {
             return response()->json([
-                'sop_type' => $docdetail->sop_type,
-                'doc_number' => $docdetail->id,
-                'created_at' => $training->created_at->format('d-M-Y'),
+                'sop_type' => $documents->sop_type,
+                'doc_number' => $documents->id,
+                'created_at' => $documents->created_at->format('d-M-Y'),
             ]);
         }
 

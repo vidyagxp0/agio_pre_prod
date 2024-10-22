@@ -35,6 +35,156 @@
 
     </style>
 
+    <!-- <script>
+        $(document).ready(function() {
+            let documentPlanIndex = 1;
+
+            $('#addTrainingPlan').click(function(e) {
+                function generateTableRow(serialNumber) {
+
+                    var documents = @json($documents); 
+                    var documentOptionsHtml = '<option value="">-- Select --</option>';
+                    documents.forEach(document => {
+                        documentOptionsHtml += `<option value="${document.id}">${document.document_name}</option>`;
+                    });
+
+                    var users = @json($users); 
+                    var usersOptionsHtml = '<option value="">-- Select --</option>';
+                    users.forEach(user => {
+                        usersOptionsHtml += `<option value="${user.id}">${user.name}</option>`;
+                    });                    
+
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                            '<td><input type="text" name="trainingPlanData[' + documentPlanIndex + '][trainingTopic]"></td>' +
+                            '<td><select class="training-select" name="trainingPlanData[' + documentPlanIndex + '][DocumentPlan]">' +
+                            documentOptionsHtml + '</select></td>' + 
+                            '<td><input type="text" class="doc-type" name="trainingPlanData[' + documentPlanIndex + '][DocType]" readonly></td>' +
+                            '<td><input type="text" class="doc-number" name="trainingPlanData[' + documentPlanIndex + '][DocNo]" readonly></td>' +
+                            '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainingType]">' +
+                                '<option value="">-- Select --</option>' +
+                                '<option value="Read & Understand">Read & Understand</option>' +
+                                '<option value="Read & Understand With Questions">Read & Understand With Questions</option>' +
+                                '<option value="Classroom Training">Classroom Training</option>' +
+                            '</select></td>' +
+                            '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainees]">' +
+                            usersOptionsHtml + '</select></td>' + 
+                            '<td><input type="date" name="trainingPlanData[' + documentPlanIndex + '][DueDate]"></td>' +                            
+                            '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainer]">' +
+                            usersOptionsHtml + '</select></td>' + 
+                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+
+                    documentPlanIndex++;
+                    return html;
+                }
+
+                var tableBody = $('#addTrainingPlanTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+
+                tableBody.find('.training-select').last().change(function() {
+                    var documentId = $(this).val();
+                    
+                    var row = $(this).closest('tr');
+
+                    if (documentId) {
+                        $.ajax({
+                            url: '/rcms/get-doc-detail/' + documentId,
+                            method: 'GET',
+                            success: function(response) {
+                                row.find('.doc-type').val(response.sop_type);
+                                row.find('.doc-number').val(response.doc_number);
+                            },
+                            error: function() {
+                                alert('Failed to fetch training details.');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+
+    </script> -->
+
+    <script>
+$('#addTrainingPlan').click(function(e) {
+    console.log("testsy");
+    
+        function generateTableRow(serialNumber) {
+            var documents = @json($documents); 
+            var documentOptionsHtml = '<option value="">-- Select --</option>';
+            documents.forEach(document => {
+                documentOptionsHtml += `<option value="${document.id}">${document.document_name}</option>`;
+            });
+
+            var users = @json($users); 
+            var usersOptionsHtml = '<option value="">-- Select --</option>';
+            users.forEach(user => {
+                usersOptionsHtml += `<option value="${user.id}">${user.name}</option>`;
+            });
+
+            // Add file picker (image/file input) in the last column
+            var html =
+                '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="trainingPlanData[' + documentPlanIndex + '][trainingTopic]" disabled></td>' +
+                    '<td><select class="training-select" name="trainingPlanData[' + documentPlanIndex + '][DocumentPlan]" disabled>' +
+                    documentOptionsHtml + '</select></td>' + 
+                    '<td><input type="text" class="doc-type" name="trainingPlanData[' + documentPlanIndex + '][DocType]" disabled></td>' +
+                    '<td><input type="text" class="doc-number" name="trainingPlanData[' + documentPlanIndex + '][DocNo]" disabled></td>' +
+                    '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainingType]" disabled>' +
+                        '<option value="">-- Select --</option>' +
+                        '<option value="Read & Understand">Read & Understand</option>' +
+                        '<option value="Read & Understand With Questions">Read & Understand With Questions</option>' +
+                        '<option value="Classroom Training">Classroom Training</option>' +
+                    '</select></td>' +
+                    '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainees]" disabled>' +
+                    usersOptionsHtml + '</select></td>' + 
+                    '<td><input type="date" name="trainingPlanData[' + documentPlanIndex + '][DueDate]" disabled></td>' +
+                    '<td><select name="trainingPlanData[' + documentPlanIndex + '][trainer]" disabled>' +
+                    usersOptionsHtml + '</select>  </td>' + 
+                    // File picker column
+                    '<td><input type="file" name="trainingPlanData[' + documentPlanIndex + '][file]"> disabled</td>' + 
+                    '<td><button type="button" class="removeRowBtn">Remove</button> disabled</td>' +
+                '</tr>';
+
+            documentPlanIndex++;
+            return html;
+        }
+
+        var tableBody = $('#addTrainingPlanTable tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+
+        tableBody.find('.training-select').last().change(function() {
+            var documentId = $(this).val();
+            var row = $(this).closest('tr');
+
+            if (documentId) {
+                $.ajax({
+                    url: '/rcms/get-doc-detail/' + documentId,
+                    method: 'GET',
+                    success: function(response) {
+                        row.find('.doc-type').val(response.sop_type);
+                        row.find('.doc-number').val(response.doc_number);
+                    },
+                    error: function() {
+                        alert('Failed to fetch training details.');
+                    }
+                });
+            }
+        });
+    });
+    </script>
+
+    
+
+
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -165,6 +315,7 @@
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification by QA/CQA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Pending Training</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
             </div>
 
@@ -649,88 +800,8 @@
                                     </div>
                                 </div>
 
+                                
 
-                                <div id="CCForm2" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            TNI Details<button type="button" name="audit-agenda-grid"
-                                                id="addTrainingPlan">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="addTrainingPlanTable">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%;">S.No</th>
-                                                    <th>TrainingTopic</th>
-                                                    <th>Document</th>
-                                                    <th style="width: 10%;">Dot Type</th>
-                                                    <th style="width: 10%;">Select</th>
-                                                    <th style="width: 10%;">Trainees</th>
-                                                    <th>Due Date</th>
-                                                    <th>rainer</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- <tr>
-                                                    <td>
-                                                        <input disabled type="text" name="trainingPlanData[0][serial]" value="1">
-                                                    </td>
-                                                    <td>
-                                                        <select name="trainingPlanData[0][trainingPlan]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($trainings as $training)
-                                                                <option value="{{ $training->id }}">{{ $training->traning_plan_name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][sopName]" readonly>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][scheduleDate]" readonly>
-                                                    </td> -->
-                                                    <!-- <td>
-                                                        <select name="trainingPlanData[0][employeeName]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($employees as $employee)
-                                                                <option value="{{ $employee->id }}">{{ $employee->employee_name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td> -->
-                                                    <!-- <td>
-                                                        <select name="trainingPlanData[0][employeeName]" class="employee-select">
-                                                            <option value="">Select a value</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="trainingPlanData[0][trainingIdentification]">
-                                                            <option value="">Select a value</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][remarks]">
-                                                    </td>
-                                                </tr> -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button ">Save</button>
@@ -4113,7 +4184,96 @@
             $material = DB::table('materials')->get();
         @endphp
 
-        <div id="CCForm11" class="inner-block cctabcontent">
+
+
+         <div id="CCForm19" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Training Details
+                                    <button type="button" name="audit-agenda-grid" id="addTrainingPlan" disabled>+</button>
+                                </label>
+
+                                <table class="table table-bordered" id="addTrainingPlanTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">S.No</th>
+                                            <th>Training Topic</th>
+                                            <th>Document Name</th>
+                                            <th style="width: 10%;">Document Type</th>
+                                            <th style="width: 10%;">Document No.</th>
+                                            <th style="width: 10%;">Training Type</th>
+                                            <th style="width: 10%;">Trainees</th>
+                                            <th>Due Date</th>
+                                            <th>Trainer</th>
+                                            <th>File</th> <!-- New column for file picker -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="trainingPlanData[0][serial]" value="1"></td>
+                                            <td><input type="text" name="trainingPlanData[0][trainingTopic]" disabled></td>
+                                            <td>
+                                                <select name="trainingPlanData[0][DocumentPlan]" disabled>
+                                                    <option value="">Select a value</option>
+                                                    @foreach ($documents as $document)
+                                                        <option value="{{ $document->id }}">{{ $document->document_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td><input type="text" name="trainingPlanData[0][DocType]" disabled></td>
+                                            <td><input type="text" name="trainingPlanData[0][DocNo]" disabled></td>
+                                            <td>
+                                                <select name="trainingPlanData[0][trainingType]" disabled>
+                                                    <option value="">Select a value</option>
+                                                    <option value="Read & Understand">Read & Understand</option>
+                                                    <option value="Read & Understand With Questions">Read & Understand With Questions</option>
+                                                    <option value="Classroom Training">Classroom Training</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="trainingPlanData[0][trainees]" disabled>
+                                                    <option value="">Select a value</option>
+                                                    @if(!empty($users))
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </td>
+                                            <td><input type="date" name="trainingPlanData[0][DueDate]" disabled></td>
+                                            <td>
+                                                <select name="trainingPlanData[0][trainer]" disabled>
+                                                    <option value="">Select a value</option>
+                                                    @if(!empty($users))
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </td>
+                                            <td><input type="file" name="trainingPlanData[0][file]" disabled></td> <!-- File input field -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                    </div>
+
+
+
+      <div id="CCForm11" class="inner-block cctabcontent">
         <div class="inner-block-content">
                    
                    <div class="row">
@@ -4761,5 +4921,31 @@
             });
         });
     });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('select[name="trainingPlanData[0][DocumentPlan]"]').change(function() {
+                var documentId = $(this).val();
+                console.log(documentId, "documentId");
+                var row = $(this).closest('tr');
+
+                if (documentId) {
+                    $.ajax({
+                        url: '/rcms/get-doc-detail/' + documentId,
+                        method: 'GET',
+                        success: function(response) {
+
+                            row.find('input[name="trainingPlanData[0][DocType]"]').val(response.sop_type);
+                            row.find('input[name="trainingPlanData[0][DocNo]"]').val(response.doc_number);
+                        },
+                        error: function() {
+                            alert('Failed to fetch document details.');
+                        }
+                    });
+                }
+            });
+        });
+
     </script>
 @endsection

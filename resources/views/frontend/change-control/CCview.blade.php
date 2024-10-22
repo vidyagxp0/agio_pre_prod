@@ -55,89 +55,64 @@
         }
     </style>
     <script>
-        $(document).ready(function() {
-            let trainingPlanIndex = 1;
+    $(document).ready(function() {
+        let documentPlanIndex = {{ count($trainingPlanData) }};
 
-            $('#addTrainingPlan').click(function(e) {
-                function generateTableRow(serialNumber) {
-
-                    var documents = @json($documents); 
-                    var documentOptionsHtml = '<option value="">-- Select --</option>';
-                    documents.forEach(document => {
-                        documentOptionsHtml += `<option value="${document.id}">${document.document_name}</option>`;
-                    });
-
-                    var users = @json($documents); 
-                    var usersOptionsHtml = '<option value="">-- Select --</option>';
-                    users.forEach(document => {
-                        usersOptionsHtml += `<option value="${user.id}">${user.name}</option>`;
-                    });
-
-                    
-
-                    var html =
-                        '<tr>' +
-                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                            '<td><input type="text" name="trainingPlanData[' + documentPlanIndex + '][trainingTopic]"></td>' +
-                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][DocumentPlan]">' +
-                            documentgOptionsHtml + '</select></td>' + 
-                            '<td><input type="text" class="sops" name="trainingPlanData[' + documentPlanIndex + '][DocType]" readonly></td>' +
-                            '<td><input type="text" class="schedule-date" name="trainingPlanData[' + documentPlanIndex + '][DocNo]" readonly></td>' +
-                            '<td><select name="trainingPlanData[' + documentgPlanIndex + '][trainingIdentification]">' +
-                                '<option value="">-- Select --</option>' +
-                                '<option value="Read & Understand">Read & Understand</option>' +
-                                '<option value="Read & Understand With Questions">Read & Understand With Questions</option>' +
-                                '<option value="Classroom Training">Classroom Training</option>' +
-                            '</select></td>' +
-                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][trainees]">' +
-                            documentgOptionsHtml + '</select></td>' + 
-                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][DueDate]">' +
-                            documentgOptionsHtml + '</select></td>' + 
-                            '<td><select class="training-select" name="trainingPlanData[' + documentgPlanIndex + '][trainer]">' +
-                            documentgOptionsHtml + '</select></td>' + 
-                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
-
-                    trainingPlanIndex++;
-                    return html;
-                }
-
-                var tableBody = $('#addTrainingPlanTable tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-
-                tableBody.find('.training-select').last().change(function() {
-                    var trainingId = $(this).val();
-                    var row = $(this).closest('tr');
-
-                    if (trainingId) {
-                        $.ajax({
-                            url: '/get-training-details/' + trainingId,
-                            method: 'GET',
-                            success: function(response) {
-                                row.find('.sops').val(response.sop_numbers.join(', '));
-
-                                row.find('.schedule-date').val(response.created_at);
-
-                                var employeeSelect = row.find('.employee-select');
-                                employeeSelect.empty();
-                                employeeSelect.append('<option value="">Select a value</option>');
-                                $.each(response.users, function(index, user) {
-                                    employeeSelect.append('<option value="' + user.id + '">' + user.name + '</option>');
-                                });
-                            },
-                            error: function() {
-                                alert('Failed to fetch training details.');
-                            }
-                        });
-                    }
-                });
-            });
+        $('#addTrainingPlan').click(function() {
+            let newRow = `
+            <tr>
+                <td><input disabled type="text" name="trainingPlanData[` + documentPlanIndex + `][serial]" value="` + (documentPlanIndex + 1) + `"></td>
+                <td><input type="text" name="trainingPlanData[` + documentPlanIndex + `][trainingTopic]" ></td>
+                <td>
+                    <select class="training-select" name="trainingPlanData[` + documentPlanIndex + `][DocumentPlan]">
+                        <option value="">-- Select --</option>
+                        @foreach ($documents as $document)
+                            <option value="{{ $document->id }}">{{ $document->document_name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type="text" class="doc-type" name="trainingPlanData[` + documentPlanIndex + `][DocType]" readonly></td>
+                <td><input type="text" class="doc-number" name="trainingPlanData[` + documentPlanIndex + `][DocNo]" readonly></td>
+                <td>
+                    <select name="trainingPlanData[` + documentPlanIndex + `][trainingType]">
+                        <option value="">-- Select --</option>
+                        <option value="Read & Understand">Read & Understand</option>
+                        <option value="Read & Understand With Questions">Read & Understand With Questions</option>
+                        <option value="Classroom Training">Classroom Training</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="trainingPlanData[` + documentPlanIndex + `][trainees]">
+                        <option value="">-- Select --</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type="date" name="trainingPlanData[` + documentPlanIndex + `][DueDate]"></td>
+                <td>
+                    <select name="trainingPlanData[` + documentPlanIndex + `][trainer]">
+                        <option value="">-- Select --</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type="file" name="trainingPlanData[` + documentPlanIndex + `][file]"></td>
+                <td><button type="button" class="removeRowBtn">Remove</button></td>
+            </tr>`;
+            
+            $('#addTrainingPlanTable tbody').append(newRow);
+            documentPlanIndex++;
         });
 
+        $('#addTrainingPlanTable').on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
 
-    </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -599,6 +574,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Implementation Verification by QA/CQA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Pending Training</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
                         </div>
 
@@ -1155,6 +1131,86 @@
 
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_in_attachment" name="deleted_in_attachment" value="">
+
+
+
+
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Training Details
+                                            <button type="button" id="addTrainingPlan">+</button>
+                                        </label>
+
+                                        <table class="table table-bordered" id="addTrainingPlanTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Training Topic</th>
+                                                    <th>Document Name</th>
+                                                    <th style="width: 10%;">Document Type</th>
+                                                    <th style="width: 10%;">Document No.</th>
+                                                    <th style="width: 10%;">Training Type</th>
+                                                    <th style="width: 10%;">Trainees</th>
+                                                    <th>Due Date</th>
+                                                    <th>Trainer</th>
+                                                    <th>File</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($trainingPlanData as $index => $plan)
+                                                <tr>
+                                                    <td><input disabled type="text" name="trainingPlanData[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="trainingPlanData[{{ $index }}][trainingTopic]" value="{{ $plan['trainingTopic'] }}"></td>
+                                                    <td>
+                                                        <select class="training-select" name="trainingPlanData[{{ $index }}][DocumentPlan]">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($documents as $document)
+                                                                <option value="{{ $document->id }}" {{ $plan['DocumentPlan'] == $document->id ? 'selected' : '' }} > {{ $document->document_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="doc-type" name="trainingPlanData[{{ $index }}][DocType]" value="{{ $plan['DocType'] }}" readonly></td>
+                                                    <td><input type="text" class="doc-number" name="trainingPlanData[{{ $index }}][DocNo]" value="{{ $plan['DocNo'] }}" readonly></td>
+                                                    <td>
+                                                        <select name="trainingPlanData[{{ $index }}][trainingType]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="Read & Understand" {{ $plan['trainingType'] == 'Read & Understand' ? 'selected' : '' }}>Read & Understand</option>
+                                                            <option value="Read & Understand With Questions" {{ $plan['trainingType'] == 'Read & Understand With Questions' ? 'selected' : '' }}>Read & Understand With Questions</option>
+                                                            <option value="Classroom Training" {{ $plan['trainingType'] == 'Classroom Training' ? 'selected' : '' }}>Classroom Training</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="trainingPlanData[{{ $index }}][trainees]">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->id }}" {{ $plan['trainees'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="date" name="trainingPlanData[{{ $index }}][DueDate]" value="{{ $plan['DueDate'] }}"></td>
+                                                    <td>
+                                                        <select name="trainingPlanData[{{ $index }}][trainer]">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->id }}" {{ $plan['trainer'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td> <input type="file" name="trainingPlanData[{{ $index }}][file]">
+                                                        @if (!empty($plan['file_path']))
+                                                            <input type="hidden" name="trainingPlanData[{{ $index }}][existing_file]" value="{{ $plan['file_path'] }}">
+                                                            <small>{{ $plan['file_path'] }}</small>
+                                                        @endif
+                                                    </td>
+
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>`
+                                </div> -->
 
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
@@ -9575,6 +9631,8 @@
                                     </div>
                                 </div>
 
+                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_hod_final_review_attach" name="deleted_hod_final_review_attach" value="">
 
@@ -10043,6 +10101,112 @@
                 $product = DB::table('products')->get();
                 $material = DB::table('materials')->get();
             @endphp
+
+            <div id="CCForm19" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Training Details
+                                    <button type="button" id="addTrainingPlan">+</button>
+                                </label>
+
+                                <table class="table table-bordered" id="addTrainingPlanTable">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Training Topic</th>
+                                            <th>Document Name</th>
+                                            <th style="width: 10%;">Document Type</th>
+                                            <th style="width: 10%;">Document No.</th>
+                                            <th style="width: 10%;">Training Type</th>
+                                            <th style="width: 10%;">Trainees</th>
+                                            <th>Due Date</th>
+                                            <th>Trainer</th>
+                                            <th>File</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($trainingPlanData as $index => $plan)
+                                        <tr>
+                                            <td>
+                                                <input disabled type="text" name="trainingPlanData[{{ $index }}][serial]" value="{{ $index + 1 }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="trainingPlanData[{{ $index }}][trainingTopic]" value="{{ $plan['trainingTopic'] }}">
+                                            </td>
+                                            <td>
+                                                <select class="training-select" name="trainingPlanData[{{ $index }}][DocumentPlan]">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($documents as $document)
+                                                        <option value="{{ $document->id }}" {{ $plan['DocumentPlan'] == $document->id ? 'selected' : '' }}>
+                                                            {{ $document->document_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="doc-type" name="trainingPlanData[{{ $index }}][DocType]" value="{{ $plan['DocType'] }}" readonly>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="doc-number" name="trainingPlanData[{{ $index }}][DocNo]" value="{{ $plan['DocNo'] }}" readonly>
+                                            </td>
+                                            <td>
+                                                <select name="trainingPlanData[{{ $index }}][trainingType]">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="Read & Understand" {{ $plan['trainingType'] == 'Read & Understand' ? 'selected' : '' }}>Read & Understand</option>
+                                                    <option value="Read & Understand With Questions" {{ $plan['trainingType'] == 'Read & Understand With Questions' ? 'selected' : '' }}>Read & Understand With Questions</option>
+                                                    <option value="Classroom Training" {{ $plan['trainingType'] == 'Classroom Training' ? 'selected' : '' }}>Classroom Training</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="trainingPlanData[{{ $index }}][trainees]">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $plan['trainees'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="date" name="trainingPlanData[{{ $index }}][DueDate]" value="{{ $plan['DueDate'] }}">
+                                            </td>
+                                            <td>
+                                                <select name="trainingPlanData[{{ $index }}][trainer]">
+                                                    <option value="">-- Select --</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $plan['trainer'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="file" name="trainingPlanData[{{ $index }}][file]">
+                                                @if (!empty($plan['file_path']))
+                                                    <input type="hidden" name="trainingPlanData[{{ $index }}][existing_file]" value="{{ $plan['file_path'] }}">
+                                                    <small>{{ $plan['file_path'] }}</small>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button type="button" class="removeRowBtn">Remove</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                    </div>
+
 
             <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -11522,5 +11686,28 @@
             $('#dueDate').attr('min', maxDate);
         });
     </script>
+
+
+<script>
+    
+$('#addTrainingPlanTable').on('change', '.training-select', function() {
+    let documentId = $(this).val();
+    let row = $(this).closest('tr');
+
+    if (documentId) {
+        $.ajax({
+            url: '/rcms/get-doc-detail/' + documentId,
+            method: 'GET',
+            success: function(response) {
+                row.find('.doc-type').val(response.sop_type);
+                row.find('.doc-number').val(response.doc_number);
+            },
+            error: function() {
+                alert('Failed to fetch document details.');
+            }
+        });
+    }
+});
+</script>
 
 @endsection

@@ -293,7 +293,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [NonConformaceController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Non Conformance Routes Ends *******************/
-
+            Route::get('get-doc-detail/{id}', [CCController::class, 'getDocumentDetail'])->name('get-doc-detail');
             /********************* Fallure Investigation Routes Starts *******************/
 
             Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
@@ -474,7 +474,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
             Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
-            Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
+            
             
 
         }
