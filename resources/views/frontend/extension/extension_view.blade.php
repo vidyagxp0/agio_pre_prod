@@ -287,7 +287,7 @@
                                 <div class="active">In Approved</div>
                             @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
                                 <div style="display: none" class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 5 || $extensionNew->count == "number" || $extensionNew->parent_type == 'number' || $extensionNew->count == 3)
+                            @elseif($extensionNew->stage == 5 || $extensionNew->count_data == "number" || $extensionNew->count == 3)
                                 <div class="" style="display: none;">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
@@ -306,7 +306,7 @@
                                 <div class="" style="display: none"> Closed - Reject</div>
                             @elseif($extensionNew->count == 3 && $extensionNew->parent_type != null)
                                 <div class="" style="display: none"> Closed - Reject</div>
-                            @elseif($extensionNew->stage >= 6 || $extensionNew->count == 'number' || $extensionNew->data_number == 3)
+                            @elseif($extensionNew->stage >= 6 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3)
                                 <div class="" style="display: none; border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @else
                                 <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>    
@@ -321,7 +321,7 @@
                             @elseif(($extensionNew->stage_hide == 'stage-6' && $extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->stage_hide == "stage-6")
                             <div class="" style="display: none;"> In CQA Approval</div>
                             <div class="" style="display: none; border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @elseif($extensionNew->count == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
+                            @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
                                 <div class=""> In CQA Approval</div>
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @endif
@@ -345,11 +345,11 @@
 
                 @if ($extensionNew->data_number == 3)
                 <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
-                @elseif($extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                @elseif($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
                 @endif
 
@@ -457,19 +457,20 @@
                                             Extension Number<span class="text-danger"></span>
                                         </label>
                                             @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
-                                            <select name="count" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                            <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
                                                 <option value="">--Select Extension Number--</option>
-                                                <option value="number1" @if ($extensionNew->count == 'number1' || $extensionNew->data_number == '1') selected @endif>2</option>
-                                                <option value="number2" @if ($extensionNew->count == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
-                                                <option value="number" @if ($extensionNew->count == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
+                                                <option value="number1" @if ($extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
+                                                <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
+                                                <option value="number" @if ($extensionNew->count_data == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
                                             @else
-                                                <select name="count" id="" disabled>
+                                                <!-- <select name="count" id="" disabled>
                                                 <option value="" >--Select Extension Number--</option>
                                                 <option value="1" @if ($extensionNew->count == '1') selected @endif>1</option>
                                                 <option value="2" @if ($extensionNew->count == '2') selected @endif>2</option>
                                                 <option value="3" @if ($extensionNew->count == '3' || $extensionNew->count == 'number') selected @endif>3</option>
-                                                </select>
+                                                </select> -->
+                                                <input type="text" name="count" value="{{ $extensionNew->count }}" readonly>
                                             @endif
                                     </div>
                                 </div>
@@ -906,7 +907,7 @@
                     </div>
                 </div>
                 <!-- Approver-->
-                @if( $extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -973,7 +974,7 @@
                 </div>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
