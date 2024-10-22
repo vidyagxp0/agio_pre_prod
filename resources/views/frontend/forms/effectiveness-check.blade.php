@@ -8,6 +8,9 @@
         header {
             display: none;
         }
+        .new-head{
+            margin-bottom: 20px;
+        }
     </style>
 
     <div class="form-field-head">
@@ -507,179 +510,180 @@
                                 <div class="col-12 sub-head">
                                     Activity Log
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head" >
                                     <div class="group-input">
                                         <label for="Submit by"><b>Submit by</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Submit On"><b>Submit On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Submit On"><b>Submit Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete By"><b>Cancel By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete On"><b>Cancel On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete On"><b>Cancel Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Acknowledge Complete by"><b>Acknowledge Complete by</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="group-input">
+                                    <div class="group-input new-head">
                                         <label for="Acknowledge Complete by"><b>Acknowledge Complete On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Acknowledge Complete by"><b>Acknowledge Complete Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete by"><b> Complete By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">NotApplicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On"><b> Complete On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On"><b> Complete Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete by"><b>HOD Review Complete By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On"><b>HOD Review Complete On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On"><b>HOD Review Complete Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective By"><b>Not Effective By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective On"><b>Not Effective On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective On"><b>Not Effective Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective by"><b>Effective By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective On"><b>Effective On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Effective On"><b>Effective Comment</b></label>
-                                        <div class="static"></div>
-                                    </div>
+                                        <div class="date">Not Applicable</div>
+                                    </div> 
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete
                                                 By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete
                                                 On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete
                                                 Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
 
 
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete By"><b>Effective Approval Complete
                                                 By</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete On"><b>Effective Approval Complete
                                                 On</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 new-head">
                                     <div class="group-input">
                                         <label for="Effective Approval Complete On"><b>Effective Approval Complete
                                                 Comment</b></label>
-                                        <div class="static"></div>
+                                        <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
 
 
                             </div>
+                           
 
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

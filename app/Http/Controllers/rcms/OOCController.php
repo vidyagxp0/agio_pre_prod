@@ -5953,7 +5953,7 @@ class OOCController extends Controller
                $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -5977,7 +5977,9 @@ class OOCController extends Controller
                 $record = $record_number;
                 $old_records = $old_record;
                 $relatedRecords = Helpers::getAllRelatedRecords();
-                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
+                $Capachild = OutOfCalibration::find($id);
+                $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
                 }
 
                if ($request->revision == "Action-Item") {
@@ -6007,7 +6009,9 @@ class OOCController extends Controller
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=OutOfCalibration::find($id);
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record'));
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1; 
+            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData'));
 
         }
 
@@ -6018,7 +6022,7 @@ class OOCController extends Controller
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $relatedRecords = Helpers::getAllRelatedRecords();
@@ -6040,18 +6044,35 @@ class OOCController extends Controller
                $oocOpen = OpenStage::find(1);
                if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
 
+            //    if ($request->revision == "Action-child") {
+            //     $p_record = OutOfCalibration::find($id);
+            //     $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+            //  //    dd($data_record);
 
-               if ($request->revision == "Action-child") {
+            //     $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            //     $parentRecord = OutOfCalibration::where('id', $id)->value('record');
+                
+
+            //     return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record'));
+            // }
+
+
+             if ($request->revision == "Action-child") {
                     $parent_due_date = "";
                     $parent_id = $id;
                     $parent_name = $request->parent_name;
                     if ($request->due_date) {
-                   $parent_due_date = $request->due_date;
-                                             }
+                       $parent_due_date = $request->due_date;
+                     }
 
+                $p_record = OutOfCalibration::find($id);
+                $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+               
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
+                $parentRecord = OutOfCalibration::where('id', $id)->value('record');
+                
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record'));
 
             }
 
@@ -6064,15 +6085,18 @@ class OOCController extends Controller
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record_number = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
+                $Capachild = OutOfCalibration::find($id);
+                $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-
-                return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
     
             }
     }
@@ -6106,8 +6130,9 @@ class OOCController extends Controller
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-
-                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
     
             }
     }
@@ -6116,7 +6141,7 @@ class OOCController extends Controller
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');
@@ -6141,8 +6166,9 @@ class OOCController extends Controller
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-
-                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
     
             }
             if ($request->revision == "Action-child") {
@@ -6153,9 +6179,11 @@ class OOCController extends Controller
                $parent_due_date = $request->due_date;
                                          }
 
-
+            $p_record = OutOfCalibration::find($id);
+            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+            $parentRecord = OutOfCalibration::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','data_record'));
 
         }
     }

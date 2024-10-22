@@ -79,10 +79,10 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-        //  $openState->related_records = implode(',', $request->related_records);
-        if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+         $openState->related_records = $request->related_records;
+        // if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -95,6 +95,7 @@ class ActionItemController extends Controller
         $openState->start_date = $request->start_date;
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         $openState->qa_comments = $request->qa_comments;
         $openState->status = 'Opened';
@@ -113,6 +114,21 @@ class ActionItemController extends Controller
             }
             $openState->file_attach = json_encode($files);
         }
+
+        if (!empty($request->acknowledge_attach)) {
+            $files = [];
+            if ($request->hasfile('acknowledge_attach')) {
+                foreach ($request->file('acknowledge_attach') as $file) {
+                      
+                    $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            
+            }
+            $openState->acknowledge_attach = json_encode($files);
+        }
+
         if (!empty($request->Support_doc)) {
             $files = [];
             if ($request->hasfile('Support_doc')) {
@@ -507,7 +523,7 @@ class ActionItemController extends Controller
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
             $history->comment = "Not Applicable";
@@ -557,6 +573,43 @@ class ActionItemController extends Controller
    
             $history->save();
         }
+
+        if (!empty($openState->acknowledge_comments)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = "Null";
+            $history->current =  $openState->acknowledge_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+        if (!empty($openState->acknowledge_attach)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = "Null";
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -577,7 +630,7 @@ class ActionItemController extends Controller
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "Not Applicable";
@@ -621,10 +674,10 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        // $openState->related_records = implode(',', $request->related_records);
-         if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+        $openState->related_records = $request->related_records;
+        //  if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
@@ -642,6 +695,7 @@ class ActionItemController extends Controller
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         if($openState->stage == 1){
             $openState->assign_to = $request->assign_to;
@@ -691,6 +745,21 @@ class ActionItemController extends Controller
                     return !in_array($file, $filesToDelete);
                 }); 
             }
+
+            if (!empty($request->acknowledge_attach)) {
+                $files = [];
+                if ($request->hasfile('acknowledge_attach')) {
+                    foreach ($request->file('acknowledge_attach') as $file) {
+                          
+                        $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                
+                }
+                $openState->acknowledge_attach = json_encode($files);
+            }
+    
         
             // Handle new files
             $newFiles = [];
@@ -1175,7 +1244,7 @@ class ActionItemController extends Controller
         if ($lastopenState->qa_comments != $openState->qa_comments || !empty($request->qa_comments_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
@@ -1233,10 +1302,53 @@ class ActionItemController extends Controller
             }
             $history->save();
         }
+
+        if ($lastopenState->acknowledge_comments != $openState->acknowledge_comments || !empty($request->qa_comments_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = $lastopenState->acknowledge_comments;
+            $history->current = $openState->acknowledge_comments;
+            $history->comment = $request->qa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_comments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastopenState->acknowledge_attach != $openState->acknowledge_attach || !empty($request->file_attach_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = $lastopenState->acknowledge_attach;
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = $request->file_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = $lastopenState->final_attach;
             $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
