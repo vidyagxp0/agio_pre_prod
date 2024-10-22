@@ -33,9 +33,9 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Acknowledge</button> 
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent Information</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
@@ -269,7 +269,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                <!-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
@@ -298,15 +298,7 @@
                                         </select>
                                         {{-- <input type="longText" name="related_records" > --}}
                                     </div>
-                                </div> -->
-
-                                <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="HOD Persons">Action Item Related Records</label>
-                                           <input type="text" name="related_records">
-                                        </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
@@ -406,48 +398,6 @@
                         </div>
                     </div> --}}
 
-                    <div id="CCForm2" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="sub-head">Acknowledge</div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="acknowledge_comments">Acknowledge Comment 
-                                        </label>
-                                        <textarea name="acknowledge_comments"></textarea>
-                                    </div>
-                                </div>
-                      
-                                     
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="file_attach">Acknowledge Attachment</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="acknowledge_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="acknowledge_attach[]"
-                                                    oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -516,10 +466,10 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">QA/CQA Verification</div>
+                                <div class="sub-head">Action Approval</div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA/CQA Verification Comments</label>
+                                        <label for="qa_comments">QA/CQA Review Comments</label>
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
@@ -537,7 +487,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">QA/CQA Verification attachments</label>
+                                        <label for="file_attach">Action Approval Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -560,35 +510,28 @@
                         </div>
                     </div>
 
-                    <style>
-                        .static{
-                            font-weight: 100 !important;
-                        }
-                    </style>
-
-
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                        <div class="sub-head">
-                            Activity Log
-                        </div>
+                        <!-- <div class="sub-head">
+                            Submit
+                        </div> -->
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submitted by">Submit By</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submitted on">Submit On</label>
-                                    <div class="Date">Not Applicable</div>
+                                    <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Submit Comment</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <!-- <div class="col-12">
@@ -597,19 +540,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Cancel By</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Cancel On</label>
-                                    <div class="Date">Not Applicable</div>
+                                    <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Cancel Comment</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -620,19 +563,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Acknowledge Complete By</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Acknowledge Complete On</label>
-                                    <div class="Date">Not Applicable</div>
+                                    <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Acknowledge Complete Comment</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -643,19 +586,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Complete By</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Complete On</label>
-                                    <div class="Date">Not Applicable</div>
+                                    <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Complete Comment</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <!-- <div class="col-12">
@@ -664,19 +607,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Verification Complete By</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Verification Complete On</label>
-                                    <div class="Date">Not Applicable</div>
+                                    <div class="Date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Verification Complete Comment</label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                                    

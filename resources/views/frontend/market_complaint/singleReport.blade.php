@@ -3309,171 +3309,64 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->submitted_by)
-                                    {{ $data->submitted_by }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
+                        <td class="w-80">{{ $data->submitted_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->submitted_on)
-                                    {{ $data->submitted_on }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
-                        <th class="w-20">Submit Comment</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->submitted_comment)
-                                    {{ $data->submitted_comment }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
+                        <td class="w-80">{{ $data->submitted_on }}</td>
                     </tr>
-
                     <tr>
-                        <th class="w-20">Complete Review By</th>
-                        <div>
-                            @if ($data->complete_review_by)
-                                {{ $data->complete_review_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">Complete Review On</th>
-                        <div>
-                            @if ($data->complete_review_on)
-                                {{ $data->complete_review_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">Complete Review Comment</th>
-                        <div>
-                            @if ($data->complete_review_Comments)
-                                {{ $data->complete_review_Comments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <th class="w-20">Submit Comment</th>
+                        <td class="w-80">{{ $data->submitted_comment }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">Complete Review By :</th>
+                        <td class="w-80">{{ $data->complete_review_by }}</td>
+                        <th class="w-20">Complete Review On :</th>
+                        <td class="w-80">{{ $data->complete_review_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Complete Review Comment</th>
+                        <td class="w-80">{{ $data->complete_review_Comments }}</td>
+                    </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <div>
-                            @if ($data->cancelled_by)
-                                {{ $data->cancelled_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <div>
-                            @if ($data->cancelled_on)
-                                {{ $data->cancelled_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cancelled_on }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Cancel Comment</th>
-                        <div>
-                            @if ($data->cancelled_comment)
-                                {{ $data->cancelled_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cancelled_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Send To CFT  By</th>
-                        <div>
-                            @if ($data->cft_complate_by)
-                                {{ $data->cft_complate_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cft_complate_by }}</td>
                         <th class="w-20">Send To CFT  On</th>
-                        <div>
-                            @if ($data->cft_complate_on)
-                                {{ $data->cft_complate_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">Send To CFT Review Comment</th>
-                        <div>
-                            @if ($data->send_cft_comment)
-                                {{ $data->send_cft_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">Send To CFT Review Comment</th>
+                        <td class="w-80">{{ $data->send_cft_comment }}</td>
+                    </tr>
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
-                        <div>
-                            @if ($data->cft_complate_by)
-                                {{ $data->cft_complate_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cft_complate_by }}</td>
                         <th class="w-20">CFT Review Complete On</th>
-                        <div>
-                            @if ($data->cft_complate_on)
-                                {{ $data->cft_complate_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">CFT Review Complete Comment</th>
-                        <div>
-                            @if ($data->cft_complate_comm)
-                                {{ $data->cft_complate_comm }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->cft_complate_on }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">CFT Review Complete Comment</th>
+                        <td class="w-80">{{ $data->cft_complate_comm }}</td>
+                    </tr>
                     <tr>
                         <th class="w-20">QA/CQA Verification Complete By :</th>
-                        <div>
-                            @if ($data->qa_cqa_verif_comp_by)
-                                {{ $data->qa_cqa_verif_comp_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->qa_cqa_verif_comp_by }}</td>
                         <th class="w-20">QA/CQA Verification Complete On :</th>
-                        <div>
-                            @if ($data->qa_cqa_verif_comp_on)
-                                {{ $data->qa_cqa_verif_comp_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">QA/CQA Verification Complete Comment</th>
-                        <div>
-                            @if ($data->QA_cqa_verif_Comments)
-                                {{ $data->QA_cqa_verif_Comments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->qa_cqa_verif_comp_on }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">QA/CQA Verification Complete Comment</th>
+                        <td class="w-80">{{ $data->QA_cqa_verif_Comments }}</td>
+                    </tr>
                     {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
                         <td class="w-80">{{ $data->qA_head_approval_completed_by }}</td>
@@ -3482,59 +3375,25 @@
                     </tr> --}}
                     <tr>
                         <th class="w-20">Approval Complete By</th>
-                        <div>
-                            @if ($data->approve_plan_by)
-                                {{ $data->approve_plan_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->approve_plan_by }}</td>
                         <th class="w-20">Approval Complete On</th>
-                        <div>
-                            @if ($data->approve_plan_on)
-                                {{ $data->approve_plan_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">Approval Comment</th>
-                        <div>
-                            @if ($data->approve_plan_comment)
-                                {{ $data->approve_plan_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->approve_plan_on }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">Approval Comment</th>
+                        <td class="w-80">{{ $data->approve_plan_comment }}</td>
+                    </tr>
 
                     <tr>
                         <th class="w-20">Send Letter By</th>
-                        <div>
-                            @if ($data->send_letter_by)
-                                {{ $data->send_letter_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->send_letter_by }}</td>
                         <th class="w-20">Send Letter On</th>
-                        <div>
-                            @if ($data->send_letter_on)
-                                {{ $data->send_letter_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
-                        <th class="w-20">Send Letter Comment</th>
-                        <div>
-                            @if ($data->send_letter_comment)
-                                {{ $data->send_letter_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </div>
+                        <td class="w-80">{{ $data->send_letter_on }}</td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">Send Letter Comment</th>
+                        <td class="w-80">{{ $data->send_letter_comment }}</td>
+                    </tr>
 
                     {{-- <tr>
                         <th class="w-20">Closure Done By</th>

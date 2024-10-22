@@ -1312,107 +1312,66 @@
                                 Activity Log
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4" style="margin-bottom: 1rem" >
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted by">Submit By</label>
-                                            <div class="Date">@if ( $data->acknowledgement_by )
-                                                {{ $data->acknowledgement_by }}
-                                             @else   Not Applicable
-                                        
-                                           @endif</div>
+                                            <div class="static">{{ $data->acknowledgement_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input"  style="margin-bottom: 1rem" >
+                                        <div class="group-input">
                                             <label for="submitted on">Submit On</label>
-                                            <div class="Date">
-                                                @if ($data->acknowledgement_on)
-                                                {{ $data->acknowledgement_on }}
-                                                @else Not Applicable  
-                                                @endif</div>
+                                            <div class="Date">{{ $data->acknowledgement_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input"  style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="submitted on">Submit Comment</label>
-                                            <div class="Date">
-                                                @if ($data->cancelacknowledgement_commentled_by)
-                                                {{ $data->cancelled_by }}
-                                                @else Not Applicable  
-                                                @endif
-                                                </div>
+                                            <div class="static">{{ $data->acknowledgement_comment }}</div>
                                         </div>
                                     </div>
 
                                   
                                     <div class="col-lg-4">
-                                        <div class="group-input"  style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled by">Approved By</label>
-                                            <div class="Date">
-                                                @if ($data->work_completion_by)
-                                                {{ $data->work_completion_by }}
-                                                @else Not Applicable  
-                                                @endif</div> 
+                                            <div class="static">{{ $data->work_completion_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled on">Approved On</label>
-                                            <div class="Date">
-                                                @if ($data->work_completion_on)
-                                                {{ $data->work_completion_on }}
-                                                @else Not Applicable  
-                                                @endif
-                                            </div>
+                                            <div class="Date">{{ $data->work_completion_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem" >
+                                        <div class="group-input">
                                             <label for="submitted on">Approved Comment</label>
-                                            <div class="Date">
-                                                @if ($data->work_completion_comment)
-                                                {{ $data->work_completion_comment }}
-                                                @else Not Applicable  
-                                                @endif</div>
+                                            <div class="static">{{ $data->work_completion_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled by">Acknowledge Complete By</label>
-                                            <div class="Date">
-                                                @if ($data->qa_varification_by)
-                                                {{ $data->qa_varification_by }}
-                                                @else Not Applicable  
-                                                @endif
-                                               </div> 
+                                            <div class="static">{{ $data->qa_varification_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled on">Acknowledge Complete On</label>
-                                            <div class="Date">
-                                                @if ($data->qa_varification_on)
-                                                {{ $data->qa_varification_on }}
-                                                @else Not Applicable  
-                                                @endif
-                                            </div>
+                                            <div class="Date">{{ $data->qa_varification_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="submitted on"> Acknowledge Completete Comment</label>
-                                            <div class="Date">
-                                                @if ($data->qa_varification_comment)
-                                                {{ $data->qa_varification_comment }}
-                                                @else Not Applicable  
-                                                @endif
-                                            </div>
+                                            <div class="static">{{ $data->qa_varification_comment }}</div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More information required By">More information required By</label>
-                                            <div class="Date">{{ $data->more_information_required_by }}</div> 
+                                            <div class="static">{{ $data->more_information_required_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -1424,74 +1383,43 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted on">Comment</label>
-                                            <div class="Date">{{ $data->more_info_requ_comment }}</div>
+                                            <div class="static">{{ $data->more_info_requ_comment }}</div>
                                         </div>
                                     </div> --}}
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="completed by">Verification Completed By</label>
-                                            <div class="Date">
-                                                @if ($data->completed_by)
-                                                {{ $data->completed_by }}
-                                                @else Not Applicable  
-                                                @endif
-                                                </div> 
+                                            <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="completed on">Verification Completed On</label>
-                                            <div class="Date">
-                                               
-                                                @if ($data->completed_on)
-                                                {{ $data->completed_on }}
-                                                @else Not Applicable  
-                                                @endif
-                                            </div> 
+                                            <div class="Date">{{ $data->completed_on }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="submitted on">Verification Completed Comment</label>
-                                            <div class="Date">
-                                                @if ($data->completed_comment)
-                                                {{ $data->completed_comment }}
-                                                @else Not Applicable  
-                                                @endif
-                                            
-                                            </div>
+                                            <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled by">Cancel By</label>
-                                            <div class="Date">
-                                                @if ($data->cancelled_by)
-                                                {{ $data->cancelled_by }}
-                                                @else Not Applicable  
-                                                @endif</div> 
+                                            <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="cancelled on">Cancel On</label>
-                                            <div class="Date">
-                                                @if ($data->cancelled_on)
-                                                {{ $data->cancelled_on }}
-                                                @else Not Applicable  
-                                                @endif
-                                            </div>
+                                            <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="group-input" style="margin-bottom: 1rem">
+                                        <div class="group-input">
                                             <label for="submitted on">Cancel Comment</label>
-                                            <div class="Date">
-                                                @if ($data->cancelled_comment)
-                                                {{ $data->cancelled_comment }}
-                                                @else Not Applicable  
-                                                @endif
-                                               </div>
+                                            <div class="static">{{ $data->cancelled_comment }}</div>
                                         </div>
                                     </div>
                                 </div>

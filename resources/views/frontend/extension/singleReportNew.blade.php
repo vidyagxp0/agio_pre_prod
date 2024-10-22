@@ -544,25 +544,24 @@
                     </table>
                 </div>
             </div>
-
             <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-80">@if ($data->submit_by) {{ $data->submit_by }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-80">@if ($data->submit_on) {{ $data->submit_on }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_on }}</td>
                         <th class="w-20">Submit Comment</th>
-                        <td class="w-80">@if ($data->submit_comment) {{ $data->submit_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-80">@if ($data->reject_by) {{ $data->reject_by }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->reject_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-80">@if ($data->reject_on) {{ $data->reject_on }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->reject_on }}</td>
                         <th class="w-20">Cancel Comment</th>
-                        <td class="w-80">@if ($data->reject_comment) {{ $data->reject_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->reject_comment }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">More Information Required By</th>
@@ -574,11 +573,11 @@
                     </tr> --}}
                     <tr>
                         <th class="w-20">Review By</th>
-                        <td class="w-80">@if ($data->submit_by_review) {{ $data->submit_by_review }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_by_review }}</td>
                         <th class="w-20">Review On</th>
-                        <td class="w-80">@if ($data->submit_on_review) {{ $data->submit_on_review }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_on_review }}</td>
                         <th class="w-20">Review Comment</th>
-                        <td class="w-80">@if ($data->submit_comment_review) {{ $data->submit_comment_review }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_comment_review }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">System By</th>
@@ -590,11 +589,11 @@
                     </tr> --}}
                     <tr>
                         <th class="w-20">Reject By</th>
-                        <td class="w-80">@if ($data->submit_by_inapproved) {{ $data->submit_by_inapproved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_by_inapproved }}</td>
                         <th class="w-20">Reject On</th>
-                        <td class="w-80">@if ($data->submit_on_inapproved) {{ $data->submit_on_inapproved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_on_inapproved }}</td>
                         <th class="w-20">Reject Comment</th>
-                        <td class="w-80">@if ($data->submit_commen_inapproved) {{ $data->submit_commen_inapproved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_commen_inapproved }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">More Information Required By</th>
@@ -606,27 +605,27 @@
                     </tr> --}}
                     <tr>
                         <th class="w-20">Send for CQA By</th>
-                        <td class="w-80">@if ($data->send_cqa_by) {{ $data->send_cqa_by }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->send_cqa_by }}</td>
                         <th class="w-20">Send for CQA On</th>
-                        <td class="w-80">@if ($data->send_cqa_on) {{ $data->send_cqa_on }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->send_cqa_on }}</td>
                         <th class="w-20">Send for CQA Comment</th>
-                        <td class="w-80">@if ($data->send_cqa_comment) {{ $data->send_cqa_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->send_cqa_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
-                        <td class="w-80">@if ($data->submit_by_approved) {{ $data->submit_by_approved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_by_approved }}</td>
                         <th class="w-20">Approved On</th>
-                        <td class="w-80">@if ($data->submit_on_approved) {{ $data->submit_on_approved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_on_approved }}</td>
                         <th class="w-20">Approved Comment</th>
-                        <td class="w-80">@if ($data->submit_comment_approved) {{ $data->submit_comment_approved }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->submit_comment_approved }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CQA Approval Complete By</th>
-                        <td class="w-80">@if ($data->cqa_approval_by) {{ $data->cqa_approval_by }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->cqa_approval_by }}</td>
                         <th class="w-20">CQA Approval Complete On</th>
-                        <td class="w-80">@if ($data->cqa_approval_on) {{ $data->cqa_approval_on }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->cqa_approval_on }}</td>
                         <th class="w-20">CQA Approval Complete Comment</th>
-                        <td class="w-80">@if ($data->cqa_approval_comment) {{ $data->cqa_approval_comment }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ $data->cqa_approval_comment }}</td>
                     </tr>
 
                 </table>

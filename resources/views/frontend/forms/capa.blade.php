@@ -581,43 +581,21 @@
 
                                         // Initialize datepicker on input fields
                                         function initializeDatepicker() {
-    $('.material_mfg_date, .material_expiry_date').datepicker({
-        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        onClose: function(dateText, inst) {
-            if (dateText) {
-                // Format the date correctly when closed
-                const dateObj = $(this).datepicker('getDate');
-                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
-            } else {
-                $(this).val(''); // Clear the input if no date is selected
-                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
-            }
-        },
-        beforeShow: function() {
-            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
-        }
-    });
-
-    // Prevent manual text entry
-    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
-        e.preventDefault(); // Disable text input
-    });
-
-    // Optional: To clear the field when clicking outside
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
-            $(this).val(''); // Clear input if not clicked
-        }
-    });
-}
-
-// Call the function to initialize the datepicker
-$(document).ready(function() {
-    initializeDatepicker();
-});
+                                            $('.material_mfg_date, .material_expiry_date').datepicker({
+                                                dateFormat: 'dd-M-yy', // Format like '10 Oct 2024'
+                                                changeMonth: true,
+                                                changeYear: true,
+                                                showButtonPanel: true,
+                                                onClose: function(dateText, inst) {
+                                                    if (dateText) {
+                                                        $(this).val($.datepicker.formatDate('dd-M-yy', new Date(dateText)));
+                                                    } else {
+                                                        $(this).attr('placeholder',
+                                                        'DD-MMM-YYYY'); // Set the placeholder back if the date is cleared
+                                                    }
+                                                }
+                                            });
+                                        }
 
                                         // Add a new row
                                         $('#material').click(function(e) {
@@ -939,7 +917,7 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments">  QA/CQA Review Comment 
+                    <label for="Comments"> CAPA QA/CQA Review Comment
                     </label>
                     <textarea name="capa_qa_comments"></textarea>
                 </div>
@@ -1093,7 +1071,7 @@ $(document).ready(function() {
                                         <textarea name="effective_check_plan"></textarea>
                                     </div>
                                 </div> -->
-                                {{-- <div class="col-12 sub-head">
+                                <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
                                 <div class="col-12">
@@ -1104,8 +1082,7 @@ $(document).ready(function() {
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
-                            </div>--}}
-                            </div> 
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="on-submit-disable-button">Save</button>
                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1457,63 +1434,63 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Propose Plan By</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed On">Propose Plan On</label>
                                     <input type="hidden" name="plan_proposed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By"> Propose Plan Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled By">Cancel By</label>
                                     <input type="hidden" name="cancelled_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled On">Cancel On</label>
                                     <input type="hidden" name="cancelled_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Cancel Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Approved By">HOD Review Complete By</label>
                                     <input type="hidden" name="hod_review_completed_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="HOD Review Completed On">HOD Review Complete On</label>
                                     <input type="hidden" name="hod_review_completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">HOD Review Complete Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1535,21 +1512,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Completed By">QA/CQA Review Complete By</label>
                                     <input type="hidden" name="qa_review_completed_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed On"> QA/CQA Review Complete On</label>
                                     <input type="hidden" name="qa_review_completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">QA/CQA Review Complete Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1571,21 +1548,21 @@ $(document).ready(function() {
                                     <label for="Approved By">Approved By</label>
                                     <input type="hidden" name="approved_by">
 
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Approved On"> Approved On</label>
                                     <input type="hidden" name="approved_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Approved Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1606,21 +1583,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Rejected By">Completed By</label>
                                     <input type="hidden" name="completed_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="completed On">Completed On</label>
                                     <input type="hidden" name="completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1641,21 +1618,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Rejected By">HOD Final Review Completed By</label>
                                     <input type="hidden" name="hod_final_review_completed_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">HOD Final Review Completed On</label>
                                     <input type="hidden" name="hod_final_review_completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">HOD Final Review Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1676,21 +1653,21 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">QA/CQA Closure Review Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -1709,25 +1686,23 @@ $(document).ready(function() {
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By">
-                                        QAH/CQA Head Approval Complete By
-                                    </label>
+                                    <label for="QA More Info Required By">QAH/CQA Approval Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA QA/CQA Approval Completed On">QAH/CQA Head Approval Complete On</label>
+                                    <label for="QA QA/CQA Approval Completed On">QAH/CQA Approval Completed On</label>
                                     <input type="hidden" name="qah_approval_completed_on">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">  QAH/CQA Head Approval Complete Comment</label>
+                                    <label for="Plan Proposed By">QAH/CQA Approval Completed Comment</label>
                                     <input type="hidden" name="">
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">

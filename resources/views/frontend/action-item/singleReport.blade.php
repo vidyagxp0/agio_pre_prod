@@ -387,60 +387,6 @@
             </div> -->
 
             <div class="block-head">
-                Acknowledge
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">Acknowledge Comment</th>
-                    <td class="w-80">
-                        @if ($data->acknowledge_comments)
-                            {{ $data->acknowledge_comments }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
-
-            </table>
-
-
-            <div class="block-head">
-                Acknowledge Attachment
-            </div>
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
-                    </tr>
-                    @if ($data->acknowledge_attach)
-                        @php $files = json_decode($data->acknowledge_attach); @endphp
-                        @if (count($files) > 0)
-                            @foreach ($files as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-60">Not Applicable</td>
-                            </tr>
-                        @endif
-                    @else
-                        <tr>
-                            <td class="w-20">1</td>
-                            <td class="w-60">Not Applicable</td>
-                        </tr>
-                    @endif
-                </table>
-            </div>
-
-
-            <div class="block-head">
                 Post Completion
             </div>
             <table>
@@ -531,11 +477,11 @@
 
 
             <div class="block-head">
-            QA/CQA Verification
+                Action Approval
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA/CQA Verification Comments</th>
+                    <th class="w-20">QA/CQA Review Comments</th>
                     <td class="w-80">
                         @if ($data->qa_comments)
                             {{ $data->qa_comments }}
@@ -549,8 +495,25 @@
             </table>
 
 
+
+            {{-- <div class="block-head">
+                Extension Justification
+            </div>
+            <table>
+                <tr>
+                    <th class="w-20">Due Date Extension Justification</th>
+                    <td class="w-80">
+                        @if ($data->due_date_extension)
+                            {{ $data->due_date_extension }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table> --}}
+
             <div class="block-head">
-            QA/CQA Verification Attachment
+                Action Approval Attachment
             </div>
             <div class="border-table">
                 <table>

@@ -178,12 +178,11 @@
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                              </button></a>
-                             @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                           
                              <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button></a>
-                             @endif
-
+                           
                              @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 66)))
 
@@ -194,28 +193,27 @@
                              <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                   More Info Required
                                </button></a>
-                               @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                             
                                <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                           @endif
+                           
                             @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65)))
 
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                {{-- QA/CQA Approval Complete --}}
-                                QAH/CQA Head Approval Complete
+                                QA/CQA Approval  Complete
+
                            </button></a>
 
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                            </button></a>
-                           @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                          
                            <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                             Child
                         </button></a>
-                        @endif
                        
                            @elseif($data->stage == 9&& (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            @if(Helpers::getChildData($data->id, 'CAPA') < 3)
@@ -830,7 +828,7 @@
                                             <div class="group-input">
                                                 <label for="Material Details">
                                                     Product / Material Details
-                                                    <button type="button" name="ann" id="material"   {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="ann" id="material">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="productmaterial">
                                                     <thead>
@@ -852,36 +850,36 @@
                                                                 <tr>
                                                                     <td><input disabled type="text"
                                                                             name="serial_number[]"
-                                                                            value="{{ $key + 1 }}" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}></td>
+                                                                            value="{{ $key + 1 }}"></td>
                                                                     <td><input type="text" name="material_name[]"
                                                                             value="{{ $material_name }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_batch_no[]"
                                                                             value="{{ unserialize($data2->material_batch_no)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_mfg_date[]"
                                                                             class="material_mfg_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_mfg_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_expiry_date[]"
                                                                             class="material_expiry_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_expiry_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_batch_desposition[]"
                                                                             value="{{ unserialize($data2->material_batch_desposition)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_remark[]"
                                                                             value="{{ unserialize($data2->material_remark)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     {{-- <td>
                                                                         <select name="material_batch_status[]"
@@ -903,7 +901,7 @@
                                                                     <td>
                                                                         <select name="material_batch_status[]"
                                                                             class="batch_status"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled ' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                                             <option value="">-- Select value --
                                                                             </option>
                                                                             <option value="Hold"
@@ -919,7 +917,7 @@
                                                                     </td>
 
                                                                     <td><button type="button" class="removeRowBtn"
-                                                                        {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }} >Remove</button>
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Remove</button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -931,6 +929,7 @@
 
                                         <script>
                                             $(document).ready(function() {
+
                                                 // Function to create a new row dynamically
                                                 function createNewRow(serialNumber) {
                                                     return $('<tr>' +
@@ -956,44 +955,21 @@
 
                                                 // Function to initialize the jQuery datepicker on input fields
                                                 function initializeDatepicker() {
-    $('.material_mfg_date, .material_expiry_date').datepicker({
-        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        onClose: function(dateText, inst) {
-            if (dateText) {
-                // Format the date correctly when closed
-                const dateObj = $(this).datepicker('getDate');
-                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
-            } else {
-                $(this).val(''); // Clear the input if no date is selected
-                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
-            }
-        },
-        beforeShow: function() {
-            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
-        }
-    });
-
-    // Prevent manual text entry
-    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
-        e.preventDefault(); // Disable text input
-    });
-
-    // Optional: To clear the field when clicking outside
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
-            $(this).val(''); // Clear input if not clicked
-        }
-    });
-}
-
-// Call the function to initialize the datepicker
-$(document).ready(function() {
-    initializeDatepicker();
-});
-
+                                                    $('.material_mfg_date, .material_expiry_date').datepicker({
+                                                        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
+                                                        changeMonth: true,
+                                                        changeYear: true,
+                                                        showButtonPanel: true,
+                                                        onClose: function(dateText, inst) {
+                                                            if (dateText) {
+                                                                $(this).val($.datepicker.formatDate('dd-M-yy', new Date(dateText)));
+                                                            } else {
+                                                                $(this).attr('placeholder',
+                                                                'DD-MMM-YYYY'); // Reset the placeholder if the date is cleared
+                                                            }
+                                                        }
+                                                    });
+                                                }
 
                                                 // Add a new row when the + button is clicked
                                                 $('#material').click(function(e) {
@@ -1072,7 +1048,7 @@ $(document).ready(function() {
                                                 <label for="Material Details">
                                                     Equipment/Instruments Details<button type="button" name="ann"
                                                     id="equipment_add"
-                                                    {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }} >+</button>
+                                                        >+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="equi_details">
                                                     <thead>
@@ -1106,7 +1082,7 @@ $(document).ready(function() {
                                                                            value="{{ unserialize($data3->equipment_comments)[$key] ?? '' }}">
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" class="removeRowBtn" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>Remove</button>
+                                                                    <button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1381,7 +1357,7 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QA/CQA Review Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
+                    <label for="Comments">CAPA QA/CQA Review Comment @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
                     <textarea name="capa_qa_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
                 </div>
             </div>
@@ -1598,7 +1574,7 @@ $(document).ready(function() {
                                                 <textarea name="effective_check_plan"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> {{ $data->effective_check_plan }}</textarea>
                                             </div>
                                         </div> -->
-                                        {{-- <div class="col-12 sub-head">
+                                        <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
                                         <div class="col-12">
@@ -1608,7 +1584,7 @@ $(document).ready(function() {
                                                 <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2102,49 +2078,49 @@ $(document).ready(function() {
                                             <div class="group-input">
                                                 <label for="Plan Proposed By">Propose Plan By</label>
                                                 <input type="hidden" name="plan_proposed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->plan_proposed_by ? $data->plan_proposed_by :" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->plan_proposed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Propose Plan  On">Propose Plan On</label>
                                                 <input type="hidden" name="plan_proposed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->plan_proposed_on ?  $data->plan_proposed_on:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->plan_proposed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Propose Plan Comment</label>
                                                 <input type="hidden" name="comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->comment ? $data->comment:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancel By</label>
                                                 <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_by ? $data->cancelled_by:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancel On</label>
                                                 <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancelled_on  ? $data->cancelled_on:" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Cancel Comment</label>
                                                 <input type="hidden" name="cancel_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->cancel_comment ?$data->cancel_comment :" Not Applicable" }} </div>
+                                                <div class="static">{{ $data->cancel_comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">HOD Review Complete By</label>
                                                 <input type="hidden" name="hod_review_completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->hod_review_completed_by ?  $data->hod_review_completed_by:" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->hod_review_completed_by }}</div>
                                             </div>
                                         </div>
 
@@ -2152,14 +2128,14 @@ $(document).ready(function() {
                                             <div class="group-input">
                                                 <label for="Plan Approved On">HOD Review Complete On</label>
                                                 <input type="hidden" name="hod_review_completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->hod_review_completed_on ?  $data->hod_review_completed_on:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->hod_review_completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">HOD Review Complete Comment</label>
                                                 <input type="hidden" name="hod_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->hod_comment ? $data->hod_comment :" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->hod_comment }}</div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-4">
@@ -2190,21 +2166,21 @@ $(document).ready(function() {
                                             <div class="group-input">
                                                 <label for="Completed By">QA/CQA Review Complete By</label>
                                                 <input type="hidden" name="qa_review_completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->qa_review_completed_by ? $data->qa_review_completed_by :" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->qa_review_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Completed On">QA/CQA Review Complete On</label>
                                                 <input type="hidden" name="qa_review_completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->qa_review_completed_on ? $data->qa_review_completed_on :" Not Applicable " }}</div>
+                                                <div class="static">{{ $data->qa_review_completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">QA/CQA Review Complete Comment</label>
                                                 <input type="hidden" name="qa_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->qa_comment ? $data->qa_comment :" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->qa_comment }}</div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-4">
@@ -2235,21 +2211,21 @@ $(document).ready(function() {
                                                 <label for="Approved By">Approved By</label>
                                                 <input type="hidden" name="approved_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
-                                                <div class="static">{{ $data->approved_by ? $data->approved_by :" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Approved On">Approved On</label>
                                                 <input type="hidden" name="approved_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->approved_on ?  $data->approved_on:" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Approved Comment</label>
                                                 <input type="hidden" name="approved_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->approved_comment ? $data->approved_comment :" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->approved_comment }}</div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-4">
@@ -2279,21 +2255,21 @@ $(document).ready(function() {
                                             <div class="group-input">
                                                 <label for="Rejected By">Completed By</label>
                                                 <input type="hidden" name="completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->completed_by ?  $data->completed_by:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Rejected On">Completed On</label>
                                                 <input type="hidden" name="completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->completed_on ?  $data->completed_on:" Not Applicable" }}</div>
+                                                <div class="static">{{ $data->completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Completed Comment</label>
                                                 <input type="hidden" name="com_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->com_comment ? $data->com_comment:" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->com_comment }}</div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-4">
@@ -2323,21 +2299,21 @@ $(document).ready(function() {
                                             <div class="group-input">
                                                 <label for="Rejected By">HOD Final Review Completed By</label>
                                                 <input type="hidden" name="hod_final_review_completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->hod_final_review_completed_by  ? $data->hod_final_review_completed_by :" Not Applicable"}}</div>
+                                                <div class="static">{{ $data->hod_final_review_completed_by }}</div>
                                             </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Rejected By">HOD Final Review Completed On</label>
                                             <input type="hidden" name="hod_final_review_completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                            <div class="static">{{ $data->hod_final_review_completed_on ? $data->hod_final_review_completed_on:" Not Applicable"}}</div>
+                                            <div class="static">{{ $data->hod_final_review_completed_on }}</div>
                                         </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Plan Approved By">HOD Final Review Completed Comment</label>
                                         <input type="hidden" name="final_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                        <div class="static">{{ $data->final_comment ? $data->final_comment :" Not Applicable"}}</div>
+                                        <div class="static">{{ $data->final_comment }}</div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
@@ -2365,21 +2341,21 @@ $(document).ready(function() {
                                     <div class="group-input">
                                         <label for="Rejected By">QA/CQA Closure Review Completed By</label>
                                         <input type="hidden" name="qa_closure_review_completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                        <div class="static">{{ $data->qa_closure_review_completed_by ? $data->qa_closure_review_completed_by :" Not Applicable" }}</div>
+                                        <div class="static">{{ $data->qa_closure_review_completed_by }}</div>
                                     </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected By">QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->qa_closure_review_completed_on ? $data->qa_closure_review_completed_on :" Not Applicable"}}</div>
+                                    <div class="static">{{ $data->qa_closure_review_completed_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Approved By">QA/CQA Closure Review Completed Comment</label>
                                     <input type="hidden" name="qa_closure_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->qa_closure_comment ? $data->qa_closure_comment :" Not Applicable"}}</div>
+                                    <div class="static">{{ $data->qa_closure_comment }}</div>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-4">
@@ -2405,23 +2381,23 @@ $(document).ready(function() {
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected By">QAH/CQA Head Approval Complete By</label>
+                                    <label for="Rejected By">QAH/CQA Approval Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->qah_approval_completed_by ?  $data->qah_approval_completed_by:" Not Applicable"}}</div>
+                                    <div class="static">{{ $data->qah_approval_completed_by }}</div>
                                 </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Rejected By">QAH/CQA Head Approval Complete On</label>
+                                <label for="Rejected By">QAH/CQA Approval Completed On</label>
                                 <input type="hidden" name="qah_approval_completed_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                <div class="static">{{ $data->qah_approval_completed_on ?  $data->qah_approval_completed_on:" Not Applicable"}}</div>
+                                <div class="static">{{ $data->qah_approval_completed_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Plan Approved By">QAH/CQA Head Approval Complete Comment</label>
+                                <label for="Plan Approved By">QAH/CQA Approval Completed Comment</label>
                                 <input type="hidden" name="qah_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                <div class="static">{{ $data->qah_comment ?  $data->qah_comment:" Not Applicable"}}</div>
+                                <div class="static">{{ $data->qah_comment }}</div>
                             </div>
                         </div>
                         {{-- <div class="col-lg-4">
@@ -2473,7 +2449,6 @@ $(document).ready(function() {
                             @csrf
 
                             <div class="modal-body">
-                                @if(Helpers::getChildData($data->id, 'CAPA') < 3)
                                 <div class="group-input">
 
                                     <label for="major">
@@ -2483,7 +2458,6 @@ $(document).ready(function() {
 
 
                                 </div>
-                                @endif
 
                             </div>
 

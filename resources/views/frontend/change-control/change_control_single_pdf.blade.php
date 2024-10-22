@@ -676,9 +676,9 @@ Not Applicable
                             <td class="w-30">{{ $data->severity_level1 }}</td>
                         </tr>  --}}
                         <tr>
-                            <!-- <th class="w-20">CFT Reviewer Person</th>
-                      
-                            <td class="w-80">@if($data->reviewer_person_value){{  $cft_teamNamesString }}@else Not Applicable @endif</td> -->
+                            <th class="w-20">CFT Reviewer Person</th>
+                            <!-- <td class="w-30">  {{ Helpers::getInitiatorName($data->hod_person) }}{{ $data->reviewer_person_value }}</td> -->
+                            <td class="w-80">@if($data->reviewer_person_value){{  $cft_teamNamesString }}@else Not Applicable @endif</td>
 
                             <th class="w-20">Classification of Change</th>
                             <td class="w-30">{{ $data->severity_level1 }}</td>
@@ -816,7 +816,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <!-- <th class="w-20">RA Feedback</th>
+                                <th class="w-20">RA Feedback</th>
                                 <td class="w-80">
                                     <div>
                                         @if ($cftData->RA_feedback)
@@ -825,7 +825,7 @@ Not Applicable
                                             Not Applicable
                                         @endif
                                     </div>
-                                </td> -->
+                                </td>
                             </tr>
                             <tr>
                                 <th class="w-20">RA Review Completed By</th>
@@ -917,7 +917,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Quality Assurance Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -928,7 +928,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
                                 <th class="w-20">Quality Assurance Review Completed By</th>
                                 <td class="w-30">
@@ -985,7 +985,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Required ?
+                                <th class="w-20">Production Tablet/Capsule/Powder Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1019,7 +1019,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Production Tablet/Capsule/Powder Feedbacdk </th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1030,9 +1030,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed By</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->Production_Table_By)
@@ -1042,7 +1042,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_On)
@@ -1087,7 +1087,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Liquid/Ointment Review Required?
+                                <th class="w-20">Production Liquid/Ointment Required?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1121,7 +1121,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Production Liquid/Ointment Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1132,9 +1132,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Production Liquid/Ointment Review Completed By</th>
+                                <th class="w-20">Production Liquid/Ointment Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_by)
@@ -1144,7 +1144,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid/Ointment Review Completed On</th>
+                                <th class="w-20">Production Liquid/Ointment Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_on)
@@ -1189,7 +1189,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Injection Review Required ?
+                                <th class="w-20">Production Injection Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1223,7 +1223,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Production Injection Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1234,9 +1234,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Production Injection Review Completed By</th>
+                                <th class="w-20">Production Injection Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Injection_By)
@@ -1246,7 +1246,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Injection Review Completed On</th>
+                                <th class="w-20">Production Injection Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Injection_On)
@@ -1291,7 +1291,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Stores Review Required ?
+                                <th class="w-20">Stores Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1325,7 +1325,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Stores Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1336,9 +1336,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Stores Review Completed By</th>
+                                <th class="w-20">Stores Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_by)
@@ -1348,7 +1348,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Review Completed On</th>
+                                <th class="w-20">Stores Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_on)
@@ -1432,7 +1432,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Quality Control Feedback</th>
                                     <td class="w-80" colspan="3">
                                         <div>
@@ -1443,10 +1443,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
-                                    <th class="w-20">Quality Control Review Completed By</th>
+                                    <th class="w-20">Quality Review Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->QualityAssurance__by)
@@ -1456,7 +1456,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Quality Control Review Completed On</th>
+                                    <th class="w-20">Quality Review Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Quality_Control_on)
@@ -1504,7 +1504,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Research & Development Review Required ?
+                                <th class="w-20">Research & Development Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1538,7 +1538,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Research & Development Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1549,9 +1549,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Research & Development Review Completed By</th>
+                                <th class="w-20">Research & Development Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ResearchDevelopment_by)
@@ -1561,7 +1561,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Research & Development Review Completed On</th>
+                                <th class="w-20">Research & Development Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ResearchDevelopment_on)
@@ -1645,7 +1645,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Engineering Feedback</th>
                                     <td class="w-80" colspan="3">
                                         <div>
@@ -1656,7 +1656,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Engineering Review Completed By</th>
@@ -1755,7 +1755,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Human Resource Feedback</th>
                                     <td class="w-80" colspan="3">
                                         <div>
@@ -1766,7 +1766,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Human Resource Review Completed By</th>
@@ -1828,7 +1828,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Microbiology Review Required ?
+                                <th class="w-20">Microbiology Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1862,7 +1862,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Microbiology Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1873,9 +1873,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Microbiology Review Completed By</th>
+                                <th class="w-20">Microbiology Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Microbiology_by)
@@ -1885,7 +1885,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Microbiology Review Completed On</th>
+                                <th class="w-20">Microbiology Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Microbiology_on)
@@ -1930,7 +1930,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Required ?
+                                <th class="w-20">Regulatory Affairs Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1964,7 +1964,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Regulatory Affairs Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -1975,9 +1975,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Completed By</th>
+                                <th class="w-20">Regulatory Affairs Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_by)
@@ -1987,7 +1987,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affairs Review Completed On</th>
+                                <th class="w-20">Regulatory Affairs Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_on)
@@ -2032,7 +2032,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Corporate Quality Assurance Review Required ?
+                                <th class="w-20">Corporate Quality Assurance Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2066,7 +2066,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Corporate Quality Assurance Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -2077,9 +2077,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Corporate Quality Assurance Review Completed By</th>
+                                <th class="w-20">Corporate Quality Assurance Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->CorporateQualityAssurance_by)
@@ -2089,7 +2089,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Corporate Quality Assurance Review Completed On</th>
+                                <th class="w-20">Corporate Quality Assurance Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->CorporateQualityAssurance_on)
@@ -2174,7 +2174,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Safety Feedback</th>
                                     <td class="w-80" colspan="3">
                                         <div>
@@ -2185,7 +2185,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Safety Review Completed By</th>
@@ -2286,7 +2286,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Information Technology Feedback</th>
                                     <td class="w-80" colspan="3">
                                         <div>
@@ -2297,7 +2297,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Information Technology Review Completed By</th>
@@ -2359,7 +2359,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Contract Giver Review Required ?
+                                <th class="w-20">Contract Giver Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2393,7 +2393,7 @@ Not Applicable
                                     </div>
                                 </td>
                                 </tr>
-                                <!-- <tr> 
+                                <tr> 
                                 <th class="w-20">Contract Giver Feedback</th>
                                 <td class="w-80" colspan="3">
                                     <div>
@@ -2404,9 +2404,9 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
-                                <th class="w-20">Contract Giver Review Completed By</th>
+                                <th class="w-20">Contract Giver Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ContractGiver_by)
@@ -2416,7 +2416,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Contract Giver Review Completed On</th>
+                                <th class="w-20">Contract Giver Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ContractGiver_on)
@@ -2512,7 +2512,7 @@ Not Applicable
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- <tr>    
+                                <tr>    
                                     <th class="w-20">Other's 1 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -2523,7 +2523,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Other's 1 Review Completed By</th>
@@ -2632,7 +2632,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Other's 2 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -2643,7 +2643,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Other's 2 Review Completed By</th>
@@ -2753,7 +2753,7 @@ Not Applicable
                                     </td>
 
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
 
                                     <th class="w-20">Other's 3 Feedback</th>
                                     <td class="w-80" colspan="5">
@@ -2765,7 +2765,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Other's 3 Review Completed By</th>
@@ -2874,7 +2874,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Other's 4 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -2885,7 +2885,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Other's 4 Review Completed By</th>
@@ -2994,7 +2994,7 @@ Not Applicable
                                         </div>
                                     </td>
                                     </tr>
-                                    <!-- <tr> 
+                                    <tr> 
                                     <th class="w-20">Other's 5 Feedback</th>
                                     <td class="w-80" colspan="5">
                                         <div>
@@ -3005,7 +3005,7 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 <tr>
 
                                     <th class="w-20">Other's 5 Review Completed By</th>
@@ -3207,12 +3207,12 @@ Not Applicable
              <div class="block">
                 <div class="head">
                     <div class="block-head">
-                    QA/CQA Head / Designee Approval
+                    QA/CQA Head/Manager Designee Approval
                     </div>
                       <table>
                               <tr>
                                
-                                <th class="w-20">QA/CQA Head / Designee Approval Comment</th>
+                                <th class="w-20">QA/CQA Head/Manager Designee Approval Comments</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cc_cfts->qa_cqa_comments)
@@ -3233,7 +3233,7 @@ Not Applicable
 
                    <div class="border-table">
                         <div class="block-">
-                        QA/CQA Head / Designee Approval Attachment
+                         QA/CQA Head/Manager Designee Approval Attachments
                         </div>
                         <table>
 
@@ -3504,14 +3504,14 @@ Not Applicable
                                     </td>
                                 </tr>
                                 
-                                <!-- <tr>
+                                <tr>
                                     <th class="w-20">Due Date Extension Justification</th>
                                     <td>
                                         <div>
                                             {{  $data->due_date_extension ?? 'Not Applicable' }}
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 
                             
                             </table>

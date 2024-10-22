@@ -3112,7 +3112,7 @@
 
                     <div class="border-table">
                             <div class="block-head">
-
+                           
                         QA/CQA Head/ Designee Approval attachment
                             </div>
                             <table>
@@ -3396,7 +3396,7 @@
                                                     <td class="w-20">
                                                         {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : 'Unknown User' }}
                                                     </td>
-
+                                                     
                                                     <td class="w-20">{{ $investigation_item['desination_dept'] }}
                                                     </td>
 
@@ -3465,169 +3465,48 @@
                                 </table>
                             </div> --}}
                             {{-- <div class="col-12" id="HideInference" style="display:none;"> --}}
-                                <div class="border-table">
-                                    <div class="col-12 mb-4" id="fmea-section-part3">
-                                        <div class="group-input">
-                                            <div class="block-head">Inference</div>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="risk-acceptance">
-                                                    <thead>
-                                                        <tr class="table_bg">
-                                                            <th style="width: 5%;">Row #</th>
-                                                            <th style="width: 30%;">Type</th>
-                                                            <th>Remarks</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (!empty($data->inference_type) && !empty($data->inference_remarks))
-                                                            @php
-                                                                $inference_types = unserialize($data->inference_type);
-                                                                $inference_remarks = unserialize($data->inference_remarks);
-                                                            @endphp
+                            <div class="border-table">
+                                <div class="col-12 mb-4" id="fmea-section-part3">
+                                    <div class="group-input">
+                                        <div class="block-head">Inference</div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="risk-acceptance">
+                                                <thead>
+                                                    <tr class="table_bg">
+                                                        <th style="width: 5%;">Row #</th>
+                                                        <th style="width: 30%;">Type</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($data->inference_type) && !empty($data->inference_remarks))
+                                                        @php
+                                                            $inference_types = unserialize($data->inference_type);
+                                                            $inference_remarks = unserialize($data->inference_remarks);
+                                                        @endphp
 
-                                                            @foreach ($inference_types as $key => $inference_type)
-                                                                <tr>
-                                                                    <td>{{ $key + 1 }}</td>
-                                                                    <td>
-                                                                        @switch($inference_type)
-                                                                            @case('Measurement')
-                                                                                Measurement
-                                                                                @break
-                                                                            @case('Materials')
-                                                                                Materials
-                                                                                @break
-                                                                            @case('Methods')
-                                                                                Methods
-                                                                                @break
-                                                                            @case('Mother Environment')
-                                                                                Mother Environment
-                                                                                @break
-                                                                            @case('Man')
-                                                                                Man
-                                                                                @break
-                                                                            @case('Machine')
-                                                                                Machine
-                                                                                @break
-                                                                            @default
-                                                                                N/A
-                                                                        @endswitch
-                                                                    </td>
-                                                                    <td>{{ $inference_remarks[$key] ?? 'No remarks provided' }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @else
+                                                        @foreach ($inference_types as $key => $inference_type)
                                                             <tr>
-                                                                <td colspan="3">No inference data available.</td>
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>
+                                                                    {{ $inference_type == 'Measurement' ? 'Measurement' : '' }}
+                                                                    {{ $inference_type == 'Materials' ? 'Materials' : '' }}
+                                                                    {{ $inference_type == 'Methods' ? 'Methods' : '' }}
+                                                                    {{ $inference_type == 'Environment' ? 'Environment' : '' }}
+                                                                    {{ $inference_type == 'Manpower' ? 'Manpower' : '' }}
+                                                                    {{ $inference_type == 'Machine' ? 'Machine' : '' }}
+                                                                </td>
+                                                                <td>{{ $inference_remarks[$key] ?? '' }}</td>
                                                             </tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-
-                            <style>
-                                .tableFMEA {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                    font-size: 7px;
-                                    table-layout: fixed; /* Ensures columns are evenly distributed */
-                                }
-
-                                .thFMEA,
-                                .tdFMEA {
-                                    border: 1px solid black;
-                                    padding: 5px;
-                                    word-wrap: break-word;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                    font-size: 6px; /* Apply the same font size for all cells */
-                                }
-
-                                /* Rotating specific headers */
-                                .rotate {
-                                    transform: rotate(-90deg);
-                                    white-space: nowrap;
-                                    width: 10px;
-                                    height: 100px;
-                                }
-
-                                /* Ensure the "Traceability Document" column fits */
-                                .tdFMEA:last-child,
-                                .thFMEA:last-child {
-                                    width: 80px; /* Allocate more space for "Traceability Document" */
-                                }
-
-                                /* Adjust for smaller screens to fit */
-                                @media (max-width: 1200px) {
-                                    .tdFMEA:last-child,
-                                    .thFMEA:last-child {
-                                        font-size: 6px;
-                                        width: 70px; /* Shrink width further for smaller screens */
-                                    }
-                                }
-
-                            </style>
-    <div class="block-head">Failure Mode And Effect Analysis</div>
-    <div class="table-responsive">
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg">
-                <th class="thFMEA" rowspan="2">Row #</th>
-                <th class="thFMEA" colspan="2">Risk Identification</th>
-                <th class="thFMEA" rowspan="2">Risk Analysis</th>
-                <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                <th class="thFMEA" rowspan="2">RPN</th>
-                <th class="thFMEA" colspan="2">Risk Control</th>
-                <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                <th class="thFMEA" rowspan="2">Risk Level</th>
-                <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
-                <th class="thFMEA" rowspan="2">Traceability Document</th>
-            </tr>
-            <tr class="table_bg">
-                <th class="thFMEA">Activity</th>
-                <th class="thFMEA">Possible Risk/Failure</th>
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Control Measures</th>
-                <th class="thFMEA">RPN</th>
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (!empty($riskEffectAnalysis->risk_factor_1))
-                @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
-                    <tr>
-                        <td class="tdFMEA">{{ $key + 1 }}</td>
-                        <td class="tdFMEA">{{ $riskFactor }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}</td>
-                    </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td colspan="3">No data available.</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
-</div>
+                            </div>
+                            
 
 
 
@@ -3636,7 +3515,10 @@
 
 
 
-{{-- <table>
+
+                            <div class="block-head"> Failure Mode And Effect Analysis </div>
+
+<table>
 
 
     <thead>
@@ -3663,11 +3545,11 @@
                 <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
                 <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
             </tr>
-        @endfor
+        @endfor 
     </tbody>
-</table> --}}
+</table>
 
-{{-- <table>
+<table>
     <thead>
         <tr class="table_bg">
             <th class="w-10">Row #</th>
@@ -3694,11 +3576,11 @@
                 <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
                 <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
             </tr>
-        @endfor
+        @endfor 
     </tbody>
-</table> --}}
+</table>
 
-{{-- <table>
+<table>
     <thead>
         <tr class="table_bg">
             <th class="w-10">Row #</th>
@@ -3742,9 +3624,9 @@
         @endif
 
     </tbody>
-</table> --}}
+</table>
 
-{{-- <table>
+<table>
     <thead>
         <tr class="table_bg">
             <th class="w-10">Row #</th>
@@ -3761,7 +3643,7 @@
         $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
         $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
         $row_number = 1;
-    @endphp
+    @endphp 
 
         @php
             $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
@@ -3788,7 +3670,7 @@
             </tr>
         @endfor
     </tbody>
-</table> --}}
+</table>
 
 
 
@@ -3805,7 +3687,7 @@
 
 
 
-
+                            
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
@@ -4253,7 +4135,131 @@
                                 </tr>
                             </table> --}}
 
+                            <div class="border-table  tbl-bottum">
+                                <div class="block-head">
+                                    Failure Mode and Effect Analysis
+                                </div>
+                                <table>
 
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Activity</th>
+                                        <th class="w-30">Possible Risk/Failure (Identified Risk)</th>
+                                        <th class="w-30">Consequences of Risk/Potential Causes</th>
+                                
+                                    </tr>
+                                    {{-- @if ($data->root_cause_initial_attachment)
+                                @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else --}}
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ $riskFactor }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                              
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+
+                                </table>
+
+                            </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Severity (S)</th>
+                                        <th class="w-30">Probability (P)</th>
+                                        <th class="w-30">Detection (D)</th>
+                                        <th class="w-30"> RPN</th>
+                                    </tr>
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->initial_detectability)[$key] }}</td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->initial_probability)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] }}</td>
+                                               
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Control Measures recommended/ Risk mitigation proposed</th>
+                                        <th class="w-30">Severity (S)</th>
+                                        <th class="w-30">Probability (P)</th>
+                                        <th class="w-30">Detection (D)</th>
+                                      
+
+                                    </tr>
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->residual_severity)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->residual_detectability)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
+                            <div class="border-table  tbl-bottum">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Row #</th>
+                                        <th class="w-30">Risk Level (RPN)</th>
+                                        <th class="w-30">Category of Risk Level (Low, Medium and High)</th>
+                                        <th class="w-30">Risk Acceptance (Y/N)</th>
+                                        <th class="w-30">Traceability document</th>
+                                      
+
+                                    </tr>
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="w-10">{{ $key + 1 }}</td>
+                                                
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->residual_rpn)[$key] }}</td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] }}
+                                                </td>
+                                                <td class="w-30">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] }}
+                                                </td>
+                                                <td class="w-30">
+                                                    {{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                </table>
+                            </div>
 
                             {{--
                             <div class="border-table">
@@ -4298,66 +4304,6 @@
                                     </tbody>
                                 </table>
                             </div> --}}
-                            <div class="block-head">Failure Mode And Effect Analysis</div>
-                            <div class="table-responsive">
-                            <table class="tableFMEA">
-                                <thead>
-                                    <tr class="table_bg">
-                                        <th class="thFMEA" rowspan="2">Row #</th>
-                                        <th class="thFMEA" colspan="2">Risk Identification</th>
-                                        <th class="thFMEA" rowspan="2">Risk Analysis</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">RPN</th>
-                                        <th class="thFMEA" colspan="2">Risk Control</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level</th>
-                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
-                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
-                                    </tr>
-                                    <tr class="table_bg">
-                                        <th class="thFMEA">Activity</th>
-                                        <th class="thFMEA">Possible Risk/Failure</th>
-                                        <th class="thFMEA">Severity (S)</th>
-                                        <th class="thFMEA">Probability (P)</th>
-                                        <th class="thFMEA">Detection (D)</th>
-                                        <th class="thFMEA">Control Measures</th>
-                                        <th class="thFMEA">RPN</th>
-                                        <th class="thFMEA">Severity (S)</th>
-                                        <th class="thFMEA">Probability (P)</th>
-                                        <th class="thFMEA">Detection (D)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (!empty($riskEffectAnalysis->risk_factor))
-                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                            <tr>
-                                                <td class="tdFMEA">{{ $key + 1 }}</td>
-                                                <td class="tdFMEA">{{ $riskFactor }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
-                                            </tr>
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                            <td colspan="3">No data available.</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-
                         </div>
 
                     </div>
@@ -4995,127 +4941,154 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-30">{{ $data->submit_by ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-30">{{ $data->submit_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->submit_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Submit Comment</th>
-                        <td class="w-30">{{ $data->submit_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->submit_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">HOD Review Complete By</th>
-                        <td class="w-30">{{ $data->HOD_Review_Complete_By ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->HOD_Review_Complete_By }}</td>
                         <th class="w-20">HOD Review Complete On</th>
-                        <td class="w-30">{{ $data->HOD_Review_Complete_On ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->HOD_Review_Complete_On }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">HOD Review Comment</th>
-                        <td class="w-30">{{ $data->HOD_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->HOD_Review_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Request For Cancellation By</th>
-                        <td class="w-30">{{ $data->pending_Cancel_by ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->pending_Cancel_by }}</td>
                         <th class="w-20">Request For Cancellation On</th>
-                        <td class="w-30">{{ $data->pending_Cancel_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->pending_Cancel_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Request For Cancellation Comment</th>
-                        <td class="w-30">{{ $data->pending_Cancel_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->pending_Cancel_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Initial Review Complete By</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By ?? 'Not Applicable' }}</td>
+                        <th class="w-20">QA/CQA Initial Review Complete by</th>
+                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
                         <th class="w-20">QA/CQA Initial Review Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">QA/CQA Initial Review Comment</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_By ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
                         <th class="w-20">CFT Review Complete On</th>
-                        <td class="w-30">{{ $data->CFT_Review_Complete_On ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Comment</th>
-                        <td class="w-30">{{ $data->CFT_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Not Required By</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_by ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cft_review_not_req_by}}</td>
                         <th class="w-20">CFT Review Not Required On</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cft_review_not_req_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">CFT Review Not Required Comment</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cft_review_not_req_comment }}</td>
+                    </tr>
+                  
+                    <tr>
+                        <th class="w-20">QA/CQA Final Assessement Complete By</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
+                        <th class="w-20">QA/CQA Final Assessement Complete On</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
+
                     </tr>
                     <tr>
-                        <th class="w-20">QA/CQA Final Assessment Complete By</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_By ?? 'Not Applicable' }}</td>
-                        <th class="w-20">QA/CQA Final Assessment Complete On</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Complete_On ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA/CQA Final Assessment Complete Comment</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Comments ?? 'Not Applicable' }}</td>
+                        <th class="w-20">QA/CQA Final Assessement Complete Comment</th>
+                        <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->Approved_By ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Approved On</th>
-                        <td class="w-30">{{ $data->Approved_On ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Approved_By }}</td>
+                        <th class="w-20">Approved ON</th>
+                        <td class="w-30">{{ $data->Approved_On }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Approved Comments</th>
-                        <td class="w-30">{{ $data->Approved_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Approved_Comments }}</td>
+                    </tr> 
+                    <!-- <tr>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva By</th>
+                        <td class="w-30">{{ $data->QA_head_approved_by }}</td>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva ON</th>
+                        <td class="w-30">{{ $data->QA_head_approved_on }}</td>
+
                     </tr>
                     <tr>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva Comment</th>
+                        <td class="w-30">{{ $data->QA_head_approved_comment }}</td>
+                    </tr> -->
+                    <tr>
                         <th class="w-20">Initiator Update Completed By</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_by ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Initiator Update Completed On</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->pending_initiator_approved_by }}</td>
+                        <th class="w-20">Initiator Update Completed ON</th>
+                        <td class="w-30">{{ $data->pending_initiator_approved_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Update Completed Comment</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->pending_initiator_approved_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation Verification Complete By</th>
-                        <td class="w-30">{{ $data->Hod_final_by ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Implementation Verification Complete On</th>
-                        <td class="w-30">{{ $data->Hod_final_on ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Implementation verification Complete By</th>
+                        <td class="w-30">{{ $data->Hod_final_by }}</td>
+                        <th class="w-20">Implementation verification Complete On</th>
+                        <td class="w-30">{{ $data->Hod_final_on }}</td>
+
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation Verification Complete Comment</th>
-                        <td class="w-30">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Implementation verification Complete Comment</th>
+                        <td class="w-30">{{ $data->Hod_final_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Closure Approved By</th>
-                        <td class="w-30">{{ $data->Close_by ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Close_by }}</td>
                         <th class="w-20">Closure Approved On</th>
-                        <td class="w-30">{{ $data->Close_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Close_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Closure Approved Comment</th>
-                        <td class="w-30">{{ $data->Close_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Close_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ $data->cancelled_on ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancelled_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->cancelled_comment }}</td>
                     </tr>
+
+
+
                 </table>
             </div>
-
         </div>
 
     </div>

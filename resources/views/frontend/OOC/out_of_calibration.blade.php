@@ -2183,14 +2183,14 @@
 
                                 <div class="group-input">
                                     <label for="Initiator Group">Submit By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Submit On: </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2201,7 +2201,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="comment">Submit Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2211,7 +2211,7 @@
 
                                 <div class="group-input">
                                     <label for="Initiator Group">HOD Primary Review Complete By: </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2220,14 +2220,14 @@
 
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">HOD Primary Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="hod_review_occ_comment">HOD Primary Review Complete Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2244,7 +2244,7 @@
                                 <div class="group-input">
 
                                     <label for="Initiator Group">QA Head Primary Review Complete By :</label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2252,7 +2252,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">QA Head Primary Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2263,7 +2263,7 @@
                                 <div class="group-input input-date">
                                     <label for="qa_intial_review_ooc_comment">QA Head Primary Review Complete Comment :
                                     </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2273,7 +2273,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IA Investigation By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2283,7 +2283,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IA Investigation On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2294,7 +2294,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IA Investigation Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2307,7 +2307,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IA HOD Review Complete By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2317,7 +2317,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IA HOD Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2328,7 +2328,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IA HOD Review Complete Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2339,7 +2339,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IA QA Review Complete By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2349,7 +2349,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
 
@@ -2360,7 +2360,7 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IA QA Review Complete Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2372,7 +2372,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Assignable Cause Found By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2382,13 +2382,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Assignable Cause Found On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Assignable Cause Found Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2399,7 +2399,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Assignable Cause Not Found By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2409,13 +2409,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Assignable Cause Not Found On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Assignable Cause Not Found Comment : </label>
-                                    <div class="static">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2424,7 +2424,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IB Investigation By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2432,13 +2432,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IB Investigation On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IB Investigation Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2450,7 +2450,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2458,13 +2458,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IB HOD Review Complete Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2474,7 +2474,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Phase IB QA Review Complete By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2482,13 +2482,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Phase IB QA Review Complete On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Phase IB QA Review Complete Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2499,7 +2499,7 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Approved By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 
@@ -2507,13 +2507,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Approved On : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="closure_ooc_comment">Approved Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
                                 </div>
                             </div>
@@ -2524,7 +2524,7 @@
 
                                 <div class="group-input">
                                     <label for="Initiator Group">Cancel By : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
 
 
                                 </div>
@@ -2533,13 +2533,13 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Cancel On: </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="comment">Cancel Comment : </label>
-                                    <div class="date">Not Applicable</div>
+                                    <div class="static"></div>
                                 </div>
                             </div>
 

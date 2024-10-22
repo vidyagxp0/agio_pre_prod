@@ -1409,78 +1409,8 @@ if (is_array($request->action) && !empty($request->action)) {
             }
         }
 
-        // ----------------------------------------------------------------------
 
-        // $observation_id = $data->id;
-
-        // if (!empty($request->observation)) {
-        //     // Fetch existing data for the observation
-        //     $existingAuditorShow = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->first();
-        //     $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
         
-        //     // Update or create a new observation entry
-        //     $observationSingleGrid = ObseravtionSingleGrid::firstOrNew(['obs_id' => $observation_id, 'identifier' => 'observation']);
-        //     $observationSingleGrid->obs_id = $observation_id;
-        //     $observationSingleGrid->identifier = 'observation';
-        //     $observationSingleGrid->data = $request->observation;
-        //     $observationSingleGrid->save();
-        
-        //     $fieldNames = [
-        //         'non_compliance' => 'Observation',
-        //     ];
-        
-        //     if (is_array($request->observation)) {
-        //         foreach ($request->observation as $index => $newAuditor) {
-        //             // Ensure that previousAuditor is fetched for each row
-        //             $previousAuditor = isset($existingAuditorData[$index]) ? $existingAuditorData[$index] : [];
-        
-        //             // Fields to track changes
-        //             $fieldsToTrack = ['non_compliance'];
-                    
-        //             foreach ($fieldsToTrack as $field) {
-        //                 $oldValue = isset($previousAuditor[$field]) ? $previousAuditor[$field] : 'Null';
-        //                 $newValue = isset($newAuditor[$field]) ? $newAuditor[$field] : 'Null';
-        
-        //                 // Only create audit trail if there is a change
-        //                 if ($oldValue !== $newValue) {
-        //                     $existingAuditTrail = AuditTrialObservation::where([
-        //                         ['Observation_id', '=', $observation_id],
-        //                         ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
-        //                         ['previous', '=', $oldValue],
-        //                         ['current', '=', $newValue]
-        //                     ])->first();
-        
-        //                     $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
-        
-        //                     if (!$existingAuditTrail) {
-        //                         $auditTrail = new AuditTrialObservation;
-        //                         $auditTrail->Observation_id = $observation_id;
-        //                         $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
-        //                         $auditTrail->previous = $oldValue;  
-        //                         $auditTrail->current = $newValue;   
-        //                         $auditTrail->comment = "";
-        //                         $auditTrail->user_id = Auth::user()->id;
-        //                         $auditTrail->user_name = Auth::user()->name;
-        //                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //                         $auditTrail->origin_state = $data->status;
-        //                         $auditTrail->change_to = "Not Applicable";
-        //                         $auditTrail->change_from = $data->status;
-        //                         $auditTrail->action_name = $actionName; 
-        //                         $auditTrail->save();
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        
-
-
-
-        // -------------------------------------------------------------------------
-
-
-        $observation_id = $data->id; 
         $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
         $observationSingleResponse->obs_id = $observation_id;
         $observationSingleResponse->identifier = 'response';
@@ -1522,7 +1452,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
                         $history->Observation_id = $id;
-                        $history->activity_type = "Response Action" . ' (' . ($actionCounter) . ')';
+                        $history->activity_type = "Corrective Action" . ' (' . ($actionCounter) . ')';
                         $history->previous = $lastResponseAction;
                         $history->current = $currentResponseAction;
                         $history->comment = $request->action_taken_comment;

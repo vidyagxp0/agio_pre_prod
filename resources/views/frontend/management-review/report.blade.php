@@ -4699,72 +4699,103 @@
                                 Activity log
                             </div>
                             <table>
+
                                 <tr>
                                     <th class="w-20">Submit By</th>
-                                    <td class="w-30">{{ $managementReview->Submited_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->Submited_by }}</td>
                                     <th class="w-20">Submit On</th>
-                                    <td class="w-30">{{ $managementReview->Submited_on ? Helpers::getdateFormat($managementReview->Submited_on) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}
+                                    </td>
                                     <th class="w-20">Submit Comment</th>
-                                    <td class="w-30">{{ $managementReview->Submited_Comment ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
+
+
+
                                 </tr>
 
+                                {{-- <tr>
+                                    <th class="w-20">Completed By</th>
+                                    <td class="w-30">{{ $managementReview->completed_by }}</td>
+                                    <th class="w-20">Completed On</th>
+                                    <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}
+                                    </td>
+                                    <th class="w-20">Comment</th>
+                                    <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
+                                </tr> --}}
                                 <tr>
                                     <th class="w-20">QA Head Review Complete By</th>
-                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
                                     <th class="w-20">QA Head Review Complete On</th>
-                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On ? Helpers::getdateFormat($managementReview->qaHeadReviewComplete_On) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
                                     <th class="w-20">QA Head Review Complete Comment</th>
-                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment ?? 'Not Applicable' }}</td>
-                                </tr>
+                                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
 
+
+
+                                </tr>
                                 <tr>
                                     <th class="w-20">Meeting and Summary Complete By</th>
-                                    <td class="w-30">{{ $managementReview->meeting_summary_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
                                     <th class="w-20">Meeting and Summary Complete On</th>
-                                    <td class="w-30">{{ $managementReview->meeting_summary_on ? Helpers::getdateFormat($managementReview->meeting_summary_on) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
                                     <th class="w-20">Meeting and Summary Complete Comment</th>
-                                    <td class="w-30">{{ $managementReview->meeting_summary_comment ?? 'Not Applicable' }}</td>
-                                </tr>
+                                    <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
 
+
+
+                                </tr>
                                 <tr>
                                     <th class="w-20">CFT Action Complete By</th>
-                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
                                     <th class="w-20">CFT Action Complete On</th>
-                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_on ? Helpers::getdateFormat($managementReview->ALLAICompleteby_on) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
                                     <th class="w-20">CFT Action Complete Comment</th>
-                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_comment ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
+
+
+
                                 </tr>
 
                                 <tr>
                                     <th class="w-20">CFT HOD Review Complete By</th>
-                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
                                     <th class="w-20">CFT HOD Review Complete On</th>
-                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on ? Helpers::getdateFormat($managementReview->hodFinaleReviewComplete_on) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
                                     <th class="w-20">CFT HOD Review Complete Comment</th>
-                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
+
+
+
                                 </tr>
 
                                 <tr>
                                     <th class="w-20">QA Verification Complete By</th>
-                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
                                     <th class="w-20">QA Verification Complete On</th>
-                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_On ? Helpers::getdateFormat($managementReview->QAVerificationComplete_On) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
                                     <th class="w-20">QA Verification Complete Comment</th>
-                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
+
+
+
                                 </tr>
 
                                 <tr>
                                     <th class="w-20">Approved By</th>
-                                    <td class="w-30">{{ $managementReview->Approved_by ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->Approved_by }}</td>
                                     <th class="w-20">Approved On</th>
-                                    <td class="w-30">{{ $managementReview->Approved_on ? Helpers::getdateFormat($managementReview->Approved_on) : 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->Approved_on }}</td>
                                     <th class="w-20">Approved Comment</th>
-                                    <td class="w-30">{{ $managementReview->Approved_comment ?? 'Not Applicable' }}</td>
+                                    <td class="w-30">{{ $managementReview->Approved_comment }}</td>
+
+
+
                                 </tr>
+
+
                             </table>
                         </div>
                     </div>
-
                     {{--
         <div class="block">
             <div class="block-head">
