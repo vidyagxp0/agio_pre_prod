@@ -637,14 +637,116 @@
                     </tr>
                 </table> --}}
 
-                <div class="block-head"> Failure Mode And Effect Analysis </div>
+                {{-- <div class="block-head"> Failure Mode And Effect Analysis </div> --}}
 
+                <style>
+                    .tableFMEA {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 7px;
+                        table-layout: fixed; /* Ensures columns are evenly distributed */
+                    }
+
+                    .thFMEA,
+                    .tdFMEA {
+                        border: 1px solid black;
+                        padding: 5px;
+                        word-wrap: break-word;
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 6px; /* Apply the same font size for all cells */
+                    }
+
+                    /* Rotating specific headers */
+                    .rotate {
+                        transform: rotate(-90deg);
+                        white-space: nowrap;
+                        width: 10px;
+                        height: 100px;
+                    }
+
+                    /* Ensure the "Traceability Document" column fits */
+                    .tdFMEA:last-child,
+                    .thFMEA:last-child {
+                        width: 80px; /* Allocate more space for "Traceability Document" */
+                    }
+
+                    /* Adjust for smaller screens to fit */
+                    @media (max-width: 1200px) {
+                        .tdFMEA:last-child,
+                        .thFMEA:last-child {
+                            font-size: 6px;
+                            width: 70px; /* Shrink width further for smaller screens */
+                        }
+                    }
+
+                </style>
+
+                <div class="block-head">Failure Mode And Effect Analysis</div>
+                            <div class="table-responsive">
+                            <table class="tableFMEA">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th class="thFMEA" rowspan="2">Row #</th>
+                                        <th class="thFMEA" colspan="2">Risk Identification</th>
+                                        <th class="thFMEA" rowspan="2">Risk Analysis</th>
+                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="2">RPN</th>
+                                        <th class="thFMEA" colspan="2">Risk Control</th>
+                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="2">Risk Level</th>
+                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
+                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                    </tr>
+                                    <tr class="table_bg">
+                                        <th class="thFMEA">Activity</th>
+                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Control Measures</th>
+                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="tdFMEA">{{ $key + 1 }}</td>
+                                                <td class="tdFMEA">{{ $riskFactor }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
+                                            </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="3">No data available.</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
 
 
                 <!-------------------- new data -->
 
 
-               <div class="border-table">
+               {{-- <div class="border-table">
                  <table>
 
 
@@ -793,7 +895,7 @@
                         @endfor
                     </tbody>
 
-                </table>
+                </table> --}}
 
 
 
