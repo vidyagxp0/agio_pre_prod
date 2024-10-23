@@ -398,50 +398,50 @@
                                     </script>
 
 
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Type..">Type</label>
+        <select name="type" id="type">
+            <option value="">Enter Your Selection Here</option>
+            <option value="Business Risk">Business Risk</option>
+            <option value="Customer Related">Customer-Related Risk (Complaint)</option>
+            <option value="Opportunity">Opportunity</option>
+            <option value="Market">Market</option>
+            <option value="Operational Risk">Operational Risk</option>
+            <option value="Strategic Risk">Strategic Risk</option>
+            <option value="Other Data">Other</option> <!-- Ensure the value matches here -->
+        </select>
+    </div>
+</div>
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Type..">Type</label>
-                                            <select name="type" id="type">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="Business Risk">Business Risk</option>
-                                                <option value="Customer Related">Customer-Related Risk (Complaint)</option>
-                                                <option value="Opportunity">Opportunity</option>
-                                                <option value="Market">Market</option>
-                                                <option value="Operational Risk">Operational Risk</option>
-                                                <option value="Strategic Risk">Strategic Risk</option>
-                                                <option value="Other Data">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
+<div id="typeOfError" class="group-input col-6" style="display: none;">
+    <label for="otherFieldsUser">Other (Type)</label>
+    <input type="text" name="other_type" class="form-control"/>
+</div>
 
-                                    <div id="typeOfError" class="group-input col-6" style="display: none;">
-                                        <label for="otherFieldsUser">Other (Type)</label>
-                                        <input type="text" name="other_type" class="form-control" />
-                                    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initially hide the field
+        $('#typeOfError').hide();
 
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Initially hide the field
-                                            $('#typeOfError').hide();
+        $('select[name=type]').change(function() {
+            const selectedVal = $(this).val();
+            if (selectedVal === 'Other Data') { // Match this value with the option value
+                $('#typeOfError').show();
+            } else {
+                $('#typeOfError').hide();
+            }
+        });
 
-                                            $('select[name=type]').change(function() {
-                                                const selectedVal = $(this).val();
-                                                if (selectedVal === 'Other_data') {
-                                                    $('#typeOfError').show();
-                                                } else {
-                                                    $('#typeOfError').hide();
-                                                }
-                                            });
+        // Optionally, check the current value when the page loads in case of form errors
+        if ($('select[name=type]').val() === 'Other Data') { // Correct the value check
+            $('#typeOfError').show();
+        }
+    });
+</script>
 
-                                            // Optionally, check the current value when the page loads in case of form errors
-                                            if ($('select[name=type]').val() === 'Other_data') {
-                                                $('#typeOfError').show();
-                                            }
-                                        });
-                                    </script>
 
                                     {{-- <script>
                                         $(document).ready(function() {
@@ -622,7 +622,7 @@
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect
                                                     Analysis</option>
-                                                <option value="Other Detail">Other</option>
+                                                <option value="Other Detail">Other</option> <!-- Ensure the value matches -->
                                             </select>
                                         </div>
                                     </div>
@@ -641,7 +641,7 @@
                                             // Function to check the current value of the select and toggle the input field
                                             function toggleOtherField() {
                                                 const selectedVals = $('#root-cause-methodology').val();
-                                                if (selectedVals && selectedVals.includes('Other_Detail')) {
+                                                if (selectedVals && selectedVals.includes('Other Detail')) { // Correct value check here
                                                     $('#rootCause').show();
                                                 } else {
                                                     $('#rootCause').hide();
@@ -657,6 +657,7 @@
                                             toggleOtherField();
                                         });
                                     </script>
+
 
 
                                     <div class="col-12 mb-4 "id="fmea-section" style="display:none;">
