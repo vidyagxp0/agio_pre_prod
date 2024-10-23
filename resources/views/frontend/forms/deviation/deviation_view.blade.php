@@ -8581,6 +8581,32 @@
                                         <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div>
+                                <div class="col-12 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">Other's 1 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="Other1_attachment">
+                                                @if ($data1->Other1_attachment)
+                                                    @foreach (json_decode($data1->Other1_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile"@if ($data->stage != 4) disabled @endif
+                                                    name="Other1_attachment[]" oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6 mb-3 other1_reviews">
                                     <div class="group-input">
@@ -9084,7 +9110,7 @@
 
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
-                                    <label for="Description of Action Item15">Description of Action Item (By Other's 4)</label>
+                                    <label for="Description of Action Item15">Impact Assessment (By Other's 4)</label>
                                     <textarea class="tiny" name="Other4_Assessment" id="summernote-47"
                                         @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_Assessment }}</textarea>
                                 </div>
@@ -9092,7 +9118,7 @@
 
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
-                                    <label for="feedback4">Other's 4 Status of Action Item</label>
+                                    <label for="feedback4">Other's 4 Feedback</label>
                                     <textarea class="tiny" name="Other4_feedback" id="summernote-48"
                                         @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
                                 </div>
@@ -9237,7 +9263,7 @@
 
                             <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
-                                    <label for="Description of Action Item16">Description of Action Item (By Other's 5)</label>
+                                    <label for="Description of Action Item16">Impact Assessment (By Other's 5)</label>
                                     <textarea class="tiny" name="Other5_Assessment" id="summernote-49"
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_Assessment }}</textarea>
                                 </div>
@@ -9245,7 +9271,7 @@
 
                             <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
-                                    <label for="productionfeedback">Other's 5 Status of Action Item</label>
+                                    <label for="productionfeedback">Other's 5 Feedback</label>
                                     <textarea class="tiny" name="Other5_feedback" id="summernote-50"
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
                                 </div>
