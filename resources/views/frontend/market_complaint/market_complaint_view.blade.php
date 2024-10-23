@@ -3069,7 +3069,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="qa_cqa_he_attach[]"
-                                            {{ $data->stage == 1 ? '' : 'disabled' }}
+                                            {{ $data->stage == 2 ? '' : 'disabled' }}
                                                 oninput="addMultipleFiles(this, 'qa_cqa_he_attach')" multiple>
                                         </div>
                                     </div>
@@ -3168,7 +3168,7 @@
                                     <label for="root_cause">
                                         Investigation Team
                                         <button type="button" id="investigation_team_add"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-details-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -3198,25 +3198,25 @@
                                                             <td><input disabled type="text"
                                                                     name="Investing_team[{{ $index }}][serial]"
                                                                     value="{{ $investingTeamIndex++ }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="Investing_team[{{ $index }}][name_inv_tem]"
                                                                     value="{{ $inves['name_inv_tem'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="Investing_team[{{ $index }}][department_inv_tem]"
                                                                     value="{{ $inves['department_inv_tem'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="Investing_team[{{ $index }}][remarks_inv_tem]"
                                                                     value="{{ $inves['remarks_inv_tem'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><button type="text" class="removeRowBtn"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>Remove</button>
                                                             </td>
 
                                                         </tr>
@@ -3270,7 +3270,7 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
                     <textarea class="" name="review_of_batch_manufacturing_record_BMR_gi" id=""
-                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                        {{ $data->stage == 3 ? '' : 'disabled' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                 </div>
             </div> --}}
                             <div class="col-md-12">
@@ -3280,7 +3280,7 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4" required>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3288,7 +3288,7 @@
                                             Manufacturing Record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea readonly class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4">{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea readonly class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @endif
                                 @error('review_of_batch_manufacturing_record_BMR_gi')
@@ -3306,8 +3306,8 @@
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id=""
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
+                                        <textarea name="review_of_raw_materials_used_in_batch_manufacturing_gi"
+                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3319,8 +3319,8 @@
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id=""
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
+                                        <textarea readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi"
+                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3335,7 +3335,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3345,7 +3345,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3361,7 +3361,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3372,7 +3372,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3387,7 +3387,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_analytical_data_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3396,7 +3396,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_analytical_data_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3411,7 +3411,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3422,7 +3422,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3438,7 +3438,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3449,7 +3449,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3464,7 +3464,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3474,7 +3474,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi"
-                                            id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                            id="summernote-1" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3489,7 +3489,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_past_history_of_product_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3499,7 +3499,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_past_history_of_product_gi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3513,7 +3513,7 @@
                                     <label for="root_cause">
                                         Brain Storming Session/Discussion With Concerned Person
                                         <button type="button" id="brain-stroming"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                            {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-details-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -3545,30 +3545,30 @@
                                                             <td><input disabled type="text"
                                                                     name="brain_stroming_details[{{ $index }}][serial]"
                                                                     value="{{ $brainindex++ }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="brain_stroming_details[{{ $index }}][possibility_bssd]"
                                                                     value="{{ $bra_st_s['possibility_bssd'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="brain_stroming_details[{{ $index }}][factscontrols_bssd]"
                                                                     value="{{ $bra_st_s['factscontrols_bssd'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="brain_stroming_details[{{ $index }}][probable_cause_bssd]"
                                                                     value="{{ $bra_st_s['probable_cause_bssd'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="brain_stroming_details[{{ $index }}][remarks_bssd]"
                                                                     value="{{ $bra_st_s['remarks_bssd'] }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td><button type="button" class="removeRowBtn"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>Remove</button>
                                                             </td>
 
                                                         </tr>
@@ -3625,7 +3625,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_pi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_pi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
                      </textarea>
                                     </div>
                                 @else
@@ -3636,7 +3636,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="conclusion_pi" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_pi }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
                      </textarea>
                                     </div>
                                 @endif
@@ -3649,7 +3649,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3658,7 +3658,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3671,7 +3671,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause_analysis_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3680,7 +3680,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause_analysis_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3695,7 +3695,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="the_probable_root" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->the_probable_root }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
                     </textarea>
                                     </div>
                                 @else
@@ -3706,7 +3706,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="the_probable_root" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->the_probable_root }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
                      </textarea>
                                     </div>
                                 @endif
@@ -3720,7 +3720,7 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
                     <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
-                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_hodsr }}
+                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
                     </textarea>
                 </div>
             </div> --}}
@@ -3734,7 +3734,7 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
                     <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1"
-                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->probable_root_causes_complaint_hodsr }}
+                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->probable_root_causes_complaint_hodsr }}
                     </textarea>
                 </div>
             </div> --}}
@@ -3746,7 +3746,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_assessment_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3755,7 +3755,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="impact_assessment_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_assessment_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3771,7 +3771,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->corrective_action_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3780,7 +3780,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="corrective_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->corrective_action_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3795,7 +3795,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->preventive_action_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3804,7 +3804,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->preventive_action_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3818,7 +3818,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_and_conclusion_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -3827,7 +3827,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_and_conclusion_hodsr }}
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -3871,7 +3871,7 @@
                             <input type="file" id="initial_attachment_hodsr"
                                 name="initial_attachment_hodsr[]"
                                 oninput="addMultipleFiles(this,'initial_attachment_hodsr')"
-                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} multiple>
+                                {{ $data->stage == 3 ? '' : 'readonly' }} multiple>
                         </div>
                     </div>
                 </div>
@@ -3882,7 +3882,7 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                             not require completion</small></div>
                     <textarea class="" name="comments_if_any_hodsr" id=""
-                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments_if_any_hodsr }}
+                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->comments_if_any_hodsr }}
                     </textarea>
                 </div>
             </div> --}}
@@ -3904,7 +3904,7 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton" id="saveButton"
-                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                                {{ $data->stage == 3 ? '' : 'readonly' }}>Save</button>
 
                             {{-- <div id="alert-message" style="display:none;">
             Your stage is Closed - Done You Cannot Edit or Save.
@@ -4024,7 +4024,7 @@
                                         <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="Production_Table_Assessment"
                                             @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                    (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17" {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data1->Production_Table_Assessment }}</textarea>
                                     </div>
 
                                 </div>
@@ -4236,7 +4236,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
+                                            <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data1->Production_Table_Feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -4267,7 +4267,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input disabled
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 5 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="Production_Table_Attachment[]"
                                                     oninput="addMultipleFiles(this, 'Production_Table_Attachment')"
                                                     multiple>
@@ -6465,7 +6465,7 @@
                                                 <div>Add</div>
                                                 <input
                                                     type="file" id="myfile"
-                                                    name="RegulatoryAffair_attechment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="RegulatoryAffair_attechment[]"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     oninput="addMultipleFiles(this, 'RegulatoryAffair_attechment')"
                                                     multiple>
                                             </div>
@@ -10314,7 +10314,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}
+                                        {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}
                                     </textarea>
                                 </div>
                             @else
@@ -10324,7 +10324,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}
+                                    {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}
                                     </textarea>
                                 </div>
                             @endif
@@ -10396,7 +10396,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="qa_cqa_attachments[]"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        {{ $data->stage == 5 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'qa_cqa_attachments')" multiple>
                                     </div>
                                 </div>
@@ -10509,14 +10509,14 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="tiny" name="qa_cqa_head_comm" id="summernote-4" required>{{ $data->qa_cqa_head_comm }}</textarea>
+                                    <textarea class="tiny" name="qa_cqa_head_comm" id="summernote-4" required {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
                                     <label for="QA/CQA Head Comment">QA/CQA Head Approval Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea readonly class="tiny" name="qa_cqa_head_comm" id="summernote-4">{{ $data->qa_cqa_head_comm }}</textarea>
+                                    <textarea readonly class="tiny" name="qa_cqa_head_comm" id="summernote-4" {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                 </div>
                             @endif
                             @error('qa_cqa_head_comm')
@@ -10590,7 +10590,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="qa_cqa_head_attach[]"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        {{ $data->stage == 6 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'qa_cqa_head_attach')" multiple>
                                     </div>
                                 </div>
@@ -10695,7 +10695,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="closure_comment_c" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->closure_comment_c }}
+                                    {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
                                     </textarea>
                                 </div>
                             </div>
@@ -10707,7 +10707,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="closure_comment_c" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->closure_comment_c }}
+                                    {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
                                     </textarea>
                                 </div>
                             </div>
@@ -10780,7 +10780,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_c[]"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        {{ $data->stage == 7 ? '' : 'readonly' }}
                                             oninput="addMultipleFiles(this, 'initial_attachment_c')" multiple>
                                     </div>
                                 </div>

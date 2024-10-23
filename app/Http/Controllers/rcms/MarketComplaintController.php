@@ -1918,13 +1918,72 @@ class MarketComplaintController extends Controller
 
 
         // For "Product Details"
-        $griddata = $marketComplaint->id;
 
-        $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
-        $product->mc_id = $griddata;
-        $product->identifer = 'ProductDetails';
-        $product->data = $request->serial_number_gi;
-        $product->save();
+
+// $Summary = $internalAudit->id;
+
+        // $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrCreate();
+        // $AuditorsNew->auditor_id = $Summary;
+        // $AuditorsNew->identifier = 'Auditors';
+
+        // $AuditorsNew->data = $request->AuditorNew;
+        // $AuditorsNew->save();
+            $griddata = $marketComplaint->id;
+
+            if (!empty($request->serial_number_gi)) {
+                // Save the new auditor data
+                $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
+                $product->mc_id = $griddata;
+                $product->identifer = 'ProductDetails';
+                $product->data = $request->serial_number_gi;
+                $product->save();
+
+
+                // Define the mapping of field keys to more descriptive names
+                $fieldNames = [
+                    'info_product_name' => 'Product Name',
+                    'info_batch_no' => 'Batch No.',
+                    '_info_mfg_date' => 'Mfg. Date',
+                    'info_expiry_date' => 'Exp. Date',
+                    'info_batch_size' => 'Batch Size',
+                    'info_pack_size' => 'Pack Size',
+                    'info_dispatch_quantity' => 'Dispatch Quantity',
+                    'info_remarks' => 'Remarks',
+
+                ];
+
+                // Track audit trail changes (creation of new data)
+                if (is_array($request->serial_number_gi)) {
+                    foreach ($request->serial_number_gi as $index => $newAuditor) {
+                        // Track changes for each field
+                        $fieldsToTrack = ['info_product_name', 'info_batch_no', '_info_mfg_date', 'info_expiry_date','info_batch_size','info_pack_size','info_dispatch_quantity','info_remarks'];
+                        foreach ($fieldsToTrack as $field) {
+                            $newValue = $newAuditor[$field] ?? 'Null';
+
+                            // Only proceed if there's new data
+                            if ($newValue !== 'Null') {
+                                // Log the creation of the new data in the audit trail
+                                $auditTrail = new MarketComplaintAuditTrial;
+                                $auditTrail->market_id = $marketComplaint->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $marketComplaint->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $marketComplaint->status;
+                                $auditTrail->action_name = 'Create'; // Since this is a create operation
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+
+
         // dd($marketrproducts->data);
         //Traceability
         // $griddata = $marketComplaint->id;
@@ -5616,7 +5675,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Microbiology Assessment';
+            $history->activity_type = 'Impact Assessment (By Microbiology)';
             $history->previous = $lastCft->Microbiology_assessment;
             $history->current = $request->Microbiology_assessment;
             $history->comment = "Not Applicable";
@@ -5656,7 +5715,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Microbiology Review By';
+            $history->activity_type = 'Microbiology Completed By';
             $history->previous = $lastCft->Microbiology_by;
             $history->current = $request->Microbiology_by;
             $history->comment = "Not Applicable";
@@ -5676,9 +5735,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Microbiology Review On';
-            $history->previous = $lastCft->Microbiology_on;
-            $history->current = $request->Microbiology_on;
+            $history->activity_type = 'Microbiology Completed On';
+            $history->previous = Helpers::getdateFormat($lastCft->Microbiology_on);
+            $history->current = Helpers::getdateFormat($request->Microbiology_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5696,7 +5755,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Microbiology Review On';
+            $history->activity_type = 'Microbiology Attachments';
             $history->previous = $lastCft->Microbiology_attachment;
             $history->current = implode(',', $request->Microbiology_attachment);
             $history->comment = "Not Applicable";
@@ -7193,15 +7252,87 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         // $marketrproducts->data = $request->serial_number_gi;
         // $marketrproducts->update();
 
-        $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
-        $product->mc_id = $griddata;
-        $product->identifer = 'ProductDetails';
-        $product->data = $request->serial_number_gi;
-        //  dd( $product->data);
+        // // Save the new auditor data
+        // $product = MarketComplaintGrids::firstOrNew(['mc_id' => $griddata, 'identifier' => 'ProductDetails']);
+        // $product->auditor_id = $griddata;
+        // $product->identifier = 'ProductDetails';
+        // $product->data = $request->serial_number_gi;
+        // $product->save();
 
-        $product->update();
 
+        $griddata = $marketComplaint->id;
 
+        if (!empty($request->serial_number_gi)) {
+            // Fetch existing auditor data
+            $existingAuditorShow = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->first();
+            $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+            $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
+            $product->mc_id = $griddata;
+            $product->identifer = 'ProductDetails';
+            $product->data = $request->serial_number_gi;
+            //  dd( $product->data);
+
+            $product->update();
+            //dd($product);
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                    'info_product_name' => 'Product Name',
+                    'info_batch_no' => 'Batch No.',
+                    'info_mfg_date' => 'Mfg. Date',
+                    'info_expiry_date' => 'Exp. Date',
+                    'info_batch_size' => 'Batch Size',
+                    'info_pack_size' => 'Pack Size',
+                    'info_dispatch_quantity' => 'Dispatch Quantity',
+                    'info_remarks' => 'Remarks',
+                ];
+
+            // Track audit trail changes
+            if (is_array($request->serial_number_gi)) {
+                foreach ($request->serial_number_gi as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['info_product_name', 'info_batch_no', '_info_mfg_date', 'info_mfg_date', 'info_expiry_date', 'info_batch_size', 'info_dispatch_quantity', 'info_remarks'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's a change or the data is new
+                        if ($oldValue !== $newValue) {
+                            // Check if this specific change has already been logged in the audit trail
+                            $existingAuditTrail = MarketComplaintAuditTrial::where([
+                                ['market_id', '=', $marketComplaint->id],
+                                ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+                                ['previous', '=', $oldValue],
+                                ['current', '=', $newValue]
+                            ])->first();
+
+                            // Determine if the data is new or updated
+                            $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+                            // If no existing audit trail record, log the change
+                            if (!$existingAuditTrail) {
+                                $auditTrail = new MarketComplaintAuditTrial;
+                                $auditTrail->market_id = $marketComplaint->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = $oldValue;
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $marketComplaint->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $marketComplaint->status;
+                                $auditTrail->action_name = $actionName; // Set action to New or Update
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         //Traceability
         // $griddata = $marketComplaint->id;
 
