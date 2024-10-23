@@ -5377,26 +5377,57 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+        // if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+            
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
+        //         ->where('previous', $lastDocument->qa_review_comments)
+        //         ->where('current', $Cft->qa_review_comments)
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA/CQA Initial Review Comments';
+        //     $history->previous = $lastDocument->qa_comments;
+        //     $history->current = $request->qa_review_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+
+
+        if ($lastDocument->qa_comments != $request->qa_review_comments && !empty($request->qa_review_comments)) {
+            // Check if an identical audit trail entry already exists
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'QA/CQA Initial Review Comments')
+                ->where('previous', $lastDocument->qa_comments)
+                ->where('current', $request->qa_review_comments)
                 ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Initial Review Comments';
-            $history->previous = $lastDocument->qa_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
+        
+            // Only create a new audit trail entry if it doesn't already exist
+            if (!$lastDocumentAuditTrail) {
+                $history = new RcmDocHistory;
+                $history->cc_id = $id;
+                $history->activity_type = 'QA/CQA Initial Review Comments';
+                $history->previous = $lastDocument->qa_comments;  // Set previous comments
+                $history->current = $request->qa_review_comments; // Set the new comments
+                $history->comment = "Not Applicable"; // Optional comment
+                $history->user_id = Auth::user()->id;  // The user making the change
+                $history->user_name = Auth::user()->name;  // Username
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name'); // User role
+                $history->origin_state = $lastDocument->status;  // Previous status
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;   // Previous status
+                $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New'; // Since this is a new entry
+                $history->save();
+            }
         }
-
+        
 
         // if ($lastDocument->qa_head != $request->qa_head) {
         //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -5741,26 +5772,7 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
 
 
-        // if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'QA/CQA Initial Review Comments';
-        //     $history->previous = $review->qa_comments;
-        //     $history->current = $request->qa_review_comments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
-
+       
         if ($lastDocument->ra_tab_comments != $Cft->ra_tab_comments && $Cft->ra_tab_comments != null) {
             // Check if an identical entry already exists to avoid repeating
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -5820,11 +5832,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
         if ($lastCft->qa_cqa_comments != $request->qa_cqa_comments && $request->qa_cqa_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Comments')
+                ->where('activity_type', 'QA/CQA Head/ Designee Approval Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Comments';
+            $history->activity_type = 'QA/CQA Head/ Designee Approval Comments';
             $history->previous = is_array($lastCft->qa_cqa_comments) ? implode(', ', $lastCft->qa_cqa_comments) : $lastCft->qa_cqa_comments;
             $history->current = $request->qa_cqa_comments;
             $history->comment = "Not Applicable";
@@ -5843,11 +5855,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
         if ($lastCft->qa_cqa_attach != $cc_cfts->qa_cqa_attach && $cc_cfts->qa_cqa_attach != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Attachments')
+                ->where('activity_type', 'QA/CQA Head / Designee Approval Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Attachments';
+            $history->activity_type = 'QA/CQA Head / Designee Approval Attachments';
             $history->previous = is_array($lastCft->qa_cqa_attach) ? implode(', ', $lastCft->qa_cqa_attach) : $lastCft->qa_cqa_attach;
             $history->current = $cc_cfts->qa_cqa_attach;
             $history->comment = "Not Applicable";
