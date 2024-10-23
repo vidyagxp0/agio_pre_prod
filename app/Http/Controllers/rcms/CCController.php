@@ -5820,11 +5820,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
         if ($lastCft->qa_cqa_comments != $request->qa_cqa_comments && $request->qa_cqa_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Comments')
+                ->where('activity_type', 'QA/CQA Head/ Designee Approval Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Comments';
+            $history->activity_type = 'QA/CQA Head/ Designee Approval Comments';
             $history->previous = is_array($lastCft->qa_cqa_comments) ? implode(', ', $lastCft->qa_cqa_comments) : $lastCft->qa_cqa_comments;
             $history->current = $request->qa_cqa_comments;
             $history->comment = "Not Applicable";
@@ -5843,11 +5843,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
         if ($lastCft->qa_cqa_attach != $cc_cfts->qa_cqa_attach && $cc_cfts->qa_cqa_attach != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Attachments')
+                ->where('activity_type', 'QA/CQA Head / Designee Approval Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Attachments';
+            $history->activity_type = 'QA/CQA Head / Designee Approval Attachments';
             $history->previous = is_array($lastCft->qa_cqa_attach) ? implode(', ', $lastCft->qa_cqa_attach) : $lastCft->qa_cqa_attach;
             $history->current = $cc_cfts->qa_cqa_attach;
             $history->comment = "Not Applicable";

@@ -3600,12 +3600,12 @@
                             QA/CQA Head / Designee Approval
                             </div>
                             <div class="group-input">
-                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comment</label>
+                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments</label>
                                 <textarea name="hod_assessment_comments" readonly></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachment</label>
+                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>
