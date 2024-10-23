@@ -592,7 +592,7 @@
 
 
             <div class="block">
-                <div class="block-head">Risk Assesment</div>
+                <div class="block-head">Risk Assessment</div>
 
                 <label class="head-number" for="Root Cause Methodology">Root Cause Methodology</label>
                 <div class="div-data">
@@ -605,8 +605,8 @@
 
                 <label class="head-number" for="Other (Root Cause Methodology)">Other (Root Cause Methodology)</label>
                 <div class="div-data">
-                    @if ($data->root_cause_methodology)
-                        {{ $data->root_cause_methodology }}
+                    @if ($data->other_root_cause_methodology)
+                        {{ $data->other_root_cause_methodology }}
                     @else
                         Not Applicable
                     @endif
@@ -3378,14 +3378,14 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">Cancel By</th>
+                    <th class="w-20">Cancel</th>
                     <td class="w-30">{{ $data->cancelled_by }}</td>
                     <th class="w-20">Cancel On</th>
                     <td class="w-30">{{ $data->cancelled_on }}</td>
                 </tr>
                 <tr>
                     <th class="w-20">
-                        Cancel By Comment</th>
+                        Cancel Comment</th>
                     <td class="w-30">{{ $data->comment }}</td>
                 </tr>
             </table>
