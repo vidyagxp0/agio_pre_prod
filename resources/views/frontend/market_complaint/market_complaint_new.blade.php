@@ -588,7 +588,7 @@
                                             Product Details
                                             <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_complaint"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -778,7 +778,7 @@
                                             Traceability
                                             <button type="button" id="traceblity_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_Traceability"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1008,7 +1008,7 @@
                                             Report Review (Final Review shall be done after QA Verification)
                                             <button type="button" id="team_members_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportReview"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1028,30 +1028,39 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
-                                                            value="1">
+                                                    <td>
+                                                        <input disabled type="text" name="Team_Members[0][serial]" value="1">
                                                     </td>
-                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][designation]"></td>
-                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][names_tm]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][designation]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][department_tm]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][sign_tm]">
+                                                    </td>
                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
-                                                                    <input id="date_0_date_tm" type="text"
+                                                                    <input id="display_date_0_tm" type="text"
                                                                         name="Team_Members[0][date_tm]"
                                                                         placeholder="DD-MMM-YYYY" />
                                                                     <input type="date" name="Team_Members[0][date_tm]"
                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        value="" id="date_0_date_tm"
+                                                                        value="" id="input_date_0_tm"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                                        oninput="handleDateInput(this, 'display_date_0_tm')" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
+
 
                                                     {{-- <td>
                                                         <div class="new-date-data-field">
@@ -1123,7 +1132,7 @@
                                             Verification)
                                             <button type="button" id="add_report_approval_row">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportApproval"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1754,7 +1763,7 @@
                                         Product/Material Details
                                         <button type="button" id="promate_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Product/Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
