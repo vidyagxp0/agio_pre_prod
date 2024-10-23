@@ -82,7 +82,7 @@ class RiskManagementController extends Controller
             $data->other_source_of_risk = null; // or handle it accordingly
         }
 
-        if ($request->input('type') == 'Other_data') {
+        if ($request->input('type') == 'Other Data') {
             $data->other_type = $request->input('other_type');
         } else {
             $data->other_type = null; // or handle it accordingly
@@ -7345,7 +7345,12 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocument ? "Update" : "New";
+            // $history->action_name = $lastDocument ? "Update" : "New";
+            if (is_null($lastDocument->qa_cqa_attachments) || $lastDocument->qa_cqa_attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -7417,7 +7422,12 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocument ? "New" : "Update";
+            // $history->action_name = $lastDocument ? "New" : "Update";
+            if (is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -10821,13 +10831,14 @@ class RiskManagementController extends Controller
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $parent_name = "Risk Assesment";
             $actionchild = RiskManagement::find($id);
+            $data = RiskManagement::find($id);
             $actionchild->actionchild = $record_number;
             // $p_record = RiskManagement::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $parent_id = $id;
             $actionchild->save();
             $parentRecord = RiskManagement::where('id', $id)->value('record');
-            return view('frontend.action-item.action-item', compact('old_record','parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
+            return view('frontend.action-item.action-item', compact('old_record','data', 'parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
         }
 
         elseif ($request->child_type == "effectiveness_check")
