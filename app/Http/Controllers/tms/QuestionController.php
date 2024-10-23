@@ -19,7 +19,7 @@ class QuestionController extends Controller
     {
         // $data = Question::where('trainer_id',Auth::user()->id)->orderByDesc('id','asc')->paginate(10);
         // return view('frontend.TMS.question',compact('data'));
-        $data = Question::orderBy('id', 'asc')->paginate(10);
+        $data = Question::where('trainer_id', Auth::user()->id)->orderBy('id', 'asc')->paginate(10);
         return view('frontend.TMS.question', compact('data'));
     }
 

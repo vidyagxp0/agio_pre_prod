@@ -3805,7 +3805,7 @@ if (!empty($request->SummaryResponse)) {
                     $auditTrail->origin_state = $internalAudit->status;
                     $auditTrail->change_to = "Not Applicable";
                     $auditTrail->change_from = $internalAudit->status;
-                    $auditTrail->action_name = $oldValue == 'Null' ? "Add" : "Update";
+                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
                     $auditTrail->save();
                 }
             }
@@ -3907,7 +3907,7 @@ if (!empty($request->AuditorNew)) {
                     $auditTrail->origin_state = $internalAudit->status;
                     $auditTrail->change_to = "Not Applicable";
                     $auditTrail->change_from = $internalAudit->status;
-                    $auditTrail->action_name = $oldValue == 'Null' ? "Add" : "Update";
+                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
                     $auditTrail->save();
                 }
             }

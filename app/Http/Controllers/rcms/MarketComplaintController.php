@@ -541,6 +541,7 @@ class MarketComplaintController extends Controller
             }
             $Cft->RegulatoryAffair_attechment = json_encode($files);
         }
+
         if (!empty($request->Quality_Control_attachment)) {
             $files = [];
             if ($request->hasfile('Quality_Control_attachment')) {
@@ -2040,6 +2041,7 @@ class MarketComplaintController extends Controller
 
     public function update(Request $request, $id)
     {
+//dd($request->all());
         $form_progress = null;
 
         // $marketComplaint = MarketComplaint::find($id);
@@ -2531,17 +2533,20 @@ class MarketComplaintController extends Controller
                 }
                 $Cft->Microbiology_attachment = json_encode($files);
             }
-            if (!empty($request->RegulatoryAffair_attachment)) {
+
+            if (!empty($request->RegulatoryAffair_attechment)) {
                 $files = [];
-                if ($request->hasfile('RegulatoryAffair_attachment')) {
-                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('RegulatoryAffair_attechment')) {
+                    foreach ($request->file('RegulatoryAffair_attechment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attechment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-                $Cft->RegulatoryAffair_attachment = json_encode($files);
+                $Cft->RegulatoryAffair_attechment = json_encode($files);
             }
+
+
             if (!empty($request->CorporateQualityAssurance_attachment)) {
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
@@ -6281,7 +6286,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
+            $history->activity_type = 'Others 1 Review Required';
             $history->previous = $lastCft->Other1_review;
             $history->current = $request->Other1_review;
             $history->comment = "Not Applicable";
@@ -6301,7 +6306,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Person';
+            $history->activity_type = 'Others 1 Person';
             $history->previous = $lastCft->Other1_person;
             $history->current = $request->Other1_person;
             $history->comment = "Not Applicable";
@@ -6321,7 +6326,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Department';
+            $history->activity_type = 'Others 1 Department';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other1_Department_person);
             $history->current = Helpers::getFullDepartmentName($request->Other1_Department_person);
             $history->comment = "Not Applicable";
@@ -6341,7 +6346,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Assessment';
+            $history->activity_type = 'Others 1 Assessment';
             $history->previous = $lastCft->Other1_assessment;
             $history->current = $request->Other1_assessment;
             $history->comment = "Not Applicable";
@@ -6361,7 +6366,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Feedback';
+            $history->activity_type = 'Others 1 Feedback';
             $history->previous = $lastCft->Other1_feedback;
             $history->current = $request->Other1_feedback;
             $history->comment = "Not Applicable";
@@ -6381,7 +6386,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Review By';
+            $history->activity_type = 'Others 1 Review By';
             $history->previous = $lastCft->Other1_by;
             $history->current = $request->Other1_by;
             $history->comment = "Not Applicable";
@@ -6401,9 +6406,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Review On';
-            $history->previous = $lastCft->Other1_on;
-            $history->current = $request->Other1_on;
+            $history->activity_type = 'Others 1 Review On';
+            $history->previous = Helpers::getdateFormat($lastCft->Other1_on);
+            $history->current = Helpers::getdateFormat($request->Other1_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6421,7 +6426,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 1 Review On';
+            $history->activity_type = 'Others 1 Attachments';
             $history->previous = $lastCft->Other1_attachment;
             $history->current = implode(',', $request->Other1_attachment);
             $history->comment = "Not Applicable";
@@ -6444,7 +6449,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
+            $history->activity_type = 'Others 2 Review Required';
             $history->previous = $lastCft->Other2_review;
             $history->current = $request->Other2_review;
             $history->comment = "Not Applicable";
@@ -6464,7 +6469,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Person';
+            $history->activity_type = 'Others 2 Person';
             $history->previous = $lastCft->Other2_person;
             $history->current = $request->Other2_person;
             $history->comment = "Not Applicable";
@@ -6484,7 +6489,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Department';
+            $history->activity_type = 'Others 2 Department';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
             $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
             $history->comment = "Not Applicable";
@@ -6504,7 +6509,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Assessment';
+            $history->activity_type = 'Others 2 Assessment';
             $history->previous = $lastCft->Other2_assessment;
             $history->current = $request->Other2_assessment;
             $history->comment = "Not Applicable";
@@ -6524,7 +6529,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Feedback';
+            $history->activity_type = 'Others 2 Feedback';
             $history->previous = $lastCft->Other2_feedback;
             $history->current = $request->Other2_feedback;
             $history->comment = "Not Applicable";
@@ -6544,7 +6549,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Review By';
+            $history->activity_type = 'Others 2 Review Completed By';
             $history->previous = $lastCft->Other2_by;
             $history->current = $request->Other2_by;
             $history->comment = "Not Applicable";
@@ -6564,9 +6569,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Review On';
-            $history->previous = $lastCft->Other2_on;
-            $history->current = $request->Other2_on;
+            $history->activity_type = 'Others 2 Completed On';
+            $history->previous = Helpers::getdateFormat($lastCft->Other2_on);
+            $history->current = Helpers::getsdateFormat($request->Other2_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6584,7 +6589,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 2 Review On';
+            $history->activity_type = 'Others 2 Attachments';
             $history->previous = $lastCft->Other2_attachment;
             $history->current = implode(',', $request->Other2_attachment);
             $history->comment = "Not Applicable";
@@ -6606,7 +6611,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
+            $history->activity_type = 'Others 3 Review Required';
             $history->previous = $lastCft->Other3_review;
             $history->current = $request->Other3_review;
             $history->comment = "Not Applicable";
@@ -6626,7 +6631,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Person';
+            $history->activity_type = 'Others 3 Person';
             $history->previous = $lastCft->Other3_person;
             $history->current = $request->Other3_person;
             $history->comment = "Not Applicable";
@@ -6646,7 +6651,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Department';
+            $history->activity_type = 'Others 3 Department';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other3_Department_person);
             $history->current = Helpers::getFullDepartmentName($request->Other3_Department_person);
             $history->comment = "Not Applicable";
@@ -6686,7 +6691,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Feedback';
+            $history->activity_type = 'Others 3 Feedback';
             $history->previous = $lastCft->Other3_feedback;
             $history->current = $request->Other3_feedback;
             $history->comment = "Not Applicable";
@@ -6706,7 +6711,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Review By';
+            $history->activity_type = 'Others 3 Review Completed By';
             $history->previous = $lastCft->Other3_by;
             $history->current = $request->Other3_by;
             $history->comment = "Not Applicable";
@@ -6726,9 +6731,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Review On';
-            $history->previous = $lastCft->Other3_on;
-            $history->current = $request->Other3_on;
+            $history->activity_type = 'Others 3 Completed On';
+            $history->previous = Helpers::getdateFormat($lastCft->Other3_on);
+            $history->current = Helpers::getdateFormat($request->Other3_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6746,7 +6751,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 3 Review On';
+            $history->activity_type = 'Others 3 Attachments';
             $history->previous = $lastCft->Other3_attachment;
             $history->current = implode(',', $request->Other3_attachment);
             $history->comment = "Not Applicable";
@@ -6768,7 +6773,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
+            $history->activity_type = 'Others 4 Review Required';
             $history->previous = $lastCft->Other4_review;
             $history->current = $request->Other4_review;
             $history->comment = "Not Applicable";
@@ -6788,7 +6793,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Person';
+            $history->activity_type = 'Others 4 Person';
             $history->previous = $lastCft->Other4_person;
             $history->current = $request->Other4_person;
             $history->comment = "Not Applicable";
@@ -6808,7 +6813,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Department';
+            $history->activity_type = 'Others 4 Department ';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other4_Department_person);
             $history->current = Helpers::getFullDepartmentName($request->Other4_Department_person);
             $history->comment = "Not Applicable";
@@ -6848,7 +6853,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Feedback';
+            $history->activity_type = 'Others 4 Feedback';
             $history->previous = $lastCft->Other4_feedback;
             $history->current = $request->Other4_feedback;
             $history->comment = "Not Applicable";
@@ -6868,7 +6873,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Review By';
+            $history->activity_type = 'Others 4 Review Completed By';
             $history->previous = $lastCft->Other4_by;
             $history->current = $request->Other4_by;
             $history->comment = "Not Applicable";
@@ -6888,9 +6893,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Review On';
-            $history->previous = $lastCft->Other4_on;
-            $history->current = $request->Other4_on;
+            $history->activity_type = 'Others 4 Completed On';
+            $history->previous = Helpers::getdateFormat($lastCft->Other4_on);
+            $history->current = Helpers::getdateFormat($request->Other4_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6908,7 +6913,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 4 Review On';
+            $history->activity_type = 'Others 4 Attachments';
             $history->previous = $lastCft->Other4_attachment;
             $history->current = implode(',', $request->Other4_attachment);
             $history->comment = "Not Applicable";
@@ -6931,7 +6936,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
+            $history->activity_type = 'Others 5 Review Required';
             $history->previous = $lastCft->Other5_review;
             $history->current = $request->Other5_review;
             $history->comment = "Not Applicable";
@@ -6951,7 +6956,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Person';
+            $history->activity_type = 'Others 5 Person';
             $history->previous = $lastCft->Other5_person;
             $history->current = $request->Other5_person;
             $history->comment = "Not Applicable";
@@ -6971,7 +6976,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Department';
+            $history->activity_type = 'Others 5 Department';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
             $history->current = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
             $history->comment = "Not Applicable";
@@ -6991,7 +6996,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Assessment';
+            $history->activity_type = 'Others 5 Assessment';
             $history->previous = $lastCft->Other5_assessment;
             $history->current = $request->Other5_assessment;
             $history->comment = "Not Applicable";
@@ -7011,7 +7016,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Feedback';
+            $history->activity_type = 'Others 5 Feedback';
             $history->previous = $lastCft->Other5_feedback;
             $history->current = $request->Other5_feedback;
             $history->comment = "Not Applicable";
@@ -7031,7 +7036,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Review By';
+            $history->activity_type = 'Others 5 Review Completed By';
             $history->previous = $lastCft->Other5_by;
             $history->current = $request->Other5_by;
             $history->comment = "Not Applicable";
@@ -7051,9 +7056,9 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Review On';
-            $history->previous = $lastCft->Other5_on;
-            $history->current = $request->Other5_on;
+            $history->activity_type = 'Others 5 Completed On';
+            $history->previous = Helpers::getdateFormat($lastCft->Other5_on);
+            $history->current = Helpers::getdateFormat($request->Other5_on);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7071,7 +7076,7 @@ class MarketComplaintController extends Controller
         if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
             $history = new MarketComplaintAuditTrial;
             $history->market_id = $id;
-            $history->activity_type = 'Other 5 Review On';
+            $history->activity_type = 'Others 5 Attachments';
             $history->previous = $lastCft->Other5_attachment;
             $history->current = implode(',', $request->Other5_attachment);
             $history->comment = "Not Applicable";
@@ -7473,10 +7478,10 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $lastDocument->send_cft_by . ' ,' . $lastDocument->send_cft_on;
+                            $history->previous = $lastDocument->send_cft_by . ' , ' . $lastDocument->send_cft_on;
                         }
                         $history->action = 'QA/CQA Initial Review Complete';
-                        $history->current = $marketstat->send_cft_by . ',' . $marketstat->send_cft_on;
+                        $history->current = $marketstat->send_cft_by . ' , ' . $marketstat->send_cft_on;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -8814,7 +8819,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             // return "test";
             $Capachild = MarketComplaint::find($id);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.capa', compact('record', 'record_number','reference_record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'relatedRecords'));
         }
     }
@@ -8904,12 +8909,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
             $Capachild = MarketComplaint::find($id);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record', 'parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+            return view('frontend.forms.capa', compact('parent_id','reference_record', 'parent_record', 'parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
             $actionchild = MarketComplaint::find($id);

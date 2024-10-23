@@ -106,7 +106,7 @@ class CCController extends Controller
         $cft = User::get();
         $pre = CC::all();
 
-        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre"));
+        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre","record_number"));
     }
 
     public function store(Request $request)
@@ -2866,7 +2866,9 @@ class CCController extends Controller
         $lastcft_teamName = implode(', ', $reviewer_Names);
 
 
-        $openState->reviewer_person_value =  implode(',', $request->reviewer_person_value);
+        $openState->reviewer_person_value =  is_array($request->reviewer_person_value) 
+        ? implode(',', $request->reviewer_person_value) 
+        : $request->reviewer_person_value;
         $capa_teamIdsArray = explode(',', $openState->reviewer_person_value);
         $reviewer_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
         $Cft_teamNamesString = implode(', ', $reviewer_teamNames);
@@ -2881,12 +2883,13 @@ class CCController extends Controller
 
 
 
-        if($openState->stage == 3){
+        // if($openState->stage == 3)
+        // {
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
             $dueDate = $initiationDate->addDays($daysToAdd);
             $openState->record_number = $request->record_number;
-        }
+        // }
 
         $openState->doc_change = $request->doc_change;
         $openState->hod_person = $request->hod_person;
@@ -3946,10 +3949,9 @@ class CCController extends Controller
         $closure->effective_check_date = $request->effective_check_date;
 
 
-
         if (!empty($request->attach_list) || !empty($request->deleted_attach_list)) {
             $existingFiles = json_decode($closure->attach_list, true) ?? [];
-
+        
             // Handle deleted files
             if (!empty($request->deleted_attach_list)) {
                 $filesToDelete = explode(',', $request->deleted_attach_list);
@@ -3957,7 +3959,7 @@ class CCController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-
+        
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('attach_list')) {
@@ -3967,13 +3969,13 @@ class CCController extends Controller
                     $newFiles[] = $name;
                 }
             }
-
+        
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $closure->attach_list = json_encode($allFiles);
         }
-
-        $areChangeClosureAttachSame = $lastclosure->attach_list = $closure->attach_list;
+        
+        $areChangeClosureAttachSame = $lastclosure->attach_list === $closure->attach_list;
 
         $closure->update();
 
@@ -4227,8 +4229,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Initial Attachment';
-            $history->previous = $lastDocument->in_attachment;
-            $history->current = $openState->in_attachment;
+            $history->previous = str_replace(',', ', ',$lastDocument->in_attachment);
+            $history->current =str_replace(',', ', ', $openState->in_attachment);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4247,8 +4249,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Risk Assessment Attachment';
-            $history->previous = $lastDocument->risk_assessment_atch;
-            $history->current = $openState->risk_assessment_atch;
+            $history->previous = str_replace(',', ', ',$lastDocument->risk_assessment_atch);
+            $history->current = str_replace(',', ', ',$openState->risk_assessment_atch);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4270,8 +4272,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Attachments';
-            $history->previous = $lastDocument->HOD_attachment;
-            $history->current = $openState->HOD_attachment;
+            $history->previous = str_replace(',', ', ',$lastDocument->HOD_attachment);
+            $history->current = str_replace(',', ', ',$openState->HOD_attachment);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4290,8 +4292,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'QA/CQA Initial Attachments';
-            $history->previous = $lastDocCft->qa_head;
-            $history->current = $Cft->qa_head;
+            $history->previous = str_replace(',', ', ',$lastDocCft->qa_head);
+            $history->current = str_replace(',', ', ',$Cft->qa_head);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4310,8 +4312,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Attachments';
-            $history->previous = $lastDocCft->RA_attachment;
-            $history->current = $Cft->RA_attachment;
+            $history->previous = str_replace(',', ', ',$lastDocCft->RA_attachment);
+            $history->current =str_replace(',', ', ', $Cft->RA_attachment);
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4835,25 +4837,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($areChangeClosureAttachSame != true) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'List Of Attachments')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'List Of Attachments';
-        //     $history->previous = $lastclosure->attach_list;
-        //     $history->current = $closure->attach_list;
-        //     $history->comment = "";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastclosure->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+      
 
         /************** Attachment Code Ends **************/
         if ($lastDocument->If_Others != $openState->If_Others) {
@@ -5393,25 +5377,25 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'QA/CQA Initial Review Comments';
-        //     $history->previous = $lastDocument->qa_comments;
-        //     $history->current = $request->qa_review_comments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if ($lastDocument->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA/CQA Initial Review Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA/CQA Initial Review Comments';
+            $history->previous = $lastDocument->qa_comments;
+            $history->current = $request->qa_review_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
 
         // if ($lastDocument->qa_head != $request->qa_head) {
@@ -5757,46 +5741,53 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
 
 
-        if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA/CQA Initial Review Comments')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Initial Review Comments';
-            $history->previous = $review->qa_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if ($review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA/CQA Initial Review Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA/CQA Initial Review Comments';
+        //     $history->previous = $review->qa_comments;
+        //     $history->current = $request->qa_review_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
         if ($lastDocument->ra_tab_comments != $Cft->ra_tab_comments && $Cft->ra_tab_comments != null) {
+            // Check if an identical entry already exists to avoid repeating
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'RA Approval Comment')
+                ->where('previous', $lastDocument->ra_tab_comments)
+                ->where('current', $Cft->ra_tab_comments)
                 ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'RA Approval Comment';
-            $history->previous = $lastDocument->ra_tab_comments;
-            $history->current = $Cft->ra_tab_comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
+        
+            // Only add a new entry if an identical entry does not already exist
+            if (!$lastDocumentAuditTrail) {
+                $history = new RcmDocHistory;
+                $history->cc_id = $id;
+                $history->activity_type = 'RA Approval Comment';
+                $history->previous = $lastDocument->ra_tab_comments;
+                $history->current = $Cft->ra_tab_comments;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'New';
+                $history->save();
+            }
         }
-
+        
 
 
         if ($lastCft->RA_attachment_second != $cc_cfts->RA_attachment_second && $cc_cfts->RA_attachment_second != null) {
@@ -5913,11 +5904,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Quality Assurance Assessment')
+                ->where('activity_type', 'Impact Assessment (By Quality Assurance)')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Quality Assurance Assessment';
+            $history->activity_type = 'Impact Assessment (By Quality Assurance)';
             $history->previous = $lastCft->QualityAssurance_assessment;
             $history->current = $request->QualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -5994,11 +5985,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet/Capsule/Powder Required')
+                ->where('activity_type', 'roduction Tablet/Capsule/Powder Review Required')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Required';
+            $history->activity_type = 'roduction Tablet/Capsule/Powder Review Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -6074,11 +6065,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet/Capsule/Powder Completed By')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Review Completed By')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Completed By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Completed By';
             $history->previous = $lastCft->Production_Table_By;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -6094,11 +6085,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet/Capsule/Powder Completed On')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Review Completed On')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Completed On';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Completed On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -6115,11 +6106,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         /*************** Production Liquid ***************/
         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid/Ointment Required')
+                ->where('activity_type', 'Production Liquid/Ointment Review Required')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Required';
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -6155,11 +6146,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Impact Assessment (By Production Liquid)')
+                ->where('activity_type', 'Impact Assessment(By Production Liquid/Ointment)')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Impact Assessment (By Production Liquid)';
+            $history->activity_type = 'Impact Assessment(By Production Liquid/Ointment)';
             $history->previous = $lastCft->ProductionLiquid_assessment;
             $history->current = $request->ProductionLiquid_assessment;
             $history->comment = "Not Applicable";
@@ -6195,11 +6186,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid/Ointment Completed By')
+                ->where('activity_type', 'Production Liquid/Ointment Review Completed By')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Completed By';
+            $history->activity_type = 'Production Liquid/Ointment Review Completed By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -6215,11 +6206,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->ProductionLiquid_on != $Cft->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid/Ointment Completed On')
+                ->where('activity_type', 'Production Liquid/Ointment Review Completed On')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Completed On';
+            $history->activity_type = 'Production Liquid/Ointment Review Completed On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $Cft->ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -6278,11 +6269,11 @@ if ($lastCft->Production_Injection_Person != $request->Production_Injection_Pers
 
 if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Production Injection Assessment')
+        ->where('activity_type', 'Impact Assessment (By Production Injection)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Production Injection Assessment';
+    $history->activity_type = 'Impact Assessment (By Production Injection)';
     $history->previous = $lastCft->Production_Injection_Assessment;
     $history->current = $request->Production_Injection_Assessment;
     $history->comment = "Not Applicable";
@@ -6318,11 +6309,11 @@ if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Fe
 
 if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Production Injection Review By')
+        ->where('activity_type', 'Production Injection Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Production Injection Review By';
+    $history->activity_type = 'Production Injection Review Completed By';
     $history->previous = $lastCft->Production_Injection_By;
     $history->current = $request->Production_Injection_By;
     $history->comment = "Not Applicable";
@@ -6338,11 +6329,11 @@ if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $r
 
 if ($lastCft->Production_Injection_On != $Cft->Production_Injection_On && $request->Production_Injection_On != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Production Injection On')
+        ->where('activity_type', 'Production Injection Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Production Injection On';
+    $history->activity_type = 'Production Injection Review Completed On';
     $history->previous = $lastCft->Production_Injection_On;
     $history->current = $Cft->Production_Injection_On;
     $history->comment = "Not Applicable";
@@ -6399,11 +6390,11 @@ if ($lastCft->Store_person != $request->Store_person && $request->Store_person !
 
 if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Store Assessment')
+        ->where('activity_type', 'Impact Assessment (By Store)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Store Assessment';
+    $history->activity_type = 'Impact Assessment (By Store)';
     $history->previous = $lastCft->Store_assessment;
     $history->current = $request->Store_assessment;
     $history->comment = "Not Applicable";
@@ -6439,11 +6430,11 @@ if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feed
 
 if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Store Review By')
+        ->where('activity_type', 'Store Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Store Review By';
+    $history->activity_type = 'Store Review Completed By';
     $history->previous = $lastCft->Store_by;
     $history->current = $request->Store_by;
     $history->comment = "Not Applicable";
@@ -6459,11 +6450,11 @@ if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
 
 if ($lastCft->Store_on != $Cft->Store_on && $request->Store_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Store Review On')
+        ->where('activity_type', 'Store Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Store Review On';
+    $history->activity_type = 'Store Review Completed On';
     $history->previous = $lastCft->Store_on;
     $history->current = $Cft->Store_on;
     $history->comment = "Not Applicable";
@@ -6480,11 +6471,11 @@ if ($lastCft->Store_on != $Cft->Store_on && $request->Store_on != null) {
 // Quality Control
 if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Quality Control Required')
+        ->where('activity_type', 'Quality Control Review Required')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Control Required';
+    $history->activity_type = 'Quality Control Review Required';
     $history->previous = $lastCft->Quality_review;
     $history->current = $request->Quality_review;
     $history->comment = "Not Applicable";
@@ -6520,11 +6511,11 @@ if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $req
 
 if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Quality Control Assessment')
+        ->where('activity_type', 'Impact Assessment (By Quality Control)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Control Assessment';
+    $history->activity_type = 'Impact Assessment (By Quality Control)';
     $history->previous = $lastCft->Quality_Control_assessment;
     $history->current = $request->Quality_Control_assessment;
     $history->comment = "Not Applicable";
@@ -6560,11 +6551,11 @@ if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && 
 
 if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Quality Control By')
+        ->where('activity_type', 'Quality Control Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Control By';
+    $history->activity_type = 'Quality Control Review Completed By';
     $history->previous = $lastCft->Quality_Control_by;
     $history->current = $request->Quality_Control_by;
     $history->comment = "Not Applicable";
@@ -6580,11 +6571,11 @@ if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Qu
 
 if ($lastCft->Quality_Control_on != $Cft->Quality_Control_on && $request->Quality_Control_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Quality Control On')
+        ->where('activity_type', 'Quality Control Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Control On';
+    $history->activity_type = 'Quality Control Review Completed On';
     $history->previous = $lastCft->Quality_Control_on;
     $history->current = $Cft->Quality_Control_on;
     $history->comment = "Not Applicable";
@@ -6601,11 +6592,11 @@ if ($lastCft->Quality_Control_on != $Cft->Quality_Control_on && $request->Qualit
 // Research & Development
 if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Research & Development Required')
+        ->where('activity_type', 'Research & Development Review Required')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Research & Development Required';
+    $history->activity_type = 'Research & Development Review Required';
     $history->previous = $lastCft->ResearchDevelopment_Review;
     $history->current = $request->ResearchDevelopment_Review;
     $history->comment = "Not Applicable";
@@ -6641,11 +6632,11 @@ if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person
 
 if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Research & Development Assessment')
+        ->where('activity_type', 'Impact Assessment (By Research & Development)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Research & Development Assessment';
+    $history->activity_type = 'Impact Assessment (By Research & Development)';
     $history->previous = $lastCft->ResearchDevelopment_assessment;
     $history->current = $request->ResearchDevelopment_assessment;
     $history->comment = "Not Applicable";
@@ -6681,11 +6672,11 @@ if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feed
 
 if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Research & Development By')
+        ->where('activity_type', 'Research & Development Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Research & Development By';
+    $history->activity_type = 'Research & Development Review Completed By';
     $history->previous = $lastCft->ResearchDevelopment_by;
     $history->current = $request->ResearchDevelopment_by;
     $history->comment = "Not Applicable";
@@ -6701,11 +6692,11 @@ if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $req
 
 if ($lastCft->ResearchDevelopment_on != $Cft->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Research & Development On')
+        ->where('activity_type', 'Research & Development Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Research & Development On';
+    $history->activity_type = 'Research & Development Review Completed On';
     $history->previous = $lastCft->ResearchDevelopment_on;
     $history->current = $Cft->ResearchDevelopment_on;
     $history->comment = "Not Applicable";
@@ -6763,11 +6754,11 @@ if ($lastCft->Engineering_person != $request->Engineering_person && $request->En
 
 if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Engineering Assessment')
+        ->where('activity_type', 'Impact Assessment (By Engineering)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Engineering Assessment';
+    $history->activity_type = 'Impact Assessment (By Engineering)';
     $history->previous = $lastCft->Engineering_assessment;
     $history->current = $request->Engineering_assessment;
     $history->comment = "Not Applicable";
@@ -6803,11 +6794,11 @@ if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request
 
 if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Engineering Review By')
+        ->where('activity_type', 'Engineering Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Engineering Review By';
+    $history->activity_type = 'Engineering Review Completed By';
     $history->previous = $lastCft->Engineering_by;
     $history->current = $request->Engineering_by;
     $history->comment = "Not Applicable";
@@ -6823,11 +6814,11 @@ if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineerin
 
 if ($lastCft->Engineering_on != $Cft->Engineering_on && $request->Engineering_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Engineering Review On')
+        ->where('activity_type', 'Engineering Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Engineering Review On';
+    $history->activity_type = 'Engineering Review Completed On';
     $history->previous = $lastCft->Engineering_on;
     $history->current = $Cft->Engineering_on;
     $history->comment = "Not Applicable";
@@ -6884,11 +6875,11 @@ if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $reque
 
 if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Human Resource Assessment')
+        ->where('activity_type', 'Impact Assessment (By Human Resource)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Human Resource Assessment';
+    $history->activity_type = 'Impact Assessment (By Human Resource)';
     $history->previous = $lastCft->Human_Resource_assessment;
     $history->current = $request->Human_Resource_assessment;
     $history->comment = "Not Applicable";
@@ -6924,11 +6915,11 @@ if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $r
 
 if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Human Resource Review By')
+        ->where('activity_type', 'Human Resource Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Human Resource Review By';
+    $history->activity_type = 'Human Resource Review Completed By';
     $history->previous = $lastCft->Human_Resource_by;
     $history->current = $request->Human_Resource_by;
     $history->comment = "Not Applicable";
@@ -6944,11 +6935,11 @@ if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Huma
 
 if ($lastCft->Human_Resource_on != $Cft->Human_Resource_on && $request->Human_Resource_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Human Resource Review On')
+        ->where('activity_type', 'Human Resource Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Human Resource Review On';
+    $history->activity_type = 'Human Resource Review Completed On';
     $history->previous = $lastCft->Human_Resource_on;
     $history->current = $Cft->Human_Resource_on;
     $history->comment = "Not Applicable";
@@ -7005,11 +6996,11 @@ if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->
 
 if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Microbiology Assessment')
+        ->where('activity_type', 'Impact Assessment (By Microbiology)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Microbiology Assessment';
+    $history->activity_type = 'Impact Assessment (By Microbiology)';
     $history->previous = $lastCft->Microbiology_assessment;
     $history->current = $request->Microbiology_assessment;
     $history->comment = "Not Applicable";
@@ -7045,11 +7036,11 @@ if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $reque
 
 if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Microbiology Review By')
+        ->where('activity_type', 'Microbiology Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Microbiology Review By';
+    $history->activity_type = 'Microbiology Review Completed By';
     $history->previous = $lastCft->Microbiology_by;
     $history->current = $request->Microbiology_by;
     $history->comment = "Not Applicable";
@@ -7065,11 +7056,11 @@ if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbio
 
 if ($lastCft->Microbiology_on != $Cft->Microbiology_on && $request->Microbiology_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Microbiology Review On')
+        ->where('activity_type', 'Microbiology Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Microbiology Review On';
+    $history->activity_type = 'Microbiology Review Completed On';
     $history->previous = $lastCft->Microbiology_on;
     $history->current = $Cft->Microbiology_on;
     $history->comment = "Not Applicable";
@@ -7126,11 +7117,11 @@ if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $r
 
 if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Regulatory Affair Assessment')
+        ->where('activity_type', 'Impact Assessment (By Regulatory Affair)')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Regulatory Affair Assessment';
+    $history->activity_type = 'Impact Assessment (By Regulatory Affair)';
     $history->previous = $lastCft->RegulatoryAffair_assessment;
     $history->current = $request->RegulatoryAffair_assessment;
     $history->comment = "Not Applicable";
@@ -7166,11 +7157,11 @@ if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback &
 
 if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Regulatory Affair Review By')
+        ->where('activity_type', 'Regulatory Affair Review Completed By')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Regulatory Affair Review By';
+    $history->activity_type = 'Regulatory Affair Review Completed By';
     $history->previous = $lastCft->RegulatoryAffair_by;
     $history->current = $request->RegulatoryAffair_by;
     $history->comment = "Not Applicable";
@@ -7186,11 +7177,11 @@ if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->
 
 if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->RegulatoryAffair_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Regulatory Affair Review On')
+        ->where('activity_type', 'Regulatory Affair Review Completed On')
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Regulatory Affair Review On';
+    $history->activity_type = 'Regulatory Affair Review Completed On';
     $history->previous = $lastCft->RegulatoryAffair_on;
     $history->current = $Cft->RegulatoryAffair_on;
     $history->comment = "Not Applicable";
@@ -7249,11 +7240,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Corporate Quality Assurance Assessment')
+            ->where('activity_type', 'Impact Assessment (By Corporate Quality Assurance)')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Assessment';
+            $history->activity_type = 'Impact Assessment (By Corporate Quality Assurance)';
             $history->previous = $lastCft->CorporateQualityAssurance_assessment;
             $history->current = $request->CorporateQualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -7287,11 +7278,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Corporate Quality Assurance Review By')
+            ->where('activity_type', 'Corporate Quality Assurance Review Completed By')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review By';
+            $history->activity_type = 'Corporate Quality Assurance Review Completed By';
             $history->previous = $lastCft->CorporateQualityAssurance_by;
             $history->current = $request->CorporateQualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -7306,11 +7297,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->CorporateQualityAssurance_on != $Cft->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Corporate Quality Assurance Review On')
+            ->where('activity_type', 'Corporate Quality Assurance Review Completed On')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->activity_type = 'Corporate Quality Assurance Review Completed On';
             $history->previous = $lastCft->CorporateQualityAssurance_on;
             $history->current = $Cft->CorporateQualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -7365,11 +7356,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Safety Assessment')
+            ->where('activity_type', 'Impact Assessment (By Safety)')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Safety Assessment';
+            $history->activity_type = 'Impact Assessment (By Safety)';
             $history->previous = $lastCft->Health_Safety_assessment;
             $history->current = $request->Health_Safety_assessment;
             $history->comment = "Not Applicable";
@@ -7403,11 +7394,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Safety Review By')
+            ->where('activity_type', 'Safety Review Completed By')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Safety Review By';
+            $history->activity_type = 'Safety Review Completed By';
             $history->previous = $lastCft->Environment_Health_Safety_by;
             $history->current = $request->Environment_Health_Safety_by;
             $history->comment = "Not Applicable";
@@ -7422,11 +7413,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->Environment_Health_Safety_on != $Cft->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Safety Review On')
+            ->where('activity_type', 'Safety Review Completed On')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Safety Review On';
+            $history->activity_type = 'Safety Review Completed On';
             $history->previous = $lastCft->Environment_Health_Safety_on;
             $history->current = $Cft->Environment_Health_Safety_on;
             $history->comment = "Not Applicable";
@@ -7481,11 +7472,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->Information_Technology_assessment != $request->Information_Technology_assessment && $request->Information_Technology_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Information Technology Assessment')
+            ->where('activity_type', 'Impact Assessment (By Information Technology)')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Information Technology Assessment';
+            $history->activity_type = 'Impact Assessment (By Information Technology)';
             $history->previous = $lastCft->Information_Technology_assessment;
             $history->current = $request->Information_Technology_assessment;
             $history->comment = "Not Applicable";
@@ -7597,11 +7588,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Contract Giver Assessment')
+            ->where('activity_type', 'Impact Assessment (By Contract Giver)')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Contract Giver Assessment';
+            $history->activity_type = 'Impact Assessment (By Contract Giver)';
             $history->previous = $lastCft->ContractGiver_assessment;
             $history->current = $request->ContractGiver_assessment;
             $history->comment = "Not Applicable";
@@ -7635,11 +7626,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Contract Giver Review By')
+            ->where('activity_type', 'Contract Giver Review Completed By')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Contract Giver Review By';
+            $history->activity_type = 'Contract Giver Review Completed By';
             $history->previous = $lastCft->ContractGiver_by;
             $history->current = $request->ContractGiver_by;
             $history->comment = "Not Applicable";
@@ -7678,7 +7669,7 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Contract Giver Review On';
+            $history->activity_type = 'Contract Giver Review Completed On';
             $history->previous = $lastCft->ContractGiver_on;
             $history->current = $request->ContractGiver_on;
             $history->comment = "Not Applicable";
@@ -8584,8 +8575,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Final Review Attachments';
-            $history->previous = $lastCft->hod_final_review_attach;
-            $history->current = $Cft->hod_final_review_attach;
+            $history->previous =str_replace(',', ', ',  $lastCft->hod_final_review_attach);
+            $history->current =str_replace(',', ', ',  $Cft->hod_final_review_attach);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8727,6 +8718,44 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->save();
             // return $closure;
         }
+
+
+
+
+
+
+
+
+
+        if (!$areChangeClosureAttachSame) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'List Of Attachments')
+                ->exists();
+        
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'List Of Attachments';
+        
+            // Convert the previous and current lists to readable formats (JSON string or comma-separated)
+            $history->previous = str_replace(',', ', ', json_encode(json_decode($lastclosure->attach_list, true))) ?: "NULL";
+            $history->current = str_replace(',', ', ', json_encode(json_decode($closure->attach_list, true))) ?: "NULL";
+            
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastclosure->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastclosure->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
+
+
+
+
+
         /************ Change Closure Ends ************/
         return back();
     }
@@ -8969,12 +8998,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($review->qa_comments))
+                if (empty($review->qa_comments) || empty($updateCFT->QualityAssurance_person))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA/CQA Review Tab is yet to be filled'
+                        'message' => 'QA/CQA Review And CFT Tab Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -9116,7 +9145,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     $history = new RcmDocHistory();
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+    $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
 
     if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
         $history->previous = "";
@@ -9153,7 +9182,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     $history = new RcmDocHistory();
     $history->cc_id = $id;
-    $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+    $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
     if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
         $history->previous = "";
@@ -9186,7 +9215,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Engineering Completed By, Engineering Completed On';
+                            $history->activity_type = 'Engineering Review Completed By, Engineering Review Completed On';
                     if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == ''){
                         $history->previous = "";
                     }else{
@@ -9215,7 +9244,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Safety Completed By, Safety Completed On';
+                            $history->activity_type = 'Safety Review Completed By, Safety Review Completed On';
                     if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == ''){
                         $history->previous = "";
                     }else{
@@ -9244,7 +9273,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Human Resource Completed By, Human Resource Completed On';
+                            $history->activity_type = 'Human Resource Review Completed By, Human Resource Review Completed On';
                     if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == ''){
                         $history->previous = "";
                     }else{
@@ -9273,7 +9302,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                            $history->activity_type = 'Information Technology Review Completed By, Information Technology Review Completed On';
                     if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
                         $history->previous = "";
                     }else{
@@ -9301,7 +9330,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Others 1 Completed By, Others 1 Completed On';
+                            $history->activity_type = 'Others 1 Review  Completed By, Others 1 Review  Completed On';
                     if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == ''){
                         $history->previous = "";
                     }else{
@@ -9330,7 +9359,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Others 2 Completed By, Others 2 Completed On';
+                            $history->activity_type = 'Others 2 Review  Completed By, Others 2 Review  Completed On';
                     if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == ''){
                         $history->previous = "";
                     }else{
@@ -9360,7 +9389,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Others 3 Completed By, Others 3 Completed On';
+                            $history->activity_type = 'Others 3 Review  Completed By, Others 3 Review  Completed On';
                     if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == ''){
                         $history->previous = "";
                     }else{
@@ -9389,7 +9418,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-$history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
+$history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Completed On';
                     if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
                         $history->previous = "";
                     }else{
@@ -9417,7 +9446,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Others 5 Completed By, Others 5 Completed On';
+                            $history->activity_type = 'Others 5 Review  Completed By, Others 5 Review  Completed On';
                     if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == ''){
                         $history->previous = "";
                     }else{
@@ -9447,7 +9476,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $history->cc_id = $id;
                             $history->activity_type = 'Activity Log';
                             $history->previous = "";
-                            $history->action= 'CFT Review';
+                            $history->action= 'CFT Review Complete';
                             $history->current = $updateCFT->RA_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -9465,7 +9494,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                           $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                           $history->activity_type = 'Production Table Review  Completed By, Production Table Review  Completed On';
                     if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                         $history->previous = "";
                     }else{
@@ -9493,7 +9522,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Production Liquid Completed By, Production Liquid Completed On';
+                            $history->activity_type = 'Production Liquid Review  Completed By, Production Liquid Review  Completed On';
                     if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == ''){
                         $history->previous = "";
                     }else{
@@ -9522,7 +9551,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Production Injection Completed By, Production Injection Completed On';
+                            $history->activity_type = 'Production Injection Review  Completed By, Production Injection Review Completed On';
                     if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
                         $history->previous = "";
                     }else{
@@ -9551,7 +9580,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                           $history->activity_type = 'Stores Completed By, Stores Completed On';
+                           $history->activity_type = 'Stores Review  Completed By, Stores Review  Completed On';
                     if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == ''){
                         $history->previous = "";
                     }else{
@@ -9580,7 +9609,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Research & Development Completed By, Research & Development Completed On';
+                            $history->activity_type = 'Research & Development Review  Completed By, Research & Development Review  Completed On';
                     if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == ''){
                         $history->previous = "";
                     }else{
@@ -9609,7 +9638,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Microbiology Completed By, Microbiology Completed On';
+                            $history->activity_type = 'Microbiology Review  Completed By, Microbiology Review  Completed On';
                     if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == ''){
                         $history->previous = "";
                     }else{
@@ -9638,7 +9667,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Regulatory Affair Completed By, Regulatory Affair Completed On';
+                            $history->activity_type = 'Regulatory Affair Review  Completed By, Regulatory Affair Review  Completed On';
                     if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == ''){
                         $history->previous = "";
                     }else{
@@ -9668,7 +9697,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Corporate Quality Assurance Completed By, Corporate Quality Assurance Completed On';
+                            $history->activity_type = 'Corporate Quality Assurance Review  Completed By, Corporate Quality Assurance Review  Completed On';
                     if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == ''){
                         $history->previous = "";
                     }else{
@@ -9697,7 +9726,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->ContractGiver_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-                            $history->activity_type = 'Contract Giver Completed By, Contract Giver Completed On';
+                            $history->activity_type = 'Contract Giver Review  Completed By, Contract Giver Review  Completed On';
                     if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == ''){
                         $history->previous = "";
                     }else{
@@ -9836,7 +9865,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'QA Final Review Tab is yet to be filled'
+                            'message' => 'QA/CQA Final Review Tab is yet to be filled'
                         ]);
 
                         return redirect()->back();
@@ -9947,7 +9976,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
                 $changeControl->stage = "7";
-                $changeControl->status = "QA/CQA Head/Manager Designee Approval";
+                $changeControl->status = "QA/CQA Head / Designee Approval";
 
 
                 $changeControl->RA_review_completed_by = Auth::user()->name;
@@ -9981,47 +10010,47 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                        }
-                    // }
-                }
+                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $changeControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //         }
+                //     // }
+                // }
 
-                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                        }
-                    // }
-                }
+                // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $changeControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //         }
+                //     // }
+                // }
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -10328,7 +10357,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             if ($changeControl->stage == 5) {
                     $changeControl->stage = "7";
-                    $changeControl->status = "QA/CQA Head/Manager Designee Approval";
+                    $changeControl->status = "QA/CQA Head / Designee Approval";
                     $changeControl->QA_final_review_by = Auth::user()->name;
                     $changeControl->QA_final_review_on = Carbon::now()->format('d-M-Y');
                     $changeControl->QA_final_review_comment = $request->comments;
@@ -10533,22 +10562,17 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
             if ($changeControl->stage == 9) {
                 $changeControl->stage = "10";
-                $changeControl->status = "HOD Final Review";
-
-
+                $changeControl->status = "Pending Training Completion";
 
                 $comments->initiator_update_complete_by = Auth::user()->name;
                 $comments->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
                 $comments->initiator_update_complete_comment = $request->comments;
-
                 $comments->save();
-
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                $lastDocument = ChangeControlComment::find($id);
-                $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
+                $history->activity_type = 'Training Required By, Training Required On';
                 if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
                     $history->previous = "NULL";
                 } else {
@@ -10561,7 +10585,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->action_name = 'Update';
                 }
 
-                $history->action = 'Initiator Updated Complete';
+                $history->action = 'Pending Training Completion';
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -10594,93 +10618,89 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
 
                 $changeControl->update();
-
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
                 toastr()->success('Sent to HOD Final Review');
                 return back();
             }
 
-
-
             // if ($changeControl->stage == 9) {
-            //     $changeControl->stage = "10";
-            //     $changeControl->status = "HOD Final Review";
+            //     $changeControl->stage = "11";
+            //     $changeControl->status = "";
 
-            //    // Update the comment fields
-            // $comment->initiator_update_complete_by = Auth::user()->name;
-            // $comment->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
-            // $comment->initiator_update_complete_comment = $request->comments;
-            // $comment->save(); // Save the updated comment to the database
+            //     $comments->cc_id = $id;
 
-            // // Save the history
-
+            //     $comments->HOD_finalReview_complete_by = Auth::user()->name;
+            //     $comments->HOD_finalReview_complete_on = Carbon::now()->format('d-M-Y');
+            //     $comments->HOD_finalReview_complete_comment = $request->comments;
+            //     $comments->save();
             //     $history = new RcmDocHistory();
             //     $history->cc_id = $id;
-
             //     $lastDocument = ChangeControlComment::find($id);
-            //     $history->activity_type = 'Initiator Updated Complete By, Initiator Updated Complete On';
-            //     if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
+            //     $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
+            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_by === '') {
             //         $history->previous = "NULL";
             //     } else {
-            //         $history->previous = $lastDocument->initiator_update_complete_by . ' , ' . $lastDocument->initiator_update_complete_on;
+            //         $history->previous = $lastDocument->HOD_finalReview_complete_by . ' , ' . $lastDocument->HOD_finalReview_complete_on;
             //     }
-            //     $history->current = $comment->initiator_update_complete_by . ' , ' . $comment->initiator_update_complete_on;
-            //     if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_on === '') {
+            //     $history->current = $comments->HOD_finalReview_complete_by . ' , ' . $comments->HOD_finalReview_complete_on;
+            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_on === '') {
             //         $history->action_name = 'New';
             //     } else {
             //         $history->action_name = 'Update';
             //     }
 
-            //     $history->action = 'Initiator Updated Complete';
+            //     $history->action = 'HOD Final Review Complete';
             //     $history->comment = $request->comments;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to = "HOD Final Review";
+            //     $history->change_to = "Implementation Verification by QA";
             //     $history->change_from = $lastDocument->status;
             //     $history->stage = 'Plan Proposed';
             //     $history->save();
 
+            //     $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getUserEmail($u->user_id);
+            //                 if ($email !== null) {
+            //                     try {
+            //                         Mail::send(
+            //                             'mail.view-mail',
+            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                             function ($message) use ($email, $changeControl) {
+            //                                 $message->to($email)
+            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+            //                             }
+            //                         );
+            //                     } catch(\Exception $e) {
+            //                         info('Error sending mail', [$e]);
+            //                     }
+            //             }
+            //         // }
+            //     }
 
+            //     $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+            //     foreach ($list as $u) {
+            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getUserEmail($u->user_id);
+            //                 if ($email !== null) {
+            //                     try {
+            //                         Mail::send(
+            //                             'mail.view-mail',
+            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                             function ($message) use ($email, $changeControl) {
+            //                                 $message->to($email)
+            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+            //                             }
+            //                         );
+            //                     } catch(\Exception $e) {
+            //                         info('Error sending mail', [$e]);
+            //                     }
+            //             }
+            //         // }
+            //     }
 
-            //     //  $list = Helpers::getHodUserList();
-            //     //     foreach ($list as $u) {
-            //     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //     //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //     //              if ($email !== null) {
-            //     //               Mail::send(
-            //     //                   'mail.view-mail',
-            //     //                    ['data' => $changeControl],
-            //     //                 function ($message) use ($email) {
-            //     //                     $message->to($email)
-            //     //                         ->subject("Document is Send By".Auth::user()->name);
-            //     //                 }
-            //     //               );
-            //     //             }
-            //     //      }
-            //     //   }
-
-            //     $comment->update();
             //     $changeControl->update();
             //     $history = new CCStageHistory();
             //     $history->type = "Change-Control";
@@ -10702,9 +10722,12 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $history->status = $changeControl->status;
             //     $history->save();
             //     // Helpers::hodMail($changeControl);
-            //     toastr()->success('Sent to HOD Final Review');
+            //     toastr()->success('Sent to Implementation Verification by QA');
             //     return back();
             // }
+
+
+            
             if ($changeControl->stage == 10) {
                 $changeControl->stage = "11";
                 $changeControl->status = "Implementation Verification by QA";
@@ -10715,9 +10738,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $comments->HOD_finalReview_complete_on = Carbon::now()->format('d-M-Y');
                 $comments->HOD_finalReview_complete_comment = $request->comments;
                 $comments->save();
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
-                $lastDocument = ChangeControlComment::find($id);
                 $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
                 if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_by === '') {
                     $history->previous = "NULL";
@@ -10785,25 +10808,6 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
 
                 $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
                 // Helpers::hodMail($changeControl);
                 toastr()->success('Sent to Implementation Verification by QA');
                 return back();
@@ -10936,12 +10940,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             toastr()->error('E-signature Not match');
             return back();
         }
-
-
-
-
     }
-
 
 
     public function sentoPostImplementation(Request $request, $id)
@@ -12477,6 +12476,56 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         }
     }
 
+
+    public function TrainingRequired(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);           
+
+            $changeControl->stage = "11";
+            $changeControl->status = "Opened";
+            $changeControl->initiator_update_complete_by	 = Auth::user()->name;
+            $changeControl->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
+            $changeControl->initiator_update_complete_comment = $request->comments;
+
+            $history = new RcmDocHistory();
+            $history->cc_id = $id;
+
+            $history->activity_type = 'Initiator Update complete By,  Initiator Update complete On';
+            if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
+                $history->previous = "NULL";
+            } else {
+                $history->previous = $lastDocument->initiator_update_complete_by . ' , ' . $lastDocument->initiator_update_complete_on;
+            }
+            $history->current = $changeControl->initiator_update_complete_by . ' , ' . $changeControl->initiator_update_complete_on;
+            if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_on === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
+            $history->action = 'Initiator Update complete';
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Opened";
+            $history->change_from = $lastDocument->status;
+            $history->save();
+            $changeControl->update();
+        
+            toastr()->success('Document Sent');
+            return back();
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
     public function sendToInitialQA(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -12563,6 +12612,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
     public function stagecancel(Request $request, $id)
     {
+       
+        
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
@@ -13147,5 +13198,34 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $due_date = $formattedDate->format('d-M-Y');
 
         return view("frontend.forms.effectiveness-check", compact('due_date','parent_record','parent_id','parent_type', 'parent_name', 'record_number'));
+    }
+
+    public function getDocumentDetail($documentId)
+    {
+        $docdetail = Document::where('id', $documentId)->first();
+
+        // $sopIds = explode(',', $docdetail->sops);
+        // $sops = Document::whereIn('id', $sopIds)->get();
+
+        // $sopNumbers = $sops->map(function ($sop) {
+        //     return $sop->sop_type_short . '/' . 
+        //            $sop->department_id . '/000' . 
+        //            $sop->id . '/R' . 
+        //            $sop->major;
+        // });
+
+        if ($training) {
+            return response()->json([
+                'sop_type' => $docdetail->sop_type,
+                'doc_number' => $docdetail->id,
+                'created_at' => $training->created_at->format('d-M-Y'),
+            ]);
+        }
+
+        return response()->json([
+            'sop_type' => [],
+            'doc_number' => '',
+            'created_at' => '',
+        ]);
     }
 }

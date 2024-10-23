@@ -91,7 +91,6 @@ class EffectivenessCheckController extends Controller
         $openState->acknowledge_comment = $request->acknowledge_comment;
         $openState->qa_cqa_review_comment = $request->qa_cqa_review_comment;
         $openState->qa_cqa_approval_comment = $request->qa_cqa_approval_comment;
-        $openState->qa_cqa_review_Attachment = $request->qa_cqa_review_Attachment;
 
 
        // $openState->Cancellation_Category = $request->Cancellation_Category;
@@ -722,7 +721,6 @@ class EffectivenessCheckController extends Controller
         $openState->acknowledge_comment = $request->acknowledge_comment;
         $openState->qa_cqa_review_comment = $request->qa_cqa_review_comment;
         $openState->qa_cqa_approval_comment = $request->qa_cqa_approval_comment;
-        $openState->qa_cqa_review_Attachment = $request->qa_cqa_review_Attachment;
 
 
      //   $openState->Cancellation_Category = $request->Cancellation_Category;
@@ -1230,6 +1228,29 @@ class EffectivenessCheckController extends Controller
             $history->save();
         }
 
+        // if ($lastopenState->qa_cqa_review_Attachment != $openState->qa_cqa_review_Attachment || !empty ($request->comment)) {
+        //     // return 'history';
+        //     $history = new EffectivenessCheckAuditTrail;
+        //     $history->extension_id = $id;
+        //     $history->activity_type = 'QA/CQA Review Attachment';
+        //      $history->previous = $lastopenState->qa_cqa_review_Attachment;
+        //     $history->current = $openState->qa_cqa_review_Attachment;
+        //     $history->comment = $openState->att_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastopenState->status;
+        //     // $history->action_name = "Update";
+        //     if (is_null($lastopenState->qa_cqa_review_Attachment) || $lastopenState->qa_cqa_review_Attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
         if ($lastopenState->qa_cqa_review_Attachment != $openState->qa_cqa_review_Attachment || !empty ($request->comment)) {
             // return 'history';
             $history = new EffectivenessCheckAuditTrail;
@@ -1237,7 +1258,7 @@ class EffectivenessCheckController extends Controller
             $history->activity_type = 'QA/CQA Review Attachment';
              $history->previous = $lastopenState->qa_cqa_review_Attachment;
             $history->current = $openState->qa_cqa_review_Attachment;
-            $history->comment = $openState->att_comment;
+            $history->comment = $openState->test_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1252,6 +1273,7 @@ class EffectivenessCheckController extends Controller
             }
             $history->save();
         }
+        
         if ($lastopenState->Attachments != $openState->Attachments || !empty ($request->comment)) {
             // return 'history';
             $history = new EffectivenessCheckAuditTrail;
@@ -1349,42 +1371,61 @@ class EffectivenessCheckController extends Controller
 
                     $history->save();
 
-
-
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $effective->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             Mail::send(
-                    //                 'mail.view-mail',
-                    //                 ['data' => $effective],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Submitted By " . Auth::user()->name);
-                    //                 }
-                    //             );
-                    //         }
+                    // $list = Helpers::getHodUserList($effective->division_id);
+                    // $getMail = User::where('id', $effective->assign_to)->value('email');
+                    // $userIds = collect($list)->pluck('user_id')->toArray();
+                    // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    // // dd($users);5
+                    // $userId = $users->pluck('id')->implode(',');
+                    // if(!empty($users)){
+                    //     try {
+                    //         $history = new EffectivenessCheckAuditTrail();
+                    //         $history->extension_id = $id;
+                    //         $history->activity_type = "Not Applicable";
+                    //         $history->previous = "Not Applicable";
+                    //         $history->current = "Not Applicable";
+                    //         $history->action = 'Notification';
+                    //         $history->comment = "";
+                    //         $history->user_id = Auth::user()->id;
+                    //         $history->user_name = Auth::user()->name;
+                    //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    //         $history->origin_state = "Not Applicable";
+                    //         $history->change_to = "Not Applicable";
+                    //         $history->change_from = "Acknowledge";
+                    //         $history->stage = "";
+                    //         $history->action_name = "";
+                    //         $history->mailUserId = $userId;
+                    //         $history->role_name = "Initiator";
+                    //         $history->save(); 
+                    //     } catch (\Throwable $e) {
+                    //         \Log::error('Mail failed to send: ' . $e->getMessage());
                     //     }
                     // }
 
-                    $effective->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Effectiveness-Check";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $effective->stage;
-                    $history->status = $effective->status;
-                    $history->save();
-                    toastr()->success('Document Sent');
+                    // if($getMail !== null){
+                    //     try {
+                    //         Mail::send(
+                    //             'mail.view-mail',
+                    //             ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //             function ($message) use ($getMail,  $effective) {
+                    //                 $message->to($getMail)
+                    //                 ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                    //             }
+                    //         );
+                    //     } catch(\Exception $e) {
+                    //         info('Error sending mail', [$e]);
+                    //     }
+                    // }                  
 
+                    $effective->update();
+                    toastr()->success('Document Sent');
                     return back();
                 // }
             }
 
 
             if ($effective->stage == 2) {
+                // dd($effective->status);
 
                 if (!$effective->acknowledge_comment) {
 
@@ -1425,36 +1466,36 @@ class EffectivenessCheckController extends Controller
                     $effective->work_complition_comment = $request->comment;
 
 
-                            $history = new EffectivenessCheckAuditTrail();
-                            $history->extension_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $history->previous = "";
-                            // $history->current = $effective->submitted_by;
-                            $history->comment = $request->comment;
-                            $history->action = 'Acknowledge Complete';
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastopenState->status;
-                            $history->change_to =   "Work Completion";
-                            $history->change_from = $lastopenState->status;
-                            $history->action_name = 'Not Applicable';
-                            $history->stage = '3';
+                    $history = new EffectivenessCheckAuditTrail();
+                    $history->extension_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    // $history->current = $effective->submitted_by;
+                    $history->comment = $request->comment;
+                    $history->action = 'Acknowledge Complete';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastopenState->status;
+                    $history->change_to =   "Work Completion";
+                    $history->change_from = $lastopenState->status;
+                    $history->action_name = 'Not Applicable';
+                    $history->stage = '3';
 
-                            $history->activity_type = 'Acknowledge Complete by, Acknowledge Complete On';
-                            if (is_null($lastopenState->work_complition_by) || $lastopenState->work_complition_by === '') {
-                                $history->previous = "";
-                            } else {
-                                $history->previous = $lastopenState->work_complition_by . ' , ' . $lastopenState->work_complition_on;
-                            }
-                            $history->current = $effective->work_complition_by . ' , ' . $effective->work_complition_on;
-                            if (is_null($lastopenState->work_complition_by) || $lastopenState->work_complition_by === '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                    $history->activity_type = 'Acknowledge Complete by, Acknowledge Complete On';
+                    if (is_null($lastopenState->work_complition_by) || $lastopenState->work_complition_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastopenState->work_complition_by . ' , ' . $lastopenState->work_complition_on;
+                    }
+                    $history->current = $effective->work_complition_by . ' , ' . $effective->work_complition_on;
+                    if (is_null($lastopenState->work_complition_by) || $lastopenState->work_complition_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
 
-                            $history->save();
+                    $history->save();
 
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -1474,19 +1515,10 @@ class EffectivenessCheckController extends Controller
                 //      }
                 //   }
 
-                    $history = new CCStageHistory();
-                    $history->type = "Effectiveness-Check";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $effective->stage;
-                    $history->status = $effective->status;
-                    $history->save();
 
-
-                    $effective->update();
-                    toastr()->success('Document Sent');
-                    return back();
+                $effective->update();
+                toastr()->success('Document Sent');
+                return back();
 
                 // }
             }
@@ -1527,24 +1559,11 @@ class EffectivenessCheckController extends Controller
                     $effective->effectiveness_check_complete_by =  Auth::user()->name;
                     $effective->effectiveness_check_complete_on = Carbon::now()->format('d-M-Y');
                     $effective->effectiveness_check_complete_comment = $request->comment;
-                            // $history = new EffectivenessCheckAuditTrail();
-                            // $history->parent_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $history->previous = "";
-                            // $history->current = $effective->effective_by;
-                            // $history->comment = $request->comment;
-                            // $history->user_id = Auth::user()->id;
-                            // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            // $history->origin_state = $lastopenState->status;
-                            // $history->step = 'Effective';
-                            // $history->save();
+                            
 
                             $history = new EffectivenessCheckAuditTrail();
                             $history->extension_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $history->previous = "";
-                            // $history->current = $effective->submitted_by;
+                          
                             $history->comment = $request->comment;
                             $history->action = 'Complete';
                             $history->user_id = Auth::user()->id;
@@ -1569,25 +1588,58 @@ class EffectivenessCheckController extends Controller
                                 $history->action_name = 'Update';
                             }
 
+                            
+                            // $list = Helpers::getHodUserList($effective->division_id);
+                            // $userIds = collect($list)->pluck('user_id')->toArray();
+                            // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            // $userId = $users->pluck('id')->implode(',');
+                            // if(!empty($users)){
+                            //     try {
+                            //         $history = new EffectivenessCheckAuditTrail();
+                            //         $history->extension_id = $id;
+                            //         $history->activity_type = "Not Applicable";
+                            //         $history->previous = "Not Applicable";
+                            //         $history->current = "Not Applicable";
+                            //         $history->action = 'Notification';
+                            //         $history->comment = "";
+                            //         $history->user_id = Auth::user()->id;
+                            //         $history->user_name = Auth::user()->name;
+                            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            //         $history->origin_state = "Not Applicable";
+                            //         $history->change_to = "Not Applicable";
+                            //         $history->change_from ="HOD Review";
+                            //         $history->stage = "";
+                            //         $history->action_name = "";
+                            //         $history->mailUserId = $userId;
+                            //         $history->role_name = "Assigned To";
+                            //         $history->save(); 
+                            //     } catch (\Throwable $e) {
+                            //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                            //     }
+                            // }
+                            // foreach ($list as $u) {
+                            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            //         $email = Helpers::getUserEmail($u->user_id);
+                            //             if ($email !== null) {
+                            //             try {
+                            //                 Mail::send(
+                            //                     'mail.view-mail',
+                            //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Complete", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //                     function ($message) use ($email,  $effective) {
+                            //                         $message->to($email)
+                            //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete");
+                            //                     }
+                            //                 );
+                            //             } catch(\Exception $e) {
+                            //                 info('Error sending mail', [$e]);
+                            //             }
+                            //         }
+                            //     // }
+                            // }
+
                             $history->save();
 
-                //     $list = Helpers:: getQAUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $effective->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $effective],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+              
 
                     $effective->update();
                     $history = new CCStageHistory();
@@ -1642,19 +1694,6 @@ class EffectivenessCheckController extends Controller
                     $effective->hod_review_complete_by =  Auth::user()->name;
                     $effective->hod_review_complete_on = Carbon::now()->format('d-M-Y');
                     $effective->hod_review_complete_comment = $request->comment;
-                            // $history = new EffectivenessCheckAuditTrail();
-                            // $history->parent_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $history->previous = "";
-                            // $history->current = $effective->effective_by;
-                            // $history->comment = $request->comment;
-                            // $history->user_id = Auth::user()->id;
-                            // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            // $history->origin_state = $lastopenState->status;
-                            // $history->step = 'Effective';
-                            // $history->save();
-
                             $history = new EffectivenessCheckAuditTrail();
                             $history->extension_id = $id;
                             $history->activity_type = 'Activity Log';
@@ -1686,23 +1725,57 @@ class EffectivenessCheckController extends Controller
 
                             $history->save();
 
-                //     $list = Helpers:: getQAUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $effective->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $effective],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By ".Auth::user()->name);
-                //                 }
-                //               );
+                    
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "QA/CQA Review";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "HOD/Designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "HOD Review Complete", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
                 //             }
-                //      }
-                //   }
+                //         }
+                //     // }
+                // }
+
+                
+              
 
                     $effective->update();
                     $history = new CCStageHistory();
@@ -1744,9 +1817,6 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->previous = "";
-                // $history->current = $effective->submit_by; // Corrected variable name here
                 $history->comment = $request->comment;
                 $history->action = 'Effective'; // Corrected typo
                 $history->user_id = Auth::user()->id;
@@ -1771,6 +1841,55 @@ class EffectivenessCheckController extends Controller
                     $history->action_name = 'Update';
                 }
 
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from =  "QA/CQA Approval - Effective";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+              
                 $history->save();
 
                 $effective->update();
@@ -1793,7 +1912,7 @@ class EffectivenessCheckController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for Closed – Effective state'
+                        'message' => 'Sent for Closed  Effective state'
                     ]);
                 }
 
@@ -1834,6 +1953,55 @@ class EffectivenessCheckController extends Controller
 
                 $history->save();
 
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Closed - Effective";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA/Head/designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Effective Approval Completed", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Approval Completed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+             
                 $effective->update();
                 toastr()->success('Document Sent');
 
@@ -1852,18 +2020,143 @@ class EffectivenessCheckController extends Controller
                 $lastDocument = EffectivenessCheck::find($id);
 
                 if ($effective->stage == 1) {
-
                     $effective->stage = "0";
                     $effective->status = "Closed Cancelled";
                     $effective->closed_cancelled_by = Auth::user()->name;
                     $effective->closed_cancelled_on = Carbon::now()->format('d-M-Y');
                     $effective->closed_cancelled_comment = $request->comment;
-
-
-                    $effective->update();
-                    return back();
-                }
-
+                    
+                    $history = new EffectivenessCheckAuditTrail();
+                    $history->extension_id = $id;
+                    $history->comment = $request->comment;
+                    $history->action = 'Cancel'; // Corrected typo
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status; // Corrected variable name here
+                    $history->change_to = "Closed Cancelled";
+                    $history->change_from = $lastDocument->status; // Corrected variable name here
+                    $history->action_name = 'Not Applicable';
+                    $history->stage = '0';
+                    
+                    $history->activity_type = 'Cancel By, Cancel On';
+                    if (is_null($lastDocument->closed_cancelled_by) || $lastDocument->closed_cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->closed_cancelled_by . ' , ' . $lastDocument->closed_cancelled_on;
+                    }
+                    $history->current = $effective->closed_cancelled_by . ' , ' . $effective->closed_cancelled_on;
+                    if (is_null($lastDocument->closed_cancelled_by) || $lastDocument->closed_cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    
+                    $history->save();
+                    
+                //     $list = Helpers::getQAUserList($effective->division_id);
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new EffectivenessCheckAuditTrail();
+                //             $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Closed Cancelled";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "Initiator";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //         if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Cancel", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //         // }
+                //     }
+                    
+                    
+                //     $list = Helpers::getCQAUsersList($effective->division_id);
+                //     $userIds = collect($list)->pluck('user_id')->toArray();
+                //     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                //     $userId = $users->pluck('id')->implode(',');
+                //     if(!empty($users)){
+                //         try {
+                //             $history = new EffectivenessCheckAuditTrail();
+                //             $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Closed Cancelled";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "Initiator";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Cancel", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+                
+                
+                // dd("test");
+                $effective->update();
+                return back();
+            }
+            
 
             } else {
                 toastr()->error('E-signature Not match');
@@ -1908,9 +2201,6 @@ class EffectivenessCheckController extends Controller
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
-                // $history->activity_type = 'Activity Log';
-                // $history->previous = "";
-                // $history->current = $effective->submit_by; // Corrected variable name here
                 $history->comment = $request->comment;
                 $history->action = 'Not Effective'; // Corrected typo
                 $history->user_id = Auth::user()->id;
@@ -1935,6 +2225,56 @@ class EffectivenessCheckController extends Controller
                 }
 
                 $history->save();
+
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "QA/CQA Approval Not-Effective";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Not Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+            
 
                 $effective->update();
                 toastr()->success('Document Sent');
@@ -1995,6 +2335,55 @@ class EffectivenessCheckController extends Controller
 
                 $history->save();
 
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Closed - Not Effective";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA/Head/Designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Not Effective Approval Completed", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Approval Completed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+
                 $effective->update();
                 toastr()->success('Document Sent');
 
@@ -2046,23 +2435,7 @@ class EffectivenessCheckController extends Controller
                             $history->stage = '2';
                             $history->save();
 
-                //     $list = Helpers:: getQAUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $effective->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' =>  $effective],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+              
 
                 $effective->update();
                 $history = new CCStageHistory();
@@ -2080,7 +2453,7 @@ class EffectivenessCheckController extends Controller
 
             if ($effective->stage == 5) {
                 $effective->stage = '6';
-                $effective->status = 'Closed – Not Effective';
+                $effective->status = 'Closed Not Effective';
                 $effective->not_effective_approval_complete_by =  Auth::user()->name;
                 $effective->not_effective_approval_complete_on = Carbon::now()->format('d-M-Y');
                 $effective->not_effective_approval_complete_comment = $request->comment;
@@ -2108,7 +2481,7 @@ class EffectivenessCheckController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status; // Corrected variable name here
-                        $history->change_to = "Closed – Not Effective";
+                        $history->change_to = "Closed Not Effective";
                         $history->change_from = $lastopenState->status; // Corrected variable name here
                         $history->action_name = 'Not Applicable';
                         $history->stage = '6';
@@ -2162,6 +2535,58 @@ class EffectivenessCheckController extends Controller
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
                 $history->save();
+               
+                // $list = Helpers::getInitiatorUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Opened";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "Initiator";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+
+
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
+
+                
 
                 $effective->update();
                 $history = new CCStageHistory();
@@ -2198,9 +2623,56 @@ class EffectivenessCheckController extends Controller
                 $history->change_to = "HOD Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
-                // $history->stage = '6';
                 $history->save();
 
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "Work Completion";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "HOD/Designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
+
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
                 $effective->update();
                 $history = new CCStageHistory();
@@ -2239,8 +2711,58 @@ class EffectivenessCheckController extends Controller
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
                 $history->save();
+                
+                // $list = Helpers::getQAUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "QA/CQA Review";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA/Head/Designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
 
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
+              
+                
                 $effective->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -2316,7 +2838,56 @@ class EffectivenessCheckController extends Controller
                 // $history->stage = '6';
                 $history->save();
 
+               
+                // $list = Helpers::getInitiatorUserList($effective->division_id);
+                // $userIds = collect($list)->pluck('user_id')->toArray();
+                // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                // $userId = $users->pluck('id')->implode(',');
+                // if(!empty($users)){
+                //     try {
+                //         $history = new EffectivenessCheckAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = "Not Applicable";
+                //         $history->previous = "Not Applicable";
+                //         $history->current = "Not Applicable";
+                //         $history->action = 'Notification';
+                //         $history->comment = "";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = "Not Applicable";
+                //         $history->change_to = "Not Applicable";
+                //         $history->change_from = "QA/CQA Review";
+                //         $history->stage = "";
+                //         $history->action_name = "";
+                //         $history->mailUserId = $userId;
+                //         $history->role_name = "QA/CQA/Head/Designee";
+                //         $history->save(); 
+                //     } catch (\Throwable $e) {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
 
+
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email,  $effective) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
                 $effective->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -2453,7 +3024,10 @@ public function effectiveness_child(Request $request, $id)
     // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     if ($request->child_type == "capa-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
+        $Capachild = EffectivenessCheck::find($id);
+        $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'EC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
     }
 
 

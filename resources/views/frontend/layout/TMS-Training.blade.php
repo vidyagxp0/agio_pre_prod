@@ -157,13 +157,13 @@
  </header>
 
 
-    {{-- <div id="tms-head">
+    <div id="tms-head">
         <div class="head">Training Management System</div>
         <div class="link-list">
          
            
         </div>
-    </div> --}}
+    </div>
 
 {{-- ======================================
                     DASHBOARD

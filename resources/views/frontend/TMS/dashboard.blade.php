@@ -583,7 +583,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>S.No</th>
+                            <th>S.NO</th>
                             <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
