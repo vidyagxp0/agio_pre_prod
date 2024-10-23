@@ -11602,38 +11602,38 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Agenda">Submit By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Agenda">Submit On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Submit Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">Request for Cancellation</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="cancelled by">Request for Cancellation By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="cancelled on">Request for Cancellation On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Request for Cancellation Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11644,38 +11644,38 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Team">HOD Primary Review Complete By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Team">HOD Primary Review Complete On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">HOD Primary Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">Cancel</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="cancelled by">Cancel By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="cancelled on">Cancel On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Cancel Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11686,19 +11686,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Comments">CQA/QA Head Primary Review Complete By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">CQA/QA Head Primary Review Complete On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">CQA/QA Head Primary Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- Request More Info -->
@@ -11707,19 +11707,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IA Investigation By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IA Investigation On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IA Investigation Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11730,19 +11730,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IA HOD Review Complete By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IA HOD Review Complete On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IA HOD Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- Request More Info -->
@@ -11751,19 +11751,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Response Completed By"> Phase IA QA/CQA Review Complete By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Response Completed On">Phase IA QA/CQA Review Complete On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IA QA/CQA Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- Obvious Error Found -->
@@ -11771,38 +11771,38 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Assignable Cause Not Found By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Assignable Cause Not Found On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Assignable Cause Not Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- No Assignable Cause Found -->
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Assignable Cause Found By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Assignable Cause Found On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Assignable Cause Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11813,19 +11813,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IB Investigation By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IB Investigation On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IB Investigation Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- Request More Info -->
@@ -11834,19 +11834,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IB HOD Review Complete by</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Audit Attachments">Phase IB HOD Review Complete On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IB HOD Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11857,19 +11857,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase IB QA/CQA Review Complete By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase IB QA/CQA Review Complete On </label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase IB QA/CQA Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- No Assignable Cause Found (No Manufacturing Defect) -->
@@ -11877,19 +11877,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">P-I B Assignable Cause Not Found By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">P-I B Assignable Cause Not Found On </label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-I B Assignable Cause Not Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                      <!-- Request More Info -->
@@ -11897,19 +11897,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">P-I B Assignable Cause Found By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">P-I B Assignable Cause Found On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-I B Assignable Cause Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
 
@@ -11918,19 +11918,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A Investigation By</label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A Investigation On</label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II A Investigation Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
 
@@ -11940,19 +11940,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A HOD Review Complete By </label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A HOD Review Complete On </label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II A HOD Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
 
@@ -11961,19 +11961,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A QA/CQA Review Complete By </label>
-                            <div class=" static"></div>
+                            <div class=" static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Reference Recores">Phase II A QA/CQA Review Complete On </label>
-                            <div class="date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II A QA/CQA Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 <div>
@@ -11984,19 +11984,19 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="submitted by">P-II A Assignable Cause Not Found By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="submitted on">P-II A Assignable Cause Not Found On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-II A Assignable Cause Not Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <!-- Request More Info -->
@@ -12004,132 +12004,132 @@ $users = DB::table('users')
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by"> P-II A Assignable Cause Found By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on"> P-II A Assignable Cause Found On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-II A Assignable Cause Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">Phase II B Investigation</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by"> Phase II B Investigation By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on"> Phase II B Investigation On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II B Investigation Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">Phase II B HOD Review Complete</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by"> Phase II B HOD Review Complete By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on"> Phase II B HOD Review Complete On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II B HOD Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">Phase II B QA/CQA Review Complete</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by">Phase II B QA/CQA Review Complete By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on"> Phase II B QA/CQA Review Complete On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">Phase II B QA/CQA Review Complete Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">P-II B Assignable Cause Found</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by">P-II B Assignable Cause Not Found By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on">P-II B Assignable Cause Not Found On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-II B Assignable Cause Not Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by">P-II B Assignable Cause Found By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on">P-II B Assignable Cause Found On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P-II B Assignable Cause Found Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                     <div class="col-12 sub-head">P III Investigation Applicaion/Not Applicable</div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed by">P III Investigation Applicaion/Not Applicable By</label>
-                            <div class="static"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
                             <label for="completed on">P III Investigation Applicaion/Not Applicable On</label>
-                            <div class="Date"></div>
+                            <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
                         <label for="Submitted on">P III Investigation Applicaion/Not Applicable Comment</label>
-                        <div class="Date"></div>
+                        <div class="static">Not Applicable</div>
                        </div>
                     </div>
                 </div>
