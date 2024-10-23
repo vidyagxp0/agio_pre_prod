@@ -185,7 +185,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity</button>
 
             </div>
 
@@ -4582,7 +4582,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Submit By : </label>
-                                    Not Applicable
                                     <div class="static"></div>
 
                                 </div>
@@ -4591,8 +4590,6 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Submit On : </label>
-                                    Not Applicable
-
                                     <div class="Date"></div>
 
                                 </div>
@@ -4600,8 +4597,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Submit Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4609,8 +4604,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Complete Review By: </label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4618,8 +4611,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Complete Review On : </label>
-                                    Not Applicable
-
                                     <div class="date"></div>
 
                                 </div>
@@ -4627,16 +4618,12 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Complete Review Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Cancel By : </label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4644,8 +4631,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Cancel On : </label>
-                                    Not Applicable
-
                                     <div class="date"></div>
 
                                 </div>
@@ -4653,8 +4638,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Cancel Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4664,8 +4647,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Send to CFT By :</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4674,16 +4655,12 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Send to CFT On :</label>
-                                    Not Applicable
-
                                     <div class="date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Send to CFT Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4694,8 +4671,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">CFT Review Complete By :</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4704,16 +4679,12 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">CFT Review Complete On :</label>
-                                    Not Applicable
-
                                     <div class="date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">CFT Review Complete Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4722,8 +4693,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">QA/CQA Verification Complete By :</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4731,8 +4700,6 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">QA/CQA Verification Complete On :</label>
-                                    Not Applicable
-
 
                                     <div class="date"></div>
                                 </div>
@@ -4740,8 +4707,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">QA/CQA Verification Complete Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4771,8 +4736,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Approval Complete By : </label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4781,16 +4744,12 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Approval Complete On : </label>
-                                    Not Applicable
-
                                     <div class="date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Approval Complete Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -4798,8 +4757,6 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Initiator Group">Send Letter By : </label>
-                                    Not Applicable
-
                                     <div class="static"></div>
 
                                 </div>
@@ -4808,16 +4765,12 @@
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Send Letter On : </label>
-                                    Not Applicable
-
                                     <div class="date"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Send Letter Comment</label>
-                                    Not Applicable
-
                                     <div class="static"></div>
                                 </div>
                             </div>

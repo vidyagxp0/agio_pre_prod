@@ -611,7 +611,7 @@
 
                 <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
-
+                    
 
                 {{-- <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
@@ -1039,7 +1039,7 @@
                                             <label for="others">Others <span id="asteriskInviothers" style="display: none"
                                             class="text-danger">*</span></label>
 
-                                                <textarea class="tiny" name="others"
+                                                <textarea class="tiny" name="others" 
                                                     id="summernote-2"></textarea>
                                             </div>
 
@@ -1094,7 +1094,7 @@
                                         Facility/ Equipment/ Instrument/ System Details
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modalDEV"
+                                            data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1187,7 +1187,7 @@
                                         <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
 
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal1"
+                                            data-bs-target="#document-details-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1288,8 +1288,8 @@
                                             Product/Batch Details
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
-                                                <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal2"
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#product-batch-grid"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1652,7 +1652,7 @@
                                         <label for="HOD Remarks">HOD Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly oname="HOD_Remarks" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1664,7 +1664,7 @@
                                             <div class="file-attachment-list" id="Audit_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments"disabled name="Audit_file[]"
+                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
                                                     oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                             </div>
                                         </div>
@@ -1794,8 +1794,8 @@
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Deviation_category">Initial Deviation Category</label>
-                                        <select name="Deviation_category" id="Deviation_category"disabled
-                                            onchange="calculateDueDate()" >
+                                        <select name="Deviation_category" id="Deviation_category"
+                                            onchange="calculateDueDate()" required>
                                             <option value="0">-- Select -- </option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -1844,7 +1844,7 @@
                                             Categorization</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="Justification_for_categorization" id="summernote-5"></textarea>
+                                        <textarea class="tiny" name="Justification_for_categorization" id="summernote-5"></textarea>
                                     </div>
                                 </div>
 
@@ -1870,7 +1870,7 @@
                                         <label for="QAInitialRemark">QA/CQA Initial Remark</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="QAInitialRemark" id="summernote-7"></textarea>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1882,7 +1882,7 @@
                                             <div class="file-attachment-list" id="Initial_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile"disabled name="Initial_attachment[]"
+                                                <input type="file" id="myfile" name="Initial_attachment[]"
                                                     oninput="addMultipleFiles(this, 'Initial_attachment')" multiple
                                                     disabled>
                                             </div>
@@ -4301,19 +4301,19 @@
                                         <label for="HOD Remarks">QA/CQA Final Assessment Comment </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="qa_final_assement" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="qa_final_assement" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA/CQA Final Assessment Attachment</label>
+                                        <label for="Audit Attachments">QA/CQA Final Assessment Comment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_final_assement_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="pending_attachment" disabled name="qa_final_assement_attach[]"
+                                                <input type="file" id="pending_attachment" name="qa_final_assement_attach[]"
                                                     oninput="addMultipleFiles(this, 'qa_final_assement_attach')" multiple>
                                             </div>
                                         </div>
@@ -4354,7 +4354,7 @@
 
 
 
-
+                    
                     <div id="CCForm17" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -4365,7 +4365,7 @@
                                         <label for="HOD Remarks">QA/CQA Head/Designee Approval comment </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="qa_head_designe_comment" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="qa_head_designe_comment" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -4377,7 +4377,7 @@
                                             <div class="file-attachment-list" id="qa_head_designee_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="pending_attachment"disabled name="qa_head_designee_attach[]"
+                                                <input type="file" id="pending_attachment" name="qa_head_designee_attach[]"
                                                     oninput="addMultipleFiles(this, 'qa_head_designee_attach')" multiple>
                                             </div>
                                         </div>
@@ -5527,7 +5527,7 @@
                                         <label for="HOD Remarks">Pending Initiator Update Comments </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="Pending_initiator_update" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="Pending_initiator_update" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -5539,7 +5539,7 @@
                                             <div class="file-attachment-list" id="Audit_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file"disabled id="pending_attachment" name="Audit_file[]"
+                                                <input type="file" id="pending_attachment" name="Audit_file[]"
                                                     oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                             </div>
                                         </div>
@@ -5585,7 +5585,7 @@
                                         <label for="HOD Remarks">HOD Final Review Comments </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="hod_final_review" id="summernote-4"></textarea>
+                                        <textarea class="tiny" name="hod_final_review" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -5597,7 +5597,7 @@
                                             <div class="file-attachment-list" id="Audit_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file"disabled id="hod_final_attachment" name="Audit_file[]"
+                                                <input type="file" id="hod_final_attachment" name="Audit_file[]"
                                                     oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                             </div>
                                         </div>
@@ -5652,7 +5652,7 @@
                                         <label for="QA Feedbacks">QA/CQA Implementation Verification</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="QA_Feedbacks" id="summernote-14">
+                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">
                                     </textarea>
                                     </div>
                                 </div>
@@ -5665,7 +5665,7 @@
                                             <div class="file-attachment-list" id="QA_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file"disabled id="myfile" name="QA_attachments[]"
+                                                <input type="file" id="myfile" name="QA_attachments[]"
                                                     oninput="addMultipleFiles(this, 'QA_attachments')" multiple>
                                             </div>
                                         </div>
@@ -5724,20 +5724,20 @@
                                             Category</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"disabled name="Investigation_Of_Review" id="summernote-13">
+                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">
                                     </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks">Head QA/CQA / Designee Closure Approval Comments</label>
-                                        <textarea class="tiny"disabled name="Closure_Comments" id="summernote-15"></textarea>
+                                        <textarea class="tiny" name="Closure_Comments" id="summernote-15"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Disposition of Batch</label>
-                                        <textarea class="tiny"disabled name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="tiny" name="Disposition_Batch" id="summernote-16"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -5750,7 +5750,7 @@
                                             <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file"disabled id="myfile" name="closure_attachment[]"
+                                                <input type="file" id="myfile" name="closure_attachment[]"
                                                     oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                             </div>
                                         </div>
@@ -5799,41 +5799,41 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">Submit By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">Submit On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit comment">Submit Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
-
+                               
 
 
                                 <div class="sub-head">HOD Review Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Review Complete By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On">HOD Review Complete On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Review Comment">HOD Review Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -5841,19 +5841,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Request For Cancellation By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Request For Cancellation On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Approved Comments">Request For Cancellation Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class=""></div>
                                     </div>
                                 </div>
 
@@ -5863,42 +5863,42 @@
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA/CQA Initial Review Comment">QA/CQA Initial Review Complete
                                             Comment:-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
-
+                               
                                 <div class="sub-head">CFT Review Complete</div>
 
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">CFT Review Complete Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -5907,42 +5907,42 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">CFT Review Not Required By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">CFT Review Not Required On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">CFT Review Not Required Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
-
+                              
                                 <div class="sub-head"> QA/CQA Final Assessement Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Complete By">QA/CQA Final Assessement Complete By
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Complete On">QA/CQA Final Assessement Complete On
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA/CQA Final Review Comment">QA/CQA Final Assessement Complete Comment
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="sub-head"> Approved</div>
@@ -5950,19 +5950,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Approved By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Approved On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approved Comment">Approved Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -5972,19 +5972,19 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">Initiator Update Complete Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -5996,77 +5996,77 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="CFT Review Comment">HOD Final Review Complete Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Implementation Verification Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Implementation Verification Complete By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Implementation Verification Complete On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="Approved Comment">Implementation Verification Complete Comment
                                             :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class=""></div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Closure Approved</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Closure Approved By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Closure Approved On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Approved Comment">Closure Approved Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class=""></div>
                                     </div>
                                 </div>
                                 <div class="sub-head">Cancel</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved By">Cancel By :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Approved On">Cancel On :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="Approved Comment">Cancel Comment :-</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class=""></div>
                                     </div>
                                 </div>
 

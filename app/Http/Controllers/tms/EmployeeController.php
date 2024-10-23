@@ -1960,8 +1960,7 @@ class EmployeeController extends Controller
                 $lastEmployee = Employee::find($id);
 
                 $decryptedPassword = "Agio_emp";
-                // $decryptedPassword = Crypt::decryptString($employee->email_password);
-
+                // $randomPassword = Str::random(6);
 
                 if ($employee->stage == 1) {
                     $employee->stage = "2";
@@ -1984,17 +1983,18 @@ class EmployeeController extends Controller
                     $history->stage = 'Submited';
                     $employee->update();
 
-                    // try {
-                    //     Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'decryptedPassword' => $decryptedPassword], function ($message) use ($employee) {
-                    //         $message->to($employee->email)
-                    //                 ->subject('Your Employee Credentials');
-                    //     });
-                    //     return redirect()->back()->with('success', 'Mail sent successfully!');
-                        
-                    // } catch (\Exception $e) {
-                    //     return redirect()->back()->with('error', 'Failed to send email: ' . $e->getMessage());
-                    // }
-                    
+                    // Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee], function ($message) use ($employee) {
+                    //     $message->to($employee->email)
+                    //         ->subject('Your Employee Credentials');
+                    // });
+
+                
+                    // Send the decrypted password via email
+                    // Mail::send('frontend.TMS.Employee.employee_credentials', ['employee' => $employee, 'decryptedPassword' => $decryptedPassword], function ($message) use ($employee) {
+                    //     $message->to($employee->email)
+                    //         ->subject('Your Employee Credentials');
+                    // });
+
                     toastr()->success('Employee Sent Successflly !');
 
                     return back();

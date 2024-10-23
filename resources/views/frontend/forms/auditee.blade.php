@@ -3639,19 +3639,19 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Audit Details Summary By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Audit Details Summary On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Audit Details Summary Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3661,20 +3661,20 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancel On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Cancel Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3686,21 +3686,21 @@
                                     <div class="group-input">
                                         <label for="Audit Preparation Completed By">Summary and Response Complete
                                             By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Summary and Response Complete  On">Summary and Response Complete
                                             On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Summary and Response Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3712,20 +3712,20 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required By">CFT Review Not Required By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required On">CFT Review Not Required On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">CFT Review Not Required Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3738,20 +3738,20 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required By">CFT Review Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required On">CFT Review Complete On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">CFT Review Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3764,20 +3764,20 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required By">Send to Opened By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required On">Send to Opened On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Send to Opened Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -3789,20 +3789,20 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required By">Approval Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required On">Approval Complet eOn</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Approval Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 

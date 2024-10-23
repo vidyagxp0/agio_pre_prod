@@ -15,18 +15,6 @@
         $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')->get();
         // dd ($userIds,$userNames, $userDetails);
     @endphp
-     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
- @if (Session::has('swal'))
-     <script>
-         swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
-             "{{ Session::get('swal')['type'] }}")
-     </script>
- @endif
-
     <style>
         textarea.note-codable {
             display: none !important;
@@ -287,7 +275,7 @@
                                 <div class="active">In Approved</div>
                             @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
                                 <div style="display: none" class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 5 || $extensionNew->count_data == "number" || $extensionNew->count == 3)
+                            @elseif($extensionNew->stage == 5 || $extensionNew->count == "number" || $extensionNew->parent_type == 'number' || $extensionNew->count == 3)
                                 <div class="" style="display: none;">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
@@ -306,7 +294,7 @@
                                 <div class="" style="display: none"> Closed - Reject</div>
                             @elseif($extensionNew->count == 3 && $extensionNew->parent_type != null)
                                 <div class="" style="display: none"> Closed - Reject</div>
-                            @elseif($extensionNew->stage >= 6 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3)
+                            @elseif($extensionNew->stage >= 6 || $extensionNew->count == 'number' || $extensionNew->data_number == 3)
                                 <div class="" style="display: none; border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @else
                                 <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>    
@@ -321,7 +309,7 @@
                             @elseif(($extensionNew->stage_hide == 'stage-6' && $extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->stage_hide == "stage-6")
                             <div class="" style="display: none;"> In CQA Approval</div>
                             <div class="" style="display: none; border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
+                            @elseif($extensionNew->count == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
                                 <div class=""> In CQA Approval</div>
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @endif
@@ -343,13 +331,11 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
 
-                @if ($extensionNew->data_number == 3)
-                <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
-                @elseif($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                @if($extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count == 'number' || $extensionNew->count == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
                 @endif
 
@@ -385,7 +371,7 @@
                                         <input disabled type="text" name="site_location" id="site_location"
                                             value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}">
                                         <input type="hidden" name="site_location_code" id="site_location_code"
-                                            value="{{ $extensionNew->site_location_code }}">
+                                            value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
@@ -394,7 +380,7 @@
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <input type="hidden" value="{{ Auth::user()->name }}" name="initiator" id="initiator"> --}}
                                         <input disabled type="text" name="initiator" id="initiator"
-                                            value="{{ Helpers::getInitiatorName($extensionNew->initiator) }}">
+                                            value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 @php
@@ -457,29 +443,28 @@
                                             Extension Number<span class="text-danger"></span>
                                         </label>
                                             @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
-                                            <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
+                                            <select name="count" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
                                                 <option value="">--Select Extension Number--</option>
-                                                <option value="number1" @if ($extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
-                                                <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
-                                                <option value="number" @if ($extensionNew->count_data == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
+                                                <option value="number1" @if ($extensionNew->count == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
+                                                <option value="number2" @if ($extensionNew->count == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
+                                                <option value="number" @if ($extensionNew->count == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
                                             @else
-                                                <!-- <select name="count" id="" disabled>
+                                                <select name="count" id="" disabled {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
                                                 <option value="" >--Select Extension Number--</option>
                                                 <option value="1" @if ($extensionNew->count == '1') selected @endif>1</option>
                                                 <option value="2" @if ($extensionNew->count == '2') selected @endif>2</option>
                                                 <option value="3" @if ($extensionNew->count == '3' || $extensionNew->count == 'number') selected @endif>3</option>
-                                                </select> -->
-                                                <input type="text" name="count" value="{{ $extensionNew->count }}" readonly>
+                                                </select>
                                             @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">HOD Review <span class="text-danger">*</span></label>
+                                        <label for="Assigned To">HOD Review</label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }} Required>
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
                                             @if (!empty(Helpers::getHODDropdown()))
                                                 @foreach (Helpers::getHODDropdown() as $listHod)
@@ -576,8 +561,8 @@
                                             <input readonly type="text" name="related_records"
                                                 value="{{ $extensionNew->related_records }}">
                                         @else
-                                            <input type="text" name="related_records_edits"
-                                                value="{{ $extensionNew->related_records_edits }}">
+                                            <input type="text" name="related_records"
+                                                value="{{ $extensionNew->related_records }}">
                                         @endif
                                     </div>
                                 </div>
@@ -611,18 +596,16 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">QA/CQA Approval <span
-                                        class="text-danger">*</span></label>
+                                        <label for="Assigned To">QA/CQA Approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }} required>
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
 
                                             @if (!empty($users))
                                                 @foreach ($users as $lan)
                                                     <option value="{{ $lan->id }}"
-                                                        @if ($lan->id == $extensionNew->approvers) selected @endif
-                                                        >
+                                                        @if ($lan->id == $extensionNew->approvers) selected @endif>
                                                         {{ $lan->name }}
                                                     </option>
                                                 @endforeach
@@ -801,7 +784,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">HOD Remarks @if($extensionNew->stage == 2)<span class="text-danger">*</span>@endif</label>
+                                    <label for="Assigned To">HOD Remarks</label>
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"
                                         {{ $extensionNew->stage == 2 ? '' : 'readonly' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
                                 </div>
@@ -907,13 +890,13 @@
                     </div>
                 </div>
                 <!-- Approver-->
-                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                @if( $extensionNew->count == 'number1' || $extensionNew->count == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">QA/CQA Approval Comments @if($extensionNew->stage == 3)<span class="text-danger">*</span>@endif </label>
+                                    <label for="Assigned To">QA/CQA Approval Comments</label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
                                         {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
@@ -974,13 +957,13 @@
                 </div>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count == 'number' || $extensionNew->count == 3)
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">CQA Approval Comments @if($extensionNew->stage == 5)<span class="text-danger">*</span>@endif</label>
+                                    <label for="Assigned To">CQA Approval Comments</label>
                                     <textarea name="QAapprover_remarks" id="QAapprover_remarks" cols="30"
                                         {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->QAapprover_remarks }}</textarea>
                                 </div>

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
-use App\Http\Controllers\InductionTrainingcontroller;
+use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\JobDescriptionController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -75,11 +75,11 @@ Route::group(['prefix' => 'rcms'], function () {
             // Route::get('auditDetailsEmployee/{id}', [EmployeeController::class, 'auditDetailsEmployee'])->name('employeeauditDetails');
             Route::get('job_traineeaudittrail/{id}', [JobTrainingController::class, 'jobAuditTrial'])->name('job_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [JobTrainingController::class, 'auditDetailsJobTrainee'])->name('jobTraineeauditDetails');
-            Route::get('induction_traineeaudittrail/{id}', [InductionTrainingcontroller::class, 'inductionAuditTrial'])->name('induction_audittrail');
-            Route::get('induction_report/{id}', [InductionTrainingcontroller::class, 'inductionReport'])->name('induction_report');
-            // Route::get('auditDetailsEmployee/{id}', [InductionTrainingcontroller::class, 'auditDetailsInduction'])->name('InductionauditDetails');
+            Route::get('induction_traineeaudittrail/{id}', [InductionTrainingController::class, 'inductionAuditTrial'])->name('induction_audittrail');
+            Route::get('induction_report/{id}', [InductionTrainingController::class, 'inductionReport'])->name('induction_report');
+            // Route::get('auditDetailsEmployee/{id}', [InductionTrainingController::class, 'auditDetailsInduction'])->name('InductionauditDetails');
             Route::post('employee_Child/{id}', [EmployeeController::class, 'Employee_Child'])->name('employee.child');
-            Route::post('job_training_Child/{id}', [InductionTrainingcontroller::class, 'Induction_Child'])->name('induction.child');
+            Route::post('job_training_Child/{id}', [InductionTrainingController::class, 'Induction_Child'])->name('induction.child');
 
             Route::resource('CC', CCController::class);
             Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
@@ -152,7 +152,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             //----------------------------------------------By Pankaj-----------------------
 
-            Route::post('audit', action: [InternalauditController::class, 'create'])->name('createInternalAudit');
+            Route::post('audit', [InternalauditController::class, 'create'])->name('createInternalAudit');
             Route::get('internalAuditShow/{id}', [InternalauditController::class, 'internalAuditShow'])->name('showInternalAudit');
             Route::post('update/{id}', [InternalauditController::class, 'update'])->name('updateInternalAudit');
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
@@ -473,8 +473,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
-            Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
-            Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
             
 
         }

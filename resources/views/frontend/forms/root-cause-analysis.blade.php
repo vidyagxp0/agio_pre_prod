@@ -1974,33 +1974,33 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="acknowledge_by">Acknowledge By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="acknowledge_on">Acknowledge On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="ack_comments">Acknowledge Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Mgr.more Info Reqd By">More Info Req.wff
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_ack_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
 
@@ -2008,40 +2008,40 @@
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_ack_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD_Review_Complete_On">HOD Review Complete On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">HOD Review Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hrc_by">More Info Req.
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hrc_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2049,39 +2049,39 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hrc_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">QA/CQA Review Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_qac_by">More Info Req.
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_qac_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2089,39 +2089,39 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_qac_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="submitted_by">Submit By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="submitted_on">Submit On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments"> Submit Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_sub_by">More Info Req.
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_sub_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2129,40 +2129,40 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_sub_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments"> HOD Final Review Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_by">More Info Req.
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2170,25 +2170,25 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments">Final QA/CQA Review Complete Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2196,14 +2196,14 @@
                                     <div class="group-input">
                                         <label for="qA_review_complete_by">More Info Req.
                                             By</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_on">More Info Req.
                                             On</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
@@ -2211,46 +2211,46 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_comment">Comments</label>
-                                        <div class=""></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="evaluation_complete_on">QAH/CQAH Closure On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="evalution_Closure_comment"> QAH/CQAH Closure Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancel On</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comments"> Cancel Comment</label>
-                                        <div class="">Not Applicable</div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                             </div>
