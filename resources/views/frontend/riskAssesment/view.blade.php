@@ -637,7 +637,7 @@
                                                 <option {{ $data->type == 'Customer Related' ? 'selected' : '' }} value="Customer Related">Customer-Related Risk (Complaint)</option>
                                                 <option {{ $data->type == 'Opportunity' ? 'selected' : '' }} value="Opportunity">Opportunity</option>
                                                 <option {{ $data->type == 'Market' ? 'selected' : '' }} value="Market">Market</option>
-                                                <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational Risk">Operational Risk</option>
+                                                <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational_Risk">Operational Risk</option>
                                                 <option {{ $data->type == 'Strategic Risk' ? 'selected' : '' }} value="Strategic Risk">Strategic Risk</option>
                                                 <option {{ $data->type == 'Other Data' ? 'selected' : '' }} value="Other Data"> Other</option>
                                             </select>
