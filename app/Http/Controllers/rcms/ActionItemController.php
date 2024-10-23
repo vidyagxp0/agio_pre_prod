@@ -663,17 +663,18 @@ class ActionItemController extends Controller
 
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $data = ActionItem::find($id);
-        $due_date_data = LabIncident::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = Capa::where('id', $data->parent_id)->value('due_date');
-        // $due_date_data = RiskManagement::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = OOS::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = OutOfCalibration::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = Auditee::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = MarketComplaint::where('id', $data->parent_id)->value('due_date');
-        // $due_date_data = ManagementReview::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = CC::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = InternalAudit::where('id', $data->parent_id)->value('due_date');
-        $due_date_data = Observation::where('id', $data->parent_id)->value('due_date');
+        $due_date_data = LabIncident::where('id', $data->parent_id)->value('due_date') ??
+        Capa::where('id', $data->parent_id)->value('due_date') ??
+        OOS::where('id', $data->parent_id)->value('due_date') ??
+        OutOfCalibration::where('id', $data->parent_id)->value('due_date') ??
+        Auditee::where('id', $data->parent_id)->value('due_date') ??
+        MarketComplaint::where('id', $data->parent_id)->value('due_date_gi') ??
+        CC::where('id', $data->parent_id)->value('due_date') ??
+        InternalAudit::where('id', $data->parent_id)->value('due_date') ??
+        Observation::where('id', $data->parent_id)->value('due_date');
+
+// Use null coalescing operator (??) to stop at the first non-null value.
+
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         // $taskdetails = Taskdetails::where('cc_id', $id)->first();

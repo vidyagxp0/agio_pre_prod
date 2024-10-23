@@ -683,10 +683,10 @@
                                                 <label for="RLS Record Number"><b>Reference Records</b></label>
                                                 @if($data->parent_record_number)
                                                 <input readonly type="text" name="parent_record_number"
-                                                    value="{{ $data->parent_record_number }}">
+                                                    value="{{ $data->parent_record_number }}" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
                                                 @else
                                                 <input type="text" name="parent_record_number_edit"
-                                                value="{{ $data->parent_record_number_edit }}">
+                                                value="{{ $data->parent_record_number_edit }}" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
                                                 @endif
                                             </div>
                                         </div>
