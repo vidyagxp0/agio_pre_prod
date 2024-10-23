@@ -286,7 +286,7 @@
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div>
-                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                            <small class="text-primary"></small>
                                         </div>
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->

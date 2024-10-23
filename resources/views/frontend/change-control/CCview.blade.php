@@ -613,8 +613,7 @@
                                                 <div class="group-input input-date">
                                                     <label for="Due Date"> Due Date</label>
                                                     <div>
-                                                        <small class="text-primary">If revising Due Date, kindly mention the revision
-                                                            reason in the "Due Date Extension Justification" data field.</small>
+                                                        <small class="text-primary"></small>
                                                     </div>
                                                     <div class="calenderauditee">
                                                         @php
@@ -6960,7 +6959,7 @@
 
 
 
-                                    <div class="sub-head">
+                                <div class="sub-head">
                                     Other's 1 (Additional Person Review From Departments If Required)
                                 </div>
 
@@ -7035,6 +7034,41 @@
                                         <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div> -->
+
+
+
+                                <div class="col-12 other1_reviews ">
+                                        <div class="group-input">
+                                            <label for="Audit Attachments">Other's 1 Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="Other1_attachment">
+                                                    @if ($data1->Other1_attachment)
+                                                        @foreach (json_decode($data1->Other1_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="Other1_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 <div class="col-md-6 mb-3 other1_reviews">
                                     <div class="group-input">
@@ -9475,7 +9509,7 @@
                             @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
-                                    Capa
+                                    CAPA
                                 </label>
                                 @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
@@ -9543,7 +9577,7 @@
                             <div>
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
-                                    Capa
+                                    CAPA
                                 </label>
 
                             </div>
