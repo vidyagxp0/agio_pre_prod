@@ -1052,7 +1052,7 @@
                                 <div class="sub-head">
                                     HOD/Designee
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Selection</label>
                                         <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers"
@@ -1065,7 +1065,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">

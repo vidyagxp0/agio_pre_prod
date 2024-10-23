@@ -1505,7 +1505,7 @@
                                 <div class="sub-head">
                                     HOD/Designee
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Selection <span class="text-danger"></span></label>
                                         <select multiple name="reviewer_person_value[]"
@@ -1525,7 +1525,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         @if ($data->stage == 2)
