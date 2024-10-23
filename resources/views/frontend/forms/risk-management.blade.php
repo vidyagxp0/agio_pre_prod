@@ -3451,20 +3451,20 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Submitted By..">Submit By:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Submitted On">Submit On:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Submit Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static"> Not Applicable</div>
                                         </div>
                                     </div>
 
@@ -3475,20 +3475,20 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Evaluated By">HOD Review Complete By:</label>
-                                            <div class="static"></div>
+                                            <div class="static"> Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Evaluated On">HOD Review Complete On:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not applicable </div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">HOD Review Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
 
@@ -3499,19 +3499,19 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved By">CFT Review Complete By:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not applicable </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved On">CFT Review Complete On:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">CFT Review Complete Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
 
@@ -3522,19 +3522,19 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved By">QA/CQA Review Complete By:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved On">QA/CQA Review Complete On:</label>
-                                            <div class="static"></div>
+                                            <div class="static"> Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">QA/CQA Review Complete Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static"> Not Applicable</div>
                                         </div>
                                     </div>
 
@@ -3545,19 +3545,19 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved By">Approved By:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved On">Approved On:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Approved Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
 
@@ -3591,19 +3591,19 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved By">Cancel By:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Plan Approved On">Cancel On:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Cancel Comment:</label>
-                                            <div class="static"></div>
+                                            <div class="static">Not Applicable</div>
                                         </div>
                                     </div>
                                 </div>

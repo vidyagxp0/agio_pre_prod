@@ -533,6 +533,7 @@ class DeviationController extends Controller
         $data3 = new DeviationGrid();
         $data3->deviation_grid_id = $deviation->id;
         $data3->type = "Deviation";
+
         if (!empty($request->facility_name)) {
             $data3->facility_name = serialize($request->facility_name);
         }
@@ -544,6 +545,68 @@ class DeviationController extends Controller
             $data3->Remarks = serialize($request->Remarks);
         }
         $data3->save();
+        $fieldNames = [
+            'facility_name' => 'Document facility_name',
+            'IDnumber' => 'Document Name',
+            'Remarks' => 'Remarks'
+        ];
+
+        // Check if $request->Number is an array and not null
+        if (!empty($request->facility_name) && is_array($request->facility_name)) {
+            foreach ($request->facility_name as $index => $facility_name) {
+                // Ensure the necessary arrays are present and have corresponding values
+                $IDnumber = $request->IDnumber[$index] ?? null;
+                $Remarks = $request->Remarks[$index] ?? null;
+
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'facility_name' => null,
+                    'IDnumber' => null,
+                    'Remarks' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'facility_name' => $facility_name,
+                    'IDnumber' => $IDnumber,
+                    'Remarks' => $Remarks,
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $deviation->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
+        }
+
+
+
         $data4 = new DeviationGrid();
         $data4->deviation_grid_id = $deviation->id;
         $data4->type = "Document";
@@ -558,6 +621,66 @@ class DeviationController extends Controller
             $data4->Document_Remarks = serialize($request->Document_Remarks);
         }
         $data4->save();
+        $fieldNames = [
+            'Number' => 'Document Number',
+            'ReferenceDocumentName' => 'Document Name',
+            'Document_Remarks' => 'Remarks'
+        ];
+
+        // Check if $request->Number is an array and not null
+        if (!empty($request->Number) && is_array($request->Number)) {
+            foreach ($request->Number as $index => $Number) {
+                // Ensure the necessary arrays are present and have corresponding values
+                $ReferenceDocumentName = $request->ReferenceDocumentName[$index] ?? null;
+                $Document_Remarks = $request->Document_Remarks[$index] ?? null;
+
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'Number' => null,
+                    'ReferenceDocumentName' => null,
+                    'Document_Remarks' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'Number' => $Number,
+                    'ReferenceDocumentName' => $ReferenceDocumentName,
+                    'Document_Remarks' => $Document_Remarks,
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $deviation->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
+        }
+
 
         $data5 = new DeviationGrid();
         $data5->deviation_grid_id = $deviation->id;
@@ -573,6 +696,66 @@ class DeviationController extends Controller
             $data5->batch_no = serialize($request->batch_no);
         }
         $data5->save();
+        $fieldNames = [
+            'product_name' => 'Product / Material',
+            'product_stage' => 'Stage',
+            'batch_no' => 'A.R.No. / Batch No'
+        ];
+
+        // Check if $request->product_name is an array and not null
+        if (!empty($request->product_name) && is_array($request->product_name)) {
+            foreach ($request->product_name as $index => $product_name) {
+                // Ensure the necessary arrays are present and have corresponding values
+                $product_stage = $request->product_stage[$index] ?? null;
+                $batch_no = $request->batch_no[$index] ?? null;
+
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'product_name' => null,
+                    'product_stage' => null,
+                    'batch_no' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'product_name' => $product_name,
+                    'product_stage' => $product_stage,
+                    'batch_no' => $batch_no,
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $deviation->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
+                        $history->action_name = "Create";
+
+                        // Save the history record
+                        $history->save();
+                    }
+                }
+            }
+        }
+
 
          $data8 = new DeviationGrid();
 
@@ -1604,6 +1787,12 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
 
+        // $deviation->capa_root_cause = $request->capa_root_cause;
+        // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
+        // $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
+        // $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+
+
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
         {
@@ -1769,6 +1958,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $deviation->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $deviation->Immediate_Action_Take;
                 $deviation->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $deviation->Corrective_Action_Details;
                 $deviation->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $deviation->Preventive_Action_Details;
+
                 $deviation->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $deviation->capa_completed_date;
                 $deviation->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $deviation->Interim_Control;
                 $deviation->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $deviation->Corrective_Action_Taken;
@@ -1903,13 +2093,27 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->Facility = $request->Facility;
 
 
-        $deviation->Immediate_Action = implode(',', $request->Immediate_Action);
-        $deviation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $deviation->Product_Details_Required = $request->Product_Details_Required;
+        // Ensure Immediate_Action is an array before using implode
+$deviation->Immediate_Action = is_array($request->Immediate_Action)
+? implode(',', $request->Immediate_Action)
+: $request->Immediate_Action;
 
+        // $deviation = is_array($lastDeviation->Immediate_Action) ? implode(',', $lastDeviation->Immediate_Action) : $lastDeviation->Immediate_Action;
+        // $deviation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        // Ensure Immediate_Action is an array before using implode
+$deviation->Immediate_Action = is_array($request->Immediate_Action)
+? implode(',', $request->Immediate_Action)
+: $request->Immediate_Action;
 
-        $deviation->HOD_Remarks = $request->HOD_Remarks;
-        $deviation->Pending_initiator_update = $request->Pending_initiator_update;
+// Ensure Preliminary_Impact is an array before using implode
+$deviation->Preliminary_Impact = is_array($request->Preliminary_Impact)
+? implode(',', $request->Preliminary_Impact)
+: $request->Preliminary_Impact;
+
+$deviation->Product_Details_Required = $request->Product_Details_Required;
+$deviation->HOD_Remarks = $request->HOD_Remarks;
+$deviation->Pending_initiator_update = $request->Pending_initiator_update;
+
 
          $deviation->hod_final_review = $request->hod_final_review;
 
@@ -1925,7 +2129,12 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->QAInitialRemark = $request->QAInitialRemark;
         $deviation->Investigation_Summary = $request->Investigation_Summary;
         // $deviation->discb_deviat = $request->discb_deviat;
-        $deviation->discb_deviat = implode(',', $request->discb_deviat);
+        // $deviation->discb_deviat = implode(',', $request->discb_deviat);
+        // Ensure Immediate_Action is an array before using implode
+        $deviation->discb_deviat = is_array($request->discb_deviat)
+        ? implode(',', $request->discb_deviat)
+        : $request->discb_deviat;
+
         $deviation->Impact_assessment = $request->Impact_assessment;
         $deviation->Root_cause = $request->Root_cause;
 
@@ -3020,6 +3229,12 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         $deviation->update();
         // grid
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
+         $previousDetails = [
+            'facility_name' => !is_null($data3->facility_name) ? unserialize($data3->facility_name) : null,
+            'IDnumber' => !is_null($data3->IDnumber) ? unserialize($data3->IDnumber) : null,
+            'Remarks' => !is_null($data3->Remarks) ? unserialize($data3->Remarks) : null,
+        ];
+
                 if (!empty($request->IDnumber)) {
                     $data3->IDnumber = serialize($request->IDnumber);
                 }
@@ -3032,10 +3247,86 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                 }
 
                 $data3->update();
+
+                $fieldNames = [
+                    'facility_name' => 'Document Name',
+                    'IDnumber' => 'Document Number',
+                    'Remarks' => 'Remarks'
+                ];
+                if (is_array($request->facility_name) && !empty($request->facility_name)) {
+                    foreach ($request->facility_name as $index => $facility_name) {
+                        // Retrieve previous details for the current index
+                        $previousValues = [
+                            'facility_name' => $previousDetails['facility_name'][$index] ?? null,
+                            'IDnumber' => $previousDetails['IDnumber'][$index] ?? null,
+                            'Remarks' => $previousDetails['Remarks'][$index] ?? null,
+                        ];
+
+                        // Current fields values from the request
+                        $fields = [
+                            'facility_name' => $facility_name,
+                            'IDnumber' => $request->IDnumber[$index],
+                            'Remarks' => $request->Remarks[$index],
+                        ];
+
+                        foreach ($fields as $key => $currentValue) {
+                            // Get the previous value from the previous data
+                            $previousValue = $previousValues[$key] ?? null;
+
+                            // Log changes for new or updated rows only if previous and current values differ
+                            if ($previousValue != $currentValue && !empty($currentValue)) {
+                                // Check if an audit trail entry for this specific row and field already exists
+                                $existingAudit = DeviationAuditTrail::where('deviation_id', $id)
+                                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                    ->where('previous', $previousValue)
+                                    ->where('current', $currentValue)
+                                    ->exists();
+
+                                // Only create a new audit trail entry if no existing entry matches
+                                if (!$existingAudit) {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+
+                                    // Set activity type to include field name and row index using the fieldNames array
+                                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                    // Assign 'Previous' value explicitly as null if it doesn't exist
+                                    $history->previous = $previousValue; // Previous value or 'null'
+
+                                    // Assign 'Current' value, which is the new value
+                                    $history->current = $currentValue; // New value
+
+                                    // Comments and user details
+                                    $history->comment = $request->equipment_comments[$index] ?? '';
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $data3->status;
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = $lastDeviation->status;
+                                    if (is_null($previousValue) || $currentValue === '') {
+                                        $history->action_name = 'New';
+                                    } else {
+                                        $history->action_name = 'Update';
+                                    }
+                                    //$history->action_name = "Update";
+
+                                    // Save the history record
+                                    $history->save();
+                                }
+                            }
+                        }
+                    }
+                }
                 // dd($request->Remarks);
 
 
             $data4=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Document")->first();
+            $previousDetails = [
+                'ReferenceDocumentName' => !is_null($data4->ReferenceDocumentName) ? unserialize($data4->ReferenceDocumentName) : null,
+                'Number' => !is_null($data4->Number) ? unserialize($data4->Number) : null,
+                'Document_Remarks' => !is_null($data4->Document_Remarks) ? unserialize($data4->Document_Remarks) : null,
+            ];
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
             }
@@ -3047,8 +3338,85 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                 $data4->Document_Remarks = serialize($request->Document_Remarks);
             }
             $data4->update();
+            $fieldNames = [
+                'ReferenceDocumentName' => 'Document Name',
+                'Number' => 'Document Number',
+                'Document_Remarks' => 'Remarks'
+            ];
+
+            // Ensure ReferenceDocumentName is an array before iterating
+            if (is_array($request->ReferenceDocumentName) && !empty($request->ReferenceDocumentName)) {
+                foreach ($request->ReferenceDocumentName as $index => $ReferenceDocumentName) {
+                    // Retrieve previous details for the current index
+                    $previousValues = [
+                        'ReferenceDocumentName' => $previousDetails['ReferenceDocumentName'][$index] ?? null,
+                        'Number' => $previousDetails['Number'][$index] ?? null,
+                        'Document_Remarks' => $previousDetails['Document_Remarks'][$index] ?? null,
+                    ];
+
+                    // Current fields values from the request
+                    $fields = [
+                        'ReferenceDocumentName' => $ReferenceDocumentName,
+                        'Number' => $request->Number[$index],
+                        'Document_Remarks' => $request->Document_Remarks[$index],
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Get the previous value from the previous data
+                        $previousValue = $previousValues[$key] ?? null;
+
+                        // Log changes for new or updated rows only if previous and current values differ
+                        if ($previousValue != $currentValue && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = DeviationAuditTrail::where('deviation_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
+
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new DeviationAuditTrail();
+                                $history->deviation_id = $id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Assign 'Previous' value explicitly as null if it doesn't exist
+                                $history->previous = $previousValue; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $data4->status;
+                                $history->change_to = "Not Applicable";
+                                $history->change_from = $lastDeviation->status;
+                                if (is_null($previousValue) || $currentValue === '') {
+                                    $history->action_name = 'New';
+                                } else {
+                                    $history->action_name = 'Update';
+                                }
+                                //$history->action_name = "Update";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+            }
 
             $data5=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Product")->first();
+            $previousDetails = [
+                'product_name' => !is_null($data5->product_name) ? unserialize($data5->product_name) : null,
+                'product_stage' => !is_null($data5->product_stage) ? unserialize($data5->product_stage) : null,
+                'batch_no' => !is_null($data5->batch_no) ? unserialize($data5->batch_no) : null,
+            ];
             if (!empty($request->product_name)) {
                 $data5->product_name = serialize($request->product_name);
             }
@@ -3060,6 +3428,78 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                 $data5->batch_no = serialize($request->batch_no);
             }
             $data5->update();
+            $fieldNames = [
+                'product_name' => 'Product / Material',
+                'product_stage' => 'Stage',
+                'batch_no' => 'A.R.No. / Batch No'
+            ];
+
+            // Ensure product_name is an array before iterating
+            if (is_array($request->product_name) && !empty($request->product_name)) {
+                foreach ($request->product_name as $index => $product_name) {
+                    // Retrieve previous details for the current index
+                    $previousValues = [
+                        'product_name' => $previousDetails['product_name'][$index] ?? null,
+                        'product_stage' => $previousDetails['product_stage'][$index] ?? null,
+                        'batch_no' => $previousDetails['batch_no'][$index] ?? null,
+                    ];
+
+                    // Current fields values from the request
+                    $fields = [
+                        'product_name' => $product_name,
+                        'product_stage' => $request->product_stage[$index],
+                        'batch_no' => $request->batch_no[$index],
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Get the previous value from the previous data
+                        $previousValue = $previousValues[$key] ?? null;
+
+                        // Log changes for new or updated rows only if previous and current values differ
+                        if ($previousValue != $currentValue && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = DeviationAuditTrail::where('deviation_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
+
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new DeviationAuditTrail();
+                                $history->deviation_id = $id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Assign 'Previous' value explicitly as null if it doesn't exist
+                                $history->previous = $previousValue; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $data5->status;
+                                $history->change_to = "Not Applicable";
+                                $history->change_from = $lastDeviation->status;
+                                if (is_null($previousValue) || $currentValue === '') {
+                                    $history->action_name = 'New';
+                                } else {
+                                    $history->action_name = 'Update';
+                                }
+                                //$history->action_name = "Update";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+            }
 
 
 

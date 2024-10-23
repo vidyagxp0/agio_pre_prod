@@ -2097,6 +2097,7 @@
                 }
 
                 .pm-empty-space {
+                    /* height: 40px; */
                     width: 100%;
                 }
 

@@ -1067,8 +1067,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                 <div class="button-block">
-                                        <button type="button" class="printButton" onclick="downloadCertificate()">
-                                            <i class="fas fa-print"></i> Print
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i>Print
                                         </button>
                                 </div>
 
@@ -1124,8 +1124,8 @@
                             </div>
                             
                             <div style="margin-top: 40px;" class="button-block">
-                                <button type="submit" class="btn btn saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="btn btn nextButton">Next</button>
+                                <!-- <button type="submit" class="btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class="btn btn nextButton">Next</button> -->
                             </div>
                         </div>
                     </div>
@@ -1139,7 +1139,6 @@
                 <!-- CSS Styling -->
             <style>
               @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
- 
 
                 .cursive {
                     font-family: 'Pinyon Script', cursive;
@@ -1168,6 +1167,7 @@
                 }
 
                 .pm-empty-space {
+                    height: 40px; 
                     width: 100%;
                 }
 
@@ -1181,7 +1181,6 @@
                     font-family: 'Open Sans', sans-serif;
                     box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
                     margin-top: 35px;
-                    align-items: center !important;  
                    
                 }
  
@@ -1334,7 +1333,7 @@
                         box-shadow: none; 
                         background-color: #618597; 
                         // padding: 30px;
-                        // margin: 0 auto; 
+                        margin: 0 auto; 
                     }
 
                     .outer-border, .inner-border {
@@ -1364,10 +1363,11 @@
                     function downloadCertificate() {
                         const element = document.querySelector('.pm-certificate-container');
                         const options = {
-                            margin: 0, 
+                            margin: 0, // Margin ko adjust karen, yahan 0 set kiya hai
                             filename: 'Job-Training-certificate.pdf',
                             html2canvas: { 
                                 scale: 2,
+                                // Allowing the certificate to be centered on the canvas
                                 x: 0,
                                 y: 0
                             },

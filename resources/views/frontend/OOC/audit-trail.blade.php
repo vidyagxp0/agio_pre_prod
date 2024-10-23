@@ -219,9 +219,13 @@
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Back
                                 </a> </button> --}}
-                            <button class="button_theme1" onclick="window.print();">
+                            {{--<button class="button_theme1" onclick="window.print();">
                                 Print
-                            </button>
+                            </button> --}}
+
+                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit
+                                </a> </button>
                         </div>
                     </div>
                     <div class="modal fade" id="auditViewers">

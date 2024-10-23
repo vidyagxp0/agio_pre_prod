@@ -12,7 +12,7 @@
 
             <div class="pm-certificate-header">
                 <div class="pm-certificate-title cursive text-center">
-                    <h2>Certificate of Job Training</h2>
+                    <h2>Certificate of JOB Training</h2>
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
                     <p class="text-center">
                         This is to certify that Mr. / Ms. / Mrs. 
                         <strong>{{ $jobTraining->name}}</strong>
-                        has undergone On The Job Training, including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
+                        has undergone Induction Training, including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
                     </p>
 
                     <p class="text-center">

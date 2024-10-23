@@ -210,9 +210,12 @@
                                      href="{{ url('rcms/devshow/' . $document->id) }}"> Back
                                  </a>
                              </button>
-                             <button class="button_theme1" onclick="window.print();">
+                             {{-- <button class="button_theme1" onclick="window.print();">
                                  Print
-                             </button>
+                             </button> --}}
+                             <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
+                                Exit
+                        </a> </button>
                          </div>
                      </div>
 
@@ -338,7 +341,7 @@
                              <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                  {{ $document->short_description }}</div>
                                  <div style="margin-bottom: 5px; font-weight: bold;">Due Date:
-                                    {{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}
+                                    {{ Helpers::getdateFormat($document->due_date)}}
                                 </div>
 
                             {{-- <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :
