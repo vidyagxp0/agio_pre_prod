@@ -3821,13 +3821,13 @@ class RiskManagementController extends Controller
         //     $history->save();
         // }
 
-        if ($lastDocument->type != $data->type || !empty ($request->type)) {
+        if ($lastDocument->type != $data->type ) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
                             ->where('activity_type', 'Type')
                             ->exists();
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Type';
+            $history->activity_type ='Type';
              $history->previous = $lastDocument->type;
             $history->current = $data->type;
             $history->comment = $request->submit_comment;

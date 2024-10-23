@@ -115,8 +115,8 @@
                             </button></a> --}}
                             @endif
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)))
-                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
-                                    data-bs-target="#signature-modal">
+                            <a href="#last-stage-modal"> <button class="button_theme1" data-bs-toggle="modal"
+                                    data-bs-target="#last-stage-modal">
                                     Verification Complete
                                 </button></a>
                             <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal"
@@ -181,9 +181,10 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Acknowledge</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent General Information</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
             <form action="{{ route('actionItem.update', $data->id) }}" method="POST" enctype="multipart/form-data">
@@ -310,24 +311,42 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-md-6 new-date-data-field">
-                                            <div class="group-input input-date ">
-                                                <label for="capa_date_due">Due Date</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="due_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
-                                                        id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                    <input type="date" class="hide-input" 
-                                                      min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                      {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                </div>
+                                 
+                                    
+                                   @if (!empty($data->parent_type) && $data->due_date_action == null)
+                                    <div class="col-lg-6">
+                                    <div class="group-input">
+                                            <label for="Audit Schedule Start Date">Due Date</label>
+                                            <input type="text" name="due_date_action" value="{{ Helpers::getdateFormat($due_date_data ) }}" readonly style="font-size: 14px;" />
                                             </div>
-                                        </div>
+                                    </div>
+                                   @elseif($data->due_date_action)
+                                   <div class="col-lg-6">
+                                    <div class="group-input">
+                                            <label for="Audit Schedule Start Date">Due Date</label>
+                                            <input type="text" value="{{ Helpers::getdateFormat($data->due_date_action ) }}" readonly style="font-size: 14px;" />
+                                            </div>
+                                    </div>
+                                   @else
+                                        <div class="col-md-6 new-date-data-field">
+                                                    <div class="group-input input-date ">
+                                                        <label for="capa_date_due">Due Date</label>
+                                                        <div class="calenderauditee">
+                                                            <input type="text" name="due_date"
+                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                                id="due_date" readonly
+                                                                placeholder="DD-MMM-YYYY"
+                                                                value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                            <input type="date" class="hide-input" 
+                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                                value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                                oninput="handleDateInput(this, 'due_date')" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                   @endif
 
                                     <!-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
@@ -410,7 +429,7 @@
                                 </div>
 
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     @if ($data->stage == 1)
                                         <div class="group-input">
                                             <label for="Related Records">Action Item Related Records</label>
@@ -477,6 +496,16 @@
                                     @enderror
 
 
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="HOD Persons">Action Item Related Records</label>
+                                           <input type="text" name="related_records" value="{{ $data->related_records }}">
+                                        </div>
+                                    @error('hod_preson')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-lg-6">
@@ -809,6 +838,142 @@
                             </div>
                         </div> --}}
 
+
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head">Acknowledge</div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">Acknowledge Comment @if ($data->stage == 2)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="acknowledge_comments">{{ $data->acknowledge_comments }}</textarea>
+                                    </div>
+                                </div>
+                      
+                            @error('acknowledge_comments')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+                           
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="file_attach">Acknowledge Attachment</label>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="acknowledge_attach">
+                                                @if ($data->acknowledge_attach)
+                                                    @foreach (json_decode($data->acknowledge_attach) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                            <input type="hidden" name="existing_Approval_Attachments[]" value="{{ $file }}">
+
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    type="file" id="myfile" name="acknowledge_attach[]"
+                                                    oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <input type="hidden" id="deleted_Approval_Attachments" name="deleted_Approval_Attachments" value="">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_Approval_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+
+                            @error('acknowledge_attach')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton"{{ $data->stage <= 1 || $data->stage >= 3 ? "disabled" : "" }}>Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -816,7 +981,7 @@
                                     <div class="sub-head col-12">Post Completion</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="action_taken">Action Taken @if ($data->stage == 2)
+                                            <label for="action_taken">Action Taken @if ($data->stage == 3)
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
@@ -827,7 +992,7 @@
                                     <div class="sub-head col-12">Post Completion</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="action_taken">Action Taken @if ($data->stage == 2)
+                                            <label for="action_taken">Action Taken @if ($data->stage == 3)
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
@@ -1077,7 +1242,7 @@
 
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton"{{ $data->stage <= 1 || $data->stage >= 3 ? "disabled" : "" }}>Save</button>
+                            <button type="submit" class="saveButton" {{ $data->stage <= 2 || $data->stage >= 4 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1089,11 +1254,11 @@
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head">Action Approval</div>
+                            <div class="sub-head">QA/CQA Verification</div>
                             @if ($data->stage == 4)
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA/CQA Review Comments @if ($data->stage == 4)
+                                        <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
@@ -1103,7 +1268,7 @@
                             @else
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA/CQA Review Comments @if ($data->stage == 4)
+                                        <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
                                         <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
@@ -1127,7 +1292,7 @@
                             @if ($data->stage == 4)
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachment</label>
+                                        <label for="file_attach">QA/CQA Verification Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach">
                                                 @if ($data->final_attach)
@@ -1226,7 +1391,7 @@
                             @else
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachments</label>
+                                        <label for="file_attach">QA/CQA Verification Attachments</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach">
                                                 @if ($data->final_attach)
@@ -1266,7 +1431,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton"{{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>Save</button>
+                            <button type="submit" class="saveButton" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1274,29 +1439,34 @@
                         </div>
                     </div>
                 </div>
+                <style>
+                    .static{
+                        font-weight: 100 !important;
+                    }
+                </style>
 
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
-                        <!-- <div class="sub-head">
-                            Submit
-                        </div> -->
+                        <div class="sub-head">
+                            Activity Log
+                        </div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submitted by">Submit By</label>
-                                    <div class="static">{{ $data->submitted_by }}</div>
+                                    <div class="static">@if ($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="submitted on">Submit On</label>
-                                    <div class="Date">{{ $data->submitted_on }}</div>
+                                    <div class="Date">@if ($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Submit Comment</label>
-                                    <div class="static">{{ $data->submitted_comment }}</div>
+                                    <div class="static">@if ($data->submitted_comment){{ $data->submitted_comment }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <!-- <div class="col-12">
@@ -1305,19 +1475,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Cancel By</label>
-                                    <div class="static">{{ $data->cancelled_by }}</div>
+                                    <div class="static">@if ($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Cancel On</label>
-                                    <div class="Date">{{ $data->cancelled_on }}</div>
+                                    <div class="Date">@if ($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Cancel Comment</label>
-                                    <div class="static">{{ $data->cancelled_comment }}</div>
+                                    <div class="static">@if ($data->cancelled_comment){{ $data->cancelled_comment }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
 
@@ -1328,19 +1498,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Acknowledge Complete By</label>
-                                    <div class="static">{{ $data->acknowledgement_by }}</div>
+                                    <div class="static">@if ($data->acknowledgement_by){{ $data->acknowledgement_by }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Acknowledge Complete On</label>
-                                    <div class="Date">{{ $data->acknowledgement_on }}</div>
+                                    <div class="Date">@if ($data->acknowledgement_on){{ $data->acknowledgement_on }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Acknowledge Complete Comment</label>
-                                    <div class="static">{{ $data->acknowledgement_comment }}</div>
+                                    <div class="static">@if ($data->acknowledgement_comment){{ $data->acknowledgement_comment }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
 
@@ -1351,19 +1521,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Complete By</label>
-                                    <div class="static">{{ $data->work_completion_by }}</div>
+                                    <div class="static">@if ($data->work_completion_by){{ $data->work_completion_by }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Complete On</label>
-                                    <div class="Date">{{ $data->work_completion_on }}</div>
+                                    <div class="Date">@if ($data->work_completion_on){{ $data->work_completion_on }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Complete Comment</label>
-                                    <div class="static">{{ $data->work_completion_comment }}</div>
+                                    <div class="static">@if ($data->work_completion_comment){{ $data->work_completion_comment }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <!-- <div class="col-12">
@@ -1372,19 +1542,19 @@
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled by">Verification Complete By</label>
-                                    <div class="static">{{ $data->qa_varification_by }}</div>
+                                    <div class="static">@if ($data->qa_varification_by){{ $data->qa_varification_by }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="cancelled on">Verification Complete On</label>
-                                    <div class="Date">{{ $data->qa_varification_on }}</div>
+                                    <div class="Date">@if ($data->qa_varification_on){{ $data->qa_varification_on }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submitted on">Verification Complete Comment</label>
-                                    <div class="static">{{ $data->qa_varification_comment }}</div>
+                                    <div class="static">@if ($data->qa_varification_comment){{ $data->qa_varification_comment }}@else Not Applicable @endif</div>
                                 </div>
                             </div>
 
@@ -1651,6 +1821,58 @@
             </div>
         </div>
     </div>
+
+
+    <style>
+          .input_width {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 11px;
+        }
+    </style>
+
+    <div class="modal fade" id="last-stage-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('rcms/action-stage-last', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+                    <input type="text" class="hide-input" name="due_date_action" value="{{ Helpers::getdateFormat($due_date_data ) }}" readonly style="font-size: 14px;" />
+
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1683,6 +1905,8 @@
                             <input type="comment" name="comment" required>
                         </div>
                     </div>
+                    <input type="text" class="hide-input" name="due_date_action" value="{{ Helpers::getdateFormat($due_date_data ) }}" readonly style="font-size: 14px;" />
+
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">

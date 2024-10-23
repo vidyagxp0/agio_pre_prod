@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\CC;
 use App\Models\RoleGroup;
+use App\Models\LabIncident;
 use App\Models\ActionItemHistory;
 use App\Models\CCStageHistory;
 use App\Models\RecordNumber;
@@ -79,10 +80,10 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-        //  $openState->related_records = implode(',', $request->related_records);
-        if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+         $openState->related_records = $request->related_records;
+        // if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -95,6 +96,7 @@ class ActionItemController extends Controller
         $openState->start_date = $request->start_date;
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         $openState->qa_comments = $request->qa_comments;
         $openState->status = 'Opened';
@@ -113,6 +115,21 @@ class ActionItemController extends Controller
             }
             $openState->file_attach = json_encode($files);
         }
+
+        if (!empty($request->acknowledge_attach)) {
+            $files = [];
+            if ($request->hasfile('acknowledge_attach')) {
+                foreach ($request->file('acknowledge_attach') as $file) {
+                      
+                    $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            
+            }
+            $openState->acknowledge_attach = json_encode($files);
+        }
+
         if (!empty($request->Support_doc)) {
             $files = [];
             if ($request->hasfile('Support_doc')) {
@@ -507,7 +524,7 @@ class ActionItemController extends Controller
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
             $history->comment = "Not Applicable";
@@ -557,6 +574,43 @@ class ActionItemController extends Controller
    
             $history->save();
         }
+
+        if (!empty($openState->acknowledge_comments)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = "Null";
+            $history->current =  $openState->acknowledge_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+        if (!empty($openState->acknowledge_attach)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = "Null";
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -577,7 +631,7 @@ class ActionItemController extends Controller
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "Not Applicable";
@@ -599,13 +653,14 @@ class ActionItemController extends Controller
 
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $data = ActionItem::find($id);
+        $due_date_data = LabIncident::where('id', $data->parent_id)->value('due_date');;
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         // $taskdetails = Taskdetails::where('cc_id', $id)->first();
         // $checkeffec = CheckEffecVerifi::where('cc_id', $id)->first();
         // $comments = RefInfoComments::where('cc_id', $id)->first();
         // return $taskdetails;
-        return view('frontend.action-item.atView', compact('data', 'cc','old_record'));
+        return view('frontend.action-item.atView', compact('data', 'cc','old_record', 'due_date_data'));
     }
 
     public function edit($id)
@@ -621,10 +676,10 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        // $openState->related_records = implode(',', $request->related_records);
-         if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+        $openState->related_records = $request->related_records;
+        //  if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
@@ -642,6 +697,7 @@ class ActionItemController extends Controller
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         if($openState->stage == 1){
             $openState->assign_to = $request->assign_to;
@@ -662,7 +718,6 @@ class ActionItemController extends Controller
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
         $openState->parent_record_number_edit = $request->parent_record_number_edit;
-
 
 
         // $openState->status = 'Opened';
@@ -691,6 +746,21 @@ class ActionItemController extends Controller
                     return !in_array($file, $filesToDelete);
                 }); 
             }
+
+            if (!empty($request->acknowledge_attach)) {
+                $files = [];
+                if ($request->hasfile('acknowledge_attach')) {
+                    foreach ($request->file('acknowledge_attach') as $file) {
+                          
+                        $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                
+                }
+                $openState->acknowledge_attach = json_encode($files);
+            }
+    
         
             // Handle new files
             $newFiles = [];
@@ -1175,7 +1245,7 @@ class ActionItemController extends Controller
         if ($lastopenState->qa_comments != $openState->qa_comments || !empty($request->qa_comments_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
@@ -1233,10 +1303,53 @@ class ActionItemController extends Controller
             }
             $history->save();
         }
+
+        if ($lastopenState->acknowledge_comments != $openState->acknowledge_comments || !empty($request->qa_comments_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = $lastopenState->acknowledge_comments;
+            $history->current = $openState->acknowledge_comments;
+            $history->comment = $request->qa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_comments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastopenState->acknowledge_attach != $openState->acknowledge_attach || !empty($request->file_attach_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = $lastopenState->acknowledge_attach;
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = $request->file_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = $lastopenState->final_attach;
             $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
@@ -1379,12 +1492,12 @@ class ActionItemController extends Controller
 
             if ($changeControl->stage == 2) {
 
-                if (empty($changeControl->action_taken))
+                if (empty($changeControl->acknowledge_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Post Completion Tab is yet to be filled'
+                        'message' => 'Acknowledge Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -1449,6 +1562,24 @@ class ActionItemController extends Controller
                 return back();
             }
             if ($changeControl->stage == 3) {
+                
+                if (empty($changeControl->action_taken))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Post Completion Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Verifiaction state'
+                    ]);
+                }
                 $changeControl->stage = '4';
                 $changeControl->status = 'QA/CQA Verification';
                 $changeControl->work_completion_by = Auth::user()->name;
@@ -1502,77 +1633,6 @@ class ActionItemController extends Controller
                 return back();
             }
 
-            if ($changeControl->stage == 4) {
-                if (empty($changeControl->qa_comments))
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'Action Approval Tab is yet to be filled'
-                    ]);
-
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA/CQA Verification state'
-                    ]);
-                }
-                $changeControl->stage = '5';
-                $changeControl->status = 'Closed - Done';
-                $changeControl->qa_varification_by = Auth::user()->name;
-                $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
-                $changeControl->qa_varification_comment = $request->comment;
-
-                $history = new ActionItemHistory;
-                $history->action = "Verification Complete";
-                $history->cc_id = $id;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastopenState->status;
-                $history->stage = "5";
-                $history->action_name = 'Not Applicable';
-                $history->stage = '2';
-                $history->activity_type = 'Verification Complete by, Verification Complete On';
-                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
-                }
-                $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
-                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->change_to = "Closed - Done";
-                $history->change_from = $lastopenState->status;
-                $history->save();
-                $changeControl->update();
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Verification Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
             
         } else {
             toastr()->error('E-signature Not match');
@@ -1607,6 +1667,96 @@ class ActionItemController extends Controller
 //     }
 // }
 
+public function lastStage(Request $request, $id){
+    if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+        $changeControl = ActionItem::find($id);
+        $lastopenState = ActionItem::find($id);
+        $openState = ActionItem::find($id);
+
+        if ($changeControl->stage == 4) {
+            if (empty($changeControl->qa_comments))
+            {
+                Session::flash('swal', [
+                    'type' => 'warning',
+                    'title' => 'Mandatory Fields!',
+                    'message' => 'QA/CQA Verification Tab is yet to be filled'
+                ]);
+
+                return redirect()->back();
+            }
+             else {
+                Session::flash('swal', [
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Sent for Closed - Done state'
+                ]);
+            }
+
+            $changeControl->due_date_action = $request->due_date_action;
+            
+            $changeControl->stage = '5';
+            $changeControl->status = 'Closed - Done';
+            $changeControl->qa_varification_by = Auth::user()->name;
+            $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
+            $changeControl->qa_varification_comment = $request->comment;
+
+            $history = new ActionItemHistory;
+            $history->action = "Verification Complete";
+            $history->cc_id = $id;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "5";
+            $history->action_name = 'Not Applicable';
+            $history->stage = '2';
+            $history->activity_type = 'Verification Complete by, Verification Complete On';
+            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
+            }
+            $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
+            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->change_to = "Closed - Done";
+            $history->change_from = $lastopenState->status;
+            $history->save();
+            $changeControl->update();
+            // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Verification Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changeControl) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete");
+            //                 }
+            //             );
+            //         }
+            //     // }
+            // }
+            $history->save();
+            toastr()->success('Document Sent');
+            return back();
+        }
+
+    }
+    else {
+        toastr()->error('E-signature Not match');
+
+        return back();
+    }
+
+}
+
 public function actionStageCancel(Request $request, $id)
 {
     if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
@@ -1615,6 +1765,9 @@ public function actionStageCancel(Request $request, $id)
         $openState = ActionItem::find($id);
 
         if ($changeControl->stage == 1) {
+
+            $changeControl->due_date_action = $request->due_date_action;
+
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
