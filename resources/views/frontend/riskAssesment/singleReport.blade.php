@@ -1343,14 +1343,14 @@
 
 
             <div class="block">
-                <div class="block-head">HOD/Designee</div>
+                {{-- <div class="block-head">HOD/Designee</div>
                 <table>
                     <tr>
                         <th class="w-20">CFT Reviewer Selection</th>
                         <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
                     </tr>
 
-                </table>
+                </table> --}}
 
                 <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
                 <div class="div-data">

@@ -6511,12 +6511,8 @@
                                                     @if ($data->stage == 3) disabled @endif
                                                     id="Other1_review" value="{{ $data1->Other1_review }}">
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data1->Other1_review == 'yes') selected @endif
-                                                        value="yes">
-                                                        Yes</option>
-                                                    <option @if ($data1->Other1_review == 'no') selected @endif
-                                                        value="no">
-                                                        No</option>
+                                                    <option @if ($data1->Other1_review == 'yes') selected @endif value="yes"> Yes</option>
+                                                    <option @if ($data1->Other1_review == 'no') selected @endif value="no"> No</option>
                                                     {{-- <option @if ($data1->Other1_review == 'na') selected @endif
                                                         value="na">
                                                         NA</option> --}}
