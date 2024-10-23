@@ -178,6 +178,12 @@
                                 </style> --}}
 
 
+                                @if (!empty($parent_type))
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <label for="Audit Schedule Start Date">Due Date</label>
+                                    <input type="text" name="due_date_action" value="{{ Helpers::getdateFormat($data->due_date) }}" readonly style="font-size: 14px;" />
+                                    </div>
+                                @else
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date</label>
@@ -190,6 +196,8 @@
 
                                     </div>
                                 </div>
+                                @endif
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
