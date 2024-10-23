@@ -3212,7 +3212,7 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">QA/CQA Head / Designee Approval Comment</th>
+                                <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cc_cfts->qa_cqa_comments)
@@ -3233,7 +3233,7 @@ Not Applicable
 
                    <div class="border-table">
                         <div class="block-">
-                        QA/CQA Head / Designee Approval Attachment
+                        QA/CQA Head / Designee Approval Attachments
                         </div>
                         <table>
 

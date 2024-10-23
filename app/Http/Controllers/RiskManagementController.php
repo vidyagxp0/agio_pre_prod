@@ -1522,23 +1522,23 @@ class RiskManagementController extends Controller
                 $history->save();
             }
 
-            if (!empty($data->reviewer_person_value)) {
-                $history = new RiskAuditTrail();
-                $history->risk_id = $data->id;
-                $history->activity_type = 'CFT Reviewer Selection';
-                $history->previous = "Null";
-                $history->current = $data->reviewer_person_value;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $data->status;
-                $history->change_to =   "Opened";
-                $history->change_from = "Initiation";
-                $history->action_name = 'Create';
+            // if (!empty($data->reviewer_person_value)) {
+            //     $history = new RiskAuditTrail();
+            //     $history->risk_id = $data->id;
+            //     $history->activity_type = 'CFT Reviewer Selection';
+            //     $history->previous = "Null";
+            //     $history->current = $data->reviewer_person_value;
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $data->status;
+            //     $history->change_to =   "Opened";
+            //     $history->change_from = "Initiation";
+            //     $history->action_name = 'Create';
 
-                $history->save();
-            }
+            //     $history->save();
+            // }
 
             // if (!empty($data->hod_des_rev_comm)) {
             //     $history = new RiskAuditTrail();
@@ -2710,6 +2710,7 @@ class RiskManagementController extends Controller
     }
     public function riskUpdate(Request $request, $id)
     {
+
         $form_progress = null;
 
         $lastDocument =  RiskManagement::find($id);
@@ -2742,11 +2743,13 @@ class RiskManagementController extends Controller
             $data->other_source_of_risk = null;
         }
 
-        if ($request->input('type') == 'Other_data') {
+        if ($request->input('type') == 'Other Data') {
             $data->other_type = $request->input('other_type');
         } else {
             $data->other_type = null;
         }
+
+
 
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->type = $request->type;
@@ -2922,7 +2925,7 @@ class RiskManagementController extends Controller
             $data->qa_cqa_head_attach = json_encode($files);
         }
         $data->fill($request->except('qa_cqa_head_attach'));
-        // return $data;
+        //  return $data;
 
         // -----------grid=------
         //  $data1 = new RiskAssesmentGrid();
@@ -3778,7 +3781,7 @@ class RiskManagementController extends Controller
         }
 
 
-        if ($lastDocument->other_source_of_risk != $data->other_source_of_risk || !empty ($request->other_source_of_risk)) {
+        if ($lastDocument->other_source_of_risk != $data->other_source_of_risk) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
                             ->where('activity_type', 'Other(Source of Risk/Opportunity)')
                             ->exists();
@@ -3842,30 +3845,8 @@ class RiskManagementController extends Controller
         }
 
 
-        // if ($lastDocument->other_type != $data->other_type) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Other(Type)';
-        //     $history->previous = $lastDocument->other_type;
-        //     $history->current = $data->other_type;
-        //     $history->comment = $request->comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->other_type) || $lastDocument->other_type === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     //  dd($history);
-        //     $history->save();
-        // }
 
-
-        if ($lastDocument->other_type != $data->other_type || !empty ($request->other_type)) {
+        if ($lastDocument->other_type != $data->other_type) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
                             ->where('activity_type', 'Other(Type)')
                             ->exists();
@@ -4278,27 +4259,27 @@ class RiskManagementController extends Controller
         // }
 
 
-        if ($lastDocument->reviewer_person_value != $data->reviewer_person_value) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'CFT Reviewer Selection';
-            $history->previous = Helpers::getInitiatorName($lastDocument->reviewer_person_value);
-            $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->reviewer_person_value) || $lastDocument->reviewer_person_value === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            //  dd($history);
-            $history->save();
-        }
+        // if ($lastDocument->reviewer_person_value != $data->reviewer_person_value) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'CFT Reviewer Selection';
+        //     $history->previous = Helpers::getInitiatorName($lastDocument->reviewer_person_value);
+        //     $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->reviewer_person_value) || $lastDocument->reviewer_person_value === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     //  dd($history);
+        //     $history->save();
+        // }
 
 
         // if ($lastDocument->hod_des_rev_comm != $data->hod_des_rev_comm || !empty($request->hod_des_rev_comm)) {

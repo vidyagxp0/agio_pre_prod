@@ -286,7 +286,7 @@
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div>
-                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                            <small class="text-primary"></small>
                                         </div>
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
@@ -3600,12 +3600,12 @@
                             QA/CQA Head / Designee Approval
                             </div>
                             <div class="group-input">
-                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comment</label>
+                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments</label>
                                 <textarea name="hod_assessment_comments" readonly></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachment</label>
+                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>
