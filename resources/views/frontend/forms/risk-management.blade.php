@@ -580,7 +580,7 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Initial Attachment</label>
+                                            <label for="CAPA Attachments">Initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
