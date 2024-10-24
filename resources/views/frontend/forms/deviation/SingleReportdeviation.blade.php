@@ -745,7 +745,7 @@
                     <div class="inner-block">
                         <label class="Summer"
                             style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                            HOD Review </label>
+                            HOD Review Comment </label>
                         <span style="font-size: 0.8rem; margin-left: 60px;">
                             @if ($data->HOD_Remarks)
                                 {{ $data->HOD_Remarks }}

@@ -1649,7 +1649,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">HOD Review</label>
+                                        <label for="HOD Remarks">HOD Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" readonly oname="HOD_Remarks" id="summernote-4"></textarea>

@@ -1315,7 +1315,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?
+                                        <label for="Production Tablet"> Production Tablet/Capsule Powder Action Required ?
                                         </label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
@@ -1417,7 +1417,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Injection"> Production Injection </label>
+                                        <label for="Production Injection"> Production Injection Action Required ?</label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1523,7 +1523,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research & Development Required ?</label>
+                                        <label for="Research Development"> Research & Development Action Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1627,7 +1627,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Administration Review Required">Human Resource
+                                        <label for="Administration Review Required">Human Resource Action
                                             Required ?</label>
                                         <select name="Human_Resource_review" id="Human_Resource_review" disabled>
                                             <option value="">-- Select --</option>
@@ -1733,7 +1733,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required
+                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Action Required
                                             ?</label>
                                         <select name="CorporateQualityAssurance_Review"
                                             id="CorporateQualityAssurance_Review" disabled>
@@ -1847,7 +1847,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Store"> Store</label>
+                                        <label for="Store"> Store Action Required ?</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1942,7 +1942,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
+                                        <label for="Engineering Review Required">Engineering Action Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2065,7 +2065,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
+                                        <label for="RegulatoryAffair"> Regulatory Affair Action Required ?</label>
                                         <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2163,7 +2163,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification">Quality Assurance Review Required ?</label>
+                                        <label for="Customer notification">Quality Assurance Review Action Required ?</label>
                                         <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2276,7 +2276,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid/Ointment Required ? </label>
+                                        <label for="Production Liquid"> Production Liquid/Ointment Action Required ? </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2374,7 +2374,7 @@
                                 </div>
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Review Required">Quality Control Review Required
+                                        <label for="Quality Control Review Required">Quality Control Action Required
                                             ?</label>
                                         <select name="Quality_review" id="Quality_review" disabled>
                                             <option value="0">-- Select --</option>
@@ -2398,7 +2398,7 @@
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <label for="Quality Control Person">Quality Control Action Required ?</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
                                             <option value="0">-- Select --</option>
                                             @foreach ($users as $user)
@@ -2480,7 +2480,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Microbiology"> Microbiology Required ?</label>
+                                        <label for="Microbiology"> Microbiology Action Required ?</label>
                                         <select name="Microbiology_Review" id="Microbiology_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2576,7 +2576,7 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Safety Review Required">Safety Review Required
+                                        <label for="Safety Review Required">Safety Action Required
                                             ?</label>
                                         <select name="Environment_Health_review" id="Environment_Health_review" disabled>
                                             <option value="0">-- Select --</option>
@@ -2686,11 +2686,11 @@
                                     });
                                 </script>
                                 <div class="sub-head">
-                                    Other's 1 ( Additional Person Review From Departments If Required)
+                                    Other's 1 ( Additional Person Action From Departments If Required)
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 1 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 1 Action Required ?</label>
                                         <select name="Other1_review" id="Other1_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2813,11 +2813,11 @@
                                     });
                                 </script>
                                 <div class="sub-head">
-                                    Other's 2 ( Additional Person Review From Departments If Required)
+                                    Other's 2 ( Additional Person Action From Departments If Required)
                                 </div>
                                 <div class="col-lg-6 ">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 2 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 2 Action Required ?</label>
                                         <select name="Other2_review" id="Other2_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -2942,11 +2942,11 @@
                                     });
                                 </script>
                                 <div class="sub-head">
-                                    Other's 3 ( Additional Person Review From Departments If Required)
+                                    Other's 3 ( Additional Person Action From Departments If Required)
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Customer notification"> Other's 3 Review Required ?</label>
+                                        <label for="Customer notification"> Other's 3 Action Required ?</label>
                                         <select name="Other3_review" id="Other3_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3071,11 +3071,11 @@
                                     });
                                 </script>
                                 <div class="sub-head">
-                                    Other's 4 ( Additional Person Review From Departments If Required)
+                                    Other's 4 ( Additional Person Action From Departments If Required)
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="review4"> Other's 4 Review Required ?</label>
+                                        <label for="review4"> Other's 4 Action Required ?</label>
                                         <select name="Other4_review" id="Other4_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
@@ -3201,11 +3201,11 @@
                                     });
                                 </script>
                                 <div class="sub-head">
-                                    Other's 5 ( Additional Person Review From Departments If Required)
+                                    Other's 5 ( Additional Person Action From Departments If Required)
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="review5"> Other's 5 Review Required ?</label>
+                                        <label for="review5"> Other's 5 Action Required ?</label>
                                         <select name="Other5_review" id="Other5_review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>

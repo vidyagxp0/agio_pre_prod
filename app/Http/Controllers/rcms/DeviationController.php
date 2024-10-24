@@ -3999,11 +3999,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->HOD_Remarks != $deviation->HOD_Remarks || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'HOD Review')
+                            ->where('activity_type', 'HOD Review Comment')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'HOD Review';
+            $history->activity_type = 'HOD Review Comment';
              $history->previous = $lastDeviation->HOD_Remarks;
             $history->current = $deviation->HOD_Remarks;
             $history->comment = $deviation->submit_comment;

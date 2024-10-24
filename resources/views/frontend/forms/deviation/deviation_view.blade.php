@@ -2414,7 +2414,7 @@
                                     <div class="col-md-12">
                                         @if ($data->stage == 2)
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Review <span
+                                                <label for="HOD Remarks">HOD Review Comment <span
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
@@ -2422,7 +2422,7 @@
                                             </div>
                                         @else
                                             <div class="group-input">
-                                                <label for="HOD Remarks">HOD Review</label>
+                                                <label for="HOD Remarks">HOD Review Comment</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
