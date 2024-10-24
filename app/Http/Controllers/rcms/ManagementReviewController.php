@@ -11001,6 +11001,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
+        $data = ManagementReview::find($id);
         $currentDate = Carbon::now();
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
@@ -11011,7 +11012,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $p_record = ManagementReview::find($id);
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
 
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'data','parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)
