@@ -1095,14 +1095,18 @@
                     <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
+                    <button id="investigationButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm9')">Investigation</button>
+                    <button id="qrmButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm11')">QRM</button>
+                    <button id="capaButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm10')">CAPA</button>
 
 
-                    <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
-                        style="display: none">Investigation</button>
-                    <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm11')"
-                        style="display: none">QRM</button>
-                    <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm10')"
-                        style="display: none">CAPA</button>
+
+                    {{-- <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
+                        style="display: none">Investigation</button> --}}
+                    {{-- <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm11')"
+                        style="display: none">QRM</button> --}}
+                    {{-- <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm10')"
+                        style="display: none">CAPA</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
@@ -2555,224 +2559,93 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- <script>
+                                            $(document).ready(function() {
+                        // Function to show or hide buttons based on the value
+                        function toggleButtonsAndTabs() {
+                            var investigationRequired = $('#Investigation_required').val();
+                            var capaRequired = $('#capa_required').val();
+                            var qrmRequired = $('#qrm_required').val();
 
-                        <script>
-                            // handleInvestigationRequiredChange();
-
-
-                            // function handleInvestigationRequiredChange() {
-                            //     var investigationSelect = document.getElementById("Investigation_required");
-                            //     var investigationButton = document.getElementById("Investigation_button");
-
-                            //     // Get the selected value of the Investigation Required dropdown
-                            //     var investigationRequired = investigationSelect.value;
-
-                            //     // Check if Investigation Required is "Yes"
-                            //     if (investigationRequired === "yes") {
-                            //         // Show the Investigation button
-                            //         investigationButton.style.display = "display";
-                            //     } else {
-                            //         // Hide the Investigation button
-                            //         investigationButton.style.display = "none";
-                            //     }
-                            // }
-
-                            // Call the function initially to set the initial visibility of the button
-
-
-
-
-                            // Function to handle the change event of the Initial Deviation Category dropdown
-                            function handleDeviationCategoryChange() {
-                                var selectElement = document.getElementById("Deviation_category");
-                                var selectedOption = selectElement.options[selectElement.selectedIndex].value;
-
-                                // var investigationSelect = document.getElementById("Investigation_required");
-
-                                // var investigationButton = document.getElementById("Investigation_button");
-
-                                // var selectedOptn = investigationSelect.options[investigationSelect.selectedIndex].value;
-
-
-                                //   if(selectedOptn=== "yes"){
-
-                                //     document.getElementById("Investigation_button").style.display = "block";
-
-                                //     }
-                                //     else{
-                                //     document.getElementById("Investigation_button").style.display = "none";
-
-
-                                //     }
-
-                                // Get the selected values
-                                // var investigationRequired = investigationSelect.value;
-
-                                // Check if the selected option is "Major" or "Critical"
-                                if (selectedOption === "major" || selectedOption === "critical") {
-                                    // If "Major" or "Critical" is selected, set default value to "yes" for all Investigation, CAPA, and QRM fields
-                                    document.getElementById("Investigation_required").value = "yes";
-                                    document.getElementById("capa_required").value = "yes";
-                                    document.getElementById("qrm_required").value = "yes";
-
-                                    // Show the Investigation, CAPA, and QRM buttons
-                                    document.getElementById("Investigation_button").style.display = "block";
-                                    document.getElementById("CAPA_button").style.display = "block";
-                                    document.getElementById("QRM_button").style.display = "block";
-                                } else {
-                                    // If any other option is selected, set default value to "select" for all Investigation, CAPA, and QRM fields
-                                    document.getElementById("Investigation_required").value = "select";
-                                    document.getElementById("capa_required").value = "select";
-                                    document.getElementById("qrm_required").value = "select";
-
-                                    // Hide the Investigation, CAPA, and QRM buttons
-                                    document.getElementById("Investigation_button").style.display = "none";
-                                    document.getElementById("CAPA_button").style.display = "none";
-                                    document.getElementById("QRM_button").style.display = "none";
-
-
-
-                                }
-
+                            // Show/Hide Investigation Button
+                            if (investigationRequired === 'yes') {
+                                $('#Investigation_button').show();
+                            } else {
+                                $('#Investigation_button').hide();
                             }
-                        </script>
 
-                        <script>
-                            // This is a JQuery used for showing the Investigation
+                            // Show/Hide CAPA Button
+                            if (capaRequired === 'yes') {
+                                $('#CAPA_button').show();
+                            } else {
+                                $('#CAPA_button').hide();
+                            }
 
-                            $(document).ready(function() {
-                                $('#Deviation_category, #Investigation_required, #qrm_required, #capa_required').change(
-                                    function() {
-                                        // Get the selected values
-                                        var deviationCategory = $('#Deviation_category').val();
-                                        var investigationRequired = $('#Investigation_required').val();
-                                        var capaRequired = $('#capa_required').val();
-                                        var qrmRequired = $('#qrm_required').val();
+                            // Show/Hide QRM Button
+                            if (qrmRequired === 'yes') {
+                                $('#QRM_button').show();
+                            } else {
+                                $('#QRM_button').hide();
+                            }
 
+                            // Show tabs if all three fields are "yes"
+                            if (investigationRequired === 'yes' && capaRequired === 'yes' && qrmRequired === 'yes') {
+                                $('#yourTabElement').show(); // Replace with your actual tab element ID
+                            } else {
+                                $('#yourTabElement').hide(); // Hide the tab if any field is not "yes"
+                            }
+                        }
 
-                                        // Check if both conditions are met
-                                        if (investigationRequired === 'yes') {
-                                            $('#Investigation_button').show(); // Show the investigation button
-                                        } else {
-                                            $('#Investigation_button').hide(); // Hide the investigation button
-                                        }
-                                        //CAPA condition
-                                        if (capaRequired === 'yes') {
-                                            $('#CAPA_button').show(); // Show the investigation button
-                                        } else {
-                                            $('#CAPA_button').hide(); // Hide the investigation button
-                                        }
-                                        //QRMCon
-                                        if (qrmRequired === 'yes') {
-                                            $('#QRM_button').show(); // Show the investigation button
-                                        } else {
-                                            $('#QRM_button').hide(); // Hide the investigation button
-                                        }
-                                    });
-                            });
+                        // Change event for Deviation Category
+                        $('#123456').change(function() {
+                            var selectedValue = $(this).val();
 
+                            if (selectedValue === 'yes') {
+                                // Automatically set the fields when "yes" is selected
+                                $('#Investigation_required').val('yes');
+                                $('#capa_required').val('yes');
+                                $('#qrm_required').val('yes');
 
+                                // Hide the dropdown and keep the values in hidden fields
+                                $('#Investigation_required, #capa_required, #qrm_required').hide();
+                                $('#hidden_investigation, #hidden_capa, #hidden_qrm').val('yes');
+                            } else {
+                                // Show the dropdowns for other selections
+                                $('#Investigation_required, #capa_required, #qrm_required').show();
 
-                            //                           $(document).ready(function () {
-                            //                             $('#Investigation_required').change(function () {
-                            //                                 var selectedValues = $(this).val();
+                                // Clear hidden fields
+                                $('#hidden_investigation, #hidden_capa, #hidden_qrm').val('');
+                            }
 
-                            // Investigation_required
-                            //                                 if (selectedValues === 'major' || selectedValues === 'critical') {
-                            //                                     $('#Investigation_required').val('yes').prop('disabled', true);
-                            //                                     $('#capa_required').val('yes').prop('disabled', true);
-                            //                                     $('#qrm_required').val('yes').prop('disabled', true);
+                            // Call the function to toggle buttons based on the values
+                            toggleButtonsAndTabs();
+                        });
 
-                            //                                 } else {
-                            //                                     $('#Investigation_required').prop('disabled', false);
-                            //                                     $('#qrm_required').prop('disabled', false);
-                            //                                     $('#capa_required').prop('disabled', false);
-                            //                                 }
+                        // Change event for each required field
+                        $('#Investigation_required, #capa_required, #qrm_required').change(function() {
+                            var value = $(this).val();
+                            var id = $(this).attr('id');
 
-                            //                             });
-                            //                         });
+                            // Update hidden fields based on the dropdown changes
+                            if (id === 'Investigation_required') {
+                                $('#hidden_investigation').val(value);
+                            } else if (id === 'capa_required') {
+                                $('#hidden_capa').val(value);
+                            } else if (id === 'qrm_required') {
+                                $('#hidden_qrm').val(value);
+                            }
 
+                            toggleButtonsAndTabs();
+                        });
 
+                        // Trigger the toggleButtons function on page load to check initial values
+                        toggleButtonsAndTabs();
+                    });
 
-                            $(document).ready(function() {
-                                $('#Deviation_category').change(function() {
-                                    var selectedValues = $(this).val();
-
-                                    if (selectedValues === 'major' || selectedValues === 'critical') {
-                                        $('#Investigation_required').val('yes').prop('disabled', true);
-                                        $('#capa_required').val('yes').prop('disabled', true);
-                                        $('#qrm_required').val('yes').prop('disabled', true);
-
-                                    } else {
-                                        $('#Investigation_required').prop('disabled', false);
-                                        $('#qrm_required').prop('disabled', false);
-                                        $('#capa_required').prop('disabled', false);
-                                    }
-
-                                });
-                            });
-
-                            $(document).ready(function() {
+                        </script> --}}
 
 
-                                $('#Deviation_category').change(function() {
-                                    if ($(this).val() === 'major') {
-                                        $('#Investigation_required').val('yes').prop('disabled', true);
 
-
-                                        $('#Investigations_details').show();
-                                        $('textarea[name="Investigations_details"]').prop('required', true);
-
-                                        $('#Customer_notification').val('yes').prop('disabled', true);
-                                        $('#customer_option').show();
-                                        $('textarea[name="customer_option"]').prop('required', true);
-                                    } else {
-                                        $('#Customer_notification').prop('disabled', false);
-                                        $('#customer_option').hide();
-                                        $('textarea[name="customer_option"]').prop('required', false);
-                                        $('#Investigation_required').prop('disabled', false);
-
-
-                                        $('#Investigations_details').hide();
-                                        $('textarea[name="Investigations_details"]').prop('required', false);
-                                    }
-                                    // if ($(this).val() === 'major') {
-                                    //     $('#Investigation_required').val('yes');
-                                    //     $('#Customer_notification').val('yes');
-                                    // }
-                                });
-                            });
-                            $(document).ready(function() {
-                                $('#Investigation_required').change(function() {
-                                    var selectedValue = $(this).val();
-                                    if (selectedValue === 'yes') {
-                                        $('#Investigations_details').show();
-                                        $('textarea[name="Investigations_details"]').prop('required', true);
-                                    } else {
-                                        $('#Investigations_details').hide();
-                                        $('textarea[name="Investigations_details"]').prop('required', false);
-                                    }
-                                });
-
-                                // Trigger change event on page load if already selected value is "Recurring"
-                                $('#Investigation_required').change();
-                            });
-                            $(document).ready(function() {
-                                $('#Customer_notification').change(function() {
-                                    var selectedValue = $(this).val();
-                                    if (selectedValue === 'yes') {
-                                        $('#customer_option').show();
-                                        $('textarea[name="customer_option"]').prop('required', true);
-                                    } else {
-                                        $('#customer_option').hide();
-                                        $('textarea[name="customer_option"]').prop('required', false);
-                                    }
-                                });
-
-                                // Trigger change event on page load if already selected value is "Recurring"
-                                $('#Customer_notification').change();
-                            });
-                        </script>
 
                         <!-- QA Initial reVIEW -->
                         <div id="CCForm2" class="inner-block cctabcontent">
@@ -2865,83 +2738,162 @@
                                             </div>
                                         </div>
                                 @endif
-                                <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                    <label for="capa_required"> CAPA Required ?</label>
-                                                                                                                                                                                                                                                                                                    <select name="capa_required" id="capa_required">
-                                                                                                                                                                                                                                                                                                        <option value="select">-- Select --</option>
-                                                                                                                                                                                                                                                                                                        <option value="yes">Yes</option>
-                                                                                                                                                                                                                                                                                                        <option value="no">No</option>
-                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                            </div> -->
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Capa Required">CAPA Required? <span
-                                                class="text-danger">*</span></label>
-                                        <select
-                                            name="capa_required"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            id="capa_required" value="{{ $data->capa_required }}">
+                                        <label for="Capa Required">CAPA Required? <span class="text-danger">*</span></label>
+                                        <select name="capa_required" id="capa_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="select">-- Select --</option>
-                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
-                                                Yes</option>
-                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>
-                                                No</option>
+                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
                                         </select>
-                                        <!-- @error('capa_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
+                                        <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
                                     </div>
-                                </div>
+                                </div> --}}
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        function toggleCapaButton() {
+                                            var capaRequired = document.getElementById('capa_required').value;
+                                            var capaButton = document.getElementById('capaButton');
 
-                                <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                    <label for="qrm_required">QRM Required ?</label>
-                                                                                                                                                                                                                                                                                                    <select name="qrm_required" id="qrm_required">
-                                                                                                                                                                                                                                                                                                        <option value="select">-- Select --</option>
-                                                                                                                                                                                                                                                                                                        <option value="yes">Yes</option>
-                                                                                                                                                                                                                                                                                                        <option value="no">No</option>
-                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                            </div> -->
+                                            if (capaRequired === 'yes') {
+                                                capaButton.style.display = 'inline-block'; // Show the button if 'Yes' is selected
+                                            } else {
+                                                capaButton.style.display = 'none'; // Hide the button if 'No' or '-- Select --' is selected
+                                            }
+                                        }
 
-                                <div class="col-lg-6">
+                                        // Call the function initially to set the button visibility based on the selected value
+                                        toggleCapaButton();
+
+                                        // Add the onchange event to the select field
+                                        document.getElementById('capa_required').addEventListener('change', toggleCapaButton);
+                                    });
+                                </script>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Capa Required">CAPA Required? <span class="text-danger">*</span></label>
+                                            <select name="capa_required" id="capa_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                <option value="select">-- Select --</option>
+                                                <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
+                                            </select>
+                                            <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
+                                        </div>
+                                    </div>
+
+                                    <!-- The CAPA button -->
+
+
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QRM Required">QRM Required? <span class="text-danger">*</span></label>
-                                        <select
-                                            name="qrm_required"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            id="qrm_required" value="{{ $data->qrm_required }}">
+                                        <select name="qrm_required" id="qrm_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="select">-- Select --</option>
-                                            <option @if ($data->qrm_required == 'yes') selected @endif value='yes'>
-                                                Yes</option>
-                                            <option @if ($data->qrm_required == 'no') selected @endif value='no'>
-                                                No</option>
+                                            <option @if ($data->qrm_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if ($data->qrm_required == 'no') selected @endif value='no'>No</option>
                                         </select>
-                                        <!-- @error('qrm_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
+                                        <input type="hidden" name="hidden_qrm" id="hidden_qrm" value="{{ $data->qrm_required }}">
                                     </div>
-                                </div>
+                                </div> --}}
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        function toggleQrmButton() {
+                                            var qrmRequired = document.getElementById('qrm_required').value;
+                                            var qrmButton = document.getElementById('qrmButton');
+
+                                            if (qrmRequired === 'Yes') {
+                                                qrmButton.style.display = 'inline-block'; // Show the button
+                                            } else {
+                                                qrmButton.style.display = 'none'; // Hide the button
+                                            }
+                                        }
+
+                                        // Call the function initially to set the button visibility based on the selected value
+                                        toggleQrmButton();
+
+                                        // Add the onchange event to the select field
+                                        document.getElementById('qrm_required').addEventListener('change', toggleQrmButton);
+                                    });
+                                </script>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Investigation required">Investigation Required? <span
-                                                class="text-danger">*</span></label>
-                                        <select
-                                            name="Investigation_required"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            id="Investigation_required" value="{{ $data->Investigation_required }}">
+                                        <label for="initiator-group">QRM Required?<span class="text-danger">*</span></label>
+                                        <select name="qrm_required" id="qrm_required"
+                                            {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+                                            <option value="Yes" @if ($data->qrm_required == 'Yes') selected @endif>Yes</option>
+                                            <option value="No" @if ($data->qrm_required == 'No') selected @endif>No</option>
+                                        </select>
+                                    </div>
+
+                                    @error('qrm_required')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <!-- The QRM button -->
+
+
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Investigation_required">Investigation Required? <span class="text-danger">*</span></label>
+                                        <select name="Investigation_required" id="Investigation_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="select">-- Select --</option>
-                                            <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>
+                                            <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if ($data->Investigation_required == 'no') selected @endif value='no'>No</option>
+                                        </select>
+                                        <input type="hidden" name="hidden_investigation" id="hidden_investigation" value="{{ $data->Investigation_required }}">
+                                    </div>
+                                </div> --}}
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        // Get the select element and button element
+                                        const selectElement = document.getElementById("Investigation_required");
+                                        const investigationButton = document.getElementById("investigationButton");
+
+                                        // Function to show or hide the button based on the select value
+                                        function toggleButton() {
+                                            if (selectElement.value === "Yes") {
+                                                investigationButton.style.display = "block"; // Show the button
+                                            } else {
+                                                investigationButton.style.display = "none"; // Hide the button
+                                            }
+                                        }
+
+                                        // Call toggleButton on page load in case a value is already selected
+                                        toggleButton();
+
+                                        // Add an event listener to detect changes on the select field
+                                        selectElement.addEventListener("change", toggleButton);
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="initiator-group">Investigation Required?<span
+                                                class = "text-danger">*</span></label>
+                                        <select name="Investigation_required"
+                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            id="Investigation_required">
+                                            <option value="">-- Select --</option>
+                                            <option value="Yes"
+                                                @if ($data->Investigation_required == 'Yes') selected @endif>
                                                 Yes</option>
-                                            <option @if ($data->Investigation_required == 'no') selected @endif value='no'>
+                                            <option value="No"
+                                                @if ($data->Investigation_required == 'No') selected @endif>
                                                 No</option>
                                         </select>
-                                        @error('Investigation_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
+
+                                    @error('Investigation_required')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
 
                                 @if ($data->stage == 3)
 
@@ -2974,51 +2926,6 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
 
-                                    {{-- <div class="col-md-12">
-                                        <div class="group-input" id="investigation_details_block" style="display: none">
-                                            <label for="Investigation Details">Investigation Details <span
-                                                    id="asteriskInviinvestication"
-                                                    style="display: {{ $data1->Investigation_required == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote Investigation_Details"
-                                                name="Investigation_Details"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                class="Investigation_Details" id="summernote-6">{{ $data->Investigation_Details }}</textarea>
-
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('Investigation_required');
-                                                    var inputsToToggle = [];
-
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Investigation_Details');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
-
-
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'yes';
-
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
-
-                                                        document.getElementById('investigation_details_block').style.display = isRequired ?
-                                                            'inline' : 'none';
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        var asteriskIcon = document.getElementById('asteriskInviinvestication');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
-                                            @error('Investigation_Details')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
 
                                     <div class="col-md-12">
                                         <div class="group-input">
@@ -3033,39 +2940,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="QA Initial Attachments">QA/CQA initial Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list" id="Initial_attachment">
-                                                    @if ($data->Initial_attachment)
-                                                        @foreach (json_decode($data->Initial_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
 
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="myfile"
-                                                        name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                         <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial_attachment">QA/CQA initial Attachments</label>
@@ -3273,7 +3148,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Investigation required">Investigation Required?</label>
                                         <select disabled name="Investigation_required" id="Investigation_required"
@@ -3288,7 +3163,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Investigation Details">Investigation Details <span
@@ -10498,58 +10373,60 @@
 
                         <!-- jQuery Script -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                function toggleSections() {
-                                    // Toggle Fishbone section
-                                    if ($('#investigation_approach').val().includes('Fishbone or Ishikawa Diagram')) {
-                                        $('.fishbone-section').show();
-                                        $('.fishbone-required').attr( true);
-                                    } else {
-                                        $('.fishbone-section').hide();
-                                        $('.fishbone-required').removeAttr();
-                                    }
-                                    //             $('#HideInference').hide();
-                                    //             if (value === 'Fishbone or Ishikawa Diagram') {
-                                    //     $('#fishbone-section').show();
-                                    //     $('#HideInference').show();
-                                    // }
+<script>
+    $(document).ready(function() {
+        function toggleSections() {
+            // Get selected values as an array
+            var selectedValues = $('#investigation_approach').val();
 
-                                    // Toggle Why-Why Chart section
-                                    if ($('#investigation_approach').val().includes('Why-Why Chart')) {
-                                        $('.why-why-chart').show();
-                                    } else {
-                                        $('.why-why-chart').hide();
-                                    }
-                                    if ($('#investigation_approach').val().includes('Is/Is Not Analysis')) {
-                                        $('.Is-not').show();
-                                    } else {
-                                        $('.Is-not').hide();
-                                    }
-                                    if ($('#investigation_approach').val().includes('Category Of Human Error')) {
-                                        $('.Category-human').show();
-                                    } else {
-                                        $('.Category-human').hide();
-                                    }
-                                    if ($('#investigation_approach').val().includes('Failure Mode and Effect Analysis')) {
-                                        $('.failure').show();
-                                    } else {
-                                        $('.failure').hide();
-                                    }
+            // Toggle Fishbone section
+            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
+                $('.fishbone-section').show();
+                $('.fishbone-required').attr('required', true);
+            } else {
+                $('.fishbone-section').hide();
+                $('.fishbone-required').removeAttr('required');
+            }
 
+            // Toggle Why-Why Chart section
+            if (selectedValues.includes('Why-Why Chart')) {
+                $('.why-why-chart').show();
+            } else {
+                $('.why-why-chart').hide();
+            }
 
+            // Toggle Is/Is Not Analysis section
+            if (selectedValues.includes('Is/Is Not Analysis')) {
+                $('.Is-not').show();
+            } else {
+                $('.Is-not').hide();
+            }
 
-                                }
+            // Toggle Category Of Human Error section
+            if (selectedValues.includes('Category Of Human Error')) {
+                $('.Category-human').show();
+            } else {
+                $('.Category-human').hide();
+            }
 
-                                // Initial check on page load
-                                toggleSections();
+            // Toggle Failure Mode and Effect Analysis section
+            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
+                $('.failure').show();
+            } else {
+                $('.failure').hide();
+            }
+        }
 
-                                // Check on change
-                                $('#investigation_approach').on('change', function() {
-                                    toggleSections();
-                                });
-                            });
-                        </script>
+        // Initial check on page load
+        toggleSections();
+
+        // Check on change
+        $('#investigation_approach').on('change', function() {
+            toggleSections();
+        });
+    });
+</script>
+
                         <script>
                             function addInference(tableId) {
                                 var table = document.getElementById(tableId);
