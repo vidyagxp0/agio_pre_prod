@@ -405,7 +405,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($managementReview->inv_attachment)
                             @foreach (json_decode($managementReview->inv_attachment) as $key => $file)
@@ -471,7 +471,7 @@
             {{-- </div>  --}}
             <div class="block">
                 <div class="block-head">
-                    QA Head review
+                    QA Head Review
                 </div>
 
 
@@ -631,13 +631,13 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        QA Head review Attachment
+                        QA Head Review Attachment
                     </div>
                     <table>
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($managementReview->file_attchment_if_any)
                             @foreach (json_decode($managementReview->file_attchment_if_any) as $key => $file)
@@ -729,7 +729,7 @@
 
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">Batch No</th>
+                    <th class="w-60">Attachment</th>
                 </tr>
                 @if ($managementReview->meeting_and_summary_attachment)
                     @foreach (json_decode($managementReview->meeting_and_summary_attachment) as $key => $file)
@@ -4599,7 +4599,7 @@
 
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($managementReview->qa_verification_file)
                                 @foreach (json_decode($managementReview->qa_verification_file) as $key => $file)
@@ -4668,7 +4668,7 @@
 
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($managementReview->closure_attachments)
                                 @foreach (json_decode($managementReview->closure_attachments) as $key => $file)

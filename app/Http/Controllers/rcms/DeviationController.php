@@ -1767,11 +1767,13 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
     public function update(Request $request, $id)
     {
+
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
         $lastDeviationAuditTrail = deviation::find($id);
         $deviation = deviation::find($id);
+
         // $lastDocument = deviation::find($id);
         $lastCft = DeviationCft::where('deviation_id', $deviation->id)->first();
         $deviation->Delay_Justification = $request->Delay_Justification;
@@ -1786,6 +1788,10 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->how = $request->how;
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
+        $deviation->Investigation_required = $request->Investigation_required;
+        // dd($deviation->Investigation_required );
+        $deviation->capa_required = $request->capa_required;
+        $deviation->qrm_required = $request->qrm_required;
 
         // $deviation->capa_root_cause = $request->capa_root_cause;
         // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
@@ -1794,20 +1800,15 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
 
-        if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
-        {
-            $deviation->Investigation_required = "yes";
-            $deviation->capa_required = "yes";
-            $deviation->qrm_required = "yes";
-        }
+        // if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
 
 
-        if ($request->Deviation_category == 'minor')
-        {
-            $deviation->Investigation_required = $request->Investigation_required;
-            $deviation->capa_required = $request->capa_required;
-            $deviation->qrm_required = $request->qrm_required;
-        }
+
+        // $deviation->Deviation_category = $request->Deviation_category;
+        //     $deviation->Investigation_required = $request->Investigation_required;
+        //     $deviation->capa_required = $request->capa_required;
+        //     $deviation->qrm_required = $request->qrm_required;
+
 
         if ($request->form_name == 'general-open')
         {
@@ -9222,15 +9223,15 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     //     }
                     // }
 
-                    if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    // if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                            }
-                            if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    //         }
+                    //         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                                    }
-                                    if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    //                 }
+                    //                 if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                                            }
+                    //                         }
 
                                             // $list = Helpers::getCftUserList($deviation->division_id);
                                             // foreach ($list as $u) {
