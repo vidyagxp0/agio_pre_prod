@@ -12709,9 +12709,10 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
      //   $data =$parent_data1;
         if ($request->revision == "Action-Item") {
             $p_record = CC::find($id);
+            $data = CC::find($id);
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('parent_record','parent_id', 'parent_name', 'record', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type', 'data_record'));
+            return view('frontend.action-item.action-item', compact('parent_record','parent_id', 'parent_name', 'record', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type', 'data_record','data'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

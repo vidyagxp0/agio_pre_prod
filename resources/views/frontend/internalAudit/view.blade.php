@@ -706,7 +706,7 @@
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date"
-                                                        {{ $data->stage !=1? 'disabled' : '' }}
+                                                        {{ $data->stage !=1? 'readonly' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'due_date')" />
@@ -1086,7 +1086,7 @@
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea @if ($data->stage != 1) disabled @endif name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                                <textarea @if ($data->stage != 1) readonly @endif name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1131,6 +1131,9 @@
                                         </div>
 
 
+
+
+
                                             <div class="col-12">
                                                 <div class="group-input" id="IncidentRow">
                                                     <label for="root_cause">
@@ -1167,7 +1170,7 @@
                                                                         <td>{{ $serialNumber++ }}</td>
 
                                                                         <td>
-                                                                            <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][auditornew]" @if ($data->stage != 1) disabled @endif>
+                                                                            <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][auditornew]" @if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option value="{{ $value->id }}"
@@ -1177,15 +1180,15 @@
                                                                                 @endforeach
                                                                             </select>
                                                                             @if ($data->stage != 1)
-                                                                            <!-- Hidden field to retain the value if select is disabled -->
+                                                                            <!-- Hidden field to retain the value if select is readonly -->
                                                                             <input type="hidden" name="auditornew" value="{{ $data->auditornew }}">
                                                                         @endif
                                                                         </td>
 
-                                                                        <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) disabled @endif></td>
+                                                                        <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td>
 
                                                                         <td>
-                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) disabled @endif>
+                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
                                                                                 <option value="Lead Auditor" {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
                                                                                     Lead Auditor
@@ -1195,14 +1198,14 @@
                                                                                 </option>
                                                                             </select>
                                                                             @if ($data->stage != 1)
-                                                                            <!-- Hidden field to retain the value if select is disabled -->
+                                                                            <!-- Hidden field to retain the value if select is readonly -->
                                                                             <input type="hidden" name="designation" value="{{ $data->designation }}">
                                                                         @endif
                                                                         </td>
 
-                                                                        <td><input type="text"@if ($data->stage != 1) disabled @endif name="AuditorNew[{{ $loop->index }}][remarks]" value="{{ $audditor['remarks'] }}"></td>
+                                                                        <td><input type="text"@if ($data->stage != 1) readonly @endif name="AuditorNew[{{ $loop->index }}][remarks]" value="{{ $audditor['remarks'] }}"></td>
 
-                                                                        <td><button class="removeRowBtn"@if ($data->stage != 1) disabled @endif>Remove</button></td>
+                                                                        <td><button class="removeRowBtn"@if ($data->stage != 1) readonly @endif>Remove</button></td>
                                                                     </tr>
                                                                 @endforeach
                                                             @else
@@ -1218,49 +1221,44 @@
 
 
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Inv Attachments">GI Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="inv_attachment">
-                                                        @if ($data->inv_attachment)
-                                                            @foreach (json_decode($data->inv_attachment) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
+                                            <div class="col-12">
+    <div class="group-input">
+        <label for="Inv Attachments">GI Attachment</label>
+        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+        <div class="file-attachment-field">
+            <div class="file-attachment-list" id="inv_attachment_list">
+                @if ($data->inv_attachment)
+                    @foreach (json_decode($data->inv_attachment) as $file)
+                        <h6 type="button" class="file-container text-dark"
+                            style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                            </a>
+                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                            </a>
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="add-btn">
+                <div>Add</div>
+                <input
+                    @if ($data->stage != 1) disabled @endif
+                    type="file" id="inv_attachment_input" name="inv_attachment[]" oninput="addMultipleFiles(this, 'inv_attachment_list')" multiple>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            @if ($data->stage != 1) disabled @endif
-                                                            type="file" id="myfile" name="inv_attachment[]"
-                                                            oninput="addMultipleFiles(this, '
-
-                                                            ')" multiple>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            <button type="submit" id="inv_attachment" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
-                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                        <button type="button" id="inv_attachment" class="nextButton">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
@@ -2341,14 +2339,11 @@
                                                 @endphp
                                                 <select multiple id="checklists" class="abc" name="checklists[]">
                                                     <option value="1"
-                                                        @if (in_array('1', $selectedChecklist)) selected @endif>Checklist -
-                                                        Tablet Dispensing & Granulation</option>
+                                                        @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Production (Tablet Dispensing & Tablet Granulation)</option>
                                                     <option value="2"
-                                                        @if (in_array('2', $selectedChecklist)) selected @endif>Checklist -
-                                                        Tablet Compression</option>
+                                                        @if (in_array('2', $selectedChecklist)) selected @endif>Checklist - Production (Tablet Compression)</option>
                                                     <option value="3"
-                                                        @if (in_array('3', $selectedChecklist)) selected @endif>Checklist -
-                                                        Tablet Coating</option>
+                                                        @if (in_array('3', $selectedChecklist)) selected @endif>Checklist - Tablet Coating</option>
                                                     <option value="4"
                                                         @if (in_array('4', $selectedChecklist)) selected @endif>Checklist -
                                                         Tablet/Capsule Packing</option>
@@ -2374,8 +2369,7 @@
                                                         @if (in_array('11', $selectedChecklist)) selected @endif>Checklist -
                                                         Stores</option>
                                                     <option value="12"
-                                                        @if (in_array('12', $selectedChecklist)) selected @endif>Checklist -
-                                                        Human Resource</option>
+                                                        @if (in_array('12', $selectedChecklist)) selected @endif>Checklist - Human Resource and Administration</option>
                                                     <option value="13"
                                                         @if (in_array('13', $selectedChecklist)) selected @endif>Checklist -
                                                         Production (Injection Dispensing & Manufacturing)</option>
@@ -4020,7 +4014,7 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response-15" id="response"
+                                                                    <select name="response_15" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         <option value="">Select an Option</option>
                                                                         <option value="Yes"
@@ -8144,7 +8138,7 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="tablet_coating_remark_13"
+                                                                    <select name="tablet_coating_response_13"
                                                                         id="tablet_coating_response_13"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         <option value="">Select an Option</option>
@@ -11931,7 +11925,7 @@
                                     </div>
                                     <div class="sub-head">
                                         STAGE 2: Manufacturing
-                                                                        </div>
+                                     </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -11950,7 +11944,7 @@
                                                             <tr>
                                                                 <td class="flex text-center">2.{{ $index + 1 }}</td>
                                                                 <td>{!! $question !!}</td>                                                                <td>
-                                                                    <td>
+                                                                    
                                                                     @php
                                                                         $tabletmanufacturingProperty =
                                                                             'dispensing_and_manufacturing_' .

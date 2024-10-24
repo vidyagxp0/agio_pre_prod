@@ -2476,21 +2476,20 @@ $Checklist_Capsule->save();
         //     $history->save();
         // }
 
-        if($lastDocument->assign_to != $request->assign_to){
-            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+
+
+
+
+        if ($lastDocument->assign_to != $request->assign_to) {
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $id)
             ->where('activity_type', 'Auditee Department Head')
             ->exists();
             $history = new InternalAuditTrial;
-            $history->InternalAudit_id = $lastDocument->id;
+            $history->InternalAudit_id = $id;
             $history->activity_type = 'Auditee Department Head';
-            if($lastDocument->assign_to == null){
-                $history->previous = "Not Applicable";
-            } else{
-                $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
-            }
-            $history->current = Helpers::getInitiatorName($request->assign_to);
-
-            $history->comment = "Not Applicable";
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $internalAudit->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2500,7 +2499,6 @@ $Checklist_Capsule->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-
 
         // if ($lastDocument->Initiator_Group!= $internalAudit->Initiator_Group|| !empty($request->Initiator_Group_comment)) {
 
@@ -4938,9 +4936,11 @@ if ($areIniAttachmentsSame2 != true) {
             $due_date = $formattedDate->format('d-M-Y');
             if($request->child_type == 'action_item'){
                 $p_record = InternalAudit::find($id);
+                $data = InternalAudit::find($id);
+                
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parent_type = "action_item";
-                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record', 'data_record'));
+                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record', 'data_record','data'));
             }
             if($request->child_type == 'r_c_a'){
                 $parent_type = "r_c_a";
