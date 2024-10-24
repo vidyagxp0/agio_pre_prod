@@ -1429,7 +1429,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
                         <td class="w-80">
                             @if ($data1->Production_Table_Feedback)
@@ -1438,7 +1438,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
@@ -1463,7 +1463,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Tablet/Capsule/Powder Attechments
+                            Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1555,7 +1555,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attechments
+                            Production Injection Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1613,7 +1613,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Reasearch & Development Feedback</th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_feedback)
@@ -1622,8 +1622,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Reasearch & Development Completed By</th>
@@ -1647,7 +1646,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Reasearch & Development Attechments
+                            Reasearch & Development Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1704,7 +1703,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Human Resources Feedback</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_feedback)
@@ -1713,8 +1712,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Human Resources Completed By</th>
@@ -1738,7 +1736,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Human Resources Attechments
+                            Human Resources Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1795,7 +1793,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Corporate Quality Assurance Feedback</th>
                         <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_feedback)
@@ -1804,8 +1802,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Completed By</th>
@@ -1886,7 +1883,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Store Feedback</th>
                         <td class="w-80">
                             @if ($data1->Store_feedback)
@@ -1895,8 +1892,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Store Completed By</th>
@@ -1977,7 +1973,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Engineering Feedback</th>
                         <td class="w-80">
                             @if ($data1->Engineering_feedback)
@@ -1986,7 +1982,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Engineering Completed By</th>
@@ -2067,7 +2063,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Regulatory Affair Feedback</th>
                         <td class="w-80">
                             @if ($data1->RegulatoryAffair_feedback)
@@ -2076,8 +2072,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Regulatory Affair Completed By</th>
@@ -2158,7 +2153,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Quality Assurance Feedback</th>
                         <td class="w-80">
                             @if ($data1->QualityAssurance_feedback)
@@ -2167,8 +2162,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Quality Assurance Review Completed By</th>
@@ -2217,10 +2211,10 @@
                     </div>
                 </table>
 
-                <div class="block-head">Production (Liquid/Externa Prepartion)</div>
+                <div class="block-head">Production (Liquid/External Prepartion)</div>
                 <table>
                     <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Required?</th>
+                        <th class="w-20">Production Liquid/External Preparation Required?</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_Review)
                                 {{ $data1->ProductionLiquid_Review }}
@@ -2239,7 +2233,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Impact Assessment (By Production Liquid/Externa Prepartion)</th>
+                        <th class="w-20">Impact Assessment (By Production Liquid/External Prepartion)</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_assessment)
                                 {{ strip_tags($data1->ProductionLiquid_assessment) }}
@@ -2249,8 +2243,8 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Feedback</th>
+                    {{-- <tr>
+                        <th class="w-20">Production Liquid/External Preparation Feedback</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_feedback)
                                 {{ strip_tags($data1->ProductionLiquid_feedback) }}
@@ -2259,10 +2253,10 @@
                             @endif
                         </td>
 
-                    </tr>
+                    </tr> --}}
 
                     <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Completed By</th>
+                        <th class="w-20">Production Liquid/External Preparation Completed By</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_by)
                                 {{ $data1->ProductionLiquid_by }}
@@ -2270,7 +2264,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Production Liquid/Externa Preparation Completed On</th>
+                        <th class="w-20">Production Liquid/External Preparation Completed On</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_on)
                                 {{ $data1->ProductionLiquid_on }}
@@ -2283,7 +2277,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Liquid/Externa Preparation Attachments
+                            Production Liquid/External Preparation Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2340,7 +2334,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Quality Control Feedback</th>
                         <td class="w-80">
                             @if ($data1->Quality_Control_feedback)
@@ -2349,8 +2343,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Quality Control Completed By</th>
@@ -2432,7 +2425,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Microbiology Feedback</th>
                         <td class="w-80">
                             @if ($data1->Microbiology_feedback)
@@ -2441,8 +2434,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Microbiology Completed By</th>
@@ -2523,7 +2515,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Saftey Feedback</th>
                         <td class="w-80">
                             @if ($data1->Health_Safety_feedback)
@@ -2532,8 +2524,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Saftey Completed By</th>
@@ -2626,7 +2617,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 1 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other1_feedback)
@@ -2635,8 +2626,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 1 Review Completed By</th>
@@ -2729,7 +2719,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 2 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other2_feedback)
@@ -2738,8 +2728,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 2 Review Completed By</th>
@@ -2832,7 +2821,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 3 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other3_feedback)
@@ -2841,8 +2830,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 3 Review Completed By</th>
@@ -2935,7 +2923,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 4 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other4_feedback)
@@ -2944,8 +2932,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 4 Review Completed By</th>
@@ -3038,7 +3025,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 5 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other5_feedback)
@@ -3047,8 +3034,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 5 Review Completed By</th>
@@ -3096,64 +3082,6 @@
                         </table>
                     </div>
                 </table>
-
-
-
-
-
-                {{-- <div class="block-head">Other's 1 (Additional Person Review Form Departments if Required)</div>
-                        <table>
-                            <tr>
-                                <th class="w-20">Contract Giver Review</th>
-                                <td class="w-30">@if ($data1->ContractGiver_Review) {{  $data1->ContractGiver_Review }}@else Not Applicable @endif</td>
-                                <th class="w-20">Contract Giver Person</th>
-                                <td class="w-30">@if ($data1->ContractGiver_person){{ $data1->Environment_Health_Safety_person}}@else Not Applicable @endif</td>
-                            </tr>
-
-                            <tr>
-                                <th class="w-20"> Contract Giver Assessment</th>
-                                <td class="w-80">@if ($data1->ContractGiver_assessment){{ strip_tags($data1->ContractGiver_assessment)  }}@else Not Applicable @endif</td>
-                            </tr>
-
-                            <tr>
-                                <th class="w-20">Contract Giver Feedback</th>
-                                <td class="w-80">@if ($data1->ContractGiver_feedback){{  strip_tags($data1->ContractGiver_feedback) }}@else Not Applicable @endif</td>
-
-                            </tr>
-
-                            <tr>
-                                <th class="w-20">Contract Giver Completed by</th>
-                                <td class="w-30">@if ($data1->ContractGiver_by){{ $data1->ContractGiver_by }}@else Not Applicable @endif</td>
-                                <th class="w-20">Contract Giver Completed  on</th>
-                                <td class="w-30">@if ($data1->ContractGiver_on){{ $data1->ContractGiver_on}}@else Not Applicable @endif</td>
-                            </tr>
-                        </table>
-                        <table>
-                            <div class="border-table">
-                                <div class="block-head">
-                                    Contract Giver Attachment
-                                </div>
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
-                                        <th class="w-60">File No</th>
-                                    </tr>
-                                    @if ($data1->ContractGiver_attachment)
-                                        @foreach (json_decode($data1->ContractGiver_attachment) as $key => $file)
-                                            <tr>
-                                                <td class="w-20">{{ $key + 1 }}</td>
-                                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td class="w-20">1</td>
-                                            <td class="w-60">Not Applicable</td>
-                                        </tr>
-                                    @endif
-                                </table>
-                            </div>
-                        </table> --}}
 
             </div>
 

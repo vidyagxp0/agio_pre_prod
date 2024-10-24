@@ -82,7 +82,7 @@ class RiskManagementController extends Controller
             $data->other_source_of_risk = null; // or handle it accordingly
         }
 
-        if ($request->input('type') == 'Other_data') {
+        if ($request->input('type') == 'Other Data') {
             $data->other_type = $request->input('other_type');
         } else {
             $data->other_type = null; // or handle it accordingly
@@ -4445,26 +4445,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
-            $history->previous = $lastCft->Production_Table_Feedback;
-            $history->current = $request->Production_Table_Feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
+        //     $history->previous = $lastCft->Production_Table_Feedback;
+        //     $history->current = $request->Production_Table_Feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
 
 
@@ -4633,26 +4633,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Production Liquid Feedback';
-            $history->previous = $lastCft->ProductionLiquid_feedback;
-            $history->current = $request->ProductionLiquid_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Production Liquid Feedback';
+        //     $history->previous = $lastCft->ProductionLiquid_feedback;
+        //     $history->current = $request->ProductionLiquid_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment) {
             $history = new RiskAuditTrail();
             $history->risk_id = $Cft->id;
@@ -4815,26 +4815,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Production Injection Feedback';
-            $history->previous = $lastCft->Production_Injection_Feedback;
-            $history->current = $request->Production_Injection_Feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Production Injection Feedback';
+        //     $history->previous = $lastCft->Production_Injection_Feedback;
+        //     $history->current = $request->Production_Injection_Feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment) {
             $history = new RiskAuditTrail();
@@ -5000,26 +5000,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Store Feedback';
-            $history->previous = $lastCft->Store_feedback;
-            $history->current = $request->Store_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Store Feedback';
+        //     $history->previous = $lastCft->Store_feedback;
+        //     $history->current = $request->Store_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastCft->Store_attachment != $request->Store_attachment) {
             $history = new RiskAuditTrail();
@@ -5157,26 +5157,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Quality Control Feeback';
-            $history->previous = $lastCft->Quality_Control_feedback;
-            $history->current = $request->Quality_Control_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Quality Control Feeback';
+        //     $history->previous = $lastCft->Quality_Control_feedback;
+        //     $history->current = $request->Quality_Control_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment) {
             $history = new RiskAuditTrail();
@@ -5274,26 +5274,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Research & Development Feedback';
-            $history->previous = $lastCft->ResearchDevelopment_feedback;
-            $history->current = $request->ResearchDevelopment_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Research & Development Feedback';
+        //     $history->previous = $lastCft->ResearchDevelopment_feedback;
+        //     $history->current = $request->ResearchDevelopment_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -5459,26 +5459,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Engineering Feedback';
-            $history->previous = $lastCft->Engineering_feedback;
-            $history->current = $request->Engineering_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Engineering Feedback';
+        //     $history->previous = $lastCft->Engineering_feedback;
+        //     $history->current = $request->Engineering_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -5826,26 +5826,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Microbiology Feedback';
-            $history->previous = $lastCft->Microbiology_feedback;
-            $history->current = $request->Microbiology_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Microbiology Feedback';
+        //     $history->previous = $lastCft->Microbiology_feedback;
+        //     $history->current = $request->Microbiology_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -6003,26 +6003,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Regulatory Affair Feedback';
-            $history->previous = $lastCft->RegulatoryAffair_feedback;
-            $history->current = $request->RegulatoryAffair_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Regulatory Affair Feedback';
+        //     $history->previous = $lastCft->RegulatoryAffair_feedback;
+        //     $history->current = $request->RegulatoryAffair_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -6186,26 +6186,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Feedback';
-            $history->previous = $lastCft->CorporateQualityAssurance_feedback;
-            $history->current = $request->CorporateQualityAssurance_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Corporate Quality Assurance Feedback';
+        //     $history->previous = $lastCft->CorporateQualityAssurance_feedback;
+        //     $history->current = $request->CorporateQualityAssurance_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
 
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
@@ -6366,26 +6366,27 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Safety Feedback';
-            $history->previous = $lastCft->Health_Safety_feedback;
-            $history->current = $request->Health_Safety_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+
+        // if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Safety Feedback';
+        //     $history->previous = $lastCft->Health_Safety_feedback;
+        //     $history->current = $request->Health_Safety_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -6570,26 +6571,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Other 1 Feedback';
-            $history->previous = $lastCft->Other1_feedback;
-            $history->current = $request->Other1_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 1 Feedback';
+        //     $history->previous = $lastCft->Other1_feedback;
+        //     $history->current = $request->Other1_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -6735,26 +6736,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Other 2 Feedback';
-            $history->previous = $lastCft->Other2_feedback;
-            $history->current = $request->Other2_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 2 Feedback';
+        //     $history->previous = $lastCft->Other2_feedback;
+        //     $history->current = $request->Other2_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -6898,26 +6899,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Other 3 Feedback';
-            $history->previous = $lastCft->Other3_feedback;
-            $history->current = $request->Other3_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 3 Feedback';
+        //     $history->previous = $lastCft->Other3_feedback;
+        //     $history->current = $request->Other3_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -7062,26 +7063,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Other 4 Feedback';
-            $history->previous = $lastCft->Other4_feedback;
-            $history->current = $request->Other4_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 4 Feedback';
+        //     $history->previous = $lastCft->Other4_feedback;
+        //     $history->current = $request->Other4_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -7226,26 +7227,26 @@ class RiskManagementController extends Controller
             }
             $history->save();
         }
-        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
-            $history = new RiskAuditTrail;
-            $history->risk_id = $id;
-            $history->activity_type = 'Other 5 Feedback';
-            $history->previous = $lastCft->Other5_feedback;
-            $history->current = $request->Other5_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
+        //     $history = new RiskAuditTrail;
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Other 5 Feedback';
+        //     $history->previous = $lastCft->Other5_feedback;
+        //     $history->current = $request->Other5_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -7345,7 +7346,12 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocument ? "Update" : "New";
+            // $history->action_name = $lastDocument ? "Update" : "New";
+            if (is_null($lastDocument->qa_cqa_attachments) || $lastDocument->qa_cqa_attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -7417,7 +7423,12 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocument ? "New" : "Update";
+            // $history->action_name = $lastDocument ? "New" : "Update";
+            if (is_null($lastDocument->qa_cqa_head_attach) || $lastDocument->qa_cqa_head_attach === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -10821,13 +10832,14 @@ class RiskManagementController extends Controller
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $parent_name = "Risk Assesment";
             $actionchild = RiskManagement::find($id);
+            $data = RiskManagement::find($id);
             $actionchild->actionchild = $record_number;
             // $p_record = RiskManagement::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $parent_id = $id;
             $actionchild->save();
             $parentRecord = RiskManagement::where('id', $id)->value('record');
-            return view('frontend.action-item.action-item', compact('old_record','parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
+            return view('frontend.action-item.action-item', compact('old_record','data', 'parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
         }
 
         elseif ($request->child_type == "effectiveness_check")
