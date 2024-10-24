@@ -2386,6 +2386,25 @@ $users = DB::table('users')
                                 <textarea id="Conclusion1"  name="Conclusion1" ></textarea>
                             </div>
                         </div>
+                        <!-- -----------thik hai -->
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">File Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attachment_IB_Inv"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attachment_IB_Inv[]"
+                                            oninput="addMultipleFiles(this, 'file_attachment_IB_Inv')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>

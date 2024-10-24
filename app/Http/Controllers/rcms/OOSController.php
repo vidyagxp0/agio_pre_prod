@@ -3291,6 +3291,7 @@ class OOSController extends Controller
          {
             $parent_name = "CAPA";
             $actionchild = OOS::find($id);
+            $data = OOS::find($id);
             // $p_record = RootCauseAnalysis::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);    
             $parentRecord = OOS::where('id', $id)->value('record');
@@ -3298,7 +3299,7 @@ class OOSController extends Controller
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
         }
         elseif ($request->child_type == "Resampling")
          {

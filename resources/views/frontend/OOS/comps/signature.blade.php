@@ -818,11 +818,11 @@
                </div>
             </div>
 
-            <div class="col-12 sub-head">P III Investigation Applicaion/Not Applicable</div>
+            <div class="col-12 sub-head">P III Investigation Applicable/Not Applicable</div>
 
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="completed by">P III Investigation Applicaion/Not Applicable By</label>
+                    <label for="completed by">P III Investigation Applicable/Not Applicable By</label>
                     @if ($data->P_III_Investigation_Applicable_By)
                         <div class="static">{{ $data->P_III_Investigation_Applicable_By }}</div>
                     @else
@@ -832,7 +832,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="group-input">
-                    <label for="completed on">P III Investigation Applicaion/Not Applicable On</label>
+                    <label for="completed on">P III Investigation Applicable/Not Applicable On</label>
                     @if ($data->P_III_Investigation_Applicable_On)
                         <div class="static">{{ $data->P_III_Investigation_Applicable_On }}</div>
                     @else
