@@ -7310,7 +7310,7 @@ class RiskManagementController extends Controller
 
 
 
-        if ($lastDocument->qa_cqa_comments != $data->qa_cqa_comments || !empty($request->qa_cqa_comments)) {
+        if ($lastDocument->qa_cqa_comments != $data->qa_cqa_comments) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'QA/CQA Review Comment';
@@ -7386,7 +7386,7 @@ class RiskManagementController extends Controller
         // }
 
 
-        if ($lastDocument->qa_cqa_head_comm != $data->qa_cqa_head_comm || !empty($request->qa_cqa_head_comm)) {
+        if ($lastDocument->qa_cqa_head_comm != $data->qa_cqa_head_comm ) {
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'QA/CQA Head Approval Comment';

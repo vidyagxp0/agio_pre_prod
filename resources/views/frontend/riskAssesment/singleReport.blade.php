@@ -1671,10 +1671,10 @@
                     </div>
                 </table>
 
-                <div class="block-head">Human Resources</div>
+                <div class="block-head">Human Resource</div>
                 <table>
                     <tr>
-                        <th class="w-20">Human Resources Required?</th>
+                        <th class="w-20">Human Resource Required?</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_review)
                                 {{ $data1->Human_Resource_review }}
@@ -1682,7 +1682,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Human Resources Person</th>
+                        <th class="w-20">Human Resource Person</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_person)
                                 {{ $data1->Production_Injection_Person }}
@@ -1693,7 +1693,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Impact Assessment (By Human Resources)</th>
+                        <th class="w-20">Impact Assessment (By Human Resource)</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_assessment)
                                 {{ strip_tags($data1->Human_Resource_assessment) }}
@@ -1704,7 +1704,7 @@
                     </tr>
 
                     {{-- <tr>
-                        <th class="w-20">Human Resources Feedback</th>
+                        <th class="w-20">Human Resource Feedback</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_feedback)
                                 {{ strip_tags($data1->Human_Resource_feedback) }}
@@ -1715,7 +1715,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Human Resources Completed By</th>
+                        <th class="w-20">Human Resource Completed By</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_by)
                                 {{ $data1->Human_Resource_by }}
@@ -1723,7 +1723,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Human Resources Completed On</th>
+                        <th class="w-20">Human Resource Completed On</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_on)
                                 {{ $data1->Human_Resource_on }}
@@ -1736,7 +1736,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Human Resources Attachments
+                            Human Resource Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -3100,7 +3100,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        QA/CQA Review Attachments
+                        QA/CQA Review Attachment
                     </div>
                     <table>
                         <tr class="table_bg">
@@ -3138,7 +3138,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        QA/CQA Head Attachments
+                        QA/CQA Head Attachment
                     </div>
                     <table>
                         <tr class="table_bg">

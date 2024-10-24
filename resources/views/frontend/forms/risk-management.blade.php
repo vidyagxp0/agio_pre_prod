@@ -309,14 +309,25 @@
                                     </div>
 
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            {{-- <input id="docname" type="text" name="short_description" maxlength="255" required> --}}
                                             <input name="short_description" id="short_description"></input>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Short Description">Short Description<span
+                                                    class="text-danger">*</span></label><span id="rchars">255</span>
+                                            Characters remaining
+                                            <input id="docname" type="text" name="short_description" maxlength="255"
+                                                required>
+                                        </div>
+                                        @error('short_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
@@ -580,7 +591,7 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Initial Attachment</label>
+                                            <label for="CAPA Attachments">Initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
