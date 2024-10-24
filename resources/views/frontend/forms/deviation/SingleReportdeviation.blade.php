@@ -745,7 +745,7 @@
                     <div class="inner-block">
                         <label class="Summer"
                             style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                            HOD Remarks </label>
+                            HOD Review </label>
                         <span style="font-size: 0.8rem; margin-left: 60px;">
                             @if ($data->HOD_Remarks)
                                 {{ $data->HOD_Remarks }}
@@ -871,7 +871,7 @@
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA
                         Initial
-                        Remark </label>
+                        Assessment </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->QAInitialRemark)
                             {{ $data->QAInitialRemark }}
@@ -924,7 +924,7 @@
 
                             <tr>
 
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Required ?
+                                <th class="w-20">Production Tablet/Capsule/Powder Impact Assessment Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -960,7 +960,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
+                                {{-- <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_By)
@@ -969,11 +969,11 @@
                                             Not Applicable
                                         @endif
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                             <tr>
 
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Impact Assessment Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_By)
@@ -983,7 +983,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Impact Assessment Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_On)
@@ -1037,7 +1037,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Production Injection Review Required ?
+                                    <th class="w-20">Production Injection Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1072,7 +1072,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Production Injection Feedback</th>
+                                    {{-- <th class="w-20">Production Injection Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Production_Injection_Feedback)
@@ -1081,11 +1081,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Production Injection Review Completed By</th>
+                                    <th class="w-20">Production Injection Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Production_Injection_By)
@@ -1095,7 +1095,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Production Injection Review Completed On</th>
+                                    <th class="w-20">Production Injection Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Production_Injection_On)
@@ -1146,7 +1146,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Research & Development Review Required ?
+                                    <th class="w-20">Research & Development Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1181,7 +1181,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Research & Development Feedback</th>
+                                    {{-- <th class="w-20">Research & Development Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ResearchDevelopment_feedback)
@@ -1190,11 +1190,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Research & Development Review Completed By</th>
+                                    <th class="w-20">Research & Development Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ResearchDevelopment_by)
@@ -1204,7 +1204,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Research & Development Review Completed On</th>
+                                    <th class="w-20">Research & Development Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ResearchDevelopment_on)
@@ -1254,7 +1254,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Human Resource Review Required ?
+                                    <th class="w-20">Human Resource Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1289,7 +1289,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Human Resource Feedback</th>
+                                    {{-- <th class="w-20">Human Resource Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Human_Resource_feedback)
@@ -1298,11 +1298,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Human Resource Review Completed By</th>
+                                    <th class="w-20">Human Resource Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Human_Resource_by)
@@ -1312,7 +1312,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Human Resource Review Completed On</th>
+                                    <th class="w-20"> Human Resource Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Human_Resource_on)
@@ -1363,7 +1363,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Corporate Quality Assurance Review Required ?
+                                    <th class="w-20">Corporate Quality Assurance Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1398,7 +1398,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Corporate Quality Assurance feedback Feedback</th>
+                                    {{-- <th class="w-20">Corporate Quality Assurance feedback Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_feedback)
@@ -1407,11 +1407,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Corporate Quality Assurance Review Completed By</th>
+                                    <th class="w-20">Corporate Quality Assurance Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_by)
@@ -1421,7 +1421,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Corporate Quality Assurance Review Completed On</th>
+                                    <th class="w-20">Corporate Quality Assurance Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_on)
@@ -1472,7 +1472,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Stores Review Required ?
+                                    <th class="w-20">Stores Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1507,7 +1507,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Stores feedback Feedback</th>
+                                    {{-- <th class="w-20">Stores feedback Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_feedback)
@@ -1516,11 +1516,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Stores Review Completed By</th>
+                                    <th class="w-20">Stores Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_by)
@@ -1530,7 +1530,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Stores Review Completed On</th>
+                                    <th class="w-20">Stores Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_on)
@@ -1581,7 +1581,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Engineering Review Required ?
+                                    <th class="w-20">Engineering Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1616,7 +1616,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Engineering Feedback</th>
+                                    {{-- <th class="w-20">Engineering Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Engineering_feedback)
@@ -1625,11 +1625,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Engineering Review Completed By</th>
+                                    <th class="w-20">Engineering Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Engineering_by)
@@ -1639,7 +1639,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Engineering Review Completed On</th>
+                                    <th class="w-20"> Engineering Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Engineering_on)
@@ -1689,7 +1689,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Regulatory Affair Review Required ?
+                                    <th class="w-20">Regulatory Affair Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1724,7 +1724,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Regulatory Affair Feedback</th>
+                                    {{-- <th class="w-20">Regulatory Affair Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->RegulatoryAffair_feedback)
@@ -1733,11 +1733,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Regulatory Affair Review Completed By</th>
+                                    <th class="w-20">Regulatory Affair Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->RegulatoryAffair_by)
@@ -1747,7 +1747,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Regulatory Affair Review Completed On</th>
+                                    <th class="w-20"> Regulatory Affair Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->RegulatoryAffair_on)
@@ -1798,7 +1798,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Quality Assurance Review Required ?
+                                    <th class="w-20">Quality Assurance Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1833,7 +1833,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Quality Assurance feedback Feedback</th>
+                                    {{-- <th class="w-20">Quality Assurance feedback Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_Assurance_feedback)
@@ -1842,11 +1842,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Quality Assurance Review Completed By</th>
+                                    <th class="w-20">Quality Assurance Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->QualityAssurance_by)
@@ -1856,7 +1856,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Quality Assurance Review Completed On</th>
+                                    <th class="w-20">Quality Assurance Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->QualityAssurance_on)
@@ -1907,7 +1907,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Production (Liquid/Ointment) Review Required ?
+                                    <th class="w-20">Production (Liquid/Ointment) Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1942,7 +1942,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Production (Liquid/Ointment) Feedback</th>
+                                    {{-- <th class="w-20">Production (Liquid/Ointment) Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ProductionLiquid_feedback)
@@ -1951,11 +1951,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Production (Liquid/Ointment) Review Completed By</th>
+                                    <th class="w-20">Production (Liquid/Ointment) Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ProductionLiquid_by)
@@ -1965,7 +1965,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Production (Liquid/Ointment) Review Completed On</th>
+                                    <th class="w-20">Production (Liquid/Ointment) Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ProductionLiquid_on)
@@ -2015,7 +2015,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Quality Control Review Required ?
+                                    <th class="w-20">Quality Control Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2050,7 +2050,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Quality Control Feedback</th>
+                                    {{-- <th class="w-20">Quality Control Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_Control_feedback)
@@ -2059,11 +2059,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Quality Control Review Completed By</th>
+                                    <th class="w-20">Quality Control Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_Control_on)
@@ -2073,7 +2073,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Quality Control Review Completed On</th>
+                                    <th class="w-20">Quality Control Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_Control_on)
@@ -2124,7 +2124,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Microbiology Review Required ?
+                                    <th class="w-20">Microbiology Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2160,7 +2160,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Microbiology Feedback</th>
+                                    {{-- <th class="w-20">Microbiology Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Microbiology_feedback)
@@ -2169,11 +2169,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Microbiology Review Completed By
+                                    <th class="w-20">Microbiology Impact Assessment Completed By
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2184,7 +2184,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Microbiology Review Completed On
+                                    <th class="w-20">Microbiology Impact Assessment Completed On
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2237,7 +2237,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Safety Review Required ?
+                                    <th class="w-20">Safety Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2272,7 +2272,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Safety Feedback</th>
+                                    {{-- <th class="w-20">Safety Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Health_Safety_feedback)
@@ -2281,11 +2281,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Safety Review Completed By</th>
+                                    <th class="w-20">Safety Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Environment_Health_Safety_by)
@@ -2295,7 +2295,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Safety Review Completed On</th>
+                                    <th class="w-20"> Safety Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Environment_Health_Safety_on)
@@ -2347,7 +2347,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Contract Giver Required ?
+                                    <th class="w-20">Contract Giver Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2382,7 +2382,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Contract Giver Feedback</th>
+                                    {{-- <th class="w-20">Contract Giver Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ContractGiver_feedback)
@@ -2391,11 +2391,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Contract Giver Review Completed By</th>
+                                    <th class="w-20">Contract Giver Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ContractGiver_by)
@@ -2405,7 +2405,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Contract Giver Review Completed On</th>
+                                    <th class="w-20"> Contract Giver Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ContractGiver_on)
@@ -2451,13 +2451,13 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Other's 1 ( Additional Person Review From Departments If Required)
+                                Other's 1 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
 
                                 <tr>
 
-                                    <th class="w-20">Other's 1 Review Required ?
+                                    <th class="w-20">Other's 1 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2502,7 +2502,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Other's 1 Feedback</th>
+                                    {{-- <th class="w-20">Other's 1 Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_feedback)
@@ -2511,11 +2511,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Other's 1 Review Completed By</th>
+                                    <th class="w-20">Other's 1 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_by)
@@ -2525,7 +2525,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Other's 1 Review Completed On</th>
+                                    <th class="w-20"> Other's 1 Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_on)
@@ -2569,13 +2569,13 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Other's 2 ( Additional Person Review From Departments If Required)
+                                Other's 2 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
 
                                 <tr>
 
-                                    <th class="w-20">Other's 2 Review Required ?
+                                    <th class="w-20">Other's 2 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2620,7 +2620,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Other's 2 Feedback</th>
+                                    {{-- <th class="w-20">Other's 2 Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other2_feedback)
@@ -2629,11 +2629,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Other's 2 Review Completed By</th>
+                                    <th class="w-20">Other's 2 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other2_by)
@@ -2643,7 +2643,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Other's 2 Review Completed On</th>
+                                    <th class="w-20"> Other's 2 Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other2_on)
@@ -2687,13 +2687,13 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Other's 3 ( Additional Person Review From Departments If Required)
+                                Other's 3 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
 
                                 <tr>
 
-                                    <th class="w-20">Other's 3 Review Required ?
+                                    <th class="w-20">Other's 3 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2738,7 +2738,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Other's 3 Feedback</th>
+                                    {{-- <th class="w-20">Other's 3 Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other3_feedback)
@@ -2747,11 +2747,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Other's 3 Review Completed By</th>
+                                    <th class="w-20">Other's 3 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other3_by)
@@ -2761,7 +2761,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Other's 3 Review Completed On</th>
+                                    <th class="w-20"> Other's 3 Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other3_on)
@@ -2805,13 +2805,13 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Other's 4 ( Additional Person Review From Departments If Required)
+                                Other's 4 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
 
                                 <tr>
 
-                                    <th class="w-20">Other's 4 Review Required ?
+                                    <th class="w-20">Other's 4 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2856,7 +2856,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Other's 4 Feedback</th>
+                                    {{-- <th class="w-20">Other's 4 Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other4_feedback)
@@ -2865,11 +2865,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Other's 4 Review Completed By</th>
+                                    <th class="w-20">Other's 4 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other4_by)
@@ -2879,7 +2879,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Other's 4 Review Completed On</th>
+                                    <th class="w-20"> Other's 4 Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other4_on)
@@ -2923,13 +2923,13 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Other's 5 ( Additional Person Review From Departments If Required)
+                                Other's 5 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
 
                                 <tr>
 
-                                    <th class="w-20">Other's 5 Review Required ?
+                                    <th class="w-20">Other's 5 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -2974,7 +2974,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Other's 5 Feedback</th>
+                                    {{-- <th class="w-20">Other's 5 Feedback</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other5_feedback)
@@ -2983,11 +2983,11 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Other's 5 Review Completed By</th>
+                                    <th class="w-20">Other's 5 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other5_by)
@@ -2997,7 +2997,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20"> Other's 5 Review Completed On</th>
+                                    <th class="w-20"> Other's 5 Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other5_on)

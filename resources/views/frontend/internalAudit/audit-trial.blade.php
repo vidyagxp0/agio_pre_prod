@@ -210,9 +210,10 @@
                                     href="{{ url('rcms/internalAuditShow/' . $document->id) }}"> Back
                                 </a>
                             </button>
-                            <button class="button_theme1" onclick="window.print();">
-                                Print
-                            </button>
+                             <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
+                                Exit
+                        </a>
+
                         </div>
                     </div>
 
@@ -322,8 +323,8 @@
 
                             <div> <strong>Record ID : </strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                           
-                            
+
+
                                 : {{ $document->initiator ?? ''}}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
@@ -443,9 +444,9 @@
             {{ $audit->links() }}
         </div>
             </div>
-            
+
         </div>
-       
+
 
         </body>
 
