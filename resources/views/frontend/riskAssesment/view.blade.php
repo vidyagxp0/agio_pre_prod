@@ -566,18 +566,31 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span
                                                     id="rchars">255</span> characters remaining
-                                                {{-- <textarea name="short_description"  type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea> --}}
 
-                                                <input type="text" name="short_description" id="short_description"
+                                                <input type="text" name="short_description" maxlength="255" id="short_description"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->short_description }}">
+                                                    value="{{ $data->short_description }}" required>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label>
+                                                <span id="rchars">255</span> characters remaining
+                                                <input name="short_description" id="docname" type="text"
+                                                    maxlength="255" required value="{{ $data->short_description }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            </div>
+                                            @error('short_description')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
 
@@ -753,7 +766,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">Initial Attachment</label>
+                                                <label for="File Attachments">Initial Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -1736,7 +1749,7 @@
                                                         $data->stage == 2 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 productionTable">
+                                        {{-- <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback
                                                     <span id="asteriskPT2"
@@ -1750,7 +1763,7 @@
                                                         (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif
                                                     name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 productionTable">
                                             <div class="group-input">
                                                 <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
@@ -1919,7 +1932,7 @@
                                                     <textarea class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionTable">
+                                            {{-- <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet feedback">Production Tablet Feedback
                                                         <!-- <span
@@ -1932,7 +1945,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
@@ -1950,13 +1963,11 @@
                                                     <textarea disabled class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionTable">
+                                            {{-- <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet feedback">Production
                                                         Tablet/Capsule/Powder Feedback
-                                                        <!-- <span
-                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                    class="text-danger">*</span> -->
+                                                        <!-- <span id="asteriskInvi22" style="display: none" class="text-danger">*</span> -->
                                                     </label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
                                                             field if
@@ -1964,7 +1975,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 productionTable">
                                             <div class="group-input">
@@ -2130,7 +2141,7 @@
                                                         (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 productionInjection">
+                                    {{-- <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback <span
                                                     id="asteriskPT2"
@@ -2143,7 +2154,7 @@
                                                     (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
                                                 name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection attachment">Production Injection
@@ -2308,19 +2319,17 @@
                                                 <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 productionInjection">
+                                        {{-- <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
-                                                    <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                    <!-- <span   id="asteriskInvi22" style="display: none" class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
                                                 <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     @else
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
@@ -2519,7 +2528,7 @@
                                                             (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 researchDevelopment">
+                                        {{-- <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
                                                 <label for="Research Development feedback">Research & Development
                                                     Feedback <span id="asteriskPT2"
@@ -2533,7 +2542,7 @@
                                                         (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif
                                                     name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-12 researchDevelopment">
                                             <div class="group-input">
@@ -2703,7 +2712,7 @@
                                                     <textarea class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 researchDevelopment">
+                                            {{-- <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development feedback">Research & Development
                                                         Feedback</label>
@@ -2713,7 +2722,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
@@ -2727,7 +2736,7 @@
                                                     <textarea disabled class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 researchDevelopment">
+                                            {{-- <div class="col-md-12 mb-3 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development feedback">Research & Development
                                                         Feedback</label>
@@ -2737,7 +2746,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 researchDevelopment">
                                             <div class="group-input">
@@ -2905,7 +2914,7 @@
                                                     @if ($data->stage == 2 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 Human_Resource">
+                                        {{-- <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
                                                 <label for="Human Resource feedback">Human Resource Feedback <span
                                                         id="asteriskPT2"
@@ -2917,7 +2926,7 @@
                                                 <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 2 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif
                                                     name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 Human_Resource">
                                             <div class="group-input">
                                                 <label for="Human Resource attachment">Human Resource
@@ -3083,7 +3092,7 @@
                                                     <textarea class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Human_Resource">
+                                            {{-- <div class="col-md-12 mb-3 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource feedback">Human Resource
                                                         Feedback</label>
@@ -3093,7 +3102,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 Human_Resource">
                                                 <div class="group-input">
@@ -3106,7 +3115,7 @@
                                                     <textarea disabled class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Human_Resource">
+                                            {{-- <div class="col-md-12 mb-3 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource feedback">Human Resource
                                                         Feedback</label>
@@ -3116,7 +3125,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 Human_Resource">
                                             <div class="group-input">
@@ -3288,7 +3297,7 @@
                                                     name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 CQA">
+                                        {{-- <div class="col-md-12 mb-3 CQA">
                                             <div class="group-input">
                                                 <label for="Corporate Quality Assurance feedback">Corporate Quality
                                                     Assurance
@@ -3305,7 +3314,7 @@
                                                     name="CorporateQualityAssurance_feedback" id="summernote-18"
                                                     @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 CQA">
                                             <div class="group-input">
                                                 <label for="Corporate Quality Assurance attachment">Corporate Quality
@@ -3481,7 +3490,7 @@
                                                     <textarea class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 CQA">
+                                            {{-- <div class="col-md-12 mb-3 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance feedback">Corporate
                                                         Quality
@@ -3493,7 +3502,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 CQA">
                                                 <div class="group-input">
@@ -3508,7 +3517,7 @@
                                                     <textarea disabled class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 CQA">
+                                            {{-- <div class="col-md-12 mb-3 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance feedback">Corporate
                                                         Quality
@@ -3520,7 +3529,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 CQA">
                                             <div class="group-input">
@@ -3692,7 +3701,7 @@
                                                     @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 store">
+                                        {{-- <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
                                                 <label for="store feedback">Store Feedback <span id="asteriskPT2"
                                                         style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -3703,7 +3712,7 @@
                                                 <textarea class="summernote Store_feedback" @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif
                                                     name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Store_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 store">
                                             <div class="group-input">
                                                 <label for="Store attachment">Store Attachments</label>
@@ -3862,7 +3871,7 @@
                                                     <textarea class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 store">
+                                            {{-- <div class="col-md-12 mb-3 store">
                                                 <div class="group-input">
                                                     <label for="Store feedback">Store Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -3871,7 +3880,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 store">
                                                 <div class="group-input">
@@ -3883,7 +3892,7 @@
                                                     <textarea disabled class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 store">
+                                            {{-- <div class="col-md-12 mb-3 store">
                                                 <div class="group-input">
                                                     <label for="Store feedback">Store Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -3892,7 +3901,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 store">
                                             <div class="group-input">
@@ -4068,7 +4077,7 @@
                                                             (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 qualityControl">
+                                        {{-- <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
                                                 <label for="Quality Control feedback">Quality Control Feedback <span
                                                         id="asteriskPT2"
@@ -4082,7 +4091,7 @@
                                                         (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
                                                     name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 qualityControl">
                                             <div class="group-input">
                                                 <label for="Quality Control attachment">Quality Control
@@ -4256,7 +4265,7 @@
                                                     <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 qualityControl">
+                                            {{-- <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control feedback">Quality Control
                                                         Feedback</label>
@@ -4266,7 +4275,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
@@ -4280,7 +4289,7 @@
                                                     <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 qualityControl">
+                                            {{-- <div class="col-md-12 mb-3 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control feedback">Quality Control
                                                         Feedback</label>
@@ -4290,7 +4299,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 qualityControl">
                                             <div class="group-input">
@@ -4450,7 +4459,7 @@
                                                 name="QualityAssurance_assessment" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 quality_assurance">
+                                    {{-- <div class="col-md-12 mb-3 quality_assurance">
                                         <div class="group-input">
                                             <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
                                                     id="asteriskQQA2"
@@ -4462,7 +4471,7 @@
                                             <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_feedback"
                                                 name="QualityAssurance_feedback" @if ($data->stage == 2 || Auth::user()->name != $data1->QualityAssurance_person) readonly @endif id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
@@ -4652,7 +4661,7 @@
                                                             (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 RegulatoryAffair">
+                                        {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
                                                 <label for="Regulatory Affair feedback">Regulatory Affair Feedback
                                                     <span id="asteriskPT2"
@@ -4666,7 +4675,7 @@
                                                         (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif
                                                     name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 RegulatoryAffair">
                                             <div class="group-input">
                                                 <label for="Regulatory Affair attachment">Regulatory Affair
@@ -4842,7 +4851,7 @@
                                                     <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 RegulatoryAffair">
+                                            {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair feedback">Regulatory Affair
                                                         Feedback</label>
@@ -4852,7 +4861,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 RegulatoryAffair">
                                                 <div class="group-input">
@@ -4866,7 +4875,7 @@
                                                     <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 RegulatoryAffair">
+                                            {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair feedback">Regulatory Affair
                                                         Feedback</label>
@@ -4876,7 +4885,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 RegulatoryAffair">
                                             <div class="group-input">
@@ -5045,7 +5054,7 @@
                                                             (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 productionLiquid">
+                                        {{-- <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
                                                 <label for="Production Liquid feedback">Production Liquid/External preparation Feedback
                                                     <span id="asteriskPT2"
@@ -5059,7 +5068,7 @@
                                                         (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif
                                                     name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 productionLiquid">
                                             <div class="group-input">
                                                 <label for="Production Liquid attachment">Production Liquid/External preparation
@@ -5233,7 +5242,7 @@
                                                     <textarea class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionLiquid">
+                                            {{-- <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid feedback">Production Liquid/External preparation
                                                         Feedback</label>
@@ -5243,7 +5252,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
@@ -5257,7 +5266,7 @@
                                                     <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 productionLiquid">
+                                            {{-- <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid feedback">Production Liquid/External preparation
                                                         Feedback</label>
@@ -5267,7 +5276,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 productionLiquid">
                                             <div class="group-input">
@@ -5431,7 +5440,7 @@
                                                     @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 Microbiology">
+                                        {{-- <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
                                                 <label for="Microbiology feedback">Microbiology Feedback <span
                                                         id="asteriskPT2"
@@ -5443,7 +5452,7 @@
                                                 <textarea class="summernote Microbiology_feedback" @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif
                                                     name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 Microbiology">
                                             <div class="group-input">
                                                 <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -5616,7 +5625,7 @@
                                                     <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Microbiology">
+                                            {{-- <div class="col-md-12 mb-3 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology feedback">Microbiology Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -5625,7 +5634,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 Microbiology">
                                                 <div class="group-input">
@@ -5638,7 +5647,7 @@
                                                     <textarea disabled class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Microbiology">
+                                            {{-- <div class="col-md-12 mb-3 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology feedback">Microbiology Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -5647,7 +5656,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 Microbiology">
                                             <div class="group-input">
@@ -5810,7 +5819,7 @@
                                                     @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 Engineering">
+                                        {{-- <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
                                                 <label for="Engineering feedback">Engineering Feedback <span
                                                         id="asteriskPT2"
@@ -5822,7 +5831,7 @@
                                                 <textarea class="summernote Engineering_feedback" @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
                                                     name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 Engineering">
                                             <div class="group-input">
                                                 <label for="Engineering attachment">Engineering Attachments</label>
@@ -5993,7 +6002,7 @@
                                                     <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            {{-- <div class="col-md-12 mb-3 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering feedback">Engineering Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -6002,7 +6011,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 Engineering">
                                                 <div class="group-input">
@@ -6015,7 +6024,7 @@
                                                     <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 Engineering">
+                                            {{-- <div class="col-md-12 mb-3 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering feedback">Engineering Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -6024,7 +6033,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 Engineering">
                                             <div class="group-input">
@@ -6191,7 +6200,7 @@
                                                                 Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 safety">
+                                        {{-- <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
                                                 <label for="Safety feedback">Safety Feedback <span id="asteriskPT2"
                                                         style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
@@ -6205,7 +6214,7 @@
                                                             Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif
                                                     name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 safety">
                                             <div class="group-input">
                                                 <label for="Safety attachment">Safety Attachments</label>
@@ -6379,7 +6388,7 @@
                                                     <textarea class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 safety">
+                                            {{-- <div class="col-md-12 mb-3 safety">
                                                 <div class="group-input">
                                                     <label for="Safety feedback">Safety Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -6388,7 +6397,7 @@
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @else
                                             <div class="col-md-12 mb-3 safety">
                                                 <div class="group-input">
@@ -6401,7 +6410,7 @@
                                                     <textarea disabled class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 safety">
+                                            {{-- <div class="col-md-12 mb-3 safety">
                                                 <div class="group-input">
                                                     <label for="Safety feedback">Safety Feedback</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data
@@ -6410,7 +6419,7 @@
                                                             does not require completion</small></div>
                                                     <textarea disabled class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                         <div class="col-12 safety">
                                             <div class="group-input">
@@ -6551,12 +6560,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 mb-3 other1_reviews">
+                                    {{-- <div class="col-md-12 mb-3 other1_reviews">
                                         <div class="group-input">
                                             <label for="Feedback1">Other's 1 Feedback</label>
                                             <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 other1_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -6793,12 +6802,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3 Other2_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Feedback2"> Other's 2 Feedback</label>
                                         <textarea class="tiny" name="Other2_feedback" id="summernote-44" @if ($data->stage != 3 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 Other2_reviews">
                                     <div class="group-input">
@@ -6940,12 +6949,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3 Other3_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="feedback3">Other's 3 Feedback</label>
                                         <textarea class="tiny" name="Other3_feedback" id="summernote-46" @if ($data->stage != 3 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 Other3_reviews">
                                     <div class="group-input">
@@ -7092,13 +7101,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3 Other4_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="feedback4">Other's 4 Feedback</label>
                                         <textarea class="tiny" name="Other4_feedback" id="summernote-48"
                                             @if ($data->stage != 3 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 Other4_reviews">
                                     <div class="group-input">
@@ -7245,13 +7254,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3 Other5_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback">Other's 5 Feedback</label>
                                         <textarea class="tiny" name="Other5_feedback" id="summernote-50"
                                         @if ($data->stage != 3 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 Other5_reviews">
                                     <div class="group-input">

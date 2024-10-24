@@ -154,7 +154,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                           Risk Assesment Audit Trail Report
+                           Risk Assessment Audit Trail Report
 
                 </td>
                 <td class="w-30">
@@ -167,7 +167,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Risk Assesment No.</strong>
+                    <strong> Risk Assessment No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::getDivisionName($doc->division_id) }}/RA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
