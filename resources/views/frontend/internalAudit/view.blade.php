@@ -373,9 +373,11 @@
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement
-                            </button>
+                        @if (Auth::user()->name == $data->assign_to)
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Acknowledgement
+                        </button>
+                    @endif
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
@@ -653,9 +655,9 @@
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif >
+                                                <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif>
                                                     <option value="">-- Select --</option>
-                                                    @foreach ($users as $key =>$user)
+                                                    @foreach ($users as $key => $user)
                                                         <option value="{{ $user->name }}"
                                                             @if ($user->name == $data->assign_to) selected @endif>
                                                             {{ $user->name }}
@@ -665,7 +667,7 @@
                                                 @if ($data->stage != 1)
                                                 <!-- Hidden field to retain the value if select is disabled -->
                                                 <input type="hidden" name="assign_to" value="{{ $data->assign_to }}">
-                                            @endif
+                                                @endif
                                             </div>
                                         </div>
                                         <!-- <div class="col-md-6 new-date-data-field">
@@ -1319,11 +1321,12 @@
                                                 <textarea class="summernote Auditee_comment"
                                                     name="Auditee_comment" id="summernote-18"
                                                     @if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
-
+                                                        READONLY
                                                     @endif
                                                 >{{ $data->Auditee_comment }}</textarea>
                                             </div>
                                         </div>
+
 
                                         {{-- <div class="col-12">
                                             <div class="group-input">
@@ -11944,7 +11947,7 @@
                                                             <tr>
                                                                 <td class="flex text-center">2.{{ $index + 1 }}</td>
                                                                 <td>{!! $question !!}</td>                                                                <td>
-                                                                    
+
                                                                     @php
                                                                         $tabletmanufacturingProperty =
                                                                             'dispensing_and_manufacturing_' .
