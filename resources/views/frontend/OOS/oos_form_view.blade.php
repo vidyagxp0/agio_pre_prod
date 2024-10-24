@@ -715,7 +715,7 @@
             <div id="CCForm27" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Hod Primary Review
+                        HOD Primary Review
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -8168,6 +8168,49 @@
                             </div>
                         </div>
 
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">File Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_gi">
+                                        @if (isset($data->file_attachment_IB_Inv) && is_array($data->file_attachment_IB_Inv))
+                                            @foreach ($data->file_attachment_IB_Inv as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ is_string($file) ? $file : 'Invalid file' }}</b>
+                                                    @if (is_string($file))
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                    @endif
+                                                </h6>
+                                            @endforeach
+                                        @else
+                                            <p>No files attached</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attachment_IB_Inv[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')"
+                                            {{ $data->stage == 1 ? '' : 'readonly' }} multiple
+                                            {{ Helpers::isOOSChemical($data->stage) }}>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
 
@@ -8862,7 +8905,7 @@
                          <!-- Others Field -->
                          <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Phase II A Assinable Cause Found</label>
+                                <label for="Report Attachments">Phase II A Assignable cause found</label>
                                 <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
