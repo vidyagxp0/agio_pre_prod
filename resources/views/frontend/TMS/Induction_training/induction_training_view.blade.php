@@ -461,7 +461,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <div class="why-why-chart">
-                                        <table class="table table-bordered">
+                                    <button type="button" onclick="addNewRow()" class="btn btn-primary"> + Add </button>
+                                        <table class="table table-bordered" id="documentTable">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 5%;">Sr.No.</th>
@@ -472,6 +473,7 @@
                                                     <th>Attachment</th>
                                                     <th>Remark</th>
                                                     <th>View SOP</th>
+                                                    <th>Action</th>
 
                                                 </tr>
                                             </thead>
@@ -1238,12 +1240,158 @@
                                                         </a>
                                                     </td>
                                                 </tr>
-                                                </tr>
+
+                                                @if (!empty($documents))
+                                                    @foreach ($documents as $index => $document)
+                                                        <tr id="row_{{ $index + 16 }}">
+                                                            <td>{{ $index + 16 }}</td>
+                                                            <td>
+                                                                {{-- <input type="text" name="document_title[]" value="{{ $document['document_title'] }}" /> --}}
+                                                                <input type="text" name="document_title[]" value="{{ $document['document_title'] ?? '' }}" />
+
+                                                            </td>
+                                                            <td>
+                                                                <select name="document_number[]" id="document_number_{{ $index + 16 }}" onchange="fetchSopLink0(this, {{ $index + 16 }})">
+                                                                    <option value="">----Select---</option>
+                                                                    @foreach ($data as $item)
+                                                                        <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}" {{ $item->id == $document['document_number'] ? 'selected' : '' }}>
+                                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" name="training_date[]" value="{{ $document['training_date'] }}" />
+                                                            </td>
+                                                            <td>
+                                                                @if (!empty($document['attachment']))
+                                                                <input type="file" name="attachment[]" />
+                                                                    <a href="{{ asset('upload/' . $document['attachment']) }}" target="_blank">{{ $document['attachment'] }}</a>
+                                                                @else
+                                                                    <input type="file" name="attachment[]" />
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="remark[]">{{ $document['remark'] }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ $document['document_number'] ? route('documents.view', $document['document_number']) : '#' }}" 
+                                                                    id="view_sop_link_{{ $index + 16 }}" target="_blank" 
+                                                                    style="display: {{ $document['document_number'] ? 'inline' : 'none' }};">
+                                                                    View SOP
+                                                                </a>  
+                                                            <td>
+                                                                <button type="button" onclick="removeRow(this)">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="16">No documents found.</td>
+                                                    </tr>
+                                                @endif
+
+                                                
                                             </tbody>
+
+
+                                            
                                         </table>
+
                                     </div>
                                 </div>
                             </div>
+
+
+
+<script>
+   let rowCount = {{ is_array($documents) ? count($documents) : 0 }};
+
+    function addNewRow() {
+        rowCount++;
+        const tableBody = document.querySelector('#documentTable tbody');
+        
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('id', `row_${rowCount}`);
+        
+        newRow.innerHTML = `
+            <td>${rowCount}</td>
+            <td>
+               <input type="text" name="document_title[]" />
+            </td>
+            <td>
+                <select name="document_number[]" id="document_number_${rowCount}" onchange="fetchSopLink0(this, ${rowCount})">
+                    <option value="">----Select---</option>
+                    @foreach ($data as $item)
+                    <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
+                        {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <input type="date" name="training_date[]" />
+            </td>
+            <td>
+                <input type="file" name="attachment[]" />
+            </td>
+            <td>
+                <textarea name="remark[]"></textarea>
+            </td>
+            <td>
+                <a href="#" id="view_sop_link_${rowCount}" target="_blank" style="display: none;">View SOP</a>
+            </td>
+        `;
+        
+        tableBody.appendChild(newRow);
+    }
+
+    function fetchSopLink0(selectElement, row) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const sopId = selectedOption.getAttribute('data-sop-id');
+        const sopLink = document.getElementById(`view_sop_link_${row}`);
+
+        if (sopId) {
+            sopLink.href = `/documents/view/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+
+    // On page load, fetch SOP links for already saved documents
+    window.onload = function() {
+        @if(is_array($documents) && count($documents) > 0)
+            @foreach ($documents as $index => $document)
+                var sopSelect = document.getElementById('document_number_{{ $index + 1 }}');
+                fetchSopLink(sopSelect, {{ $index + 1 }}); // Pass the row number
+            @endforeach
+        @endif
+    };
+
+
+    function removeRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+</script>
+<!-- <script>
+    function fetchSopLink0(selectElement, rowId) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const sopId = selectedOption.getAttribute('data-sop-id');
+        const sopLink = document.getElementById(`view_sop_link${rowId}`);
+
+        if (sopId) {
+            sopLink.href = `/documents/view/${sopId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+    }
+</script> -->
+
+
+
                             <script>
                                 function fetchSopLink(selectElement) {
                                     var selectedOption = selectElement.options[selectElement.selectedIndex];

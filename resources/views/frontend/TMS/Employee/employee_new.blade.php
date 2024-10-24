@@ -346,13 +346,18 @@
                                     function toggleOtherDesignation() {
                                         const jobTitleSelect = document.getElementById('job_title');
                                         const otherDesignationContainer = document.getElementById('other_designation_container');
-                                        if (jobTitleSelect.value === "other designation") {
+                                        if (jobTitleSelect.value === "Other Designation") {
                                             otherDesignationContainer.style.display = 'block';
                                         } else {
                                             otherDesignationContainer.style.display = 'none';
                                         }
                                     }
+
+                                    window.onload = function() {
+                                        toggleOtherDesignation();
+                                    };
                                 </script>
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)<span

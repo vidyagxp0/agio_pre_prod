@@ -83,7 +83,6 @@ class InductionTrainingcontroller extends Controller
     
     public function store(Request $request)
     {
-        //  dd($request->all());
         $inductionTraining = new Induction_training();
 
 
@@ -118,8 +117,31 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_15 = $request->training_date_15;
         // $inductionTraining->training_date_16 = $request->training_date_16;
 
+        $documents = [];
+    
+        foreach ($request->document_number as $index => $documentNumber) {
+            $documentTitle = $request->document_title[$index];
+            $trainingDate = $request->training_date[$index];
+            $remark = $request->remark[$index];
+    
+            $attachment = null;
+            if ($request->hasFile('attachment.' . $index)) {
+                $file = $request->file('attachment.' . $index);
+                $filePath = $file->store('attachments', 'public');
+                $attachment = $filePath;
+            }
+    
+            $documents[] = [
+                'document_title' => $documentTitle,
+                'document_number' => $documentNumber,
+                'training_date' => $trainingDate,
+                'remark' => $remark,
+                'attachment' => $attachment,
+            ];
+        }
+    
+        $inductionTraining->documents = json_encode($documents);
 
-        // Handle looping through the document fields
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
@@ -153,6 +175,48 @@ class InductionTrainingcontroller extends Controller
                 $inductionTraining->$attachmentKey = $name;
             }
         }
+
+
+        //new code here 
+        // $documentNumbers = $request->input('document_number', []); 
+        // $rowCount = count($documentNumbers);
+    
+        // for ($i = 1; $i <= $rowCount; $i++) {
+        //     $documentNumberKey = "document_number_$i";
+        //     $trainingDateKey = "training_date_$i";
+        //     $remarkKey = "remark_$i";
+        //     $attachmentKey = "attachment_$i";
+    
+        //     // Safely handle the inputs
+        //     $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));
+        //     $trainingDate = $request->input($trainingDateKey) ?? $request->input(str_replace('_', '-', $trainingDateKey));
+        //     $remark = $request->input($remarkKey) ?? $request->input(str_replace('_', '-', $remarkKey));
+    
+        //     // Save or update the induction training record
+        //     $inductionTraining->$documentNumberKey = $documentNumber;
+        //     $inductionTraining->$trainingDateKey = $trainingDate;
+        //     $inductionTraining->$remarkKey = $remark;
+    
+        //     // Handle file uploads
+        //     if ($request->hasFile($attachmentKey)) {
+        //         // Optionally delete the old file
+        //         if ($inductionTraining->$attachmentKey) {
+        //             Storage::delete('public/' . $inductionTraining->$attachmentKey);
+        //         }
+    
+        //         // Store the new file
+        //         $file = $request->file($attachmentKey);
+        //         $filePath = $file->store('attachments', 'public');
+        //         $inductionTraining->$attachmentKey = $filePath;
+        //     }
+        // }
+        
+
+
+  
+        $inductionTraining->save();
+    
+
         $inductionTraining->trainee_name = $request->trainee_name;
         $inductionTraining->training_type = $request->training_type;
 
@@ -305,9 +369,8 @@ class InductionTrainingcontroller extends Controller
 
     public function edit($id)
     {
-        // Find the Induction Training record by ID
+        // Find the Induction Training record by
         $inductionTraining = Induction_training::find($id);
-    
         // Fetch the employee details related to this training
         $employee = Employee::where('id', $inductionTraining->name_employee)->first();
         $employee_name = $employee ? $employee->employee_name : '';
@@ -316,11 +379,13 @@ class InductionTrainingcontroller extends Controller
         $employees = Employee::all();
         $data = Document::all();
         $users = User::get();
+
+        $documents = json_decode($inductionTraining->documents, true);
+
         // Fetch the record and document training by ID
         $record = Induction_training::findOrFail($id);
         $document_training = DocumentTraining::where('document_id', $id)->first();
     
-        // Use optional() to avoid null errors when training_plan or quize is null
         $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
         $quize = optional($training)->quize ? Quize::find($training->quize) : null;
     
@@ -334,7 +399,7 @@ class InductionTrainingcontroller extends Controller
         ];
         // Return the view with all necessary data
         return view('frontend.TMS.Induction_training.induction_training_view', compact(
-            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations'
+            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations','documents'
         ));
     }
     
@@ -342,6 +407,8 @@ class InductionTrainingcontroller extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
+
         $inductionTraining = Induction_training::find($id);
         $lastdocument = Induction_training::find($id);
 
@@ -431,6 +498,32 @@ class InductionTrainingcontroller extends Controller
         $employeeJobGrid->identifier = 'Questionaries';
         $employeeJobGrid->data = $request->jobResponsibilities;  
         $employeeJobGrid->save();
+
+
+        $documents = [];
+    
+        foreach ($request->document_number as $index => $documentNumber) {
+            $documentTitle = $request->document_title[$index];
+            $trainingDate = $request->training_date[$index];
+            $remark = $request->remark[$index];
+    
+            $attachment = null;
+            if ($request->hasFile('attachment.' . $index)) {
+                $file = $request->file('attachment.' . $index);
+                $filePath = $file->store('attachments', 'public');
+                $attachment = $filePath;
+            }
+    
+            $documents[] = [
+                'document_title' => $documentTitle,
+                'document_number' => $documentNumber,
+                'training_date' => $trainingDate,
+                'remark' => $remark,
+                'attachment' => $attachment,
+            ];
+        }
+    
+        $inductionTraining->documents = json_encode($documents);
 
         // Handle looping through the document fields
         for ($i = 1; $i <= 16; $i++) {
