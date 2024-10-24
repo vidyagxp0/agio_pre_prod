@@ -127,8 +127,8 @@
                                         <i class="fa-solid fa-angle-down"></i>
                                     </div>
                                     <div class="icon-block small-block">
-                                        <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
-                                        <div><a href="{{ route('logout-employee') }}">Log Out</a></div>
+                                        <div data-bs-toggle="modal" data-bs-target="#about-modal"> <i class="fas fa-info-circle"></i> About</div>
+                                        <div><a href="{{ route('logout-employee') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
                                     </div>
                                 </div>
                             @else                        
@@ -183,7 +183,8 @@
                                         <div>TMS Dashboard</div>
                                     </div>
                         </div>
-                        <div class="doc-links d-flex">
+                        <div class="doc-links d-flex-1">
+                            
                             <a href="javascript:window.location.reload(true)">Refresh</a>
 
                         </div>
@@ -359,15 +360,15 @@
                                     <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at): "-" }}</td>
                                     <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
                                     <td>
-                                            @if ($inductionResult && $inductionResult->result == "Pass")
+                                            {{-- @if ($inductionResult && $inductionResult->result == "Pass")
                                                 Pass
-                                            @elseif($temp->attempt_count <= 0)
-                                                Attempts completed (Failed)
-                                            @else
+                                            @elseif($temp->attempt_count <= 0) --}}
+                                                {{-- Attempts completed (Failed) --}}
+                                            {{-- @else --}}
                                                 <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
                                                     Attempt Quiz
                                                 </button>
-                                            @endif
+                                            {{-- @endif --}}
                                     </td>
                                     <td>
                                         @if($temp->stage >=6)

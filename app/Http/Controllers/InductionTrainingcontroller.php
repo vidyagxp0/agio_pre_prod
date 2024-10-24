@@ -1040,76 +1040,167 @@ class InductionTrainingcontroller extends Controller
             return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
     }
 
-    public function checkAnswerInduction(Request $request)
-    {
-        // Fetch all questions in a random order
+//     public function checkAnswerInduction(Request $request)
+//     {
+//         // Fetch all questions in a random order
 
-        $allQuestions = Question::inRandomOrder()->get();
+//         $allQuestions = Question::inRandomOrder()->get();
 
-        // Filter questions to include only Single and Multi Selection Questions
-        $filteredQuestions = $allQuestions->filter(function ($question) {
-            return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
-        });
+//         // Filter questions to include only Single and Multi Selection Questions
+//         $filteredQuestions = $allQuestions->filter(function ($question) {
+//             return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+//         });
 
-        // Take the first 10 questions from the filtered list
-        $questions = $filteredQuestions->take(10);
+//         // Take the first 10 questions from the filtered list
+//         $questions = $filteredQuestions->take(10);
 
-        $correctCount = 0; // Initialize correct answer count
-        $totalQuestions = count($questions); // Total number of selected questions (should be 10)
+//         $correctCount = 0; // Initialize correct answer count
+//         $totalQuestions = count($questions); // Total number of selected questions (should be 10)
 
-        foreach ($questions as $question) {
-            // Retrieve user's answer for each question
-            $userAnswer = $request->input('question_' . $question->id);
-            $correctAnswers = unserialize($question->answers); // Correct answers for the question
-            $questionType = $question->type;
+//         foreach ($questions as $question) {
+//             // Retrieve user's answer for each question
+//             $userAnswer = $request->input('question_' . $question->id);
+//             $correctAnswers = unserialize($question->answers); // Correct answers for the question
+//             $questionType = $question->type;
 
-            if ($questionType === 'Single Selection Questions') {
-                // If it's a single selection question, check if the user's answer matches the correct answer
-                if ($userAnswer == $correctAnswers[0]) {
+//             if ($questionType === 'Single Selection Questions') {
+//                 // If it's a single selection question, check if the user's answer matches the correct answer
+//                 if ($userAnswer == $correctAnswers[0]) {
+//                     $correctCount++;
+//                 }
+//             } elseif ($questionType === 'Multi Selection Questions') {
+//                 // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+//                 if (is_array($userAnswer)) {
+//                     // Check if the user's answer matches exactly with the correct answer set
+//                     if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+//                         $correctCount++;
+//                     }
+//                 }
+//             }
+//         }
+
+//         // Calculate the correct percentage for the 10 questions
+//         $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+
+    
+//         $result = $score >= 80 ? 'Pass' : 'Fail';
+
+//         if($request->attempt_count == 0 || $result == 'Pass'){
+//             $induction = Induction_training::find($request->training_id);
+//             $induction->stage = 3;
+//             $induction->status = "Evaluation";
+//             $induction->update();
+//         }
+
+//             $storeResult = new EmpTrainingQuizResult();
+//             $storeResult->emp_id = $request->emp_id;
+//             $storeResult->training_id = $request->training_id;
+//             $storeResult->employee_name = $request->employee_name;
+//             $storeResult->training_type = "Induction Training";
+//             $storeResult->correct_answers = $correctCount;
+//             $storeResult->incorrect_answers = $totalQuestions - $correctCount;
+//             $storeResult->total_questions = $totalQuestions;
+//             $storeResult->score = $score."%";
+//             $storeResult->result = $result;
+//             $storeResult->attempt_number = $request->attempt_count + 1;
+//             $storeResult->save();        
+
+//         return view('frontend.TMS.Job_Training.job_quiz_result', [
+//             'totalQuestions' => $totalQuestions, // Total questions shown
+//             'correctCount' => $correctCount, // Number of correctly answered questions
+//             'score' => $score, // Final score for these 10 questions
+//             'result' => $result // Pass or Fail based on 80%
+//         ]);
+//     }
+// }
+
+
+
+
+
+public function checkAnswerInduction(Request $request)
+{
+    // Fetch all questions in a random order
+    $allQuestions = Question::inRandomOrder()->get();
+
+    // Filter questions to include only Single and Multi Selection Questions
+    $filteredQuestions = $allQuestions->filter(function ($question) {
+        return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+    });
+
+    // Take the first 10 questions from the filtered list
+    $questions = $filteredQuestions->take(10);
+
+    $correctCount = 0; // Initialize correct answer count
+    $totalQuestions = count($questions); // Total number of selected questions (should be 10)
+
+    $questionsWithAnswers = []; // Store questions with user and correct answers
+
+    foreach ($questions as $question) {
+        // Retrieve user's answer for each question
+        $userAnswer = $request->input('question_' . $question->id);
+        $correctAnswers = unserialize($question->answers); // Correct answers for the question
+        $questionType = $question->type;
+
+        $isCorrect = false;
+
+        if ($questionType === 'Single Selection Questions') {
+            // If it's a single selection question, check if the user's answer matches the correct answer
+            $isCorrect = $userAnswer == $correctAnswers[0];
+            if ($isCorrect) {
+                $correctCount++;
+            }
+        } elseif ($questionType === 'Multi Selection Questions') {
+            // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+            if (is_array($userAnswer)) {
+                $isCorrect = count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0;
+                if ($isCorrect) {
                     $correctCount++;
-                }
-            } elseif ($questionType === 'Multi Selection Questions') {
-                // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
-                if (is_array($userAnswer)) {
-                    // Check if the user's answer matches exactly with the correct answer set
-                    if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
-                        $correctCount++;
-                    }
                 }
             }
         }
 
-        // Calculate the correct percentage for the 10 questions
-        $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
-
-    
-        $result = $score >= 80 ? 'Pass' : 'Fail';
-
-        if($request->attempt_count == 0 || $result == 'Pass'){
-            $induction = Induction_training::find($request->training_id);
-            $induction->stage = 3;
-            $induction->status = "Evaluation";
-            $induction->update();
-        }
-
-            $storeResult = new EmpTrainingQuizResult();
-            $storeResult->emp_id = $request->emp_id;
-            $storeResult->training_id = $request->training_id;
-            $storeResult->employee_name = $request->employee_name;
-            $storeResult->training_type = "Induction Training";
-            $storeResult->correct_answers = $correctCount;
-            $storeResult->incorrect_answers = $totalQuestions - $correctCount;
-            $storeResult->total_questions = $totalQuestions;
-            $storeResult->score = $score."%";
-            $storeResult->result = $result;
-            $storeResult->attempt_number = $request->attempt_count + 1;
-            $storeResult->save();        
-
-        return view('frontend.TMS.Job_Training.job_quiz_result', [
-            'totalQuestions' => $totalQuestions, // Total questions shown
-            'correctCount' => $correctCount, // Number of correctly answered questions
-            'score' => $score, // Final score for these 10 questions
-            'result' => $result // Pass or Fail based on 80%
-        ]);
+        // Store the question with the user's answer and correct answer for display
+        $questionsWithAnswers[] = [
+            'question_text' => $question->question,
+            'user_answer' => is_array($userAnswer) ? implode(', ', $userAnswer) : $userAnswer,
+            'correct_answers' => implode(', ', $correctAnswers),
+            'is_correct' => $isCorrect,
+            'type' => $questionType
+        ];
     }
+
+    // Calculate the correct percentage for the 10 questions
+    $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+    $result = $score >= 80 ? 'Pass' : 'Fail';
+
+    if ($request->attempt_count == 0 || $result == 'Pass') {
+        $induction = Induction_training::find($request->training_id);
+        $induction->stage = 3;
+        $induction->status = "Evaluation";
+        $induction->update();
+    }
+
+    // Store the result in the database
+    $storeResult = new EmpTrainingQuizResult();
+    $storeResult->emp_id = $request->emp_id;
+    $storeResult->training_id = $request->training_id;
+    $storeResult->employee_name = $request->employee_name;
+    $storeResult->training_type = "Induction Training";
+    $storeResult->correct_answers = $correctCount;
+    $storeResult->incorrect_answers = $totalQuestions - $correctCount;
+    $storeResult->total_questions = $totalQuestions;
+    $storeResult->score = $score . "%";
+    $storeResult->result = $result;
+    $storeResult->attempt_number = $request->attempt_count + 1;
+    $storeResult->save();
+
+    return view('frontend.TMS.Job_Training.job_quiz_result', [
+        'totalQuestions' => $totalQuestions, // Total questions shown
+        'correctCount' => $correctCount, // Number of correctly answered questions
+        'score' => $score, // Final score for these 10 questions
+        'result' => $result, // Pass or Fail based on 80%
+        'questionsWithAnswers' => $questionsWithAnswers, // Pass the questions with user and correct answers
+    ]);
+}
 }

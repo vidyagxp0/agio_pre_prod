@@ -1408,134 +1408,304 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i>Print
+                                        <button type="button" class="printButton"onclick="downloadCertificate()">
+                                            <i class="fas fa-print"></i> Print
                                         </button>
                                     </div>
-                                    <div class="certificate-container">
-                                    <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
-                                        <p class="certificate-content">
-                                            This is to certify that Mr. / Ms. / Mrs. <strong>{{$trainer->employee_name}}</strong> 
-                                            has appropriate Qualification / skill / thorough knowledge/ and experience in the 
-                                            <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> section/Department for more than
+                                    <div id="certificateContent" class="pm-certificate-container">
+                                <div class="outer-border"></div>
+                                <div class="inner-border"></div>
+
+                                <div class="pm-certificate-border">
+                                    <!-- Logos Section -->
+                                    <div class="pm-certificate-logos text-center">
+                                        <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="Agio Logo" class="logo logo-left">
+                                        <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="Vidhya GxP Logo" class="logo logo-right">
+                                    </div>
+
+                                    <div class="pm-certificate-header">
+                                        <div class="pm-certificate-title cursive text-center">
+                                            <h2>Certificate of Trainer Qualification Training</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="pm-certificate-body">
+                                        <div class="pm-certificate-block">
+                                            <p class="text-center">
+                                                This is to certify that Mr. / Ms. / Mrs. 
+                                                <strong>{{$trainer->employee_name}}</strong>
+                                                has appropriate Qualification / skill / thorough knowledge/ and experience in the 
+                                                <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> section/Department for more than
                                             <strong>{{$trainer->experience_if_any}}</strong> years, and hence is declared as the trainer of 
                                             <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> Department.
-                                        </p>
-                                        <div class="signature-section">
-                                            <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
-                                                Sign / Date: _______________ <br>Head of Department
+                                            </p>
+
+                                         
+                                        </div>
+
+                                        <div class="pm-certificate-footer">
+                                            <div class="pm-certified text-center">
+                                                <span class="bold block">Sign / Date:</span>
+                                                <strong></strong>
+                                                <span class="pm-empty-space block underline"></span>
+                                                <span class="bold block">Head of Department</span>
                                             </div>
-                                            <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
-                                                Sign / Date: <span>{{$trainer->qualified_by}} / {{$trainer->qualified_on }}</span>QA/CQA Head 
+                                            <div class="pm-certified text-center">
+                                                <span class="bold block">Sign / Date:</span>
+                                                <strong>{{$trainer->qualified_by}}  {{$trainer->qualified_on }}</strong>
+                                                <span class="pm-empty-space block underline"></span>
+                                                <span class="bold block">Head QA/CQA</span>
                                             </div>
                                         </div>
                                     </div>
+                           
+
                                 </div>
-                                <div style="margin-top: 40px;" class="button-block">
-                                    {{-- <button type="submit" class=" btn btn saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton"
-                                        class=" btn btn nextButton">Next</button> --}}
-                                </div>
+                              
                             </div>
                         </div>
                     </div>
                 @endif
 
+                <!-- CSS Styling -->
+            <style>
+              @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
 
-                    <style>
-                        .certificate-container {
-                            width: 100%; /* Ensure it takes full width when printed */
-                            max-width: 685px; /* For regular view */
-                            height: auto;
-                            border: 4px solid #3d6186;
-                            padding: 18px;
-                            background-color: white;
-                            margin: auto;
-                            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-                            position: relative;
-                            page-break-inside: avoid; /* Avoid breaking the certificate into multiple pages */
-                        }
+                .cursive {
+                    font-family: 'Pinyon Script', cursive;
+                }
 
-                        .certificate-title {
-                            font-size: 30px;
-                            font-weight: bold;
-                            color: #677078;
-                            text-align: center; /* Align title to the center */
-                        }
+                .sans {
+                    font-family: 'Open Sans', sans-serif;
+                }
 
-                        .certificate-content {
-                            font-size: 18px;
-                            color: #333;
-                            text-align: justify;
-                            margin-top: 20px;
-                        }
+                .bold {
+                    font-weight: bold;
+                }
 
-                        .signature-section {
-                            display: flex;
-                            justify-content: space-between;
-                            margin-top: 40px;
-                        }
+                .block {
+                    display: block;
+                }
 
-                        .signature {
-                            text-align: center;
-                            font-size: 18px;
-                        }
+                .underline {
+                    border-bottom: 1px solid #777;
+                    padding: 5px;
+                    margin-bottom: 15px;
+                }
 
-                        .signature-line {
-                            width: 200px;
-                            border-top: 1px solid black;
-                            margin-bottom: 10px;
-                        }
+                .text-center {
+                    text-align: center;
+                }
 
-                        .button-block {
-                            display: flex;
-                            justify-content: flex-end;
-                            margin-top: 30px;
-                        }
+                .pm-empty-space {
+                    width: 100%;
+                }
 
-                        .printButton, .saveButton, .nextButton {
-                            background-color: #2c3e50;
-                            color: white;
-                            border: none;
-                            padding: 12px 24px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            border-radius: 5px;
-                            transition: background-color 0.3s ease;
-                            margin-left: 10px;
-                        }
+                .pm-certificate-container {
+                    position: relative;
+                    width: 90%;
+                    max-width: 800px;
+                    background-color: #618597;
+                    padding: 30px;
+                    color: #333;
+                    font-family: 'Open Sans', sans-serif;
+                    box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
+                    margin-top: 35px;
+                   
+                }
+ 
 
-                        .printButton:hover, .saveButton:hover, .nextButton:hover {
-                            background-color: #1a252f;
-                        }
+                .outer-border {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
 
-                        @media print {
-                            .button-block {
-                                display: none !important; /* Hide all buttons on print */
-                            }
+                .inner-border {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    right: 10px;
+                    bottom: 10px;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
 
-                            body {
-                                visibility: hidden;
-                            }
+                .pm-certificate-border {
+                    position: relative;
+                    padding: 20px;
+                    border: 1px solid #E1E5F0;
+                    background-color: rgba(255, 255, 255, 1);
+                }
 
-                            .certificate-container, .certificate-container * {
-                                visibility: visible;
-                            }
+                    .printButton:hover {
+                        background-color: #1a252f;
+                    }
 
-                            .certificate-container {
-                                position: absolute;
-                                left: 0;
-                                top: 0;
-                                width: 100%;
-                            }
+                .pm-certificate-logos {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                
+                }
 
-                            .signature-section {
-                                page-break-inside: avoid; /* Avoid breaking signatures across pages */
-                            }
-                        }
-                    </style>
+                .logo {
+                    max-width: 100px;
+                }
+
+                .logo-left {
+                    transform: scale(0.7);
+                    margin-bottom: 14px;
+                }
+
+                .logo-right {
+                    transform: scale(1.8);
+                    margin-right: 65px;
+                }
+
+                .pm-certificate-header {
+                    margin-bottom: 10px;
+                }
+
+                .pm-certificate-title h2 {
+                    font-size: 34px;
+                }
+
+                .pm-certificate-body {
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .pm-certificate-block {
+                    text-align: center;
+                }
+
+                .pm-name-text {
+                    font-size: 20px;
+                }
+
+                .pm-earned {
+                    margin: 15px 0 20px;
+                }
+
+                .pm-earned-text {
+                    font-size: 20px;
+                }
+
+                .pm-credits-text {
+                    font-size: 15px;
+                }
+
+                .pm-course-title {
+                    margin-bottom: 15px;
+                }
+
+                .pm-certified {
+                    font-size: 12px;
+                    width: 300px; 
+                    margin-top: 0; 
+                    text-align: center;
+                }
+
+                .pm-certificate-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center; 
+                    width: 100%;
+                    margin-top: 20px;
+                    flex-wrap: nowrap
+                }
+                @media print {
+                    .print-button {
+                        display: none;
+                    }
+                    .print-button-container {
+                        display: none;
+                    }
+                }
+
+
+                .print-button {
+                    padding: 10px 20px;
+                    background-color: #007bff; 
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin-block-end: 700px;
+                }
+
+
+                @media print {
+                    body {
+                        background: none;
+                        -webkit-print-color-adjust: exact; 
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                    }
+
+                    .pm-certificate-container {
+                        page-break-inside: avoid; 
+                        page-break-after: avoid; 
+                        width: 100%;
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden; 
+                        box-shadow: none; 
+                        background-color: #618597; 
+                        // padding: 30px;
+                        margin: 0 auto; 
+                    }
+
+                    .outer-border, .inner-border {
+                        border-color: #d3d0d0; 
+                    }
+
+                    .print-button, .print-button-container {
+                        display: none; 
+                        
+                    }
+
+                
+                    html, body {
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden;
+                    }
+                }
+
+                </style>
+
+                  
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+                <script>
+                    function downloadCertificate() {
+                        const element = document.querySelector('.pm-certificate-container');
+                        const options = {
+                            margin: 0, // Margin ko adjust karen, yahan 0 set kiya hai
+                            filename: 'Trainer-Qualification-certificate.pdf',
+                            html2canvas: { 
+                                scale: 2,
+                                // Allowing the certificate to be centered on the canvas
+                                x: 0,
+                                y: 0
+                            },
+                            jsPDF: { orientation: 'landscape' }
+                        };
+                        html2pdf().from(element).set(options).save();
+                    }
+                </script>
+
 
                 <script>
                     // function printCertificate() {

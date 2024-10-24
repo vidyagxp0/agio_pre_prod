@@ -1067,8 +1067,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                 <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i>Print
+                                        <button type="button" class="printButton" onclick="downloadCertificate()">
+                                            <i class="fas fa-print"></i> Print
                                         </button>
                                 </div>
 
@@ -1167,7 +1167,6 @@
                 }
 
                 .pm-empty-space {
-                    height: 40px; 
                     width: 100%;
                 }
 

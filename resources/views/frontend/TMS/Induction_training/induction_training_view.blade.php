@@ -2110,7 +2110,7 @@
                     color: #333;
                     font-family: 'Open Sans', sans-serif;
                     box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
-                    margin-left: 325px;
+                    margin-left: 45px;
                 }
 
                 .outer-border {
