@@ -566,18 +566,31 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span
                                                     id="rchars">255</span> characters remaining
-                                                {{-- <textarea name="short_description"  type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea> --}}
 
-                                                <input type="text" name="short_description" id="short_description"
+                                                <input type="text" name="short_description" maxlength="255" id="short_description"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->short_description }}">
+                                                    value="{{ $data->short_description }}" required>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label>
+                                                <span id="rchars">255</span> characters remaining
+                                                <input name="short_description" id="docname" type="text"
+                                                    maxlength="255" required value="{{ $data->short_description }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            </div>
+                                            @error('short_description')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
 
