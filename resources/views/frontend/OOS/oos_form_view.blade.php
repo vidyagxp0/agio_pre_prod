@@ -1242,7 +1242,7 @@
                                  "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
                                  "Was purge valve was closed before start of analysis?",
                                  "Was the vial position as per mentioned in printed sequence?",
-                                 "Was analyst used SS (Stainiless steel) tubes for analysis?",
+                                 "Was analyst used appropriate test tubes for analysis?",
                                  "Was septa of vial/fitment of septa/ filament of cap proper?",
                                  "were capping/crimping of GC vial/HPLC Vial done properly?",
                                  "Was analyst used the Bonded septa for analysis?",
