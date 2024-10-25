@@ -9010,7 +9010,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($review->qa_comments) || empty($updateCFT->QualityAssurance_person))
+                if (empty($review->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

@@ -211,6 +211,10 @@
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Due Date</th>
+                        <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Auditee Department Head</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
@@ -227,17 +231,16 @@
                         </td> --}}
 
                     </tr>
-                    <tr>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Others</th>
+                   
+                    <tr>  
+                     <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Scheduled audit date</th>
                         <td class="w-30"> @if($data->sch_audit_start_date){{Helpers::getdateFormat ($data->sch_audit_start_date) }} @else Not Applicable @endif</td>
                         <th class="w-20">Auditee department Name</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->auditee_department){{ Helpers::getFullDepartmentName($data->auditee_department) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit Category</th>
@@ -265,6 +268,59 @@
                     </tr> --}}
 
                 </table>
+
+
+
+
+
+
+                <div class="block">
+    <div class="block-head">
+        Auditors
+    </div>
+
+    <div class="border-table">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="table_bg">
+                    <th>Row #</th>
+                    <th>Auditor Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $serialNumber = 1;
+                @endphp
+
+                @if (!empty($auditorview->data) && is_iterable($auditorview->data))
+                    @foreach ($auditorview->data as $audditor)
+                        <tr>
+                            <td>{{ $serialNumber++ }}</td>
+                            <td>
+                            {{ Helpers::getInitiatorName($audditor['auditornew']) ?? 'Not Available' }}
+                        </td>
+                            <td>{{ $audditor['regulatoryagency'] ?? 'Not Available' }}</td>
+                            <td>{{ $audditor['designation'] ?? 'Not Available' }}</td>
+                            <td>{{ $audditor['remarks'] ?? 'Not Available' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="5">No auditors found.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
                 <div class="border-table">
                     <div class="block-head">
                         GI Attachment
@@ -300,15 +356,17 @@
                         </div>
                         <table>
                             <tr>
-                                <th class="w-30">Auditee Comment</th>
-                                <td class="w-20">@if($data->Auditee_comment){{ $data->Auditee_comment }}@else Not Applicable @endif</td>
-                                <th class="w-30">Auditor Comment</th>
-                                <td class="w-20">@if($data->Auditor_comment){{ $data->Auditor_comment }}@else Not Applicable @endif</td>
+                                <th class="w-20">Auditee Comment</th>
+                                <td class="w-80">@if($data->Auditee_comment){{ $data->Auditee_comment }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>    
+                                <th class="w-20">Auditor Comment</th>
+                                <td class="w-80">@if($data->Auditor_comment){{ $data->Auditor_comment }}@else Not Applicable @endif</td>
                             </tr>   
                         </table>
                         <div class="border-table">
                             <div class="block-head">
-                                Acknowledgment Attachment
+                            Acknowledgement Attachment
                             </div>
                             <table>
             
@@ -445,13 +503,13 @@
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
+                                    @if($data->audit_start_date){{ Helpers::getdateFormat($data->audit_start_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
                             <th class="w-20">Audit End Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
+                                    @if($data->audit_end_date){{ Helpers::getdateFormat($data->audit_end_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
@@ -459,11 +517,74 @@
                         <tr>
                             <th class="w-20">Audit Comments</th>
                             <td class="w-80"> @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
                         </tr>
                    </table>
                 </div>
+
+
+
+                <div class="block">
+                <div class="block-head">
+                Audit Agenda
+                </div>
+
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">SR no.</th>
+                                    <th>Area of Audit</th>
+                                    <th>Start Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Date</th>
+                                    <th>End Time</th>
+                                    <th>Auditor</th>
+                                    <th>Auditee</th>
+                                    <th>Remark</th>
+                                </tr>
+                                @if ($grid_data)
+                                    @php
+                                        // Getting the maximum number of entries in any of the arrays to loop through all rows
+                                        $maxRows = max(
+                                            count($grid_data->area_of_audit ?? []),
+                                            count($grid_data->start_date ?? []),
+                                            count($grid_data->start_time ?? []),
+                                            count($grid_data->end_date ?? []),
+                                            count($grid_data->end_time ?? []),
+                                            count($grid_data->auditor ?? []),
+                                            count($grid_data->auditee ?? []),
+                                            count($grid_data->remark ?? [])
+                                        );
+                                    @endphp
+
+                                    @for ($i = 0; $i < $maxRows; $i++)
+                                        <tr>
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>{{ $grid_data->area_of_audit[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->start_date[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->start_time[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->end_date[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->end_time[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->auditor[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->auditee[$i] ?? 'Not Applicable' }}</td>
+                                            <td>{{ $grid_data->remark[$i] ?? 'Not Applicable' }}</td>
+                                        </tr>
+                                    @endfor
+                                @else
+                                    <tr>
+                                        <td colspan="9">No Data Available</td>
+                                    </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
                  <div class="border-table">
                 <div class="block-head">
                     Audit Preparation and Execution Attachment</div>

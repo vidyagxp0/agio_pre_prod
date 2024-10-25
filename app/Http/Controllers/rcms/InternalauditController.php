@@ -4149,6 +4149,7 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
+      
         // foreach($auditorview as $ss)
         // return $auditorview;
 
@@ -5036,13 +5037,32 @@ if ($areIniAttachmentsSame2 != true) {
 
 
 
+        $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
+        
+        $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
 
 
+
+
+
+        if (!empty($grid_data)) {
+            // Unserialize the necessary fields
+            $grid_data->area_of_audit = unserialize($grid_data->area_of_audit);
+            $grid_data->start_date = unserialize($grid_data->start_date);
+            $grid_data->start_time = unserialize($grid_data->start_time);
+            $grid_data->end_date = unserialize($grid_data->end_date);
+            $grid_data->end_time = unserialize($grid_data->end_time);
+            $grid_data->auditor = unserialize($grid_data->auditor);
+            $grid_data->auditee = unserialize($grid_data->auditee);
+            $grid_data->remark = unserialize($grid_data->remark);
+        }
+
+        
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
