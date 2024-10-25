@@ -10091,9 +10091,9 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
                 $changeControl->status = "Closed - Rejected";
-                $changeControl->RA_review_completed_by = Auth::user()->name;
-                $changeControl->RA_review_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->RA_review_completed_comment = $request->comments;
+                $updateCFT->RA_review_completed_by = Auth::user()->name;
+                $updateCFT->RA_review_completed_on = Carbon::now()->format('d-M-Y');
+                $updateCFT->RA_review_completed_comment = $request->comments;
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
@@ -10218,9 +10218,11 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
 
     public function reject(Request $request, $id)
     {
+        
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
+           
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()
@@ -10231,21 +10233,21 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
             if ($changeControl->stage == 7) {
                 $changeControl->stage = 8;
                 $changeControl->status = "Closed - Rejected";
-                $changeControl->RA_review_completed_by = Auth::user()->name;
-                $changeControl->RA_review_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->RA_review_completed_comment = $request->comments;
+                $changeControl->Training_complete_by = Auth::user()->name;
+                $changeControl->Training_complete_on = Carbon::now()->format('d-M-Y');
+                $changeControl->Training_complete_comment = $request->comments;
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Rejected By, Rejected On';
 
-                $history->previous = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_by === ''
+                $history->previous = is_null($lastDocument->Training_complete_by) || $lastDocument->Training_complete_by === ''
                     ? "NULL"
-                    : $lastDocument->RA_review_completed_by . ' , ' . $lastDocument->RA_review_completed_on;
+                    : $lastDocument->Training_complete_by . ' , ' . $lastDocument->Training_complete_on;
 
-                $history->current = $changeControl->RA_review_completed_by . ' , ' . $changeControl->RA_review_completed_on;
+                $history->current = $changeControl->Training_complete_by . ' , ' . $changeControl->Training_complete_on;
 
-                $history->action_name = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_on === ''
+                $history->action_name = is_null($lastDocument->Training_complete_by) || $lastDocument->Training_complete_on === ''
                     ? 'New'
                     : 'Update';
 
@@ -10260,68 +10262,68 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                        }
-                    // }
-                }
+                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $changeControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //         }
+                //     // }
+                // }
 
-                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                        }
-                    // }
-                }
+                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $changeControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //         }
+                //     // }
+                // }
 
-                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
-                        }
-                    // }
-                }
+                // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //                 try {
+                //                     Mail::send(
+                //                         'mail.view-mail',
+                //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                         function ($message) use ($email, $changeControl) {
+                //                             $message->to($email)
+                //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                //                         }
+                //                     );
+                //                 } catch(\Exception $e) {
+                //                     info('Error sending mail', [$e]);
+                //                 }
+                //         }
+                //     // }
+                // }
 
                 $changeControl->update();
 
@@ -10574,7 +10576,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
 
             if ($changeControl->stage == 9) {
                 $changeControl->stage = "10";
-                $changeControl->status = "Pending Training Completion";
+                $changeControl->status = "HOD Final Review Complete";
 
                 $comments->initiator_update_complete_by = Auth::user()->name;
                 $comments->initiator_update_complete_on = Carbon::now()->format('d-M-Y');
@@ -10584,7 +10586,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                $history->activity_type = 'Training Required By, Training Required On';
+                $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
                 if (is_null($lastDocument->initiator_update_complete_by) || $lastDocument->initiator_update_complete_by === '') {
                     $history->previous = "NULL";
                 } else {

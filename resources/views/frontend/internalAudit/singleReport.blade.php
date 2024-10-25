@@ -216,7 +216,8 @@
                     </tr>
                     <tr>
                         <th class="w-20">Auditee Department Head</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{ ($data->assign_to) }} @else Not Applicable @endif</td>
+             
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                     </tr>
@@ -524,15 +525,13 @@
                         </tr>
                    </table>
                 </div>
-
-
-
+            </div>
                 <div class="block">
-                <div class="block-head">
-                Audit Agenda
-                </div>
+                        <div class="block-head">
+                        Audit Agenda
+                        </div>
 
-                        <div class="border-table">
+                     <div class="border-table">
                             <table>
                                 <tr class="table_bg">
                                     <th class="w-20">SR no.</th>
@@ -639,6 +638,55 @@
 
 
 
+
+
+
+
+
+
+            <div class="block">
+                <div class="block-head">
+                Internal Audit (Observations/Discrepancy)
+                </div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">SR no.</th>
+                                <th>Observations/Discrepancy</th>
+                                <th>Category</th>
+                                <th>Remarks</th>
+                                
+                            </tr>
+            
+                                <tbody>
+                                    @if($grid_Data3 && is_array($grid_Data3->data))
+                                        @foreach($grid_Data3->data as $index => $item)
+                                        <tr>
+                                            <td>{{$index +1}}</td>
+                                            <td>{{$item['observation'] ?? 'Not Applicable'}}</td>
+                                            <td>{{$item['category'] ?? 'Not Applicable'}}</td>
+                                            <td>{{$item['remarks'] ?? 'Not Applicable'}}</td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                
+                                    <tr>
+                                        <td colspan="4">No observations/discrepancies found.</td>
+                                    </tr>
+
+                                    @endif
+
+                                </tbody>
+                        </table>
+                     </div>
+            </div>
+
+
+
+
+
+
                 <div class="block">
                     <div class="block-head">
                         Pending Response
@@ -651,6 +699,8 @@
                                     <div>
                                         @if($data->refrence_record){{ Helpers::getDivisionName( $data->refrence_record )}}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif
                             </td>
+                        </tr>
+                        <tr>
                             <th class="w-20">Audit Comments
                             </th>
                             <td class="w-80">
@@ -659,7 +709,55 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+
+
+
+                        </table>
+                        
+                    <div class="block">
+                        <div class="block-head">
+                        Initial Response
+                        </div>
+
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-20">SR no.</th>
+                                        <th>Observation</th>
+                                        <th>Response with impact assesment & CAPA (If Applicable)</th>
+                                        <th>Responsibility</th>
+                                        <th>Proposed Closure Date</th>
+                                        <th>Actual Closure Date</th>
+                                        
+                                    </tr>
+                    
+                                        <tbody>
+                                            @if($grid_Data5 && is_array($grid_Data5->data))
+                                                @foreach($grid_Data5->data as $index => $item)
+                                                <tr>
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{$item['observation'] ?? 'Not Applicable'}}</td>
+                                                    <td>{{$item['impact_assesment'] ?? 'Not Applicable'}}</td>
+                                                    <td>{{$item['responsiblity'] ?? 'Not Applicable'}}</td>
+                                                    <td>{{$item['closure_date'] ?? 'Not Applicable'}}</td>
+                                                    <td>{{$item['Actual_date'] ?? 'Not Applicable'}}</td>
+                                                </tr>
+                                            @endforeach
+                                            @else
+                                        
+                                            <tr>
+                                                <td colspan="6">No data found.</td>
+                                            </tr>
+
+                                            @endif
+
+                                        </tbody>
+                                </table>
+                                </div>
+                    </div>
+
+
+                        <!-- <tr>
 
                             <th class="w-20">Due Date Extension Justification</th>
                             <td class="w-30">
@@ -667,8 +765,8 @@
                                         @if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif
                                     </div>
                                 </td>
-                        </tr>
-                   </table>
+                        </tr> -->
+                   
                    <div class="border-table">
                     <div class="block-head">
                         Report  Attachment
@@ -734,14 +832,36 @@
                             <td>
                                 {{ $data->res_ver }}
                             </td>
-                            <th>
-                            Response verification Attachments
-                            </th>
-                            <td>
-                                {{ $data->attach_file_rv }}
-                            </td>
+                         
                         </tr>
                     </table>
+
+                    <div class="border-table">
+                    <div class="block-head">
+                    Response verification Attachments
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                            @if($data->attach_file_rv)
+                            @foreach(json_decode($data->attach_file_rv) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+                         </table>
+                </div>
+            </div>
         
             </div>
         </div>

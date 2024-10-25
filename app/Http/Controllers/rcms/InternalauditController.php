@@ -5038,10 +5038,10 @@ if ($areIniAttachmentsSame2 != true) {
 
 
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
-        
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
-
-
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' =>$id, 'identifier' => 'observations'])->first();
+        $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
+     
 
 
 
@@ -5062,7 +5062,7 @@ if ($areIniAttachmentsSame2 != true) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview','grid_Data3','grid_Data5'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

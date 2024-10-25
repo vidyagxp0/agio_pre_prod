@@ -2300,14 +2300,14 @@
                                         <textarea name="Audit_Comments2"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is
                                                 crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
