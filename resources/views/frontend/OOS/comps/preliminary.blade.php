@@ -496,12 +496,26 @@
                     </textarea>
                 </div>
             </div>
-            <div class="col-lg-12 new-time-data-field">
+
+            
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Results Of Repeat Testing</label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion </small></div>
+                    <textarea class="summernote" name="result_of_repeat" id="summernote-1"
+                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->result_of_repeat ? $data->result_of_repeat : '' }}
+                    </textarea>
+                </div>
+            </div>
+
+
+            <!-- <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Results Of Repeat Testing</label>
                     <textarea id="result_of_repeat" name="result_of_repeat">{{ $data->result_of_repeat }}</textarea>
                 </div>
-            </div>
+            </div> -->
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Impact Assessment</label>

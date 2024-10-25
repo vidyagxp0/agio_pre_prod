@@ -842,7 +842,7 @@
             </div>
             <div class="col-lg-4">
                <div class="group-input">
-                <label for="Submitted on">P III Investigation Applicaion/Not Applicable Comment</label>
+                <label for="Submitted on">P III Investigation Applicable/Not Applicable Comment</label>
                     @if ($data->P_III_Investigation_Applicable_Comment)
                         <div class="static">{{ $data->P_III_Investigation_Applicable_Comment }}</div>
                     @else

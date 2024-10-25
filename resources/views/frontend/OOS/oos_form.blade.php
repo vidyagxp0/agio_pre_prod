@@ -1780,7 +1780,7 @@ $users = DB::table('users')
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="deviation_time">Results Of Repeat Testing</label>
-                                <textarea id="result_of_repeat" name="result_of_repeat"></textarea>
+                                <textarea class="summernote" name="result_of_repeat" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
@@ -2850,7 +2850,7 @@ $users = DB::table('users')
                                  "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
                                  "Was purge valve was closed before start of analysis?",
                                  "Was the vial position as per mentioned in printed sequence?",
-                                 "Was analyst used SS (Stainiless steel) tubes for analysis?",
+                                 "Was analyst used appropriate test tubes for analysis?",
                                  "Was septa of vial/fitment of septa/ filament of cap proper?",
                                  "were capping/crimping of GC vial/HPLC Vial done properly?",
                                  "Was analyst used the Bonded septa for analysis?",
@@ -9991,7 +9991,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Audit Attachments">Manufacturing Operater Interview Details</label>
+                            <label for="Audit Attachments">Manufacturing Operator Interview Details</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
@@ -12132,22 +12132,22 @@ $users = DB::table('users')
                         <div class="static">Not Applicable</div>
                        </div>
                     </div>
-                    <div class="col-12 sub-head">P III Investigation Applicaion/Not Applicable</div>
+                    <div class="col-12 sub-head">P III Investigation Applicable/Not Applicable</div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="completed by">P III Investigation Applicaion/Not Applicable By</label>
+                            <label for="completed by">P III Investigation Applicable/Not Applicable By</label>
                             <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="completed on">P III Investigation Applicaion/Not Applicable On</label>
+                            <label for="completed on">P III Investigation Applicable/Not Applicable On</label>
                             <div class="static">Not Applicable</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                        <div class="group-input">
-                        <label for="Submitted on">P III Investigation Applicaion/Not Applicable Comment</label>
+                        <label for="Submitted on">P III Investigation Applicable/Not Applicable Comment</label>
                         <div class="static">Not Applicable</div>
                        </div>
                     </div>
