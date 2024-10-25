@@ -59,6 +59,7 @@ class OOSService
                 'hod_attachment4',
                 'hod_attachment5',
                 'phaseII_attachment',
+                'file_attachment_IB_Inv',
                 'QA_Head_attachment1',
                 'QA_Head_attachment2',
                 'QA_Head_attachment3',
@@ -902,6 +903,30 @@ class OOSService
                     $history->current = implode(',', $request->phaseII_attachment);
                 } else {
                     $history->current = $request->phaseII_attachment;
+                }
+                
+                $history->save();
+            }
+
+            if (!empty($request->file_attachment_IB_Inv)) {
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->activity_type = 'File Attachment';
+            
+                if (is_array($request->file_attachment_IB_Inv)) {
+                    $history->current = implode(',', $request->file_attachment_IB_Inv);
+                } else {
+                    $history->current = $request->file_attachment_IB_Inv;
                 }
                 
                 $history->save();
@@ -3766,6 +3791,7 @@ class OOSService
                 'hod_attachment4',
                 'hod_attachment5',
                 'phaseII_attachment',
+                'file_attachment_IB_Inv',
                 'QA_Head_attachment1',
                 'QA_Head_attachment2',
                 'QA_Head_attachment3',
@@ -7032,6 +7058,36 @@ class OOSService
             $history->change_from = $lastOosRecod->status;
         
             if (is_null($lastOosRecod->phaseII_attachment) || $lastOosRecod->phaseII_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+
+
+        if(json_encode($lastOosRecod->file_attachment_IB_Inv) != json_encode($input['file_attachment_IB_Inv'])){
+        
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                    ->where('activity_type', 'File Attachment')
+                                    ->exists();
+            
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = json_encode($lastOosRecod->file_attachment_IB_Inv);
+            $history->activity_type = 'File Attachment';
+            $history->current = json_encode($input['file_attachment_IB_Inv']);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastOosRecod->status;
+        
+            if (is_null($lastOosRecod->file_attachment_IB_Inv) || $lastOosRecod->file_attachment_IB_Inv === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

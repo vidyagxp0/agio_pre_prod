@@ -8177,7 +8177,7 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_gi">
+                                    <div class="file-attachment-list" id="file_attachment_IB_Inv">
                                         @if (isset($data->file_attachment_IB_Inv) && is_array($data->file_attachment_IB_Inv))
                                             @foreach ($data->file_attachment_IB_Inv as $file)
                                                 <h6 type="button" class="file-container text-dark"
@@ -8201,7 +8201,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attachment_IB_Inv[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')"
+                                            oninput="addMultipleFiles(this, 'file_attachment_IB_Inv')"
                                             {{ $data->stage == 1 ? '' : 'readonly' }} multiple
                                             {{ Helpers::isOOSChemical($data->stage) }}>
                                     </div>
