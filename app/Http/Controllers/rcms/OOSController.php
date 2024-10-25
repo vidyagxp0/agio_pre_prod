@@ -3441,7 +3441,7 @@ class OOSController extends Controller
             $data = OOSAuditTrial::where('oos_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.oos.comps.auditReport', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.OOS.comps.auditReport', compact('data', 'doc'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
