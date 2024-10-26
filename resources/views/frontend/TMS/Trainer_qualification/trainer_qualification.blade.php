@@ -434,7 +434,6 @@
                         <label for="qualification">Qualification</label>
                         <input id="qualification" type="text" name="qualification" maxlength="255" >
                     </div>
-                </div> -->
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Short Description">Qualification </label>

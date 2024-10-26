@@ -26,7 +26,7 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResamplingController;
-use App\Http\Controllers\InductionTrainingController;
+use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\NonConformaceController;
@@ -68,11 +68,11 @@ use Maatwebsite\Excel\Facades\Excel;
 Route::group(['middleware' => ['auth:employee']], function () {
     // All employee authenticated routes here
     Route::resource('TMS', TMSController::class);
-Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
+Route::get('induction_training_certificate/{id}', [InductionTrainingcontroller::class, 'showCertificate']);
 
     Route::get('/logout-employee', [UserLoginController::class, 'logoutEmployee'])->name('logout-employee');
     Route::get('/tms-training', [TMSController::class, 'TMSTraining'])->name('tms.training');
-    Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
+    Route::get('induction_training-details/{id}', [InductionTrainingcontroller::class, 'viewrendersopinduction']);
 
 });
 
@@ -410,18 +410,18 @@ Route::post('/check-answer-otj', [JobTrainingController::class, 'checkAnswerOtj'
 Route::post('/check-answer-induction', [InductionTrainingcontroller::class, 'checkAnswerInduction'])->name('check_answer_induction');
 
 
-Route::get('induction_training-details/{id}', [InductionTrainingController::class, 'viewrendersopinduction']);
-Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingController::class, 'inductionquestionshow']);
-Route::get('induction_training_certificate/{id}', [InductionTrainingController::class, 'showCertificate']);
-Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
-Route::get('induction_training/show/{id}', [InductionTrainingController::class, 'edit'])->name('induction_training_view');
-Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
-Route::put('induction_training/{id}', [InductionTrainingController::class, 'update'])->name('induction_training.update');
+Route::get('induction_training-details/{id}', [InductionTrainingcontroller::class, 'viewrendersopinduction']);
+Route::get('induction_question_training/{id}/{induction_id}', [InductionTrainingcontroller::class, 'inductionquestionshow']);
+Route::get('induction_training_certificate/{id}', [InductionTrainingcontroller::class, 'showCertificate']);
+Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])->name('induction_training.index');
+Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
+Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
+Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
 //new route 
-Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
+Route::get('/employees/{id}', [InductionTrainingcontroller::class, 'getEmployeeDetails']);
 
-Route::get('/fetch-question/{documentId}', [InductionTrainingController::class, 'fetchQuestion']);
-Route::get('/documents/view/{id}', [InductionTrainingController::class, 'viewSop'])->name('documents.view');
+Route::get('/fetch-question/{documentId}', [InductionTrainingcontroller::class, 'fetchQuestion']);
+Route::get('/documents/view/{id}', [InductionTrainingcontroller::class, 'viewSop'])->name('documents.view');
 
 
 
@@ -639,8 +639,8 @@ Route::get('/get-questions/{documentId}', [TrainerController::class, 'getQuestio
 
 
 //new one
-Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
-Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);
+Route::post('tms/induction/sendstage/{id}', [InductionTrainingcontroller::class, 'sendStage']);
+Route::post('tms/induction/cancelstage/{id}', [InductionTrainingcontroller::class, 'cancelStage']);
 
 // =======
 Route::post('tni', [TNIController::class, 'store'])->name('tni.store');

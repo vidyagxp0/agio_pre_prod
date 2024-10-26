@@ -463,7 +463,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HOD Evaluation</button>
 
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head Approval</button>
-            @if ($trainer->stage >= 5 && $trainer->trainer == 'Qualified')
+            @if ($trainer->stage >= 5)
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button>
             @endif
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button> -->
@@ -1423,11 +1423,10 @@
                                         </p>
                                         <div class="signature-section">
                                             <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
+
                                                 Sign / Date: _______________ <br>Head of Department
                                             </div>
                                             <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
                                                 Sign / Date: <span>{{$trainer->qualified_by}} / {{$trainer->qualified_on }}</span>QA/CQA Head 
                                             </div>
                                         </div>
@@ -1446,8 +1445,8 @@
 
                     <style>
                         .certificate-container {
-                            width: 100%; /* Ensure it takes full width when printed */
-                            max-width: 685px; /* For regular view */
+                            width: 100%;
+                            max-width: 685px;
                             height: auto;
                             border: 4px solid #3d6186;
                             padding: 18px;
@@ -1455,14 +1454,14 @@
                             margin: auto;
                             box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
                             position: relative;
-                            page-break-inside: avoid; /* Avoid breaking the certificate into multiple pages */
+                            page-break-inside: avoid;
                         }
 
                         .certificate-title {
                             font-size: 30px;
                             font-weight: bold;
                             color: #677078;
-                            text-align: center; /* Align title to the center */
+                            text-align: center;
                         }
 
                         .certificate-content {
@@ -1513,7 +1512,7 @@
 
                         @media print {
                             .button-block {
-                                display: none !important; /* Hide all buttons on print */
+                                display: none !important;
                             }
 
                             body {
@@ -1532,7 +1531,7 @@
                             }
 
                             .signature-section {
-                                page-break-inside: avoid; /* Avoid breaking signatures across pages */
+                                page-break-inside: avoid;
                             }
                         }
                     </style>
@@ -1784,7 +1783,7 @@
     <script>
         document.getElementById('myfile').addEventListener('change', function() {
             var fileListDiv = document.querySelector('.file-list');
-            fileListDiv.innerHTML = ''; // Clear previous entries
+            fileListDiv.innerHTML = '';
 
             for (var i = 0; i < this.files.length; i++) {
                 var file = this.files[i];
@@ -1830,10 +1829,8 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
 
-            // Find the index of the clicked tab button
             const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
 
-            // Update the currentStep to the index of the clicked tab
             currentStep = index;
         }
 
@@ -1845,21 +1842,17 @@
         let currentStep = 0;
 
         function nextStep() {
-            // Check if there is a next step
+
             if (currentStep < steps.length - 1) {
-                // Hide current step
+
                 steps[currentStep].style.display = "none";
 
-                // Show next step
                 steps[currentStep + 1].style.display = "block";
 
-                // Add active class to next button
                 stepButtons[currentStep + 1].classList.add("active");
 
-                // Remove active class from current button
                 stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
                 currentStep++;
             }
         }

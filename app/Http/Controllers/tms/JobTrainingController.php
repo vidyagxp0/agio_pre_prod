@@ -141,6 +141,10 @@ public function trainingQuestions($id){
     public function store(Request $request)
     {
 
+        $documentData = $request->input('data');
+
+        $jsonData = json_encode($documentData);
+
         $jobTraining = new JobTraining();
 
         $jobTraining->stage = '1';
@@ -175,9 +179,9 @@ public function trainingQuestions($id){
         $jobTraining->evaluation_required = $request->input('evaluation_required');
         $jobTraining->delegate = $request->input('delegate');
         $jobTraining->selected_document_id = $request->input('selected_document_id');
+        
 
-
-      $jobTraining_id = $jobTraining->id;
+        $jobTraining_id = $jobTraining->id;
 
         $employeeJobGrid = JobTrainingGrid::where(['jobTraining_id' => $jobTraining_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
         $employeeJobGrid->jobTraining_id = $jobTraining_id;
@@ -185,8 +189,11 @@ public function trainingQuestions($id){
         $employeeJobGrid->data = $request->jobResponsibilities;  
 
         $employeeJobGrid->save();
+        
+        $jobTraining->document_data = $jsonData;
 
         for ($i = 1; $i <= 5; $i++) {
+
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
             $jobTraining->{"type_of_training_$i"} = $request->input("type_of_training_$i");
             $jobTraining->{"reference_document_no_$i"} = $request->input("reference_document_no_$i");
@@ -196,8 +203,8 @@ public function trainingQuestions($id){
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
-        $jobTraining->save();
 
+        $jobTraining->save();
 
         if (!empty($request->name)) {
             $validation2 = new JobTrainingAudit();
@@ -286,6 +293,10 @@ public function trainingQuestions($id){
         $savedSop = $record->sopdocument;
         $employees = Employee::all();
         
+        // $documentData = json_decode($jobTraining->document_data, true);
+        $storedData = json_decode($jobTraining->document_data, true);
+
+
         $document_training = DocumentTraining::where('document_id', $id)->first();
          // Use optional() to avoid null errors when training_plan or quize is null
          $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
@@ -301,12 +312,14 @@ public function trainingQuestions($id){
         if (!$jobTraining) {
             return redirect()->route('job_training.index')->with('error', 'Job Training not found');
         }
-        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','quize','training','document_training','employees','employee_grid_data'));
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','quize','training','document_training','employees','employee_grid_data','storedData'));
     }
 
     public function update(Request $request, $id)
     {
         // dd($request->all());
+
+
         $jobTraining = JobTraining::findOrFail($id);
         $lastDocument = JobTraining::findOrFail($id);
 
@@ -348,6 +361,18 @@ public function trainingQuestions($id){
         $jobTraining->final_review_comment = $request->input('final_review_comment');
         $jobTraining->selected_document_id = $request->input('selected_document_id');
 
+
+        // Retrieve the existing JSON data and decode it
+        $existingData = json_decode($jobTraining->document_data, true) ?? [];
+    
+        // Get the updated data from the request, defaulting to an empty array if missing
+        $updatedData = $request->input('data') ?? [];
+    
+        // Merge the existing data with the updated data
+        $newData = array_replace($existingData, $updatedData);
+    
+        // Encode the updated data back to JSON
+        $jobTraining->document_data = json_encode($newData);
 
         // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
         // $employeeJobGrid->employee_id = $employee_id;

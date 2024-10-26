@@ -1304,92 +1304,77 @@
 
 
 
-<script>
-   let rowCount = {{ is_array($documents) ? count($documents) : 0 }};
+                            <script>
+                                let rowCount = {{ is_array($documents) ? count($documents) : 0 }};
 
-    function addNewRow() {
-        rowCount++;
-        const tableBody = document.querySelector('#documentTable tbody');
-        
-        const newRow = document.createElement('tr');
-        newRow.setAttribute('id', `row_${rowCount}`);
-        
-        newRow.innerHTML = `
-            <td>${rowCount}</td>
-            <td>
-               <input type="text" name="document_title[]" />
-            </td>
-            <td>
-                <select name="document_number[]" id="document_number_${rowCount}" onchange="fetchSopLink0(this, ${rowCount})">
-                    <option value="">----Select---</option>
-                    @foreach ($data as $item)
-                    <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
-                        {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
-                    </option>
-                    @endforeach
-                </select>
-            </td>
-            <td>
-                <input type="date" name="training_date[]" />
-            </td>
-            <td>
-                <input type="file" name="attachment[]" />
-            </td>
-            <td>
-                <textarea name="remark[]"></textarea>
-            </td>
-            <td>
-                <a href="#" id="view_sop_link_${rowCount}" target="_blank" style="display: none;">View SOP</a>
-            </td>
-        `;
-        
-        tableBody.appendChild(newRow);
-    }
+                                function addNewRow() {
+                                    rowCount++;
+                                    const tableBody = document.querySelector('#documentTable tbody');
+                                    
+                                    const newRow = document.createElement('tr');
+                                    newRow.setAttribute('id', `row_${rowCount}`);
+                                    
+                                    newRow.innerHTML = `
+                                        <td>${rowCount}</td>
+                                        <td>
+                                        <input type="text" name="document_title[]" />
+                                        </td>
+                                        <td>
+                                            <select name="document_number[]" id="document_number_${rowCount}" onchange="fetchSopLink0(this, ${rowCount})">
+                                                <option value="">----Select---</option>
+                                                @foreach ($data as $item)
+                                                <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
+                                                    {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="date" name="training_date[]" />
+                                        </td>
+                                        <td>
+                                            <input type="file" name="attachment[]" />
+                                        </td>
+                                        <td>
+                                            <textarea name="remark[]"></textarea>
+                                        </td>
+                                        <td>
+                                            <a href="#" id="view_sop_link_${rowCount}" target="_blank" style="display: none;">View SOP</a>
+                                        </td>
+                                    `;
+                                    
+                                    tableBody.appendChild(newRow);
+                                }
 
-    function fetchSopLink0(selectElement, row) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const sopId = selectedOption.getAttribute('data-sop-id');
-        const sopLink = document.getElementById(`view_sop_link_${row}`);
+                                function fetchSopLink0(selectElement, row) {
+                                    const selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    const sopId = selectedOption.getAttribute('data-sop-id');
+                                    const sopLink = document.getElementById(`view_sop_link_${row}`);
 
-        if (sopId) {
-            sopLink.href = `/documents/view/${sopId}`;
-            sopLink.style.display = 'inline';
-        } else {
-            sopLink.style.display = 'none';
-        }
-    }
+                                    if (sopId) {
+                                        sopLink.href = `/documents/view/${sopId}`;
+                                        sopLink.style.display = 'inline';
+                                    } else {
+                                        sopLink.style.display = 'none';
+                                    }
+                                }
 
-    // On page load, fetch SOP links for already saved documents
-    window.onload = function() {
-        @if(is_array($documents) && count($documents) > 0)
-            @foreach ($documents as $index => $document)
-                var sopSelect = document.getElementById('document_number_{{ $index + 1 }}');
-                fetchSopLink(sopSelect, {{ $index + 1 }}); // Pass the row number
-            @endforeach
-        @endif
-    };
+                                // On page load, fetch SOP links for already saved documents
+                                window.onload = function() {
+                                    @if(is_array($documents) && count($documents) > 0)
+                                        @foreach ($documents as $index => $document)
+                                            var sopSelect = document.getElementById('document_number_{{ $index + 1 }}');
+                                            fetchSopLink(sopSelect, {{ $index + 1 }});
+                                        @endforeach
+                                    @endif
+                                };
 
 
-    function removeRow(button) {
-        const row = button.closest('tr');
-        row.remove();
-    }
-</script>
-<!-- <script>
-    function fetchSopLink0(selectElement, rowId) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const sopId = selectedOption.getAttribute('data-sop-id');
-        const sopLink = document.getElementById(`view_sop_link${rowId}`);
-
-        if (sopId) {
-            sopLink.href = `/documents/view/${sopId}`;
-            sopLink.style.display = 'inline';
-        } else {
-            sopLink.style.display = 'none';
-        }
-    }
-</script> -->
-
+                                function removeRow(button) {
+                                    const row = button.closest('tr');
+                                    row.remove();
+                                }
+                            </script>
 
 
                             <script>

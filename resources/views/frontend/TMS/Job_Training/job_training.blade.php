@@ -324,10 +324,10 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
 
 
-            <div class="col-12">
-                <div class="group-input">
-                    <div class="why-why-chart">
-                    <table class="table table-bordered">
+<div class="col-12">
+    <div class="group-input">
+        <div class="why-why-chart">
+        <table class="table table-bordered" id="documentTable">
     <thead>
         <tr>
             <th style="width: 5%;">Sr.No.</th>
@@ -347,7 +347,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         @endphp
         
         <tr>
-        <td>1</td>
+<td>1</td>
 <td>
     <select name="subject_1" id="sopdocument" onchange="fetchDocumentDetails(this)">
         <option value="">---Select Document Name---</option>
@@ -489,7 +489,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     <td><input type="text" name="reference_document_no_4_display" id="document_number4" readonly></td>
     <input type="hidden" name="reference_document_no_4" id="reference_document_no_4">
 
-    <!-- <td><input type="text" name="reference_document_no_4" id="document_number4" readonly></td> -->
 
     <td>
         <select name="trainer_4" id="trainer_4">
@@ -552,8 +551,43 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </td>
 </tr>
 <input type="hidden" id="selected_document_id5" name="selected_document_id">
+
+<tr id="row_5">
+    <td>6</td>
+    <td>
+        <select name="data[6][document_name]" id="sopdocument_6" onchange="fetchDocumentDetails0(this, 6)">
+            <option value="">---Select Document Name---</option>
+            @foreach ($data as $dat)
+            <option value="{{ $dat->document_name }}"
+                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                    data-sop-link="{{ $dat->id }}" 
+                    data-id="{{ $dat->id }}">
+                {{ $dat->document_name }}
+            </option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="text" name="data[6][type_of_training]"></td>
+    <td><input type="text" name="data[6][reference_document_no_display]" id="document_number_6" readonly></td>
+    <input type="hidden" name="data[6][reference_document_no]" id="reference_document_no_6">
+    <td>
+        <select name="data[6][trainer]" id="trainer_6">
+            <option value="">-- Select --</option>
+            @foreach ($usersDetails as $u)
+            <option value="{{ $u->id }}">{{ $u->name }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td><input type="date" name="data[6][startdate]" id="startdate_6" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td><input type="date" name="data[6][enddate]" id="enddate_6" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+    <td>
+        <a href="" id="view_sop_6" target="_blank" style="display:none;">View SOP</a>
+    </td>
+</tr>
+
     </tbody>
 </table>
+<button type="button" onclick="addNewRow()">+ Add Row</button>
 
                     </div>
                 </div>
@@ -569,6 +603,83 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
 </div>
 </div>
+<script>
+    let rowCount = 6;
+
+    function addNewRow() {
+        rowCount++;
+        const tableBody = document.querySelector('#documentTable tbody');
+
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('id', `row_${rowCount}`);
+
+        newRow.innerHTML = `
+            <td>${rowCount}</td>
+            <td>
+                <select name="subject_${rowCount}" id="sopdocument_${rowCount}" onchange="fetchDocumentDetails0(this, ${rowCount})">
+                    <option value="">---Select Document Name---</option>
+                    @foreach ($data as $dat)
+                    <option value="{{ $dat->document_name }}"
+                            data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                            data-sop-link="{{ $dat->id }}" 
+                            data-id="{{ $dat->id }}">
+                        {{ $dat->document_name }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="text" name="type_of_training_${rowCount}"></td>
+            <td><input type="text" name="reference_document_no_${rowCount}_display" id="document_number_${rowCount}" readonly></td>
+            <input type="hidden" name="reference_document_no_${rowCount}" id="reference_document_no_${rowCount}">
+            <td>
+                <select name="trainer_${rowCount}" id="trainer_${rowCount}">
+                    <option value="">-- Select --</option>
+                    @foreach ($usersDetails as $u)
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="date" name="startdate_${rowCount}" id="startdate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td><input type="date" name="enddate_${rowCount}" id="enddate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+            <td>
+                <a href="" id="view_sop_${rowCount}" target="_blank" style="display:none;">View SOP</a>
+            </td>
+        `;
+
+        tableBody.appendChild(newRow);
+    }
+
+    function fetchDocumentDetails0(selectElement, rowNumber) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var documentNumber = selectedOption.getAttribute('data-doc-number');
+        var documentId = selectedOption.getAttribute('data-id');
+
+        document.getElementById(`document_number_${rowNumber}`).value = documentNumber;
+        document.getElementById(`reference_document_no_${rowNumber}`).value = documentId;
+
+        var sopAnchor = document.getElementById(`view_sop_${rowNumber}`);
+        if (documentId) {
+            sopAnchor.href = `/documents/view/${documentId}`;
+            sopAnchor.style.display = 'inline';
+        } else {
+            sopAnchor.style.display = 'none';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        for (let i = 1; i <= rowCount; i++) {
+            let selectedDocumentId = document.getElementById(`reference_document_no_${i}`).value;
+            let sopAnchor = document.getElementById(`view_sop_${i}`);
+            
+            if (selectedDocumentId) {
+                sopAnchor.href = `/documents/view/${selectedDocumentId}`;
+                sopAnchor.style.display = 'inline';
+            }
+        }
+    });
+</script>
+
+
 <script>
    function fetchDocumentDetails(selectElement) {
     var selectedOption = selectElement.options[selectElement.selectedIndex];
