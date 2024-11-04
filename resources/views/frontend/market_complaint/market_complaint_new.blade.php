@@ -1310,7 +1310,7 @@
                                             Investigation Team
                                             <button type="button" id="investigation_team_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1491,7 +1491,7 @@
                                             Brain Storming Session/Discussion With Concerned Person
                                             <button type="button" id="brain_storming_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1763,7 +1763,7 @@
                                         Product/Material Details
                                         <button type="button" id="promate_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Product/Material"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>

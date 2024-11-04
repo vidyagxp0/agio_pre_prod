@@ -1717,6 +1717,7 @@
                                                                 value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}>
                                                         </td>
+
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
@@ -1725,21 +1726,23 @@
                                                                         <input class="click_date"
                                                                             id="date_{{ $index }}_date_tm_display"
                                                                             type="text"
-                                                                            name="Team_Members[{{ $index }}][date_tm_display]"
+                                                                            name="Team_Members[{{ $index }}][date_tm]"
                                                                             placeholder="DD-MMM-YYYY" readonly
                                                                             value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
+                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             onclick="showDatePicker('date_{{ $index }}_date_tm')" />
 
                                                                         <!-- Hidden input for actual date -->
                                                                         <input type="date"
                                                                             name="Team_Members[{{ $index }}][date_tm]"
                                                                             value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             id="date_{{ $index }}_date_tm"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')" />
+                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')"
+                                                                            {{ $data->stage == 1 ? '' : 'readonly' }} />
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1825,7 +1828,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
+                                        Report Approval by Head QA/CQA (Final Approval shall be done after QA Verification)
                                         <button type="button" id="report_approval"
                                             {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -2062,7 +2065,7 @@
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Product/Material"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -3175,7 +3178,7 @@
                                         <button type="button" id="investigation_team_add"
                                         {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -3520,7 +3523,7 @@
                                         <button type="button" id="brain-stroming"
                                             {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -6895,7 +6898,7 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                             <span class="text-danger"></span></label>
-                                            @if ($data->stage != 3) disabled @endif>
+                                            @if ($data->stage != 3) @endif
                                         <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
@@ -9481,7 +9484,7 @@
                                 @enderror
                             </div>
                         </div>
-
+                        </div>
 
                     <div class="button-block">
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -10004,7 +10007,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_c[]"
-                                        {{ $data->stage == 7 ? '' : 'readonly' }}
+                                        {{ $data->stage == 7 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'initial_attachment_c')" multiple>
                                     </div>
                                 </div>
