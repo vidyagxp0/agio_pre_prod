@@ -1107,6 +1107,456 @@
         </div>
     </div>
 
+        {{--Market Complaint Instruction Model--}}
+
+        {{--Product Details--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_complaint">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Product Name :&nbsp;</strong>
+                            The name of the product being launched or shipped.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch No :&nbsp;</strong>
+                            Unique identification number for the batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Mfg. Date :&nbsp;</strong>
+                            Date when the product batch was manufactured.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Exp. Date :&nbsp;</strong>
+                            The date by which the product should be used.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            Total number of units produced in the batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Size :&nbsp;</strong>
+                            Number of units per pack (e.g., bottles, boxes, etc.).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Dispatch Quantity :&nbsp;</strong>
+                            Number of units being dispatched/shipped.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional information related to the batch (e.g., delayed dispatch, quality checks).
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Traceability --}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_Traceability">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Product Name :&nbsp;</strong>
+                            The name of the product being manufactured or dispatched.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch No :&nbsp;</strong>
+                            A unique identifier assigned to a specific batch of the product.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Manufacturing Location :&nbsp;</strong>
+                            The facility or plant where the product was manufactured.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional notes, such as delays, quality control status, or special instructions related to the batch.
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            Total number of units produced in the batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Size :&nbsp;</strong>
+                            Number of units per pack (e.g., bottles, boxes, etc.).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Dispatch Quantity :&nbsp;</strong>
+                            Number of units being dispatched/shipped.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional information related to the batch (e.g., delayed dispatch, quality checks).
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Report Review (Final Review shall be done after QA Verification)--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_ReportReview">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Names :&nbsp;</strong>
+                            The full names of individuals involved.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Designation :&nbsp;</strong>
+                            The job title or position of the individual (e.g., Manager, Supervisor).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Department :&nbsp;</strong>
+                            The specific department or division where the individual works (e.g., Quality Control, Production).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Sign :&nbsp;</strong>
+                            The signature or initials of the individual to validate the document or process.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Date :&nbsp;</strong>
+                            The date when the individual signed or approved the document.
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>Pack Size :&nbsp;</strong>
+                            Number of units per pack (e.g., bottles, boxes, etc.).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Dispatch Quantity :&nbsp;</strong>
+                            Number of units being dispatched/shipped.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional information related to the batch (e.g., delayed dispatch, quality checks).
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_ReportApproval">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Names :&nbsp;</strong>
+                            The full names of individuals involved.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Designation :&nbsp;</strong>
+                            The job title or position of the individual (e.g., Manager, Supervisor).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Department :&nbsp;</strong>
+                            The specific department or division where the individual works (e.g., Quality Control, Production).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Sign :&nbsp;</strong>
+                            The signature or initials of the individual to validate the document or process.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Date :&nbsp;</strong>
+                            The date when the individual signed or approved the document.
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>Pack Size :&nbsp;</strong>
+                            Number of units per pack (e.g., bottles, boxes, etc.).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Dispatch Quantity :&nbsp;</strong>
+                            Number of units being dispatched/shipped.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional information related to the batch (e.g., delayed dispatch, quality checks).
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Product/Material Details--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_Material">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Product Name :&nbsp;</strong>
+                            The name of the product in the batch (e.g., a specific medication or supplement).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch No :&nbsp;</strong>
+                            A unique identification code for the batch, used for tracking and record-keeping.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Mfg. Date :&nbsp;</strong>
+                            The date on which the product was manufactured.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Exp. Date :&nbsp;</strong>
+                            The date when the product will expire and should no longer be used.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            The total quantity of product units manufactured in this batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Profile :&nbsp;</strong>
+                            The packaging configuration, describing how the product is packed (e.g., bottles, boxes, blister packs).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Released Quantity :&nbsp;</strong>
+                            The quantity of the product that has been approved and released for distribution or sale.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Additional notes or comments about the batch, such as quality checks, issues, or special instructions.
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Investigation Team--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_InvestigationTeam">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Name :&nbsp;</strong>
+                            The full name of the individual involved, often used for identification or record-keeping.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Department :&nbsp;</strong>
+                            The specific organizational unit or division where the individual works (e.g., Quality Assurance, Production, Logistics).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Any additional comments or observations related to the individual’s role, actions, or specific details about their involvement in a process (e.g., "Reviewed and Approved," "Pending Final Review").
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>Exp. Date :&nbsp;</strong>
+                            The date when the product will expire and should no longer be used.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            The total quantity of product units manufactured in this batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Profile :&nbsp;</strong>
+                            The packaging configuration, describing how the product is packed (e.g., bottles, boxes, blister packs).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Released Quantity :&nbsp;</strong>
+                            The quantity of the product that has been approved and released for distribution or sale.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Additional notes or comments about the batch, such as quality checks, issues, or special instructions.
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{--Brain Storming Session/Discussion With Concerned Person--}}
+
+        <div class="modal fade" id="observation-field-instruction-modal-Market_Complaint_BrainStorming">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Possibility :&nbsp;</strong>
+                            A potential outcome, risk, or scenario that could impact the process or project. This might include anticipated challenges or opportunities.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Facts/Controls :&nbsp;</strong>
+                            Verified information or measures in place to address, manage, or mitigate the identified possibility.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Probable Cause :&nbsp;</strong>
+                            The most likely reason or origin for the possibility or issue, based on analysis or observation.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Additional notes or observations, such as insights, status updates, or further context related to the situation.
+                        </div>
+                        {{--<div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            The total quantity of product units manufactured in this batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Profile :&nbsp;</strong>
+                            The packaging configuration, describing how the product is packed (e.g., bottles, boxes, blister packs).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Released Quantity :&nbsp;</strong>
+                            The quantity of the product that has been approved and released for distribution or sale.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Additional notes or comments about the batch, such as quality checks, issues, or special instructions.
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
    {{-- ============================================
                 WHY WHY CHART INSTRUCTION MODAL
     ============================================= --}}

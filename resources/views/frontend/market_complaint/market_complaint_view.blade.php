@@ -1123,8 +1123,8 @@
                                         Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" {{ $data->stage == 1 ? '' : 'readonly' }}
-                                        name="details_of_nature_market_complaint_gi" id="summernote-1">{{ $data->details_of_nature_market_complaint_gi }}
+                                    <textarea class="summernote"
+                                        name="details_of_nature_market_complaint_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->details_of_nature_market_complaint_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -1619,15 +1619,16 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="additional_inform" id="summernote-1">{{ $data->additional_inform }}
+                                    <textarea class="summernote" name="additional_inform" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_inform }}
                                 </textarea>
                                 </div>
                             </div>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Additional information if require ">Type of Market Complaints </label>
+                                    <label for="Additional information if require">Type of Market Complaints </label>
                                     <select
-                                        name="probable_root_causes_complaint_hodsr"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        name="probable_root_causes_complaint_hodsr" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="probable_root_causes_complaint_hodsr">
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
@@ -1646,7 +1647,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Comments </label>
+                                    <label for="In case of Invalide complain then">Comments</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"
@@ -1717,6 +1718,7 @@
                                                                 value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}>
                                                         </td>
+
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
@@ -1725,21 +1727,23 @@
                                                                         <input class="click_date"
                                                                             id="date_{{ $index }}_date_tm_display"
                                                                             type="text"
-                                                                            name="Team_Members[{{ $index }}][date_tm_display]"
+                                                                            name="Team_Members[{{ $index }}][date_tm]"
                                                                             placeholder="DD-MMM-YYYY" readonly
                                                                             value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
+                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             onclick="showDatePicker('date_{{ $index }}_date_tm')" />
 
                                                                         <!-- Hidden input for actual date -->
                                                                         <input type="date"
                                                                             name="Team_Members[{{ $index }}][date_tm]"
                                                                             value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             id="date_{{ $index }}_date_tm"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')" />
+                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')"
+                                                                            {{ $data->stage == 1 ? '' : 'readonly' }} />
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1825,7 +1829,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
+                                        Report Approval by Head QA/CQA (Final Approval shall be done after QA Verification)
                                         <button type="button" id="report_approval"
                                             {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -2062,7 +2066,7 @@
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Product/Material"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -2836,7 +2840,7 @@
                             </div> --}}
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="initial_attachment_ca">Ackowledgment Attachment</label>
+                                    <label for="initial_attachment_ca">Acknowledgment Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -3175,7 +3179,7 @@
                                         <button type="button" id="investigation_team_add"
                                         {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -3520,7 +3524,7 @@
                                         <button type="button" id="brain-stroming"
                                             {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -6895,7 +6899,7 @@
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                             <span class="text-danger"></span></label>
-                                            @if ($data->stage != 3) disabled @endif>
+                                            @if ($data->stage != 3) @endif
                                         <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                             @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
@@ -9481,7 +9485,7 @@
                                 @enderror
                             </div>
                         </div>
-
+                        </div>
 
                     <div class="button-block">
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -10004,7 +10008,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_c[]"
-                                        {{ $data->stage == 7 ? '' : 'readonly' }}
+                                        {{ $data->stage == 7 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'initial_attachment_c')" multiple>
                                     </div>
                                 </div>

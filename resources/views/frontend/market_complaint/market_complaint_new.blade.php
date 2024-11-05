@@ -189,7 +189,7 @@
 
             </div>
 
-            <form action="{{ route('marketcomplaint.mcstore') }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('marketcomplaint.mcstore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
@@ -1233,7 +1233,7 @@
                                 </script>
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button"> <a class="text-white"
@@ -1288,7 +1288,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" id="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1310,7 +1310,7 @@
                                             Investigation Team
                                             <button type="button" id="investigation_team_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1491,7 +1491,7 @@
                                             Brain Storming Session/Discussion With Concerned Person
                                             <button type="button" id="brain_storming_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1729,7 +1729,7 @@
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1763,7 +1763,7 @@
                                         Product/Material Details
                                         <button type="button" id="promate_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Product/Material"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -2417,7 +2417,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -4550,7 +4550,7 @@
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton"
                                 style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                class="saveButton">Save</button>
+                                class="saveButton on-submit-disable-button">Save</button>
                             {{-- <a href="/rcms/qms-dashboard"
                         style=" justify-content: center; width: 4rem; margin-left: 1px;">
                         <button type="button" class="backButton">Back</button>
@@ -4833,7 +4833,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -4880,7 +4880,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton" id="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -4927,7 +4927,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -5166,6 +5166,14 @@
                 displayInput.value = '';
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        });
     </script>
 
     {{-- <script>

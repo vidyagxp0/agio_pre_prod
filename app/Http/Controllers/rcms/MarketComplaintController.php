@@ -9691,8 +9691,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record_number = $record;
             $relatedRecords = Helpers::getAllRelatedRecords();
+            $Capachild = MarketComplaint::find($id);
+            //    dd($Capachild->division_id);
+               $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
             $p_record = MarketComplaint::find($id);
