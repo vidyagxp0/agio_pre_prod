@@ -621,6 +621,13 @@
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">Description of Change</label>
+                                        <textarea name="bd_domestic"></textarea>
+                                    </div>
+                                </div>
                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
