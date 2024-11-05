@@ -2988,7 +2988,7 @@ class OOSService
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = 'Create';
-                $history->activity_type = 'OOS/OOT Stands.';
+                $history->activity_type = 'OOS Stands.';
                 $history->current = $request->oos_stands_oosc;
                 $history->save();
             }
