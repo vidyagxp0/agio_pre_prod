@@ -17,6 +17,7 @@
         min-width: 100vw;
         min-height: 100vh;
     }
+    Market Complaint Audit Trail Report
 
     .w-5 {
         width: 5%;
@@ -178,12 +179,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>  MarketComplaint No.</strong>
+                    <strong>  Market Complaint No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/MC
-                    /{{ Helpers::year($doc->created_at) }}/
-                    {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->division_id) }}/MC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
