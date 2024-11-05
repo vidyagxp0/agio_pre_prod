@@ -2345,7 +2345,7 @@
                                                 <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3 productionInjection">
+                                        {{-- <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
                                                     <!-- <span
@@ -2357,7 +2357,7 @@
                                                         does not require completion</small></div>
                                                 <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     @endif
                                     <div class="col-12 productionInjection">
                                         <div class="group-input">
@@ -6502,7 +6502,9 @@
                                                 <option value="">-- Select --</option>
                                                 <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                                 <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                                <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                                {{-- <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option> --}}
+                                                <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -6748,7 +6750,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other2_review == 'na') selected @endif>NA</option>
+                                            {{-- <option value="na" @if ($data1->Other2_review == 'na') selected @endif>NA</option> --}}
+                                            <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -6895,7 +6899,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other3_review == 'na') selected @endif>NA</option>
+                                            {{-- <option value="na" @if ($data1->Other3_review == 'na') selected @endif>NA</option> --}}
+                                            <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -7044,7 +7050,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other4_review == 'na') selected @endif>NA</option>
+                                            {{-- <option value="na" @if ($data1->Other4_review == 'na') selected @endif>NA</option> --}}
+                                            <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -7197,7 +7205,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other5_review == 'na') selected @endif>NA</option>
+                                            {{-- <option value="na" @if ($data1->Other5_review == 'na') selected @endif>NA</option> --}}
+                                            <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
+
                                         </select>
                                     </div>
                                 </div>
