@@ -400,18 +400,18 @@
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="initial_attachment_gi">
                             @if ($data->initial_attachment_gi)
-                            @foreach ($data->initial_attachment_gi as $file)
-                            <h6 type="button" class="file-container text-dark"
-                                style="background-color: rgb(243, 242, 240);">
-                                <b>{{ $file }}</b>
-                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                        class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                        class="fa-solid fa-circle-xmark"
-                                        style="color:red; font-size:20px;"></i></a>
-                            </h6>
-                            @endforeach
+                                @foreach ($data->initial_attachment_gi as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                @endforeach
                             @endif
                         </div>
 
@@ -533,8 +533,7 @@
                                                     value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}" />
                                                     <input {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
                                                     value="{{ $info_product_material['info_mfg_date'] }}" class="hide-input"
-                                                    oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')"
-                                                    max="{{ date('Y-m') }}"> <!-- Use PHP's date function to get the current month -->
+                                                    oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')"> <!-- Use PHP's date function to get the current month -->
                                                 </div>
 
                                             </div>
@@ -547,7 +546,7 @@
                                                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getmonthFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
                                                     <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_expiry_date]"
                                                     value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input"
-                                                    oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')" min="{{ date('Y-m') }}">
+                                                    oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>

@@ -99,7 +99,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">OOS Stands </label>
+                            <label for="Reference Recores">OOS/OOT Stands </label>
                             <select name="oos_stands_oosc" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="valid" @if ($micro_data->oos_stands_oosc == 'valid') selected @endif>Valid</option>
