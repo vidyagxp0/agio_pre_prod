@@ -256,8 +256,8 @@
                     <tr>
                         <th class="w-20">Extension Number</th>
                         <td class="w-80">
-                            @if ($data->Extension)
-                                {{ $data->Extension }}
+                            @if ($data->count)
+                                {{ $data->count }}
                             @else
                                 Not Applicable
                             @endif
@@ -604,14 +604,16 @@
                         <th class="w-20">More Information Required Comment</th>
                         <td class="w-80">{{ $data->more_info_inapproved_comment }}</td>
                     </tr> --}}
-                    <tr>
-                        <th class="w-20">Send for CQA By</th>
-                        <td class="w-80">@if ($data->send_cqa_by) {{ $data->send_cqa_by }} @else Not Applicable @endif</td>
-                        <th class="w-20">Send for CQA On</th>
-                        <td class="w-80">@if ($data->send_cqa_on) {{ $data->send_cqa_on }} @else Not Applicable @endif</td>
-                        <th class="w-20">Send for CQA Comment</th>
-                        <td class="w-80">@if ($data->send_cqa_comment) {{ $data->send_cqa_comment }} @else Not Applicable @endif</td>
-                    </tr>
+                    @if($data->count == 3)
+                        <tr>
+                            <th class="w-20">Send for CQA By</th>
+                            <td class="w-80">@if ($data->send_cqa_by) {{ $data->send_cqa_by }} @else Not Applicable @endif</td>
+                            <th class="w-20">Send for CQA On</th>
+                            <td class="w-80">@if ($data->send_cqa_on) {{ $data->send_cqa_on }} @else Not Applicable @endif</td>
+                            <th class="w-20">Send for CQA Comment</th>
+                            <td class="w-80">@if ($data->send_cqa_comment) {{ $data->send_cqa_comment }} @else Not Applicable @endif</td>
+                        </tr>
+                    @endif
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-80">@if ($data->submit_by_approved) {{ $data->submit_by_approved }} @else Not Applicable @endif</td>

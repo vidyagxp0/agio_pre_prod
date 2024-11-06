@@ -596,7 +596,7 @@
                                     </div>  --}}
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="file_attach">File Attachmnets</label>
+                                        <label for="file_attach">File Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="file_attach">
