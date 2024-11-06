@@ -178,7 +178,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Management Audit No.</strong>
+                    <strong>Management Review No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
@@ -785,7 +785,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">HOD Production Tablet/Capsule/Powder Person</th>
+                            <th class="w-20">Production Tablet/Capsule / Powder HOD Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Production_Table_Person)
@@ -911,7 +911,7 @@
                             </tr>
 
                             <tr>
-                                <th class="w-20">HOD Production Injection Person</th>
+                                <th class="w-20">Production Injection HOD Person </th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Production_Injection_Person)
@@ -1034,7 +1034,7 @@
                             <tr>
 
 
-                                <th class="w-20">HOD Research & Development Person</th>
+                                <th class="w-20">Research & Development HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_ResearchDevelopment_person)
@@ -1156,7 +1156,7 @@
 
                             <tr>
 
-                                <th class="w-20">HOD Human Resource Person</th>
+                                <th class="w-20">Human Resourse HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Human_Resource_person)
@@ -1277,7 +1277,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">HOD Corporate Quality Assurance Person</th>
+                                <th class="w-20">Corporate Quality Assurance HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_CorporateQualityAssurance_person)
@@ -1400,7 +1400,7 @@
 
                             <tr>
 
-                                <th class="w-20">HOD Stores Person</th>
+                                <th class="w-20">Store HOD Person </th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Store_person)
@@ -1522,7 +1522,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Engineering Person</th>
+                                <th class="w-20">Engineering HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Engineering_person)
@@ -1766,7 +1766,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Quality Assurance Person</th>
+                                <th class="w-20"> Quality Assurance HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_QualityAssurance_person)
@@ -2011,7 +2011,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Quality Control Person</th>
+                                <th class="w-20">Quality Control HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Quality_Control_Person)
@@ -2133,7 +2133,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Microbiology Person</th>
+                                <th class="w-20"> Microbiology HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Microbiology_person)
@@ -2259,7 +2259,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Safety Person</th>
+                                <th class="w-20"> Safety HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Environment_Health_Safety_person)
@@ -2506,7 +2506,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Other's 1 Person</th>
+                                <th class="w-20"> Other's 1 HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Other1_person)
@@ -2639,7 +2639,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">HOD Other's 2 Person</th>
+                                <th class="w-20">Other's 2 HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Other2_person)
@@ -2881,7 +2881,7 @@
                             <tr>
 
 
-                                <th class="w-20">HOD Other's 4 Person</th>
+                                <th class="w-20"> Other's 4 HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Other4_person)
@@ -3014,7 +3014,7 @@
 
                             <tr>
 
-                                <th class="w-20">HOD Other's 5 Person</th>
+                                <th class="w-20">Other's 5 HOD Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_Other5_person)
