@@ -3358,7 +3358,7 @@
                             </div> --}}
                             <div class="inner-block">
                                 <label class="Summer"
-                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
+                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">
                                     Investigation Summary </label>
                                 <span style="font-size: 0.8rem; margin-left: 60px;">
                                     @if ($data->Detail_Of_Root_Cause)
@@ -3526,6 +3526,119 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="block-head">
+                                    Fishbone or Ishikawa Diagram
+                                </div>
+
+                            @php
+                                // Decode the JSON data to convert it to an array
+                                $decodedData = json_decode($fishboneData->data, true);
+                            
+                                // Debug to ensure the data is properly decoded
+                                //dd($decodedData);
+                            @endphp
+                            
+                            @if ($decodedData && is_array($decodedData))
+                                <table>
+                                    <tr>
+                                        <th class="w-20">Measurement</th>
+                                        <td class="w-80">
+                                            @php $measurement = $decodedData['measurement'] ?? []; @endphp
+                                            @if (is_array($measurement))
+                                                @foreach ($measurement as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($measurement))
+                                                {{ htmlspecialchars($measurement) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">Materials</th>
+                                        <td class="w-80">
+                                            @php $materials = $decodedData['materials'] ?? []; @endphp
+                                            @if (is_array($materials))
+                                                @foreach ($materials as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($materials))
+                                                {{ htmlspecialchars($materials) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Methods</th>
+                                        <td class="w-80">
+                                            @php $methods = $decodedData['methods'] ?? []; @endphp
+                                            @if (is_array($methods))
+                                                @foreach ($methods as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($methods))
+                                                {{ htmlspecialchars($methods) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">Environment</th>
+                                        <td class="w-80">
+                                            @php $environment = $decodedData['environment'] ?? []; @endphp
+                                            @if (is_array($environment))
+                                                @foreach ($environment as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($environment))
+                                                {{ htmlspecialchars($environment) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Manpower</th>
+                                        <td class="w-80">
+                                            @php $manpower = $decodedData['manpower'] ?? []; @endphp
+                                            @if (is_array($manpower))
+                                                @foreach ($manpower as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($manpower))
+                                                {{ htmlspecialchars($manpower) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">Machine</th>
+                                        <td class="w-80">
+                                            @php $machine = $decodedData['machine'] ?? []; @endphp
+                                            @if (is_array($machine))
+                                                @foreach ($machine as $value)
+                                                    {{ htmlspecialchars($value) }}
+                                                @endforeach
+                                            @elseif(is_string($machine))
+                                                {{ htmlspecialchars($machine) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
+                            
+                            
+    <div class="inner-block">
+        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
+            Problem Statement
+        </label>
+        <span style="font-size: 0.8rem; margin-left: 60px;">
+            {{ $fishboneData->data['problem_statement'] ?? 'Not Applicable' }}
+        </span>
+    </div>
+@endif
+
+
 
                             <style>
                                 .tableFMEA {
@@ -3997,7 +4110,7 @@
                                         <th class="w-60">Gap Category</th>
                                         <th class="w-60">Issues</th>
                                         <th class="w-60">Actions</th>
-                                        <th class="w-60">Remark</th>
+                                        <th class="w-60">Remarks</th>
                                     </tr>
 
                                     <tbody>
@@ -4122,10 +4235,10 @@
 
                             </table>
                         </div>
-                        <div class="border-table">
+                        {{-- <div class="border-table">
                             <div class="block-head">
                                 CAPA Attachment
-                            </div>
+                          </div>
                             <table>
 
                                 <tr class="table_bg">
@@ -4148,7 +4261,7 @@
                                 @endif
 
                             </table>
-                        </div>
+                        </div> --}}
 
                     </div>
                     <div class="block">
@@ -4328,25 +4441,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (!empty($riskEffectAnalysis->risk_factor))
-                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                    @if (!empty($riskEffectAnalysis->risk_factor_1))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
                                             <tr>
                                                 <td class="tdFMEA">{{ $key + 1 }}</td>
                                                 <td class="tdFMEA">{{ $riskFactor }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}</td>
                                             </tr>
                                         @endforeach
                                         @else
@@ -4357,11 +4470,12 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        </div>
-
-                    </div>
-
+                        
+                        
+                        
+                        
+                        
+                        
                     <!-- **************************QRM TAB ENDS******************************** -->
 
 
@@ -4373,29 +4487,7 @@
                                 CAPA
                             </div>
                             <table>
-                                <tr>
-                                    {{-- <th class="w-20">Proposed Due Date
-                                    </th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($capaExtension && $capaExtension->capa_proposed_due_date)
-                                                {{ $capaExtension->capa_proposed_due_date }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td> --}}
-                                    <!-- <th class="w-20">Name of the Department</th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($data->department_capa)
-                                                {{ $data->department_capa }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
+                            
                                 <tr>
                                     <th class="w-20">Source of CAPA</th>
                                     <td class="w-80">
@@ -4466,93 +4558,41 @@
                                     </td>
                                 </tr>
 
-                                <!-- <tr>
-                                    <th class="w-20">Target Completion Date</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->capa_completed_date)
-                                                {{ $data->capa_completed_date }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-
-                                    <th class="w-20">Interim Control</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->Interim_Control)
-                                                {{ strip_tags($data->Interim_Control) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Corrective Action Taken</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->Corrective_Action_Taken)
-                                                {{ strip_tags($data->Corrective_Action_Taken) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-
-                                    <th class="w-20">Preventive Action Taken</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->Preventive_action_Taken)
-                                                {{ strip_tags($data->Preventive_action_Taken) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">CAPA Closure Comments</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->CAPA_Closure_Comments)
-                                                {{ strip_tags($data->CAPA_Closure_Comments) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td> -->
-
-                                    <th class="w-20">CAPA  Attachment</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->CAPA_Closure_attachment)
-                                                {{ $data->CAPA_Closure_attachment }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Source Document</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->source_doc)
-                                                {{ $data->source_doc }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                     </div>
+                                <div class="border-table">
+                                    <div class="block-head">
+                                        CAPA Attachment
+                                  </div>
+                                    <table>
+        
+                                        <tr class="table_bg">
+                                            <th class="w-20">S.N.</th>
+                                            <th class="w-60">Attachment</th>
+                                        </tr>
+                                        @if ($data->Capa_attachment)
+                                            @foreach (json_decode($data->Capa_attachment) as $key => $file)
+                                                <tr>
+                                                    <td class="w-20">{{ $key + 1 }}</td>
+                                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td class="w-20">1</td>
+                                                <td class="w-20">Not Applicable</td>
+                                            </tr>
+                                        @endif
+        
+                                    </table>
+                                </div>
+                            
+
+                               
+                              
+                          
 
                     <!-- **************************INVESTIGATION TAB ENDS******************************** -->
 
@@ -5070,7 +5110,7 @@
                         <td class="w-30">{{ $data->Approved_On ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Approved Comments</th>
+                        <th class="w-20">Approved Comment</th>
                         <td class="w-30">{{ $data->Approved_Comments ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
