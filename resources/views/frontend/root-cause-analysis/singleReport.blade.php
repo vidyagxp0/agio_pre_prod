@@ -962,7 +962,7 @@
     
     <div class="inner-block">
         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-            QAH/CQAH/designee Final Approval Comments
+            QAH/CQAH/Designee Final Approval Comments
 
 </label>
         <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -975,7 +975,7 @@
     </div>
     <div class="border-table">
         <div class="block-head">
-            QAH/CQAH/designee Final Approval Attachments
+            QAH/CQAH/Designee Final Approval Attachments
 
         </div>
         <table>
