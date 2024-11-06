@@ -256,8 +256,8 @@
                     <tr>
                         <th class="w-20">Extension Number</th>
                         <td class="w-80">
-                            @if ($data->Extension)
-                                {{ $data->Extension }}
+                            @if ($data->count_data)
+                                {{ Helpers::getInitiatorCount($data->count_data) }}
                             @else
                                 Not Applicable
                             @endif
