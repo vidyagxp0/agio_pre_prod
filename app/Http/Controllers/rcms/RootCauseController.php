@@ -4590,9 +4590,11 @@ class RootCauseController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
         $p_record = RootCauseAnalysis::find($id);
+        $data = new \stdClass();   // Create an empty object
+        $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
         $record = $record_number;
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record', 'data'));
     }
     public function RCAChildRoot(Request $request, $id)
     {
@@ -4630,10 +4632,12 @@ class RootCauseController extends Controller
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
             $p_record = RootCauseAnalysis::find($id);
+            $data = new \stdClass();   // Create an empty object
+            $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record'));
+            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));
         }
     }
 
