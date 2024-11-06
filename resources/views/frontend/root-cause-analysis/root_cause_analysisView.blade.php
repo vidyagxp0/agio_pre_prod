@@ -2691,14 +2691,14 @@
                                         @if ($data->stage == 7)
 
                                            <div class="group-input">
-                                               <label for="comments" >QAH/CQAH/designee Final Approval Comments <span
+                                               <label for="comments" >QAH/CQAH/Designee Final Approval Comments <span
                                                    class="text-danger">*</span></label>
                                                <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
                                            
                                          @else
                                            <div class="group-input">
-                                               <label for="comments">QAH/CQAH/designee Final Approval Comments</label>
+                                               <label for="comments">QAH/CQAH/Designee Final Approval Comments</label>
                                                <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
                                        @endif
