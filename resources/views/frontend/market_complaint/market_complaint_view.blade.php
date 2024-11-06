@@ -1123,8 +1123,8 @@
                                         Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" {{ $data->stage == 1 ? '' : 'readonly' }}
-                                        name="details_of_nature_market_complaint_gi" id="summernote-1">{{ $data->details_of_nature_market_complaint_gi }}
+                                    <textarea class="summernote"
+                                        name="details_of_nature_market_complaint_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->details_of_nature_market_complaint_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -1619,15 +1619,16 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="additional_inform" id="summernote-1">{{ $data->additional_inform }}
+                                    <textarea class="summernote" name="additional_inform" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_inform }}
                                 </textarea>
                                 </div>
                             </div>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Additional information if require ">Type of Market Complaints </label>
+                                    <label for="Additional information if require">Type of Market Complaints </label>
                                     <select
-                                        name="probable_root_causes_complaint_hodsr"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        name="probable_root_causes_complaint_hodsr" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="probable_root_causes_complaint_hodsr">
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
@@ -1646,7 +1647,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Comments </label>
+                                    <label for="In case of Invalide complain then">Comments</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"
@@ -2839,7 +2840,7 @@
                             </div> --}}
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="initial_attachment_ca">Ackowledgment Attachment</label>
+                                    <label for="initial_attachment_ca">Acknowledgment Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

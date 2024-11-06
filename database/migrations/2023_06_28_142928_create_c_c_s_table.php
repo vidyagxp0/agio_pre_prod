@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('doc_change')->nullable();
             $table->longText('If_Others')->nullable();
             $table->string('Division_Code')->nullable();
-            $table->string('in_attachment')->nullable();
+            $table->longText('in_attachment')->nullable();
             $table->longText('current_practice')->nullable();
             $table->longText('proposed_change')->nullable();
             $table->longText('reason_change')->nullable();

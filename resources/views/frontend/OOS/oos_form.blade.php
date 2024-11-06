@@ -632,7 +632,7 @@ $users = DB::table('users')
                                 <label disabled for="Division Code">Site/Location Code<span class="text-danger"></span></label>
                                 <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
 
@@ -640,8 +640,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator">Initiator <span class="text-danger"></span></label>
                                 <input type="hidden" name="initiator_id" value="{{ Auth::user()->id }}">
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                                <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
 
@@ -650,33 +649,21 @@ $users = DB::table('users')
                                 <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                 <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-
                             </div>
                         </div>
+
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                <input type="text" name="due_date"  id="due_date"  readonly placeholder="DD-MMM-YYYY"/>
-                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                oninput="handleDateInput(this, 'due_date')" />
+                                    <input type="text" name="due_date"  id="due_date"  readonly placeholder="DD-MMM-YYYY"/>
+                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'due_date')" />
                                 </div>
                             </div>
                         </div>
 
-
-                       {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description"> Severity Level</label>
-                                <select name="severity_level_gi" >
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option  value="Major">Major</option>
-                                    <option value="Minor">Minor</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
-                        </div>--}}
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
@@ -685,8 +672,8 @@ $users = DB::table('users')
                                 <input id="docname"  name="description_gi" maxlength="255" required>
                             </div>
                             @error('short_description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
@@ -725,13 +712,7 @@ $users = DB::table('users')
                                 <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
-                        {{-- <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="If Others">If Others
-                                    <span class="text-danger">*</span></label>
-                                <textarea id="docname"  name="if_others_gi" ></textarea>
-                            </div>
-                        </div> --}}
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
@@ -1021,7 +1002,8 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
                                                         <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
-                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')" max="{{ date('Y-m') }}">
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">   
+                                                        <!-- max="{{ date('Y-m') }}" -->
                                                     </div>
                                                     {{-- <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly
@@ -1038,7 +1020,8 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
                                                         <input type="month"  name="info_product_material[0][info_expiry_date]"
-                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')" min="{{ date('Y-m') }}">
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
+                                                        <!-- min="{{ date('Y-m') }}" -->
                                                     </div>
                                                     {{-- <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly

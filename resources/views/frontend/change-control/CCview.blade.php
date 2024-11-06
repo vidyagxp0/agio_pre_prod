@@ -1023,6 +1023,15 @@
                                                 </div>
                                             </div>
 
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="others">Description of Change </label>
+                                                    <textarea name="bd_domestic">{{ $data->bd_domestic }}</textarea>
+                                                </div>
+                                            </div>
+
+
                                             <!-- <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
@@ -7105,7 +7114,7 @@
                                 </div>
                                 <div class="col-6 other1_reviews new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Others 1 Completed On">Others 1 Completed On</label>
+                                        <label for="Others 1 Completed On">Others 1 Review Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="Other1_on" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
@@ -7348,7 +7357,7 @@
 
                             <div class="col-6 Other2_reviews new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Others 2 Completed On">Others 2 Completed On</label>
+                                    <label for="Others 2 Completed On">Others 2 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other2_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
                                         <input readonly type="date" name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'Other2_on')" />
@@ -7496,7 +7505,7 @@
 
                             <div class="col-6 new-date-data-field Other3_reviews">
                                 <div class="group-input input-date">
-                                    <label for="Others 3 Completed On">Others 3 Completed On</label>
+                                    <label for="Others 3 Completed On">Others 3 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other3_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
                                         <input readonly type="date" name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'Other3_on')" />
@@ -7650,7 +7659,7 @@
 
                             <div class="col-6 new-date-data-field Other4_reviews">
                                 <div class="group-input input-date">
-                                    <label for="Others 4 Completed On">Others 4 Completed On</label>
+                                    <label for="Others 4 Completed On">Others 4 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other4_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
                                         <input readonly type="date" name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'Other4_on')" />
@@ -7804,7 +7813,7 @@
 
                             <div class="col-6 new-date-data-field Other5_reviews">
                                 <div class="group-input input-date">
-                                    <label for="Others 5 Completed On">Others 5 Completed On</label>
+                                    <label for="Others 5 Completed On">Others 5 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other5_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
                                         <input readonly type="date" name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'Other5_on')" />
