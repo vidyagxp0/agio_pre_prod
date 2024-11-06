@@ -639,7 +639,7 @@ $questions = [
                 </table>
                             {{-- --------------------------------OOS_Conclusion------------------------------------------------- --}}
                             <div class="block-head">
-                                OOS Conclusion
+                                OOS/OOT Conclusion
                             </div>
 
                 <table>
@@ -650,7 +650,7 @@ $questions = [
     "results_to_be_reported_oosc" => 'Results to be Reported',
     "final_reportable_results_oosc" => 'Final Reportable Results',
     "justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
-    "oos_stands_oosc" => 'OOS Stands',
+    "oos_stands_oosc" => 'OOS/OOT Stands',
     "capa_req_oosc" => 'CAPA Req.',
     "capa_ref_no_oosc" => 'CAPA Ref No.',
     "justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',

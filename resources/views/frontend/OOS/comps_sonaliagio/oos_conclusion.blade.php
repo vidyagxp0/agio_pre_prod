@@ -97,7 +97,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Recores">OOS Stands </label>
+                    <label for="Reference Recores">OOS/OOT Stands </label>
                     <select name="oos_stands_oosc">
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>

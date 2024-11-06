@@ -8648,6 +8648,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
     {
         $data = Auditee::find($id);
        $grid_Data = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Auditors'])->first();
+       
        $grid_Data_2 = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Summary Response'])->first();
 
 
@@ -8743,10 +8744,11 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $p_record = Auditee::find($id);
+            $data = Auditee::find($id);
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data'));
         }
         if ($request->child_type == "Observations")
         $parent_id = $id;
