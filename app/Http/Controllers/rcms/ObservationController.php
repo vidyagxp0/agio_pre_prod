@@ -927,7 +927,7 @@ if(!empty($request->attach_files2)){
     if (!empty($data->attach_files2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Response Verification Attachements';
+        $history->activity_type = 'Response Verification Attachments';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -1793,7 +1793,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response due date ';
+            $history->activity_type = 'Response Due Date ';
             $history->previous = Helpers::getdateFormat($lastDocument->recomendation_capa_date_due);
             $history->current = Helpers::getdateFormat($data->recomendation_capa_date_due);
             $history->comment = $request->actual_start_date_comment;
@@ -2035,7 +2035,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response Verification Attachements ';
+            $history->activity_type = 'Response Verification Attachments ';
             $history->previous = $lastDocument->attach_files2;
             $history->current = $data->attach_files2;
             $history->comment = $request->action_taken_comment;
