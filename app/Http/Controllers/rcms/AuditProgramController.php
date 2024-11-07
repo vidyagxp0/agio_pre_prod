@@ -744,34 +744,194 @@ class AuditProgramController extends Controller
             $history->save();
           
         }
-           $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'audit_program';
-        $newDataMeetingManagement->data = $request->audit_program;
-        // $history->change_to= "Opened";
-        // $history->change_from= "Initiator";
-        // $history->action_name="Create";
-        $newDataMeetingManagement->save();
-        $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'Self_Inspection';
-        $newDataMeetingManagement->data = $request->Self_Inspection;
-        // $history->change_to= "Opened";
-        // $history->change_from= "Initiator";
-        // $history->action_name="Create";
-        $newDataMeetingManagement->save();
+
+
+        // $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'audit_program';
+        // $newDataMeetingManagement->data = $request->audit_program;
+        // $newDataMeetingManagement->save();
+
+//-----------------------Audit Program Grid Data sgowing in audit trail --------------------------
 
         $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
-        $newDataMeetingManagement->data = $request->Self_Inspection_circular;
+
+        if (!empty($request->audit_program)) {
+            // Save the new auditor data
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program'])->firstOrNew();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'audit_program';
+            $newDataMeetingManagement->data = $request->audit_program;
+            $newDataMeetingManagement->save();
+
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'Auditees' => 'Auditees',
+                'Due_Date' => 'Date Start',
+                'End_date' => 'Date End',
+                'Lead_Investigator' => 'Lead Investigator',
+                'Comment' => 'Comment',
+            ];
+
+            // Track audit trail changes (creation of new data)
+            if (is_array($request->audit_program)) {
+                $index = 1; // Initialize a counter to ensure correct sequence
+                foreach ($request->audit_program as $newAuditor) {
+                    // Track changes for each field
+                    $fieldsToTrack = ['Auditees', 'Due_Date', 'End_date', 'Lead_Investigator', 'Comment'];
+                    foreach ($fieldsToTrack as $field) {
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's new data
+                        if ($newValue !== 'Null') {
+                            // Log the creation of the new data in the audit trail
+                            $auditTrail = new AuditProgramAuditTrial;
+                            $auditTrail->AuditProgram_id = $data->id;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
+                            $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $data->status;
+                            $auditTrail->change_to = "Not Applicable";
+                            $auditTrail->change_from = $data->status;
+                            $auditTrail->action_name = 'Create'; // Since this is a create operation
+                            $auditTrail->save();
+                        }
+                    }
+                    $index++; // Increment the counter after each new auditor entry
+                }
+            }
+        }
+
+
+
+//-----------------------------------------------------------------------------
+
+        // $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'Self_Inspection';
+        // $newDataMeetingManagement->data = $request->Self_Inspection;
+        // // $history->change_to= "Opened";
+        // // $history->change_from= "Initiator";
+        // // $history->action_name="Create";
+        // $newDataMeetingManagement->save();
+
+
+        //---------------------------------------------------------------------------------------------------
+
+        $audit_program_id = $data->id;
+
+        if (!empty($request->Self_Inspection)) {
+            // Save the new auditor data
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'Self_Inspection';
+            $newDataMeetingManagement->data = $request->Self_Inspection;
+            $newDataMeetingManagement->save();
+
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'department' => 'Department',
+                'Months' => 'Months',
+                'Remarked' => 'Remarks',
+            ];
+
+            // Track audit trail changes (creation of new data)
+            if (is_array($request->Self_Inspection)) {
+                $index = 1; // Initialize a counter to ensure correct sequence
+                foreach ($request->Self_Inspection as $newAuditor) {
+                    // Track changes for each field
+                    $fieldsToTrack = ['department', 'Months', 'Remarked'];
+                    foreach ($fieldsToTrack as $field) {
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's new data
+                        if ($newValue !== 'Null') {
+                            // Log the creation of the new data in the audit trail
+                            $auditTrail = new AuditProgramAuditTrial;
+                            $auditTrail->AuditProgram_id = $data->id;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
+                            $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $data->status;
+                            $auditTrail->change_to = "Not Applicable";
+                            $auditTrail->change_from = $data->status;
+                            $auditTrail->action_name = 'Create'; // Since this is a create operation
+                            $auditTrail->save();
+                        }
+                    }
+                    $index++; // Increment the counter after each new auditor entry
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------------
+
+        // $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
+        // $newDataMeetingManagement->data = $request->Self_Inspection_circular;
         // $history->change_to= "Opened";
         // $history->change_from= "Initiator";
         // $history->action_name="Create";
-        $newDataMeetingManagement->save();
+        // $newDataMeetingManagement->save();
+
+        // --------------------------------------------------------------------------------------------------------------------------
+
+        $id_audit = $data->id;
+
+        if (!empty($request->Self_Inspection_circular)) {
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $id_audit   , 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
+            $newDataMeetingManagement->ci_id = $id_audit    ;
+            $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
+            $newDataMeetingManagement->data = $request->Self_Inspection_circular;
+            $newDataMeetingManagement->save();
+
+            $fieldNames = [
+                'departments' => 'Department',
+                'info_mfg_date' => 'Audit Date',
+                'Auditor' => 'Name of Auditors',
+            ];
+            if (is_array($request->Self_Inspection_circular)) {
+                $index = 1;
+                foreach ($request->Self_Inspection_circular as $newAuditor) {
+                    $fieldsToTrack = ['departments', 'info_mfg_date', 'Auditor'];
+                    foreach ($fieldsToTrack as $field) {
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        if ($newValue !== 'Null') {
+                            $auditTrail = new AuditProgramAuditTrial;
+                            $auditTrail->AuditProgram_id = $data->id;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
+                            $auditTrail->previous = 'Null'; 
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $data->status;
+                            $auditTrail->change_to = "Not Applicable";
+                            $auditTrail->change_from = $data->status;
+                            $auditTrail->action_name = 'Create'; 
+                            $auditTrail->save();
+                        }
+                    }
+                    $index++; 
+                }
+            }
+        }
+
+        // ------------------------------------------------------------------------------------------------------------------------------
 
         toastr()->success('Record is created Successfully');
 
@@ -1570,46 +1730,269 @@ class AuditProgramController extends Controller
             $history->save();
         }
         
-           $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'audit_program';
-        $newDataMeetingManagement->data = $request->audit_program;
+        //    $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'audit_program';
+        // $newDataMeetingManagement->data = $request->audit_program;
         // $history->change_to= "Opened";
         // $history->change_from= "Initiator";
         // $history->action_name="Create";
-    
-        $newDataMeetingManagement->save();   $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'Self_Inspection';
-        $newDataMeetingManagement->data = $request->Self_Inspection;
-        // $history->change_to= "Opened";
-        // $history->change_from= "Initiator";
-        // $history->action_name="Create";
-    
-        $newDataMeetingManagement->save();
-         $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'Self_Inspection';
-        $newDataMeetingManagement->data = $request->Self_Inspection;
-        // $history->change_to= "Opened";
-        // $history->change_from= "Initiator";
-        // $history->action_name="Create";
-    
-        $newDataMeetingManagement->save();
 
-           $audit_program_id = $data->id;
-        $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
-        $newDataMeetingManagement->ci_id = $audit_program_id;
-        $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
-        $newDataMeetingManagement->data = $request->Self_Inspection_circular;
+
+        //---------------------update code fo the audit program grid ---------------------
+
+        $audit_program_id = $data->id;
+
+        if (!empty($request->audit_program)) {
+            // Fetch existing auditor data
+            $existingAuditorShow = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program'])->first();
+            $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program'])->firstOrNew();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'audit_program';
+            $newDataMeetingManagement->data = $request->audit_program;
+            //  dd( $newDataMeetingManagement->data);
+
+            $newDataMeetingManagement->update();
+            //dd($product);
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'Auditees' => 'Auditees',
+                'Due_Date' => 'Date Start',
+                'End_date' => 'Date End',
+                'Lead_Investigator' => 'Lead Investigator',
+                'Comment' => 'Comment',
+            ];
+
+            // Track audit trail changes
+            if (is_array($request->audit_program)) {
+                
+                foreach ($request->audit_program as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['Auditees', 'Due_Date', 'End_date', 'Lead_Investigator', 'Comment'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's a change or the data is new
+                        if ($oldValue !== $newValue) {
+                            // Check if this specific change has already been logged in the audit trail
+                            $existingAuditTrail = AuditProgramAuditTrial::where([
+                                ['AuditProgram_id', '=', $data->id],
+                                ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+                                ['previous', '=', $oldValue],
+                                ['current', '=', $newValue]
+                            ])->first();
+
+                            // Determine if the data is new or updated
+                            $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+                            // If no existing audit trail record, log the change
+                            if (!$existingAuditTrail) {
+                                $auditTrail = new AuditProgramAuditTrial;
+                                $auditTrail->AuditProgram_id = $data->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = $oldValue;
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $data->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $data->status;
+                                $auditTrail->action_name = $actionName; // Set action to New or Update
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------
+    
+        // $audit_program_id = $data->id;
+        // $newDataMeetingManagement->save();   
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'Self_Inspection';
+        // $newDataMeetingManagement->data = $request->Self_Inspection;
+        // $history->change_to= "Opened";
+        // $history->change_from= "Initiator";
+        // $history->action_name="Create";
+
+        //---------------------------------------------------------------------------------------------------------------------
+
+        $audit_program_id = $data->id;
+
+        if (!empty($request->Self_Inspection)) {
+            // Fetch existing auditor data
+            $existingAuditorShow = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection'])->first();
+            $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'Self_Inspection';
+            $newDataMeetingManagement->data = $request->Self_Inspection;
+            //  dd( $newDataMeetingManagement->data);
+
+            $newDataMeetingManagement->update();
+            //dd($product);
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'department' => 'Department',
+                'Months' => 'Months',
+                'Remarked' => 'Remarks',
+            ];
+
+            // Track audit trail changes
+            if (is_array($request->Self_Inspection)) {
+                foreach ($request->Self_Inspection as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['department', 'Months', 'Remarked'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's a change or the data is new
+                        if ($oldValue !== $newValue) {
+                            // Check if this specific change has already been logged in the audit trail
+                            $existingAuditTrail = AuditProgramAuditTrial::where([
+                                ['AuditProgram_id', '=', $data->id],
+                                ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+                                ['previous', '=', $oldValue],
+                                ['current', '=', $newValue]
+                            ])->first();
+
+                            // Determine if the data is new or updated
+                            // $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+                            // If no existing audit trail record, log the change
+                            if (!$existingAuditTrail) {
+                                $auditTrail = new AuditProgramAuditTrial;
+                                $auditTrail->AuditProgram_id = $data->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = $oldValue;
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $data->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $data->status;
+                                $auditTrail->action_name = "Update"; // Set action to New or Update
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------
+
+        //  $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'Self_Inspection';
+        // $newDataMeetingManagement->data = $request->Self_Inspection;
+        // // $history->change_to= "Opened";
+        // // $history->change_from= "Initiator";
+        // // $history->action_name="Create";
+    
+        // $newDataMeetingManagement->save();
+
+        //    $audit_program_id = $data->id;
+        // $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
+        // $newDataMeetingManagement->ci_id = $audit_program_id;
+        // $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
+        // $newDataMeetingManagement->data = $request->Self_Inspection_circular;
         // $history->change_to= "Opened";
         // $history->change_from= "Initiator";
         // $history->action_name="Create";
     
-        $newDataMeetingManagement->save();
+        // $newDataMeetingManagement->save();
+
+        //-------------------------------------------------------------------------------------------------------------------------------
+
+        $audit_program_id = $data->id;
+
+        if (!empty($request->Self_Inspection_circular)) {
+            // Fetch existing auditor data
+            $existingAuditorShow = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular'])->first();
+            $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->firstOrCreate();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'Self_Inspection_circular';
+            $newDataMeetingManagement->data = $request->Self_Inspection_circular;
+            //  dd( $newDataMeetingManagement->data);
+
+            $newDataMeetingManagement->update();
+            //dd($product);
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'departments' => 'Department',
+                'info_mfg_date' => 'Audit Date',
+                'Auditor' => 'Name of Auditors',
+            ];
+
+            // Track audit trail changes
+            if (is_array($request->Self_Inspection_circular)) {
+                foreach ($request->Self_Inspection_circular as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['department', 'Months', 'Remarked'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's a change or the data is new
+                        if ($oldValue !== $newValue) {
+                            // Check if this specific change has already been logged in the audit trail
+                            $existingAuditTrail = AuditProgramAuditTrial::where([
+                                ['AuditProgram_id', '=', $data->id],
+                                ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+                                ['previous', '=', $oldValue],
+                                ['current', '=', $newValue]
+                            ])->first();
+
+                            // Determine if the data is new or updated
+                            // $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+                            // If no existing audit trail record, log the change
+                            if (!$existingAuditTrail) {
+                                $auditTrail = new AuditProgramAuditTrial;
+                                $auditTrail->AuditProgram_id = $data->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = $oldValue;
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $data->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $data->status;
+                                $auditTrail->action_name = "Update"; // Set action to New or Update
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------------------
 
 
 
