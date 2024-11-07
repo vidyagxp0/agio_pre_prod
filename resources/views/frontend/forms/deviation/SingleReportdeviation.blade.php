@@ -3682,33 +3682,39 @@
                                 }
 
                             </style>
+
+
     <div class="block-head">Failure Mode And Effect Analysis</div>
     <div class="table-responsive">
     <table class="tableFMEA">
         <thead>
-            <tr class="table_bg">
+            <tr class="table_bg" style="text-align: center; vertical-align: middle; padding: 20px;">
                 <th class="thFMEA" rowspan="2">Row #</th>
                 <th class="thFMEA" colspan="2">Risk Identification</th>
-                <th class="thFMEA" rowspan="2">Risk Analysis</th>
-                <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                <th class="thFMEA" rowspan="2">RPN</th>
-                <th class="thFMEA" colspan="2">Risk Control</th>
-                <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                <th class="thFMEA" rowspan="2">Risk Level</th>
-                <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
+                <th class="thFMEA">Risk Analysis</th>
+                <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                <th class="thFMEA">Risk Control</th>
+                <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                {{-- <th class="thFMEA">Risk Level</th>
+                <th class="thFMEA">Risk Acceptance (Y/N)</th> --}}
                 <th class="thFMEA" rowspan="2">Traceability Document</th>
             </tr>
             <tr class="table_bg">
                 <th class="thFMEA">Activity</th>
                 <th class="thFMEA">Possible Risk/Failure</th>
+                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
                 <th class="thFMEA">Severity (S)</th>
                 <th class="thFMEA">Probability (P)</th>
                 <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Control Measures</th>
                 <th class="thFMEA">RPN</th>
+                <th class="thFMEA">Control Measures</th>
                 <th class="thFMEA">Severity (S)</th>
                 <th class="thFMEA">Probability (P)</th>
                 <th class="thFMEA">Detection (D)</th>
+                <th class="thFMEA">RPN</th>
+                <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
+                <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                {{-- <th></th> --}}
             </tr>
         </thead>
         <tbody>
