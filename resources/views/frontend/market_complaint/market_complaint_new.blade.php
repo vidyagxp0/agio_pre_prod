@@ -4672,7 +4672,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Send to CFT By :</label>
+                                    <label for="Initiator Group">Send to CFT Review By :</label>
                                     Not Applicable
 
                                     <div class="static"></div>
@@ -4682,7 +4682,7 @@
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send to CFT On :</label>
+                                    <label for="OOC Logged On">Send to CFT Review On :</label>
                                     Not Applicable
 
                                     <div class="date"></div>
@@ -4690,7 +4690,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Comment">Send to CFT Comment</label>
+                                    <label for="Comment">Send to CFT Review Comment</label>
                                     Not Applicable
 
                                     <div class="static"></div>

@@ -1168,7 +1168,7 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Information Attachment';
-            $history->previous = "NA";
+            $history->previous = "Null";
             $history->current = $marketComplaint->initial_attachment_gi;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -1253,7 +1253,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->review_of_complaint_sample_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Complaint Samplet';
+            $history->activity_type = 'Review of Complaint Sample';
             $history->previous = "Null";
             $history->current = $marketComplaint->review_of_complaint_sample_gi;
             $history->comment = "Not Applicable";
@@ -3187,6 +3187,7 @@ class MarketComplaintController extends Controller
         //             $newFiles[] = $name;
         //         }
         //     }
+
         if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach)) {
             $existingFiles = json_decode($marketComplaint->qa_cqa_head_attach, true) ?? [];
 
@@ -3238,6 +3239,7 @@ class MarketComplaintController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $marketComplaint->qa_cqa_he_attach = json_encode($allFiles);
         }
+
         if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments)) {
             $existingFiles = json_decode($marketComplaint->qa_cqa_attachments, true) ?? [];
 
@@ -7567,7 +7569,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $previousAuditor = $existingAuditorData[$index] ?? [];
 
                     // Track changes for each field
-                    $fieldsToTrack = ['info_product_name', 'info_batch_no', '_info_mfg_date', 'info_mfg_date', 'info_expiry_date', 'info_batch_size', 'info_dispatch_quantity', 'info_remarks'];
+                    $fieldsToTrack = ['info_product_name', 'info_batch_no', 'info_mfg_date', 'info_expiry_date', 'info_batch_size', 'info_pack_size', 'info_dispatch_quantity', 'info_remarks'];
                     foreach ($fieldsToTrack as $field) {
                         $oldValue = $previousAuditor[$field] ?? 'Null';
                         $newValue = $newAuditor[$field] ?? 'Null';
@@ -9090,11 +9092,16 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->change_to =   "QA/CQA Head Approval ";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Approved';
-                        if (is_null($lastDocument->qa_cqa_verif_comp_by) || $lastDocument->approve_plan_on == '') {
-                            $history->previous = "";
+                        if (is_null($lastDocument->qa_cqa_verif_comp_by) || $lastDocument->closed_done_on == '') {
+                            $history->action_name = 'New';
                         } else {
-                            $history->previous = $lastDocument->qa_cqa_verif_comp_by . ' ,' . $lastDocument->approve_plan_on;
+                            $history->action_name = 'Update';
                         }
+                        //if (is_null($lastDocument->qa_cqa_verif_comp_by) || $lastDocument->approve_plan_on == '') {
+                        //    $history->previous = "";
+                        //} else {
+                        //    $history->previous = $lastDocument->qa_cqa_verif_comp_by . ' ,' . $lastDocument->approve_plan_on;
+                        //}
                         $history->save();
 
                         // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
@@ -9166,11 +9173,16 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->change_to =   "Pending Response Letter";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Approved';
-                        if (is_null($lastDocument->approve_plan_by) || $lastDocument->complete_review_on == '') {
-                            $history->previous = "";
+                        if (is_null($lastDocument->approve_plan_by) || $lastDocument->approve_plan_on == '') {
+                            $history->action_name = 'New';
                         } else {
-                            $history->previous = $lastDocument->approve_plan_by . ' ,' . $lastDocument->approve_plan_on;
+                            $history->action_name = 'Update';
                         }
+                        //if (is_null($lastDocument->approve_plan_by) || $lastDocument->complete_review_on == '') {
+                        //    $history->previous = "";
+                        //} else {
+                        //    $history->previous = $lastDocument->approve_plan_by . ' ,' . $lastDocument->approve_plan_on;
+                        //}
                         $history->save();
 
                         // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
@@ -9240,11 +9252,16 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->change_to =   "Closed-Done";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Completed';
-                        if (is_null($lastDocument->send_letter_by) || $lastDocument->send_letter_on == '') {
-                            $history->previous = "";
+                        if (is_null($lastDocument->send_letter_by) || $lastDocument->closed_done_on == '') {
+                            $history->action_name = 'New';
                         } else {
-                            $history->previous = $lastDocument->send_letter_by . ' ,' . $lastDocument->send_letter_on;
+                            $history->action_name = 'Update';
                         }
+                        //if (is_null($lastDocument->send_letter_by) || $lastDocument->send_letter_on == '') {
+                        //    $history->previous = "";
+                        //} else {
+                        //    $history->previous = $lastDocument->send_letter_by . ' ,' . $lastDocument->send_letter_on;
+                        //}
                         $history->save();
 
                         $marketstat->update();
