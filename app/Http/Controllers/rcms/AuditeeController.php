@@ -710,7 +710,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($internalAudit->intiation_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -733,7 +733,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Inititator';
             $history->previous = "Null";
             $history->current =Auth::user()->name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -751,7 +751,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
             $history->current = $internalAudit->assign_to;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -768,7 +768,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName(session()->get('division')) . "/EA/" . Helpers::year($internalAudit->created_at) . "/" . str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -785,7 +785,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Initiatior Department';
             $history->previous = "Null";
             $history->current =  Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -804,7 +804,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
             $history->current =  $internalAudit->initiator_group_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -824,7 +824,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $internalAudit->division_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -842,7 +842,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = $internalAudit->initiator;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -859,7 +859,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $internalAudit->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -877,7 +877,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Type of Audit';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_type;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -895,7 +895,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Initiated Through';
             $history->previous = "Null";
             $history->current = $internalAudit->initiated_through;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -913,7 +913,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Others';
             $history->previous = "Null";
             $history->current = $internalAudit->initiated_if_other;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -928,10 +928,10 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->if_other)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'If Others';
+            $history->activity_type = 'If Other';
             $history->previous = "Null";
             $history->current = $internalAudit->if_other;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -949,7 +949,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'External Agencies';
             $history->previous = "Null";
             $history->current = $internalAudit->external_agencies;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -967,7 +967,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Others';
             $history->previous = "Null";
             $history->current = $internalAudit->Others;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -984,7 +984,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Description';
             $history->previous = "Null";
             $history->current = $internalAudit->initial_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1001,8 +1001,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit  Start Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->start_date;
-            $history->comment = "Na";
+            $history->current = Helpers::getdateFormat($internalAudit->start_date);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1019,8 +1019,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit  End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->end_date;
-            $history->comment = "NA";
+            $history->current = Helpers::getdateFormat($internalAudit->end_date);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1042,8 +1042,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Start Date of Audit';
             $history->previous = "Null";
-            $history->current = $internalAudit->start_date_gi;
-            $history->comment = "NA";
+            $history->current = Helpers::getdateFormat($internalAudit->start_date_gi);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1062,8 +1062,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'End Date of Audit';
             $history->previous = "Null";
-            $history->current = $internalAudit->end_date_gi;
-            $history->comment = "NA";
+            $history->current = Helpers::getdateFormat($internalAudit->end_date_gi);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1084,7 +1084,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'CFT review selection';
             $history->previous = "Null";
             $history->current = $internalAudit->reviewer_person_value;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1102,7 +1102,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Comments if any';
             $history->previous = "Null";
             $history->current = $internalAudit->if_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1120,7 +1120,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Agenda';
             $history->previous = "Null";
             $history->current = $internalAudit->audit_agenda;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1138,7 +1138,7 @@ class AuditeeController extends Controller
         //     $history->activity_type = 'Facility Name';
         //     $history->previous = "Null";
         //     $history->current = $internalAudit->Facility;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1152,7 +1152,7 @@ class AuditeeController extends Controller
         //     $history->activity_type = 'Group Name';
         //     $history->previous = "Null";
         //     $history->current = $internalAudit->Group;
-        //     $history->comment = "NA";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1166,7 +1166,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Product/Material Name';
             $history->previous = "Null";
             $history->current = $internalAudit->material_name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1184,7 +1184,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Lead Auditor';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->lead_auditor);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1202,7 +1202,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Team';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->Audit_team);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1220,7 +1220,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Auditee';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1238,7 +1238,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'External Auditor Details';
             $history->previous = "Null";
             $history->current = $internalAudit->Auditor_Details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1256,7 +1256,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'External Auditing Agency';
             $history->previous = "Null";
             $history->current = $internalAudit->External_Auditing_Agency;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1276,7 +1276,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Relevant Guidelines / Industry Standards';
             $history->previous = "Null";
             $history->current = $internalAudit->Relevant_Guideline;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1295,7 +1295,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'QA Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->QA_Comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1313,7 +1313,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1331,7 +1331,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Category';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_Category;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1351,7 +1351,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Supplier/Vendor/Manufacturer Details';
             $history->previous = "Null";
             $history->current = $internalAudit->Supplier_Details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1370,7 +1370,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Supplier/Vendor/Manufacturer Site';
             $history->previous = "Null";
             $history->current = $internalAudit->Supplier_Site;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1388,7 +1388,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_Comments1;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1406,7 +1406,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Remarks';
             $history->previous = "Null";
             $history->current = $internalAudit->Remarks;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1424,7 +1424,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores1;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1442,7 +1442,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Reference Recores';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1460,7 +1460,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Comments';
             $history->previous = "Null";
             $history->current = $internalAudit->Audit_Comments2;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1478,7 +1478,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'GI Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->inv_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1496,7 +1496,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'File Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->file_attachment;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1508,23 +1508,23 @@ class AuditeeController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->Audit_file)) {
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Attachments';
-            $history->previous = "Null";
-            $history->current = $internalAudit->Audit_file;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
+        // if (!empty($internalAudit->Audit_file)) {
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $internalAudit->id;
+        //     $history->activity_type = 'Audit Attachments';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->Audit_file;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
         if (!empty($internalAudit->report_file)) {
             $history = new AuditTrialExternal();
@@ -1532,7 +1532,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Report Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->report_file;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1550,7 +1550,7 @@ class AuditeeController extends Controller
             $history->activity_type =  'Audit Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1570,7 +1570,7 @@ class AuditeeController extends Controller
             $history->activity_type =  'CFT review selection';
             $history->previous = "Null";
             $history->current = $internalAudit->reviewer_person_value;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1587,7 +1587,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Summary And Response Attachment';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1606,7 +1606,7 @@ class AuditeeController extends Controller
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($internalAudit->due_date);
             // $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1624,7 +1624,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit Start Date';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($internalAudit->audit_start_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1642,7 +1642,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Audit End Date';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($internalAudit->audit_end_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1660,7 +1660,7 @@ class AuditeeController extends Controller
             $history->activity_type = 'Observation Category';
             $history->previous = "Null";
             $history->current = $internalAudit->severity_level;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2921,7 +2921,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'If Others';
+            $history->activity_type = 'If Other';
             $history->previous = $lastDocument->if_other;
             $history->current = $internalAudit->if_other;
             $history->comment = $request->date_comment;
@@ -3553,29 +3553,29 @@ class AuditeeController extends Controller
 
             $history->save();
         }
-        if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
+        // if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
 
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit Attachments';
-            $history->previous = $lastDocument->Audit_file;
-            $history->current = $internalAudit->Audit_file;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->Audit_file) || $lastDocument->Audit_file === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $id;
+        //     $history->activity_type = 'Audit Attachments';
+        //     $history->previous = $lastDocument->Audit_file;
+        //     $history->current = $internalAudit->Audit_file;
+        //     $history->comment = $request->date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->Audit_file) || $lastDocument->Audit_file === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
 
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
         if ($lastDocument->report_file != $internalAudit->report_file || !empty($request->report_file_comment)) {
 
             $history = new AuditTrialExternal();
@@ -3684,8 +3684,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Start Date of Audit';
-            $history->previous = $lastDocument->start_date_gi;
-            $history->current = $internalAudit->start_date_gi;
+            $history->previous = Helpers::getdateFormat($lastDocument->start_date_gi);
+            $history->current = Helpers::getdateFormat($internalAudit->start_date_gi);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3951,8 +3951,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Quality Assurance Review Comment Required';
-            $history->previous = $lastCft->Quality_Assurance_Review;
-            $history->current = $Cft->Quality_Assurance_Review;
+            $history->previous = ucfirst($lastCft->Quality_Assurance_Review);
+            $history->current = ucfirst($Cft->Quality_Assurance_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4094,8 +4094,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Production Tablet/Capsule Powder Review Comment Required';
-            $history->previous = $lastCft->Production_Table_Review;
-            $history->current = $request->Production_Table_Review;
+            $history->previous = ucfirst($lastCft->Production_Table_Review);
+            $history->current = ucfirst($request->Production_Table_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4236,8 +4236,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Production Liquid/ointment Review Comment Required';
-            $history->previous = $lastCft->ProductionLiquid_Review;
-            $history->current = $request->ProductionLiquid_Review;
+            $history->previous = ucfirst($lastCft->ProductionLiquid_Review);
+            $history->current = ucfirst($request->ProductionLiquid_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4378,8 +4378,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Production Injection Review Comment Required';
-            $history->previous = $lastCft->Production_Injection_Review;
-            $history->current = $request->Production_Injection_Review;
+            $history->previous = ucfirst($lastCft->Production_Injection_Review);
+            $history->current = ucfirst($request->Production_Injection_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4520,8 +4520,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Store Review Comment Required';
-            $history->previous = $lastCft->Store_Review;
-            $history->current = $request->Store_Review;
+            $history->previous = ucfirst($lastCft->Store_Review);
+            $history->current = ucfirst($request->Store_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4662,8 +4662,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Quality Control Review Comment Required';
-            $history->previous = $lastCft->Quality_review;
-            $history->current = $request->Quality_review;
+            $history->previous =ucfirst( $lastCft->Quality_review);
+            $history->current = ucfirst($request->Quality_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4804,8 +4804,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Research Development Review Comment Required ';
-            $history->previous = $lastCft->ResearchDevelopment_Review;
-            $history->current = $request->ResearchDevelopment_Review;
+            $history->previous = ucfirst($lastCft->ResearchDevelopment_Review);
+            $history->current = ucfirst($request->ResearchDevelopment_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4946,8 +4946,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Engineering Review Comment Required';
-            $history->previous = $lastCft->Engineering_review;
-            $history->current = $request->Engineering_review;
+            $history->previous = ucfirst($lastCft->Engineering_review);
+            $history->current = ucfirst($request->Engineering_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5088,8 +5088,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Human Resource Review Comment Required';
-            $history->previous = $lastCft->Human_Resource_review;
-            $history->current = $request->Human_Resource_review;
+            $history->previous = ucfirst($lastCft->Human_Resource_review);
+            $history->current = ucfirst($request->Human_Resource_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5230,8 +5230,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Microbiology Review Comment Required';
-            $history->previous = $lastCft->Microbiology_Review;
-            $history->current = $request->Microbiology_Review;
+            $history->previous = ucfirst($lastCft->Microbiology_Review);
+            $history->current = ucfirst($request->Microbiology_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5372,8 +5372,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Regulatory Affair Review Comment Required';
-            $history->previous = $lastCft->RegulatoryAffair_Review;
-            $history->current = $request->RegulatoryAffair_Review;
+            $history->previous = ucfirst($lastCft->RegulatoryAffair_Review);
+            $history->current = ucfirst($request->RegulatoryAffair_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5514,8 +5514,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Review Comment Required';
-            $history->previous = $lastCft->CorporateQualityAssurance_Review;
-            $history->current = $request->CorporateQualityAssurance_Review;
+            $history->previous = ucfirst($lastCft->CorporateQualityAssurance_Review);
+            $history->current = ucfirst($request->CorporateQualityAssurance_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5656,8 +5656,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Safety Review Comment Required';
-            $history->previous = $lastCft->Environment_Health_review;
-            $history->current = $request->Environment_Health_review;
+            $history->previous = ucfirst($lastCft->Environment_Health_review);
+            $history->current = ucfirst($request->Environment_Health_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5798,8 +5798,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Contract Giver Review Required';
-            $history->previous = $lastCft->ContractGiver_Review;
-            $history->current = $request->ContractGiver_Review;
+            $history->previous = ucfirst($lastCft->ContractGiver_Review);
+            $history->current = ucfirst($request->ContractGiver_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5940,8 +5940,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = "Other's 1 Review Comment Required ";
-            $history->previous = $lastCft->Other1_review;
-            $history->current = $request->Other1_review;
+            $history->previous = ucfirst($lastCft->Other1_review);
+            $history->current = ucfirst($request->Other1_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6103,8 +6103,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 2 Review Comment Required';
-            $history->previous = $lastCft->Other2_review;
-            $history->current = $request->Other2_review;
+            $history->previous = ucfirst($lastCft->Other2_review);
+            $history->current = ucfirst($request->Other2_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6265,8 +6265,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 3 Review Comment Required';
-            $history->previous = $lastCft->Other3_review;
-            $history->current = $request->Other3_review;
+            $history->previous = ucfirst($lastCft->Other3_review);
+            $history->current = ucfirst($request->Other3_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6427,8 +6427,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 4 Review Comment Required';
-            $history->previous = $lastCft->Other4_review;
-            $history->current = $request->Other4_review;
+            $history->previous = ucfirst($lastCft->Other4_review);
+            $history->current = ucfirst($request->Other4_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6590,8 +6590,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 5 Review Comment Required';
-            $history->previous = $lastCft->Other5_review;
-            $history->current = $request->Other5_review;
+            $history->previous = ucfirst($lastCft->Other5_review);
+            $history->current = ucfirst($request->Other5_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

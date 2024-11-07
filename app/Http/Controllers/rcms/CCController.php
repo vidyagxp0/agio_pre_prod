@@ -3380,13 +3380,10 @@ if ($request->hasfile('Quality_Assurance_attachment')) {
         $file->move('upload/', $name);
         $files[] = $name;
     }
-    $Cft->Quality_Assurance_attachment = json_encode($files);
+    $Cft->Quality_Assurance_attachment = !empty($files) ? json_encode($files) : null;
 }
 
-// Check if attachments have changed
-$previousQAAttachments = json_decode($lastDocCft->Quality_Assurance_attachment, true) ?? [];
-$currentQAAttachments = json_decode($Cft->Quality_Assurance_attachment, true) ?? [];
-$areQAAttachSame = $previousQAAttachments === $currentQAAttachments;
+
 
 // Handling Production Table Attachments
 if ($request->hasfile('Production_Table_Attachment')) {
@@ -3396,12 +3393,9 @@ if ($request->hasfile('Production_Table_Attachment')) {
         $file->move('upload/', $name);
         $files[] = $name;
     }
-    $Cft->Production_Table_Attachment = json_encode($files);
+    $Cft->Production_Table_Attachment = !empty($files) ? json_encode($files) : null;;
 }
 
-$previousPTAttachments = json_decode($lastDocCft->Production_Table_Attachment, true) ?? [];
-$currentPTAttachments = json_decode($Cft->Production_Table_Attachment, true) ?? [];
-$arePTAttachSame = $previousPTAttachments === $currentPTAttachments;
 
 // Handling Production Liquid Attachments
 if ($request->hasfile('ProductionLiquid_attachment')) {
@@ -3411,13 +3405,8 @@ if ($request->hasfile('ProductionLiquid_attachment')) {
         $file->move('upload/', $name);
         $files[] = $name;
     }
-    $Cft->ProductionLiquid_attachment = json_encode($files);
+    $Cft->ProductionLiquid_attachment = !empty($files) ? json_encode($files) : null;
 }
-
-$previousPlAttachments = json_decode($lastDocCft->ProductionLiquid_attachment, true) ?? [];
-$currentPlAttachments = json_decode($Cft->ProductionLiquid_attachment, true) ?? [];
-$arePlAttachSame = $previousPlAttachments === $currentPlAttachments;
-
 
 if (!empty($request->Production_Injection_Attachment)) {
     $files = [];
@@ -3671,9 +3660,9 @@ if (!empty($request->Human_Resource_attachment)) {
 
 
         $areRaAttachSame = $lastDocCft->RA_attachment == json_encode($request->RA_attachment);
-        // $areQAAttachSame = $lastDocCft->Quality_Assurance_attachment == json_encode($request->Quality_Assurance_attachment);
-        // $arePTAttachSame = $lastDocCft->Production_Table_Attachment == json_encode($request->Production_Table_Attachment);
-        // $arePlAttachSame = $lastDocCft->ProductionLiquid_attachment == json_encode($request->ProductionLiquid_attachment);
+        $areQAAttachSame = $lastDocCft->Quality_Assurance_attachment == json_encode($request->Quality_Assurance_attachment);
+        $arePTAttachSame = $lastDocCft->Production_Table_Attachment == json_encode($request->Production_Table_Attachment);
+        $arePlAttachSame = $lastDocCft->ProductionLiquid_attachment == json_encode($request->ProductionLiquid_attachment);
         $arePiAttachSame = $lastDocCft->Production_Injection_Attachment === json_encode($request->Production_Injection_Attachment);
         $areStoreAttachSame = $lastDocCft->Store_attachment === json_encode($request->Store_attachment);
         $areQcAttachSame = $lastDocCft->Quality_Control_attachment === json_encode($request->Quality_Control_attachment);
@@ -4358,7 +4347,7 @@ if (!empty($request->Human_Resource_attachment)) {
 
 
     // Audit Trail Logic for Quality Assurance Attachments
-if (!$areQAAttachSame && !empty($currentQAAttachments)) {
+if (!$areQAAttachSame && !empty($request->Quality_Assurance_attachment)) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Quality Assurance Attachments')
         ->exists();
@@ -4366,8 +4355,8 @@ if (!$areQAAttachSame && !empty($currentQAAttachments)) {
     $history = new RcmDocHistory;
     $history->cc_id = $id;
     $history->activity_type = 'Quality Assurance Attachments';
-    $history->previous = json_encode($previousQAAttachments);
-    $history->current = json_encode($currentQAAttachments);
+    $history->previous = $lastDocCft->Quality_Assurance_attachment;;
+    $history->current = $Cft->Quality_Assurance_attachment;;
     $history->comment = '';
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -4380,7 +4369,7 @@ if (!$areQAAttachSame && !empty($currentQAAttachments)) {
 }
 
 // Audit Trail Logic for Production Table Attachments
-if (!$arePTAttachSame && !empty($currentPTAttachments)) {
+if (!$arePTAttachSame && !empty($request->Production_Table_Attachment)) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Production Tablet/Capsule/Powder Attachments')
         ->exists();
@@ -4388,8 +4377,8 @@ if (!$arePTAttachSame && !empty($currentPTAttachments)) {
     $history = new RcmDocHistory;
     $history->cc_id = $id;
     $history->activity_type = 'Production Tablet/Capsule/Powder Attachments';
-    $history->previous = json_encode($previousPTAttachments);
-    $history->current = json_encode($currentPTAttachments);
+    $history->previous = $lastDocCft->Production_Table_Attachment;;
+    $history->current = $Cft->Production_Table_Attachment;;
     $history->comment = "";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -4402,7 +4391,7 @@ if (!$arePTAttachSame && !empty($currentPTAttachments)) {
 }
 
 // Audit Trail Logic for Production Liquid Attachments
-if (!$arePlAttachSame && !empty($currentPlAttachments)) {
+if (!$arePlAttachSame && !empty($request->ProductionLiquid_attachment)) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Production Liquid/Ointment Attachments')
         ->exists();
@@ -4410,8 +4399,8 @@ if (!$arePlAttachSame && !empty($currentPlAttachments)) {
     $history = new RcmDocHistory;
     $history->cc_id = $id;
     $history->activity_type = 'Production Liquid/Ointment Attachments';
-    $history->previous = json_encode($previousPlAttachments);
-    $history->current = json_encode($currentPlAttachments);
+    $history->previous = $lastDocCft->ProductionLiquid_attachment;;
+    $history->current = $Cft->ProductionLiquid_attachment;;
     $history->comment = "";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -7820,11 +7809,11 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
         }
         if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Other 1 Assessment')
+            ->where('activity_type', "Impact Assessment (By Other's 1)")
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Other 1 Assessment';
+            $history->activity_type = "Impact Assessment (By Other's 1)";
             $history->previous = $lastCft->Other1_assessment;
             $history->current = $request->Other1_assessment;
             $history->comment = "Not Applicable";
@@ -7954,15 +7943,15 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
+        if ($lastCft->Other2_Assessment != $request->Other2_Assessment && $request->Other2_Assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Other 2 Assessment')
+            ->where('activity_type', "Impact Assessment (By Other's 2)")
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Other 2 Assessment';
-            $history->previous = $lastCft->Other2_assessment;
-            $history->current = $request->Other2_assessment;
+            $history->activity_type = "Impact Assessment (By Other's 2)";
+            $history->previous = $lastCft->Other2_Assessment;
+            $history->current = $request->Other2_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8096,15 +8085,15 @@ if ($lastCft->Other3_Department_person != $request->Other3_Department_person && 
 }
 
 // Other 3 Assessment
-if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
+if ($lastCft->Other3_Assessment != $request->Other3_Assessment && $request->Other3_Assessment != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'Other 3 Assessment')
+        ->where('activity_type', "Impact Assessment (By Other's 3)")
         ->exists();
     $history = new RcmDocHistory;
     $history->cc_id = $id;
-    $history->activity_type = 'Other 3 Assessment';
-    $history->previous = $lastCft->Other3_assessment;
-    $history->current = $request->Other3_assessment;
+    $history->activity_type = "Impact Assessment (By Other's 3)";
+    $history->previous = $lastCft->Other3_Assessment;
+    $history->current = $request->Other3_Assessment;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -8240,15 +8229,15 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->save();
         }
 
-        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
+        if ($lastCft->Other4_Assessment != $request->Other4_Assessment && $request->Other4_Assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Other 4 Assessment')
+                ->where('activity_type', "Impact Assessment (By Other's 4)")
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Other 4 Assessment';
-            $history->previous = $lastCft->Other4_assessment;
-            $history->current = $request->Other4_assessment;
+            $history->activity_type = "Impact Assessment (By Other's 4)";
+            $history->previous = $lastCft->Other4_Assessment;
+            $history->current = $request->Other4_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8382,15 +8371,15 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->save();
         }
 
-        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
+        if ($lastCft->Other5_Assessment != $request->Other5_Assessment && $request->Other5_Assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Other 5 Assessment')
+                ->where('activity_type', "Impact Assessment (By Other's 5)")
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Other 5 Assessment';
-            $history->previous = $lastCft->Other5_assessment;
-            $history->current = $request->Other5_assessment;
+            $history->activity_type = "Impact Assessment (By Other's 5)";
+            $history->previous = $lastCft->Other5_Assessment;
+            $history->current = $request->Other5_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

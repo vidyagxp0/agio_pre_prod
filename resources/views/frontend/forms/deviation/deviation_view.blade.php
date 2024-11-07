@@ -10229,8 +10229,8 @@
                                                 </div>
                                             </div>
                                             <div class="grid-field field-name">
-                                                <div>Mother Environment</div>
-                                                <div>Man</div>
+                                                <div>Environment</div>
+                                                <div>Manpower</div>
                                                 <div>Machine</div>
                                             </div>
                                         </div>

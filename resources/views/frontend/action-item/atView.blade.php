@@ -157,7 +157,7 @@
                                     <div class="">Acknowledge</div>
                                 @endif
                                 @if ($data->stage >= 3)
-                                    <div class="active">work Completion</div>
+                                    <div class="active">Work Completion</div>
                                 @else
                                     <div class="">Work Completion </div>
                                 @endif
@@ -311,8 +311,8 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                 
-                                    
+
+
                                    @if (!empty($data->parent_type) && $data->due_date_action == null)
                                     <div class="col-lg-6">
                                     <div class="group-input">
@@ -338,7 +338,7 @@
                                                                 id="due_date" readonly
                                                                 placeholder="DD-MMM-YYYY"
                                                                 value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                            <input type="date" class="hide-input" 
+                                                            <input type="date" class="hide-input"
                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
                                                                 value="{{ Helpers::getdateFormat($data->due_date) }}"
@@ -356,17 +356,17 @@
                                                 <input type="text" id="due_date_display" readonly
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
-                                        
+
                                                 {{-- Date input field --}}
                                                 <input type="date" name="due_date"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('Y-m-d') : '' }}" 
+                                                    value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('Y-m-d') : '' }}"
                                                     class="hide-input"
                                                     onchange="handleDateInput(this, 'due_date_display')" />
                                             </div>
                                         </div>
                                     </div> -->
-                                    
+
                                     <script>
                                         function handleDateInput(dateInput, displayId) {
                                             // Check if a valid date is selected
@@ -383,20 +383,20 @@
                                                 document.getElementById(displayId).value = '';
                                             }
                                         }
-                                    
+
                                         // Call this function initially to ensure the correct format is shown on page load
                                         document.addEventListener('DOMContentLoaded', function() {
                                             const dateInput = document.querySelector('input[name="due_date"]');
                                             handleDateInput(dateInput, 'due_date_display');
                                         });
                                     </script>
-                                    
+
                                     <style>
                                         .hide-input {
                                             display: none;
                                         }
                                     </style>
-                                    
+
                                 <div class="col-12">
                                     @if ($data->stage == 1)
                                         <div class="group-input">
@@ -637,6 +637,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="col-lg-12">
                                     @if ($data->stage == 1)
                                         <div class="group-input">
@@ -675,12 +676,12 @@
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -689,7 +690,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_file_Attachments');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -699,26 +700,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -726,16 +727,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-                                
+
                                     @else
                                         <div class="group-input">
                                             <label for="file_attach">File Attachments</label>
@@ -775,7 +776,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -783,6 +784,153 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                @if ($data->stage == 2)
+                                <div class="sub-head">Acknowledge</div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="qa_comments">Acknowledge Comment @if ($data->stage == 2)
+                                                <span class="text-danger">*</span>
+                                            @endif</label>
+                                            <textarea name="acknowledge_comments" {{ $data->stage == 2 ? '' : 'readonly' }} required>{{ $data->acknowledge_comments }}</textarea>
+                                        </div>
+                                    </div>
+                                    @else
+                                    <div class="sub-head">Acknowledge</div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="qa_comments">Acknowledge Comment</label>
+                                            <textarea name="acknowledge_comments" readonly {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->acknowledge_comments }}</textarea>
+                                        </div>
+                                    </div>
+                                @endif
+
+
+
+                                @error('acknowledge_comments')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+
+
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="file_attach">Acknowledge Attachment</label>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="acknowledge_attach">
+                                                    @if ($data->acknowledge_attach)
+                                                    @foreach (json_decode($data->acknowledge_attach) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                                </a>
+                                                        <input type="hidden" name="existing_fileAttachments[]" value="{{ $file }}">
+
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        type="file" id="myfile" name="acknowledge_attach[]"
+                                                        oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="deleted_Acknoledge_Attachments" name="deleted_Acknoledge_Attachments" value="">
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const removeButtons = document.querySelectorAll('.remove-file');
+
+                                            removeButtons.forEach(button => {
+                                                button.addEventListener('click', function() {
+                                                    const fileName = this.getAttribute('data-file-name');
+                                                    const fileContainer = this.closest('.file-container');
+
+                                                    // Hide the file container
+                                                    if (fileContainer) {
+                                                        fileContainer.style.display = 'none';
+                                                        // Remove hidden input associated with this file
+                                                        const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                        if (hiddenInput) {
+                                                            hiddenInput.remove();
+                                                        }
+
+                                                        // Add the file name to the deleted files list
+                                                        const deletedFilesInput = document.getElementById('deleted_Acknoledge_Attachments');
+                                                        let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                        deletedFiles.push(fileName);
+                                                        deletedFilesInput.value = deletedFiles.join(',');
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        function addMultipleFiles(input, id) {
+                                            const fileListContainer = document.getElementById(id);
+                                            const files = input.files;
+
+                                            for (let i = 0; i < files.length; i++) {
+                                                const file = files[i];
+                                                const fileName = file.name;
+                                                const fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container', 'text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                const fileText = document.createElement('b');
+                                                fileText.textContent = fileName;
+
+                                                const viewLink = document.createElement('a');
+                                                viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                viewLink.target = '_blank';
+                                                viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                                const removeLink = document.createElement('a');
+                                                removeLink.classList.add('remove-file');
+                                                removeLink.dataset.fileName = fileName;
+                                                removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                removeLink.addEventListener('click', function() {
+                                                    fileContainer.style.display = 'none';
+                                                });
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(viewLink);
+                                                fileContainer.appendChild(removeLink);
+
+                                                fileListContainer.appendChild(fileContainer);
+                                            }
+                                        }
+                                    </script>
+
+                                @error('acknowledge_attach')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
 
                     {{-- <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -839,145 +987,12 @@
                         </div> --}}
 
 
-                <div id="CCForm2" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="sub-head">Acknowledge</div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="qa_comments">Acknowledge Comment @if ($data->stage == 2)
-                                                <span class="text-danger">*</span>
-                                            @endif
-                                        </label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="acknowledge_comments">{{ $data->acknowledge_comments }}</textarea>
-                                    </div>
-                                </div>
-                      
-                            @error('acknowledge_comments')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-
-                           
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="file_attach">Acknowledge Attachment</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="acknowledge_attach">
-                                                @if ($data->acknowledge_attach)
-                                                    @foreach (json_decode($data->acknowledge_attach) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                            <input type="hidden" name="existing_Approval_Attachments[]" value="{{ $file }}">
-
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    type="file" id="myfile" name="acknowledge_attach[]"
-                                                    oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <input type="hidden" id="deleted_Approval_Attachments" name="deleted_Approval_Attachments" value="">
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
-                                
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
-                                
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
-                                
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_Approval_Attachments');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
-                                                }
-                                            });
-                                        });
-                                    });
-                                
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
-                                
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
-                                
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
-                                
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
-                                
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
-                                    }
-                                </script>
-
-                            @error('acknowledge_attach')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton"{{ $data->stage <= 1 || $data->stage >= 3 ? "disabled" : "" }}>Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
 
 
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                @if ($data->stage == 2 || $data->stage == 3)
+                                @if ($data->stage == 3)
                                     <div class="sub-head col-12">Post Completion</div>
                                     <div class="col-12">
                                         <div class="group-input">
@@ -985,19 +1000,21 @@
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
+                                            <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                 @else
                                     <div class="sub-head col-12">Post Completion</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="action_taken">Action Taken @if ($data->stage == 3)
+                                            <label for="action_taken">Action Taken
+                                                {{--@if ($data->stage == 3)
                                                     <span class="text-danger">*</span>
-                                                @endif
+                                                @endif--}}
                                             </label>
-                                            <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                            <textarea class="tiny" readonly {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
+                                    </div>
                                 @endif
                                 @error('action_taken')
                                     <div class="text-danger">{{ $message }}</div>
@@ -1014,7 +1031,7 @@
                                                 <input type="text" id="start_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1029,7 +1046,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date" readonly
-                                                    name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1041,7 +1058,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
 
-                                @if ($data->stage == 2 || $data->stage == 3)
+                                @if ($data->stage == 3)
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule End Date">Actual End Date</label>
@@ -1050,7 +1067,7 @@
                                                 <input type="text" id="end_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="end_date_checkdate" value="{{ $data->end_date }}"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1065,7 +1082,7 @@
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                     <input class="hide-input" type="date" readonly
-                                                        name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
                                                         id="end_date_checkdate" value="{{ $data->end_date }}"
                                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                                 </div>
@@ -1080,18 +1097,18 @@
 
 
 
-                            @if ($data->stage == 2 || $data->stage == 3)
+                            @if ($data->stage == 3)
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments">{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @else
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments" readonly>{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments" readonly>{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -1101,7 +1118,7 @@
 
                         </div>
 
-                        @if ($data->stage == 2 || $data->stage == 3)
+                        @if ($data->stage == 3)
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="file_attach">Completion Attachment</label>
@@ -1127,8 +1144,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <input {{ $data->stage == 3 ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" multiple>
                                         </div>
@@ -1140,12 +1156,12 @@
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const removeButtons = document.querySelectorAll('.remove-file');
-                            
+
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
                                             const fileName = this.getAttribute('data-file-name');
                                             const fileContainer = this.closest('.file-container');
-                            
+
                                             // Hide the file container
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
@@ -1154,7 +1170,7 @@
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
                                                 }
-                            
+
                                                 // Add the file name to the deleted files list
                                                 const deletedFilesInput = document.getElementById('deleted_completion_Attachments');
                                                 let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1164,26 +1180,26 @@
                                         });
                                     });
                                 });
-                            
+
                                 function addMultipleFiles(input, id) {
                                     const fileListContainer = document.getElementById(id);
                                     const files = input.files;
-                            
+
                                     for (let i = 0; i < files.length; i++) {
                                         const file = files[i];
                                         const fileName = file.name;
                                         const fileContainer = document.createElement('h6');
                                         fileContainer.classList.add('file-container', 'text-dark');
                                         fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                            
+
                                         const fileText = document.createElement('b');
                                         fileText.textContent = fileName;
-                            
+
                                         const viewLink = document.createElement('a');
                                         viewLink.href = '#'; // You might need to adjust this to handle local previews
                                         viewLink.target = '_blank';
                                         viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                            
+
                                         const removeLink = document.createElement('a');
                                         removeLink.classList.add('remove-file');
                                         removeLink.dataset.fileName = fileName;
@@ -1191,11 +1207,11 @@
                                         removeLink.addEventListener('click', function() {
                                             fileContainer.style.display = 'none';
                                         });
-                            
+
                                         fileContainer.appendChild(fileText);
                                         fileContainer.appendChild(viewLink);
                                         fileContainer.appendChild(removeLink);
-                            
+
                                         fileListContainer.appendChild(fileContainer);
                                     }
                                 }
@@ -1224,14 +1240,11 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <input disabled {{ $data->stage == 3 ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" class="tiny" multiple>
                                         </div>
                                     </div>
-
-
 
                                 </div>
                             </div>
@@ -1242,7 +1255,7 @@
 
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton" {{ $data->stage <= 2 || $data->stage >= 4 ? "disabled" : "" }}>Save</button>
+                            <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1262,7 +1275,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
                                 </div>
                             @else
@@ -1271,7 +1284,7 @@
                                         <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
-                                        <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea class="tiny" readonly {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
 
                                 </div>
@@ -1315,8 +1328,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                <input {{ $data->stage == 4 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
@@ -1328,12 +1340,12 @@
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1342,7 +1354,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_Approval_Attachments');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1352,26 +1364,26 @@
                                             });
                                         });
                                     });
-                                
+
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-                                
+
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-                                
+
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-                                
+
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-                                
+
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -1379,11 +1391,11 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-                                
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-                                
+
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
@@ -1413,8 +1425,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input disabled
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 3 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
@@ -1431,7 +1442,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>Save</button>
+                            <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1598,7 +1609,6 @@
                         </div>
                         <div class="button-block">
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <!-- <button type="submit" class="saveButton" {{ $data->stage <= 4 || $data->stage == 5 ? "disabled" : "" }}>Save</button> -->
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>

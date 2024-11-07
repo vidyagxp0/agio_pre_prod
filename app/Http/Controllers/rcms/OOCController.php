@@ -5985,13 +5985,14 @@ class OOCController extends Controller
                if ($request->revision == "Action-Item") {
                    $p_record = OutOfCalibration::find($id);
                    $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-                //    dd($data_record);
+                    //dd($data_record);
+                    $data = new \stdClass();   // Create an empty object
+                    $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
 
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $parentRecord = OutOfCalibration::where('id', $id)->value('record');
                    
-
-                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record'));
+                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -6067,12 +6068,14 @@ class OOCController extends Controller
 
                 $p_record = OutOfCalibration::find($id);
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-               
+
+                $data = new \stdClass();   // Create an empty object
+                $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $parentRecord = OutOfCalibration::where('id', $id)->value('record');
                 
-                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record'));
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data'));
 
             }
 
@@ -6183,7 +6186,11 @@ class OOCController extends Controller
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = OutOfCalibration::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','data_record'));
+
+            $data = new \stdClass();   // Create an empty object
+            $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
+
+            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','data_record','data'));
 
         }
     }

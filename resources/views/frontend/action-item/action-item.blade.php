@@ -33,7 +33,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Acknowledge</button> 
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Acknowledge</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
@@ -55,14 +55,14 @@
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
@@ -71,7 +71,7 @@
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                     @endif
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
                                         @if (!empty($data_record))
                                         <input readonly type="text" name="parent_record_number"
@@ -129,7 +129,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                              
+
 
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
@@ -141,15 +141,15 @@
                                         {{-- <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
                                             <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Hidden input field to allow the user to pick a date -->
                                             <input type="date" name="due_date"
-                                               
+
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div> --}}
-                                
+
                                 {{-- <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -160,7 +160,7 @@
                                             document.getElementById(displayId).value = '';
                                         }
                                     }
-                                
+
                                     // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
@@ -170,7 +170,7 @@
                                         }
                                     });
                                 </script> --}}
-                                
+
                                 {{-- <style>
                                     .hide-input {
                                         display: none;
@@ -204,20 +204,20 @@
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                         document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                    
+
                                     // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
                                         handleDateInput(dateInput, 'due_date_display');
                                     });
                                     </script>
-                                    
+
                                     <style>
                                     .hide-input {
                                         display: none;
                                     }
                                     </style>
-                              
+
 
 
 
@@ -247,28 +247,28 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                 function handleDateInput(dateInput, displayId) {
                                     const date = new Date(dateInput.value);
                                     const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                     document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                 }
-                                
+
                                 // Call this function initially to ensure the correct format is shown on page load
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const dateInput = document.querySelector('input[name="due_date"]');
                                     handleDateInput(dateInput, 'due_date_display');
                                 });
                                 </script> --}}
-                                
+
                                 <style>
                                 .hide-input {
                                     display: none;
                                 }
                                 </style>
-                                
-                             
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -276,13 +276,13 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
-                                      @if (!empty($old_record)) 
+                                      @if (!empty($old_record))
                                             @foreach ($old_record as $new)
                                             @php
                                             $recordValue =
@@ -322,7 +322,7 @@
                                             data-silent-initial-value-set="true">
                                             <option value="">select person</option>
                                             @foreach ($users as $value)
-                                                
+
                                                 <option value="{{ $value->name }}">{{ $value->name }}</option>
 
                                             @endforeach
@@ -420,13 +420,13 @@
                             <div class="sub-head">Acknowledge</div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="acknowledge_comments">Acknowledge Comment 
+                                        <label for="acknowledge_comments">Acknowledge Comment
                                         </label>
-                                        <textarea name="acknowledge_comments"></textarea>
+                                        <textarea name="acknowledge_comments" disabled></textarea>
                                     </div>
                                 </div>
-                      
-                                     
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">Acknowledge Attachment</label>
@@ -434,7 +434,7 @@
                                             <div class="file-attachment-list" id="acknowledge_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="acknowledge_attach[]"
+                                                <input type="file" id="myfile" disabled name="acknowledge_attach[]"
                                                     oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple>
                                             </div>
                                         </div>
@@ -463,7 +463,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <textarea name="action_taken" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -473,7 +473,7 @@
                                             <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -481,19 +481,19 @@
                                     <div class="group-input input-date">
                                         <label for="end_date">Actual End Date</label>
                                         <div class="calenderauditee">
-                                        <input type="text" id="end_date"                             
+                                        <input type="text" id="end_date"
                                                 placeholder="DD-MMM-YYYY" />
                                              <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" disabled />
                                         </div>
-                                   
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea name="comments"></textarea>
+                                        <textarea name="comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -504,7 +504,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Support_doc[]"
-                                                    oninput="addMultipleFiles(this, 'Support_doc')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Support_doc')" multiple disabled>
                                             </div>
                                         </div>
 
@@ -528,10 +528,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA/CQA Verification Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <textarea name="qa_comments" disabled></textarea>
                                     </div>
                                 </div>
-                                
+
                                 {{-- <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
@@ -542,7 +542,7 @@
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div> --}}
-                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">QA/CQA Verification attachments</label>
@@ -551,7 +551,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="final_attach[]"
-                                                    oninput="addMultipleFiles(this, 'final_attach')" multiple>
+                                                    oninput="addMultipleFiles(this, 'final_attach')" multiple disabled>
                                             </div>
                                         </div>
 
@@ -687,7 +687,7 @@
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
-                                   
+
                                 </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

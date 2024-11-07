@@ -1596,6 +1596,23 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        if (!empty ($request->qa_head_designe_comment)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'QA/CQA Head/Designee Approval comment';
+            $history->previous = "Null";
+            $history->current = $deviation->qa_head_designe_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->Product_Batch)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1630,7 +1647,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
 
 
-                if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
+               if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Immediate Action (if any)';
@@ -3606,6 +3623,48 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+        if ($lastDeviation->qa_head_designe_comment != $deviation->qa_head_designe_comment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QA/CQA Head/Designee Approval comment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QA/CQA Head/Designee Approval comment';
+             $history->previous = $lastDeviation->qa_head_designe_comment;
+            $history->current = $deviation->qa_head_designe_comment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->qa_head_designee_attach != $deviation->qa_head_designee_attach || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QA/CQA Head/ Designee Approval attachment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QA/CQA Head/ Designee Approval attachment';
+             $history->previous = $lastDeviation->qa_head_designee_attach;
+            $history->current = $deviation->qa_head_designee_attach;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+
          if ($lastDeviation->Deviation_date != $deviation->Deviation_date || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Observed On')
@@ -4096,11 +4155,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->hod_final_review != $deviation->hod_final_review || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'HOD Final Review')
+                            ->where('activity_type', 'HOD Final Review Comments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'HOD Final Review';
+            $history->activity_type = 'HOD Final Review Comments';
              $history->previous = $lastDeviation->hod_final_review;
             $history->current = $deviation->hod_final_review;
             $history->comment = $deviation->submit_comment;
@@ -4157,13 +4216,53 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->Investigation_required != $deviation->Investigation_required || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Investigation required')
+                            ->where('activity_type', 'Investigation required ?')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Investigation required';
+            $history->activity_type = 'Investigation required ?';
              $history->previous = $lastDeviation->Investigation_required;
             $history->current = $deviation->Investigation_required;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->capa_required != $deviation->capa_required || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'CAPA Required ?')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'CAPA required ?';
+             $history->previous = $lastDeviation->capa_required;
+            $history->current = $deviation->capa_required;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->qrm_required != $deviation->qrm_required || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QRM Required ?')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QRM Required ? ';
+             $history->previous = $lastDeviation->qrm_required;
+            $history->current = $deviation->qrm_required;
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4256,11 +4355,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA initial Attachments')
+                            ->where('activity_type', 'QA/CQA Implementation Verification Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA initial Attachments';
+            $history->activity_type = 'QA/CQA Implementation Verification Attachments';
              $history->previous = $lastDeviation->Initial_attachment;
             $history->current = $deviation->Initial_attachment;
             $history->comment = $deviation->submit_comment;
@@ -4354,11 +4453,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->imidiate_action != $deviation->imidiate_action || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Imidiate_action')
+                            ->where('activity_type', 'Immediate Action')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Imidiate Action';
+            $history->activity_type = 'Immediate Action';
              $history->previous = $lastDeviation->imidiate_action;
             $history->current = $deviation->imidiate_action;
             $history->comment = $deviation->submit_comment;
@@ -4997,11 +5096,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->Disposition_Batch != $deviation->Disposition_Batch || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Disposition Batch')
+                            ->where('activity_type', 'Disposition of Batch')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Disposition Batch';
+            $history->activity_type = 'Disposition of Batch';
              $history->previous = $lastDeviation->Disposition_Batch;
             $history->current = $deviation->Disposition_Batch;
             $history->comment = $deviation->submit_comment;
@@ -11183,7 +11282,7 @@ public function audit_trail_filter(Request $request, $id)
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
         // $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
-        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+            $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
 
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
@@ -11193,6 +11292,9 @@ public function audit_trail_filter(Request $request, $id)
             $grid_data_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
             $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
+           $fishboneData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
+            
+            //dd($fishboneData);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
 
@@ -11203,7 +11305,7 @@ public function audit_trail_filter(Request $request, $id)
             // }
 
 
-            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
+            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

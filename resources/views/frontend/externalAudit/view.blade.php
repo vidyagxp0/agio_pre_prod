@@ -7305,7 +7305,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Review Required1">Other's 1 Review Required?</label>
+                                        <label for="Review Required1">Other's 1 Review Comment Required ?</label>
                                         <select name="Other1_review" id="Other1_review"  @if ($data->stage != 2) disabled @endif >
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
@@ -7470,7 +7470,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Review Required1">Other's 1 Review Required?</label>
+                                        <label for="Review Required1">Other's 1 Review Comment Required ?</label>
                                         <select disabled name="Other1_review" id="Other1_review">
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
@@ -7602,7 +7602,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="review2"> Other's 2 Review Required?</label>
+                                    <label for="review2"> Other's 2 Review Comment Required ?</label>
                                     <select name="Other2_review" id="Other2_review"  @if ($data->stage != 2) disabled @endif>
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
@@ -7749,7 +7749,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="review3">Other's 3 Review Required?</label>
+                                    <label for="review3">Other's 3 Review Comment Required ?</label>
                                     <select name="Other3_review" id="Other3_review" @if ($data->stage == 4) disabled @endif>
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
@@ -7898,7 +7898,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="review4">Other's 4 Review Required?</label>
+                                    <label for="review4">Other's 4 Review Comment Required ?</label>
                                     <select name="Other4_review" id="Other4_review" @if ($data->stage != 2) disabled @endif>
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
@@ -8051,7 +8051,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="review5">Other's 5 Review Required?</label>
+                                    <label for="review5">Other's 5 Review Comment Required ?</label>
                                     <select name="Other5_review" id="Other5_review" @if ($data->stage != 2) disabled @endif>
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
