@@ -3583,7 +3583,7 @@
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20">Environment</th>
+                                        <th class="w-20">Mother Environment</th>
                                         <td class="w-80">
                                             @php $environment = $decodedData['environment'] ?? []; @endphp
                                             @if (is_array($environment))
@@ -3598,7 +3598,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="w-20">Manpower</th>
+                                        <th class="w-20">Man</th>
                                         <td class="w-80">
                                             @php $manpower = $decodedData['manpower'] ?? []; @endphp
                                             @if (is_array($manpower))

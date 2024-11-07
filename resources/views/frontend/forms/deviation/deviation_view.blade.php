@@ -3470,7 +3470,9 @@
                                                 {{-- <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                     value='yes'>
                                                     Yes</option> --}}
-                                                    <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>Yes</option>
+                                                    <option 
+                                                @if (empty($data1->Production_Table_Review) || $data1->Production_Table_Review == 'yes') selected @endif
+                                                value="yes">Yes</option>
 
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
@@ -3478,8 +3480,7 @@
                                                 <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                     value='na'>
                                                     NA</option>
-                                                    {{-- <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
-                                            </select> --}}
+                                                   
                                         </select>
 
                                         </div>
@@ -3567,7 +3568,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Production_Table_Attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Production_Table_Attachment')"
@@ -3670,7 +3671,9 @@
                                             <select name="Production_Table_Review" disabled
                                                 id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Table_Review == 'yes' ) selected @endif value='yes'>Yes</option>
+                                                <option 
+                                                @if (empty($data1->Production_Table_Review) || $data1->Production_Table_Review == 'yes') selected @endif
+                                                value="yes">Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
@@ -3794,7 +3797,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Production_Table_Attachment[]"
                                                         oninput="addMultipleFiles(this, 'Production_Table_Attachment')"
@@ -3967,7 +3970,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Production_Injection_Attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
@@ -4173,7 +4176,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Production_Injection_Attachment[]"
                                                         oninput="addMultipleFiles(this, 'Production_Injection_Attachment')"
@@ -4350,7 +4353,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ResearchDevelopment_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'ResearchDevelopment_attachment')"
@@ -4542,7 +4545,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ResearchDevelopment_attachment[]"
                                                         oninput="addMultipleFiles(this, 'ResearchDevelopment_attachment')"
@@ -4714,7 +4717,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Human_Resource_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Human_Resource_attachment')"
@@ -4898,7 +4901,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Human_Resource_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Human_Resource_attachment')"
@@ -5082,7 +5085,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="CorporateQualityAssurance_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'CorporateQualityAssurance_attachment')"
@@ -5289,7 +5292,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="Microbiology_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Microbiology_attachment')"
                                                         multiple>
@@ -5457,7 +5460,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Store_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Store_attachment')" multiple>
@@ -5643,7 +5646,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="Store_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Store_attachment')" multiple>
                                                 </div>
@@ -5814,7 +5817,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Engineering_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Engineering_attachment')"
@@ -6005,7 +6008,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="Engineering_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Engineering_attachment')"
                                                         multiple>
@@ -6176,7 +6179,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="RegulatoryAffair_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'RegulatoryAffair_attachment')"
@@ -6371,7 +6374,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="RegulatoryAffair_attachment[]"
                                                         oninput="addMultipleFiles(this, 'RegulatoryAffair_attachment')"
@@ -6574,7 +6577,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                     type="file" id="myfile"
                                                     name="Quality_Assurance_attachment[]"
                                                     oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')"
@@ -6744,7 +6747,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ProductionLiquid_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'ProductionLiquid_attachment')"
@@ -6942,7 +6945,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ProductionLiquid_attachment[]"
                                                         oninput="addMultipleFiles(this, 'ProductionLiquid_attachment')"
@@ -7115,7 +7118,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Quality_Control_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
@@ -7308,7 +7311,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="Store_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
                                                         multiple>
@@ -7472,7 +7475,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Microbiology_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Microbiology_attachment')"
@@ -7663,7 +7666,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="Microbiology_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Microbiology_attachment')"
                                                         multiple>
@@ -7836,7 +7839,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Environment_Health_Safety_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'Environment_Health_Safety_attachment')"
@@ -8028,7 +8031,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input disabled
-                                                        {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="Environment_Health_Safety_attachment[]"
                                                         oninput="addMultipleFiles(this, 'Environment_Health_Safety_attachment')"
@@ -8203,7 +8206,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ContractGiver_attachment[]"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -8340,7 +8343,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage != 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage != 4 ? 'disabled' : '' }}
                                                         type="file" id="myfile"
                                                         name="ContractGiver_attachment[]"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -10189,7 +10192,8 @@
                                                         <div><input type="text"
                                                                 name="fishbone[measurement][{{ $loop->index }}]"
                                                                 value="{{ $measurement }}" class="fishbone-required">
-                                                        </div>
+                                                        
+                                                            </div>
                                                     @endforeach
                                                     @foreach ($fishbone_data['materials'] as $materials)
                                                         <div><input type="text"
@@ -10229,8 +10233,8 @@
                                                 </div>
                                             </div>
                                             <div class="grid-field field-name">
-                                                <div>Environment</div>
-                                                <div>Manpower</div>
+                                                <div>Mother Environment</div>
+                                                <div>Man</div>
                                                 <div>Machine</div>
                                             </div>
                                         </div>
@@ -10271,8 +10275,8 @@
                                                 </div>
                                             </div>
                                             <div class="grid-field field-name">
-                                                <div>Environment</div>
-                                                <div>Manpower</div>
+                                                <div>Mother Environment</div>
+                                                <div>Man</div>
                                                 <div>Machine</div>
                                             </div>
                                         </div>

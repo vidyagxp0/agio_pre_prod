@@ -353,8 +353,8 @@
                         <li class="list-group-item">
                             <strong>Brainstorm Major Categories:</strong>
                             <p>Encourage team members to brainstorm and identify major categories related to the
-                                problem. Use the generic headings provided (Measurement, Materials, Method, Environment,
-                                Manpower, Machine, Mentor) as a starting point. Allow for flexibility in creating
+                                problem. Use the generic headings provided (Measurement, Materials, Method, Mother Environment,
+                                Man, Machine) as a starting point. Allow for flexibility in creating
                                 additional categories as needed.</p>
                         </li>
 
