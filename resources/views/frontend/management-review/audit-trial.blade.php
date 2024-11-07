@@ -218,7 +218,7 @@
                             </div>
 
                             <div class="heading-new">
-                                Management Review Trail
+                                Audit Trail
                             </div>
 
                             <div> <strong>Record ID. </strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>

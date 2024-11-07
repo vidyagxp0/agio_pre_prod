@@ -1271,7 +1271,7 @@ class ManagementReviewController extends Controller
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current = $management->record_number;
+        $history->current =Helpers::getDivisionName($management->division_id). '/RA/'. Helpers::year($management->created). '/'.str_pad($management->record, 4, '0', STR_PAD_LEFT);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -5728,12 +5728,12 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
+        if ($lastCft->Other1_Department_person != $Cft->Other1_Department_person && $Cft->Other1_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 1 Department';
             $history->previous = Helpers::getFullDepartmentName ($lastCft->Other1_Department_person);
-            $history->current =Helpers::getFullDepartmentName ($request->Other1_Department_person);
+            $history->current =Helpers::getFullDepartmentName ($Cft->Other1_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5911,12 +5911,12 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
+        if ($lastCft->Other2_Department_person != $Cft->Other2_Department_person && $Cft->Other2_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Department';
             $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
+            $history->current = Helpers::getFullDepartmentName($Cft->Other2_Department_person);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8650,7 +8650,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA Head Review state'
+                            'message' => 'Sent for Meeting And Summary state'
                         ]);
                     }
                 $changeControl->stage = "3";
@@ -8769,7 +8769,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                             Session::flash('swal', [
                                 'type' => 'success',
                                 'title' => 'Success',
-                                'message' => 'CFT Reviews'
+                                'message' => 'CFT Action'
                             ]);
                         }
                 $changeControl->stage = "4";

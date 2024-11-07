@@ -285,9 +285,9 @@
                                 <div class="">Meeting And Summary</div>
                             @endif
                             @if ($data->stage >= 4)
-                                <div class="active">CFT actions </div>
+                                <div class="active">CFT Actions </div>
                             @else
-                                <div class="">CFT actions </div>
+                                <div class="">CFT Actions </div>
                             @endif
                             @if ($data->stage >= 5)
                                 <div class="active">CFT HOD Review </div>
@@ -484,7 +484,6 @@
                                 </div>
 
 
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Department Code</label>
@@ -510,51 +509,51 @@
 
 
                                <div class="col-12">
-    <div class="group-input">
-        <label for="Short_Description">Short Description<span class="text-danger">*</span></label>
-        <span id="rchars">255</span> characters remaining
+                                <div class="group-input">
+                                    <label for="Short_Description">Short Description<span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span> characters remaining
 
-        <input name="short_description" id="docname" type="text" maxlength="255" required
-            value="{{ $data->short_description }}"
-            @if ($data->stage != 1) readonly @endif />
+                                    <input name="short_description" id="docname" type="text" maxlength="255" required
+                                        value="{{ $data->short_description }}"
+                                        @if ($data->stage != 1) readonly @endif />
 
-        @if ($data->stage != 1)
-            <!-- Hidden field to retain the value if input is readonly -->
-            <input type="hidden" name="short_description" value="{{ $data->short_description }}">
-        @endif
+                                    @if ($data->stage != 1)
+                                        <!-- Hidden field to retain the value if input is readonly -->
+                                        <input type="hidden" name="short_description" value="{{ $data->short_description }}">
+                                    @endif
 
-        <p id="docnameError" style="color:red">**Short Description is required</p>
-    </div>
-</div>
-
-
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+                                </div>
+                            </div>
 
 
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="type">Type
-            @if ($data->stage == 1)
-                <span class="text-danger">*</span>
-            @endif
-        </label>
-        <select name="summary_recommendation" id="summary_recommendation"
-            onchange="toggleReviewPeriod()"
-            @if ($data->stage != 1) disabled @endif required>
-            <option value="">Select Type</option>
-            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
-                Monthly
-            </option>
-            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
-                Six Monthly
-            </option>
-        </select>
 
-        @if ($data->stage != 1)
-            <!-- Hidden field to retain the value if select is disabled -->
-            <input type="hidden" name="summary_recommendation" value="{{ $data->summary_recommendation }}">
-        @endif
-    </div>
-</div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="type">Type
+                                            @if ($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select name="summary_recommendation" id="summary_recommendation"
+                                            onchange="toggleReviewPeriod()"
+                                            @if ($data->stage != 1) disabled @endif required>
+                                            <option value="">Select Type</option>
+                                            <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
+                                                Monthly
+                                            </option>
+                                            <option @if ($data->summary_recommendation == 'Six Monthly') selected @endif value="Six Monthly">
+                                                Six Monthly
+                                            </option>
+                                        </select>
+
+                                        @if ($data->stage != 1)
+                                            <!-- Hidden field to retain the value if select is disabled -->
+                                            <input type="hidden" name="summary_recommendation" value="{{ $data->summary_recommendation }}">
+                                        @endif
+                                    </div>
+                                </div>
 
 
 
@@ -1879,7 +1878,7 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet"> Production Tablet/Capsule Powder Action Required ?
+                                            <label for="Production Tablet">Hod Production Tablet/Capsule/Powder Action Required ?
                                                 <span class="text-danger">*</span></label>
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
@@ -1907,7 +1906,7 @@
                                     @endphp
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder
+                                            <label for="Production Tablet notification">Production Tablet/Capsule/Powder
                                                 Person <span id="asteriskPT"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
@@ -1945,7 +1944,7 @@
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet assessment">Description of Action Item (By
-                                                Tablet/Capsule Powder
+                                                Tablet/Capsule/Powder
                                                 ) <span id="asteriskPT1"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -1959,7 +1958,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet feedback">Production Tablet/Capsule Powder Status
+                                            <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Status
                                                 of Action Item
                                                 <span id="asteriskPT2"
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -1974,7 +1973,7 @@
                                     </div>
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet attachment">Production Tablet/Capsule Powder
+                                            <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
                                                 Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -2010,7 +2009,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Action
+                                            <label for="Production Tablet Completed By">HOd Production Tablet/Capsule/Powder Action
                                                 Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
@@ -2041,7 +2040,7 @@
                                     </div> --}}
                                     <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet/Capsule Powder Action
+                                            <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/Powder Action
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
@@ -2104,7 +2103,7 @@
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet">Production Tablet/Capsule Powder Action Required
+                                            <label for="Production Tablet">Production Tablet/Capsule/Powder Action Required
                                                 ?</label>
                                             <select name="Production_Table_Review" disabled id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
@@ -2131,7 +2130,7 @@
                                     @endphp
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">Production Tablet/Capsule Powder
+                                            <label for="Production Tablet notification">Production Tablet/Capsule/Powder
                                                 Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="Production_Table_Person" disabled id="Production_Table_Person">
@@ -2146,7 +2145,7 @@
                                     </div>
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule
+                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule/
                                                 Powder Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_Production_Table_Person" disabled
@@ -2164,7 +2163,7 @@
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
                                                 <label for="Production Tablet assessment">Description of Action Item (By
-                                                    Tablet/Capsule Powder
+                                                    Tablet/Capsule/Powder
                                                     )
                                                     <!-- <span
                                                                                                                                                                                                                                                                                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
@@ -2178,7 +2177,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder
+                                                <label for="Production Tablet feedback">Production Tablet/Capsule/Powder
                                                     Status of Action
                                                     item
                                                     <!-- <span
@@ -2195,7 +2194,7 @@
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
                                                 <label for="Production Tablet assessment">Description of Action Item (By
-                                                    Tablet/Capsule Powder)
+                                                    Tablet/Capsule/Powder)
                                                     <!-- <span
                                                                                                                                                                                                                                                                                                                                                                                                                                                         id="asteriskInvi12" style="display: none"
                                                                                                                                                                                                                                                                                                                                                                                                                                                         class="text-danger">*</span> -->
@@ -2208,7 +2207,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Production Tablet/Capsule Powder
+                                                <label for="Production Tablet feedback">Production Tablet/Capsule/Powder
                                                     Status of Action Item
                                                     <!-- <span
                                                                                                                                                                                                                                                                                                                                                                                                                                                         id="asteriskInvi22" style="display: none"
@@ -2223,7 +2222,7 @@
                                     @endif
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet attachment">Production Tablet/Capsule Powder
+                                            <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
                                                 Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -2260,7 +2259,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Action Completed By</label>
+                                            <label for="Production Tablet Completed By">HOD Production Tablet/Capsule/Powder Action Completed By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                 name="Production_Table_By" id="Production_Table_By">
 
@@ -2269,7 +2268,7 @@
                                     </div>
                                     <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet/Capsule Powder Action
+                                            <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/Powder Action
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
@@ -7779,7 +7778,7 @@
 
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet feedback">Production Tablet/Capsule / Powder HOD Person <span id="asteriskPT2"
+                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder HOD Person <span id="asteriskPT2"
                                                 style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -7792,7 +7791,7 @@
                                 </div>
                                 <div class="col-12 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet attachment">HOD Production Tablet/Capsule Powder
+                                        <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
                                             Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
