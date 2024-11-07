@@ -741,23 +741,23 @@ foreach ($pre as $processName => $modelClass) {
             $history->save();
         }
 
-        // if (!empty($openState->departments)) {
-        //     $history = new ResamplingAudittrail();
-        //     $history->resampling_id =   $openState->id;
-        //     $history->activity_type = 'Departments';
-        //     $history->previous = "Null";
-        //     $history->current =  $openState->departments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $openState->status;
-        //     $history->change_to = "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = "Create";
+        if (!empty($openState->departments)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id =   $openState->id;
+            $history->activity_type = 'Responsible Department';
+            $history->previous = "Null";
+            $history->current =  Helpers::getFullDepartmentName($openState->departments);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
 
-        //     $history->save();
-        // }
+            $history->save();
+        }
 
 
 
@@ -1143,11 +1143,11 @@ foreach ($pre as $processName => $modelClass) {
 
             $history->save();
         }
-        if ($lastopenState->departments != $openState->departments) {
+        if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'Responsible Department';
-            $history->previous = Helpers::getFullDepartmentName($lastopenState->department);
+            $history->previous = Helpers::getFullDepartmentName($lastopenState->departments);
             $history->current = Helpers::getFullDepartmentName($openState->departments);
             $history->comment = $request->departments_comment;
             $history->user_id = Auth::user()->id;

@@ -1926,13 +1926,13 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments"> QAH/CQAH/designee Final Approval Comments</label>
+                                        <label for="comments"> QAH/CQAH/Designee Final Approval Comments</label>
                                         <textarea name="qah_final_comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">QAH/CQAH/designee Final Approval Attachments</label>
+                                        <label for="Inv Attachments">QAH/CQAH/Designee Final Approval Attachments</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents

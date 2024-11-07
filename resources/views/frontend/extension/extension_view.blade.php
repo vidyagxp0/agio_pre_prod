@@ -1124,7 +1124,7 @@
                             </div>
 
 
-
+                        @if($extensionNew->count == 3)
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Send for CQA By</label>
@@ -1143,6 +1143,7 @@
                                     <div class="static">{{ $extensionNew->send_cqa_comment }}</div>
                                 </div>
                             </div>
+                        @endif    
 
                             <div class="col-lg-4">
                                 <div class="group-input">

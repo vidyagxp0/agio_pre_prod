@@ -698,7 +698,7 @@
                                         </div> -->
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="capa_date_due">Response due date</label>
+                                                <label for="capa_date_due">Response Due Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" name="recomendation_capa_date_due"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1195,8 +1195,8 @@
                                                             <th style="width: 20px;">S.No.</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
-                                                            <th>Target Completion Date</th>
-                                                            <th>Action Status</th>
+                                                            <th>Deadline</th>
+                                                            <th>Item Status</th>
                                                             <th style="width: 15%">Action</th>
                                                         </tr>
                                                     </thead>
