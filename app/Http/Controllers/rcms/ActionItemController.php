@@ -769,21 +769,6 @@ class ActionItemController extends Controller
                 });
             }
 
-            if (!empty($request->file_attach)) {
-                $files = [];
-                if ($request->hasfile('file_attach')) {
-                    foreach ($request->file('file_attach') as $file) {
-
-                        $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-
-                }
-                $openState->file_attach = json_encode($files);
-            }
-
-
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('file_attach')) {
@@ -798,6 +783,7 @@ class ActionItemController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->file_attach = json_encode($allFiles);
         }
+
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
             //     foreach ($request->file('file_attach') as $file) {
@@ -891,6 +877,7 @@ class ActionItemController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->acknowledge_attach = json_encode($allFiles);
         }
+
 
         //Acknoledge Attachment
 
