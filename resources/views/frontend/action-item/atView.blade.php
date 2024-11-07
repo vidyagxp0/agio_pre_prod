@@ -157,7 +157,7 @@
                                     <div class="">Acknowledge</div>
                                 @endif
                                 @if ($data->stage >= 3)
-                                    <div class="active">work Completion</div>
+                                    <div class="active">Work Completion</div>
                                 @else
                                     <div class="">Work Completion </div>
                                 @endif
@@ -637,6 +637,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="col-lg-12">
                                     @if ($data->stage == 1)
                                         <div class="group-input">
@@ -787,13 +788,27 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                @if ($data->stage == 2)
                                 <div class="sub-head">Acknowledge</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="qa_comments">Acknowledge Comment</label>
-                                            <textarea name="acknowledge_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->acknowledge_comments }}</textarea>
+                                            <label for="qa_comments">Acknowledge Comment @if ($data->stage == 2)
+                                                <span class="text-danger">*</span>
+                                            @endif</label>
+                                            <textarea name="acknowledge_comments" {{ $data->stage == 2 ? '' : 'readonly' }} required>{{ $data->acknowledge_comments }}</textarea>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="sub-head">Acknowledge</div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="qa_comments">Acknowledge Comment</label>
+                                            <textarea name="acknowledge_comments" readonly {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->acknowledge_comments }}</textarea>
+                                        </div>
+                                    </div>
+                                @endif
+
+
 
                                 @error('acknowledge_comments')
                                     <div class="text-danger">{{ $message }}</div>
@@ -829,7 +844,7 @@
                                                     <div>Add</div>
                                                     <input
                                                         type="file" id="myfile" name="acknowledge_attach[]"
-                                                        oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                        oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}>
                                                 </div>
                                             </div>
 
@@ -977,15 +992,15 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                @if ($data->stage == 2 || $data->stage == 3)
+                                @if ($data->stage == 3)
                                     <div class="sub-head col-12">Post Completion</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="action_taken">Action Taken @if ($data->stage == 2)
+                                            <label for="action_taken">Action Taken @if ($data->stage == 3)
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
+                                            <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -997,8 +1012,9 @@
                                                     <span class="text-danger">*</span>
                                                 @endif--}}
                                             </label>
-                                            <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                            <textarea class="tiny" readonly {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
+                                    </div>
                                 @endif
                                 @error('action_taken')
                                     <div class="text-danger">{{ $message }}</div>
@@ -1015,7 +1031,7 @@
                                                 <input type="text" id="start_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1030,7 +1046,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date" readonly
-                                                    name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1042,7 +1058,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
 
-                                @if ($data->stage == 2 || $data->stage == 3)
+                                @if ($data->stage == 3)
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule End Date">Actual End Date</label>
@@ -1051,7 +1067,7 @@
                                                 <input type="text" id="end_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="end_date_checkdate" value="{{ $data->end_date }}"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -1066,7 +1082,7 @@
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                     <input class="hide-input" type="date" readonly
-                                                        name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
                                                         id="end_date_checkdate" value="{{ $data->end_date }}"
                                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                                 </div>
@@ -1081,18 +1097,18 @@
 
 
 
-                            @if ($data->stage == 2 || $data->stage == 3)
+                            @if ($data->stage == 3)
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments">{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @else
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments" readonly>{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments" readonly>{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -1102,7 +1118,7 @@
 
                         </div>
 
-                        @if ($data->stage == 2 || $data->stage == 3)
+                        @if ($data->stage == 3)
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="file_attach">Completion Attachment</label>
@@ -1128,8 +1144,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <input {{ $data->stage == 3 ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" multiple>
                                         </div>
@@ -1225,14 +1240,11 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <input disabled {{ $data->stage == 3 ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" class="tiny" multiple>
                                         </div>
                                     </div>
-
-
 
                                 </div>
                             </div>
@@ -1263,7 +1275,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
                                 </div>
                             @else
@@ -1272,7 +1284,7 @@
                                         <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
-                                        <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea class="tiny" readonly {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
 
                                 </div>
@@ -1316,8 +1328,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                <input {{ $data->stage == 4 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
@@ -1414,8 +1425,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input disabled
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 3 ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>

@@ -422,7 +422,7 @@
                                     <div class="group-input">
                                         <label for="acknowledge_comments">Acknowledge Comment
                                         </label>
-                                        <textarea name="acknowledge_comments"></textarea>
+                                        <textarea name="acknowledge_comments" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -434,7 +434,7 @@
                                             <div class="file-attachment-list" id="acknowledge_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="acknowledge_attach[]"
+                                                <input type="file" id="myfile" disabled name="acknowledge_attach[]"
                                                     oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple>
                                             </div>
                                         </div>
