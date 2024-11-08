@@ -885,7 +885,7 @@ class CapaController extends Controller
         if (!empty($capa->capa_type)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Capa Type';
+            $history->activity_type = 'CAPA Type';
             $history->previous = "Null";
             $history->current = $capa->capa_type;
             $history->comment = "Not Applicable";
