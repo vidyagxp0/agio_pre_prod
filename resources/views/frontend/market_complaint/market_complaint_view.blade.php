@@ -1788,43 +1788,43 @@
 
                             <script>
                                 $(document).ready(function() {
-                                    let indexteam =
-                                        {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
+                                    let indexTeam = {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
+
                                     $('#team_members').click(function(e) {
                                         e.preventDefault();
 
-                                        function generateTableRow(teamserialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Team_Members[' + teamserialNumber +
-                                                '][serial]" value="' + (teamserialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][names_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam +
-                                                '][designation]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam +
-                                                '][department_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][sign_tm]"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexteam + '_date_tm" type="text" name="Team_Members[' + indexteam +
-                                                '][date_tm]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="Team_Members[' +
-                                                indexteam +
-                                                '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
-                                                indexteam +
-                                                '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexteam + '_date_tm\')" /> </div> </div></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-                                                '</tr>';
-                                            indexteam++;
+                                        function generateTableRow(teamSerialNumber) {
+                                            let html = `
+                                                <tr>
+                                                    <td><input disabled type="text" name="Team_Members[${teamSerialNumber}][serial]" value="${teamSerialNumber + 1}"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][names_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][designation]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][department_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][sign_tm]"></td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input id="date_${indexTeam}_date_tm" type="text" name="Team_Members[${indexTeam}][date_tm]" placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="Team_Members[${indexTeam}][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_${indexTeam}_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_${indexTeam}_date_tm')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>`;
+                                            indexTeam++;
                                             return html;
                                         }
 
-                                        var tableBody = $('#team_members_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
+                                        let tableBody = $('#team_members_details tbody');
+                                        let rowCount = tableBody.children('tr').length;
+                                        let newRow = generateTableRow(rowCount);
                                         tableBody.append(newRow);
                                     });
                                 });
                             </script>
+
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -2619,7 +2619,7 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="yes" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2628,7 +2628,7 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="no" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>

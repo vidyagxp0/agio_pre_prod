@@ -1062,12 +1062,12 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($marketComplaint->initiator_group_code_gi)) {
+        if (!empty($marketComplaint->initiator_group)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
-            $history->current = $marketComplaint->initiator_group_code_gi;
+            $history->current = $marketComplaint->initiator_group;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3431,12 +3431,12 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if ($lastmarketComplaint->initiator_group_code_gi != $marketComplaint->initiator_group_code_gi) {
+        if ($lastmarketComplaint->initiator_group != $marketComplaint->initiator_group) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department Code';
-            $history->previous = Helpers::getFullDepartmentName($lastmarketComplaint->initiator_group_code_gi);
-            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group_code_gi);
+            $history->previous = Helpers::getFullDepartmentName($lastmarketComplaint->initiator_group);
+            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group);
             $history->comment = $request->initiator_group_code_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

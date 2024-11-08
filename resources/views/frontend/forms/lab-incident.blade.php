@@ -53,10 +53,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        {{-- <input disabled type="text" name="record_number" id="record_number" 
+                                        {{-- <input disabled type="text" name="record_number" id="record_number"
                                             value="---/LI/{{ date('y') }}/{{ $record_number }}"> --}}
                                             {{-- <span id="record_number_suffix"></span> --}}
-                                      
+
                                             {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             <input type="hidden" id="record" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('y') }}/{{ $record_number}}">
@@ -126,18 +126,18 @@
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        
+
                                         // If date is valid, format it to 'DD-MMM-YYYY'
                                         if (!isNaN(date.getTime())) {
                                             const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
@@ -151,11 +151,11 @@
                                             document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
                                         }
                                     }
-                                
+
                                     // Initialize the display field to show placeholder on load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        
+
                                         // If there's an initial date, handle it; otherwise, show placeholder
                                         if (dateInput.value) {
                                             handleDateInput(dateInput, 'due_date_display');
@@ -164,15 +164,15 @@
                                         }
                                     });
                                 </script>
-                                
-                                
+
+
                                 <style>
                                     .hide-input {
                                         display: none;
                                     }
                                 </style>
-                                
-                                
+
+
 
 
                                 {{-- <div class="col-lg-6">
@@ -216,7 +216,7 @@
                                             </div>
 
                                         </div>
-                                
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -240,7 +240,7 @@
                                     Incident Investigation Report
                                     <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#observation-field-instruction-modal"
+                                        data-bs-target="#observation-field-instruction-modal-LabIncident"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                         (Launch Instruction)
                                     </span>
@@ -253,7 +253,7 @@
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
-                                            <th>Action</th> 
+                                            <th>Action</th>
 
 
                                         </tr>
@@ -424,7 +424,7 @@
                                     <div class="group-input input-date">
                                         <label for="due-date">Date Of Analysis <span class="text-danger"></span></label> --}}
                                         {{-- <p class="text-primary"> </p> --}}
-                                        
+
                                         {{-- <div class="calenderauditee">
                                             <input type="text" id="incident_date_analysis_gi" readonly
                                                 placeholder="DD-MMM-YYYY"/>
@@ -448,14 +448,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input" id="incident_date_analysis_gi">
                                         <label for="incident_date_analysis_gi">Date of Analysis<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="incident_date_analysis_gi" id="incident_date_analysis_gi" value="">
                                     </div>
-        
+
                                 </div> --}}
                                 <script>
                                     function formatDate(input) {
@@ -467,9 +467,9 @@
                                         input.value = formattedDate;
                                     }
                                 </script>
-                                 
-                                
-                                
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="incident_specification_no_gi">
                                         <label for="Incident_specification_no">Specification Number<span
@@ -497,7 +497,7 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="incident_date_incidence_gi">Date of Incidence <span class="text-danger"></span></label>
-                                        
+
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_date_incidence_gi_display" readonly
                                                 placeholder="DD-MMM-YYYY"/>
@@ -513,7 +513,7 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -616,7 +616,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_Category_others">
                                         <label for="Incident_Category">Others<span
@@ -641,7 +641,7 @@
                                         <textarea name="immediate_action_ia"></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Initial Attachment</label>
@@ -657,8 +657,8 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                                
+
+
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
@@ -688,7 +688,7 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QC Head Review Comments</label>
@@ -755,7 +755,7 @@
                         </div>
                     </div>
 
-                     
+
                     <!-- Investigation Details content -->
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -769,7 +769,7 @@
                                         <div class="static">Question datafield</div>
                                     </div>
                                 </div> --}}
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details</label>
@@ -884,7 +884,7 @@
             </select>
         </div>
     </div>
-    
+
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
             <label for="other_incidence"><b>Other Incidence</b></label>
@@ -895,7 +895,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var typeIncidenceSelect = document.getElementById('type_incidence_ia');
             var otherIncidenceDiv = document.getElementById('other_incidence_div');
-    
+
             typeIncidenceSelect.addEventListener('change', function() {
                 if (typeIncidenceSelect.value === 'Other') {
                     otherIncidenceDiv.style.display = 'block';
@@ -905,7 +905,7 @@
             });
         });
     </script>
-        
+
 
     {{-- type of incidence --}}
 
@@ -981,7 +981,7 @@
                         </div>
 
                     </div>
-                
+
                     {{-- ---------------------------------------QC Head/HOD Secondary Review------------------------------------------------ --}}
                     <div id="CCForm14" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1008,7 +1008,7 @@
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const typeIncidenceSelect = document.getElementById('Incident_Category_data');
                                         const otherIncidenceDiv = document.getElementById('other_incidence_data');
-                                
+
                                         function toggleOtherIncidence() {
                                             if (typeIncidenceSelect.value === 'Other') {
                                                 otherIncidenceDiv.style.display = 'block';
@@ -1016,9 +1016,9 @@
                                                 otherIncidenceDiv.style.display = 'none';
                                             }
                                         }
-                                
+
                                         typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-                                
+
                                         // Initial check on page load
                                         toggleOtherIncidence();
                                     });
@@ -1088,7 +1088,7 @@
                             </div>
                         </div>
                     </div> -->
-                    
+
                                         {{-- ---------------------------------------QA Secondary Review----------------------------------------------- --}}
                     <div id="CCForm15" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1123,7 +1123,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
 
                 <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1176,7 +1176,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                             <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submit 
+                                    Submit
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1199,9 +1199,9 @@
                                         <div class="static" ></div>
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                QC Head/HOD Initial Review Complete 
+                                QC Head/HOD Initial Review Complete
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1222,7 +1222,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                          
+
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QA Initial Review Complete
@@ -1361,7 +1361,7 @@
                                     </div>
                                 </div>
                                 </div>
-                  
+
                                 <div class="button-block">
                                 <!-- <button type="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1446,8 +1446,8 @@
                     {{-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                
-                                
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="capa">Capa</label>
@@ -1495,7 +1495,7 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div> --}} 
+                    </div> --}}
                             </div>
                         </div>
                     </div>
