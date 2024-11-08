@@ -4526,10 +4526,8 @@
                                         <th class="thFMEA" colspan="3">Risk Evaluation</th>
                                         <th class="thFMEA" rowspan="2">RPN</th>
                                         <th class="thFMEA" colspan="2">Risk Control</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level</th>
-                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
-                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        
                                     </tr>
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
@@ -4542,6 +4540,9 @@
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level</th>
+                                        <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                                        <th class="thFMEA">Traceability Document</th>
                                     </tr>
                                 </thead>
                                 <tbody>
