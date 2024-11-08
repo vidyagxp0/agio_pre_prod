@@ -366,48 +366,55 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            let investigationTeamDataIndex =
-                {{ $investigationTeamData && is_array($investigationTeamData) ? count($investigationTeamData) : 1 }};
-            $('#investigationTeamAdd').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    var userOptionsHtml = '';
-                    users.forEach(user => {
-                        userOptionsHtml = userOptionsHtml.concat(
-                            `<option value="${user.id}">${user.name}</option>`)
-                    });
+   <script>
+    $(document).ready(function() {
+        let investigationTeamDataIndex =
+            {{ $investigationTeamData && is_array($investigationTeamData) ? count($investigationTeamData) : 1 }};
+        
+        $('#investigationTeamAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var userOptionsHtml = '';
+                users.forEach(user => {
+                    userOptionsHtml = userOptionsHtml.concat(
+                        `<option value="${user.id}">${user.name}</option>`)
+                });
 
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td> <select name="investigationTeam[' + investigationTeamDataIndex +
-                        '][teamMember]" id="" class="teamMember"> <option value="">-- Select --</option>' +
-                        userOptionsHtml + ' </select> </td>' +
-                        '<td><input type="text" class="responsibility" name="investigationTeam[' +
-                        investigationTeamDataIndex + '][responsibility]"></td>' +
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td> <select name="investigationTeam[' + investigationTeamDataIndex +
+                    '][teamMember]" id="" class="teamMember"> <option value="">-- Select --</option>' +
+                    userOptionsHtml + ' </select> </td>' +
+                    
+                    '<td><textarea class="responsibility" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][responsibility]"></textarea></td>' +
 
+                    '<td><textarea class="desination_dept" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][desination_dept]"></textarea></td>' +
 
-                        '<td><input type="text" class="desination_dept" name="investigationTeam[' +
-                        investigationTeamDataIndex + '][desination_dept]"></td>' +
+                    '<td><textarea class="remarks" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][remarks]"></textarea></td>' +
 
-                        '<td><input type="text" class="remarks" name="investigationTeam[' +
-                        investigationTeamDataIndex + '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-                        '</tr>';
-                    investigationTeamDataIndex++;
-                    return html;
-                }
+                    '<td><textarea class="investigation_approach" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][investigation_approach]"></textarea></td>' +
 
-                var tableBody = $('#investigationTeamDetailTable tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                
+                investigationTeamDataIndex++;
+                return html;
+            }
+
+            var tableBody = $('#investigationTeamDetailTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
         });
-    </script>
+    });
+</script>
+
 
 
     <script>
@@ -1338,82 +1345,67 @@
                                     </div>
 
                                     <div class="col-lg-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Short Description required">Repeat Deviation? <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="short_description_required"
-                                                  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="short_description_required" onchange="checkRecurring(this)"
-                                                value="{{ $data->short_description_required }}">
-                                                <option value="0">-- Select --</option>
-                                                <option value="Recurring"
-                                                    @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
-                                                <option value="Non_Recurring"
-                                                    @if ($data->short_description_required == 'Non_Recurring' || old('short_description_required') == 'Non_Recurring') selected @endif>No</option>
-                                            </select>
-                                        </div>
-                                        @error('short_description_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-lg-6" id="nature_of_repeat_block"
-                                        @if ($data->short_description_required != 'Recurring') style="display: none" @endif>
-                                        <div class="group-input" id="nature_of_repeat">
-                                            <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                                                    style="display: {{ $data->short_description_required == 'Recurring' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <textarea class="nature_of_repeat"
-                                                name="nature_of_repeat"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="nature_of_repeat"
-                                                class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
-                                        </div>
-                                        @error('nature_of_repeat')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('short_description_required');
-                                            var inputsToToggle = [];
+    <div class="group-input input-date">
+        <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
+        <select name="short_description_required"
+                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                id="short_description_required" onchange="checkRecurring(this)"
+                value="{{ $data->short_description_required }}">
+            <option value="0">-- Select --</option>
+            <option value="Yes" 
+                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+            <option value="No" 
+                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+        </select>
+    </div>
+</div>
 
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('nature_of_repeat');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
+<div class="col-lg-6" id="nature_of_repeat_block"
+    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
+    <div class="group-input" id="nature_of_repeat">
+        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
+                style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
+                class="text-danger">*</span></label>
+        <textarea class="nature_of_repeat"
+            name="nature_of_repeat"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="nature_of_repeat"
+            class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
+    </div>
+</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('short_description_required');
+        var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
+        var asteriskIcon = document.getElementById('asteriskInviRecurring');
+        var natureOfRepeatField = document.getElementById('nature_of_repeat');
 
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'Recurring';
-                                                // var natureOfRepeatBlock = document.getElementsById('nature_of_repeat_block');
+        // Show/hide 'Repeat Nature' field and asterisk based on initial selection
+        toggleNatureOfRepeatField(selectField.value === 'Yes');
 
-                                                inputsToToggle.forEach(function(input) {
+        // Listen for changes in 'Repeat Deviation' dropdown
+        selectField.addEventListener('change', function() {
+            var isYesSelected = this.value === 'Yes';
+            toggleNatureOfRepeatField(isYesSelected);
+        });
 
-                                                    if (!isRequired) {
-                                                        document.getElementById('nature_of_repeat_block').style.display = 'none';
-                                                    } else {
-                                                        document.getElementById('nature_of_repeat_block').style.display = 'block';
-                                                    }
+        // Toggle display and required attribute for 'Repeat Nature' based on 'Yes' or 'No' selection
+        function toggleNatureOfRepeatField(isYes) {
+            natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
+            asteriskIcon.style.display = isYes ? 'inline' : 'none';
+            natureOfRepeatField.required = isYes;
+        }
+    });
 
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
+    function checkRecurring(selectElement) {
+        var repeatNatureField = document.getElementById('nature_of_repeat');
+        if (selectElement.value === 'Yes') {
+            repeatNatureField.setAttribute('required', 'required');
+        } else {
+            repeatNatureField.removeAttribute('required');
+        }
+    }
+</script>
 
-                                                // Show or hide the asterisk icon based on the selected value
-                                                var asteriskIcon = document.getElementById('asteriskInviRecurring');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
-                                    <script>
-                                        function checkRecurring(selectElement) {
-                                            var repeatNatureField = document.getElementById('nature_of_repeat');
-                                            if (selectElement.value === 'Recurring') {
-                                                repeatNatureField.setAttribute('required', 'required');
-                                            } else {
-                                                repeatNatureField.removeAttribute('required');
-                                            }
-                                        }
-                                    </script>
 
                                 <div class="col-6 new-date-data-field">
     <div class="group-input input-date">
@@ -1959,7 +1951,7 @@
                                             <div class="group-input" id="productRow"
                                                 @if ($data->Product_Details_Required == 'no') style="display: none" @endif>
                                                 <label for="audit-agenda-grid">
-                                                    Product/Batch Details
+                                                Product/ Material Batch Details
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="Product_Details">+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
@@ -1974,9 +1966,9 @@
                                                         <thead>
                                                             <tr>
                                                                 <th style="width: 4%">Row#</th>
-                                                                <th style="width: 12%">Product</th>
+                                                                <th style="width: 12%">Product /Material</th>
                                                                 <th style="width: 16%"> Stage</th>
-                                                                <th style="width: 16%">Batch No</th>
+                                                                <th style="width: 16%">Batch No /A.R.No.</th>
                                                                 <th style="width: 8%">Action</th>
 
 
@@ -9716,6 +9708,7 @@
                                                 <th style="width: 16%">Responsibility</th>
                                                 <th style="width: 16%">Remarks</th>
 
+                                                <th style="width: 16%">Investigation Approach</th>
 
                                                 <th style="width: 8%">Action</th>
                                             </tr>
@@ -9745,21 +9738,25 @@
 
 
                                                         <td>
-                                                            <input type="text" class="desination_dept"
-                                                                name="investigationTeam[{{ $loop->index }}][desination_dept]"
-                                                                value="{{ isset($investigation_data['desination_dept']) ? $investigation_data['desination_dept'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="responsibility"
-                                                                name="investigationTeam[{{ $loop->index }}][responsibility]"
-                                                                value="{{ isset($investigation_data['responsibility']) ? $investigation_data['responsibility'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="remarks"
-                                                                name="investigationTeam[{{ $loop->index }}][remarks]"
-                                                                value="{{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}">
-                                                        </td>
-
+                                                                <textarea class="desination_dept" name="investigationTeam[{{ $loop->index }}][desination_dept]">
+                                                                    {{ isset($investigation_data['desination_dept']) ? $investigation_data['desination_dept'] : '' }}
+                                                                </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea class="responsibility" name="investigationTeam[{{ $loop->index }}][responsibility]">
+                                                                    {{ isset($investigation_data['responsibility']) ? $investigation_data['responsibility'] : '' }}
+                                                                </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea class="remarks" name="investigationTeam[{{ $loop->index }}][remarks]">
+                                                                    {{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}
+                                                                </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea class="investigation_approach" name="investigationTeam[{{ $loop->index }}][investigation_approach]">
+                                                                    {{ isset($investigation_data['investigation_approach']) ? $investigation_data['investigation_approach'] : '' }}
+                                                                </textarea>
+                                                            </td>
 
                                                         <td><button type="text" class="removeRowBtn"
                                                                 name="Action[]">Remove</button></td>
@@ -9784,7 +9781,8 @@
                                                         name="investigationTeam[0][responsibility]"></td>
                                                 <td><input type="text" class="remarks"
                                                         name="investigationTeam[0][remarks]"></td>
-
+                                                 <td><input type="text" class="investigation_approach"
+                                                        name="investigationTeam[0][investigation_approach]"></td>
 
                                                 <td><button type="text" class="removeRowBtn"
                                                         name="Action[]">Remove</button></td>
@@ -9845,7 +9843,7 @@
                         <th colspan="4" style="text-align:center;">Risk Evaluation</th>
                         <th colspan="1" style="text-align:center;">Risk Control</th>
                         <th colspan="6" style="text-align:center;">Risk Evaluation</th>
-                        <th colspan="2" style="text-align:center;"></th>
+                        <th colspan="4" style="text-align:center;"></th>
                     </tr>
                     <tr>
                         <th>Row #</th>
@@ -9864,6 +9862,8 @@
                         <th>Category of Risk Level (Low, Medium and High)</th>
                         <th>Risk Acceptance (Y/N)</th>
                         <th>Traceability document</th>
+                        <th>Others</th>
+                        <th>Attchment</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -9872,9 +9872,23 @@
         @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td><input name="risk_factor_1[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
-                <td><input name="problem_cause_1[]" type="text" value="{{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
-                <td><input name="existing_risk_control_1[]" type="text" value="{{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
+                <!-- <td><input name="risk_factor_1[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td> -->
+
+                <td>
+                <textarea name="risk_factor_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
+                </td>
+                <td>
+    <textarea name="problem_cause_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+        {{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}
+    </textarea>
+</td>
+
+<td>
+    <textarea name="existing_risk_control_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+        {{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}
+    </textarea>
+</td>
+
                 <td>
                     <select onchange="calculateInitialResult_1(this)" class="fieldR" name="initial_severity_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                         <option value="">-- Select --</option>
@@ -9906,7 +9920,12 @@
                     </select>
                 </td>
                 <td><input name="initial_rpn_1[]" type="text" class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}" readonly {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
-                <td><input name="risk_control_measure_1[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
+                <td>
+                    <textarea name="risk_control_measure_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                        {{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}
+                    </textarea>
+                </td>
+
                 <!-- Repeat for other fields as needed -->
 
 
@@ -10007,10 +10026,45 @@
                             </td>
 
 
-                            <td><input name="mitigation_proposal_1[]" type="text"
-                                    value="{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}"
-                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                            <td>
+                                <textarea name="mitigation_proposal_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                    {{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}
+                                </textarea>
                             </td>
+
+
+                            <td>
+                                <textarea name="conclusion[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                    {{ unserialize($riskEffectAnalysis->conclusion)[$key] ?? null }}
+                                </textarea>
+                            </td>
+
+                          <td>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="file_{{ $key }}">
+                                    @if (!empty($riskEffectAnalysis['attachment']))
+                                        @foreach (json_decode($riskEffectAnalysis['attachment']) as $file)
+                                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                </a>
+                                                <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                </a>
+                                            </h6>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                  
+                                    <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
+                                </div>
+                            </div>
+                        </td>
+
+
 
 
 
@@ -10070,9 +10124,9 @@
 
         newRow.innerHTML = `
             <td>${currentRowCount}</td>
-            <td><input name='risk_factor_1[]' type='text'></td>
-            <td><input name='problem_cause_1[]' type='text'></td>
-            <td><input name='existing_risk_control_1[]' type='text'></td>
+            <td><textarea name='risk_factor_1[]' ></textarea></td>
+            <td><textarea name='problem_cause_1[]' ></textarea></td>
+            <td><textarea name='existing_risk_control_1[]'  ></textarea></td>
             <td>
                 <select onchange='calculateInitialResult_1(this)' class='fieldR' name='initial_severity_1[]'>
                     <option value=''>-- Select --</option>
@@ -10104,7 +10158,7 @@
                 </select>
             </td>
             <td><input name='initial_rpn_1[]' type='text' class='initial-rpn' readonly></td>
-            <td><input name='risk_control_measure_1[]' type='text'></td>
+            <td><textarea name='risk_control_measure_1[]' ></textarea></td>
             <td>
                 <select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity_1[]'>
                     <option value=''>-- Select --</option>
@@ -10145,7 +10199,23 @@
                 </select>
             </td>
 
-            <td><input name='mitigation_proposal_1[]' type='text'></td>
+         <td><textarea name="mitigation_proposal_1[]"></textarea></td>
+        <td><textarea name='conclusion[]' ></textarea></td>
+     
+
+
+<td>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="file_{{ $key }}"></div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                  
+                                <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
+                            </div>
+                        </div>
+                    </td>
+
+
 
             <td><button class='btn btn-dark' onclick='removeRow(this)'>Remove</button></td>
         `;
@@ -10189,49 +10259,44 @@
                                             <div class="top-field-group">
                                                 <div class="grid-field fields top-field">
                                                     @foreach ($fishbone_data['measurement'] as $measurement)
-                                                        <div><input type="text"
-                                                                name="fishbone[measurement][{{ $loop->index }}]"
-                                                                value="{{ $measurement }}" class="fishbone-required">
-                                                        
-                                                            </div>
+                                                        <div>
+                                                            <textarea name="fishbone[measurement][{{ $loop->index }}]" class="fishbone-required">{{ $measurement }}</textarea>
+                                                        </div>
                                                     @endforeach
                                                     @foreach ($fishbone_data['materials'] as $materials)
-                                                        <div><input type="text"
-                                                                name="fishbone[materials][{{ $loop->index }}]"
-                                                                value="{{ $materials }}" class="fishbone-required">
+                                                        <div>
+                                                            <textarea name="fishbone[materials][{{ $loop->index }}]" class="fishbone-required">{{ $materials }}</textarea>
                                                         </div>
                                                     @endforeach
                                                     @foreach ($fishbone_data['methods'] as $methods)
-                                                        <div><input type="text"
-                                                                name="fishbone[methods][{{ $loop->index }}]"
-                                                                value="{{ $methods }}" class="fishbone-required">
+                                                        <div>
+                                                            <textarea name="fishbone[methods][{{ $loop->index }}]" class="fishbone-required">{{ $methods }}</textarea>
                                                         </div>
                                                     @endforeach
                                                 </div>
                                             </div>
+
                                             <div class="mid"></div>
-                                            <div class="bottom-field-group">
-                                                <div class="grid-field fields bottom-field">
-                                                    @foreach ($fishbone_data['environment'] as $environment)
-                                                        <div><input type="text"
-                                                                name="fishbone[environment][{{ $loop->index }}]"
-                                                                value="{{ $environment }}" class="fishbone-required">
-                                                        </div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['manpower'] as $manpower)
-                                                        <div><input type="text"
-                                                                name="fishbone[manpower][{{ $loop->index }}]"
-                                                                value="{{ $manpower }}" class="fishbone-required">
-                                                        </div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['machine'] as $machine)
-                                                        <div><input type="text"
-                                                                name="fishbone[machine][{{ $loop->index }}]"
-                                                                value="{{ $machine }}" class="fishbone-required">
-                                                        </div>
-                                                    @endforeach
+                                                <div class="bottom-field-group">
+                                                    <div class="grid-field fields bottom-field">
+                                                        @foreach ($fishbone_data['environment'] as $environment)
+                                                            <div>
+                                                                <textarea name="fishbone[environment][{{ $loop->index }}]" class="fishbone-required">{{ $environment }}</textarea>
+                                                            </div>
+                                                        @endforeach
+                                                        @foreach ($fishbone_data['manpower'] as $manpower)
+                                                            <div>
+                                                                <textarea name="fishbone[manpower][{{ $loop->index }}]" class="fishbone-required">{{ $manpower }}</textarea>
+                                                            </div>
+                                                        @endforeach
+                                                        @foreach ($fishbone_data['machine'] as $machine)
+                                                            <div>
+                                                                <textarea name="fishbone[machine][{{ $loop->index }}]" class="fishbone-required">{{ $machine }}</textarea>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                            </div>
+
                                             <div class="grid-field field-name">
                                                 <div>Mother Environment</div>
                                                 <div>Man</div>
@@ -11978,18 +12043,24 @@
                                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
-                                                        <td><input name="risk_factor[]" type="text"
-                                                                value="{{ $riskFactor }}"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        <td>
+                                                            <textarea name="risk_factor[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                {{ $riskFactor }}
+                                                            </textarea>
                                                         </td>
-                                                        <td><input name="problem_cause[]" type="text"
-                                                                value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+
+                                                        <td>
+                                                            <textarea name="problem_cause[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}
+                                                            </textarea>
                                                         </td>
-                                                        <td><input name="existing_risk_control[]" type="text"
-                                                                value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+
+                                                        <td>
+                                                            <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                {{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}
+                                                            </textarea>
                                                         </td>
+
                                                         <td>
                                                             <select onchange="calculateInitialResult(this)"
                                                                 class="fieldR" name="initial_severity[]"
@@ -12062,10 +12133,12 @@
                                                                 readonly
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                         </td>
-                                                        <td><input name="risk_control_measure[]" type="text"
-                                                                value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        <td>
+                                                            <textarea name="risk_control_measure[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                {{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}
+                                                            </textarea>
                                                         </td>
+
                                                         <td>
                                                             <select onchange="calculateResidualResult(this)"
                                                                 class="residual-fieldR" name="residual_severity[]"
@@ -12154,10 +12227,12 @@
                                                                     Y</option>
                                                             </select>
                                                         </td>
-                                                        <td><input name="mitigation_proposal[]" type="text"
-                                                                value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                        </td>
+                                                        <td>
+                                                                <textarea name="mitigation_proposal[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                    {{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}
+                                                                </textarea>
+                                                         </td>
+
                                                         <td> <button class="btn btn-dark removeBtn"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
                                                         </td>
@@ -12216,13 +12291,14 @@
                                 cell1.innerHTML = currentRowCount;
 
                                 var cell2 = newRow.insertCell(1);
-                                cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+                            cell2.innerHTML = "<textarea name='risk_factor[]'></textarea>";
 
-                                var cell4 = newRow.insertCell(2);
-                                cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+                            var cell4 = newRow.insertCell(2);
+                            cell4.innerHTML = "<textarea name='problem_cause[]'></textarea>";
 
-                                var cell5 = newRow.insertCell(3);
-                                cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+                            var cell5 = newRow.insertCell(3);
+                            cell5.innerHTML = "<textarea name='existing_risk_control[]'></textarea>";
+
 
                                 var cell6 = newRow.insertCell(4);
                                 cell6.innerHTML =
