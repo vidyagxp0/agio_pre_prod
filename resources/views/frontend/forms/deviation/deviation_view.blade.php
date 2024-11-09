@@ -9868,26 +9868,27 @@
                     </tr>
                 </thead>
                 <tbody>
-    @if (!empty($riskEffectAnalysis->risk_factor_1))
-        @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
-            <tr>
-                <td>{{ $key + 1 }}</td>
+                @if (!empty($riskEffectAnalysis->risk_factor_1))
+                   
+                    @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
                 <!-- <td><input name="risk_factor_1[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td> -->
 
                 <td>
                 <textarea name="risk_factor_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
                 </td>
                 <td>
-    <textarea name="problem_cause_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-        {{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}
-    </textarea>
-</td>
+                    <textarea name="problem_cause_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                        {{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}
+                    </textarea>
+                </td>
 
-<td>
-    <textarea name="existing_risk_control_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-        {{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}
-    </textarea>
-</td>
+                <td>
+                    <textarea name="existing_risk_control_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                        {{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}
+                    </textarea>
+                </td>
 
                 <td>
                     <select onchange="calculateInitialResult_1(this)" class="fieldR" name="initial_severity_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
@@ -9929,14 +9930,7 @@
                 <!-- Repeat for other fields as needed -->
 
 
-
-
-
-
-
-
-
-                <td>
+                         <td>
                                 <select onchange="calculateResidualResult(this)"
                                     class="residual-fieldR" name="residual_severity_1[]"
                                     {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
@@ -10039,37 +10033,41 @@
                                 </textarea>
                             </td>
 
-                          <td>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_{{ $key }}">
-                                    @if (!empty($riskEffectAnalysis['attachment']))
-                                        @foreach (json_decode($riskEffectAnalysis['attachment']) as $file)
-                                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                <b>{{ $file }}</b>
-                                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                </a>
-                                                <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                </a>
-                                            </h6>
-                                        @endforeach
-                                    @endif
+
+                            <td>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_{{ $key }}">
+                                        @if (!empty($riskEffectAnalysis['attachment']))
+                                            {{-- Decode the attachment JSON or unserialize it --}}
+                                            @php
+                                                $attachments = json_decode($riskEffectAnalysis['attachment'], true); // or unserialize($riskEffectAnalysis['attachment'])
+                                            @endphp
+
+                                            {{-- Check if there are files under the current key --}}
+                                            @if (!empty($attachments[$key]))
+                                                @foreach ($attachments[$key] as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
+                                    </div>
                                 </div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                  
-                                    <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
-                                </div>
-                            </div>
-                        </td>
-
-
-
-
-
-                <td><button class="btn btn-dark removeBtn" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button></td>
-            </tr>
+                                <td>
+                                <button type="button" class="btn btn-dark" onclick="removeRow(this)" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
+                            </td>
+                        </tr>
         @endforeach
     @endif
 </tbody>
@@ -10118,12 +10116,15 @@
 
     // Function to dynamically add a new row to the table
     function addRiskAssessmentdata_1(tableId) {
-        var table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
-        var currentRowCount = table.rows.length + 1;
-        var newRow = table.insertRow();
+        const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+        const rowCount = table.rows.length;
+        const newRow = table.insertRow();
+        
+
+        const currentRowId = `file_${rowCount}`;
 
         newRow.innerHTML = `
-            <td>${currentRowCount}</td>
+            <td>${rowCount + 1}</td>
             <td><textarea name='risk_factor_1[]' ></textarea></td>
             <td><textarea name='problem_cause_1[]' ></textarea></td>
             <td><textarea name='existing_risk_control_1[]'  ></textarea></td>
@@ -10203,30 +10204,32 @@
         <td><textarea name='conclusion[]' ></textarea></td>
      
 
+  <td>
+                <div class="file-attachment-field">
+                    <div class="file-attachment-list" id="${currentRowId}"></div>
+                    <div class="add-btn">
+                        <div>Add</div>
+                        <input type="file" name="attachment[${rowCount}][]" oninput="addMultipleFiles(this, '${currentRowId}')" multiple>
+                    </div>
+                </div>
+            </td>
+            <td><button type="button" class="btn btn-dark" onclick="removeRow(this)">Remove</button></td>
+    
+                `;
+            }
 
-<td>
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_{{ $key }}"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                  
-                                <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
-                            </div>
-                        </div>
-                    </td>
+            
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
 
-
-
-            <td><button class='btn btn-dark' onclick='removeRow(this)'>Remove</button></td>
-        `;
-    }
-
-    // Function to remove a row
-    function removeRow(button) {
-        var row = button.closest('tr');
-        row.remove();
-    }
-</script>
+            // Recalculate row numbers to keep them sequential
+            const tableRows = document.querySelectorAll('#risk-assessment-risk-management_2 tbody tr');
+            tableRows.forEach((row, index) => {
+                row.cells[0].innerText = index + 1;
+            });
+        }
+        </script>
 
                         <!-- Fishbone or Ishikawa Diagram Section -->
                         <div class="col-12 sub-head"></div>

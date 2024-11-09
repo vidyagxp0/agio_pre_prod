@@ -2213,39 +2213,38 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         $data8->conclusion = serialize($request->input('conclusion', []));
 
        
-        // if (!empty($request->attachment)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment')) {
-        //         foreach ($request->file('attachment') as $file) {
-        //             $name = 'attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move(public_path('upload'), $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $data8->attachment = json_encode($files);
-        // }
-    
-        if ($request->has('attachment')) {
-            $allFiles = []; // Initialize an empty array to collect all file names
         
-            foreach ($request->attachment as $key => $attachments) {
-                if (is_array($attachments)) {
-                    foreach ($attachments as $file) {
-                        if ($file instanceof \Illuminate\Http\UploadedFile) { 
-                            // Only handle actual file uploads
-                            $name = 'attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move(public_path('upload'), $name); 
-                            $allFiles[] = $name;
+    
+        $allAttachments = [];
+
+        // Loop through each attachment group (key) in the request
+        if ($request->has('attachment')) {
+            foreach ($request->attachment as $key => $files) {
+                $attachmentFiles = []; // Initialize an array to store files for the current key
+        
+                // Check if the files array is valid
+                if (is_array($files)) {
+                    foreach ($files as $file) {
+                        if ($file instanceof \Illuminate\Http\UploadedFile) {
+                            // Generate a unique name for the file
+                            $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            // Move the file to the upload directory
+                            $file->move(public_path('upload'), $name);
+                            // Add the file name to the array for the current key
+                            $attachmentFiles[] = $name;
                         }
                     }
                 }
-            }
         
-            $data8->attachment = json_encode($allFiles); // Store all file names as a JSON array
+                // Assign the array of files for the current key
+                $allAttachments[$key] = $attachmentFiles;
+            }
         }
-
-
-       // dd($data8) ;
+        
+        // Store the attachments array in the database (serialized or JSON format)
+        $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
+        
+       //dd($data8) ;
         $data8->save();
 
 
