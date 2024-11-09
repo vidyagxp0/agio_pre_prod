@@ -697,14 +697,14 @@
                                                     <th style="width: 25px;">S.No.</th>
                                                     <th>Action</th>
                                                     <th>Responsible</th>
-                                                    <th>Target Completion Date</th>
-                                                    <th>Action Status</th>
+                                                    <th>Deadline</th>
+                                                    <th>Item Status</th>
                                                     <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
+                                                </td>Deadline
                                                 <td><input type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
                                                 <td> <select id="select-state" placeholder="Select..."

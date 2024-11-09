@@ -602,7 +602,7 @@
                                 </div>
                             </div> --}}
 
-                            <div class="col-lg-4">
+                            <!-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Send for CQA By</label>
                                     <div class="static"></div>
@@ -619,7 +619,7 @@
                                     <label for="Rejected On">Send for CQA Comment</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-4">
                                 <div class="group-input">

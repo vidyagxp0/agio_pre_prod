@@ -1,7 +1,7 @@
 <div id="CCForm8" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-            OOS Conclusion
+            OOS/OOT Conclusion
         </div>
         <div class="row">
             <div class="col-md-12 mb-4">
@@ -97,7 +97,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Recores">OOS Stands </label>
+                    <label for="Reference Recores">OOS/OOT Stands </label>
                     <select name="oos_stands_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid

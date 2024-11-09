@@ -145,7 +145,7 @@
     .inner-block .block-head {
         font-weight: bold;
         font-size: 1.1rem;
-        padding-bottom: 5px;
+        padding-bottom: 7px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
         color: #4274da;
@@ -351,7 +351,7 @@
 
                         {{-- <div class="inner-block">
                             <label
-                                class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                                class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                                 Others</label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->initiated_if_other)
@@ -579,7 +579,7 @@
                 HOD Review
             </div>
             <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                     HOD Review Comment</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->hod_comments)
@@ -625,7 +625,7 @@
                 Initial QA/CQA Review       
             </div>
             <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                     Initial QA/CQA Review Comments
                 </label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -862,7 +862,7 @@
                 HOD Final Review
             </div>
             <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                     HOD Final Review Comments</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->hod_final_comments)
@@ -910,7 +910,7 @@
         QA/CQA Final Review
     </div>
     <div class="inner-block">
-        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
             QA/CQA Final Review Comments
 
 </label>
@@ -961,8 +961,8 @@
     </div>
     
     <div class="inner-block">
-        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-            QAH/CQAH/designee Final Approval Comments
+        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
+            QAH/CQAH/Designee Final Approval Comments
 
 </label>
         <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -975,7 +975,7 @@
     </div>
     <div class="border-table">
         <div class="block-head">
-            QAH/CQAH/designee Final Approval Attachments
+            QAH/CQAH/Designee Final Approval Attachments
 
         </div>
         <table>
@@ -1009,7 +1009,7 @@
 
                 {{-- <div class="inner-block">
                     <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Root Cause Methodology </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->root_cause_methodology)
@@ -1021,7 +1021,7 @@
                 </div>
                 <div class="inner-block">
                     <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Root Cause Description</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->root_cause_description)
@@ -1033,7 +1033,7 @@
                 </div>
                 <div class="inner-block">
                     <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Investigation Summary</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->investigation_summary)
@@ -1101,122 +1101,109 @@ Not Applicable
 
                     </table>
                 </div> --}} 
+                <style>
+                    .table {
+                        width: 100%;
+                        font-size: 7px;
+                        /* font-weight: 100!important; */
+                    }
+            
+                    .th,
+                    .td {
+                        border: 1px solid black;
+                        padding: 1px;
+                        word-wrap: break-word;
+                        text-align: center;
+                        
+                    }
+            
+                    /* Rotate table by flipping headers and rows */
+                    .rotated-table {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        transform: rotate(-90deg);
+                        transform-origin: left top 0;
+                    }
+            
+                    .rotated-table table {
+                        transform: rotate(90deg);
+                        /* Rotate inner table content back to normal */
+                    }
+                </style>
 
                 <div class="border-table  tbl-bottum">
                     <div class="block-head">
                         Failure Mode and Effect Analysis
                     </div>
-                    <table>
+                    <table class="table">
+                        <thead>
+                            <tr class="table_bg tr">
+                                <th class="th" style="font-size: 7px" rowspan="2">Row #</th>
+                                <th class="th" style="font-size: 7px" colspan="2">Risk Identification</th>
+                                <th class="th"  style="font-size: 7px" colspan="1">Risk Analysis</th>
+                                <th class="th" style="font-size: 7px" colspan="4">Risk Evaluation</th>
+                                <th class="th"  style="font-size: 7px"colspan="1">Risk Control</th>
+                                <th class="th" style="font-size: 7px" colspan="6">Risk Evaluation</th>
+                                <th class="th" style="font-size: 7px"></th>
+                
+                            </tr>
+                            <tr class="table_bg tr">
+                                <th  style="font-size: 7px" class="th">Activity</th>
+                                <th style="font-size: 7px" class="th">Possible Risk/Failure (Identified Risk)</th>
+                                <th style="font-size: 7px" class="th">Consequences of Risk/Potential Causes</th>
+                                <th style="font-size: 7px" class="rotate th">Severity (S)</th>
+                                <th style="font-size: 7px" class="rotate  th">Probability (P)</th>
+                                <th style="font-size: 7px" class="rotate th">Detection (D)</th>
+                                <th style="font-size: 7px" class="rotate th">RPN</th>
+                                <th style="font-size: 7px" class="th">Control Measures recommended/ Risk mitigation proposed</th>
+                                <th style="font-size: 7px" class="rotate th">Severity (S)</th>
+                                <th style="font-size: 7px" class="rotate th">Probability (P)</th>
+                                <th style="font-size: 7px" class="rotate th">Detection (D)</th>
+                                <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
+                                <th style="font-size: 7px">Category of Risk Level (Low, Medium, High)</th>
+                                <th style="font-size: 7px">Risk Acceptance (Y/N)</th>
+                                <th style="font-size: 7px">Traceability Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-30">Activity</th>
-                            <th class="w-30">Possible Risk/Failure (Identified Risk)</th>
-                            <th class="w-30">Consequences of Risk/Potential Causes</th>
-                            {{-- <th class="w-30">Existing Risk Controls</th> --}}
-                        </tr>
-                        {{-- @if ($data->root_cause_initial_attachment)
-                                @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else --}}
-                        @if (!empty($data->risk_factor))
+                            @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                <tr>
-                                    <td class="w-10">{{ $key + 1 }}</td>
-                                    <td class="w-30">{{ $riskFactor }}</td>
-                                    <td class="w-30">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
-                                    <td class="w-30">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
-                                    {{-- <td class="w-30">{{ unserialize($data->existing_risk_control)[$key] ?? null }} --}}
-                                    </td>
+                                <tr class="tr">
+                                    <td style="font-size: 7px"  class="td">{{ $key + 1 }}</td>
+                                    <td style="font-size: 7px" class="td">{{ $riskFactor }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_severity)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_detectability)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_probability)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_rpn)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_control_measure)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_severity)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_probability)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_detectability)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_rpn)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
+                                    <td style="font-size: 7px" class="td">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
+                                    
                                 </tr>
                             @endforeach
-                        @else
-                        @endif
+                            @else
+                            @endif
 
+                        </tbody>
                     </table>
 
                 </div>
-                <div class="border-table  tbl-bottum">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-30">Severity (S)</th>
-                            <th class="w-30">Probability (P)</th>
-                            <th class="w-30">Detection (D)</th>
-                            <th class="w-30">RPN</th>
-                        </tr>
-                        @if (!empty($data->risk_factor))
-                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                <tr>
-                                    <td class="w-10">{{ $key + 1 }}</td>
-                                    <td class="w-30">{{ unserialize($data->initial_severity)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->initial_detectability)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->initial_probability)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->initial_rpn)[$key] }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                        @endif
-                    </table>
-                </div>
-                <div class="border-table  tbl-bottum">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            {{-- <th class="w-30">Risk Acceptance (Y/N)</th> --}}
-                            <th class="w-30">Control Measures recommended/ Risk mitigation proposed</th>
-                            <th class="w-30">Severity (S)</th>
-                            <th class="w-30">Probability (P)</th>
-                        </tr>
-                        @if (!empty($data->risk_factor))
-                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                <tr>
-                                    <td class="w-10">{{ $key + 1 }}</td>
-                                    {{-- <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}</td> --}}
-                                    <td class="w-30">{{ unserialize($data->risk_control_measure)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->residual_severity)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->residual_probability)[$key] }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                        @endif
-                    </table>
-                </div>
-                <div class="border-table  tbl-bottum">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-30">Detection (D)</th>
-                            <th class="w-30">Risk Level (RPN)</th>
-                            <th class="w-30">Category of Risk Level (Low, Medium and High)</th>
-                            <th class="w-30">Risk Acceptance (Y/N)</th>
-                            <th class="w-30">Traceability document </th>
-                        </tr>
-                        @if (!empty($data->risk_factor))
-                            @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                <tr>
-                                    <td class="w-10">{{ $key + 1 }}</td>
-                                    <td class="w-30">{{ unserialize($data->residual_detectability)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->residual_rpn)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->risk_acceptance)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
-                                    <td class="w-30">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                        @endif
-                    </table>
-                </div>
+               
 
                 <div class="block-head">
                     Fishbone or Ishikawa Diagram
                 </div>
                 <table>
-                    - <tr>
+                     <tr>
                         <th class="w-20">Measurement</th>
                         {{-- <td class="w-80">@if ($riskgrdfishbone->measurement){{ $riskgrdfishbone->measurement }}@else Not Applicable @endif</td> --}}
                         <td class="w-80">
@@ -1329,7 +1316,7 @@ Not Applicable
                 </table>
                 <div class="inner-block">
                     <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Problem Statement</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->problem_statement)
@@ -1376,7 +1363,7 @@ Not Applicable
 
                 <div class="inner-block">
                     <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Problem Statement</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->why_problem_statement)
@@ -1493,7 +1480,7 @@ Not Applicable
 
                 <div class="inner-block">
                     <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                         Root Cause :</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->why_root_cause)
@@ -2095,7 +2082,7 @@ Not Applicable
                 QA/CQA Final Review
             </div>
             <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                     QA/CQA Final Review Comments</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->qa_final_comments)
@@ -2140,7 +2127,7 @@ Not Applicable
                 QAH/CQAH Final Review
             </div>
             <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
                     QAH/CQAH Final Review Comments</label>
                 <span style="font-size: 0.8rem; margin-left: 60px;">
                     @if ($data->qah_final_comments)

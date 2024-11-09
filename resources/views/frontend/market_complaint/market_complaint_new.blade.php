@@ -189,7 +189,7 @@
 
             </div>
 
-            <form action="{{ route('marketcomplaint.mcstore') }}" method="POST" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('marketcomplaint.mcstore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
@@ -588,7 +588,7 @@
                                             Product Details
                                             <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_complaint"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -778,7 +778,7 @@
                                             Traceability
                                             <button type="button" id="traceblity_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_Traceability"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1008,7 +1008,7 @@
                                             Report Review (Final Review shall be done after QA Verification)
                                             <button type="button" id="team_members_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportReview"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1028,30 +1028,39 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
-                                                            value="1">
+                                                    <td>
+                                                        <input disabled type="text" name="Team_Members[0][serial]" value="1">
                                                     </td>
-                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][designation]"></td>
-                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][names_tm]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][designation]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][department_tm]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Team_Members[0][sign_tm]">
+                                                    </td>
                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
-                                                                    <input id="date_0_date_tm" type="text"
+                                                                    <input id="display_date_0_tm" type="text"
                                                                         name="Team_Members[0][date_tm]"
                                                                         placeholder="DD-MMM-YYYY" />
                                                                     <input type="date" name="Team_Members[0][date_tm]"
                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        value="" id="date_0_date_tm"
+                                                                        value="" id="input_date_0_tm"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                        oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                                        oninput="handleDateInput(this, 'display_date_0_tm')" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
+
 
                                                     {{-- <td>
                                                         <div class="new-date-data-field">
@@ -1123,7 +1132,7 @@
                                             Verification)
                                             <button type="button" id="add_report_approval_row">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportApproval"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1224,7 +1233,7 @@
                                 </script>
 
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button"> <a class="text-white"
@@ -1279,7 +1288,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" id="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1301,7 +1310,7 @@
                                             Investigation Team
                                             <button type="button" id="investigation_team_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1482,7 +1491,7 @@
                                             Brain Storming Session/Discussion With Concerned Person
                                             <button type="button" id="brain_storming_add">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
+                                                data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -1720,7 +1729,7 @@
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1754,7 +1763,7 @@
                                         Product/Material Details
                                         <button type="button" id="promate_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
+                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -1792,8 +1801,8 @@
                                                                         readonly placeholder="DD-MMM-YYYY" />
                                                                     <input type="date"
                                                                         name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                                        min="{{ today()->subDays(1000)->format('Y-m-d') }}"
-                                                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        {{-- min="{{ today()->subDays(1000)->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                         oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
@@ -1862,7 +1871,7 @@
                                                 '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
                                                 '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
                                                 '<input type="date" name="Product_MaterialDetails[' + productserialno +
-                                                '][mfg_date_pmd_ca]" readonly min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
+                                                '][mfg_date_pmd_ca]" min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
                                                 productserialno +
                                                 '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
                                                 productserialno + '_mfg_date_pmd_ca\')"/>' +
@@ -2408,7 +2417,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -4541,7 +4550,7 @@
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton"
                                 style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                class="saveButton">Save</button>
+                                class="saveButton on-submit-disable-button">Save</button>
                             {{-- <a href="/rcms/qms-dashboard"
                         style=" justify-content: center; width: 4rem; margin-left: 1px;">
                         <button type="button" class="backButton">Back</button>
@@ -4663,7 +4672,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Send to CFT By :</label>
+                                    <label for="Initiator Group">Send to CFT Review By :</label>
                                     Not Applicable
 
                                     <div class="static"></div>
@@ -4673,7 +4682,7 @@
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send to CFT On :</label>
+                                    <label for="OOC Logged On">Send to CFT Review On :</label>
                                     Not Applicable
 
                                     <div class="date"></div>
@@ -4681,7 +4690,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Comment">Send to CFT Comment</label>
+                                    <label for="Comment">Send to CFT Review Comment</label>
                                     Not Applicable
 
                                     <div class="static"></div>
@@ -4824,7 +4833,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -4871,7 +4880,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton" id="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -4918,7 +4927,7 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -5157,6 +5166,14 @@
                 displayInput.value = '';
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        });
     </script>
 
     {{-- <script>

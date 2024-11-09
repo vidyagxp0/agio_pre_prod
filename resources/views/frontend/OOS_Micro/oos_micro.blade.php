@@ -2109,7 +2109,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Reference Recores">OOS Stands </label>
+                                <label for="Reference Recores">OOS/OOT Stands </label>
                                 <select name="oos_stands_oosc">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="valid">Valid</option>

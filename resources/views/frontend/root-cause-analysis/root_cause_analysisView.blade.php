@@ -2051,7 +2051,7 @@
                                                                             value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}"
                                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                     </td>
-                                                                    <td> <button class="btn btn-dark removeBtn"
+                                                                    <td> <button class=" btn-dark removeRowBtn"
                                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button>
                                                                     </td>
                                                                 </tr>
@@ -2691,14 +2691,14 @@
                                         @if ($data->stage == 7)
 
                                            <div class="group-input">
-                                               <label for="comments" >QAH/CQAH/designee Final Approval Comments <span
+                                               <label for="comments" >QAH/CQAH/Designee Final Approval Comments <span
                                                    class="text-danger">*</span></label>
                                                <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
                                            
                                          @else
                                            <div class="group-input">
-                                               <label for="comments">QAH/CQAH/designee Final Approval Comments</label>
+                                               <label for="comments">QAH/CQAH/Designee Final Approval Comments</label>
                                                <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
                                        @endif
@@ -3531,7 +3531,7 @@
             cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
 
             var cell17 = newRow.insertCell(16);
-            cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+            cell17.innerHTML = "<button type='text'  class='removeRowBtn  btn-dark' name='Action[]' readonly>Remove</button>";
 
             for (var i = 0; i < currentRowCount-1; i++) {
                 var row = table.children[1].rows[i];

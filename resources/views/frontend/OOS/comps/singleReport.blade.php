@@ -411,31 +411,29 @@
                             <th style="width: 8%"> Label Claim.</th>
                             <th style="width: 8%">Pack Size</th>
                         </tr>
-                        @if($data->info_product_materials)
-                        @foreach ($data->info_product_materials->data as $key => $datagridI)
-                        <tr>
-                            <td class="w-15">{{ $datagridI ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-15">{{ $datagridI['info_product_code'] ?  $datagridI['info_product_code']: "Not Applicable"}}</td>
-
-                            <td class="w-15">{{ $datagridI['info_batch_no'] ?  $datagridI['info_batch_no']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_mfg_date'] ?  Helpers::getdateFormat($datagridI['info_mfg_date'] ?? ''): "Not Applicable" }}</td>
-                            <td class="w-15">{{ $datagridI['info_expiry_date'] ?  Helpers::getdateFormat($datagridI['info_expiry_date'] ?? ''): "Not Applicable" }}</td>
-                            <td class="w-15">{{ $datagridI['info_label_claim'] ?  $datagridI['info_label_claim']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_pack_size'] ?  $datagridI['info_pack_size']: "Not Applicable"}}</td>
-                        </tr>
-                        @endforeach
+                        @if($data->info_product_materials && is_array($data->info_product_materials->data))
+                            @foreach ($data->info_product_materials->data as $key => $datagridI)
+                                <tr>
+                                    <td class="w-15">{{ $datagridI ? $key + 1  : "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_analyst_name'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_others_specify'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_process_sample_stage'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_packing_material_type'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_stability_for'] ?? "Not Applicable" }}</td>
+                                </tr>
+                            @endforeach
                         @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
                         @endif
+
                     </table>
                 </div>
             </div>
@@ -451,25 +449,28 @@
                             <th style="width: 12% pt-3">Packing Material Type</th>
                             <th style="width: 16% pt-2"> Stability for</th>
                         </tr>
-                        @if($data->info_product_materials)
-                        @foreach ($data->info_product_materials->data as $key => $datagridI)
-                        <tr>
-                            <td class="w-15">{{ $datagridI ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-15">{{ $datagridI['info_analyst_name'] ?  $datagridI['info_analyst_name']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_others_specify'] ?  $datagridI['info_others_specify']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_process_sample_stage'] ?  $datagridI['info_process_sample_stage']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_packing_material_type'] ?  $datagridI['info_packing_material_type']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_stability_for'] ?  $datagridI['info_stability_for']: "Not Applicable"}}</td>
-                         </tr>
-                        @endforeach
+                        @if(isset($data->info_product_materials) && isset($data->info_product_materials->data) && is_array($data->info_product_materials->data))
+                            @foreach ($data->info_product_materials->data as $key => $datagridI)
+                                <tr>
+                                    <td class="w-15">{{ $datagridI ? $key + 1 : "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_analyst_name'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_others_specify'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_process_sample_stage'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_packing_material_type'] ?? "Not Applicable" }}</td>
+                                    <td class="w-15">{{ $datagridI['info_stability_for'] ?? "Not Applicable" }}</td>
+                                </tr>
+                            @endforeach
                         @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
                         @endif
+
                     </table>
                  </div>
                 </div>
@@ -498,6 +499,7 @@
                         @endforeach
                         @else
                         <tr>
+                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -532,10 +534,6 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
                         </tr>
                         @endif
                     </table>
@@ -552,8 +550,9 @@
                                 <th style="width: 8%">Test Name of OOS/OOT</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <!-- <th style="width: 16%">File Attachment</th> -->
+                                <th style="width: 16%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
+                                <th style="width: 16%">Submit By</th>
                         </tr>
                         @if(($data->oos_details) && is_array($data->oos_details->data))
                         @foreach ($data->oos_details->data as $key => $datagridIII)
@@ -563,7 +562,16 @@
                             <td class="w-15">{{ $datagridIII['oos_test_name'] ?  $datagridIII['oos_test_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
+                            <td class="w-15">
+                                {{ isset($datagridIII['oos_file_attachment']) && is_array($datagridIII['oos_file_attachment']) 
+                                    ? implode(', ', $datagridIII['oos_file_attachment']) 
+                                    : ($datagridIII['oos_file_attachment'] ?? "Not Applicable") 
+                                }}
+                            </td>
+
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
+                            </td>
+                            <td class="w-15">{{ $datagridIII['oos_submit_by'] ?  Helpers::getInitiatorName($datagridIII['oos_submit_by'] ?? ''): "Not Applicable" }}
                             </td>
                         </tr>
                         @endforeach
@@ -663,7 +671,7 @@
            <div class="block">
             <div class="block-head">HOD Primary Review</div>
             <div class = "inner-block">
-                <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">HOD Remark</label>
+                <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">HOD Remarks</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->hod_remark1 ){{ $data->hod_remark1 }} @else Not Applicable @endif</span>
             </div>
            </div>
@@ -768,6 +776,21 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Workbench Evaluation</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->Comments_plidata ){{ $data->Comments_plidata }} @else Not Applicable @endif</span>
                 </div>
+
+
+                <div class="inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Checklists</label>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        @if($data->checklists)
+                            {{ is_array($data->checklists) ? implode(', ', $data->checklists) : $data->checklists }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </span>
+                </div>
+
+
+
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Checklist Outcome</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->justify_if_no_field_alert_pli ){{ $data->justify_if_no_field_alert_pli }} @else Not Applicable @endif</span>
@@ -867,10 +890,18 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Results Of Retest/Re-Measurement</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->Description_Deviation ){{ $data->Description_Deviation }} @else Not Applicable @endif</span>
                 </div>
+
+
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Results Of Repeat Testing</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->result_of_repeat ){{ $data->result_of_repeat }} @else Not Applicable @endif</span>
                 </div>
+
+
+                <!-- <div class = "inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Results Of Repeat Testing</label>
+                    <span style="font-size:0.8rem; margin-left:10px">@if($data->result_of_repeat ){{ $data->result_of_repeat }} @else Not Applicable @endif</span>
+                </div> -->
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Impact Assessment</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->impact_assesment_pia ){{ $data->impact_assesment_pia }} @else Not Applicable @endif</span>
@@ -1113,12 +1144,21 @@
               <div class="block">
                 <div class="block-head">Phase IA CQAH/QAH Review</div>
                 <div class = "inner-block">
-                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-IA CQAH/QAH Remark</label>
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Phase IA CQAH/QAH Remark</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->QA_Head_primary_remark2 ){{ $data->QA_Head_primary_remark2 }} @else Not Applicable @endif</span>
                 </div>
               </div>
+
               <div class="block">
-                <div class="block-head">P-IA CQAH/QAH Attachment</div>
+                <div class = "inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Phase IA Assignable Cause Found</label>
+                    <span style="font-size:0.8rem; margin-left:10px">@if($data->assign_cause_found ){{ $data->assign_cause_found }} @else Not Applicable @endif</span>
+              </div>
+
+
+
+              <div class="block">
+                <div class="block-head">Phase IA CQAH/QAH Attachment</div>
                 <div class="border-table">
                   <table>
                       <tr class="table_bg">
@@ -1161,6 +1201,13 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Probable Cause Identification</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->Probable_cause_iden ){{ $data->Probable_cause_iden }} @else Not Applicable @endif</span>
                 </div>
+
+                <div class = "inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Proposal For Phase IB hypothesis</label>
+                    <span style="font-size:0.8rem; margin-left:10px">@if($data->proposal_for_hypothesis_IB ){{ $data->proposal_for_hypothesis_IB }} @else Not Applicable @endif</span>
+                </div>
+
+
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Others</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->proposal_for_hypothesis_others ){{ $data->proposal_for_hypothesis_others }} @else Not Applicable @endif</span>
@@ -1264,6 +1311,31 @@
                 <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Conclusion</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->Conclusion1 ){{ $data->Conclusion1 }} @else Not Applicable @endif</span>
               </div>
+              </div>
+
+              <div class="block">
+                <div class="block-head">File Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->file_attachment_IB_Inv)
+                                @foreach ($data->file_attachment_IB_Inv as $key => $file)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
               </div>
 
                {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
@@ -1609,6 +1681,12 @@
 
                <div class="block">
                 <div class="block-head">P-II A QAH/CQAH Review</div>
+                
+                <div class = "inner-block">
+                    <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Phase II A Assinable Cause Found</label>
+                    <span style="font-size:0.8rem; margin-left:10px">@if($data->phase_ii_a_assi_cause ){{ $data->phase_ii_a_assi_cause }} @else Not Applicable @endif</span>
+                </div>
+                
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-II A QAH/CQAH Remark</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->QA_Head_primary_remark4 ){{ $data->QA_Head_primary_remark4 }} @else Not Applicable @endif</span>

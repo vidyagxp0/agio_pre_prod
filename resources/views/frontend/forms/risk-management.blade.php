@@ -309,14 +309,25 @@
                                     </div>
 
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            {{-- <input id="docname" type="text" name="short_description" maxlength="255" required> --}}
                                             <input name="short_description" id="short_description"></input>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Short Description">Short Description<span
+                                                    class="text-danger">*</span></label><span id="rchars">255</span>
+                                            Characters remaining
+                                            <input id="docname" type="text" name="short_description" maxlength="255"
+                                                required>
+                                        </div>
+                                        @error('short_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
@@ -398,50 +409,50 @@
                                     </script>
 
 
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Type..">Type</label>
+        <select name="type" id="type">
+            <option value="">Enter Your Selection Here</option>
+            <option value="Business Risk">Business Risk</option>
+            <option value="Customer Related">Customer-Related Risk (Complaint)</option>
+            <option value="Opportunity">Opportunity</option>
+            <option value="Market">Market</option>
+            <option value="Operational Risk">Operational Risk</option>
+            <option value="Strategic Risk">Strategic Risk</option>
+            <option value="Other Data">Other</option> <!-- Ensure the value matches here -->
+        </select>
+    </div>
+</div>
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Type..">Type</label>
-                                            <select name="type" id="type">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="Business Risk">Business Risk</option>
-                                                <option value="Customer Related">Customer-Related Risk (Complaint)</option>
-                                                <option value="Opportunity">Opportunity</option>
-                                                <option value="Market">Market</option>
-                                                <option value="Operational Risk">Operational Risk</option>
-                                                <option value="Strategic Risk">Strategic Risk</option>
-                                                <option value="Other Data">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
+<div id="typeOfError" class="group-input col-6" style="display: none;">
+    <label for="otherFieldsUser">Other (Type)</label>
+    <input type="text" name="other_type" class="form-control"/>
+</div>
 
-                                    <div id="typeOfError" class="group-input col-6" style="display: none;">
-                                        <label for="otherFieldsUser">Other (Type)</label>
-                                        <input type="text" name="other_type" class="form-control" />
-                                    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initially hide the field
+        $('#typeOfError').hide();
 
-                                    <script>
-                                        $(document).ready(function() {
-                                            // Initially hide the field
-                                            $('#typeOfError').hide();
+        $('select[name=type]').change(function() {
+            const selectedVal = $(this).val();
+            if (selectedVal === 'Other Data') { // Match this value with the option value
+                $('#typeOfError').show();
+            } else {
+                $('#typeOfError').hide();
+            }
+        });
 
-                                            $('select[name=type]').change(function() {
-                                                const selectedVal = $(this).val();
-                                                if (selectedVal === 'Other_data') {
-                                                    $('#typeOfError').show();
-                                                } else {
-                                                    $('#typeOfError').hide();
-                                                }
-                                            });
+        // Optionally, check the current value when the page loads in case of form errors
+        if ($('select[name=type]').val() === 'Other Data') { // Correct the value check
+            $('#typeOfError').show();
+        }
+    });
+</script>
 
-                                            // Optionally, check the current value when the page loads in case of form errors
-                                            if ($('select[name=type]').val() === 'Other_data') {
-                                                $('#typeOfError').show();
-                                            }
-                                        });
-                                    </script>
 
                                     {{-- <script>
                                         $(document).ready(function() {
@@ -580,7 +591,7 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Initial Attachment</label>
+                                            <label for="CAPA Attachments">Initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -622,7 +633,7 @@
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect
                                                     Analysis</option>
-                                                <option value="Other Detail">Other</option>
+                                                <option value="Other Detail">Other</option> <!-- Ensure the value matches -->
                                             </select>
                                         </div>
                                     </div>
@@ -641,7 +652,7 @@
                                             // Function to check the current value of the select and toggle the input field
                                             function toggleOtherField() {
                                                 const selectedVals = $('#root-cause-methodology').val();
-                                                if (selectedVals && selectedVals.includes('Other_Detail')) {
+                                                if (selectedVals && selectedVals.includes('Other Detail')) { // Correct value check here
                                                     $('#rootCause').show();
                                                 } else {
                                                     $('#rootCause').hide();
@@ -657,6 +668,7 @@
                                             toggleOtherField();
                                         });
                                     </script>
+
 
 
                                     <div class="col-12 mb-4 "id="fmea-section" style="display:none;">
@@ -1196,12 +1208,12 @@
                                             <textarea class="summernote Production_Table_Assessment" name="Production_Table_Assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 productionTable">
+                                    {{-- <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback</label>
                                             <textarea class="summernote Production_Table_Feedback" name="Production_Table_Feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
@@ -1303,14 +1315,14 @@
                                                 id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 productionInjection">
+                                    {{-- <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection feedback">Production Injection Feedback (By
                                                 Production
                                                 Injection) </label>
                                             <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection attachment">Production Injection
@@ -1414,13 +1426,13 @@
                                             <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 researchDevelopment">
+                                    {{-- <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
                                             <label for="Research Development feedback">Research & Development
                                                 Feedback</label>
                                             <textarea class="summernote ResearchDevelopment_feedback" name="ResearchDevelopment_feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 researchDevelopment">
                                         <div class="group-input">
                                             <label for="Research Development attachment">Research & Development
@@ -1516,12 +1528,12 @@
                                             <textarea class="" name="Human_Resource_assessment" id="summernote-35"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 human_resources">
+                                    {{-- <div class="col-md-12 mb-3 human_resources">
                                         <div class="group-input">
                                             <label for="productionfeedback">Human Resource Feedback</label>
                                             <textarea class="" name="Human_Resource_feedback" id="summernote-36"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 human_resources">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Human Resource
@@ -1636,14 +1648,14 @@
                                                 id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 CQA">
+                                    {{-- <div class="col-md-12 mb-3 CQA">
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance
                                                 Feedback</label>
                                             <textarea class="summernote CorporateQualityAssurance_feedback" name="CorporateQualityAssurance_feedback"
                                                 id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 CQA">
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance
@@ -1746,12 +1758,12 @@
                                             <textarea class="summernote Store_assessment" name="Store_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 store">
+                                    {{-- <div class="col-md-12 mb-3 store">
                                         <div class="group-input">
                                             <label for="Store feedback">Store Feedback</label>
                                             <textarea class="summernote Store_feedback" name="Store_feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 store">
                                         <div class="group-input">
                                             <label for="Store attachment">Store Attachments</label>
@@ -1843,7 +1855,7 @@
                                     </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 engineering">
+                                    {{-- <div class="col-md-12 mb-3 engineering">
                                         <div class="group-input">
                                             <label for="productionfeedback">Engineering Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -1852,7 +1864,7 @@
                                             <textarea class="" name="Engineering_feedback" id="summernote-26">
                                     </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 engineering">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Engineering Attachments</label>
@@ -1969,12 +1981,12 @@
                                             <textarea class="summernote RegulatoryAffair_assessment" name="RegulatoryAffair_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 RegulatoryAffair">
+                                    {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
                                             <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
                                             <textarea class="summernote RegulatoryAffair_feedback" name="RegulatoryAffair_feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 RegulatoryAffair">
                                         <div class="group-input">
                                             <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -2072,7 +2084,7 @@
                                     </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 quality_assurance">
+                                    {{-- <div class="col-md-12 mb-3 quality_assurance">
                                         <div class="group-input">
                                             <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2081,7 +2093,7 @@
                                             <textarea class="" name="QualityAssurance_feedback" id="summernote-24">
                                     </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 quality_assurance">
                                         <div class="group-input">
                                             <label for="Quality Assurance Attachments">Quality Assurance
@@ -2188,13 +2200,13 @@
                                             <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 productionLiquid">
+                                    {{-- <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
                                             <label for="Production Liquid feedback">Production Liquid/External Preparation
                                                 Feedback</label>
                                             <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 productionLiquid">
                                         <div class="group-input">
                                             <label for="Production Liquid attachment">Production Liquid/External
@@ -2399,12 +2411,12 @@
                                             <textarea class="summernote Microbiology_assessment" name="Microbiology_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 Microbiology">
+                                    {{-- <div class="col-md-12 mb-3 Microbiology">
                                         <div class="group-input">
                                             <label for="Microbiology feedback">Microbiology Feedback</label>
                                             <textarea class="summernote Microbiology_feedback" name="Microbiology_feedback" id="summernote-18"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 Microbiology">
                                         <div class="group-input">
                                             <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -2500,13 +2512,13 @@
                                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 environmental_health">
+                                    {{-- <div class="col-md-12 mb-3 environmental_health">
                                         <div class="group-input">
                                             <label for="productionfeedback">Safety Feedback</label>
                                             <textarea class="" name="Health_Safety_feedback" id="summernote-34">
                                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 environmental_health">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Safety Attachments</label>
@@ -2741,13 +2753,13 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 other1_reviews">
+                                    {{-- <div class="col-md-12 mb-3 other1_reviews">
                                         <div class="group-input">
                                             <label for="productionfeedback"> Other's 1 Feedback</label>
                                             <textarea class="" name="Other1_feedback" id="summernote-42">
                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 other1_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 1 Attachments</label>
@@ -2870,13 +2882,13 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 Other2_reviews">
+                                    {{-- <div class="col-md-12 mb-3 Other2_reviews">
                                         <div class="group-input">
                                             <label for="Feedback2"> Other's 2 Feedback</label>
                                             <textarea class="" name="Other2_feedback" id="summernote-44">
                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 Other2_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 2 Attachments</label>
@@ -3001,13 +3013,13 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 Other3_reviews">
+                                    {{-- <div class="col-md-12 mb-3 Other3_reviews">
                                         <div class="group-input">
                                             <label for="productionfeedback"> Other's 3 Feedback</label>
                                             <textarea class="" name="Other3_feedback" id="summernote-46">
                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 Other3_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 3 Attachments</label>
@@ -3132,13 +3144,13 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 Other4_reviews">
+                                    {{-- <div class="col-md-12 mb-3 Other4_reviews">
                                         <div class="group-input">
                                             <label for="feedback4"> Other's 4 Feedback</label>
                                             <textarea class="" name="Other4_feedback" id="summernote-48">
                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 Other4_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 4 Attachments</label>
@@ -3264,13 +3276,13 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 Other5_reviews">
+                                    {{-- <div class="col-md-12 mb-3 Other5_reviews">
                                         <div class="group-input">
                                             <label for="productionfeedback"> Other's 5 Feedback</label>
                                             <textarea class="" name="Other5_feedback" id="summernote-50">
                                         </textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12 Other5_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 5 Attachments</label>

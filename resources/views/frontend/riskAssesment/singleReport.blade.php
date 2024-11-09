@@ -267,15 +267,19 @@
                     </tr> --}}
 
                 </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            @if ($data->short_description)
+                            {{ $data->short_description }}
+                        @else
+                            Not Applicable
+                        @endif
+                        </td>
+                    </tr>
+                </table>
 
-                <label class="head-number" for="Short Description">Short Description</label>
-                <div class="div-data">
-                    @if ($data->short_description)
-                        {{ $data->short_description }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
 
                 <table>
                     <tr>
@@ -384,12 +388,12 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Initial Attachment
+                    Initial Attachments
                 </div>
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">File No.</th>
                     </tr>
                     @if ($data->risk_attachment)
                         @foreach (json_decode($data->risk_attachment) as $key => $file)
@@ -567,12 +571,12 @@
 
             {{-- <div class="border-table">
                     <div class="block-head">
-                        Work Group Attachments
+                        Work Group Attachmentss
                     </div>
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No</th>
                         </tr>
                         @if ($data->reference)
                             @foreach (json_decode($data->reference) as $key => $file)
@@ -592,7 +596,7 @@
 
 
             <div class="block">
-                <div class="block-head">Risk Assesment</div>
+                <div class="block-head">Risk Assessment</div>
 
                 <label class="head-number" for="Root Cause Methodology">Root Cause Methodology</label>
                 <div class="div-data">
@@ -605,8 +609,8 @@
 
                 <label class="head-number" for="Other (Root Cause Methodology)">Other (Root Cause Methodology)</label>
                 <div class="div-data">
-                    @if ($data->root_cause_methodology)
-                        {{ $data->root_cause_methodology }}
+                    @if ($data->other_root_cause_methodology)
+                        {{ $data->other_root_cause_methodology }}
                     @else
                         Not Applicable
                     @endif
@@ -637,14 +641,116 @@
                     </tr>
                 </table> --}}
 
-                <div class="block-head"> Failure Mode And Effect Analysis </div>
+                {{-- <div class="block-head"> Failure Mode And Effect Analysis </div> --}}
 
+                <style>
+                    .tableFMEA {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 7px;
+                        table-layout: fixed; /* Ensures columns are evenly distributed */
+                    }
+
+                    .thFMEA,
+                    .tdFMEA {
+                        border: 1px solid black;
+                        padding: 5px;
+                        word-wrap: break-word;
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 6px; /* Apply the same font size for all cells */
+                    }
+
+                    /* Rotating specific headers */
+                    .rotate {
+                        transform: rotate(-90deg);
+                        white-space: nowrap;
+                        width: 10px;
+                        height: 100px;
+                    }
+
+                    /* Ensure the "Traceability Document" column fits */
+                    .tdFMEA:last-child,
+                    .thFMEA:last-child {
+                        width: 80px; /* Allocate more space for "Traceability Document" */
+                    }
+
+                    /* Adjust for smaller screens to fit */
+                    @media (max-width: 1200px) {
+                        .tdFMEA:last-child,
+                        .thFMEA:last-child {
+                            font-size: 6px;
+                            width: 70px; /* Shrink width further for smaller screens */
+                        }
+                    }
+
+                </style>
+
+                <div class="block-head">Failure Mode And Effect Analysis</div>
+                            <div class="table-responsive">
+                            <table class="tableFMEA">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th class="thFMEA" rowspan="2">Row #</th>
+                                        <th class="thFMEA" colspan="2">Risk Identification</th>
+                                        <th class="thFMEA" rowspan="2">Risk Analysis</th>
+                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="2">RPN</th>
+                                        <th class="thFMEA" colspan="2">Risk Control</th>
+                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="2">Risk Level</th>
+                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
+                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                    </tr>
+                                    <tr class="table_bg">
+                                        <th class="thFMEA">Activity</th>
+                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Control Measures</th>
+                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                            <tr>
+                                                <td class="tdFMEA">{{ $key + 1 }}</td>
+                                                <td class="tdFMEA">{{ $riskFactor }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
+                                            </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="3">No data available.</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
 
 
                 <!-------------------- new data -->
 
 
-               <div class="border-table">
+               {{-- <div class="border-table">
                  <table>
 
 
@@ -793,7 +899,7 @@
                         @endfor
                     </tbody>
 
-                </table>
+                </table> --}}
 
 
 
@@ -1082,7 +1188,7 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                         @if ($data->risk_ana_attach)
                             @foreach (json_decode($data->risk_ana_attach) as $key => $file)
@@ -1241,14 +1347,14 @@
 
 
             <div class="block">
-                <div class="block-head">HOD/Designee</div>
+                {{-- <div class="block-head">HOD/Designee</div>
                 <table>
                     <tr>
                         <th class="w-20">CFT Reviewer Selection</th>
                         <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
                     </tr>
 
-                </table>
+                </table> --}}
 
                 <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
                 <div class="div-data">
@@ -1260,12 +1366,12 @@
                 </div>
                 <div class="border-table">
                     <div class="block-head">
-                        Hod/Designee Attachment
+                        HOD/Designee  Attachments
                     </div>
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                         @if ($data->hod_design_attach)
                             @foreach (json_decode($data->hod_design_attach) as $key => $file)
@@ -1290,7 +1396,7 @@
                 <div class="block-head">
                     CFT Review
                 </div>
-                <div class="block-head">Production (Table/Capsule/Powder)</div>
+                <div class="block-head">Production (Tablet/Capsule/Powder) </div>
                 <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
@@ -1323,7 +1429,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
                         <td class="w-80">
                             @if ($data1->Production_Table_Feedback)
@@ -1332,7 +1438,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
@@ -1357,12 +1463,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Tablet/Capsule/Powder Attechment
+                            Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Production_Table_Attachment)
                                 @foreach (json_decode($data1->Production_Table_Attachment) as $key => $file)
@@ -1449,12 +1555,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attechments
+                            Production Injection Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Production_Injection_Attachment)
                                 @foreach (json_decode($data1->Production_Injection_Attachment) as $key => $file)
@@ -1507,7 +1613,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Reasearch & Development Feedback</th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_feedback)
@@ -1516,8 +1622,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Reasearch & Development Completed By</th>
@@ -1541,12 +1646,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Reasearch & Development Attechments
+                            Reasearch & Development Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->ResearchDevelopment_attachment)
                                 @foreach (json_decode($data1->ResearchDevelopment_attachment) as $key => $file)
@@ -1598,7 +1703,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Human Resource Feedback</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_feedback)
@@ -1607,8 +1712,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Human Resource Completed By</th>
@@ -1632,12 +1736,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Human Resource Attechments
+                            Human Resource Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Human_Resource_attachment)
                                 @foreach (json_decode($data1->Human_Resource_attachment) as $key => $file)
@@ -1689,7 +1793,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Corporate Quality Assurance Feedback</th>
                         <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_feedback)
@@ -1698,8 +1802,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Completed By</th>
@@ -1723,12 +1826,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Corporate Quality Assurance Attachment
+                            Corporate Quality Assurance Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->CorporateQualityAssurance_attachment)
                                 @foreach (json_decode($data1->CorporateQualityAssurance_attachment) as $key => $file)
@@ -1780,7 +1883,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Store Feedback</th>
                         <td class="w-80">
                             @if ($data1->Store_feedback)
@@ -1789,8 +1892,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Store Completed By</th>
@@ -1814,12 +1916,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Store Attachment
+                            Store Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->store_attachment)
                                 @foreach (json_decode($data1->store_attachment) as $key => $file)
@@ -1871,7 +1973,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Engineering Feedback</th>
                         <td class="w-80">
                             @if ($data1->Engineering_feedback)
@@ -1880,7 +1982,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Engineering Completed By</th>
@@ -1904,12 +2006,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Engineering Attachment
+                            Engineering Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Engineering_attachment)
                                 @foreach (json_decode($data1->Engineering_attachment) as $key => $file)
@@ -1961,7 +2063,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Regulatory Affair Feedback</th>
                         <td class="w-80">
                             @if ($data1->RegulatoryAffair_feedback)
@@ -1970,8 +2072,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Regulatory Affair Completed By</th>
@@ -1995,12 +2096,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Regularory Affair Attachment
+                            Regularory Affair Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->RegulatoryAffair_attechment)
                                 @foreach (json_decode($data1->RegulatoryAffair_attechment) as $key => $file)
@@ -2052,7 +2153,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Quality Assurance Feedback</th>
                         <td class="w-80">
                             @if ($data1->QualityAssurance_feedback)
@@ -2061,8 +2162,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Quality Assurance Review Completed By</th>
@@ -2086,12 +2186,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Quality Assurance Attachment
+                            Quality Assurance Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Quality_Assurance_attachment)
                                 @foreach (json_decode($data1->Quality_Assurance_attachment) as $key => $file)
@@ -2111,10 +2211,10 @@
                     </div>
                 </table>
 
-                <div class="block-head">Production (Liquid/Externa Prepartion)</div>
+                <div class="block-head">Production (Liquid/External Prepartion)</div>
                 <table>
                     <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Required?</th>
+                        <th class="w-20">Production Liquid/External Preparation Required?</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_Review)
                                 {{ $data1->ProductionLiquid_Review }}
@@ -2133,7 +2233,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Impact Assessment (By Production Liquid/Externa Prepartion)</th>
+                        <th class="w-20">Impact Assessment (By Production Liquid/External Prepartion)</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_assessment)
                                 {{ strip_tags($data1->ProductionLiquid_assessment) }}
@@ -2143,8 +2243,8 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Feedback</th>
+                    {{-- <tr>
+                        <th class="w-20">Production Liquid/External Preparation Feedback</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_feedback)
                                 {{ strip_tags($data1->ProductionLiquid_feedback) }}
@@ -2153,10 +2253,10 @@
                             @endif
                         </td>
 
-                    </tr>
+                    </tr> --}}
 
                     <tr>
-                        <th class="w-20">Production Liquid/Externa Preparation Completed By</th>
+                        <th class="w-20">Production Liquid/External Preparation Completed By</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_by)
                                 {{ $data1->ProductionLiquid_by }}
@@ -2164,7 +2264,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Production Liquid/Externa Preparation Completed On</th>
+                        <th class="w-20">Production Liquid/External Preparation Completed On</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_on)
                                 {{ $data1->ProductionLiquid_on }}
@@ -2177,12 +2277,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Production Liquid/Externa Preparation Attachment
+                            Production Liquid/External Preparation Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->ProductionLiquid_attachment)
                                 @foreach (json_decode($data1->ProductionLiquid_attachment) as $key => $file)
@@ -2234,7 +2334,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Quality Control Feedback</th>
                         <td class="w-80">
                             @if ($data1->Quality_Control_feedback)
@@ -2243,8 +2343,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Quality Control Completed By</th>
@@ -2268,12 +2367,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Quality Control Attachment
+                            Quality Control Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Quality_Control_attachment)
                                 @foreach (json_decode($data1->Quality_Control_attachment) as $key => $file)
@@ -2326,7 +2425,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Microbiology Feedback</th>
                         <td class="w-80">
                             @if ($data1->Microbiology_feedback)
@@ -2335,8 +2434,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Microbiology Completed By</th>
@@ -2360,12 +2458,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Microbiology Attachment
+                            Microbiology Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Microbiology_attachment)
                                 @foreach (json_decode($data1->Microbiology_attachment) as $key => $file)
@@ -2417,7 +2515,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Saftey Feedback</th>
                         <td class="w-80">
                             @if ($data1->Health_Safety_feedback)
@@ -2426,8 +2524,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Saftey Completed By</th>
@@ -2451,12 +2548,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Saftey Attachment
+                            Saftey Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Environment_Health_Safety_attachment)
                                 @foreach (json_decode($data1->Environment_Health_Safety_attachment) as $key => $file)
@@ -2520,7 +2617,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 1 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other1_feedback)
@@ -2529,8 +2626,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 1 Review Completed By</th>
@@ -2554,12 +2650,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Other's 1 Attachment
+                            Other's 1 Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Other1_attachment)
                                 @foreach (json_decode($data1->Other1_attachment) as $key => $file)
@@ -2623,7 +2719,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 2 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other2_feedback)
@@ -2632,8 +2728,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 2 Review Completed By</th>
@@ -2657,12 +2752,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Other's 2 Attachment
+                            Other's 2 Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Other2_attachment)
                                 @foreach (json_decode($data1->Other2_attachment) as $key => $file)
@@ -2726,7 +2821,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 3 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other3_feedback)
@@ -2735,8 +2830,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 3 Review Completed By</th>
@@ -2760,12 +2854,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Other's 3 Attachment
+                            Other's 3 Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Other3_attachment)
                                 @foreach (json_decode($data1->Other3_attachment) as $key => $file)
@@ -2829,7 +2923,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 4 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other4_feedback)
@@ -2838,8 +2932,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 4 Review Completed By</th>
@@ -2863,12 +2956,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Other's 4 Attachment
+                            Other's 4 Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Other4_attachment)
                                 @foreach (json_decode($data1->Other4_attachment) as $key => $file)
@@ -2932,7 +3025,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Other's 5 Feedback</th>
                         <td class="w-80">
                             @if ($data1->Other5_feedback)
@@ -2941,8 +3034,7 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Other's 5 Review Completed By</th>
@@ -2966,12 +3058,12 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Other's 5 Attachment
+                            Other's 5 Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File No.</th>
                             </tr>
                             @if ($data1->Other5_attachment)
                                 @foreach (json_decode($data1->Other5_attachment) as $key => $file)
@@ -2990,64 +3082,6 @@
                         </table>
                     </div>
                 </table>
-
-
-
-
-
-                {{-- <div class="block-head">Other's 1 (Additional Person Review Form Departments if Required)</div>
-                        <table>
-                            <tr>
-                                <th class="w-20">Contract Giver Review</th>
-                                <td class="w-30">@if ($data1->ContractGiver_Review) {{  $data1->ContractGiver_Review }}@else Not Applicable @endif</td>
-                                <th class="w-20">Contract Giver Person</th>
-                                <td class="w-30">@if ($data1->ContractGiver_person){{ $data1->Environment_Health_Safety_person}}@else Not Applicable @endif</td>
-                            </tr>
-
-                            <tr>
-                                <th class="w-20"> Contract Giver Assessment</th>
-                                <td class="w-80">@if ($data1->ContractGiver_assessment){{ strip_tags($data1->ContractGiver_assessment)  }}@else Not Applicable @endif</td>
-                            </tr>
-
-                            <tr>
-                                <th class="w-20">Contract Giver Feedback</th>
-                                <td class="w-80">@if ($data1->ContractGiver_feedback){{  strip_tags($data1->ContractGiver_feedback) }}@else Not Applicable @endif</td>
-
-                            </tr>
-
-                            <tr>
-                                <th class="w-20">Contract Giver Completed by</th>
-                                <td class="w-30">@if ($data1->ContractGiver_by){{ $data1->ContractGiver_by }}@else Not Applicable @endif</td>
-                                <th class="w-20">Contract Giver Completed  on</th>
-                                <td class="w-30">@if ($data1->ContractGiver_on){{ $data1->ContractGiver_on}}@else Not Applicable @endif</td>
-                            </tr>
-                        </table>
-                        <table>
-                            <div class="border-table">
-                                <div class="block-head">
-                                    Contract Giver Attachment
-                                </div>
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
-                                        <th class="w-60">Batch No</th>
-                                    </tr>
-                                    @if ($data1->ContractGiver_attachment)
-                                        @foreach (json_decode($data1->ContractGiver_attachment) as $key => $file)
-                                            <tr>
-                                                <td class="w-20">{{ $key + 1 }}</td>
-                                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td class="w-20">1</td>
-                                            <td class="w-60">Not Applicable</td>
-                                        </tr>
-                                    @endif
-                                </table>
-                            </div>
-                        </table> --}}
 
             </div>
 
@@ -3071,7 +3105,7 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                         @if ($data->qa_cqa_attachments)
                             @foreach (json_decode($data->qa_cqa_attachments) as $key => $file)
@@ -3109,7 +3143,7 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                         @if ($data->qa_cqa_head_attach)
                             @foreach (json_decode($data->qa_cqa_head_attach) as $key => $file)
@@ -3191,15 +3225,15 @@
             <table>
                 <tr>
                     <th class="w-20">Submit By</th>
-                    <td class="w-30">{{ $data->submitted_by }}</td>
+                    <td class="w-30">@if($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</td>
                     <th class="w-20">
                         Submit On</th>
-                    <td class="w-30">{{ $data->submitted_on }}</td>
+                    <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         Submit Comment</th>
-                    <td class="w-30">{{ $data->submit_comment }}</td>
+                    <td class="w-30">@if($data->submit_comment){{ $data->submit_comment }}@else Not Applicable @endif</td>
                 </tr>
 
             </table>
@@ -3209,14 +3243,14 @@
             <table>
                 <tr>
                     <th class="w-20">HOD Review Complete By</th>
-                    <td class="w-30">{{ $data->evaluated_by }}</td>
+                    <td class="w-30">@if($data->evaluated_by){{ $data->evaluated_by }}@else Not Applicable @endif</td>
                     <th class="w-20">HOD Review Complete On</th>
-                    <td class="w-30">{{ $data->evaluated_on }}</td>
+                    <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         HOD Review Complete Comment</th>
-                    <td class="w-30">{{ $data->evaluation_complete_comment }}</td>
+                    <td class="w-30">@if($data->evaluation_complete_comment){{ $data->evaluation_complete_comment }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3226,15 +3260,15 @@
 
                 <tr>
                     <th class="w-20">CFT Review Complete By</th>
-                    <td class="w-30">{{ $data->CFT_Review_Complete_By }}</td>
+                    <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">
                         CFT Review Complete On</th>
-                    <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
+                    <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         CFT Review Complete Comment</th>
-                    <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
+                    <td class="w-30">@if($data->CFT_Review_Comments){{ $data->CFT_Review_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3244,14 +3278,14 @@
 
                 <tr>
                     <th class="w-20">QA/CQA Review Complete By</th>
-                    <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
+                    <td class="w-30">@if($data->QA_Initial_Review_Complete_By){{ $data->QA_Initial_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">QA/CQA Review Complete On</th>
-                    <td class="w-30">{{ $data->QA_Initial_Review_Complete_On }}</td>
+                    <td class="w-30">@if($data->QA_Initial_Review_Complete_on){{ $data->QA_Initial_Review_Complete_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         QA/CQA Review Complete Comment</th>
-                    <td class="w-30">{{ $data->QA_Initial_Review_Complete_On }}</td>
+                    <td class="w-30">@if($data->QA_Initial_Review_Complete_On){{ $data->QA_Initial_Review_Complete_On }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3260,14 +3294,14 @@
             <table>
                 <tr>
                     <th class="w-20">Approved By</th>
-                    <td class="w-30">{{ $data->in_approve_by }}</td>
+                    <td class="w-30">@if($data->in_approve_by){{ $data->in_approve_by }}@else Not Applicable @endif</td>
                     <th class="w-20">Approved On</th>
-                    <td class="w-30">{{ $data->in_approve_on }}</td>
+                    <td class="w-30">@if($data->in_approve_on){{ $data->in_approve_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         Approved Comment</th>
-                    <td class="w-30">{{ $data->in_approve_Comments }}</td>
+                    <td class="w-30">@if($data->in_approve_Comments){{ $data->in_approve_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
 
@@ -3277,14 +3311,14 @@
             <table>
                 <tr>
                     <th class="w-20">Cancel By</th>
-                    <td class="w-30">{{ $data->cancelled_by }}</td>
+                    <td class="w-30">@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
                     <th class="w-20">Cancel On</th>
-                    <td class="w-30">{{ $data->cancelled_on }}</td>
+                    <td class="w-30">@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
-                        Cancel By Comment</th>
-                    <td class="w-30">{{ $data->comment }}</td>
+                        Cancel Comment</th>
+                    <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                 </tr>
             </table>
 

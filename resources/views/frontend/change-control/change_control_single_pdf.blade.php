@@ -263,7 +263,7 @@
                         <th class="w-20">Risk Assessment Required</th>
                         <td class="w-30">
                             @if ($data->risk_assessment_required)
-                                {{ $data->risk_assessment_required }}
+                                {{ ucfirst($data->risk_assessment_required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -284,7 +284,7 @@
                     <th class="w-20">Change Related To</th>
                     <td class="w-30">
                         @if ($data->severity)
-                            {{ $data->severity }}
+                            {{ucfirst($data->severity) }}
                         @else
                             Not Applicable
                         @endif
@@ -333,7 +333,7 @@
                         <th class="w-20">Repeat</th>
                         <td class="w-30" colspan="3">
                             @if ($data->repeat)
-                                {{ $data->repeat }}
+                                {{ucfirst($data->repeat) }}
                             @else
                                 Not Applicable
                             @endif
@@ -378,11 +378,22 @@
                                 Not Applicable
                             @endif
                         </td>
-
+                    </tr>    
+                    <tr>
                         <th class="w-20">If Others</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->If_Others)
                                 {{ $data->If_Others }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Description of Change</th>
+                        <td class="w-30" colspan="3">
+                            @if ($data->bd_domestic)
+                                {{ $data->bd_domestic }}
                             @else
                                 Not Applicable
                             @endif
@@ -681,7 +692,7 @@ Not Applicable
                             <td class="w-80">@if($data->reviewer_person_value){{  $cft_teamNamesString }}@else Not Applicable @endif</td> -->
 
                             <th class="w-20">Classification of Change</th>
-                            <td class="w-30">{{ $data->severity_level1 }}</td>
+                            <td class="w-30">{{ ucfirst($data->severity_level1) }}</td>
                         </tr>
 
                        
@@ -852,7 +863,7 @@ Not Applicable
                         </table>
                     </div>--}}
                     {{--  <div class="border-table">
-                        <div class="block-">
+                         <div class="block-head">
                             RA Attachments
                         </div>
                         <table>
@@ -888,7 +899,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Quality_Assurance_Review)
-                                            {{ $cftData->Quality_Assurance_Review }}
+                                            {{ ucfirst($cftData->Quality_Assurance_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -944,7 +955,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->QualityAssurance_on)
-                                            {{ $cftData->QualityAssurance_on }}
+                                            {{Helpers::getDateFormat( $cftData->QualityAssurance_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -953,8 +964,10 @@ Not Applicable
                             </tr>
                         </table>
                     </div>
+
+                    
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Quality Assurance Attachments
                         </div>
                         <table>
@@ -990,7 +1003,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Review)
-                                            {{ $cftData->Production_Table_Review }}
+                                            {{ucfirst($cftData->Production_Table_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1033,7 +1046,7 @@ Not Applicable
                             </tr> -->
                             <tr>
                                 <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
-                                <td class="w-80" colspan="3">
+                                <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_By)
                                             {{ $cftData->Production_Table_By }}
@@ -1046,7 +1059,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_On)
-                                            {{ $cftData->Production_Table_On }}
+                                            {{Helpers::getDateFormat( $cftData->Production_Table_On) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1056,7 +1069,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                         Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
@@ -1092,7 +1105,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_Review)
-                                            {{ $cftData->ProductionLiquid_Review }}
+                                            {{ ucfirst($cftData->ProductionLiquid_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1148,7 +1161,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_on)
-                                            {{ $cftData->ProductionLiquid_on }}
+                                            {{ Helpers::getDateFormat( $cftData->ProductionLiquid_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1158,7 +1171,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                         Production Liquid/Ointment Attachments
                         </div>
                         <table>
@@ -1194,7 +1207,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Injection_Review)
-                                            {{ $cftData->Production_Injection_Review }}
+                                            {{ ucfirst($cftData->Production_Injection_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1250,7 +1263,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Injection_On)
-                                            {{ $cftData->Production_Injection_On }}
+                                            {{Helpers::getDateFormat( $cftData->Production_Injection_On) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1260,7 +1273,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Production Injection Attachments
                         </div>
                         <table>
@@ -1296,7 +1309,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_Review)
-                                            {{ $cftData->Store_Review }}
+                                            {{ucfirst($cftData->Store_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1352,7 +1365,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_on)
-                                            {{ $cftData->Store_on }}
+                                            {{Helpers::getDateFormat( $cftData->Store_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1362,7 +1375,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Stores Attachments
                         </div>
                         <table>
@@ -1401,7 +1414,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Quality_review)
-                                                {{ $cftData->Quality_review }}
+                                                {{ucfirst($cftData->Quality_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1460,7 +1473,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Quality_Control_on)
-                                                {{ $cftData->Quality_Control_on }}
+                                                {{Helpers::getDateFormat( $cftData->Quality_Control_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1470,7 +1483,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Quality Control Attachments
                             </div>
                             <table>
@@ -1509,7 +1522,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ResearchDevelopment_Review)
-                                            {{ $cftData->ResearchDevelopment_Review }}
+                                            {{ ucfirst($cftData->ResearchDevelopment_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1565,7 +1578,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ResearchDevelopment_on)
-                                            {{ $cftData->ResearchDevelopment_on }}
+                                            {{ Helpers::getDateFormat($cftData->ResearchDevelopment_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1575,7 +1588,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Research & Development Attachments
                         </div>
                         <table>
@@ -1614,7 +1627,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Engineering_review)
-                                                {{ $cftData->Engineering_review }}
+                                                {{ ucfirst($cftData->Engineering_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1673,7 +1686,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Engineering_on)
-                                                {{ $cftData->Engineering_on }}
+                                                {{ Helpers::getDateFormat($cftData->Engineering_on) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1683,7 +1696,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Engineering Attachments
                             </div>
                             <table>
@@ -1724,7 +1737,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Human_Resource_review)
-                                                {{ $cftData->Human_Resource_review }}
+                                                {{ ucfirst($cftData->Human_Resource_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1783,7 +1796,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->production_on)
-                                                {{ $cftData->production_on }}
+                                                {{Helpers::getDateFormat( $cftData->production_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1793,7 +1806,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Human Resource Attachment
                             </div>
                             <table>
@@ -1833,7 +1846,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Microbiology_Review)
-                                            {{ $cftData->Microbiology_Review }}
+                                            {{ ucfirst($cftData->Microbiology_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1889,7 +1902,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Microbiology_on)
-                                            {{ $cftData->Microbiology_on }}
+                                            {{Helpers::getDateFormat( $cftData->Microbiology_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1899,7 +1912,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Microbiology Attachment
                         </div>
                         <table>
@@ -1935,7 +1948,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_Review)
-                                            {{ $cftData->RegulatoryAffair_Review }}
+                                            {{ ucfirst($cftData->RegulatoryAffair_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1991,7 +2004,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_on)
-                                            {{ $cftData->RegulatoryAffair_on }}
+                                            {{ Helpers::getDateFormat($cftData->RegulatoryAffair_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2001,7 +2014,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Regulatory Affairs Attachments
                         </div>
                         <table>
@@ -2037,7 +2050,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->CorporateQualityAssurance_Review)
-                                            {{ $cftData->CorporateQualityAssurance_Review }}
+                                            {{ ucfirst($cftData->CorporateQualityAssurance_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2093,7 +2106,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->CorporateQualityAssurance_on)
-                                            {{ $cftData->CorporateQualityAssurance_on }}
+                                            {{Helpers::getDateFormat( $cftData->CorporateQualityAssurance_on )}}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2103,7 +2116,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Corporate Quality Assurance Attachments
                         </div>
                         <table>
@@ -2143,7 +2156,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Environment_Health_review)
-                                                {{ $cftData->Environment_Health_review }}
+                                                {{ucfirst($cftData->Environment_Health_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2202,7 +2215,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Human_Resource_on)
-                                                {{ $cftData->Human_Resource_on }}
+                                                {{Helpers::getDateFormat( $cftData->Human_Resource_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2212,7 +2225,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Safety Attachments
                             </div>
                             <table>
@@ -2255,7 +2268,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Information_Technology_review)
-                                                {{ $cftData->Information_Technology_review }}
+                                                {{ ucfirst($cftData->Information_Technology_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2314,7 +2327,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Information_Technology_on)
-                                                {{ $cftData->Information_Technology_on }}
+                                                {{Helpers::getDateFormat( $cftData->Information_Technology_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2324,7 +2337,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Information Technology Attachments
                             </div>
                             <table>
@@ -2364,7 +2377,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ContractGiver_Review)
-                                            {{ $cftData->ContractGiver_Review }}
+                                            {{ ucfirst($cftData->ContractGiver_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2420,7 +2433,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ContractGiver_on)
-                                            {{ $cftData->ContractGiver_on }}
+                                            {{  Helpers::getDateFormat($cftData->ContractGiver_on) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2430,7 +2443,7 @@ Not Applicable
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Contract Giver Attachments
                         </div>
                         <table>
@@ -2471,7 +2484,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other1_review)
-                                                {{ $cftData->Other1_review }}
+                                                {{ ucfirst($cftData->Other1_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2491,7 +2504,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other1_Department_person)
-                                                {{ $cftData->Other1_Department_person }}
+                                                {{Helpers::getFullDepartmentName($cftData->Other1_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2540,7 +2553,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other1_on)
-                                                {{ $cftData->Other1_on }}
+                                                {{Helpers::getDateFormat($cftData->Other1_on) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2550,7 +2563,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Other's 1 Attachments
                             </div>
                             <table>
@@ -2591,7 +2604,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other2_review)
-                                                {{ $cftData->Other2_review }}
+                                                {{ ucfirst($cftData->Other2_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2611,7 +2624,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other2_Department_person)
-                                                {{ $cftData->Other2_Department_person }}
+                                                {{ Helpers::getFullDepartmentName($cftData->Other2_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2660,7 +2673,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other2_on)
-                                                {{ $cftData->Other2_on }}
+                                                {{Helpers::getDateFormat( $cftData->Other2_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2670,7 +2683,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Other's 2 Attachments
                             </div>
                             <table>
@@ -2711,7 +2724,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other3_review)
-                                                {{ $cftData->Other3_review }}
+                                                {{ ucfirst($cftData->Other3_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2731,7 +2744,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other3_Department_person)
-                                                {{ $cftData->Other3_Department_person }}
+                                                {{Helpers::getFullDepartmentName($cftData->Other3_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2782,7 +2795,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other3_on)
-                                                {{ $cftData->Other3_on }}
+                                                {{Helpers::getDateFormat( $cftData->Other3_on ) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2792,7 +2805,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Other's 3 Attachments
                             </div>
                             <table>
@@ -2833,7 +2846,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other4_review)
-                                                {{ $cftData->Other4_review }}
+                                                {{ ucfirst($cftData->Other4_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2853,7 +2866,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other4_Department_person)
-                                                {{ $cftData->Other4_Department_person }}
+                                                {{Helpers::getFullDepartmentName( $cftData->Other4_Department_person )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2902,7 +2915,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other4_on)
-                                                {{ $cftData->Other4_on }}
+                                                {{Helpers::getDateFormat( $cftData->Other4_on) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2912,7 +2925,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Other's 4 Attachments
                             </div>
                             <table>
@@ -2953,7 +2966,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other5_review)
-                                                {{ $cftData->Other5_review }}
+                                                {{ ucfirst($cftData->Other5_review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2973,7 +2986,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other5_Department_person)
-                                                {{ $cftData->Other5_Department_person }}
+                                                {{Helpers::getFullDepartmentName( $cftData->Other5_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3022,7 +3035,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other5_on)
-                                                {{ $cftData->Other5_on }}
+                                                {{ Helpers::getDateFormat($cftData->Other5_on) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3032,7 +3045,7 @@ Not Applicable
                             </table>
                         </div>
                         <div class="border-table">
-                            <div class="block-">
+                            <div class="block-head">
                                 Other's 5 Attachments
                             </div>
                             <table>
@@ -3112,7 +3125,7 @@ Not Applicable
 
 
                    <div class="border-table">
-                        <div class="block-">
+                         <div class="block-head">
                            QA/CQA Final Review Attachments
                         </div>
                         <table>
@@ -3171,7 +3184,7 @@ Not Applicable
 
 
                    <div class="border-table">
-                        <div class="block-">
+                         <div class="block-head">
                           RA Attachments
                         </div>
                         <table>
@@ -3212,7 +3225,7 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">QA/CQA Head / Designee Approval Comment</th>
+                                <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cc_cfts->qa_cqa_comments)
@@ -3232,8 +3245,8 @@ Not Applicable
 
 
                    <div class="border-table">
-                        <div class="block-">
-                        QA/CQA Head / Designee Approval Attachment
+                         <div class="block-head">
+                        QA/CQA Head / Designee Approval Attachments
                         </div>
                         <table>
 
@@ -3282,7 +3295,7 @@ Not Applicable
 
 
                         <div class="border-table">
-                        <div class="block-">
+                         <div class="block-head">
                         QA Evaluation Attachments
                         </div>
                         <table>
@@ -3312,8 +3325,8 @@ Not Applicable
 
             
 
-            <div class="block">
-                <div class="head">
+             <div class="border-table">
+                
                             <div class="block-head">
                                 Initiator Update
                             </div>
@@ -3333,7 +3346,7 @@ Not Applicable
                         
 
                     <div class="border-table">
-                        <div class="block-">
+                    <div class="block-head">
                         Initiator Update Attachments
                         </div>
                         <table>
@@ -3386,7 +3399,7 @@ Not Applicable
                         
 
                     <div class="border-table">
-                        <div class="block-">
+                    <div class="block-head">
                           HOD Final Review Attachments
                         </div>
                         <table>
@@ -3449,7 +3462,7 @@ Not Applicable
                         
 
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                         Implementation Verification Attachments
                         </div>
                         <table>
@@ -3518,7 +3531,7 @@ Not Applicable
                         
 
                     <div class="border-table">
-                        <div class="block-">
+                         <div class="block-head">
                          List Of Attachments
                         </div>
                         <table>
@@ -3816,60 +3829,60 @@ Not Applicable
                 <tr>
                     <th class="w-20">Submit By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_by }}</div>
+                        <div class="static">{{ $data->submit_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">Submit On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_on }}</div>
+                        <div class="static">{{ $data->submit_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">Submit Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->submit_comment }}</div>
+                        <div class="static">{{ $data->submit_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">HOD Assessment Complete By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->hod_review_by }}</div>
+                        <div class="static">{{ $data->hod_review_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">HOD Assessment Complete On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->hod_review_on }}</div>
+                        <div class="static">{{ $data->hod_review_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">HOD Assessment Complete Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->hod_review_comment }}</div>
+                        <div class="static">{{ $data->hod_review_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">QA/CQA Initial Assessment Complete By</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_initial_review_by }}</div>
+                        <div class="static">{{ $data->QA_initial_review_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">QA/CQA Initial Assessment Complete On</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_initial_review_on }}</div>
+                        <div class="static">{{ $data->QA_initial_review_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">QA/CQA Initial Assessment Complete Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_initial_review_comment }}</div>
+                        <div class="static">{{ $data->QA_initial_review_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20">CFT Assessment Complete By </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->pending_RA_review_by }}</div>
+                        <div class="static">{{ $data->pending_RA_review_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">CFT Assessment Complete On </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->pending_RA_review_on }}</div>
+                        <div class="static">{{ $data->pending_RA_review_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">CFT Assessment Complete Comment </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->pending_RA_review_comment }}</div>
+                        <div class="static">{{ $data->pending_RA_review_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
@@ -3877,15 +3890,15 @@ Not Applicable
                 <tr>
                     <th class="w-20">RA Approval Required By  </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_required_by }}</div>
+                        <div class="static">{{ $data->RA_review_required_by  ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">RA Approval Required On </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_required_on }}</div>
+                        <div class="static">{{ $data->RA_review_required_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">RA Approval Required Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_required_comment }}</div>
+                        <div class="static">{{ $data->RA_review_required_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
@@ -3894,30 +3907,30 @@ Not Applicable
                 <tr>
                     <th class="w-20">RA Approval Complete By </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_completed_by }}</div>
+                        <div class="static">{{ $data->RA_review_completed_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">RA Approval Complete On </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_completed_on }}</div>
+                        <div class="static">{{ $data->RA_review_completed_on ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20"> RA Approval Comment</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->RA_review_completed_comment }}</div>
+                        <div class="static">{{ $data->RA_review_completed_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="w-20"> QA/CQA Final Review Complete By </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_by }}</div>
+                        <div class="static">{{ $data->QA_final_review_by ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20"> QA/CQA Final Review Complete On </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_on }}</div>
+                        <div class="static">{{ $data->QA_final_review_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">QA/CQA Final Review Complete Comment </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_comment }}</div>
+                        <div class="static">{{ $data->QA_final_review_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
 
@@ -3926,15 +3939,15 @@ Not Applicable
                 <tr>
                     <th class="w-20">Approved  By  </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->approved_by }}</div>
+                        <div class="static">{{ $data->approved_by ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Approved  On </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->approved_on }}</div>
+                        <div class="static">{{ $data->approved_on ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Approved Comment </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->approved_comment }}</div>
+                        <div class="static">{{ $data->approved_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
 
@@ -3966,15 +3979,15 @@ Not Applicable
                  <tr>
                     <th class="w-20">HOD Final Review Complete  By </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_by }}</div>
+                        <div class="static">{{ $data->closure_approved_by  ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20"> HOD Final Review Complete  On  </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_on }}</div>
+                        <div class="static">{{ $data->closure_approved_on ?? 'Not Applicable'  }}</div>
                     </td>
                     <th class="w-20">HOD Final Review Complete Comment </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_comment }}</div>
+                        <div class="static">{{ $data->closure_approved_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
 
@@ -3998,15 +4011,15 @@ Not Applicable
                     <tr>
                     <th class="w-20">Closure Approved By : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_by }}</div>
+                        <div class="static">{{ $data->closure_approved_by ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Closure Approved On : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_on }}</div>
+                        <div class="static">{{ $data->closure_approved_on ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Closure Approved Comment :</th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_comment }}</div>
+                        <div class="static">{{ $data->closure_approved_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
             </table>

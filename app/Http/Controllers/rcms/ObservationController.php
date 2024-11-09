@@ -927,7 +927,7 @@ if(!empty($request->attach_files2)){
     if (!empty($data->attach_files2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Response Verification Attachements';
+        $history->activity_type = 'Response Verification Attachments';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -1793,7 +1793,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response due date ';
+            $history->activity_type = 'Response Due Date ';
             $history->previous = Helpers::getdateFormat($lastDocument->recomendation_capa_date_due);
             $history->current = Helpers::getdateFormat($data->recomendation_capa_date_due);
             $history->comment = $request->actual_start_date_comment;
@@ -2035,7 +2035,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Response Verification Attachements ';
+            $history->activity_type = 'Response Verification Attachments ';
             $history->previous = $lastDocument->attach_files2;
             $history->current = $data->attach_files2;
             $history->comment = $request->action_taken_comment;
@@ -3350,9 +3350,11 @@ if (is_array($request->action) && !empty($request->action)) {
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
         }
         if ($request->revision == "Action-Item") {
+            $data = Observation::find($id);
+            $data_record = Helpers::getDivisionName($data->division_code ) . '/' . 'OBS' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data', 'data_record'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

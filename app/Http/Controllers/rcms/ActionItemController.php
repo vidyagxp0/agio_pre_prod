@@ -7,6 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\CC;
 use App\Models\RoleGroup;
+use App\Models\LabIncident;
+use App\Models\Observation;
+use App\Models\InternalAudit;
+// use App\Models\CC;
+use App\Models\ManagementReview;
+use App\Models\MarketComplaint;
+use App\Models\Auditee;
+use App\Models\OutOfCalibration;
+use App\Models\OOS;
+use App\Models\RiskManagement;
+use App\Models\Capa;
 use App\Models\ActionItemHistory;
 use App\Models\CCStageHistory;
 use App\Models\RecordNumber;
@@ -42,7 +53,7 @@ class ActionItemController extends Controller
     }
     public function index()
     {
-       
+
         $document = ActionItem::all();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         foreach ($document as $data) {
@@ -59,6 +70,7 @@ class ActionItemController extends Controller
 
     public function store(Request $request)
     {
+
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
@@ -79,10 +91,10 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-        //  $openState->related_records = implode(',', $request->related_records);
-        if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+         $openState->related_records = $request->related_records;
+        // if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -95,6 +107,7 @@ class ActionItemController extends Controller
         $openState->start_date = $request->start_date;
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         $openState->qa_comments = $request->qa_comments;
         $openState->status = 'Opened';
@@ -104,25 +117,40 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                      
+
                     $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             }
             $openState->file_attach = json_encode($files);
         }
+
+        if (!empty($request->acknowledge_attach)) {
+            $files = [];
+            if ($request->hasfile('acknowledge_attach')) {
+                foreach ($request->file('acknowledge_attach') as $file) {
+
+                    $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $openState->acknowledge_attach = json_encode($files);
+        }
+
         if (!empty($request->Support_doc)) {
             $files = [];
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    
+
                     $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             $openState->Support_doc = json_encode($files);
             }
         }
@@ -130,12 +158,12 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
-                    
+
                     $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             $openState->final_attach = json_encode($files);
             }
         }
@@ -172,7 +200,7 @@ class ActionItemController extends Controller
         $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
- 
+
         if (!empty($openState->title)) {
         $history = new ActionItemHistory();
         $history->cc_id = $openState->id;
@@ -190,7 +218,7 @@ class ActionItemController extends Controller
         $history->save();
         }
 
-        
+
         if (!empty($openState->short_description)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -205,7 +233,7 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-    
+
             $history->save();
             }
         if (!empty($openState->due_date)) {
@@ -257,7 +285,7 @@ class ActionItemController extends Controller
                 $history->action_name = 'Create';
                 $history->save();
             }
-                
+
             if (!empty($openState->intiation_date)) {
                 $history = new ActionItemHistory();
                 $history->cc_id =  $openState->id;
@@ -308,7 +336,7 @@ class ActionItemController extends Controller
                     $history->action_name = "Create";
                     $history->save();
                     }
-                
+
 
             if (!empty($openState->related_records)) {
                 $history = new ActionItemHistory();
@@ -326,7 +354,7 @@ class ActionItemController extends Controller
                 $history->action_name = "Create";
                 $history->save();
                 }
-        
+
         if (!empty($openState->Reference_Recores1)) {
         $history = new ActionItemHistory();
         $history->cc_id =   $openState->id;
@@ -343,8 +371,8 @@ class ActionItemController extends Controller
         $history->action_name = "Create";
         $history->save();
         }
-        
-          
+
+
         if (!empty($request->departments)) {
             $history = new ActionItemHistory();
             $history->cc_id =  $openState->id;
@@ -361,7 +389,7 @@ class ActionItemController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-       
+
         if (!empty($openState->initiatorGroup)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -376,11 +404,11 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
             }
-            
-          
+
+
         // if (!empty($openState->assign_to)) {
             if (!empty($openState->assign_to) && $openState->assign_to !== "")
             {
@@ -397,10 +425,10 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
             }
-        
+
             if (!empty($openState->description)) {
                 $history = new ActionItemHistory();
                 $history->cc_id =   $openState->id;
@@ -415,10 +443,10 @@ class ActionItemController extends Controller
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = "Create";
-       
+
                 $history->save();
                 }
-            
+
                 if (!empty($openState->hod_preson)) {
                     $history = new ActionItemHistory();
                     $history->cc_id =   $openState->id;
@@ -433,7 +461,7 @@ class ActionItemController extends Controller
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-           
+
                     $history->save();
                     }
                  if (!empty($openState->action_taken)) {
@@ -450,7 +478,7 @@ class ActionItemController extends Controller
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-           
+
                     $history->save();
                }
                if (!empty($openState->start_date)) {
@@ -467,7 +495,7 @@ class ActionItemController extends Controller
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = "Create";
-       
+
                 $history->save();
            }
            if (!empty($openState->end_date)) {
@@ -484,7 +512,7 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
        }
        if (!empty($openState->comments)) {
@@ -507,7 +535,7 @@ class ActionItemController extends Controller
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
             $history->comment = "Not Applicable";
@@ -518,7 +546,7 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -536,7 +564,7 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
 
@@ -554,9 +582,46 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
+
+        if (!empty($openState->acknowledge_comments)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = "Null";
+            $history->current =  $openState->acknowledge_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+
+            $history->save();
+        }
+
+        if (!empty($openState->acknowledge_attach)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = "Null";
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+
+            $history->save();
+        }
+
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -571,13 +636,13 @@ class ActionItemController extends Controller
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-   
+
             $history->save();
         }
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "Not Applicable";
@@ -587,7 +652,7 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
-            $history->action_name = "Create";   
+            $history->action_name = "Create";
             $history->save();
         }
         toastr()->success('Document created');
@@ -599,13 +664,25 @@ class ActionItemController extends Controller
 
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $data = ActionItem::find($id);
+        $due_date_data = LabIncident::where('id', $data->parent_id)->value('due_date') ??
+        Capa::where('id', $data->parent_id)->value('due_date') ??
+        OOS::where('id', $data->parent_id)->value('due_date') ??
+        OutOfCalibration::where('id', $data->parent_id)->value('due_date') ??
+        Auditee::where('id', $data->parent_id)->value('due_date') ??
+        MarketComplaint::where('id', $data->parent_id)->value('due_date_gi') ??
+        CC::where('id', $data->parent_id)->value('due_date') ??
+        InternalAudit::where('id', $data->parent_id)->value('due_date') ??
+        Observation::where('id', $data->parent_id)->value('due_date');
+
+// Use null coalescing operator (??) to stop at the first non-null value.
+
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         // $taskdetails = Taskdetails::where('cc_id', $id)->first();
         // $checkeffec = CheckEffecVerifi::where('cc_id', $id)->first();
         // $comments = RefInfoComments::where('cc_id', $id)->first();
         // return $taskdetails;
-        return view('frontend.action-item.atView', compact('data', 'cc','old_record'));
+        return view('frontend.action-item.atView', compact('data', 'cc','old_record', 'due_date_data'));
     }
 
     public function edit($id)
@@ -621,10 +698,10 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        // $openState->related_records = implode(',', $request->related_records);
-         if (is_array($request->related_records)) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+        $openState->related_records = $request->related_records;
+        //  if (is_array($request->related_records)) {
+        //     $openState->related_records = implode(',', $request->related_records);
+        // }
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
@@ -642,6 +719,7 @@ class ActionItemController extends Controller
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
+        $openState->acknowledge_comments = $request->acknowledge_comments;
         $openState->due_date_extension= $request->due_date_extension;
         if($openState->stage == 1){
             $openState->assign_to = $request->assign_to;
@@ -664,7 +742,6 @@ class ActionItemController extends Controller
         $openState->parent_record_number_edit = $request->parent_record_number_edit;
 
 
-
         // $openState->status = 'Opened';
         // $openState->stage = 1;
         // if ($request->hasFile('file_attach')) {
@@ -676,22 +753,22 @@ class ActionItemController extends Controller
         //     }
         //     $openState->file_attach = json_encode($files);
         // }
-    
+
         // $openState->fill($request->except('file_attach'));
 
         // first attach
 
         if (!empty($request->file_attach) || !empty($request->deleted_file_Attachments)) {
             $existingFiles = json_decode($openState->file_attach, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_file_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_file_Attachments);
                 $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
                     return !in_array($file, $filesToDelete);
-                }); 
+                });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('file_attach')) {
@@ -701,15 +778,16 @@ class ActionItemController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->file_attach = json_encode($allFiles);
         }
+
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
             //     foreach ($request->file('file_attach') as $file) {
-            //         if ($file instanceof \Illuminate\Http\UploadedFile) {  
+            //         if ($file instanceof \Illuminate\Http\UploadedFile) {
             //         $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
             //         $file->move('upload/', $name);
             //         $files[] = $name;
@@ -717,13 +795,13 @@ class ActionItemController extends Controller
             // }
             // }
             // $openState->file_attach = json_encode($files);
-        
+
 
         // if (!empty($request->Support_doc)) {
         //     $files = [];
         //     if ($request->hasfile('Support_doc')) {
         //         foreach ($request->file('Support_doc') as $file) {
-        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {
         //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
@@ -732,18 +810,18 @@ class ActionItemController extends Controller
         //     }
         //     $openState->Support_doc = json_encode($files);
         // }
-        // second attach 
+        // second attach
         if (!empty($request->Support_doc) || !empty($request->deleted_completion_Attachments)) {
             $existingFiles = json_decode($openState->Support_doc, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_completion_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_completion_Attachments);
                 $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
                     return !in_array($file, $filesToDelete);
-                }); 
+                });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('Support_doc')) {
@@ -753,7 +831,7 @@ class ActionItemController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->Support_doc = json_encode($allFiles);
@@ -762,7 +840,7 @@ class ActionItemController extends Controller
         //     $files = [];
         //     if ($request->hasfile('final_attach')) {
         //         foreach ($request->file('final_attach') as $file) {
-        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {
         //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
@@ -772,18 +850,49 @@ class ActionItemController extends Controller
         //     $openState->final_attach = json_encode($files);
         // }
 
+        //Acknoledge Attachment
+
+        if (!empty($request->acknowledge_attach) || !empty($request->deleted_Acknoledge_Attachments)) {
+            $existingFiles = json_decode($openState->acknowledge_attach, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_Acknoledge_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_Acknoledge_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('acknowledge_attach')) {
+                foreach ($request->file('acknowledge_attach') as $file) {
+                    $name = $request->name . 'acknowledge_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->acknowledge_attach = json_encode($allFiles);
+        }
+
+
+        //Acknoledge Attachment
+
         // Third attach
  if (!empty($request->final_attach) || !empty($request->deleted_Approval_Attachments)) {
             $existingFiles = json_decode($openState->final_attach, true) ?? [];
-        
+
             // Handle deleted files
             if (!empty($request->deleted_Approval_Attachments)) {
                 $filesToDelete = explode(',', $request->deleted_Approval_Attachments);
                 $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
                     return !in_array($file, $filesToDelete);
-                }); 
+                });
             }
-        
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('final_attach')) {
@@ -793,12 +902,12 @@ class ActionItemController extends Controller
                     $newFiles[] = $name;
                 }
             }
-        
+
             // Merge existing and new files
             $allFiles = array_merge($existingFiles, $newFiles);
             $openState->final_attach = json_encode($allFiles);
         }
-        
+
         $openState->update();
 
 
@@ -822,7 +931,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
 
@@ -845,7 +954,7 @@ class ActionItemController extends Controller
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
-            }   
+            }
             $history->save();
         }
 
@@ -867,16 +976,16 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
+        }
 
         // if ($lastopenState->due_date != $openState->due_date ) {
         //     $history = new ActionItemHistory;
         //     $history->cc_id = $id;
         //     $history->activity_type = 'Due Date';
         //     $history->previous = $lastopenState->due_date;
-        //     $history->current = Helpers::getdateFormat($openState->due_date); 
+        //     $history->current = Helpers::getdateFormat($openState->due_date);
         //     $history->comment = $request->due_date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
@@ -889,9 +998,9 @@ class ActionItemController extends Controller
         //     } else {
         //         $history->action_name = "Update";
         //     }
-   
+
         //     $history->save();
-        // }  
+        // }
         if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
             // History update logic
             $history = new ActionItemHistory;
@@ -906,7 +1015,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastopenState->status;
-        
+
             // Action Name
             // if (is_null($lastopenState->due_date)) {
             if (is_null($lastopenState->due_date) || $lastopenState->due_date === '') {
@@ -915,11 +1024,11 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
-        if ($lastopenState->parent_record_number_edit != $openState->parent_record_number_edit) { 
+        if ($lastopenState->parent_record_number_edit != $openState->parent_record_number_edit) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Parent Record Number';
@@ -937,10 +1046,10 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
-        
+        }
+
         if ($lastopenState->assign_to != $openState->assign_to) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -959,10 +1068,10 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
-        }  
-          
+        }
+
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -981,7 +1090,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
 
@@ -999,7 +1108,7 @@ class ActionItemController extends Controller
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $openState->status;
         //     $history->action_name = "Update";
-   
+
         //     $history->save();
         // }
         // if (!empty($openState->short_description)) {
@@ -1021,7 +1130,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-    
+
             $history->save();
             }
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
@@ -1042,7 +1151,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment )) {
@@ -1064,7 +1173,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
@@ -1086,7 +1195,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->action_taken != $openState->action_taken || !empty($request->action_taken_comment)) {
@@ -1148,7 +1257,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->comments != $openState->comments || !empty($request->comments_comment)) {
@@ -1169,13 +1278,13 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->qa_comments != $openState->qa_comments || !empty($request->qa_comments_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA/CQA Review Comments';
+            $history->activity_type = 'QA/CQA Verification Comments';
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
@@ -1210,7 +1319,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->file_attach != $openState->file_attach || !empty($request->file_attach_comment)) {
@@ -1233,10 +1342,53 @@ class ActionItemController extends Controller
             }
             $history->save();
         }
+
+        if ($lastopenState->acknowledge_comments != $openState->acknowledge_comments || !empty($request->qa_comments_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Comment';
+            $history->previous = $lastopenState->acknowledge_comments;
+            $history->current = $openState->acknowledge_comments;
+            $history->comment = $request->qa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_comments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastopenState->acknowledge_attach != $openState->acknowledge_attach || !empty($request->file_attach_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Acknowledge Attachment';
+            $history->previous = $lastopenState->acknowledge_attach;
+            $history->current = str_replace(',', ', ',$openState->acknowledge_attach);
+            $history->comment = $request->file_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->acknowledge_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Action Approval Attachment';
+            $history->activity_type = 'QA/CQA Verification attachments';
             $history->previous = $lastopenState->final_attach;
             $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
@@ -1251,7 +1403,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         if ($lastopenState->Support_doc != $openState->Support_doc || !empty($request->Support_doc_comment)) {
@@ -1272,7 +1424,7 @@ class ActionItemController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-   
+
             $history->save();
         }
         toastr()->success('Document update');
@@ -1291,15 +1443,15 @@ class ActionItemController extends Controller
             $lastopenState = ActionItem::find($id);
             $openState = ActionItem::find($id);
             $task = Taskdetails::where('cc_id', $id)->first();
-         
-            
+
+
             if ($changeControl->stage == 1) {
                 $changeControl->stage = '2';
                 $changeControl->status = 'Acknowledge';
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                 $changeControl->submitted_comment = $request->comment;
-                
+
                 $history = new ActionItemHistory;
                 $history->cc_id = $id;
                 $history->action = "Submit";
@@ -1307,7 +1459,7 @@ class ActionItemController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastopenState->status;                    
+                $history->origin_state = $lastopenState->status;
                 $history->change_to = "Acknowledge";
                 $history->change_from = $lastopenState->status;
                 $history->action_name = 'Not Applicable';
@@ -1360,7 +1512,7 @@ class ActionItemController extends Controller
             //         if($u->q_m_s_divisions_id == $openState->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $openState],
@@ -1370,7 +1522,7 @@ class ActionItemController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 toastr()->success('Document Sent');
 
@@ -1379,12 +1531,12 @@ class ActionItemController extends Controller
 
             if ($changeControl->stage == 2) {
 
-                if (empty($changeControl->action_taken))
+                if (empty($changeControl->acknowledge_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Post Completion Tab is yet to be filled'
+                        'message' => 'Acknowledge Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -1402,7 +1554,7 @@ class ActionItemController extends Controller
                 $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
 
-                $history = new ActionItemHistory;                     
+                $history = new ActionItemHistory;
                 $history->cc_id = $id;
                 $history->action = "Acknowledge Complete";
                 $history->comment = $request->comment;
@@ -1449,6 +1601,24 @@ class ActionItemController extends Controller
                 return back();
             }
             if ($changeControl->stage == 3) {
+
+                if (empty($changeControl->action_taken))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Post Completion Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Verifiaction state'
+                    ]);
+                }
                 $changeControl->stage = '4';
                 $changeControl->status = 'QA/CQA Verification';
                 $changeControl->work_completion_by = Auth::user()->name;
@@ -1465,7 +1635,7 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->stage = "4";
                 $history->action_name = 'Not Applicable';
-                
+
                 $history->activity_type = 'Complete By, Complete On';
                 if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
                     $history->previous = "";
@@ -1502,78 +1672,7 @@ class ActionItemController extends Controller
                 return back();
             }
 
-            if ($changeControl->stage == 4) {
-                if (empty($changeControl->qa_comments))
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'Action Approval Tab is yet to be filled'
-                    ]);
 
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for QA/CQA Verification state'
-                    ]);
-                }
-                $changeControl->stage = '5';
-                $changeControl->status = 'Closed - Done';
-                $changeControl->qa_varification_by = Auth::user()->name;
-                $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
-                $changeControl->qa_varification_comment = $request->comment;
-
-                $history = new ActionItemHistory;
-                $history->action = "Verification Complete";
-                $history->cc_id = $id;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastopenState->status;
-                $history->stage = "5";
-                $history->action_name = 'Not Applicable';
-                $history->stage = '2';
-                $history->activity_type = 'Verification Complete by, Verification Complete On';
-                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
-                }
-                $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
-                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->change_to = "Closed - Done";
-                $history->change_from = $lastopenState->status;
-                $history->save();
-                $changeControl->update();
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Verification Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            
         } else {
             toastr()->error('E-signature Not match');
 
@@ -1607,6 +1706,96 @@ class ActionItemController extends Controller
 //     }
 // }
 
+public function lastStage(Request $request, $id){
+    if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+        $changeControl = ActionItem::find($id);
+        $lastopenState = ActionItem::find($id);
+        $openState = ActionItem::find($id);
+
+        if ($changeControl->stage == 4) {
+            if (empty($changeControl->qa_comments))
+            {
+                Session::flash('swal', [
+                    'type' => 'warning',
+                    'title' => 'Mandatory Fields!',
+                    'message' => 'QA/CQA Verification Tab is yet to be filled'
+                ]);
+
+                return redirect()->back();
+            }
+             else {
+                Session::flash('swal', [
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Sent for Closed - Done state'
+                ]);
+            }
+
+            $changeControl->due_date_action = $request->due_date_action;
+
+            $changeControl->stage = '5';
+            $changeControl->status = 'Closed - Done';
+            $changeControl->qa_varification_by = Auth::user()->name;
+            $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
+            $changeControl->qa_varification_comment = $request->comment;
+
+            $history = new ActionItemHistory;
+            $history->action = "Verification Complete";
+            $history->cc_id = $id;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "5";
+            $history->action_name = 'Not Applicable';
+            $history->stage = '2';
+            $history->activity_type = 'Verification Complete by, Verification Complete On';
+            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
+            }
+            $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
+            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->change_to = "Closed - Done";
+            $history->change_from = $lastopenState->status;
+            $history->save();
+            $changeControl->update();
+            // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Verification Complete", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changeControl) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete");
+            //                 }
+            //             );
+            //         }
+            //     // }
+            // }
+            $history->save();
+            toastr()->success('Document Sent');
+            return back();
+        }
+
+    }
+    else {
+        toastr()->error('E-signature Not match');
+
+        return back();
+    }
+
+}
+
 public function actionStageCancel(Request $request, $id)
 {
     if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
@@ -1615,13 +1804,16 @@ public function actionStageCancel(Request $request, $id)
         $openState = ActionItem::find($id);
 
         if ($changeControl->stage == 1) {
+
+            $changeControl->due_date_action = $request->due_date_action;
+
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment =$request->comment;
             $history = new ActionItemHistory;
-            $history->action = "Cancel";    
+            $history->action = "Cancel";
             $history->cc_id = $id;
             $history->activity_type = 'Cancel By, Cancel On';
             if (is_null($lastopenState->cancelled_by) || $lastopenState->cancelled_by === '') {
@@ -1668,14 +1860,14 @@ public function actionStageCancel(Request $request, $id)
             // $history->user_name = Auth::user()->name;
             // $history->stage_id = $changeControl->stage;
             // $history->status = $changeControl->status;
-            
+
             $history->save();
             // $list = Helpers::getActionOwnerUserList();
             //         foreach ($list as $u) {
             //             if($u->q_m_s_divisions_id == $openState->division_id){
             //                 $email = Helpers::getInitiatorEmail($u->user_id);
             //                  if ($email !== null) {
-                          
+
             //                   Mail::send(
             //                       'mail.view-mail',
             //                        ['data' => $openState],
@@ -1685,13 +1877,13 @@ public function actionStageCancel(Request $request, $id)
             //                     }
             //                   );
             //                 }
-            //          } 
+            //          }
             //       }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }
 
-  
+
     } else {
         toastr()->error('E-signature Not match');
         return back();
@@ -1712,7 +1904,7 @@ public function actionmoreinfo(Request $request, $id)
             $changeControl->more_information_required_by = (string)Auth::user()->name;
             $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
             $changeControl->more_info_requ_comment =$request->comment;
-        
+
             $history = new ActionItemHistory;
             $history->action = "More Information Required";
             $history->cc_id = $id;
@@ -1744,21 +1936,21 @@ public function actionmoreinfo(Request $request, $id)
             //         // }
             //     }
             $changeControl->update();
-           
+
             // $history->type = "Action Item";
             // $history->doc_id = $id;
             // $history->user_id = Auth::user()->id;
             // $history->user_name = Auth::user()->name;
             // $history->stage_id = $changeControl->stage;
             // $history->status = "More-information Required";
-            
+
             // $history->save();
         //     $list = Helpers::getInitiatorUserList();
         //     foreach ($list as $u) {
         //         if($u->q_m_s_divisions_id == $openState->division_id){
         //             $email = Helpers::getInitiatorEmail($u->user_id);
         //              if ($email !== null) {
-                  
+
         //               Mail::send(
         //                   'mail.view-mail',
         //                    ['data' => $openState],
@@ -1768,7 +1960,7 @@ public function actionmoreinfo(Request $request, $id)
         //                 }
         //               );
         //             }
-        //      } 
+        //      }
         //   }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
@@ -1818,7 +2010,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->change_to = "HOD Review";
             $history->change_from = $lastopenState->status;
             $history->save();
-      
+
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }
@@ -1867,7 +2059,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->change_to = "Acknowledge";
             $history->change_from = $lastopenState->status;
             $history->save();
-      
+
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }
@@ -1965,7 +2157,7 @@ public function auditTrailPdf($id)
                 'isRemoteEnabled' => true,
                 'isPhpEnabled' => true,
             ]);
-        
+
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();
@@ -1994,7 +2186,7 @@ public function auditTrailPdf($id)
         // Start query for DeviationAuditTrail
         $query = ActionItemHistory::query();
         $query->where('cc_id', $id);
-    
+
         // Check if typedata is provided
         if ($request->filled('typedata')) {
             switch ($request->typedata) {
@@ -2003,7 +2195,7 @@ public function auditTrailPdf($id)
                     $cft_field = ['CFT Review Complete','CFT Review Not Required',];
                     $query->whereIn('action', $cft_field);
                     break;
-    
+
                 case 'stage':
                     // Filter by activity log stage changes
                     $stage=[  'Submit', 'Acknowledge Complete', 'Complete','Request For Cancellation',
@@ -2012,7 +2204,7 @@ public function auditTrailPdf($id)
                         'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                     $query->whereIn('action', $stage); // Ensure correct activity_type value
                     break;
-    
+
                 case 'user_action':
                     // Filter by various user actions
                     $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
@@ -2031,33 +2223,33 @@ public function auditTrailPdf($id)
                     $business = [];
                     $query->whereIn('action', $business);
                     break;
-    
+
                 default:
                     break;
             }
         }
-    
+
         // Apply additional filters
         if ($request->filled('user')) {
             $query->where('user_id', $request->user);
         }
-    
+
         if ($request->filled('from_date')) {
             $query->whereDate('created_at', '>=', $request->from_date);
         }
-    
+
         if ($request->filled('to_date')) {
             $query->whereDate('created_at', '<=', $request->to_date);
         }
-    
+
         // Get the filtered results
         $audit = $query->orderByDesc('id')->get();
-    
+
         // Flag for filter request
         $filter_request = true;
         // Render the filtered view and return as JSON
         $responseHtml = view('frontend.action-item.action_filter', compact('audit', 'filter_request'))->render();
-    
+
         return response()->json(['html' => $responseHtml]);
     }
 

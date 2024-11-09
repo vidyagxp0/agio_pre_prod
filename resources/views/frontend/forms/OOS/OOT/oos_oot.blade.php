@@ -1785,7 +1785,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">OOS Stands </label>
+                            <label for="Reference Recores">OOS/OOT Stands </label>
                             <select>
                                 <option value="">Valid</option>
                                 <option value="">Invalid</option>

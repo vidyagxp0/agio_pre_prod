@@ -570,7 +570,7 @@
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Review)
-                                        {{ $data1->Production_Table_Review }}
+                                        {{ ucfirst($data1->Production_Table_Review) }}
                                     @else
                                         Not Applicable
                                     @endif
@@ -686,7 +686,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Injection_Review)
-                                            {{ $data1->Production_Injection_Review }}
+                                            {{ucfirst($data1->Production_Injection_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -786,7 +786,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_Review)
-                                            {{ $data1->ResearchDevelopment_Review }}
+                                            {{ ucfirst($data1->ResearchDevelopment_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -885,7 +885,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Human_Resource_review)
-                                            {{ $data1->Human_Resource_review }}
+                                            {{ucfirst( $data1->Human_Resource_review )}}
                                         @else
                                             Not Applicable
                                         @endif
@@ -985,7 +985,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->CorporateQualityAssurance_Review)
-                                            {{ $data1->CorporateQualityAssurance_Review }}
+                                            {{ ucfirst($data1->CorporateQualityAssurance_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1085,7 +1085,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_Review)
-                                            {{ $data1->Store_Review }}
+                                            {{ ucfirst($data1->Store_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1185,7 +1185,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Engineering_review)
-                                            {{ $data1->Engineering_review }}
+                                            {{ ucfirst($data1->Engineering_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1284,7 +1284,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->RegulatoryAffair_Review)
-                                            {{ $data1->RegulatoryAffair_Review }}
+                                            {{ ucfirst($data1->RegulatoryAffair_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1384,7 +1384,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_Assurance_Review)
-                                            {{ $data1->Quality_Assurance_Review }}
+                                            {{ ucfirst($data1->Quality_Assurance_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1484,7 +1484,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_Review)
-                                            {{ $data1->ProductionLiquid_Review }}
+                                            {{ ucfirst($data1->ProductionLiquid_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1583,7 +1583,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_review)
-                                            {{ $data1->Quality_review }}
+                                            {{ ucfirst($data1->Quality_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1683,7 +1683,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Microbiology_Review)
-                                            {{ $data1->Microbiology_Review }}
+                                            {{ ucfirst($data1->Microbiology_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1787,7 +1787,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Environment_Health_review)
-                                            {{ $data1->Environment_Health_review }}
+                                            {{ ucfirst($data1->Environment_Health_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1989,7 +1989,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_review)
-                                            {{ $data1->Other1_review }}
+                                            {{ ucfirst($data1->Other1_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2098,7 +2098,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_review)
-                                            {{ $data1->Other2_review }}
+                                            {{ ucfirst($data1->Other2_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2207,7 +2207,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_review)
-                                            {{ $data1->Other3_review }}
+                                            {{ ucfirst($data1->Other3_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2316,7 +2316,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_review)
-                                            {{ $data1->Other4_review }}
+                                            {{ ucfirst($data1->Other4_review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2425,7 +2425,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_review)
-                                            {{ $data1->Other5_review }}
+                                            {{ ucfirst($data1->Other5_review) }}
                                         @else
                                             Not Applicable
                                         @endif

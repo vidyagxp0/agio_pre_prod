@@ -1596,6 +1596,23 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        if (!empty ($request->qa_head_designe_comment)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'QA/CQA Head/Designee Approval comment';
+            $history->previous = "Null";
+            $history->current = $deviation->qa_head_designe_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->Product_Batch)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1630,7 +1647,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
 
 
-                if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
+               if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Immediate Action (if any)';
@@ -1767,11 +1784,13 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
     public function update(Request $request, $id)
     {
+
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
         $lastDeviationAuditTrail = deviation::find($id);
         $deviation = deviation::find($id);
+
         // $lastDocument = deviation::find($id);
         $lastCft = DeviationCft::where('deviation_id', $deviation->id)->first();
         $deviation->Delay_Justification = $request->Delay_Justification;
@@ -1786,6 +1805,10 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->how = $request->how;
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
+        $deviation->Investigation_required = $request->Investigation_required;
+        // dd($deviation->Investigation_required );
+        $deviation->capa_required = $request->capa_required;
+        $deviation->qrm_required = $request->qrm_required;
 
         // $deviation->capa_root_cause = $request->capa_root_cause;
         // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
@@ -1794,20 +1817,15 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
 
 
-        if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
-        {
-            $deviation->Investigation_required = "yes";
-            $deviation->capa_required = "yes";
-            $deviation->qrm_required = "yes";
-        }
+        // if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
 
 
-        if ($request->Deviation_category == 'minor')
-        {
-            $deviation->Investigation_required = $request->Investigation_required;
-            $deviation->capa_required = $request->capa_required;
-            $deviation->qrm_required = $request->qrm_required;
-        }
+
+        // $deviation->Deviation_category = $request->Deviation_category;
+        //     $deviation->Investigation_required = $request->Investigation_required;
+        //     $deviation->capa_required = $request->capa_required;
+        //     $deviation->qrm_required = $request->qrm_required;
+
 
         if ($request->form_name == 'general-open')
         {
@@ -3605,6 +3623,48 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+        if ($lastDeviation->qa_head_designe_comment != $deviation->qa_head_designe_comment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QA/CQA Head/Designee Approval comment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QA/CQA Head/Designee Approval comment';
+             $history->previous = $lastDeviation->qa_head_designe_comment;
+            $history->current = $deviation->qa_head_designe_comment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->qa_head_designee_attach != $deviation->qa_head_designee_attach || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QA/CQA Head/ Designee Approval attachment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QA/CQA Head/ Designee Approval attachment';
+             $history->previous = $lastDeviation->qa_head_designee_attach;
+            $history->current = $deviation->qa_head_designee_attach;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+
          if ($lastDeviation->Deviation_date != $deviation->Deviation_date || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Observed On')
@@ -3999,11 +4059,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->HOD_Remarks != $deviation->HOD_Remarks || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'HOD Remarks')
+                            ->where('activity_type', 'HOD Review Comment')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'HOD Remarks';
+            $history->activity_type = 'HOD Review Comment';
              $history->previous = $lastDeviation->HOD_Remarks;
             $history->current = $deviation->HOD_Remarks;
             $history->comment = $deviation->submit_comment;
@@ -4095,11 +4155,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->hod_final_review != $deviation->hod_final_review || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'HOD Final Review')
+                            ->where('activity_type', 'HOD Final Review Comments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'HOD Final Review';
+            $history->activity_type = 'HOD Final Review Comments';
              $history->previous = $lastDeviation->hod_final_review;
             $history->current = $deviation->hod_final_review;
             $history->comment = $deviation->submit_comment;
@@ -4156,13 +4216,53 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->Investigation_required != $deviation->Investigation_required || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Investigation required')
+                            ->where('activity_type', 'Investigation required ?')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Investigation required';
+            $history->activity_type = 'Investigation required ?';
              $history->previous = $lastDeviation->Investigation_required;
             $history->current = $deviation->Investigation_required;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->capa_required != $deviation->capa_required || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'CAPA Required ?')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'CAPA required ?';
+             $history->previous = $lastDeviation->capa_required;
+            $history->current = $deviation->capa_required;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if ($lastDeviation->qrm_required != $deviation->qrm_required || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'QRM Required ?')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'QRM Required ? ';
+             $history->previous = $lastDeviation->qrm_required;
+            $history->current = $deviation->qrm_required;
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4236,11 +4336,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->QAInitialRemark != $deviation->QAInitialRemark || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA Initial Remark')
+                            ->where('activity_type', 'QA/CQA Initial Assessment')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA Initial Remark';
+            $history->activity_type = 'QA/CQA Initial Assessment';
              $history->previous = $lastDeviation->QAInitialRemark;
             $history->current = $deviation->QAInitialRemark;
             $history->comment = $deviation->submit_comment;
@@ -4255,11 +4355,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA initial Attachments')
+                            ->where('activity_type', 'QA/CQA Implementation Verification Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA initial Attachments';
+            $history->activity_type = 'QA/CQA Implementation Verification Attachments';
              $history->previous = $lastDeviation->Initial_attachment;
             $history->current = $deviation->Initial_attachment;
             $history->comment = $deviation->submit_comment;
@@ -4353,11 +4453,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         }
         if ($lastDeviation->imidiate_action != $deviation->imidiate_action || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Imidiate_action')
+                            ->where('activity_type', 'Immediate Action')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Imidiate Action';
+            $history->activity_type = 'Immediate Action';
              $history->previous = $lastDeviation->imidiate_action;
             $history->current = $deviation->imidiate_action;
             $history->comment = $deviation->submit_comment;
@@ -4996,11 +5096,11 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
         if ($lastDeviation->Disposition_Batch != $deviation->Disposition_Batch || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Disposition Batch')
+                            ->where('activity_type', 'Disposition of Batch')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Disposition Batch';
+            $history->activity_type = 'Disposition of Batch';
              $history->previous = $lastDeviation->Disposition_Batch;
             $history->current = $deviation->Disposition_Batch;
             $history->comment = $deviation->submit_comment;
@@ -5021,7 +5121,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Quality Assurance Review Required';
+            $history->activity_type = 'Quality Assurance Impact Assessment Required';
             $history->previous = $lastCft->Quality_Assurance_Review;
             $history->current = $request->Quality_Assurance_Review;
             $history->comment = "Not Applicable";
@@ -5078,26 +5178,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Quality Assurance Feedback';
-            $history->previous = $lastCft->QualityAssurance_feedback;
-            $history->current = $request->QualityAssurance_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Quality Assurance Feedback';
+        //     $history->previous = $lastCft->QualityAssurance_feedback;
+        //     $history->current = $request->QualityAssurance_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
          if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
@@ -5121,7 +5221,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Quality Assurance Review By';
+            $history->activity_type = 'Quality Assurance Impact Assessment By';
             $history->previous = $lastCft->QualityAssurance_by;
             $history->current = $request->QualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -5141,7 +5241,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Quality Assurance Review On';
+            $history->activity_type = 'Quality Assurance Impact Assessment On';
             $history->previous = $lastCft->QualityAssurance_on;
             $history->current = $request->QualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -5164,7 +5264,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Impact Assessment Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -5221,26 +5321,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
-            $history->previous = $lastCft->Production_Table_Feedback;
-            $history->current = $request->Production_Table_Feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Production Tablet/Capsule/Powder Feeback';
+        //     $history->previous = $lastCft->Production_Table_Feedback;
+        //     $history->current = $request->Production_Table_Feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
@@ -5264,7 +5364,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Review By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Impact Assessment By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -5284,7 +5384,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder On';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Impact Assessment On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -5306,7 +5406,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Review Required';
+            $history->activity_type = 'Production Liquid/Ointment Impact Assessment Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -5383,30 +5483,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Feedback';
-            $history->previous = $lastCft->ProductionLiquid_attachment;
-            $history->current = implode(',',$request->ProductionLiquid_attachment);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Production Liquid/Ointment Feedback';
+        //     $history->previous = $lastCft->ProductionLiquid_attachment;
+        //     $history->current = implode(',',$request->ProductionLiquid_attachment);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Review By';
+            $history->activity_type = 'Production Liquid/Ointment Impact Assessment By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -5426,7 +5526,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Liquid/Ointment Review On';
+            $history->activity_type = 'Production Liquid/Ointment Impact Assessment On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $request->ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -5448,7 +5548,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Injection Review Required';
+            $history->activity_type = 'Production Injection Impact Assessment Required';
             $history->previous = $lastCft->Production_Injection_Review;
             $history->current = $request->Production_Injection_Review;
             $history->comment = "Not Applicable";
@@ -5505,30 +5605,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Production Injection Feedback';
-            $history->previous = $lastCft->Production_Injection_Feedback;
-            $history->current = $request->Production_Injection_Feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Production Injection Feedback';
+        //     $history->previous = $lastCft->Production_Injection_Feedback;
+        //     $history->current = $request->Production_Injection_Feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Injection On';
+            $history->activity_type = 'Production Injection Attachment';
             $history->previous = $lastCft->Production_Injection_Attachment;
             $history->current =implode(',', $request->Production_Injection_Attachment);
             $history->comment = "Not Applicable";
@@ -5548,7 +5648,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Injection Review By';
+            $history->activity_type = 'Production Injection Impact Assessment By';
             $history->previous = $lastCft->Production_Injection_By;
             $history->current = $request->Production_Injection_By;
             $history->comment = "Not Applicable";
@@ -5568,7 +5668,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Production Injection On';
+            $history->activity_type = 'Production Injection Impact Assessment On';
             $history->previous = $lastCft->Production_Injection_On;
             $history->current = $request->Production_Injection_On;
             $history->comment = "Not Applicable";
@@ -5590,7 +5690,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Store Review Required';
+            $history->activity_type = 'Store Impact Assessment Required';
             $history->previous = $lastCft->Store_Review;
             $history->current = $request->Store_Review;
             $history->comment = "Not Applicable";
@@ -5647,30 +5747,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Store Feedback';
-            $history->previous = $lastCft->Store_feedback;
-            $history->current = $request->Store_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Store Feedback';
+        //     $history->previous = $lastCft->Store_feedback;
+        //     $history->current = $request->Store_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
          if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Store Review On';
+            $history->activity_type = 'Store Attachment';
             $history->previous = $lastCft->Store_attachment;
             $history->current =implode(',', $request->Store_attachment);
             $history->comment = "Not Applicable";
@@ -5690,7 +5790,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Store Review By';
+            $history->activity_type = 'Store Impact Assessment By';
             $history->previous = $lastCft->Store_by;
             $history->current = $request->Store_by;
             $history->comment = "Not Applicable";
@@ -5710,7 +5810,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Store Review On';
+            $history->activity_type = 'Store Impact Assessment On';
             $history->previous = $lastCft->Store_on;
             $history->current = $request->Store_on;
             $history->comment = "Not Applicable";
@@ -5732,7 +5832,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Quality Control Required';
+            $history->activity_type = 'Quality Control Impact Assessment Required';
             $history->previous = $lastCft->Quality_review;
             $history->current = $request->Quality_review;
             $history->comment = "Not Applicable";
@@ -5789,26 +5889,26 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Quality Control Feeback';
-            $history->previous = $lastCft->Quality_Control_feedback;
-            $history->current = $request->Quality_Control_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Quality Control Feeback';
+        //     $history->previous = $lastCft->Quality_Control_feedback;
+        //     $history->current = $request->Quality_Control_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         // if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
         //     $history = new DeviationAuditTrail;
         //     $history->deviation_id = $id;
@@ -5852,7 +5952,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Quality Control On';
+            $history->activity_type = 'Quality Control Attachment';
             $history->previous = $lastCft->Quality_Control_attachment;
             $history->current =implode(',', $request->Quality_Control_attachment);
             $history->comment = "Not Applicable";
@@ -5874,7 +5974,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Research & Development Required';
+            $history->activity_type = 'Research & Development Impact Assessment Required';
             $history->previous = $lastCft->ResearchDevelopment_Review;
             $history->current = $request->ResearchDevelopment_Review;
             $history->comment = "Not Applicable";
@@ -5931,30 +6031,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Research & Development Feedback';
-            $history->previous = $lastCft->ResearchDevelopment_feedback;
-            $history->current = $request->ResearchDevelopment_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Research & Development Feedback';
+        //     $history->previous = $lastCft->ResearchDevelopment_feedback;
+        //     $history->current = $request->ResearchDevelopment_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Research & Development By';
+            $history->activity_type = 'Research & Development Impact Assessment By';
             $history->previous = $lastCft->ResearchDevelopment_by;
             $history->current = $request->ResearchDevelopment_by;
             $history->comment = "Not Applicable";
@@ -5974,7 +6074,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Research & Development On';
+            $history->activity_type = 'Research & Development Impact Assessment On';
             $history->previous = $lastCft->ResearchDevelopment_on;
             $history->current = $request->ResearchDevelopment_on;
             $history->comment = "Not Applicable";
@@ -5994,7 +6094,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Research & Development On';
+            $history->activity_type = 'Research & Development Attachment';
             $history->previous = $lastCft->ResearchDevelopment_attachment;
             $history->current =implode(',', $request->ResearchDevelopment_attachment);
             $history->comment = "Not Applicable";
@@ -6016,7 +6116,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Engineering Review Required';
+            $history->activity_type = 'Engineering Review Impact Assessment Required';
             $history->previous = $lastCft->Engineering_review;
             $history->current = $request->Engineering_review;
             $history->comment = "Not Applicable";
@@ -6073,30 +6173,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Engineering Feedback';
-            $history->previous = $lastCft->Engineering_feedback;
-            $history->current = $request->Engineering_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Engineering Feedback';
+        //     $history->previous = $lastCft->Engineering_feedback;
+        //     $history->current = $request->Engineering_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Engineering Review By';
+            $history->activity_type = 'Engineering Impact Assessment By';
             $history->previous = $lastCft->Engineering_by;
             $history->current = $request->Engineering_by;
             $history->comment = "Not Applicable";
@@ -6116,7 +6216,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Engineering Review On';
+            $history->activity_type = 'Engineering Impact Assessment On';
             $history->previous = $lastCft->Engineering_on;
             $history->current = $request->Engineering_on;
             $history->comment = "Not Applicable";
@@ -6136,7 +6236,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Engineering Review On';
+            $history->activity_type = 'Engineering Attachment';
             $history->previous = $lastCft->Engineering_attachment;
             $history->current = implode(',',$request->Engineering_attachment);
             $history->comment = "Not Applicable";
@@ -6158,7 +6258,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Human Resource Review Required';
+            $history->activity_type = 'Human Resource Impact Assessment Required';
             $history->previous = $lastCft->Human_Resource_review;
             $history->current = $request->Human_Resource_review;
             $history->comment = "Not Applicable";
@@ -6215,30 +6315,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Human Resource Feedback';
-            $history->previous = $lastCft->Human_Resource_feedback;
-            $history->current = $request->Human_Resource_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Human Resource Feedback';
+        //     $history->previous = $lastCft->Human_Resource_feedback;
+        //     $history->current = $request->Human_Resource_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Human Resource Review By';
+            $history->activity_type = 'Human Resource Impact Assessment By';
             $history->previous = $lastCft->Human_Resource_by;
             $history->current = $request->Human_Resource_by;
             $history->comment = "Not Applicable";
@@ -6258,7 +6358,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Human Resource Review On';
+            $history->activity_type = 'Human Resource Impact Assessment On';
             $history->previous = $lastCft->Human_Resource_on;
             $history->current = $request->Human_Resource_on;
             $history->comment = "Not Applicable";
@@ -6278,7 +6378,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Human Resource Review On';
+            $history->activity_type = 'Human Resource Attachment';
             $history->previous = $lastCft->Human_Resource_attachment;
             $history->current =implode(',', $request->Human_Resource_attachment);
             $history->comment = "Not Applicable";
@@ -6300,7 +6400,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Microbiology Review Required';
+            $history->activity_type = 'Microbiology Impact Assessment Required';
             $history->previous = $lastCft->Microbiology_Review;
             $history->current = $request->Microbiology_Review;
             $history->comment = "Not Applicable";
@@ -6357,30 +6457,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Microbiology Feedback';
-            $history->previous = $lastCft->Microbiology_feedback;
-            $history->current = $request->Microbiology_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Microbiology Feedback';
+        //     $history->previous = $lastCft->Microbiology_feedback;
+        //     $history->current = $request->Microbiology_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Microbiology Review By';
+            $history->activity_type = 'Microbiology Impact Assessment By';
             $history->previous = $lastCft->Microbiology_by;
             $history->current = $request->Microbiology_by;
             $history->comment = "Not Applicable";
@@ -6400,7 +6500,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Microbiology Review On';
+            $history->activity_type = 'Microbiology Impact Assessment On';
             $history->previous = $lastCft->Microbiology_on;
             $history->current = $request->Microbiology_on;
             $history->comment = "Not Applicable";
@@ -6420,7 +6520,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
          if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Microbiology Review On';
+            $history->activity_type = 'Microbiology Attachment';
             $history->previous = $lastCft->Microbiology_attachment;
             $history->current = implode(',',$request->Microbiology_attachment);
             $history->comment = "Not Applicable";
@@ -6442,7 +6542,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Regulatory Affair Review Required';
+            $history->activity_type = 'Regulatory Affair Impact Assessment Required';
             $history->previous = $lastCft->RegulatoryAffair_Review;
             $history->current = $request->RegulatoryAffair_Review;
             $history->comment = "Not Applicable";
@@ -6499,30 +6599,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Regulatory Affair Feedback';
-            $history->previous = $lastCft->RegulatoryAffair_feedback;
-            $history->current = $request->RegulatoryAffair_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Regulatory Affair Feedback';
+        //     $history->previous = $lastCft->RegulatoryAffair_feedback;
+        //     $history->current = $request->RegulatoryAffair_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Regulatory Affair Review By';
+            $history->activity_type = 'Regulatory Affair Impact Assessment By';
             $history->previous = $lastCft->RegulatoryAffair_by;
             $history->current = $request->RegulatoryAffair_by;
             $history->comment = "Not Applicable";
@@ -6542,7 +6642,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Impact Assessment On';
             $history->previous = $lastCft->RegulatoryAffair_on;
             $history->current = $request->RegulatoryAffair_on;
             $history->comment = "Not Applicable";
@@ -6562,7 +6662,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Attachment';
             $history->previous = $lastCft->RegulatoryAffair_attachment;
             $history->current =implode(',', $request->RegulatoryAffair_attachment);
             $history->comment = "Not Applicable";
@@ -6584,7 +6684,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review Required';
+            $history->activity_type = 'Corporate Quality Assurance Impact Assessment Required';
             $history->previous = $lastCft->CorporateQualityAssurance_Review;
             $history->current = $request->CorporateQualityAssurance_Review;
             $history->comment = "Not Applicable";
@@ -6641,30 +6741,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Feedback';
-            $history->previous = $lastCft->CorporateQualityAssurance_feedback;
-            $history->current = $request->CorporateQualityAssurance_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Corporate Quality Assurance Feedback';
+        //     $history->previous = $lastCft->CorporateQualityAssurance_feedback;
+        //     $history->current = $request->CorporateQualityAssurance_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review By';
+            $history->activity_type = 'Corporate Quality Assurance Impact Assessment By';
             $history->previous = $lastCft->CorporateQualityAssurance_by;
             $history->current = $request->CorporateQualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -6684,7 +6784,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->activity_type = 'Corporate Quality Assurance Impact Assessment On';
             $history->previous = $lastCft->CorporateQualityAssurance_on;
             $history->current = $request->CorporateQualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -6704,7 +6804,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Review On';
+            $history->activity_type = 'Corporate Quality Assurance Attachment';
             $history->previous = $lastCft->CorporateQualityAssurance_attachment;
             $history->current =implode(',', $request->CorporateQualityAssurance_attachment);
             $history->comment = "Not Applicable";
@@ -6726,7 +6826,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Safety Review Required';
+            $history->activity_type = 'Safety Impact Assessment Required';
             $history->previous = $lastCft->Environment_Health_review;
             $history->current = $request->Environment_Health_review;
             $history->comment = "Not Applicable";
@@ -6783,30 +6883,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Safety Feedback';
-            $history->previous = $lastCft->Health_Safety_feedback;
-            $history->current = $request->Health_Safety_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Safety Feedback';
+        //     $history->previous = $lastCft->Health_Safety_feedback;
+        //     $history->current = $request->Health_Safety_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Safety Review By';
+            $history->activity_type = 'Safety Impact Assessment By';
             $history->previous = $lastCft->Environment_Health_Safety_by;
             $history->current = $request->Environment_Health_Safety_by;
             $history->comment = "Not Applicable";
@@ -6846,7 +6946,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Safety Review On';
+            $history->activity_type = 'Safety Impact Assessment On';
             $history->previous = $lastCft->Environment_Health_Safety_attachment;
             $history->current =implode(',', $request->Environment_Health_Safety_attachment);
             $history->comment = "Not Applicable";
@@ -6868,7 +6968,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Contract Required';
+            $history->activity_type = 'Contract giver Impact Assessment Required';
             $history->previous = $lastCft->ContractGiver_Review;
             $history->current = $request->ContractGiver_Review;
             $history->comment = "Not Applicable";
@@ -6925,30 +7025,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Contract Giver Feedback';
-            $history->previous = $lastCft->ContractGiver_feedback;
-            $history->current = $request->ContractGiver_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Contract Giver Feedback';
+        //     $history->previous = $lastCft->ContractGiver_feedback;
+        //     $history->current = $request->ContractGiver_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Contract Giver Review By';
+            $history->activity_type = 'Contract Giver Impact Assessment By';
             $history->previous = $lastCft->ContractGiver_by;
             $history->current = $request->ContractGiver_by;
             $history->comment = "Not Applicable";
@@ -6968,7 +7068,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Contract Giver Review On';
+            $history->activity_type = 'Contract Giver Impact Assessment On';
             $history->previous = $lastCft->ContractGiver_on;
             $history->current = $request->ContractGiver_on;
             $history->comment = "Not Applicable";
@@ -6989,7 +7089,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->ContractGiver_attachment != $request->ContractGiver_attachment && $request->ContractGiver_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Contract Giver Review On';
+            $history->activity_type = 'Contract Giver Attachment ';
             $history->previous = $lastCft->ContractGiver_attachment;
             $history->current = implode(',',$request->ContractGiver_attachment);
             $history->comment = "Not Applicable";
@@ -7010,7 +7110,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
+            $history->activity_type = 'Other 1 Impact Assessment Required';
             $history->previous = $lastCft->Other1_review;
             $history->current = $request->Other1_review;
             $history->comment = "Not Applicable";
@@ -7050,7 +7150,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Review Required';
+            $history->activity_type = 'Other 1 Department';
             $history->previous = $lastCft->Other1_Department_person;
             $history->current = $request->Other1_Department_person;
             $history->comment = "Not Applicable";
@@ -7087,30 +7187,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Feedback';
-            $history->previous = $lastCft->Other1_feedback;
-            $history->current = $request->Other1_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Other 1 Feedback';
+        //     $history->previous = $lastCft->Other1_feedback;
+        //     $history->current = $request->Other1_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Other1_feedback) || $lastCft->Other1_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Review By';
+            $history->activity_type = 'Other 1 Impact Assessment By';
             $history->previous = $lastCft->Other1_by;
             $history->current = $request->Other1_by;
             $history->comment = "Not Applicable";
@@ -7130,7 +7230,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Review On';
+            $history->activity_type = 'Other 1 Impact Assessment On';
             $history->previous = $lastCft->Other1_on;
             $history->current = $request->Other1_on;
             $history->comment = "Not Applicable";
@@ -7150,7 +7250,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 1 Review On';
+            $history->activity_type = 'Other 1 Attachment';
             $history->previous = $lastCft->Other1_attachment;
             $history->current = implode(',',$request->Other1_attachment);
             $history->comment = "Not Applicable";
@@ -7173,7 +7273,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
+            $history->activity_type = 'Other 2 Impact Assessment Required';
             $history->previous = $lastCft->Other2_review;
             $history->current = $request->Other2_review;
             $history->comment = "Not Applicable";
@@ -7213,7 +7313,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
+            $history->activity_type = 'Other 2 Department';
             $history->previous = $lastCft->Other2_Department_person;
             $history->current = $request->Other2_Department_person;
             $history->comment = "Not Applicable";
@@ -7250,30 +7350,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Feedback';
-            $history->previous = $lastCft->Other2_feedback;
-            $history->current = $request->Other2_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Other 2 Feedback';
+        //     $history->previous = $lastCft->Other2_feedback;
+        //     $history->current = $request->Other2_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Other2_feedback) || $lastCft->Other2_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Review By';
+            $history->activity_type = 'Other 2 Impact Assessment By';
             $history->previous = $lastCft->Other2_by;
             $history->current = $request->Other2_by;
             $history->comment = "Not Applicable";
@@ -7293,7 +7393,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Review On';
+            $history->activity_type = 'Other 2 Impact Assessment On';
             $history->previous = $lastCft->Other2_on;
             $history->current = $request->Other2_on;
             $history->comment = "Not Applicable";
@@ -7313,7 +7413,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 2 Review On';
+            $history->activity_type = 'Other 2 Attachment';
             $history->previous = $lastCft->Other2_attachment;
             $history->current =implode(',', $request->Other2_attachment);
             $history->comment = "Not Applicable";
@@ -7335,7 +7435,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
+            $history->activity_type = 'Other 3 Impact Assessment Required';
             $history->previous = $lastCft->Other3_review;
             $history->current = $request->Other3_review;
             $history->comment = "Not Applicable";
@@ -7375,7 +7475,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
+            $history->activity_type = 'Other 3 Department';
             $history->previous = $lastCft->Other3_Department_person;
             $history->current = $request->Other3_Department_person;
             $history->comment = "Not Applicable";
@@ -7412,30 +7512,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Feedback';
-            $history->previous = $lastCft->Other3_feedback;
-            $history->current = $request->Other3_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Other 3 Feedback';
+        //     $history->previous = $lastCft->Other3_feedback;
+        //     $history->current = $request->Other3_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Other3_feedback) || $lastCft->Other3_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Review By';
+            $history->activity_type = 'Other 3 Impact Assessment By';
             $history->previous = $lastCft->Other3_by;
             $history->current = $request->Other3_by;
             $history->comment = "Not Applicable";
@@ -7455,7 +7555,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Review On';
+            $history->activity_type = 'Other 3 Impact Assessment On';
             $history->previous = $lastCft->Other3_on;
             $history->current = $request->Other3_on;
             $history->comment = "Not Applicable";
@@ -7475,7 +7575,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 3 Review On';
+            $history->activity_type = 'Other 3 Attachment';
             $history->previous = $lastCft->Other3_attachment;
             $history->current =implode(',', $request->Other3_attachment);
             $history->comment = "Not Applicable";
@@ -7497,7 +7597,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
+            $history->activity_type = 'Other 4 Impact Assessment Required';
             $history->previous = $lastCft->Other4_review;
             $history->current = $request->Other4_review;
             $history->comment = "Not Applicable";
@@ -7537,7 +7637,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
+            $history->activity_type = 'Other 4 Department';
             $history->previous = $lastCft->Other4_Department_person;
             $history->current = $request->Other4_Department_person;
             $history->comment = "Not Applicable";
@@ -7574,30 +7674,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Feedback';
-            $history->previous = $lastCft->Other4_feedback;
-            $history->current = $request->Other4_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Other 4 Feedback';
+        //     $history->previous = $lastCft->Other4_feedback;
+        //     $history->current = $request->Other4_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Other4_feedback) || $lastCft->Other4_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Review By';
+            $history->activity_type = 'Other 4 Impact Assessment By';
             $history->previous = $lastCft->Other4_by;
             $history->current = $request->Other4_by;
             $history->comment = "Not Applicable";
@@ -7617,7 +7717,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Review On';
+            $history->activity_type = 'Other 4 Impact Assessment On';
             $history->previous = $lastCft->Other4_on;
             $history->current = $request->Other4_on;
             $history->comment = "Not Applicable";
@@ -7637,7 +7737,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 4 Review On';
+            $history->activity_type = 'Other 4 Attachment';
             $history->previous = $lastCft->Other4_attachment;
             $history->current =implode(',', $request->Other4_attachment);
             $history->comment = "Not Applicable";
@@ -7660,7 +7760,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
+            $history->activity_type = 'Other 5 Impact Assessment Required';
             $history->previous = $lastCft->Other5_review;
             $history->current = $request->Other5_review;
             $history->comment = "Not Applicable";
@@ -7700,7 +7800,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
+            $history->activity_type = 'Other 5 Department';
             $history->previous = $lastCft->Other5_Department_person;
             $history->current = $request->Other5_Department_person;
             $history->comment = "Not Applicable";
@@ -7737,30 +7837,30 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             }
             $history->save();
         }
-        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Feedback';
-            $history->previous = $lastCft->Other5_feedback;
-            $history->current = $request->Other5_feedback;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-             if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
+        //     $history = new DeviationAuditTrail;
+        //     $history->deviation_id = $id;
+        //     $history->activity_type = 'Other 5 Feedback';
+        //     $history->previous = $lastCft->Other5_feedback;
+        //     $history->current = $request->Other5_feedback;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDeviation->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDeviation->status;
+        //      if (is_null($lastCft->Other5_feedback) || $lastCft->Other5_feedback === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
         if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Review By';
+            $history->activity_type = 'Other 5 Impact Assessment By';
             $history->previous = $lastCft->Other5_by;
             $history->current = $request->Other5_by;
             $history->comment = "Not Applicable";
@@ -7780,7 +7880,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Review On';
+            $history->activity_type = 'Other 5 Impact Assessment On';
             $history->previous = $lastCft->Other5_on;
             $history->current = $request->Other5_on;
             $history->comment = "Not Applicable";
@@ -7800,7 +7900,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
         if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Other 5 Review On';
+            $history->activity_type = 'Other 5 Attachment';
             $history->previous = $lastCft->Other5_attachment;
             $history->current = implode(',',$request->Other5_attachment);
             $history->comment = "Not Applicable";
@@ -9222,15 +9322,15 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                     //     }
                     // }
 
-                    if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    // if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                            }
-                            if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    //         }
+                    //         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                                    }
-                                    if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
+                    //                 }
+                    //                 if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
 
-                                            }
+                    //                         }
 
                                             // $list = Helpers::getCftUserList($deviation->division_id);
                                             // foreach ($list as $u) {
@@ -11182,7 +11282,7 @@ public function audit_trail_filter(Request $request, $id)
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
         // $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
-        $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+            $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
 
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
@@ -11192,6 +11292,9 @@ public function audit_trail_filter(Request $request, $id)
             $grid_data_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
             $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
+           $fishboneData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
+            
+            //dd($fishboneData);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
 
@@ -11202,7 +11305,7 @@ public function audit_trail_filter(Request $request, $id)
             // }
 
 
-            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
+            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

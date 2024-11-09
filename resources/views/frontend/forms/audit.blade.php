@@ -243,7 +243,7 @@
                         '</div>' +
                         '</div>' +
                         '</div>' +
-                       
+
                         //    '<td><input type="text" name="Initial[' + serialNumber + '][Actual_date]"></td>' +
                         '<td>' +
                        '<div class="group-input new-date-data-field mb-0">' +
@@ -260,7 +260,7 @@
                         '</div>' +
                         '</div>' +
                         '</td>' +
-                        
+
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
 
@@ -366,13 +366,13 @@
             width: 100%;
         }
     </style>
-<!-- 
+<!--
         <style>
             .data  {
                 display: none;
             }
         </style> -->
-    
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -539,13 +539,13 @@
                                         </div>
                                     </div> --}}
 
-                                
+
                                     <!-- <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date </label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="due_date" placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                               
+
                                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" />
                                             </div>
                                         </div>
@@ -557,18 +557,18 @@
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        
+
                                         // If date is valid, format it to 'DD-MMM-YYYY'
                                         if (!isNaN(date.getTime())) {
                                             const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
@@ -582,11 +582,11 @@
                                             document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
                                         }
                                     }
-                                
+
                                     // Initialize the display field to show placeholder on load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        
+
                                         // If there's an initial date, handle it; otherwise, show placeholder
                                         if (dateInput.value) {
                                             handleDateInput(dateInput, 'due_date_display');
@@ -595,8 +595,8 @@
                                         }
                                     });
                                 </script>
-                                
-                                
+
+
                                 <style>
                                     .hide-input {
                                         display: none;
@@ -609,14 +609,14 @@
                                             const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                             document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                         }
-                                        
+
                                         // Call this function initially to ensure the correct format is shown on page load
                                         document.addEventListener('DOMContentLoaded', function() {
                                             const dateInput = document.querySelector('input[name="due_date"]');
                                             handleDateInput(dateInput, 'due_date');
                                         });
                                         </script>
-                                
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Department </b></label>
@@ -863,7 +863,7 @@
                                                 oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                         </div>
                                     </div>
-                                </div>     
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input" id="IncidentRow">
                                         <label for="root_cause">
@@ -873,7 +873,7 @@
                                                 (Launch Instruction)
                                             </span>
                                         </label>
-                                
+
                                         <table class="table table-bordered" id="onservation-incident-tableAuditor">
                                             <thead>
                                                 <tr>
@@ -915,13 +915,13 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                 $(document).ready(function() {
                                     let investdetails = 1; // Start from 1 as the initial index
                                     $('#IncidentAddAuditor').click(function(e) {
                                         e.preventDefault();
-                                
+
                                         // Function to generate a new table row with incremented serial number
                                         function generateTableRow(serialNumber) {
                                             var html =
@@ -949,13 +949,13 @@
                                             investdetails++; // Increment investdetails for the next row
                                             return html;
                                         }
-                                
+
                                         var tableBody = $('#onservation-incident-tableAuditor tbody'); // Get the table body
                                         var rowCount = tableBody.children('tr').length; // Calculate the current number of rows
                                         var newRow = generateTableRow(rowCount + 1); // Generate the new row with the correct serial number
                                         tableBody.append(newRow); // Append the new row to the table
                                     });
-                                
+
                                     // Remove row functionality
                                     $(document).on('click', '.removeRowBtn', function() {
                                         $(this).closest('tr').remove();
@@ -966,7 +966,7 @@
                                     });
                                 });
                                 </script>
-                                
+
                                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments"> GI Attachment</label>
@@ -992,7 +992,7 @@
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                      <div id="CCForm29" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1010,7 +1010,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments"> Acknowledment Attachment</label>
+                                        <label for="Inv Attachments"> Acknowledgement Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
@@ -1026,10 +1026,10 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                  
+
                                         <button type="submit" id="ChangesaveButton" class="saveButton">
                                             Save</button>
-                                    
+
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -1066,12 +1066,12 @@
                                         <option value="17">Checklist - Formulation Research and Development</option>
                                         <option value="18">Checklist - LL / P2P</option>
                                     </select>
- 
+
                                 </div>
                             </div>
 
-                            
-                                          
+
+
 
 
                                 <div class="col-lg-6  new-date-data-field">
@@ -1368,7 +1368,7 @@
                                                             document.getElementById('button16').style.display = 'none';
                                                             // console.log('print3e');
                                                         }
-                                                        
+
                                                         if (selectedOptions.includes('17')) {
                                                             // console.log('print2',selectedOptions);
                                                             document.getElementById('button17').style.display = 'block';
@@ -1576,7 +1576,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    
+
                     <div id="CCForm28" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1686,7 +1686,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1711,7 +1711,7 @@
                                             <option value="17">Checklist - Formulation Research and Development</option>
                                             {{-- <option value="18">Checklist - LL / P2P</option> --}}
                                         </select>
-     
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1735,7 +1735,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               
+
                             <div class="button-block">
                                     <button type="submit" id="ChangesaveButton" class="saveButton"
                                     >Save</button>
@@ -1746,17 +1746,17 @@
                             </div>
                         </div>
                     </div>
-                    </div>  
+                    </div>
                     <script>
 
                         const virtualSelectInstance = VirtualSelect.init({
                                 ele: '#checklists'
                             });
-            
+
                             document.querySelector('.abc').addEventListener('change', function() {
                                 const selectedOptions = $('#checklists').val()
-            
-            
+
+
                                 if (selectedOptions.includes('1')) {
                                     console.log('print1',selectedOptions);
                                     var abc = document.getElementById('button1');
@@ -1766,7 +1766,7 @@
                                     document.getElementById('button1').style.display = 'none';
                                     console.log('print1e');
                                 }
-            
+
                                 if (selectedOptions.includes('2')) {
                                     console.log('print2',selectedOptions);
                                     document.getElementById('button2').style.display = 'block';
@@ -1823,7 +1823,7 @@
                                     document.getElementById('button9').style.display = 'none';
                                     // console.log('print3e');
                                 }
-            
+
                                 if (selectedOptions.includes('10')) {
                                     // console.log('print2',selectedOptions);
                                     document.getElementById('button10').style.display = 'block';
@@ -1873,7 +1873,7 @@
                                     document.getElementById('button16').style.display = 'none';
                                     // console.log('print3e');
                                 }
-                                
+
                                 if (selectedOptions.includes('17')) {
                                     // console.log('print2',selectedOptions);
                                     document.getElementById('button17').style.display = 'block';
@@ -1889,7 +1889,7 @@
                                     // console.log('print3e');
                                 }
                             });
-            
+
                             function openCity(evt, cityName) {
                                 console.log('Open city:', cityName);
                             }
@@ -1946,7 +1946,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
@@ -2031,12 +2031,12 @@
                         </div>
                     </div> --}}
 
-              
+
 
                     <div id="CCForm25" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                               
+
                             <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
@@ -2112,7 +2112,7 @@
                                         </table>
                                     </div>
                                 </div> --}}
-                                
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -2300,14 +2300,14 @@
                                         <textarea name="Audit_Comments2"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is
                                                 crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -2332,7 +2332,7 @@
                                         <textarea name="res_ver"></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Response Verification Attachments</label>
@@ -2555,7 +2555,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="button-block">
                                 <!-- <button type="submit" class="saveButton">Save</button> -->
@@ -2693,7 +2693,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            
+
                                                             Standard operating procedure for dispensing of raw material is
                                                             displayed?
                                                         </td>
@@ -2722,7 +2722,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                            
+
                                                             All the person involve in dispensing having proper gowning?
                                                         </td>
                                                         <td>
@@ -4273,7 +4273,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    STAGE 1: COMPRESSION 
+                                    STAGE 1: COMPRESSION
                                 </div>
 
                                 <div class="col-12">
@@ -6968,7 +6968,7 @@
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                         <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
-                                            
+
                                     </div>
                                 </div>
 
@@ -7715,7 +7715,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea></textarea>
-                                        
+
                                 </div>
                             </div>
 
@@ -8831,7 +8831,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -9012,7 +9012,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea></textarea>
-                                        
+
                                 </div>
                             </div>
 
@@ -9405,14 +9405,14 @@
                                                         </td>
 
                                                     </tr>
-                                                                       
+
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sub-head">
-                                    STAGE 2: Manufacturing 
+                                    STAGE 2: Manufacturing
                                 </div>
 
                                 <div class="col-12">
@@ -9459,7 +9459,7 @@
 
 
                                                     </tr>
-                                 
+
                                                     <tr>
                                                         <td class="flex text-center">2.3</td>
                                                         <td>Equipment cleanliness, check few equipments.</td>
@@ -10539,7 +10539,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
- 
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -10721,7 +10721,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
-                                       
+
                                 </div>
                             </div>
 
@@ -12089,7 +12089,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
-                                       
+
                                 </div>
                             </div>
 
@@ -13185,7 +13185,7 @@
                                                             <br>b)	Process changes impacting on the identity, quality and purity of the material?
                                                             <br>c)	Raw materials, packaging materials, in-process materials, and product batches?
                                                             <br>d)	New suppliers or subcontractors?
-                                                        
+
 
                                                         </td>
                                                         <td>
@@ -13450,7 +13450,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
-                                       
+
                                 </div>
                             </div>
 
@@ -13556,7 +13556,7 @@
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                     </tr>
                                                     {{-- <tr>
                                                         <td class="flex text-center">1.2.1</td>
@@ -13722,9 +13722,9 @@
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                     </tr>
-                                                   
+
                                                     <tr>
                                                         <td class="flex text-center">1.4</td>
                                                         <td>Is equipment designed to prevent adulteration of product with lubricants, coolants, fuel, metal fragments, or other extraneous materials? </td>
@@ -14554,7 +14554,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
-                                        
+
                                 </div>
                             </div>
 
@@ -14708,7 +14708,7 @@
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
                                                             Have the employees undergone training in the following areas?
-                                                         
+
                                                                 <br>a)cGLP (Related: SOP for Good Laboratory Practices)
                                                                 <br>b)SOP’s
                                                                 <br>c)Analytical Techniques
@@ -15027,10 +15027,10 @@
                                                         <td>
 
                                                             Are all reagents and solutions
-                                                            
+
                                                                 <br>a)	Clearly, labeled with their proper name?
                                                                 <br>b)Labeled with the date of receipt and/or expiration date?
-                                                            
+
 
                                                         <td>
                                                             <div
@@ -15102,7 +15102,7 @@
                                                         <td>
                                                             Are prepared solutions labeled with the
 
-                                                          
+
                                                                 <br>a)Name of the person who prepared them?
                                                                 <br>b)Date of preparation?
                                                                 <br>c)Expiration date?
@@ -16693,14 +16693,14 @@
                                                         <td>
 
                                                             Are these stability chambers available to carryout stability of the product at
-                                                            
+
                                                                 <br>a)25°C / 60% Rh
                                                                 <br>b)30°C / 75% Rh
                                                                 <br>c)40°C / 75% Rh
                                                                 <br>d)30°C / 65% Rh
                                                                 <br>e)Stand By Chamber
-                                                            
-                                                        
+
+
 
 
 
@@ -17346,13 +17346,13 @@
                                                         <td>
 
                                                             Microbiological Laboratories
-                                                            
+
                                                                 <br>a)Are positive and negative controls used for testing? Are their results recorded?
                                                                 <br>b)Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
                                                                 <br>c)Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
                                                                 <br>d)Are isolates from microbiological testing identified if appropriate?
                                                                 <br>e)Is each lot of microbial ID systems checked with positive and negative controls?
-                                                            
+
 
 
                                                         </td>
@@ -17376,7 +17376,7 @@
                                                         </td>
 
                                                     </tr>
-                                                      
+
                                                     {{-- </tr>  <tr>
                                                         <td class="flex text-center">1.87.3</td>
                                                         <td>
@@ -17479,7 +17479,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"> </textarea>
-                                        
+
                                 </div>
                             </div>
 
@@ -18248,7 +18248,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
-                                        
+
                                 </div>
                             </div>
 
@@ -19178,7 +19178,7 @@
                                     <label for="Description Deviation">Final Comments</label>
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
-                                       
+
                                 </div>
                             </div>
 
@@ -19331,7 +19331,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            
+
                                                             Standard operating procedure for dispensing of raw material is
                                                             displayed?
                                                         </td>
@@ -19360,7 +19360,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                            
+
                                                             All the person involve in dispensing having proper gowning?
                                                         </td>
                                                         <td>
@@ -20797,7 +20797,7 @@
                                     </div>
                                 </div>
                                     <div class="sub-head">
-                                        STAGE 3 : DOCUMENTATION 
+                                        STAGE 3 : DOCUMENTATION
                                     </div>
                                                     <div class="col-12">
                                                         {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -20979,7 +20979,7 @@
                                                             <label for="Description Deviation">Final Comments</label>
                                                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                                             <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
-                                                                
+
                                                         </div>
                                                     </div>
 
@@ -21495,8 +21495,8 @@
                                                         <td class="flex text-center">1.19</td>
                                                         <td>
                                                             Are all weighing and measuring performed by one qualified person and checked by a second person<br>
-                                                            Check the weighing balance record 
-                                                            
+                                                            Check the weighing balance record
+
 
                                                         </td>
                                                         <td>
@@ -22263,7 +22263,7 @@
                                 <label for="Description Deviation">Final Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="Description_Deviation[]" id="summernote-1"></textarea>
-                                   
+
                             </div>
                         </div>
 
@@ -24993,7 +24993,7 @@
                                                             a)	25°C / 60% Rh<br>
                                                             b)	30°C / 65% Rh<br>
                                                             c)	40°C / 75% Rh
-                                                            
+
 
                                                         </td>
                                                         <td>
@@ -25270,11 +25270,11 @@
                         </div>
                     </div>
 
-                    
 
 
 
-                
+
+
 
                 </div>
             </form>

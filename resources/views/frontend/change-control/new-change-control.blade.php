@@ -286,7 +286,7 @@
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div>
-                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                            <small class="text-primary"></small>
                                         </div>
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
@@ -621,6 +621,13 @@
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">Description of Change</label>
+                                        <textarea name="bd_domestic"></textarea>
+                                    </div>
+                                </div>
                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
@@ -656,87 +663,7 @@
                                 </div>
 
 
-                                <div id="CCForm2" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            TNI Details<button type="button" name="audit-agenda-grid"
-                                                id="addTrainingPlan">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="addTrainingPlanTable">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%;">S.No</th>
-                                                    <th>TrainingTopic</th>
-                                                    <th>Document</th>
-                                                    <th style="width: 10%;">Dot Type</th>
-                                                    <th style="width: 10%;">Select</th>
-                                                    <th style="width: 10%;">Trainees</th>
-                                                    <th>Due Date</th>
-                                                    <th>rainer</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- <tr>
-                                                    <td>
-                                                        <input disabled type="text" name="trainingPlanData[0][serial]" value="1">
-                                                    </td>
-                                                    <td>
-                                                        <select name="trainingPlanData[0][trainingPlan]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($trainings as $training)
-                                                                <option value="{{ $training->id }}">{{ $training->traning_plan_name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][sopName]" readonly>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][scheduleDate]" readonly>
-                                                    </td> -->
-                                                    <!-- <td>
-                                                        <select name="trainingPlanData[0][employeeName]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($employees as $employee)
-                                                                <option value="{{ $employee->id }}">{{ $employee->employee_name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td> -->
-                                                    <!-- <td>
-                                                        <select name="trainingPlanData[0][employeeName]" class="employee-select">
-                                                            <option value="">Select a value</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="trainingPlanData[0][trainingIdentification]">
-                                                            <option value="">Select a value</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="trainingPlanData[0][remarks]">
-                                                    </td>
-                                                </tr> -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                             
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button ">Save</button>
@@ -3680,12 +3607,12 @@
                             QA/CQA Head / Designee Approval
                             </div>
                             <div class="group-input">
-                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comment</label>
+                                <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments</label>
                                 <textarea name="hod_assessment_comments" readonly></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachment</label>
+                                    <label for="qa-eval-attach">QA/CQA Head / Designee Approval Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>

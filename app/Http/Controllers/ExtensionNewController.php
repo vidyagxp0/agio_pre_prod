@@ -680,12 +680,12 @@ class ExtensionNewController extends Controller
         $extensionNew->Extension = $request->Extension;
         if($extensionNew->stage == 1){
             $extensionNew->count = $request->count;
-            $extensionNew->parent_type = $request->count;
+            $extensionNew->count_data = $request->count_data;
             // dd($request->count);
+            $extensionNew->reviewers = $request->reviewers;
+            $extensionNew->approvers = $request->approvers;
         }
 
-        $extensionNew->reviewers = $request->reviewers;
-        $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
         $extensionNew->proposed_due_date = $request->proposed_due_date;
         $extensionNew->description = $request->description;
@@ -1341,6 +1341,24 @@ class ExtensionNewController extends Controller
 
                 if ($extensionNew->stage == 1) {
 
+                    if (empty($extensionNew->reviewers) || empty($extensionNew->approvers))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'General Information Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for In Review state'
+                        ]);
+                    }
+
                     $extensionNew->stage = "2";
                     $extensionNew->status = "In Review";
                     $extensionNew->submit_by = Auth::user()->name;
@@ -1436,7 +1454,7 @@ class ExtensionNewController extends Controller
                     return back();
                 }
                 if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3)
-                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count == 'number' || $extensionNew->data_number == 3 )
+                || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3 )
                 ){
                 if ($extensionNew->stage == 2) {
                     if (empty($extensionNew->reviewer_remarks))
@@ -1840,7 +1858,7 @@ class ExtensionNewController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for In CQA Approval state'
+                            'message' => 'Sent for Closed - Done state'
                         ]);
                     }
                     $extensionNew->stage = "6";

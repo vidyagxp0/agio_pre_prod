@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Observations Report
+                    Observation Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -478,8 +478,8 @@
                             <th class="w-20" style="width: 25px;">S.No.</th>
                             <th class="w-20">Action</th>
                             <th class="w-20">Responsible</th>
-                            <th class="w-20">Target Completion Date</th>
-                            <th class="w-20">Action Status</th>
+                            <th class="w-20">Deadline</th>
+                            <th class="w-20">Item Status</th>
                         </tr>
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
@@ -651,7 +651,7 @@
             </table>
 
                 <div class="block-head">
-                Response Verification Attachements
+                Response Verification Attachments
                 </div>
                <div class="border-table">
                  <table>
