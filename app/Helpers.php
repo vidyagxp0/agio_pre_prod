@@ -1227,6 +1227,85 @@ class Helpers
         return $checklist;
     }
 
+//----------------------------------------
+
+    static function getSeverityValue($seve){
+        $sevrty = '';
+
+        switch($seve){
+            case'1':
+            $sevrty = "1-Insignificant";
+            break;
+            case'2':
+            $sevrty = "2-Minor";
+            break;
+            case'3':
+            $sevrty = "3-Major";
+            break;
+            case'4':
+            $sevrty = "4-Critical";
+            break;
+            case'5':
+            $sevrty = "5-Catastrophic";
+        break;
+        }
+        return $sevrty;
+    }
+
+
+    static function getProbabilityValue($probe){
+        $probilty = '';
+
+        switch($probe){
+            case'1':
+            $probilty = "1-Very rare";
+            break;
+            case'2':
+            $probilty = "2-Unlikely";
+            break;
+            case'3':
+            $probilty = "3-Possibly";
+            break;
+            case'4':
+            $probilty = "4-Likely";
+            break;
+            case'5':
+            $probilty = "5-Almost certain (every time)";
+        break;
+        }
+        return $probilty;
+    }
+
+
+    static function getDetectionValue($dect){
+        $dectct = '';
+
+        switch($dect){
+            case'1':
+            $dectct = "1-Always detected";
+            break;
+            case'2':
+            $dectct = "2-Likely to detect";
+            break;
+            case'3':
+            $dectct = "3-Possible to detect";
+            break;
+            case'4':
+            $dectct = "4-Unlikely to detect";
+            break;
+            case'5':
+            $dectct = "5-Not detectable";
+        break;
+        }
+        return $dectct;
+    }
+
+
+//----------------------------------------
+
+
+
+
     public static function getChildData($id, $parent_type){
         $count = 0;
         if($parent_type == 'LabIncident')

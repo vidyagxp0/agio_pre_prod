@@ -28,7 +28,7 @@
 
     @php
         $users = DB::table('users')->get();
-        
+
     @endphp
 
     <div class="form-field-head">
@@ -319,7 +319,7 @@
 
                                     {{-- <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number" 
+                                        <input disabled type="text" name="record_number" id="record_number"
                                             value="---/LI/{{ date('y') }}/{{ $record_number }}"></div> --}}
                                 </div>
                                 <div class="col-lg-6">
@@ -404,21 +404,21 @@
 
                                             </div>
                                         </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                         document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                    
+
                                     // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
                                         handleDateInput(dateInput, 'due_date_display');
                                     });
                                     </script>
-                                    
+
                                     <style>
                                     .hide-input {
                                         display: none;
@@ -526,7 +526,7 @@
                                         <label for="audit-incident-grid">
                                             Incident Investigation Report
                                             <button type="button" name="audit-incident-grid" id="IncidentAdd" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>+</button>
-                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal-LabIncident"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
@@ -567,42 +567,42 @@
                                     </div>
                                 </div>
 
-    
-    
-    
+
+
+
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var selectField = document.getElementById('Facility_Equipment');
                         var inputsToToggle = [];
-    
+
                         // Add elements with class 'facility-name' to inputsToToggle
                         var facilityNameInputs = document.getElementsByClassName('facility-name');
                         for (var i = 0; i < facilityNameInputs.length; i++) {
                             inputsToToggle.push(facilityNameInputs[i]);
                         }
-    
+
                         // Add elements with class 'id-number' to inputsToToggle
                         var idNumberInputs = document.getElementsByClassName('id-number');
                         for (var j = 0; j < idNumberInputs.length; j++) {
                             inputsToToggle.push(idNumberInputs[j]);
                         }
-    
+
                         // Add elements with class 'remarks' to inputsToToggle
                         var remarksInputs = document.getElementsByClassName('remarks');
                         for (var k = 0; k < remarksInputs.length; k++) {
                             inputsToToggle.push(remarksInputs[k]);
                         }
-    
-    
+
+
                         selectField.addEventListener('change', function() {
                             var isRequired = this.value === 'yes';
                             console.log(this.value, isRequired, 'value');
-    
+
                             inputsToToggle.forEach(function(input) {
                                 input.required = isRequired;
                                 console.log(input.required, isRequired, 'input req');
                             });
-    
+
                             document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
                             // Show or hide the asterisk icon based on the selected value
                             var asteriskIcon = document.getElementById('asteriskInvi');
@@ -610,15 +610,15 @@
                         });
                     });
                     </script>
-    
-    
+
+
     <script>
         $(document).ready(function() {
             let investdetails = 1;
             $('#IncidentAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
-    
+
                     var html =
                         '<tr>' +
                         '<td><input type="text"  name="investrecord[][s_no]" value="' + serialNumber +
@@ -627,22 +627,22 @@
                         '<td><input type="text" name="investrecord['+ serialNumber +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ serialNumber +'][remarks]" value=""></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-    
-    
+
+
                         '</tr>';
-    
+
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
-    
+
                     html += '</select></td>' +
-    
+
                         '</tr>';
 
                         investdetails++;
                     return html;
                 }
-    
+
                 var tableBody = $('#onservation-incident-table tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -653,11 +653,11 @@
     });
         });
         </script>
-    
-    
-    
-    
-    
+
+
+
+
+
                             {{-- new added table --}}
 
                         {{-- New Added --}}
@@ -679,7 +679,7 @@
 
                         </div><br>
 
-                        <div class="col-lg-4">                              
+                        <div class="col-lg-4">
                             <div class="group-input" id="incident_stability_cond_gi">
                                 <label for="incident_stability_cond_gi">Stability Condition (If Applicable)<span
                                         class="text-danger d-none">*</span></label>
@@ -705,8 +705,8 @@
                             </div>
 
                         </div>
-                          
-                        
+
+
                         {{-- <div class="col-lg-6">
                             <div class="group-input" id="incident_date_analysis_gi">
                                 <label for="incident_date_analysis_gi">Date of Analysis<span
@@ -739,9 +739,9 @@
                                 </div>
                             </div>
                         </div>
-                        
 
-                        
+
+
 
                         <div class="col-lg-6">
                             <div class="group-input" id="incident_specification_no_gi">
@@ -791,8 +791,8 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
 
                         <div class="col-lg-12">
                             <div class="group-input" id="description_incidence_gi">
@@ -809,7 +809,7 @@
                                 </label>
                                 <textarea name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->analyst_sign_date_gi }}</textarea>
                                 <!-- <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage >= 2 ? 'disabled' : '' }}>
-                                    <option value="">Select a value</option> 
+                                    <option value="">Select a value</option>
                                     @foreach ($users as $key => $value)
                                         <option value="{{ $value->id }}" @if ($data->analyst_sign_date_gi == $value->id) selected @endif>{{ $value->name }}</option>
                                     @endforeach
@@ -826,7 +826,7 @@
                                     Section Head Name <span class="text-danger"></span>
                                 </label>
                                 <select id="select-state" placeholder="Select..." name="section_sign_date_gi" {{ $data->stage == 0 || $data->stage >= 2 ? 'disabled' : '' }} onchange="markFieldAsChanged('section_sign_date_gi_changed')">
-                                    <option value="">Select a value</option> 
+                                    <option value="">Select a value</option>
                                     @foreach ($users as $key => $value)
                                         <option value="{{ $value->id }}" @if ($data->section_sign_date_gi == $value->id) selected @endif>{{ $value->name }}</option>
                                     @endforeach
@@ -842,9 +842,9 @@
                                 <label for="search">
                                     QC Head/HOD Person <span class="text-danger"></span>
                                 </label>
-        
+
                                 <!-- <textarea name="investigator_qc">{{ $data->investigator_qc }}</textarea> -->
-        
+
                                 <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
                                     <option value="">Select a value</option>
                                     @foreach ($users as $key=> $value)
@@ -856,23 +856,23 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- <input type="hidden" name="investigator_qc" value="{{ $data->investigator_qc }}"> -->
-                        
+
                         <script>
                             document.addEventListener('DOMContentLoaded', (event) => {
                                 const originalValue = document.querySelector('#select-state').value;
                                 document.querySelector('#section_sign_date_gi_changed').value = '0';
                             });
-                        
+
                             function markFieldAsChanged(hiddenInputId) {
                                 document.getElementById(hiddenInputId).value = '1';
                             }
                         </script>
-                        
-                        
 
-                
+
+
+
 
 
                                 {{-- <div class="col-12">
@@ -912,7 +912,7 @@
                                     </div>
                                 </div>
                                 </div>-->
-                               
+
                                 <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req1">
                                                 <label for="Incident_Category_others">Others<span
@@ -965,19 +965,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <input type="hidden" name="removed_files" id="removed_files">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeFileLinks = document.querySelectorAll('.remove-file');
                                         const removedFilesInput = document.getElementById('removed_files');
-                                
+
                                         removeFileLinks.forEach(link => {
                                             link.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 this.parentElement.remove();
-                                
+
                                                 // Add the file name to the removed files input
                                                 let removedFiles = removedFilesInput.value ? JSON.parse(removedFilesInput.value) : [];
                                                 removedFiles.push(fileName);
@@ -1006,7 +1006,7 @@
                                     </div>
                                 </div> -->
                                 {{-- =======kkkkkuldeep --}}
-                                
+
                                 {{-- ====kkkk? --}}
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1039,19 +1039,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_attachments_gi" name="deleted_attachments_gi" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1060,7 +1060,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_attachments_gi');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1071,9 +1071,9 @@
                                         });
                                     });
                                 </script>
-                                
-                               
-                                
+
+
+
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">
@@ -1105,7 +1105,7 @@
                                         <input type="date" name="section_date_ia" value="{{$data->section_date_ia}}">
                                     </div>
                                 </div> --}}
-                              
+
 
 
                             </div>
@@ -1126,7 +1126,7 @@
                                         <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }}>{{$data->immediate_action_ia}}</textarea>
                                     </div>
                                 </div>
-                                
+
                                <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
@@ -1190,19 +1190,19 @@
             </select>
         </div>
     </div>
-    
+
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
             <label for="Other Incidence"><b>Other Incidence</b></label>
             <input type="text" name="other_incidence" id="other_incidence" value="{{ $data->other_incidence ?? '' }}" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }} />
         </div>
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const typeIncidenceSelect = document.getElementById('type_incidence');
             const otherIncidenceDiv = document.getElementById('other_incidence_div');
-    
+
             function toggleOtherIncidence() {
                 if (typeIncidenceSelect.value === 'Other') {
                     otherIncidenceDiv.style.display = 'block';
@@ -1210,15 +1210,15 @@
                     otherIncidenceDiv.style.display = 'none';
                 }
             }
-    
+
             typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-    
+
             toggleOtherIncidence();
         });
     </script>
-    
 
-                
+
+
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
@@ -1280,25 +1280,25 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <input type="hidden" id="deleted_attachments_ia" name="deleted_attachments_ia" value="">
-                
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const removeButtons = document.querySelectorAll('.remove-file');
-                
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function() {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-                
+
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
                                     const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                     if (hiddenInput) {
                                         hiddenInput.remove();
                                     }
-                
+
                                     const deletedFilesInput = document.getElementById('deleted_attachments_ia');
                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
                                     deletedFiles.push(fileName);
@@ -1308,7 +1308,7 @@
                         });
                     });
                 </script>
-                
+
 
                             </div>
                             <div class="button-block">
@@ -1321,15 +1321,15 @@
                     </div> -->
 
                      {{-- extension --}}
-                    
 
 
 
-                  
 
-              
 
-                  
+
+
+
+
                     <!-- QA Review content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1366,19 +1366,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_QA_Head_Attachment" name="deleted_QA_Head_Attachment" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1387,7 +1387,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_QA_Head_Attachment');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1398,7 +1398,7 @@
                                         });
                                     });
                                 </script>
-                                
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "disabled" : "" }}>Save</button>
@@ -1433,7 +1433,7 @@
 
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Incident Category">QA Initial Review Comments @if($data->stage==3)<span class="text-danger">*</span>   
+                    <label for="Incident Category">QA Initial Review Comments @if($data->stage==3)<span class="text-danger">*</span>
                     @endif</label>
                     <textarea name="QA_initial_Comments" {{ $data->stage <= 2 || $data->stage >= 4 ? "readonly" : "" }}>{{ $data->QA_initial_Comments }}</textarea>
                 </div>
@@ -1462,19 +1462,19 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Hidden field to keep track of files to be deleted -->
             <input type="hidden" id="deleted_QA_Initial_Attachment" name="deleted_QA_Initial_Attachment" value="">
-            
+
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const removeButtons = document.querySelectorAll('.remove-file');
-            
+
                     removeButtons.forEach(button => {
                         button.addEventListener('click', function() {
                             const fileName = this.getAttribute('data-file-name');
                             const fileContainer = this.closest('.file-container');
-            
+
                             // Hide the file container
                             if (fileContainer) {
                                 fileContainer.style.display = 'none';
@@ -1483,7 +1483,7 @@
                                 if (hiddenInput) {
                                     hiddenInput.remove();
                                 }
-            
+
                                 // Add the file name to the deleted files list
                                 const deletedFilesInput = document.getElementById('deleted_QA_Initial_Attachment');
                                 let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1494,7 +1494,7 @@
                     });
                 });
             </script>
-            
+
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton" {{ $data->stage <= 2 || $data->stage >= 4 ? "disabled" : "" }}>Save</button>
@@ -1518,11 +1518,11 @@
                                         <div class="static">Question datafield</div>
                                     </div>
                                 </div> --}}
-                                
-                                
+
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span>   
+                                        <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span>
                                             @endif</label>
                                         <textarea name="Investigation_Details" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
                                     </div>
@@ -1568,19 +1568,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Hidden field to keep track of files to be deleted -->
                                 <input type="hidden" id="deleted_Inv_Attachment" name="deleted_Inv_Attachment" value="">
-                                
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-                                
+
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-                                
+
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
@@ -1589,7 +1589,7 @@
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-                                
+
                                                     // Add the file name to the deleted files list
                                                     const deletedFilesInput = document.getElementById('deleted_Inv_Attachment');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1624,9 +1624,9 @@
 
 
                           {{-- selection field --}}
-                
-                          
-                         
+
+
+
                 {{-- selection field --}}
                 <div class="col-12">
                     <div class="group-input">
@@ -1686,19 +1686,19 @@
             </select>
         </div>
     </div>
-    
+
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
             <label for="Other Incidence"><b>Other Incidence</b></label>
             <input type="text" name="other_incidence" id="other_incidence" value="{{ $data->other_incidence ?? '' }}" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }} />
         </div>
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const typeIncidenceSelect = document.getElementById('type_incidence');
             const otherIncidenceDiv = document.getElementById('other_incidence_div');
-    
+
             function toggleOtherIncidence() {
                 if (typeIncidenceSelect.value === 'Other') {
                     otherIncidenceDiv.style.display = 'block';
@@ -1706,21 +1706,21 @@
                     otherIncidenceDiv.style.display = 'none';
                 }
             }
-    
+
             typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-    
+
             // Initial check on page load
             toggleOtherIncidence();
         });
     </script>
-    
-    
+
+
     {{-- type of incidence --}}
 
 
                 {{-- selection field --}}
-                
-             
+
+
                  {{-- <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
@@ -1792,19 +1792,19 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Hidden field to keep track of files to be deleted -->
                 <input type="hidden" id="deleted_attachments_ia" name="deleted_attachments_ia" value="">
-                
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const removeButtons = document.querySelectorAll('.remove-file');
-                
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function() {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-                
+
                                 // Hide the file container
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
@@ -1813,7 +1813,7 @@
                                     if (hiddenInput) {
                                         hiddenInput.remove();
                                     }
-                
+
                                     // Add the file name to the deleted files list
                                     const deletedFilesInput = document.getElementById('deleted_attachments_ia');
                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -1824,7 +1824,7 @@
                         });
                     });
                 </script>
-                
+
 
                             </div>
                             <div class="button-block">
@@ -1870,25 +1870,25 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="pending_update_Attachment[]" 
+                            <input type="file" id="myfile" name="pending_update_Attachment[]"
                                    oninput="addMultipleFiles(this, 'pending_update_Attachment')" multiple>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <input type="hidden" id="deleted_pending_update_Attachment" name="deleted_pending_update_Attachment" value="">
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                 removeButtons.forEach(button => {
                     button.addEventListener('click', function() {
                         const fileName = this.getAttribute('data-file-name');
                         const fileContainer = this.closest('.file-container');
-        
+
                         if (fileContainer) {
                             fileContainer.style.display = 'none';
 
@@ -1896,7 +1896,7 @@
                             if (hiddenInput) {
                                 hiddenInput.remove();
                             }
-        
+
                             const deletedFilesInput = document.getElementById('deleted_pending_update_Attachment');
                             let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
                             deletedFiles.push(fileName);
@@ -1952,7 +1952,7 @@
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const typeIncidenceSelect = document.getElementById('Incident_Category_data');
                                         const otherIncidenceDiv = document.getElementById('other_incidence_data');
-                                
+
                                         function toggleOtherIncidence() {
                                             if (typeIncidenceSelect.value === 'Other') {
                                                 otherIncidenceDiv.style.display = 'block';
@@ -1960,9 +1960,9 @@
                                                 otherIncidenceDiv.style.display = 'none';
                                             }
                                         }
-                                
+
                                         typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-                                
+
                                         // Initial check on page load
                                         toggleOtherIncidence();
                                     });
@@ -1986,7 +1986,7 @@
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Incident Category">QC Head/HOD Secondary Review Comments  @if($data->stage==5)<span class="text-danger">*</span>
-                        
+
                         @endif</label>
                     <textarea name="QC_head_hod_secondry_Comments" {{ $data->stage <= 4 || $data->stage >= 6 ? "readonly" : "" }}>{{ $data->QC_head_hod_secondry_Comments }}</textarea>
                 </div>
@@ -2014,26 +2014,26 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="QC_headhod_secondery_Attachment[]" 
+                            <input type="file" id="myfile" name="QC_headhod_secondery_Attachment[]"
                                    oninput="addMultipleFiles(this, 'QC_headhod_secondery_Attachment')" {{ $data->stage <= 4 || $data->stage >= 6 ? "disabled" : "" }} multiple>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Hidden field to keep track of files to be deleted -->
         <input type="hidden" id="deleted_QC_headhod_secondery_Attachment" name="deleted_QC_headhod_secondery_Attachment" value="">
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                 removeButtons.forEach(button => {
                     button.addEventListener('click', function() {
                         const fileName = this.getAttribute('data-file-name');
                         const fileContainer = this.closest('.file-container');
-        
+
                         // Hide the file container
                         if (fileContainer) {
                             fileContainer.style.display = 'none';
@@ -2042,7 +2042,7 @@
                             if (hiddenInput) {
                                 hiddenInput.remove();
                             }
-        
+
                             // Add the file name to the deleted files list
                             const deletedFilesInput = document.getElementById('deleted_QC_headhod_secondery_Attachment');
                             let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -2068,7 +2068,7 @@
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Incident Category">QA Secondary Review Comments @if($data->stage==6)<span class="text-danger">*</span>
-                        
+
                         @endif</label></label>
                     <textarea name="QA_secondry_Comments" {{ $data->stage <= 5 || $data->stage >= 7 ? "readonly" : "" }}>{{ $data->QA_secondry_Comments }}</textarea>
                 </div>
@@ -2096,26 +2096,26 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="QA_secondery_Attachment[]" 
+                            <input type="file" id="myfile" name="QA_secondery_Attachment[]"
                                    oninput="addMultipleFiles(this, 'QA_secondery_Attachment')" {{ $data->stage <= 5 || $data->stage >= 7 ? "disabled" : "" }} multiple>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Hidden field to keep track of files to be deleted -->
         <input type="hidden" id="deleted_QA_secondery_Attachment" name="deleted_QA_secondery_Attachment" value="">
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                 removeButtons.forEach(button => {
                     button.addEventListener('click', function() {
                         const fileName = this.getAttribute('data-file-name');
                         const fileContainer = this.closest('.file-container');
-        
+
                         // Hide the file container
                         if (fileContainer) {
                             fileContainer.style.display = 'none';
@@ -2124,7 +2124,7 @@
                             if (hiddenInput) {
                                 hiddenInput.remove();
                             }
-        
+
                             // Add the file name to the deleted files list
                             const deletedFilesInput = document.getElementById('deleted_QA_secondery_Attachment');
                             let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -2160,7 +2160,7 @@
                                     </div>
                                 </div>
                             <div class="col-lg-6">
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
@@ -2174,7 +2174,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                  
+
                                         <textarea name="due_date_extension" id="duedoc" type="text" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
@@ -2226,7 +2226,7 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for=" qa head remark"><b>QA Head Comment</b> @if($data->stage==7)<span class="text-danger">*</span>   
+                                <label for=" qa head remark"><b>QA Head Comment</b> @if($data->stage==7)<span class="text-danger">*</span>
                                 @endif</label>
                                <textarea name="qa_hear_remark_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
@@ -2259,18 +2259,18 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <input type="hidden" id="deleted_closure_attachment_c" name="deleted_closure_attachment_c" value="">
-                        
+
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const removeButtons = document.querySelectorAll('.remove-file');
-                        
+
                                 removeButtons.forEach(button => {
                                     button.addEventListener('click', function() {
                                         const fileName = this.getAttribute('data-file-name');
                                         const fileContainer = this.closest('.file-container');
-                        
+
                                         // Hide the file container
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
@@ -2279,7 +2279,7 @@
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
                                             }
-                        
+
                                             // Add the file name to the deleted files list
                                             const deletedFilesInput = document.getElementById('deleted_closure_attachment_c');
                                             let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
@@ -2290,7 +2290,7 @@
                                 });
                             });
                         </script>
-                        
+
 
                         <div class="button-block">
                             <button type="submit" class="saveButton" {{ $data->stage <= 6 || $data->stage >= 8 ? "disabled" : "" }}>Save</button>
@@ -2309,9 +2309,9 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                              
+
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submit 
+                                    Submit
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2334,9 +2334,9 @@
                                         <div class="static" >{{$data->comment}}</div>
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                QC Head/HOD Initial Review Complete 
+                                QC Head/HOD Initial Review Complete
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2357,7 +2357,7 @@
                                         <div class="static">{{$data->verification_complete_comment}}</div>
                                     </div>
                                 </div>
-                              
+
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QA Initial Review Complete
@@ -2863,7 +2863,7 @@
                                 Extension
                             </label>
                         </div>
-                        
+
                     </div>
 
                     <!-- Modal footer -->
@@ -2890,7 +2890,7 @@
                     <form action="{{ route('labincidentRisk_Child', $data->id) }}" method="POST">
                         @csrf
                         <div class="group-input">
-                            
+
                         </div>
                         <div class="group-input">
                             <label for="root-item">
@@ -2904,7 +2904,7 @@
                                 Extension
                             </label>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2923,14 +2923,14 @@
                 <div class="modal-body">
                     <form action="{{ route('lab_incident_extension_child', $data->id) }}" method="POST">
                         @csrf
-                        
+
                         <div class="group-input">
                             <label for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="Extension">
                                 Extension
                             </label>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2981,7 +2981,7 @@
                             </label>
                         @endif
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2992,8 +2992,8 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                               
-                                    
+
+
 
 
 
@@ -3062,7 +3062,7 @@
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                             </div>
                         </div>
-                    </div> --}} 
+                    </div> --}}
                       <!-- Incident Details content -->
                     {{-- <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3103,7 +3103,7 @@
                                         <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 10 ? "readonly" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="ccf_attachments">Attachment</label>
@@ -3153,7 +3153,7 @@
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                             </div>
                         </div>
-                    </div> --}}  
+                    </div> --}}
 
                     {{-- <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3171,13 +3171,13 @@
                                      <textarea name="reasoon_for_extension_e">{{$data->reasoon_for_extension_e}}</textarea>
                                  </div>
                              </div>
- 
+
                              {{-- <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Date (if required)</label>
                                  <input type="date" name="extension_date_esc" id="extension_date" value="{{$data->extension_date_esc}}">
                                  </div>
-                             </div> 
+                             </div>
 
                              <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -3195,14 +3195,14 @@
 
 
 
-                            
-                                
+
+
                              {{-- <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Initiator Date</label>
                                  <input type="date" name="extension_date_initiator" id="extension_date" value="{{$data->extension_date_initiator}}">
                                  </div>
-                             </div> 
+                             </div>
 
 
                              <div class="col-lg-6 new-date-data-field">
@@ -3252,7 +3252,7 @@
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div> 
+                            </div>
 
 
 
@@ -3272,14 +3272,14 @@
                                  <textarea name="reasoon_for_extension_esc">{{$data->reasoon_for_extension_esc}}</textarea>
                                  </div>
                               </div>
- 
-                           
+
+
                               {{-- <div class="col-6">
                                  <div class="group-input">
                                   <label for="extension date">Extension Date (if required)</label>
                                    <input type="date" name="extension_date_e" id="extension_date__sc" value="{{$data->extension_date_e}}">
                                  </div>
-                              </div> 
+                              </div>
 
                               <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -3294,7 +3294,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Date Due"> Extension Initiator Date</label>
@@ -3313,23 +3313,23 @@
                                     <div class="group-input input-date">
                                         <label for="extension_date_idsc">Extension Initiator Date <span class="text-danger"></span></label> --}}
                                         {{-- <p class="text-primary">Last date this record should be closed by</p> --}}
-                                
+
                                         {{-- <div class="calenderauditee">
-                                            <input type="date" id="extension_date_idsc_display" 
+                                            <input type="date" id="extension_date_idsc_display"
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="extension_date_idsc" name="extension_date_idsc"
                                                 class="hide-input" oninput="handleDateInput(this)" />
                                         </div>
-                                        
+
                                     </div> --}}
                       {{--           </div> --}}
-                      
 
 
-                                    
-    
+
+
+
                                                 {{-- person field --}}
-                                                
+
 
                                                 {{-- <div class="col-md-6">
                                                     <div class="group-input">
@@ -3346,11 +3346,11 @@
                                                             <p class="text-danger">{{ $message }}</p>
                                                         @enderror
                                                     </div>
-                                                </div> 
+                                                </div>
 
                            </div>
 
-                           {{-- third section 
+                           {{-- third section
 
                            <div class="row">
                              <div class="group-input">
@@ -3364,9 +3364,9 @@
                               <textarea name="reasoon_for_extension_tc">{{$data->reasoon_for_extension_tc}}</textarea>
                               </div>
                            </div>
- 
-                        
-                           
+
+
+
                            <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due"> Extension Date</label>
@@ -3380,8 +3380,8 @@
                                 </div>
                             </div>
                         </div>
-                         
-                              
+
+
 
                               <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -3396,7 +3396,7 @@
                                     </div>
                                 </div>
                             </div>
-                                    {{-- person field 
+                                    {{-- person field
 
                                     <div class="col-md-6">
                                         {{-- <div class="group-input">
@@ -3412,7 +3412,7 @@
                                             @error('assign_to')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <div class="col-md-4">
@@ -3429,7 +3429,7 @@
                                             @error('assign_to')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
-                                        </div> 
+                                        </div>
                                     </div>
                         </div>
                         <div class="col-12">
