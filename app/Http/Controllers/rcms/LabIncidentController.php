@@ -474,25 +474,57 @@ class LabIncidentController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
             // For "Incident Report"
             $griddata = $data->id;
 
-            $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-            $incidentReport->labincident_id = $griddata;
-            $incidentReport->identifier = 'Incident Report';
-            $incidentReport->data = $request->investrecord;
-            $incidentReport->save();
+            if (!empty($request->investrecord)) {
+                // Save the new auditor data
+                $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+                $incidentReport->labincident_id = $griddata;
+                $incidentReport->identifier = 'Incident Report';
+                $incidentReport->data = $request->investrecord;
+                $incidentReport->save();
+
+
+                // Define the mapping of field keys to more descriptive names
+                $fieldNames = [
+                    'name_of_product' => 'Name of Product',
+                    'batch_no' => 'B No./A.R. No.',
+                    'remarks' => 'Remarks',
+
+                ];
+
+                // Track audit trail changes (creation of new data)
+                if (is_array($request->investrecord)) {
+                    foreach ($request->investrecord as $index => $newAuditor) {
+                        // Track changes for each field
+                        $fieldsToTrack = ['name_of_product', 'batch_no', 'remarks'];
+                        foreach ($fieldsToTrack as $field) {
+                            $newValue = $newAuditor[$field] ?? 'Null';
+
+                            // Only proceed if there's new data
+                            if ($newValue !== 'Null') {
+                                // Log the creation of the new data in the audit trail
+                                $auditTrail = new LabIncidentAuditTrial;
+                                $auditTrail->LabIncident_id = $data->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $data->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $data->status;
+                                $auditTrail->action_name = 'Create'; // Since this is a create operation
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+
 
 
 
@@ -1350,7 +1382,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        
+
         if (!empty($data->name_of_analyst)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -1434,7 +1466,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        if (!empty($data->QA_Initial_Attachment)) { 
+        if (!empty($data->QA_Initial_Attachment)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'QA Initial Review Attachments';
@@ -2528,7 +2560,7 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date= $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
-        $data->Incident_Category_others = $request->Incident_Category_others; 
+        $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
         $data->capa_capa =$request->capa_capa;
@@ -2742,8 +2774,8 @@ class LabIncidentController extends Controller
 
 
 
-        
-        
+
+
 
         // if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
         //     $existingFiles = json_decode($data->attachments_gi, true) ?? [];
@@ -2764,7 +2796,7 @@ class LabIncidentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $data->attachments_gi = json_encode($allFiles);
         // }
-        
+
 
 
         if (!empty($request->ccf_attachments)) {
@@ -2823,7 +2855,7 @@ class LabIncidentController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->Inv_Attachment = json_encode($allFiles);
         }
-        
+
 
         if (!empty($request->CAPA_Attachment)) {
             $files = [];
@@ -2877,7 +2909,7 @@ if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Att
  // QA Initial Review Attachments Handling
  if (!empty($request->QA_Initial_Attachment) || !empty($request->deleted_QA_Initial_Attachment)) {
     $existingFiles = json_decode($data->QA_Initial_Attachment, true) ?? [];
-    
+
     // Handle deleted attachments
     if (!empty($request->deleted_QA_Initial_Attachment)) {
         $filesToDelete = explode(',', $request->deleted_QA_Initial_Attachment);
@@ -2885,9 +2917,9 @@ if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Att
             return !in_array($file, $filesToDelete);
         });
     }
-    
+
     $newFiles = [];
-    
+
     // Handle new file uploads
     if ($request->hasFile('QA_Initial_Attachment')) {
         foreach ($request->file('QA_Initial_Attachment') as $file) {
@@ -2896,7 +2928,7 @@ if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Att
             $newFiles[] = $name;
         }
     }
-    
+
     $allFiles = array_merge($existingFiles, $newFiles);
     $data->QA_Initial_Attachment = json_encode($allFiles);
 }
@@ -2907,7 +2939,7 @@ $data->QA_initial_Comments = $request->QA_initial_Comments;
     // Pending Initiator Update Attachments Handling
     if (!empty($request->pending_update_Attachment) || !empty($request->deleted_pending_update_Attachment)) {
         $existingFiles = json_decode($data->pending_update_Attachment, true) ?? [];
-        
+
         // Handle deleted attachments
         if (!empty($request->deleted_pending_update_Attachment)) {
             $filesToDelete = explode(',', $request->deleted_pending_update_Attachment);
@@ -2917,7 +2949,7 @@ $data->QA_initial_Comments = $request->QA_initial_Comments;
         }
 
         $newFiles = [];
-        
+
         // Handle new file uploads
         if ($request->hasFile('pending_update_Attachment')) {
             foreach ($request->file('pending_update_Attachment') as $file) {
@@ -2937,7 +2969,7 @@ $data->QA_initial_Comments = $request->QA_initial_Comments;
  // QC Head/HOD Secondary Review Attachments Handling
  if (!empty($request->QC_headhod_secondery_Attachment) || !empty($request->deleted_QC_headhod_secondery_Attachment)) {
     $existingFiles = json_decode($data->QC_headhod_secondery_Attachment, true) ?? [];
-    
+
     // Handle deleted attachments
     if (!empty($request->deleted_QC_headhod_secondery_Attachment)) {
         $filesToDelete = explode(',', $request->deleted_QC_headhod_secondery_Attachment);
@@ -2947,7 +2979,7 @@ $data->QA_initial_Comments = $request->QA_initial_Comments;
     }
 
     $newFiles = [];
-    
+
     // Handle new file uploads
     if ($request->hasFile('QC_headhod_secondery_Attachment')) {
         foreach ($request->file('QC_headhod_secondery_Attachment') as $file) {
@@ -2969,7 +3001,7 @@ $data->QC_head_hod_secondry_Comments = $request->QC_head_hod_secondry_Comments;
  // QA Secondary Review Attachments Handling
  if (!empty($request->QA_secondery_Attachment) || !empty($request->deleted_QA_secondery_Attachment)) {
     $existingFiles = json_decode($data->QA_secondery_Attachment, true) ?? [];
-    
+
     // Handle deleted attachments
     if (!empty($request->deleted_QA_secondery_Attachment)) {
         $filesToDelete = explode(',', $request->deleted_QA_secondery_Attachment);
@@ -2979,7 +3011,7 @@ $data->QC_head_hod_secondry_Comments = $request->QC_head_hod_secondry_Comments;
     }
 
     $newFiles = [];
-    
+
     // Handle new file uploads
     if ($request->hasFile('QA_secondery_Attachment')) {
         foreach ($request->file('QA_secondery_Attachment') as $file) {
@@ -3017,7 +3049,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastDocument->qc_head_closure != $data->qc_head_closure ) {
@@ -3039,7 +3071,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastDocument->qa_hear_remark_c != $data->qa_hear_remark_c ) {
@@ -3061,7 +3093,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastDocument->closure_attachment_c != $data->closure_attachment_c ) {
@@ -3083,7 +3115,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastDocument->other_incidence != $data->other_incidence ) {
@@ -3105,7 +3137,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocument->test_gi != $data->test_gi ) {
@@ -3127,7 +3159,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
 if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_gi) {
@@ -3149,7 +3181,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-            
+
     $history->save();
 }
 
@@ -3172,7 +3204,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastDocument->incident_stp_no_gi != $data->incident_stp_no_gi ) {
@@ -3194,7 +3226,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->action_name = "Update";
             }
             $history->save();
-          
+
         }
         // if ($lastDocument->Incident_name_analyst_no_gi != $data->Incident_name_analyst_no_gi ) {
         //     $history = new LabIncidentAuditTrial();
@@ -3215,7 +3247,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         //         $history->action_name = "Update";
         //     }
         //     $history->save();
-          
+
         // }
         if ($lastDocument->incident_date_incidence_gi != $data->incident_date_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -3235,7 +3267,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
 
@@ -3257,7 +3289,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
 
@@ -3279,11 +3311,11 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
 
-        
+
         if ($lastDocument->qc_review_data != $data->qc_review_data ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -3302,7 +3334,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
 
@@ -3324,7 +3356,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
 
@@ -3347,7 +3379,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
 
@@ -3373,9 +3405,9 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         //         $history->action_name = "Update";
         //     }
         //     $history->save();
-           
-        // }        
-                
+
+        // }
+
         if ($lastDocument->analyst_sign_date_gi != $data->analyst_sign_date_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -3395,9 +3427,9 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
+
         $previousSectionName = User::find($lastDocument->section_sign_date_gi);
         $currentSectionName = User::find($data['section_sign_date_gi']);
 
@@ -3420,7 +3452,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
         $previousSectionHeadName = User::find($lastDocument->section_sign_date_gi);
         $currentSectionHeadName = User::find($data['section_sign_date_gi']);
@@ -3443,7 +3475,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -3465,7 +3497,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         if ($lastDocument->Incident_Category_others != $data->Incident_Category_others ) {
@@ -3486,7 +3518,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->attachments_gi != $data->attachments_gi ) {
@@ -3507,7 +3539,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -3558,7 +3590,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
 
 
 
-        // ======================five attchemnt 
+        // ======================five attchemnt
 
 if (!empty($request->system_suitable_attachments) || !empty($request->deleted_system_suitable_attachments)) {
     // Get the existing attachments from the database
@@ -3685,7 +3717,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
         if ($lastlabtab->qc_hear_remark_c != $labtab->qc_hear_remark_c ) {
@@ -3709,7 +3741,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
 
 
@@ -3755,7 +3787,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //         $history->action_name = "Update";
         //     }
         //     $history->save();
-           
+
         // }
 
         if ($lastDocument->Other_Ref != $data->Other_Ref ) {
@@ -3777,7 +3809,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         if ($lastDocument->due_date != $data->due_date ) {
@@ -3799,7 +3831,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         $previousAssignedToName = User::find($lastDocument->assign_to);
@@ -3819,11 +3851,11 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            
+
             $history->save();
         }
 
@@ -3846,7 +3878,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->Invocation_Type != $data->Invocation_Type ) {
@@ -3868,7 +3900,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         if ($lastDocument->incident_involved_others_gi != $data->incident_involved_others_gi ) {
@@ -3889,7 +3921,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->stage_stage_gi != $data->stage_stage_gi ) {
@@ -3910,7 +3942,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->incident_stability_cond_gi != $data->incident_stability_cond_gi ) {
@@ -3931,7 +3963,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->Incident_Details != $data->Incident_Details ) {
@@ -3954,7 +3986,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                 $history->action_name = "Update";
             }
             $history->save();
-          
+
         }
         if ($lastDocument->Document_Details != $data->Document_Details ) {
 
@@ -3975,7 +4007,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -3998,10 +4030,10 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
-        
+
         if ($lastDocument->Instrument_Details != $data->Instrument_Details ) {
 
             $history = new LabIncidentAuditTrial();
@@ -4021,7 +4053,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->Involved_Personnel != $data->Involved_Personnel ) {
@@ -4043,7 +4075,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->Product_Details != $data->Product_Details) {
@@ -4065,7 +4097,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Comments ) {
@@ -4087,7 +4119,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
         if ($lastDocument->Cancelation_Remarks != $data->Cancelation_Remarks ) {
@@ -4109,7 +4141,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         // if ($lastDocument->Investigation_Details != $data->Investigation_Details ) {
@@ -4131,7 +4163,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-          
+
         //     $history->save();
         // }
         if ($lastDocument->Action_Taken != $data->Action_Taken ) {
@@ -4153,7 +4185,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->save();
         }
         if ($lastDocument->Root_Cause != $data->Root_Cause ) {
@@ -4175,7 +4207,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4198,7 +4230,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4221,7 +4253,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4244,7 +4276,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->save();
         // }
 
@@ -4267,7 +4299,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->save();
         // }
 
@@ -4290,7 +4322,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4313,7 +4345,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4336,7 +4368,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4359,7 +4391,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4382,7 +4414,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->QC_headhod_secondery_Attachment != $data->QC_headhod_secondery_Attachment) {
@@ -4404,7 +4436,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4427,10 +4459,10 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
- 
+
         if ($lastDocument->QA_secondery_Attachment != $data->QA_secondery_Attachment) {
 
             $history = new LabIncidentAuditTrial();
@@ -4450,7 +4482,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
 
@@ -4476,7 +4508,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->save();
         }
         if ($lastDocument->Effectiveness_Check != $data->Effectiveness_Check ) {
@@ -4499,7 +4531,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
         if ($lastDocument->Incident_Type != $data->Incident_Type ) {
 
@@ -4541,7 +4573,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4563,7 +4595,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4585,7 +4617,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4607,7 +4639,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4629,7 +4661,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4651,7 +4683,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4673,7 +4705,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4695,7 +4727,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4721,7 +4753,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             }
 
         }
-        
+
         if ($lastDocument->immediate_action_ia != $data->immediate_action_ia) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -4739,7 +4771,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-       
+
         $history->origin_state = $lastDocument->status;
         $history->save();
     }
@@ -4761,7 +4793,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                 } else {
                     $history->action_name = "Update";
                 }
-        
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4784,7 +4816,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4806,7 +4838,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-          
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4828,7 +4860,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-            
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4850,7 +4882,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4872,7 +4904,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4897,7 +4929,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4919,7 +4951,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4941,7 +4973,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4963,7 +4995,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4987,7 +5019,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5009,7 +5041,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5031,7 +5063,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5053,7 +5085,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5075,7 +5107,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5097,7 +5129,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5120,7 +5152,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //         $history->action_name = "Update";
         //     }
         // }
-        
+
         if ($lastLabtab->stage_stage_ssfi != $labtab->stage_stage_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -5138,7 +5170,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5159,7 +5191,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -5181,7 +5213,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5203,7 +5235,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -5225,7 +5257,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5270,7 +5302,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5292,7 +5324,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         //     } else {
         //         $history->action_name = "Update";
         //     }
-           
+
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -5314,7 +5346,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
                     } else {
                         $history->action_name = "Update";
                     }
-                   
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5336,7 +5368,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5358,7 +5390,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5380,7 +5412,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5404,7 +5436,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-         
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5426,12 +5458,12 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-          
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
 
-    
+
 
 
         if ($lastDocument->root_cause_ssfi != $data->root_cause_ssfi) {
@@ -5451,7 +5483,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5473,7 +5505,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             } else {
                 $history->action_name = "Update";
             }
-           
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -5495,7 +5527,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 //             } else {
 //                 $history->action_name = "Update";
 //             }
-          
+
 //     $history->origin_state = $lastDocument->status;
 //     $history->save();
 // }
@@ -5518,7 +5550,7 @@ if ($lastDocument->investigation_summary_ia != $data->investigation_summary_ia) 
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5540,7 +5572,7 @@ if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5561,7 +5593,7 @@ if ($lastDocument->investigator_qc != $data->investigator_qc) {
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5582,7 +5614,7 @@ if ($lastDocument->qc_review_to != $data->qc_review_to) {
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5605,7 +5637,7 @@ if ($lastDocument->capa_number_im != $data->capa_number_im) {
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5628,7 +5660,7 @@ if ($lastDocument->corrective_and_preventive_action_ia != $data->corrective_and_
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5651,7 +5683,7 @@ if ($lastDocument->corrective_and_preventive_action_ia != $data->corrective_and_
 //             } else {
 //                 $history->action_name = "Update";
 //             }
-          
+
 //     $history->origin_state = $lastDocument->status;
 //     $history->save();
 // }
@@ -5673,7 +5705,7 @@ if ($lastDocument->result_of_repeat_analysis_ia != $data->result_of_repeat_analy
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5696,7 +5728,7 @@ if ($lastDocument->repeat_analysis_plan_ia != $data->repeat_analysis_plan_ia) {
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5719,7 +5751,7 @@ if ($lastDocument->proposed_correctivei_ia != $data->proposed_correctivei_ia) {
             } else {
                 $history->action_name = "Update";
             }
-         
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5742,7 +5774,7 @@ if ($lastDocument->Incident_Details != $data->Incident_Details) {
             } else {
                 $history->action_name = "Update";
             }
-         
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5765,7 +5797,7 @@ if ($lastDocument->Document_Details != $data->Document_Details) {
             } else {
                 $history->action_name = "Update";
             }
-          
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5812,7 +5844,7 @@ if ($lastDocument->Involved_Personnel != $data->Involved_Personnel) {
             } else {
                 $history->action_name = "Update";
             }
-          
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5835,7 +5867,7 @@ if ($lastDocument->Product_Details != $data->Product_Details) {
             } else {
                 $history->action_name = "Update";
             }
-            
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5858,7 +5890,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
             } else {
                 $history->action_name = "Update";
             }
-           
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -5881,29 +5913,94 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             } else {
                 $history->action_name = "Update";
             }
-          
+
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
 
-$griddata = $data->id;
 
-if($data->stage == 1){
-    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-    $incidentReport->labincident_id = $griddata;
-    $incidentReport->identifier = 'Incident Report';
-    $incidentReport->data = $request->investrecord;
-    $incidentReport->save();       
-}
 
-    // For "Sutability" report
-$identifier = 'Sutability';
+        $griddata = $data->id;
 
-$suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
-$suitabilityReport->labincident_id = $griddata;
-$suitabilityReport->identifier = $identifier;
-$suitabilityReport->data = $request->investigation;
-$suitabilityReport->save();
+
+        if (!empty($request->investrecord)) {
+            // Fetch existing auditor data
+            $existingAuditorShow = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->first();
+            $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+            if($data->stage == 1){
+                $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+                $incidentReport->labincident_id = $griddata;
+                $incidentReport->identifier = 'Incident Report';
+                $incidentReport->data = $request->investrecord;
+                $incidentReport->update();
+            }
+            //dd($product);
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'name_of_product' => 'Name of Product',
+                'batch_no' => 'B No./A.R. No.',
+                'remarks' => 'Remarks',
+
+            ];
+
+            // Track audit trail changes
+            if (is_array($request->investrecord)) {
+                foreach ($request->investrecord as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['name_of_product', 'batch_no', 'remarks'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // Only proceed if there's a change or the data is new
+                        if ($oldValue !== $newValue) {
+                            // Check if this specific change has already been logged in the audit trail
+                            $existingAuditTrail = LabIncidentAuditTrial::where([
+                                ['labincident_id', '=', $data->id],
+                                ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+                                ['previous', '=', $oldValue],
+                                ['current', '=', $newValue]
+                            ])->first();
+
+                            // Determine if the data is new or updated
+                            $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+                            // If no existing audit trail record, log the change
+                            if (!$existingAuditTrail) {
+                                $auditTrail = new LabIncidentAuditTrial;
+                                $auditTrail->labincident_id = $data->id;
+                                $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                                $auditTrail->previous = $oldValue;
+                                $auditTrail->current = $newValue;
+                                $auditTrail->comment = "";
+                                $auditTrail->user_id = Auth::user()->id;
+                                $auditTrail->user_name = Auth::user()->name;
+                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->origin_state = $data->status;
+                                $auditTrail->change_to = "Not Applicable";
+                                $auditTrail->change_from = $data->status;
+                                $auditTrail->action_name = $actionName; // Set action to New or Update
+                                $auditTrail->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+                // For "Sutability" report
+                $identifier = 'Sutability';
+
+                $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
+                $suitabilityReport->labincident_id = $griddata;
+                $suitabilityReport->identifier = $identifier;
+                $suitabilityReport->data = $request->investigation;
+                $suitabilityReport->save();
 
 
 
@@ -5957,14 +6054,14 @@ $suitabilityReport->save();
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
                $old_record = Capa::select('id', 'division_id', 'record')->get();
-                   
+
                     $data=LabIncident::find($id);
                     // $p_record = OutOfCalibration::find($id);
                     $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                    $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
                 //    $count = Helpers::getActionItemData($id, $parent_type);
                 //    $countData = $count + 1;
-                   
+
                 //    dd($countData);
                 // return $data;
                    return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record', 'data'));
@@ -6003,7 +6100,7 @@ $suitabilityReport->save();
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
-           
+
 
            }
 
@@ -6036,7 +6133,7 @@ $suitabilityReport->save();
                    $data=LabIncident::find($id);
                    $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                     $count = Helpers::getChildData($id, $parent_type);
-                    $countData = $count + 1; 
+                    $countData = $count + 1;
                    return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record'));
 
                }
@@ -6065,7 +6162,7 @@ $suitabilityReport->save();
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            $data=LabIncident::find($id);
+            $data = LabIncident::find($id);
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
 
             return view('frontend.forms.action-item', compact('expectedParenRecord','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
@@ -6192,7 +6289,7 @@ $suitabilityReport->save();
             $history->change_from = $lastDocument->status;
             $history->origin_state = $lastDocument->status;
             $history->stage='Approved';
-            $history->action='Approved';   
+            $history->action='Approved';
             if (is_null($lastDocument->no_assignable_cause_by) || $lastDocument->no_assignable_cause_by === '') {
                 $history->action_name = 'New';
             } else {
@@ -6225,7 +6322,7 @@ $suitabilityReport->save();
             return back();
         }
     }
-    
+
     public function LabIncidentStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -6439,7 +6536,7 @@ $suitabilityReport->save();
                             'title' => 'Mandatory Fields!',
                             'message' => 'Investigation Details Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -6499,7 +6596,7 @@ $suitabilityReport->save();
                     //         }
                     //     // }
                     // }
-    
+
                     $changeControl->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -6889,7 +6986,7 @@ $suitabilityReport->save();
                 //         }
                 //     // }
                 // }
-                
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -6941,7 +7038,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -6996,7 +7093,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7049,7 +7146,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7102,7 +7199,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7155,7 +7252,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7208,7 +7305,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7261,7 +7358,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->action='More Information Required';   
+                $history->action='More Information Required';
                 // if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
                 //     $history->action_name = 'New';
                 // } else {
@@ -7338,7 +7435,7 @@ $suitabilityReport->save();
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Cancel';
-                $history->action='Cancel';   
+                $history->action='Cancel';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                     $history->action_name = 'New';
                 } else {

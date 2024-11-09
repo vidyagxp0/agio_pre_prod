@@ -1013,7 +1013,7 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file1"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1039,7 +1039,7 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    const removeButtons = document.querySelectorAll('.remove-file');
+                                    const removeButtons = document.querySelectorAll('.remove-file1');
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
@@ -1788,43 +1788,43 @@
 
                             <script>
                                 $(document).ready(function() {
-                                    let indexteam =
-                                        {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
+                                    let indexTeam = {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
+
                                     $('#team_members').click(function(e) {
                                         e.preventDefault();
 
-                                        function generateTableRow(teamserialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Team_Members[' + teamserialNumber +
-                                                '][serial]" value="' + (teamserialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][names_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam +
-                                                '][designation]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam +
-                                                '][department_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + indexteam + '][sign_tm]"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexteam + '_date_tm" type="text" name="Team_Members[' + indexteam +
-                                                '][date_tm]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="Team_Members[' +
-                                                indexteam +
-                                                '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
-                                                indexteam +
-                                                '_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexteam + '_date_tm\')" /> </div> </div></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-                                                '</tr>';
-                                            indexteam++;
+                                        function generateTableRow(teamSerialNumber) {
+                                            let html = `
+                                                <tr>
+                                                    <td><input disabled type="text" name="Team_Members[${teamSerialNumber}][serial]" value="${teamSerialNumber + 1}"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][names_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][designation]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][department_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[${indexTeam}][sign_tm]"></td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input id="date_${indexTeam}_date_tm" type="text" name="Team_Members[${indexTeam}][date_tm]" placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="Team_Members[${indexTeam}][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_${indexTeam}_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_${indexTeam}_date_tm')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>`;
+                                            indexTeam++;
                                             return html;
                                         }
 
-                                        var tableBody = $('#team_members_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
+                                        let tableBody = $('#team_members_details tbody');
+                                        let rowCount = tableBody.children('tr').length;
+                                        let newRow = generateTableRow(rowCount);
                                         tableBody.append(newRow);
                                     });
                                 });
                             </script>
+
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -2116,19 +2116,23 @@
                                                                                 id="text_date_{{ $index }}_mfg_date_pmd_ca"
                                                                                 type="text"
                                                                                 name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                 placeholder="DD-MMM-YYYY"
                                                                                 value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
                                                                                 readonly
                                                                                 onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+
                                                                             <input type="date"
                                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                                 name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
                                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
                                                                                 id="date_{{ $index }}_mfg_date_pmd_ca"
                                                                                 class="hide-input show_date"
                                                                                 style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca'); updateExpiryMinDate('{{ $index }}');" />
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
+                                                                                {{--updateExpiryMinDate('{{ $index }}');"--}}
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2147,15 +2151,18 @@
                                                                                 value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
                                                                                 readonly
                                                                                 onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
+
+
                                                                             <input type="date"
                                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                                 name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
                                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
                                                                                 id="date_{{ $index }}_expiry_date_pmd_ca"
                                                                                 class="hide-input show_date"
                                                                                 style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                                 onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2612,7 +2619,7 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="yes" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2621,7 +2628,7 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="no" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2854,7 +2861,7 @@
                                                             <i class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i>
                                                         </a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file2"
                                                             data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i>
@@ -2881,7 +2888,7 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    const removeButtons = document.querySelectorAll('.remove-file');
+                                    const removeButtons = document.querySelectorAll('.remove-file2');
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
@@ -3064,7 +3071,7 @@
                                                             <i class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i>
                                                         </a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file3"
                                                             data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i>
@@ -3091,7 +3098,7 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    const removeButtons = document.querySelectorAll('.remove-file');
+                                    const removeButtons = document.querySelectorAll('.remove-file3');
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
@@ -9610,7 +9617,7 @@
                                                         <i class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i>
                                                     </a>
-                                                    <a type="button" class="remove-file"
+                                                    <a type="button" class="remove-file4"
                                                         data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark"
                                                             style="color:red; font-size:20px;"></i>
@@ -9637,7 +9644,7 @@
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const removeButtons = document.querySelectorAll('.remove-file');
+                                const removeButtons = document.querySelectorAll('.remove-file4');
 
                                 removeButtons.forEach(button => {
                                     button.addEventListener('click', function() {
@@ -9804,7 +9811,7 @@
                                                         <i class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i>
                                                     </a>
-                                                    <a type="button" class="remove-file"
+                                                    <a type="button" class="remove-file5"
                                                         data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark"
                                                             style="color:red; font-size:20px;"></i>
@@ -9831,7 +9838,7 @@
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const removeButtons = document.querySelectorAll('.remove-file');
+                                const removeButtons = document.querySelectorAll('.remove-file5');
 
                                 removeButtons.forEach(button => {
                                     button.addEventListener('click', function() {
@@ -9994,7 +10001,7 @@
                                                         <i class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i>
                                                     </a>
-                                                    <a type="button" class="remove-file"
+                                                    <a type="button" class="remove-file6"
                                                         data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark"
                                                             style="color:red; font-size:20px;"></i>
@@ -10021,7 +10028,7 @@
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const removeButtons = document.querySelectorAll('.remove-file');
+                                const removeButtons = document.querySelectorAll('.remove-file6');
 
                                 removeButtons.forEach(button => {
                                     button.addEventListener('click', function() {
@@ -10213,7 +10220,7 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Send To CFT By : </label>
+                                <label for="Initiator Group">Send To CFT Review By : </label>
                                 @if ($data->send_cft_by)
                                 <div class="static">{{ $data->send_cft_by }}</div>
                                 @else
@@ -10224,7 +10231,7 @@
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Send To CFT On : </label>
+                                <label for="OOC Logged On">Send To CFT Review On : </label>
                                 @if ($data->send_cft_on)
                                 <div class="static">{{ $data->send_cft_on }}</div>
                                 @else
@@ -10235,7 +10242,7 @@
 
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Comment">Send To CFT Comment : </label>
+                                <label for="Comment">Send To CFT Review Comment : </label>
                                 @if ($data->send_cft_comment)
                                 <div class="static">{{ $data->send_cft_comment }}</div>
                                 @else

@@ -1023,7 +1023,7 @@
 
 
                             <div class="row">
-                                @if ($data->stage == 2 || $data->stage == 3)
+                                @if ($data->stage == 3)
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule Start Date">Actual Start Date</label>
