@@ -1009,12 +1009,12 @@
                                                                                 <th>Severity (S)</th>
                                                                                 <th>Probability (P)</th>
                                                                                 <th>Detection (D)</th>
-                                                                                <th>RPN</th>
+                                                                                <th>Risk Lavel(RPN)</th>
                                                                                 <th>Control Measures recommended/ Risk mitigation proposed</th>
                                                                                 <th>Severity (S)</th>
                                                                                 <th>Probability (P)</th>
                                                                                 <th>Detection (D)</th>
-                                                                                <th>Risk Level (RPN)</th>
+                                                                                <th>RPN</th>
                                                                                 <th>Category of Risk Level (Low, Medium and High)</th>
                                                                                 <th>Risk Acceptance (Y/N)</th>
                                                                                 <th>Traceability document</th>

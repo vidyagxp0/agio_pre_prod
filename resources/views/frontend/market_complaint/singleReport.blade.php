@@ -774,7 +774,7 @@
                 </div> --}}
                 <div class="border-table">
                     <div class="block-head">
-                        Proposal to Accomplish Investigation Report
+                        Proposal To Accomplish Investigation
                     </div>
 
                     <table>
@@ -3437,7 +3437,7 @@
                         </div>
                     </tr>
                     <tr>
-                        <th class="w-20">Send To CFT  By</th>
+                        <th class="w-20">Send To CFT Review By</th>
                         <div>
                             @if ($data->cft_complate_by)
                                 {{ $data->cft_complate_by }}
@@ -3445,7 +3445,7 @@
                                 Not Applicable
                             @endif
                         </div>
-                        <th class="w-20">Send To CFT  On</th>
+                        <th class="w-20">Send To CFT Review On</th>
                         <div>
                             @if ($data->cft_complate_on)
                                 {{ $data->cft_complate_on }}
@@ -3540,7 +3540,7 @@
                                 Not Applicable
                             @endif
                         </div>
-                        <th class="w-20">Approval Comment</th>
+                        <th class="w-20">Approval Complete Comment</th>
                         <div>
                             @if ($data->approve_plan_comment)
                                 {{ $data->approve_plan_comment }}

@@ -1801,8 +1801,8 @@
                                                                         readonly placeholder="DD-MMM-YYYY" />
                                                                     <input type="date"
                                                                         name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                                        min="{{ today()->subDays(1000)->format('Y-m-d') }}"
-                                                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        {{-- min="{{ today()->subDays(1000)->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                         oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
@@ -1871,7 +1871,7 @@
                                                 '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
                                                 '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
                                                 '<input type="date" name="Product_MaterialDetails[' + productserialno +
-                                                '][mfg_date_pmd_ca]" readonly min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
+                                                '][mfg_date_pmd_ca]" min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
                                                 productserialno +
                                                 '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
                                                 productserialno + '_mfg_date_pmd_ca\')"/>' +
@@ -4672,7 +4672,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Send to CFT By :</label>
+                                    <label for="Initiator Group">Send to CFT Review By :</label>
                                     Not Applicable
 
                                     <div class="static"></div>
@@ -4682,7 +4682,7 @@
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Send to CFT On :</label>
+                                    <label for="OOC Logged On">Send to CFT Review On :</label>
                                     Not Applicable
 
                                     <div class="date"></div>
@@ -4690,7 +4690,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Comment">Send to CFT Comment</label>
+                                    <label for="Comment">Send to CFT Review Comment</label>
                                     Not Applicable
 
                                     <div class="static"></div>
