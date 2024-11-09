@@ -10064,6 +10064,7 @@
                                         <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
                                     </div>
                                 </div>
+                            </td>
                                 <td>
                                 <button type="button" class="btn btn-dark" onclick="removeRow(this)" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
                             </td>
