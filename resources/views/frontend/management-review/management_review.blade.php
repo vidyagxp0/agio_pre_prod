@@ -2145,8 +2145,7 @@
                                     </div>
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule/
-                                                Powder Person <span id="asteriskInvi11" style="display: none"
+                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule/Powder Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_Production_Table_Person" disabled
                                                 id="hod_Production_Table_Person">

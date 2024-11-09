@@ -781,100 +781,9 @@ class RiskManagementController extends Controller
 
 //----------------------------------------------------------------------------------------------------
 
-        $data1 = new RiskAssesmentGrid();
-        $data1->risk_id = $data->id;
-        $data1->type = "effect_analysis";
 
-        $fieldNames = [
-            'risk_factor' => 'Activity',
-            // 'risk_element' => 'Responsible',
-            'problem_cause' => 'Possible Risk/Failure (Identified Risk)',
-            'existing_risk_control' => 'Consequences of Risk/Potential Causes',
-            'initial_severity' => 'Severity (S)',
-            'initial_detectability' => 'Probability (P)',
-            'initial_probability' => 'Detection (D)',
-            'initial_rpn' => 'Risk Level (RPN)',
-            'risk_control_measure' => 'Control Measures recommended/ Risk mitigation proposed',
-            'residual_severity' => 'Severity (S)',
-            'residual_probability' => 'Probability (P)',
-            'residual_detectability' => 'Detection (D)',
-            'residual_rpn' => 'RPN',
-            'risk_acceptance' => 'Category of Risk Level (Low, Medium and High)',
-            'risk_acceptance2' => 'Risk Acceptance (Y/N)',
-            'mitigation_proposal' => 'Traceability document',
-        ];
 
-        foreach ($request->risk_factor as $index => $risk_factor) {
-            // Since this is a new entry, there are no previous details
-            $previousDetails = [
-                'risk_factor' => null,
-                'problem_cause' => null,
-                'existing_risk_control' => null,
-                'initial_severity' => null,
-                'initial_detectability' => null,
-                'initial_probability' => null,
-                'initial_rpn' => null,
-                'risk_control_measure' => null,
-                'residual_severity' => null,
-                'residual_probability' => null,
-                'residual_detectability' => null,
-                'residual_rpn' => null,
-                'risk_acceptance' => null,
-                'risk_acceptance2' => null,
-                'mitigation_proposal' => null,
-            ];
 
-            // Current fields values from the request
-            $fields = [
-                'risk_factor' => $risk_factor,
-                'problem_cause' => $request->problem_cause[$index] ?? null,
-                'existing_risk_control' => $request->existing_risk_control[$index] ?? null,
-                'initial_severity' => Helpers::getSeverityValue($request->initial_severity[$index]) ?? null,
-                'initial_detectability' => Helpers::getProbabilityValue($request->initial_detectability[$index]) ?? null,
-                'initial_probability' => Helpers::getDetectionValue($request->initial_probability[$index]) ?? null,
-                'initial_rpn' => $request->initial_rpn[$index] ?? null,
-                'risk_control_measure' => $request->risk_control_measure[$index] ?? null,
-                'residual_severity' => Helpers::getSeverityValue($request->residual_severity[$index]) ?? null,
-                'residual_probability' => Helpers::getProbabilityValue($request->residual_probability[$index]) ?? null,
-                'residual_detectability' => Helpers::getDetectionValue($request->residual_detectability[$index]) ?? null,
-                'residual_rpn' => $request->residual_rpn[$index] ?? null,
-                'risk_acceptance' => $request->risk_acceptance[$index] ?? null,
-                'risk_acceptance2' => $request->risk_acceptance2[$index] ?? null,
-                'mitigation_proposal' => $request->mitigation_proposal[$index] ?? null,
-            ];
-            
-
-            foreach ($fields as $key => $currentValue) {
-                // Log changes for new rows (no previous value to compare)
-                if (!empty($currentValue)) {
-                    // Only create an audit trail entry for new values
-                    $history = new RiskAuditTrail();
-                    $history->risk_id = $data->id;
-
-                    // Set activity type to include field name and row index using the fieldNames array
-                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-                    // Since this is a new entry, 'Previous' value is null
-                    $history->previous = 'null'; // Previous value or 'null'
-
-                    // Assign 'Current' value, which is the new value
-                    $history->current = $currentValue; // New value
-
-                    // Comments and user details
-                    $history->comment = 'NA';
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-                    $history->change_to = "Opened";
-                    $history->change_from = "Initiation";
-                    $history->action_name = "Create";
-
-                    // Save the history record
-                    $history->save();
-                }
-            }
-        }
 
 //---------------------------------------------------------------------------------------------------
         // ---------------------------------------
@@ -3689,14 +3598,14 @@ class RiskManagementController extends Controller
                     'risk_acceptance' => isset($previousDetails['risk_acceptance'][$index]) ? $previousDetails['risk_acceptance'][$index] : null,
                     'risk_acceptance2' => isset($previousDetails['risk_acceptance2'][$index]) ? $previousDetails['risk_acceptance2'][$index] : null,
                     'mitigation_proposal' => isset($previousDetails['mitigation_proposal'][$index]) ? $previousDetails['mitigation_proposal'][$index] : null,
-                    
+
 
                     // 'action' => $previousDetails['action'][$index] ?? null,
                     // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
                     // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
                     // 'item_status' => $previousDetails['item_status'][$index] ?? null,
                 ];
-                
+
 
 
                 // Current field values
