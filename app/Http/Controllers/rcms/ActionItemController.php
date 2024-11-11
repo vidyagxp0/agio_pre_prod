@@ -1154,28 +1154,29 @@ class ActionItemController extends Controller
 
             $history->save();
         }
-        if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment )) {
-            // dd($lastopenState->hod_preson);
-            $history = new ActionItemHistory;
+
+
+        if($lastopenState->hod_preson != $openState->hod_preson || !empty($request->comment)) {
+            $lastDataAuditTrail = ActionItemHistory::where('cc_id', $openState->id)
+                            ->where('activity_type', 'HOD Persons')
+                            ->exists();
+            $history = new ActionItemHistory();
             $history->cc_id = $id;
             $history->activity_type = 'HOD Persons';
-            $history->previous = $lastopenState->hod_preson;
+            $history->previous =  $lastopenState->hod_preson;
             $history->current = $openState->hod_preson;
-            $history->comment = $request->hod_preson_comment;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
-           $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->hod_preson) || $lastopenState->hod_preson = " ") {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-
+            $history->change_from = $lastopenState->status;
+            $history->action_name = $lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
+
+
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -1643,6 +1644,7 @@ class ActionItemController extends Controller
                     $history->previous = $lastopenState->work_completion_by . ' , ' . $lastopenState->work_completion_on;
                 }
                 $history->current = $changeControl->work_completion_by . ' , ' . $changeControl->work_completion_on;
+
                 if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
                     $history->action_name = 'New';
                 } else {
@@ -1742,6 +1744,14 @@ public function lastStage(Request $request, $id){
             $history = new ActionItemHistory;
             $history->action = "Verification Complete";
             $history->cc_id = $id;
+
+            if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastopenState->qa_varification_by . ' , ' . $lastopenState->qa_varification_on;
+            }
+            $history->current = $changeControl->qa_varification_by . ' , ' . $changeControl->qa_varification_on;
+
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1751,13 +1761,7 @@ public function lastStage(Request $request, $id){
             $history->action_name = 'Not Applicable';
             $history->stage = '2';
             $history->activity_type = 'Verification Complete by, Verification Complete On';
-            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
-                $history->previous = "";
-            } else {
-                $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
-            }
-            $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
-            if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+            if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';

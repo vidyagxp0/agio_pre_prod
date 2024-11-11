@@ -658,8 +658,8 @@
                                                 <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->name == $data->assign_to) selected @endif>
+                                                        <option value="{{ $user->id }}"
+                                                            @if ($user->id == $data->assign_to) selected @endif>
                                                             {{ $user->name }}
                                                         </option>
                                                     @endforeach
@@ -962,7 +962,8 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Auditee department Name</label>
                                                 <select name="auditee_department"
-                                                @if ($data->stage != 1) disabled @endif>
+                                                {{--@if ($data->stage != 1) disabled @endif--}}
+                                                >
                                                     {{-- <option value="0">-- Select --</option> --}}
                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
@@ -1131,8 +1132,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
 
 
 
@@ -2145,6 +2144,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
@@ -15142,8 +15142,7 @@
                         '<td><input disabled type="text" name="observations[0][serial_number]" value="' +
                         serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="observations[' + serialNumber +
-                        '][observation]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber +'][observation]"></td>' +
                         '<td><input type="text" name="observations[' + serialNumber + '][category]"></td>' +
                         '<td><input type="text" name="observations[' + serialNumber + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
