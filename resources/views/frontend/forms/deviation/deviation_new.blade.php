@@ -1285,7 +1285,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input" id="productRow" style="display: none">
                                         <label for="audit-agenda-grid">
-                                            Product/Batch Details
+                                        Product/ Material Batch Details 
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
@@ -1300,9 +1300,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
-                                                        <th style="width: 12%">Product</th>
+                                                        <th style="width: 12%">Product /Material</th>
                                                         <th style="width: 16%"> Stage</th>
-                                                        <th style="width: 16%">Batch No</th>
+                                                        <th style="width: 16%">Batch No /A.R.No.</th>
                                                         <th style="width: 8%">Action</th>
 
 

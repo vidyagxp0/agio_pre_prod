@@ -1188,13 +1188,14 @@ function addRiskAssessmentdata(tableId) {
     cell1.innerHTML = currentRowCount;
 
     var cell2 = newRow.insertCell(1);
-    cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+    cell2.innerHTML = "<textarea name='risk_factor[]' ></textarea>";
+    
 
     var cell4 = newRow.insertCell(2);
-    cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+    cell4.innerHTML = "<textarea name='problem_cause[]' ></textarea>";
 
     var cell5 = newRow.insertCell(3);
-    cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+    cell5.innerHTML = "<textarea name='existing_risk_control[]' ></textarea>";
 
     var cell6 = newRow.insertCell(4);
     cell6.innerHTML =
@@ -1233,8 +1234,8 @@ function addRiskAssessmentdata(tableId) {
     cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
     var cell11 = newRow.insertCell(8);
-    cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
-
+    cell11.innerHTML = "<textarea name='risk_control_measure[]'></textarea>";
+   
     var cell12 = newRow.insertCell(9);
     cell12.innerHTML =
         "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
@@ -1285,7 +1286,8 @@ function addRiskAssessmentdata(tableId) {
         "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
     var cell17 = newRow.insertCell(15);
-    cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+    cell17.innerHTML = "<textarea name='mitigation_proposal[]' ></textarea>";
+   
 
     var cell18 = newRow.insertCell(16);
     cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";

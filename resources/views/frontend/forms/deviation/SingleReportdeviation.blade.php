@@ -359,7 +359,7 @@
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
-                                {{ $data->Facility_Equipment }}
+                                {{ Ucfirst($data->Facility_Equipment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -371,7 +371,7 @@
                         <th class="w-20">Document Details Required?</th>
                         <td class="w-30">
                             @if ($data->Document_Details_Required)
-                                {{ $data->Document_Details_Required }}
+                                {{Ucfirst( $data->Document_Details_Required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -379,7 +379,7 @@
                         <th class="w-20">Product/Batch Details Required?</th>
                         <td class="w-30">
                             @if ($data->Product_Details_Required)
-                                {{ strip_tags($data->Product_Details_Required) }}
+                                {{ Ucfirst(strip_tags($data->Product_Details_Required)) }}
                             @else
                                 Not Applicable
                             @endif
@@ -669,15 +669,15 @@
                 {{-- ==================================new Added=================== --}}
                 <div class="block">
                     <div class="block-head">
-                        Product/Batch Details
+                    Product/ Material Batch Details 
                     </div>
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
                                 <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Product</th>
+                                <th class="w-25">Product /Material</th>
                                 <th class="w-25">Stage</th>
-                                <th class="w-25">Batch No.</th>
+                                <th class="w-25">Batch No /A.R.No.</th>
 
                             </tr>
                             @if (!empty($grid_data2->product_name))
@@ -796,7 +796,7 @@
                         <th class="w-20">CAPA Required</th>
                         <td class="w-30">
                             @if ($data->capa_required)
-                                {{ $data->capa_required }}
+                                {{ Ucfirst($data->capa_required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -824,7 +824,7 @@
                         <th class="w-20">Initial Deviation category</th>
                         <td class="w-30">
                             @if ($data->Deviation_category)
-                                {{ $data->Deviation_category }}
+                                {{ Ucfirst($data->Deviation_category) }}
                             @else
                                 Not Applicable
                             @endif
@@ -929,7 +929,7 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Table_Review)
-                                            {{ $data1->Production_Table_Review }}
+                                            {{ Ucfirst($data1->Production_Table_Review) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1042,7 +1042,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Production_Injection_Review)
-                                                {{ $data1->Production_Injection_Review }}
+                                                {{Ucfirst( $data1->Production_Injection_Review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1111,7 +1111,7 @@
 
                         <div class="border-table">
                             <div class="block-head">
-                                Production Injection Attachments 2
+                                Production Injection Attachments 
                             </div>
                             <table>
 
@@ -1151,7 +1151,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ResearchDevelopment_Review)
-                                                {{ $data1->ResearchDevelopment_Review }}
+                                                {{ Ucfirst($data1->ResearchDevelopment_Review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1259,7 +1259,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Human_Resource_review)
-                                                {{ $data1->Human_Resource_review }}
+                                                {{ Ucfirst($data1->Human_Resource_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1368,7 +1368,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_Review)
-                                                {{ $data1->CorporateQualityAssurance_Review }}
+                                                {{Ucfirst($data1->CorporateQualityAssurance_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1477,7 +1477,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_Review)
-                                                {{ $data1->Store_Review }}
+                                                {{Ucfirst( $data1->Store_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1586,7 +1586,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Engineering_review)
-                                                {{ $data1->Engineering_review }}
+                                                {{Ucfirst( $data1->Engineering_review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1694,7 +1694,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->RegulatoryAffair_Review)
-                                                {{ $data1->RegulatoryAffair_Review }}
+                                                {{ Ucfirst($data1->RegulatoryAffair_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1803,7 +1803,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_Assurance)
-                                                {{ $data1->Quality_Assurance }}
+                                                {{ Ucfirst($data1->Quality_Assurance) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1912,7 +1912,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ProductionLiquid_Review)
-                                                {{ $data1->ProductionLiquid_Review }}
+                                                {{ Ucfirst($data1->ProductionLiquid_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2020,7 +2020,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Quality_review)
-                                                {{ $data1->Quality_review }}
+                                                {{ Ucfirst($data1->Quality_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2066,8 +2066,8 @@
                                     <th class="w-20">Quality Control Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Quality_Control_on)
-                                                {{ $data1->Quality_Control_on }}
+                                            @if ($data1->Quality_Control_by)
+                                                {{ $data1->Quality_Control_by }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2129,7 +2129,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Microbiology_Review)
-                                                {{ $data1->Microbiology_Review }}
+                                                {{ Ucfirst($data1->Microbiology_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2242,7 +2242,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Environment_Health_review)
-                                                {{ $data1->Environment_Health_review }}
+                                                {{ Ucfirst($data1->Environment_Health_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2352,7 +2352,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ContractGiver_Review)
-                                                {{ $data1->ContractGiver_Review }}
+                                                {{ Ucfirst($data1->ContractGiver_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2462,7 +2462,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_review)
-                                                {{ $data1->Other1_review }}
+                                                {{Ucfirst( $data1->Other1_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2580,7 +2580,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other2_review)
-                                                {{ $data1->Other2_review }}
+                                                {{Ucfirst( $data1->Other2_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2698,7 +2698,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other3_review)
-                                                {{ $data1->Other3_review }}
+                                                {{ Ucfirst($data1->Other3_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2816,7 +2816,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other4_review)
-                                                {{ $data1->Other4_review }}
+                                                {{ Ucfirst($data1->Other4_review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2934,7 +2934,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other5_review)
-                                                {{ $data1->Other5_review }}
+                                                {{ Ucfirst($data1->Other5_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3379,7 +3379,7 @@
                                         <th class="w-60">Investigation Team</th>
                                          <th class="w-60">Designation & Department  </th>
                                         <th class="w-60">Responsibility</th>
-
+                                        <th class="w-60">Investigation Approach</th>
                                         <th class="w-60">Remarks</th>
 
                                     </tr>
@@ -3403,11 +3403,13 @@
                                                     <td class="w-20">{{ $investigation_item['responsibility'] }}
                                                     </td>
                                                     <td class="w-20">{{ $investigation_item['remarks'] }}</td>
+                                                    <td class="w-20">{{ $investigation_item['investigation_approach'] }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
                                                 <td class="w-20">1</td>
+                                                <td class="w-20">Not Applicable</td>
                                                 <td class="w-20">Not Applicable</td>
                                                 <td class="w-20">Not Applicable</td>
                                                 <td class="w-20">Not Applicable</td>
@@ -3555,6 +3557,8 @@
                                                 Not Applicable
                                             @endif
                                         </td>
+                                        </tr>
+                                        <tr>
                                         <th class="w-20">Materials</th>
                                         <td class="w-80">
                                             @php $materials = $decodedData['materials'] ?? []; @endphp
@@ -3583,7 +3587,9 @@
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20">Environment</th>
+                                        </tr>
+                                        <tr>
+                                        <th class="w-20">Mother Environment</th>
                                         <td class="w-80">
                                             @php $environment = $decodedData['environment'] ?? []; @endphp
                                             @if (is_array($environment))
@@ -3598,7 +3604,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="w-20">Manpower</th>
+                                        <th class="w-20">Man</th>
                                         <td class="w-80">
                                             @php $manpower = $decodedData['manpower'] ?? []; @endphp
                                             @if (is_array($manpower))
@@ -3611,6 +3617,8 @@
                                                 Not Applicable
                                             @endif
                                         </td>
+                                        </tr>
+                                        <tr>   
                                         <th class="w-20">Machine</th>
                                         <td class="w-80">
                                             @php $machine = $decodedData['machine'] ?? []; @endphp
@@ -3627,16 +3635,16 @@
                                     </tr>
                                 </table>
                             
-                            
-    <div class="inner-block">
-        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-            Problem Statement
-        </label>
-        <span style="font-size: 0.8rem; margin-left: 60px;">
-            {{ $fishboneData->data['problem_statement'] ?? 'Not Applicable' }}
-        </span>
-    </div>
-@endif
+                                                    
+                            <div class="inner-block">
+                                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
+                                    Problem Statement
+                                </label>
+                                <span style="font-size: 0.8rem; margin-left: 60px;">
+                                    {{ $fishboneData->data['problem_statement'] ?? 'Not Applicable' }}
+                                </span>
+                            </div>
+                        @endif
 
 
 
@@ -3698,6 +3706,9 @@
                 {{-- <th class="thFMEA">Risk Level</th>
                 <th class="thFMEA">Risk Acceptance (Y/N)</th> --}}
                 <th class="thFMEA" rowspan="2">Traceability Document</th>
+                <th class="thFMEA"></th>
+                <th class="thFMEA"></th>
+                
             </tr>
             <tr class="table_bg">
                 <th class="thFMEA">Activity</th>
@@ -3714,6 +3725,9 @@
                 <th class="thFMEA">RPN</th>
                 <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
                 <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                <th class="thFMEA">Others</th>
+                <th class="thFMEA">Attchment</th>
+                
                 {{-- <th></th> --}}
             </tr>
         </thead>
@@ -3737,6 +3751,8 @@
                         <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null }}</td>
                         <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null }}</td>
                         <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}</td>
+                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->conclusion)[$key] ?? null }}</td>
+                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->attachment)[$key] ?? null }}</td>
                     </tr>
                 @endforeach
                 @else
@@ -3931,12 +3947,46 @@
                                     Why Why Chart
                                 </div>
 
-                                <!-- *********************** WHY 1 *********************** -->
+                                <!-- *********************** problem state *********************** -->
+
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
-                                    Why 1
+                                    Problem Statement
                                 </div>
 
                                 <table>
+                                    <tr class="table_bg">
+                                        <th class="w-20">S.N.</th>
+                                        <th class="w-60">Description</th>
+                                    </tr>
+                                    <tbody>
+                                        @if ($why_data && isset($why_data['problem_statement']))
+                                            @php
+                                                $serialNumber = 1;
+                                            @endphp
+                                            @if (is_array($why_data['problem_statement']))
+                                                @foreach ($why_data['problem_statement'] as $statement)
+                                                    <tr>
+                                                        <td class="w-20">{{ $serialNumber++ }}</td>
+                                                        <td class="w-60">{{ $statement }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td class="w-20">1</td>
+                                                    <td class="w-60">{{ $why_data['problem_statement'] }}</td>
+                                                </tr>
+                                            @endif
+                                        @else
+                                            <tr>
+                                                <td class="w-20">1</td>
+                                                <td class="w-60">Not Applicable</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+
+
+                                <!-- <table>
                                     <tr>
                                         <th class="w-20">Problem Statement</th>
                                         <td class="w-30">
@@ -3959,7 +4009,14 @@
                                             </div>
                                         </td>
                                     </tr>
-                                </table>
+                                </table> -->
+
+             <!-- *********************** problem state *********************** -->
+                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+                                    Why 1
+                                </div>
+
+                                
                                 <table>
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
@@ -4106,9 +4163,50 @@
                                 </table>
                             </div>
 
+
+              <!-- ***********************  Root Cause *********************** -->
+                            
+                            <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+                                Root Cause
+                                </div>
+
+                                
+                                <table>
+    <tr class="table_bg">
+        <th class="w-20">S.N.</th>
+        <th class="w-60">Description</th>
+    </tr>
+    <tbody>
+        @if ($why_data && isset($why_data['root-cause']))
+            @php
+                $serialNumber = 1;
+            @endphp
+            @if (is_array($why_data['root-cause']))
+                @foreach ($why_data['root-cause'] as $rootCause)
+                    <tr>
+                        <td class="w-20">{{ $serialNumber++ }}</td>
+                        <td class="w-60">{{ $rootCause }}</td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-60">{{ $why_data['root-cause'] }}</td>
+                </tr>
+            @endif
+        @else
+            <tr>
+                <td class="w-20">1</td>
+                <td class="w-60">Not Applicable</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+
+
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom: 5px; font-weight:bold;">
-                                    Category of Human Error
+                                Category Of Human Error 
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -4428,10 +4526,8 @@
                                         <th class="thFMEA" colspan="3">Risk Evaluation</th>
                                         <th class="thFMEA" rowspan="2">RPN</th>
                                         <th class="thFMEA" colspan="2">Risk Control</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level</th>
-                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
-                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        
                                     </tr>
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
@@ -4444,6 +4540,9 @@
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level</th>
+                                        <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                                        <th class="thFMEA">Traceability Document</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -4956,7 +5055,7 @@
                                 Post Categorization Of Deviation </label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->Post_Categorization)
-                                    {{ $data->Post_Categorization }}
+                                    {{ Ucfirst($data->Post_Categorization) }}
                                 @else
                                     Not Applicable
                                 @endif

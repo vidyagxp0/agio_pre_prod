@@ -1193,7 +1193,7 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Due Date';
             $history->previous = "NULL";
-            $history->current = $openState->due_date;
+            $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4163,8 +4163,8 @@ if (!empty($request->Human_Resource_attachment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $openState->due_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

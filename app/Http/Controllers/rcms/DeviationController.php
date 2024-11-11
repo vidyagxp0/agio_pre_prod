@@ -1785,6 +1785,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     public function update(Request $request, $id)
     {
 
+      //  dd($request->all());
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
@@ -1834,8 +1835,8 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
-                'short_description_required' => 'required|in:Recurring,Non_Recurring',
-                'nature_of_repeat' => 'required_if:short_description_required,Recurring',
+                // 'short_description_required' => 'required|in:Recurring,Non_Recurring',
+                // 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
                 'Deviation_date' => 'required',
                 'deviation_time' => 'required',
                 'Deviation_reported_date' => 'required',
@@ -2209,8 +2210,41 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         $data8->risk_acceptance_1 = serialize($request->input('risk_acceptance_1', []));
         $data8->risk_acceptance3 = serialize($request->input('risk_acceptance3', []));
         $data8->mitigation_proposal_1 = serialize($request->input('mitigation_proposal_1', []));
+        $data8->conclusion = serialize($request->input('conclusion', []));
 
-        //dd($data8) ;
+       
+        
+    
+        $allAttachments = [];
+
+        // Loop through each attachment group (key) in the request
+        if ($request->has('attachment')) {
+            foreach ($request->attachment as $key => $files) {
+                $attachmentFiles = []; // Initialize an array to store files for the current key
+        
+                // Check if the files array is valid
+                if (is_array($files)) {
+                    foreach ($files as $file) {
+                        if ($file instanceof \Illuminate\Http\UploadedFile) {
+                            // Generate a unique name for the file
+                            $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            // Move the file to the upload directory
+                            $file->move(public_path('upload'), $name);
+                            // Add the file name to the array for the current key
+                            $attachmentFiles[] = $name;
+                        }
+                    }
+                }
+        
+                // Assign the array of files for the current key
+                $allAttachments[$key] = $attachmentFiles;
+            }
+        }
+        
+        // Store the attachments array in the database (serialized or JSON format)
+        $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
+        
+       //dd($data8) ;
         $data8->save();
 
 
@@ -5122,8 +5156,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Quality Assurance Impact Assessment Required';
-            $history->previous = $lastCft->Quality_Assurance_Review;
-            $history->current = $request->Quality_Assurance_Review;
+            $history->previous = Ucfirst($lastCft->Quality_Assurance_Review);
+            $history->current = Ucfirst($request->Quality_Assurance_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5265,8 +5299,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Production Tablet/Capsule/Powder Impact Assessment Required';
-            $history->previous = $lastCft->Production_Table_Review;
-            $history->current = $request->Production_Table_Review;
+            $history->previous = Ucfirst($lastCft->Production_Table_Review);
+            $history->current = Ucfirst($request->Production_Table_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5407,8 +5441,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Production Liquid/Ointment Impact Assessment Required';
-            $history->previous = $lastCft->ProductionLiquid_Review;
-            $history->current = $request->ProductionLiquid_Review;
+            $history->previous = Ucfirst($lastCft->ProductionLiquid_Review);
+            $history->current = Ucfirst($request->ProductionLiquid_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5549,8 +5583,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Production Injection Impact Assessment Required';
-            $history->previous = $lastCft->Production_Injection_Review;
-            $history->current = $request->Production_Injection_Review;
+            $history->previous = Ucfirst($lastCft->Production_Injection_Review);
+            $history->current = Ucfirst($request->Production_Injection_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5691,8 +5725,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Store Impact Assessment Required';
-            $history->previous = $lastCft->Store_Review;
-            $history->current = $request->Store_Review;
+            $history->previous = Ucfirst($lastCft->Store_Review);
+            $history->current = Ucfirst($request->Store_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5833,8 +5867,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Quality Control Impact Assessment Required';
-            $history->previous = $lastCft->Quality_review;
-            $history->current = $request->Quality_review;
+            $history->previous = Ucfirst($lastCft->Quality_review);
+            $history->current = Ucfirst($request->Quality_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5975,8 +6009,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Research & Development Impact Assessment Required';
-            $history->previous = $lastCft->ResearchDevelopment_Review;
-            $history->current = $request->ResearchDevelopment_Review;
+            $history->previous = Ucfirst($lastCft->ResearchDevelopment_Review);
+            $history->current = Ucfirst($request->ResearchDevelopment_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6117,8 +6151,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Engineering Review Impact Assessment Required';
-            $history->previous = $lastCft->Engineering_review;
-            $history->current = $request->Engineering_review;
+            $history->previous = Ucfirst($lastCft->Engineering_review);
+            $history->current = Ucfirst($request->Engineering_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6259,8 +6293,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Human Resource Impact Assessment Required';
-            $history->previous = $lastCft->Human_Resource_review;
-            $history->current = $request->Human_Resource_review;
+            $history->previous = Ucfirst($lastCft->Human_Resource_review);
+            $history->current = Ucfirst($request->Human_Resource_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6401,8 +6435,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Microbiology Impact Assessment Required';
-            $history->previous = $lastCft->Microbiology_Review;
-            $history->current = $request->Microbiology_Review;
+            $history->previous = Ucfirst($lastCft->Microbiology_Review);
+            $history->current =Ucfirst( $request->Microbiology_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6543,8 +6577,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Regulatory Affair Impact Assessment Required';
-            $history->previous = $lastCft->RegulatoryAffair_Review;
-            $history->current = $request->RegulatoryAffair_Review;
+            $history->previous = Ucfirst($lastCft->RegulatoryAffair_Review);
+            $history->current = Ucfirst($request->RegulatoryAffair_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6685,8 +6719,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Impact Assessment Required';
-            $history->previous = $lastCft->CorporateQualityAssurance_Review;
-            $history->current = $request->CorporateQualityAssurance_Review;
+            $history->previous =Ucfirst( $lastCft->CorporateQualityAssurance_Review);
+            $history->current = Ucfirst($request->CorporateQualityAssurance_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6827,8 +6861,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Safety Impact Assessment Required';
-            $history->previous = $lastCft->Environment_Health_review;
-            $history->current = $request->Environment_Health_review;
+            $history->previous = Ucfirst($lastCft->Environment_Health_review);
+            $history->current = Ucfirst($request->Environment_Health_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6969,8 +7003,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Contract giver Impact Assessment Required';
-            $history->previous = $lastCft->ContractGiver_Review;
-            $history->current = $request->ContractGiver_Review;
+            $history->previous = Ucfirst($lastCft->ContractGiver_Review);
+            $history->current =Ucfirst( $request->ContractGiver_Review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7111,8 +7145,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 1 Impact Assessment Required';
-            $history->previous = $lastCft->Other1_review;
-            $history->current = $request->Other1_review;
+            $history->previous = Ucfirst($lastCft->Other1_review);
+            $history->current = Ucfirst($request->Other1_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7274,8 +7308,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 2 Impact Assessment Required';
-            $history->previous = $lastCft->Other2_review;
-            $history->current = $request->Other2_review;
+            $history->previous = Ucfirst($lastCft->Other2_review);
+            $history->current = Ucfirst($request->Other2_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7436,8 +7470,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 3 Impact Assessment Required';
-            $history->previous = $lastCft->Other3_review;
-            $history->current = $request->Other3_review;
+            $history->previous = Ucfirst($lastCft->Other3_review);
+            $history->current = Ucfirst($request->Other3_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7598,8 +7632,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 4 Impact Assessment Required';
-            $history->previous = $lastCft->Other4_review;
-            $history->current = $request->Other4_review;
+            $history->previous = Ucfirst($lastCft->Other4_review);
+            $history->current = Ucfirst($request->Other4_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7761,8 +7795,8 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 5 Impact Assessment Required';
-            $history->previous = $lastCft->Other5_review;
-            $history->current = $request->Other5_review;
+            $history->previous = Ucfirst($lastCft->Other5_review);
+            $history->current = Ucfirst($request->Other5_review);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
