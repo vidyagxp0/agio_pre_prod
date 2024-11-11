@@ -1453,7 +1453,7 @@
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Production_Table_On)
-                                {{ $data1->Production_Table_On }}
+                                {{ Helpers::getdateFormat($data1->Production_Table_On) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1544,8 +1544,8 @@
                         </td>
                         <th class="w-20">Production Injection Completed on</th>
                         <td class="w-80">
-                            @if ($data1->Production_Injection_On)
-                                {{ $data1->Production_Injection_On }}
+                            @if ( $data1->Production_Injection_On)
+                                {{ Helpers::getdateFormat($data1->Production_Injection_On) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1636,7 +1636,7 @@
                         <th class="w-20">Reasearch & Development Completed On</th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_on)
-                                {{ $data1->ResearchDevelopment_on }}
+                                {{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1726,7 +1726,7 @@
                         <th class="w-20">Human Resource Completed On</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_on)
-                                {{ $data1->Human_Resource_on }}
+                                {{ Helpers::getdateFormat($data1->Human_Resource_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1816,7 +1816,7 @@
                         <th class="w-20">Corporate Quality Assurance Completed On</th>
                         <td class="w-80">
                             @if ($data1->CorporateQualityAssurance_on)
-                                {{ $data1->CorporateQualityAssurance_on }}
+                                {{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1906,7 +1906,7 @@
                         <th class="w-20">Store Completed On</th>
                         <td class="w-80">
                             @if ($data1->Store_on)
-                                {{ $data1->Store_on }}
+                                {{ Helpers::getdateFormat($data1->Store_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1996,7 +1996,7 @@
                         <th class="w-20">Engineering Completed On</th>
                         <td class="w-80">
                             @if ($data1->Store_on)
-                                {{ $data1->Store_on }}
+                                {{ Helpers::getdateFormat($data1->Store_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2086,7 +2086,7 @@
                         <th class="w-20">Regulatory Affair Completed On</th>
                         <td class="w-80">
                             @if ($data1->RegulatoryAffair_on)
-                                {{ $data1->RegulatoryAffair_on }}
+                                {{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2176,7 +2176,7 @@
                         <th class="w-20">Quality Assurance Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->QualityAssurance_on)
-                                {{ $data1->QualityAssurance_on }}
+                                {{ Helpers::getdateFormat($data1->QualityAssurance_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2267,7 +2267,7 @@
                         <th class="w-20">Production Liquid/External Preparation Completed On</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_on)
-                                {{ $data1->ProductionLiquid_on }}
+                                {{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2357,7 +2357,7 @@
                         <th class="w-20">Quality Control Completed On</th>
                         <td class="w-80">
                             @if ($data1->Quality_Control_on)
-                                {{ $data1->Quality_Control_on }}
+                                {{ Helpers::getdateFormat($data1->Quality_Control_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2448,7 +2448,7 @@
                         <th class="w-20">Microbiology Completed On</th>
                         <td class="w-80">
                             @if ($data1->Microbiology_on)
-                                {{ $data1->Microbiology_on }}
+                                {{ Helpers::getdateFormat($data1->Microbiology_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2538,7 +2538,7 @@
                         <th class="w-20">Saftey Completed On</th>
                         <td class="w-80">
                             @if ($data1->Environment_Health_Safety_on)
-                                {{ $data1->Environment_Health_Safety_on }}
+                                {{ helpers::getdateFormat($data1->Environment_Health_Safety_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2640,7 +2640,7 @@
                         <th class="w-20">Others 1 Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other1_on)
-                                {{ $data1->Other1_on }}
+                                {{ Helpers::getdateFormat($data1->Other1_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2742,7 +2742,7 @@
                         <th class="w-20">Others 2 Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other2_on)
-                                {{ $data1->Other2_on }}
+                                {{ Helpers::getdateFormat($data1->Other2_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2844,7 +2844,7 @@
                         <th class="w-20">Others 3 Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other3_on)
-                                {{ $data1->Other3_on }}
+                                {{ Helpers::getdateFormat($data1->Other3_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -3048,7 +3048,7 @@
                         <th class="w-20">Others 5 Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other5_on)
-                                {{ $data1->Other5_on }}
+                                {{ Helpers::getdateFormat($data1->Other5_on) }}
                             @else
                                 Not Applicable
                             @endif
@@ -3263,7 +3263,7 @@
                     <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">
                         CFT Review Complete On</th>
-                    <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->CFT_Review_Complete_on){{ Helpers::getdateFormat($data->CFT_Review_Complete_on) }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">

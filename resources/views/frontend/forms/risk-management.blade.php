@@ -485,7 +485,7 @@
                                             <select name="priority_level" id="priority_level">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="High">High</option>
-                                                <option value="medium">Medium</option>
+                                                <option value="Medium">Medium</option>
                                                 <option value="Low">Low</option>
                                             </select>
                                         </div>
@@ -1168,11 +1168,11 @@
                                                 Required?</label>
                                             <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -1275,11 +1275,11 @@
                                             <select name="Production_Injection_Review" id="Production_Injection_Review"
                                                 disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -1290,7 +1290,8 @@
                                             ->where('name', Helpers::getDivisionName(session()->get('division')))
                                             ->first();
                                         $userRoles = DB::table('user_roles')
-                                            ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                            ->where(['q_m_s_roles
+                                            _id' => 22, 'q_m_s_divisions_id' => $division->id])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                         $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -1386,11 +1387,11 @@
                                             <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                                 disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -1493,9 +1494,9 @@
                                                 Required ?</label>
                                             <select name="Human_Resource_review" id="Human_Resource_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -1604,11 +1605,11 @@
                                             <select name="CorporateQualityAssurance_Review"
                                                 id="CorporateQualityAssurance_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -1721,11 +1722,11 @@
                                             <label for="Store"> Store Required ?</label>
                                             <select name="Store_Review" id="Store_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -1816,9 +1817,9 @@
                                             <label for="Engineering Review Required">Engineering Review Required ?</label>
                                             <select name="Engineering_review" id="Engineering_review" disabled>
                                                 <option value="0">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
                                             </select>
 
                                         </div>
@@ -1942,11 +1943,11 @@
                                             <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
                                             <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -2043,9 +2044,9 @@
                                             <label for="Customer notification">Quality Assurance Review Required ?</label>
                                             <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
                                                 <option value="0">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -2161,11 +2162,11 @@
                                                 ? </label>
                                             <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -2264,9 +2265,9 @@
                                                 ?</label>
                                             <select name="Quality_review" id="Quality_review" disabled>
                                                 <option value="0">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -2372,11 +2373,11 @@
                                             <label for="Microbiology"> Microbiology Required ?</label>
                                             <select name="Microbiology_Review" id="Microbiology_Review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value='yes'>
+                                                <option value='Yes'>
                                                     Yes</option>
-                                                <option value='no'>
+                                                <option value='No'>
                                                     No</option>
-                                                <option value='na'>
+                                                <option value='NA'>
                                                     NA</option>
                                             </select>
 
@@ -2474,9 +2475,9 @@
                                             <select name="Environment_Health_review" id="Environment_Health_review"
                                                 disabled>
                                                 <option value="0">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -2685,9 +2686,9 @@
                                             <label for="Customer notification"> Other's 1 Review Required ?</label>
                                             <select name="Other1_review" id="Other1_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -2814,9 +2815,9 @@
                                             <label for="Customer notification"> Other's 2 Review Required ?</label>
                                             <select name="Other2_review" id="Other2_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -2945,9 +2946,9 @@
                                             <label for="Customer notification"> Other's 3 Review Required ?</label>
                                             <select name="Other3_review" id="Other3_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -3076,9 +3077,9 @@
                                             <label for="review4"> Other's 4 Review Required ?</label>
                                             <select name="Other4_review" id="Other4_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 
@@ -3208,9 +3209,9 @@
                                             <label for="review5"> Other's 5 Review Required ?</label>
                                             <select name="Other5_review" id="Other5_review" disabled>
                                                 <option value="">-- Select --</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                                <option value="na">NA</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="NA">NA</option>
 
                                             </select>
 

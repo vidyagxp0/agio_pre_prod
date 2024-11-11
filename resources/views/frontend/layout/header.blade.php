@@ -1557,6 +1557,68 @@
             </div>
         </div>
 
+        {{--Lab Incident Process Start--}}
+        <div class="modal fade" id="observation-field-instruction-modal-LabIncident">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Explanation of Data Fields</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{--<div class="mb-2">
+                            <strong>Row# (Row Number) :&nbsp;</strong>
+                            This is an automatically generated or manually assigned number for each row of data.
+                        </div>--}}
+                        <div class="mb-2">
+                            <strong>Name of Product :&nbsp;</strong>
+                            The specific name of the product involved in the incident, to identify it clearly among other products.
+                        </div>
+                        <div class="mb-2">
+                            <strong>B No./A.R. No. :&nbsp;</strong>
+                            The batch or A.R. (Analysis Report) number associated with the product.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Initial corrective actions taken or recommended to address the issue.
+                        </div>
+
+                        {{--<div class="mb-2">
+                            <strong>Batch Size :&nbsp;</strong>
+                            The total quantity of product units manufactured in this batch.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Pack Profile :&nbsp;</strong>
+                            The packaging configuration, describing how the product is packed (e.g., bottles, boxes, blister packs).
+                        </div>
+                        <div class="mb-2">
+                            <strong>Released Quantity :&nbsp;</strong>
+                            The quantity of the product that has been approved and released for distribution or sale.
+                        </div>
+                        <div class="mb-2">
+                            <strong>Remarks :&nbsp;</strong>
+                            Additional notes or comments about the batch, such as quality checks, issues, or special instructions.
+                        </div>--}}
+                        {{--<div class="mb-2">
+                            <strong>CAPA Due date :&nbsp;</strong>
+                            Deadline for completing the corrective &amp; preventive actions.
+                        </div>
+                        <div>
+                            <strong>Status :&nbsp;</strong>
+                            The current status of the observation (e.g., Open, In Progress, Closed).
+                        </div>--}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+     {{--Lab Incident Process end--}}
+
    {{-- ============================================
                 WHY WHY CHART INSTRUCTION MODAL
     ============================================= --}}

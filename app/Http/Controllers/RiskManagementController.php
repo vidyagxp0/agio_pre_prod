@@ -779,6 +779,13 @@ class RiskManagementController extends Controller
 
         $data1->save();
 
+//----------------------------------------------------------------------------------------------------
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------
         // ---------------------------------------
         $data2 = new RiskAssesmentGrid();
         $data2->risk_id = $data->id;
@@ -3510,6 +3517,27 @@ class RiskManagementController extends Controller
 
         $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
 
+        // Safely unserialize and use fallback to empty array if null
+        $previousDetails = [
+            'risk_factor' => !is_null($data1->risk_factor) ? unserialize($data1->risk_factor) : null ,
+            'problem_cause' => !is_null($data1->problem_cause) ? unserialize($data1->problem_cause) : null,
+            'existing_risk_control' => !is_null($data1->existing_risk_control) ? unserialize($data1->existing_risk_control) : null,
+            'initial_severity' => !is_null($data1->initial_severity) ? unserialize($data1->initial_severity) : null,
+
+            'initial_detectability' => !is_null($data1->initial_detectability) ? unserialize($data1->initial_detectability) : null ,
+            'initial_rpn' => !is_null($data1->initial_rpn) ? unserialize($data1->initial_rpn) : null,
+            'risk_control_measure' => !is_null($data1->risk_control_measure) ? unserialize($data1->risk_control_measure) : null,
+            'residual_severity' => !is_null($data1->residual_severity) ? unserialize($data1->residual_severity) : null,
+
+            'residual_probability' => !is_null($data1->residual_probability) ? unserialize($data1->residual_probability) : null ,
+            'residual_detectability' => !is_null($data1->residual_detectability) ? unserialize($data1->residual_detectability) : null,
+            'residual_rpn' => !is_null($data1->residual_rpn) ? unserialize($data1->residual_rpn) : null,
+            'risk_acceptance' => !is_null($data1->risk_acceptance) ? unserialize($data1->risk_acceptance) : null,
+
+            'risk_acceptance2' => !is_null($data1->risk_acceptance2) ? unserialize($data1->risk_acceptance2) : null,
+            'mitigation_proposal' => !is_null($data1->mitigation_proposal) ? unserialize($data1->mitigation_proposal) : null,
+        ];
+
         // Serialize and update the data, ensuring that we always update the fields
         $data1->risk_factor = serialize($request->risk_factor ?? []);
         $data1->risk_element = serialize($request->risk_element ?? []);
@@ -3529,6 +3557,111 @@ class RiskManagementController extends Controller
         $data1->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
 
         $data1->save();
+//----------------------------------------------------------------------------------------------------------------------
+
+        // Define the mapping of database fields to the descriptive field names
+        $fieldNames = [
+            'risk_factor' => 'Activity',
+            // 'risk_element' => 'Responsible',
+            'problem_cause' => 'Possible Risk/Failure (Identified Risk)',
+            'existing_risk_control' => 'Consequences of Risk/Potential Causes',
+            'initial_severity' => 'Severity (S)',
+            'initial_detectability' => 'Probability (P)',
+            'initial_probability' => 'Detection (D)',
+            'initial_rpn' => 'Risk Level (RPN)',
+            'risk_control_measure' => 'Control Measures recommended/ Risk mitigation proposed',
+            'residual_severity' => 'Severity (S)',
+            'residual_probability' => 'Probability (P)',
+            'residual_detectability' => 'Detection (D)',
+            'residual_rpn' => 'RPN',
+            'risk_acceptance' => 'Category of Risk Level (Low, Medium and High)',
+            'risk_acceptance2' => 'Risk Acceptance (Y/N)',
+            'mitigation_proposal' => 'Traceability document',
+        ];
+
+        if (is_array($request->risk_factor) && !empty($request->risk_factor)) {
+            foreach ($request->risk_factor as $index => $risk_factor) {
+
+                $previousValues = [
+                    'risk_factor' => isset($previousDetails['risk_factor'][$index]) ? $previousDetails['risk_factor'][$index] : null,
+                    'problem_cause' => isset($previousDetails['problem_cause'][$index]) ? $previousDetails['problem_cause'][$index] : null,
+                    'existing_risk_control' => isset($previousDetails['existing_risk_control'][$index]) ? $previousDetails['existing_risk_control'][$index] : null,
+                    'initial_severity' => isset($previousDetails['initial_severity'][$index]) ? Helpers::getSeverityValue($previousDetails['initial_severity'][$index]) : null,
+                    'initial_detectability' => isset($previousDetails['initial_detectability'][$index]) ? Helpers::getProbabilityValue($previousDetails['initial_detectability'][$index]) : null,
+                    'initial_probability' => isset($previousDetails['initial_probability'][$index]) ? Helpers::getDetectionValue($previousDetails['initial_probability'][$index]) : null,
+                    'initial_rpn' => isset($previousDetails['initial_rpn'][$index]) ? $previousDetails['initial_rpn'][$index] : null,
+                    'risk_control_measure' => isset($previousDetails['risk_control_measure'][$index]) ? $previousDetails['risk_control_measure'][$index] : null,
+                    'residual_severity' => isset($previousDetails['residual_severity'][$index]) ? Helpers::getSeverityValue($previousDetails['residual_severity'][$index]) : null,
+                    'residual_probability' => isset($previousDetails['residual_probability'][$index]) ? Helpers::getProbabilityValue($previousDetails['residual_probability'][$index]) : null,
+                    'residual_detectability' => isset($previousDetails['residual_detectability'][$index]) ? Helpers::getDetectionValue($previousDetails['residual_detectability'][$index]) : null,
+                    'residual_rpn' => isset($previousDetails['residual_rpn'][$index]) ? $previousDetails['residual_rpn'][$index] : null,
+                    'risk_acceptance' => isset($previousDetails['risk_acceptance'][$index]) ? $previousDetails['risk_acceptance'][$index] : null,
+                    'risk_acceptance2' => isset($previousDetails['risk_acceptance2'][$index]) ? $previousDetails['risk_acceptance2'][$index] : null,
+                    'mitigation_proposal' => isset($previousDetails['mitigation_proposal'][$index]) ? $previousDetails['mitigation_proposal'][$index] : null,
+
+
+                    // 'action' => $previousDetails['action'][$index] ?? null,
+                    // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
+                    // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
+                    // 'item_status' => $previousDetails['item_status'][$index] ?? null,
+                ];
+
+
+
+                // Current field values
+                $fields = [
+                    'risk_factor' => $risk_factor,
+                    'problem_cause' => $request->problem_cause[$index] ?? null,
+                    'existing_risk_control' => $request->existing_risk_control[$index] ?? null,
+                    'initial_severity' => Helpers::getSeverityValue($request->initial_severity[$index]) ?? null,
+                    'initial_detectability' => Helpers::getProbabilityValue($request->initial_detectability[$index]) ?? null,
+                    'initial_probability' => Helpers::getDetectionValue($request->initial_probability[$index]) ?? null,
+                    'initial_rpn' => $request->initial_rpn[$index] ?? null,
+                    'risk_control_measure' => $request->risk_control_measure[$index] ?? null,
+                    'residual_severity' => Helpers::getSeverityValue($request->residual_severity[$index]) ?? null,
+                    'residual_probability' => Helpers::getProbabilityValue($request->residual_probability[$index]) ?? null,
+                    'residual_detectability' => Helpers::getDetectionValue($request->residual_detectability[$index]) ?? null,
+                    'residual_rpn' => $request->residual_rpn[$index] ?? null,
+                    'risk_acceptance' => $request->risk_acceptance[$index] ?? null,
+                    'risk_acceptance2' => $request->risk_acceptance2[$index] ?? null,
+                    'mitigation_proposal' => $request->mitigation_proposal[$index] ?? null,
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    $previousValue = $previousValues[$key] ?? null;
+
+                    // Log changes if the current value is different from the previous one
+                    if ($previousValue != $currentValue && !empty($currentValue)) {
+                        // Check if an audit trail entry for this specific row and field already exists
+                        $existingAudit = RiskAuditTrail::where('risk_id', $id)
+                            ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                            ->where('previous', $previousValue)
+                            ->where('current', $currentValue)
+                            ->exists();
+
+                        // Only create a new audit trail entry if no existing entry matches
+                        if (!$existingAudit) {
+                            $history = new RiskAuditTrail();
+                            $history->risk_id = $data->id;
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                            $history->previous = $previousValue; // Use the previous value
+                            $history->current = $currentValue; // New value
+                            $history->comment = 'NA'; // Use comments if available
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Not Applicable"; // Adjust if needed
+                            $history->change_from = $lastDocument->status; // Adjust if needed
+                            $history->action_name = "Update";
+                            $history->save();
+                        }
+                    }
+                }
+            }
+        }
+
+//--------------------------------------------------------------------------------------------------------------------------
 
         // ---------------------------------------
         //  $data2 = new RiskAssesmentGrid();
