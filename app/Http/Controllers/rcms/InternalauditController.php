@@ -92,6 +92,7 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Category= $request->Audit_Category;
         // dd($internalAudit->Audit_Category);
         $internalAudit->res_ver = $request->res_ver;
+
         if (!empty($request->attach_file_rv)) {
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
@@ -1579,6 +1580,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -2425,6 +2429,7 @@ $Checklist_Capsule->save();
 
             $internalAudit->supproting_attachment = json_encode($files);
         }
+
         if (!empty($request->tablet_coating_supporting_attachment)) {
             $files = [];
             if ($request->hasfile('tablet_coating_supporting_attachment')) {
@@ -2621,6 +2626,7 @@ $Checklist_Capsule->save();
 
             $internalAudit->file_attach_add_1 = json_encode($files);
         }
+
         if (!empty($request->file_attach)) {
             $files = [];
             if ($request->hasfile('file_attach')) {

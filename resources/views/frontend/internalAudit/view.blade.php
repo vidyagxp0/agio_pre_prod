@@ -711,7 +711,7 @@
                                                         {{ $data->stage !=1? 'readonly' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
                                                 </div>
                                                 {{-- <input type="text" id="due_date" name="due_date"
                                                     placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
@@ -946,8 +946,7 @@
                                                     maxlength="255"
                                                     required
                                                     value="{{ $data->short_description }}"
-                                                    @if ($data->stage != 1) readonly @endif
-                                                    @if ($data->stage != 1) disabled @endif
+                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
                                                 />
 
                                                 @if ($data->stage != 1)
@@ -962,7 +961,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Auditee department Name</label>
                                                 <select name="auditee_department"
-                                                {{--@if ($data->stage != 1) disabled @endif--}}
+                                                @if ($data->stage != 1) disabled @endif
                                                 >
                                                     {{-- <option value="0">-- Select --</option> --}}
                                                     <option value="">-- Select --</option>
@@ -1089,7 +1088,7 @@
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea @if ($data->stage != 1) readonly @endif name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                                <textarea {{ $data->stage == 1 ? '' : 'disabled' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1127,7 +1126,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
-                                                        class="hide-input"
+                                                        class="hide-input" {{ $data->stage == 1 ? '' : 'readonly' }}
                                                         oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                                 </div>
                                             </div>
@@ -1318,10 +1317,10 @@
                                                 </div>
 
                                                 <textarea class="summernote Auditee_comment"
-                                                    name="Auditee_comment" id="summernote-18"
-                                                    @if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
-                                                        READONLY
-                                                    @endif
+                                                    name="Auditee_comment" id="summernote-18" {{ $data->stage == 2 ? '' : 'readonly' }}
+                                                    {{--@if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
+                                                        readonly
+                                                    @endif--}}
                                                 >{{ $data->Auditee_comment }}</textarea>
                                             </div>
                                         </div>
@@ -1368,9 +1367,10 @@
                                                     </small>
                                                 </div>
                                                 <textarea class="summernote Auditor_comment"
-                                                name="Auditor_comment" id="summernote-18"
-                                             @if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)readonly
-                                             @endif>{{ $data->Auditor_comment}}</textarea>
+                                                name="Auditor_comment" id="summernote-18" {{ $data->stage == 2 ? '' : 'readonly' }}
+                                             {{--@if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)readonly
+                                             @endif--}}
+                                             >{{ $data->Auditor_comment}}</textarea>
                                             </div>
                                         </div>
 
@@ -5572,7 +5572,7 @@
                                             Please Attach all relevant or supporting documents
                                         </small>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach">
+                                            <div class="file-attachment-list" id="file_attach1">
                                                 @if ($data->file_attach)
                                                 @foreach (json_decode($data->file_attach) as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -5593,7 +5593,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="file_attach[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                    oninput="addMultipleFiles(this, 'file_attach1')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -7601,7 +7601,7 @@
                                         </small>
 
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="supproting_attachment">
+                                            <div class="file-attachment-list" id="file_attach2">
                                                 @if ($data->supproting_attachment)
                                                 @foreach (json_decode($data->supproting_attachment) as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -7621,7 +7621,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="supproting_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'supproting_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'file_attach2')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -12069,7 +12069,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments"> Supporting Attachment11 </label>
+                                        <label for="Audit Attachments"> Supporting Attachment </label>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
                                         </small>
