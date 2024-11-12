@@ -1421,9 +1421,9 @@
                                                         </tr>
                                                     @endforeach
                                                 @else
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td colspan="5">No found</td>
-                                                    </tr>
+                                                    </tr> --}}
                                                 @endif
                                             </tbody>
                                         </table>
@@ -2954,9 +2954,6 @@
 
                         </div>
                         <div class="button-block">
-                            <button type="button" style="margin-right: 10px"><a class="text-white"
-                                    href="{{ route('marketcomplaint.acknoledgment_report', $data->id) }}"
-                                    target="_blank"> Print </a></button>
 
                             <button type="submit" class="saveButton" id="saveButton"
                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
@@ -3316,28 +3313,24 @@
                                 @if ($data->stage == 3)
                                     <div class="group-input">
                                         <label
-                                            for="Review of Raw materials used in batch
-                        manufacturing">Review
+                                            for="Review of Raw materials used in batch manufacturing">Review
                                             Of Raw Materials Used In Batch
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea name="review_of_raw_materials_used_in_batch_manufacturing_gi"
-                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
-                    </textarea>
+                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }} </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label
-                                            for="Review of Raw materials used in batch
-                        manufacturing">Review
+                                            for="Review of Raw materials used in batch manufacturing">Review
                                             Of Raw Materials Used In Batch
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi"
-                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
-                    </textarea>
+                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
                                     </div>
                                 @endif
 
@@ -3351,8 +3344,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
-                    </textarea>
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3361,8 +3353,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}
-                    </textarea>
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
                                     </div>
                                 @endif
 
@@ -3377,8 +3368,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
-                    </textarea>
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3388,8 +3378,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
-                    </textarea>
+                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }} </textarea>
                                     </div>
                                 @endif
 
@@ -3993,8 +3982,10 @@
                                                 Yes</option>
                                             <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                 No</option>
-                                            <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
-                                                NA</option>
+                                            {{-- <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
+                                                NA</option> --}}
+                                                <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
+
                                         </select>
 
                                     </div>
@@ -4168,8 +4159,10 @@
                                                 Yes</option>
                                             <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                 No</option>
-                                            <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
-                                                NA</option>
+                                            {{-- <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
+                                                NA</option> --}}
+                                            <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
+
                                         </select>
 
                                     </div>
