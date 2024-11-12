@@ -1768,7 +1768,7 @@
 
                 <div class="col-12">
                     <div class="group-input">
-                        <label for="Attachments">Immidiate Action Attachments</label>
+                        <label for="Attachments">immediate Action Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="attachments_ia">

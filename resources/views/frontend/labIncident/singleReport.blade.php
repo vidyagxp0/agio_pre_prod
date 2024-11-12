@@ -201,7 +201,7 @@
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
@@ -357,7 +357,7 @@
                
             <div class="block">
                 <div class="block-head">
-                QC Initial Review
+                QC Head Review
                 </div>
                 <table>
                     <tr>
@@ -530,7 +530,7 @@
 
             <div class="border-table">
                     <div class="block-head">
-                    Immidiate Action Attachments
+                    immediate Action Attachments
                     </div>
                     <table>
 
