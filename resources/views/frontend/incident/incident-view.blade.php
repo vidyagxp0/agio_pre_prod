@@ -1948,7 +1948,7 @@
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="Document Details Required">Product / Material details Required? <span
+                                                    <label for="Document Details Required">Product / Material Details Required? <span
                                                             class="text-danger">*</span></label>
                                                     <select
                                                         name="Product_Details_Required"

@@ -405,7 +405,7 @@
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
-                                {{ $data->Facility_Equipment }}
+                                {{ Ucfirst($data->Facility_Equipment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -465,7 +465,7 @@
                         <th class="w-20">Document Details Required?</th>
                         <td class="w-30">
                             @if ($data->Document_Details_Required)
-                                {{ $data->Document_Details_Required }}
+                                {{ Ucfirst($data->Document_Details_Required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -524,7 +524,7 @@
                         <th class="w-20">Products / Material  Details Required?</th>
                         <td class="w-80">
                             @if ($data->Product_Details_Required)
-                                {{ $data->Product_Details_Required }}
+                                {{ Ucfirst($data->Product_Details_Required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -735,7 +735,7 @@
                             Product Quality Impact</th>
                         <td class="w-30">
                             @if ($data->product_quality_imapct)
-                                {{ $data->product_quality_imapct }}
+                                {{ Ucfirst($data->product_quality_imapct) }}
                             @else
                                 Not Applicable
                             @endif
@@ -744,7 +744,7 @@
                             Process Performance Impact</th>
                         <td class="w-30">
                             @if ($data->process_performance_impact)
-                                {{ $data->process_performance_impact }}
+                                {{ Ucfirst($data->process_performance_impact )}}
                             @else
                                 Not Applicable
                             @endif
@@ -755,7 +755,7 @@
                             Yield Impact</th>
                         <td class="w-30">
                             @if ($data->yield_impact)
-                                {{ $data->yield_impact }}
+                                {{ Ucfirst($data->yield_impact) }}
                             @else
                                 Not Applicable
                             @endif
@@ -764,7 +764,7 @@
                             GMP Impact</th>
                         <td class="w-30">
                             @if ($data->gmp_impact)
-                                {{ $data->gmp_impact }}
+                                {{ Ucfirst($data->gmp_impact)}}
                             @else
                                 Not Applicable
                             @endif
@@ -775,7 +775,7 @@
                             Additional Testing Required</th>
                         <td class="w-30">
                             @if ($data->additionl_testing_required)
-                                {{ $data->additionl_testing_required }}
+                                {{ Ucfirst($data->additionl_testing_required) }}
                             @else
                                 Not Applicable
                             @endif
@@ -923,16 +923,16 @@
                             CAPA Implementation</th>
                         <td class="w-30">
                             @if ($data->capa_implementation)
-                                {{ $data->capa_implementation }}
+                                {{Ucfirst($data->capa_implementation) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                         <th class="w-20">
-                            All check points compiled with </th>
+                        All check points compiled with (Documentary evidence shall be attached or referred to)</th>
                         <td class="w-30">
                             @if ($data->check_points)
-                                {{ $data->check_points }}
+                                {{ Ucfirst($data->check_points) }}
                             @else
                                 Not Applicable
                             @endif
@@ -945,7 +945,7 @@
                             required</th>
                         <td class="w-30">
                             @if ($data->corrective_actions)
-                                {{ $data->corrective_actions }}
+                                {{ Ucfirst($data->corrective_actions) }}
                             @else
                                 Not Applicable
                             @endif
@@ -954,7 +954,7 @@
                             Batch release satisfactory</th>
                         <td class="w-30">
                             @if ($data->batch_release)
-                                {{ $data->batch_release }}
+                                {{ Ucfirst($data->batch_release) }}
                             @else
                                 Not Applicable
                             @endif
@@ -965,7 +965,7 @@
                             Affected documents closed</th>
                         <td class="w-30">
                             @if ($data->affected_documents)
-                                {{ $data->affected_documents }}
+                                {{ Ucfirst($data->affected_documents) }}
                             @else
                                 Not Applicable
                             @endif
