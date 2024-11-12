@@ -1290,8 +1290,7 @@
                                             ->where('name', Helpers::getDivisionName(session()->get('division')))
                                             ->first();
                                         $userRoles = DB::table('user_roles')
-                                            ->where(['q_m_s_roles
-                                            _id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                            ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                         $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
