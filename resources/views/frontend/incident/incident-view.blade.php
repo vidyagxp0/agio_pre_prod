@@ -1262,81 +1262,73 @@
                                                 @enderror
                                             </div>
                                             <div class="col-lg-6 new-date-data-field">
-                                                <div class="group-input input-date">
-                                                    <label for="Short Description required">Repeat Incident?<span
-                                                            class="text-danger">*</span></label>
-                                                    <select name="short_description_required"
-                                                        id="short_description_required" onchange="checkRecurring(this)"
-                                                        value="{{ $data->short_description_required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option value="Recurring"
-                                                            @if ($data->short_description_required == 'Recurring' || old('short_description_required') == 'Recurring') selected @endif>Yes</option>
-                                                        <option value="Non-Recurring"
-                                                            @if ($data->short_description_required == 'Non-Recurring' || old('short_description_required') == 'Non-Recurring') selected @endif>No</option>
-                                                    </select>
-                                                </div>
-                                                @error('short_description_required')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="col-lg-6" id="nature_of_repeat_block"
-                                                @if ($data->short_description_required != 'Recurring') style="display: none" @endif>
-                                                <div class="group-input" id="nature_of_repeat">
-                                                    <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                                                            style="display: {{ $data->short_description_required == 'Recurring' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <textarea class="nature_of_repeat"
-                                                        name="nature_of_repeat" id="nature_of_repeat"
-                                                        class="nature_of_repeat" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->nature_of_repeat }}</textarea>
-                                                </div>
-                                                @error('nature_of_repeat')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('short_description_required');
-                                                    var inputsToToggle = [];
+    <div class="group-input input-date">
+        <label for="short_description_required">Repeat Incident?<span class="text-danger">*</span></label>
+        <select name="short_description_required"
+                id="short_description_required" 
+                onchange="checkRecurring(this)"
+                value="{{ $data->short_description_required }}" 
+                {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+            <option value="">-- Select --</option>
+            <option value="Yes" 
+                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+            <option value="No" 
+                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+        </select>
+    </div>
+    @error('short_description_required')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('nature_of_repeat');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
+<div class="col-lg-6" id="nature_of_repeat_block"
+    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
+    <div class="group-input">
+        <label for="nature_of_repeat">Repeat Nature 
+            <span id="asteriskInviRecurring" 
+                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}" 
+                  class="text-danger">*</span>
+        </label>
+        <textarea class="nature_of_repeat"
+                  name="nature_of_repeat" 
+                  id="nature_of_repeat"
+                  {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
+    </div>
+    @error('nature_of_repeat')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('short_description_required');
+        var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
+        var asteriskIcon = document.getElementById('asteriskInviRecurring');
+        var natureOfRepeatField = document.getElementById('nature_of_repeat');
+
+        // Initialize 'Repeat Nature' field visibility based on current selection
+        toggleNatureOfRepeatField(selectField.value === 'Yes');
+
+        // Listen for dropdown changes
+        selectField.addEventListener('change', function() {
+            toggleNatureOfRepeatField(this.value === 'Yes');
+        });
+
+        // Toggle visibility and required attribute for 'Repeat Nature'
+        function toggleNatureOfRepeatField(isYes) {
+            natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
+            asteriskIcon.style.display = isYes ? 'inline' : 'none';
+            natureOfRepeatField.required = isYes;
+        }
+    });
+
+    function checkRecurring(selectElement) {
+        var repeatNatureField = document.getElementById('nature_of_repeat');
+        repeatNatureField.required = selectElement.value === 'Yes';
+    }
+</script>
 
 
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'Recurring';
-                                                        // var natureOfRepeatBlock = document.getElementsById('nature_of_repeat_block');
-
-                                                        inputsToToggle.forEach(function(input) {
-
-                                                            if (!isRequired) {
-                                                                document.getElementById('nature_of_repeat_block').style.display = 'none';
-                                                            } else {
-                                                                document.getElementById('nature_of_repeat_block').style.display = 'block';
-                                                            }
-
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
-
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        var asteriskIcon = document.getElementById('asteriskInviRecurring');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
-                                            <script>
-                                                function checkRecurring(selectElement) {
-                                                    var repeatNatureField = document.getElementById('nature_of_repeat');
-                                                    if (selectElement.value === 'Recurring') {
-                                                        repeatNatureField.setAttribute('required', 'required');
-                                                    } else {
-                                                        repeatNatureField.removeAttribute('required');
-                                                    }
-                                                }
-                                            </script>
                                         <div class="col-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="severity-level">Incident Observed On (Date)<span
@@ -4070,7 +4062,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">Submit By :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->submit_by)
                                         <div class="static">{{ $data->submit_by }}</div>
                                         @else
                                             Not Applicable
@@ -4080,7 +4072,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">Submit On :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->submit_on)
                                         <div class="static">{{ $data->submit_on }}</div>
                                         @else
                                             Not Applicable
@@ -4090,7 +4082,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="submit comment">Submit Comment :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->submit_comment)
                                         <div class="">{{ $data->submit_comment }}</div>
                                         @else
                                             Not Applicable
@@ -4102,7 +4094,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->HOD_Initial_Review_Complete_By)
                                         <div class="static">{{ $data->HOD_Initial_Review_Complete_By }}</div>
                                         @else
                                             Not Applicable
@@ -4112,7 +4104,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="HOD Review Complete On">HOD Initial Review Complete On :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->HOD_Initial_Review_Complete_On)
                                         <div class="static">{{ $data->HOD_Initial_Review_Complete_On }}</div>
                                         @else
                                             Not Applicable
@@ -4122,7 +4114,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="HOD Review Comments">HOD Initial Review Complete Comment :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->HOD_Initial_Review_Comments)
                                         <div class="static">{{ $data->HOD_Initial_Review_Comments }}</div>
                                         @else
                                             Not Applicable
@@ -4177,7 +4169,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Initial_Review_Complete_By)
                                         <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                                         @else
                                             Not Applicable
@@ -4187,7 +4179,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Initial_Review_Complete_On)
                                         <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                                         @else
                                             Not Applicable
@@ -4197,7 +4189,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QA Initial Review Complete Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Initial_Review_Comments)
                                         <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                                         @else
                                             Not Applicable
@@ -4231,7 +4223,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete By">QAH/Designee Approval Complete By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QAH_Designee_Approval_Complete_By)
                                         <div class="static">{{ $data->QAH_Designee_Approval_Complete_By }}</div>
                                         @else
                                             Not Applicable
@@ -4241,7 +4233,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Initial Review Complete On">QAH/Designee Approval Complete On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QAH_Designee_Approval_Complete_On)
                                         <div class="static">{{ $data->QAH_Designee_Approval_Complete_On }}</div>
                                         @else
                                             Not Applicable
@@ -4251,7 +4243,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QAH_Designee_Approval_Complete_Comments)
                                         <div class="">{{ $data->QAH_Designee_Approval_Complete_Comments }}</div>
                                         @else
                                             Not Applicable
@@ -4263,7 +4255,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Pending Initiator Update Complete By">Pending Initiator Update Complete By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Pending_Review_Complete_By)
                                         <div class="static">{{ $data->Pending_Review_Complete_By }}</div>
                                         @else
                                             Not Applicable
@@ -4273,7 +4265,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Pending_Review_Complete_On)
                                         <div class="static">{{ $data->Pending_Review_Complete_On }}</div>
                                         @else
                                             Not Applicable
@@ -4283,7 +4275,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="CFT Review Comments">Pending Initiator Update Complete Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Pending_Review_Comments)
                                         <div class="">{{ $data->Pending_Review_Comments }}</div>
                                         @else
                                             Not Applicable
@@ -4317,7 +4309,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By"> HOD Final Review Complete By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Hod_Final_Review_Complete_By)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_By }}</div>
                                         @else
                                             Not Applicable
@@ -4327,7 +4319,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On"> HOD Final Review Complete On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Hod_Final_Review_Complete_On)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_On }}</div>
                                         @else
                                             Not Applicable
@@ -4337,7 +4329,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments">HOD Final Review Complete Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Hod_Final_Review_Comments)
                                         <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
                                         @else
                                             Not Applicable
@@ -4351,7 +4343,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By"> QA Final Review Complete By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Final_Review_Complete_By)
                                         <div class="static">{{ $data->QA_Final_Review_Complete_By}}</div>
                                         @else
                                             Not Applicable
@@ -4361,7 +4353,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On"> QA Final Review Complete On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Final_Review_Complete_On)
                                         <div class="static">{{ $data->QA_Final_Review_Complete_On}}</div>
                                         @else
                                             Not Applicable
@@ -4371,7 +4363,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments"> QA Final Review Complete Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_Final_Review_Comments)
                                         <div class="">{{ $data->QA_Final_Review_Comments}}</div>
                                         @else
                                             Not Applicable
@@ -4430,7 +4422,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete By">Approved By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_head_approved_by)
                                         <div class="static">{{ $data->QA_head_approved_by }}</div>
                                         @else
                                             Not Applicable
@@ -4440,7 +4432,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Final Review Complete On">Approved On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_head_approved_on)
                                         <div class="static">{{ $data->QA_head_approved_on }}</div>
                                         @else
                                             Not Applicable
@@ -4450,7 +4442,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Final Review Comments">Approved Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->QA_head_approved_comment)
                                         <div class="">{{ $data->QA_head_approved_comment }}</div>
                                         @else
                                             Not Applicable
@@ -4569,7 +4561,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit by">cancel By:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Cancelled_by)
                                         <div class="static">{{ $data->Cancelled_by }}</div>
                                         @else
                                             Not Applicable
@@ -4579,7 +4571,7 @@
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="cancelled on">cancel On:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Cancelled_on)
                                         <div class="static">{{ $data->Cancelled_on }}</div>
                                         @else
                                             Not Applicable
@@ -4589,7 +4581,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit on">Cancel Comment:-</label>
-                                        @if ($data->send_cft_by)
+                                        @if ($data->Cancelled_cmt)
                                         <div class="static">{{ $data->Cancelled_cmt }}</div>
                                         @else
                                             Not Applicable

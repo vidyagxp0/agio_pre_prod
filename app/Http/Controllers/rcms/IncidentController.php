@@ -2393,8 +2393,7 @@ class IncidentController extends Controller
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
-                'short_description_required' => 'required|in:Recurring,Non-Recurring',
-                'nature_of_repeat' => 'required_if:short_description_required,Recurring',
+              
                 'incident_date' => 'required',
                 'incident_time' => 'required',
                 'incident_reported_date' => 'required',
@@ -2501,8 +2500,7 @@ class IncidentController extends Controller
                 //     },
                 // ],
             ], [
-                'short_description_required.required' => 'Nature of Repeat required!',
-                'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
+                
                 'audit_type' => 'Incident related to field required!'
             ]);
 
@@ -8603,6 +8601,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $actionchild = Incident::find($id);
+            $data=Incident::find($id);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             //$p_record = OutOfCalibration::find($id);
@@ -8610,7 +8609,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $actionchild->save();
 
             //return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record','data'));
 
         }
         elseif ($request->child_type == "effectiveness_check")
