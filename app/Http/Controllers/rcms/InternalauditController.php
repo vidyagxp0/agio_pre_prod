@@ -55,7 +55,7 @@ class InternalauditController extends Controller
         $internalAudit->division_id = $request->division_id;
         $internalAudit->external_agencies = $request->external_agencies;
        // $internalAudit->severity_level = $request->severity_level_select;
-       $internalAudit->severity_level_form = $request->severity_level_form;
+        $internalAudit->severity_level_form = $request->severity_level_form;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
@@ -85,9 +85,9 @@ class InternalauditController extends Controller
         $internalAudit->QA_Comments= $request->QA_Comments;
         $internalAudit->Others= $request->Others;
         $internalAudit->Auditor_comment = $request->Auditor_comment;
-               $internalAudit->Auditee_comment = $request->Auditee_comment;
+        $internalAudit->Auditee_comment = $request->Auditee_comment;
         $internalAudit->auditee_department = $request->auditee_department;
-
+//dd($request->auditee_department);
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
         // dd($internalAudit->Audit_Category);
@@ -277,40 +277,185 @@ class InternalauditController extends Controller
 
         $internalAudit->save();
 
+
+
         $Summary = $internalAudit->id;
 
-        $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrCreate();
+        $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
         $AuditorsNew->auditor_id = $Summary;
         $AuditorsNew->identifier = 'Auditors';
-
         $AuditorsNew->data = $request->AuditorNew;
         $AuditorsNew->save();
+
+        //if (!empty($request->AuditorNew)) {
+        //    // Save the new auditor data
+        //    $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
+        //    $AuditorsNew->auditor_id = $Summary;
+        //    $AuditorsNew->identifier = 'Auditors';
+        //    $AuditorsNew->data = $request->AuditorNew;
+        //    $AuditorsNew->save();
+
+
+        //    // Define the mapping of field keys to more descriptive names
+        //    $fieldNames = [
+        //        'auditornew' => 'Auditor Name',
+        //        'regulatoryagency' => 'Department',
+        //        'designation' => 'Designation',
+        //        'remarks' => 'Remarks',
+
+        //    ];
+
+        //    // Track audit trail changes (creation of new data)
+        //    if (is_array($request->AuditorNew)) {
+        //        foreach ($request->AuditorNew as $index => $newAuditor) {
+        //            // Track changes for each field
+        //            $fieldsToTrack = ['auditornew', 'regulatoryagency', 'designation', 'remarks'];
+        //            foreach ($fieldsToTrack as $field) {
+        //                $newValue = $newAuditor[$field] ?? 'Null';
+
+        //                // Only proceed if there's new data
+        //                if ($newValue !== 'Null') {
+        //                    // Log the creation of the new data in the audit trail
+        //                    $auditTrail = new InternalAuditTrial;
+        //                    $auditTrail->internalAudit_id = $internalAudit->id;
+        //                    $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+        //                    $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+        //                    $auditTrail->current = $newValue;
+        //                    $auditTrail->comment = "";
+        //                    $auditTrail->user_id = Auth::user()->id;
+        //                    $auditTrail->user_name = Auth::user()->name;
+        //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                    //$auditTrail->origin_state = $internalAudit->status;
+        //                    $auditTrail->change_to = "Not Applicable";
+        //                    $auditTrail->change_from = $internalAudit->status;
+        //                    $auditTrail->action_name = 'Create'; // Since this is a create operation
+        //                    $auditTrail->save();
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
 
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
 
-$internal_id = $internalAudit->id;
-$newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew    ();
-// dd($newDataGridInternalsave);
-$newDataGridInternalsave->io_id = $internal_id;
-$newDataGridInternalsave->identifier = 'observations';
-$newDataGridInternalsave->data = $request->observations;
-$newDataGridInternalsave->save();
+            $internal_id = $internalAudit->id;
+            $newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+            // dd($newDataGridInternalsave);
+            $newDataGridInternalsave->io_id = $internal_id;
+            $newDataGridInternalsave->identifier = 'observations';
+            $newDataGridInternalsave->data = $request->observations;
+            $newDataGridInternalsave->save();
+
+            //if (!empty($request->observations)) {
+            //    $newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+            //    // dd($newDataGridInternalsave);
+            //    $newDataGridInternalsave->io_id = $internal_id;
+            //    $newDataGridInternalsave->identifier = 'observations';
+            //    $newDataGridInternalsave->data = $request->observations;
+            //    $newDataGridInternalsave->save();
 
 
-$internal_id = $internalAudit->id;
-$newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
-$newDataGridInitialClosure->io_id = $internal_id;
-$newDataGridInitialClosure->identifier = 'Initial';
-$newDataGridInitialClosure->data = $request->Initial;
-$newDataGridInitialClosure->save();
+            //    // Define the mapping of field keys to more descriptive names
+            //    $fieldNames = [
+            //        'observation' => 'Observations/Discrepancy',
+            //        'category' => 'Category',
+            //        'remarks' => 'Remarks',
+
+            //    ];
+
+            //    // Track audit trail changes (creation of new data)
+            //    if (is_array($request->observations)) {
+            //        foreach ($request->observations as $index => $newAuditor) {
+            //            // Track changes for each field
+            //            $fieldsToTrack = ['observation', 'category', 'remarks'];
+            //            foreach ($fieldsToTrack as $field) {
+            //                $newValue = $newAuditor[$field] ?? 'Null';
+
+            //                // Only proceed if there's new data
+            //                if ($newValue !== 'Null') {
+            //                    // Log the creation of the new data in the audit trail
+            //                    $auditTrail = new InternalAuditTrial;
+            //                    $auditTrail->InternalAudit_id = $internalAudit->id;
+            //                    $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+            //                    $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+            //                    $auditTrail->current = $newValue;
+            //                    $auditTrail->comment = "";
+            //                    $auditTrail->user_id = Auth::user()->id;
+            //                    $auditTrail->user_name = Auth::user()->name;
+            //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    $auditTrail->origin_state = $internalAudit->status;
+            //                    $auditTrail->change_to = "Not Applicable";
+            //                    $auditTrail->change_from = $internalAudit->status;
+            //                    $auditTrail->action_name = 'Create'; // Since this is a create operation
+            //                    $auditTrail->save();
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+
+            $internal_id = $internalAudit->id;
+            $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+            $newDataGridInitialClosure->io_id = $internal_id;
+            $newDataGridInitialClosure->identifier = 'Initial';
+            $newDataGridInitialClosure->data = $request->Initial;
+            $newDataGridInitialClosure->save();
+
+            //if (!empty($request->Initial)) {
+            //    $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+            //    $newDataGridInitialClosure->io_id = $internal_id;
+            //    $newDataGridInitialClosure->identifier = 'Initial';
+            //    $newDataGridInitialClosure->data = $request->Initial;
+            //    $newDataGridInitialClosure->save();
+
+
+            //    // Define the mapping of field keys to more descriptive names
+            //    $fieldNames = [
+            //        'observation' => 'Observation',
+            //        'impact_assesment' => 'Response with impact assesment & CAPA (If Applicable)',
+            //        'responsiblity' => 'Responsibility',
+            //        'closure_date' => 'Proposed Closure Date',
+            //        'Actual_date' => 'Actual Closure Date',
+
+            //    ];
+
+            //    // Track audit trail changes (creation of new data)
+            //    if (is_array($request->Initial)) {
+            //        foreach ($request->Initial as $index => $newAuditor) {
+            //            // Track changes for each field
+            //            $fieldsToTrack = ['observation', 'impact_assesment', 'responsiblity', 'closure_date', 'Actual_date'];
+            //            foreach ($fieldsToTrack as $field) {
+            //                $newValue = $newAuditor[$field] ?? 'Null';
+
+            //                // Only proceed if there's new data
+            //                if ($newValue !== 'Null') {
+            //                    // Log the creation of the new data in the audit trail
+            //                    $auditTrail = new InternalAuditTrial;
+            //                    $auditTrail->internalAudit_id = $internalAudit->id;
+            //                    $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+            //                    $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+            //                    $auditTrail->current = $newValue;
+            //                    $auditTrail->comment = "";
+            //                    $auditTrail->user_id = Auth::user()->id;
+            //                    $auditTrail->user_name = Auth::user()->name;
+            //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    //$auditTrail->origin_state = $internalAudit->status;
+            //                    $auditTrail->change_to = "Not Applicable";
+            //                    $auditTrail->change_from = $internalAudit->status;
+            //                    $auditTrail->action_name = 'Create'; // Since this is a create operation
+            //                    $auditTrail->save();
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
 
 //$internalAudit->save();
-          $ia_id = $internalAudit->id;
-
-
-
-
+        $ia_id = $internalAudit->id;
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
         $auditAssessmentGrid->ia_id = $internalAudit->id;
         $auditAssessmentGrid->identifier = 'auditAssessmentChecklist';
@@ -489,6 +634,7 @@ $newDataGridInitialClosure->save();
         $data3 = new InternalAuditGrid();
         $data3->audit_id = $internalAudit->id;
         $data3->type = "internal_audit";
+
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
         }
@@ -514,6 +660,81 @@ $newDataGridInitialClosure->save();
             $data3->remark = serialize($request->remarks);
         }
         $data3->save();
+
+        //$fieldNames = [
+        //    'audit' => 'Area of Audit',
+        //    'scheduled_start_date' => 'Scheduled Start Date',
+        //    'scheduled_start_time' => 'Scheduled Start Time',
+        //    'scheduled_end_date' => 'Scheduled End Date',
+        //    'scheduled_end_time' => 'Scheduled End Time',
+        //    'auditor' => 'Auditor',
+        //    'auditee' => 'Auditee',
+        //    'remark' => 'Remarks',
+
+        //];
+
+        //foreach ($request->audit as $index => $audit) {
+        //    // Since this is a new entry, there are no previous details
+        //    $previousDetails = [
+        //        'audit' => null,
+        //        'scheduled_start_date' => null,
+        //        'scheduled_start_time' => null,
+        //        'scheduled_end_date' => null,
+        //        'scheduled_end_time' => null,
+        //        'auditor' => null,
+        //        'auditee' => null,
+        //        'remark' => null,
+
+        //    ];
+
+        //    // Current fields values from the request
+        //    $fields = [
+        //        'audit' => $audit,
+        //        'scheduled_start_date' => Helpers::getdateFormat($request->scheduled_start_date[$index]) ?? null,
+        //        'scheduled_start_time' => $request->scheduled_start_time[$index] ?? null,
+        //        'scheduled_end_date' => Helpers::getdateFormat($request->scheduled_end_date[$index]) ?? null,
+        //        'scheduled_end_time' => $request->scheduled_end_time[$index] ?? null,
+        //        'auditor' => Helpers::getInitiatorName($request->auditor[$index]) ?? null,
+        //        'auditee' => Helpers::getInitiatorName($request->auditee[$index]) ?? null,
+        //        'remark' => $request->remark[$index] ?? null,
+
+        //    ];
+
+
+        //    foreach ($fields as $key => $currentValue) {
+        //        // Log changes for new rows (no previous value to compare)
+        //        if (!empty($currentValue)) {
+
+        //            $history = new InternalAuditTrial();
+        //            $history->InternalAudit_id = $internalAudit->id;
+
+        //            // Set activity type to include field name and row index using the fieldNames array
+        //            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+        //            // Since this is a new entry, 'Previous' value is null
+        //            $history->previous = 'null'; // Previous value or 'null'
+
+        //            // Assign 'Current' value, which is the new value
+        //            $history->current = $currentValue; // New value
+
+        //            // Comments and user details
+        //            $history->comment = 'NA';
+        //            $history->user_id = Auth::user()->id;
+        //            $history->user_name = Auth::user()->name;
+        //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+        //            $history->change_to = "Opened";
+        //            $history->change_from = "Initiation";
+        //            $history->action_name = "Create";
+
+        //            // Save the history record
+        //            $history->save();
+        //        }
+        //    }
+        //}
+
+
+
 
 
         $data4 = new InternalAuditGrid();
@@ -1760,7 +1981,7 @@ for ($i = 1; $i <= 50; $i++)
     $Checklist_Capsule->$string = $request->$string;
 }
 // dd($checklistTabletCompression->tablet_compress_remark_1)
-$Checklist_Capsule->Description_Deviation_capsule = $request->Description_Deviation_capsule;
+//$Checklist_Capsule->Description_Deviation_capsule = $request->Description_Deviation_capsule;
 $Checklist_Capsule->save();
 
 //=========================================================================================
@@ -3843,6 +4064,9 @@ if ($areIniAttachmentsSame2 != true) {
 
 
         $internalAudit->update();
+
+
+
         $Summary = $internalAudit->id;
         $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
         $AuditorsNew->auditor_id = $Summary;
@@ -3850,14 +4074,153 @@ if ($areIniAttachmentsSame2 != true) {
         $AuditorsNew->data = $request->AuditorNew;
         $AuditorsNew->update();
 
+        //if (!empty($request->AuditorNew)) {
+        //    // Fetch existing auditor data
+        //    $existingAuditorShow = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->first();
+        //    $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+        //    if($internalAudit->stage == 1){
+        //        $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
+        //        $AuditorsNew->auditor_id = $Summary;
+        //        $AuditorsNew->identifier = 'Auditors';
+        //        $AuditorsNew->data = $request->AuditorNew;
+        //        $AuditorsNew->update();
+        //    }
+        //    //dd($product);
+        //    // Define the mapping of field keys to more descriptive names
+        //    $fieldNames = [
+        //        'auditornew' => 'Auditor Name',
+        //        'regulatoryagency' => 'Department',
+        //        'designation' => 'Designation',
+        //        'remarks' => 'Remarks',
+
+        //    ];
+
+        //    // Track audit trail changes
+        //    if (is_array($request->AuditorNew)) {
+        //        foreach ($request->AuditorNew as $index => $newAuditor) {
+        //            $previousAuditor = $existingAuditorData[$index] ?? [];
+
+        //            // Track changes for each field
+        //            $fieldsToTrack = ['auditornew', 'regulatoryagency', 'designation', 'remarks'];
+        //            foreach ($fieldsToTrack as $field) {
+        //                $oldValue = $previousAuditor[$field] ?? 'Null';
+        //                $newValue = $newAuditor[$field] ?? 'Null';
+
+        //                // Only proceed if there's a change or the data is new
+        //                if ($oldValue !== $newValue) {
+        //                    // Check if this specific change has already been logged in the audit trail
+        //                    $existingAuditTrail = InternalAuditTrial::where([
+        //                        ['InternalAudit_id', '=', $internalAudit->id],
+        //                        ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+        //                        ['previous', '=', $oldValue],
+        //                        ['current', '=', $newValue]
+        //                    ])->first();
+
+        //                    // Determine if the data is new or updated
+        //                    $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+        //                    // If no existing audit trail record, log the change
+        //                    if (!$existingAuditTrail) {
+        //                        $auditTrail = new InternalAuditTrial;
+        //                        $auditTrail->InternalAudit_id = $internalAudit->id;
+        //                        $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+        //                        $auditTrail->previous = $oldValue;
+        //                        $auditTrail->current = $newValue;
+        //                        $auditTrail->comment = "";
+        //                        $auditTrail->user_id = Auth::user()->id;
+        //                        $auditTrail->user_name = Auth::user()->name;
+        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->origin_state = $internalAudit->status;
+        //                        $auditTrail->change_to = "Not Applicable";
+        //                        $auditTrail->change_from = $internalAudit->status;
+        //                        $auditTrail->action_name = $actionName; // Set action to New or Update
+        //                        $auditTrail->save();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+
+
 
         $internal_id = $internalAudit->id;
         $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
-        //   dd($newDataGridInternalAudits);
         $newDataGridInternalAudits->io_id = $internal_id;
-  $newDataGridInternalAudits->identifier = 'observations';
-  $newDataGridInternalAudits->data = $request->observations;
-  $newDataGridInternalAudits->save();
+        $newDataGridInternalAudits->identifier = 'observations';
+        $newDataGridInternalAudits->data = $request->observations;
+        $newDataGridInternalAudits->save();
+
+        //if (!empty($request->observations)) {
+        //    // Fetch existing auditor data
+        //    $existingAuditorShow = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->first();
+        //    $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+        //    if($internalAudit->stage == 1){
+        //        $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+        //        $newDataGridInternalAudits->io_id = $internal_id;
+        //        $newDataGridInternalAudits->identifier = 'observations';
+        //        $newDataGridInternalAudits->data = $request->observations;
+        //        $newDataGridInternalAudits->save();
+        //    }
+        //    //dd($product);
+        //    // Define the mapping of field keys to more descriptive names
+        //    $fieldNames = [
+        //        'observation' => 'Observations/Discrepancy',
+        //        'category' => 'Category',
+        //        'remarks' => 'Remarks',
+
+        //    ];
+
+        //    // Track audit trail changes
+        //    if (is_array($request->observations)) {
+        //        foreach ($request->observations as $index => $newAuditor) {
+        //            $previousAuditor = $existingAuditorData[$index] ?? [];
+
+        //            // Track changes for each field
+        //            $fieldsToTrack = ['observation', 'category', 'remarks'];
+        //            foreach ($fieldsToTrack as $field) {
+        //                $oldValue = $previousAuditor[$field] ?? 'Null';
+        //                $newValue = $newAuditor[$field] ?? 'Null';
+
+        //                // Only proceed if there's a change or the data is new
+        //                if ($oldValue !== $newValue) {
+        //                    // Check if this specific change has already been logged in the audit trail
+        //                    $existingAuditTrail = InternalAuditTrial::where([
+        //                        ['InternalAudit_id', '=', $internalAudit->id],
+        //                        ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+        //                        ['previous', '=', $oldValue],
+        //                        ['current', '=', $newValue]
+        //                    ])->first();
+
+        //                    // Determine if the data is new or updated
+        //                    $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+        //                    // If no existing audit trail record, log the change
+        //                    if (!$existingAuditTrail) {
+        //                        $auditTrail = new InternalAuditTrial;
+        //                        $auditTrail->InternalAudit_id = $internalAudit->id;
+        //                        $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+        //                        $auditTrail->previous = $oldValue;
+        //                        $auditTrail->current = $newValue;
+        //                        $auditTrail->comment = "";
+        //                        $auditTrail->user_id = Auth::user()->id;
+        //                        $auditTrail->user_name = Auth::user()->name;
+        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->origin_state = $internalAudit->status;
+        //                        $auditTrail->change_to = "Not Applicable";
+        //                        $auditTrail->change_from = $internalAudit->status;
+        //                        $auditTrail->action_name = $actionName; // Set action to New or Update
+        //                        $auditTrail->save();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
 
   $internal_id = $internalAudit->id;
   $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
@@ -3866,12 +4229,85 @@ if ($areIniAttachmentsSame2 != true) {
   $newDataGridInternalAuditRoles->data = $request->auditorroles;
   $newDataGridInternalAuditRoles->save();
 
-  $internal_id = $internalAudit->id;
-  $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
-  $newDataGridInitialClosure->io_id = $internal_id;
-  $newDataGridInitialClosure->identifier = 'Initial';
-  $newDataGridInitialClosure->data = $request->Initial;
-  $newDataGridInitialClosure->save();
+
+
+        $internal_id = $internalAudit->id;
+        $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+        $newDataGridInitialClosure->io_id = $internal_id;
+        $newDataGridInitialClosure->identifier = 'Initial';
+        $newDataGridInitialClosure->data = $request->Initial;
+        $newDataGridInitialClosure->update();
+
+        //if (!empty($request->Initial)) {
+        //    // Fetch existing auditor data
+        //    $existingAuditorShow = InternalAuditObservationGrid::where(['io_id' => $Summary, 'identifier' => 'Initial'])->first();
+        //    $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
+
+        //    if($internalAudit->stage == 1){
+        //        $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+        //        $newDataGridInitialClosure->io_id = $internal_id;
+        //        $newDataGridInitialClosure->identifier = 'Initial';
+        //        $newDataGridInitialClosure->data = $request->Initial;
+        //        $newDataGridInitialClosure->update();
+        //    }
+        //    //dd($product);
+        //    // Define the mapping of field keys to more descriptive names
+        //    $fieldNames = [
+        //        'observation' => 'Observation',
+        //        'impact_assesment' => 'Response with impact assesment & CAPA (If Applicable)',
+        //        'responsiblity' => 'Responsibility',
+        //        'closure_date' => 'Proposed Closure Date',
+        //        'Actual_date' => 'Actual Closure Date',
+
+        //    ];
+
+        //    // Track audit trail changes
+        //    if (is_array($request->Initial)) {
+        //        foreach ($request->Initial as $index => $newAuditor) {
+        //            $previousAuditor = $existingAuditorData[$index] ?? [];
+
+        //            // Track changes for each field
+        //            $fieldsToTrack = ['observation', 'impact_assesment', 'responsiblity', 'closure_date', 'Actual_date'];
+        //            foreach ($fieldsToTrack as $field) {
+        //                $oldValue = $previousAuditor[$field] ?? 'Null';
+        //                $newValue = $newAuditor[$field] ?? 'Null';
+
+        //                // Only proceed if there's a change or the data is new
+        //                if ($oldValue !== $newValue) {
+        //                    // Check if this specific change has already been logged in the audit trail
+        //                    $existingAuditTrail = InternalAuditTrial::where([
+        //                        ['InternalAudit_id', '=', $internalAudit->id],
+        //                        ['activity_type', '=', $fieldNames[$field] . ' ( ' . ($index + 1) . ')'],
+        //                        ['previous', '=', $oldValue],
+        //                        ['current', '=', $newValue]
+        //                    ])->first();
+
+        //                    // Determine if the data is new or updated
+        //                    $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
+
+        //                    // If no existing audit trail record, log the change
+        //                    if (!$existingAuditTrail) {
+        //                        $auditTrail = new InternalAuditTrial;
+        //                        $auditTrail->InternalAudit_id = $internalAudit->id;
+        //                        $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+        //                        $auditTrail->previous = $oldValue;
+        //                        $auditTrail->current = $newValue;
+        //                        $auditTrail->comment = "";
+        //                        $auditTrail->user_id = Auth::user()->id;
+        //                        $auditTrail->user_name = Auth::user()->name;
+        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->origin_state = $internalAudit->status;
+        //                        $auditTrail->change_to = "Not Applicable";
+        //                        $auditTrail->change_from = $internalAudit->status;
+        //                        $auditTrail->action_name = $actionName; // Set action to New or Update
+        //                        $auditTrail->save();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
 
 
 
@@ -4005,34 +4441,168 @@ if ($areIniAttachmentsSame2 != true) {
         }
         $internalAuditComments->save();
 
-        $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
-        if (!empty($request->audit)) {
-            $data3->area_of_audit = serialize($request->audit);
-        }
-        if (!empty($request->scheduled_start_date)) {
-            $data3->start_date = serialize($request->scheduled_start_date);
-        }
-        if (!empty($request->scheduled_start_time)) {
-            $data3->start_time = serialize($request->scheduled_start_time);
-        }
-        if (!empty($request->scheduled_end_date)) {
-            $data3->end_date = serialize($request->scheduled_end_date);
-        }
-        if (!empty($request->scheduled_end_time)) {
-            $data3->end_time = serialize($request->scheduled_end_time);
-        }
-        if (!empty($request->auditor)) {
-            $data3->auditor = serialize( $request->auditor);
-        }
-        if (!empty($request->auditee)) {
-            $data3->auditee = serialize( $request->auditee);
 
-        }
-        if (!empty($request->remark)) {
-            $data3->remark = serialize($request->remark);
-        }
-        // dd($data3);
-        $data3->save();
+        // Fetch the existing record from the database based on the incident ID
+            $data3 = InternalAuditGrid::where('audit_id', $internalAudit->id)
+                ->where('type', 'internal_audit')
+                ->first();
+
+            // Perform the update after storing the previous values
+            if (!empty($request->audit)) {
+                $data3->area_of_audit = serialize($request->audit);
+            }
+            if (!empty($request->scheduled_start_date)) {
+                $data3->start_date = serialize($request->scheduled_start_date);
+            }
+            if (!empty($request->scheduled_start_time)) {
+                $data3->start_time = serialize($request->scheduled_start_time);
+            }
+            if (!empty($request->scheduled_end_date)) {
+                $data3->end_date = serialize($request->scheduled_end_date);
+            }
+            if (!empty($request->scheduled_end_time)) {
+                $data3->end_time = serialize($request->scheduled_end_time);
+            }
+            if (!empty($request->auditor)) {
+                $data3->auditor = serialize($request->auditor);
+            }
+            if (!empty($request->auditee)) {
+                $data3->auditee = serialize($request->auditee);
+            }
+            if (!empty($request->remark)) {
+                $data3->remark = serialize($request->remark);
+            }
+
+            // Update the record in the database
+            $data3->update();
+
+            // Store the previous details for comparison before making updates
+            //$previousDetails = [
+            //    'audit' => !is_null($data3->audit) ? unserialize($data3->audit) : null,
+            //    'scheduled_start_date' => !is_null($data3->scheduled_start_date) ? unserialize($data3->scheduled_start_date) : null,
+            //    'scheduled_start_time' => !is_null($data3->scheduled_start_time) ? unserialize($data3->scheduled_start_time) : null,
+            //    'scheduled_end_date' => !is_null($data3->scheduled_end_date) ? unserialize($data3->scheduled_end_date) : null,
+            //    'scheduled_end_time' => !is_null($data3->scheduled_end_time) ? unserialize($data3->scheduled_end_time) : null,
+            //    'auditor' => !is_null($data3->auditor) ? unserialize($data3->auditor) : null,
+            //    'auditee' => !is_null($data3->auditee) ? unserialize($data3->auditee) : null,
+            //    'remark' => !is_null($data3->remark) ? unserialize($data3->remark) : null,
+            //];
+
+            //// Perform the update after storing the previous values
+            //if (!empty($request->audit)) {
+            //    $data3->area_of_audit = serialize($request->audit);
+            //}
+            //if (!empty($request->scheduled_start_date)) {
+            //    $data3->start_date = serialize($request->scheduled_start_date);
+            //}
+            //if (!empty($request->scheduled_start_time)) {
+            //    $data3->start_time = serialize($request->scheduled_start_time);
+            //}
+            //if (!empty($request->scheduled_end_date)) {
+            //    $data3->end_date = serialize($request->scheduled_end_date);
+            //}
+            //if (!empty($request->scheduled_end_time)) {
+            //    $data3->end_time = serialize($request->scheduled_end_time);
+            //}
+            //if (!empty($request->auditor)) {
+            //    $data3->auditor = serialize($request->auditor);
+            //}
+            //if (!empty($request->auditee)) {
+            //    $data3->auditee = serialize($request->auditee);
+            //}
+            //if (!empty($request->remark)) {
+            //    $data3->remark = serialize($request->remark);
+            //}
+
+            //// Update the record in the database
+            //$data3->update();
+
+            //// Define an associative array to map the field keys to display names
+            //$fieldNames = [
+            //    'audit' => 'Area of Audit',
+            //    'scheduled_start_date' => 'Scheduled Start Date',
+            //    'scheduled_start_time' => 'Scheduled Start Time',
+            //    'scheduled_end_date' => 'Scheduled End Date',
+            //    'scheduled_end_time' => 'Scheduled End Time',
+            //    'auditor' => 'Auditor',
+            //    'auditee' => 'Auditee',
+            //    'remark' => 'Remarks'
+            //];
+
+            //// Ensure audit is an array before iterating
+            //if (is_array($request->audit) && !empty($request->audit)) {
+            //    foreach ($request->audit as $index => $audit) {
+            //        // Retrieve previous details for the current index
+            //        $previousValues = [
+            //            'audit' => $previousDetails['audit'][$index] ?? null,
+            //            'scheduled_start_date' => $previousDetails['scheduled_start_date'][$index] ?? null,
+            //            'scheduled_start_time' => $previousDetails['scheduled_start_time'][$index] ?? null,
+            //            'scheduled_end_date' => $previousDetails['scheduled_end_date'][$index] ?? null,
+            //            'scheduled_end_time' => $previousDetails['scheduled_end_time'][$index] ?? null,
+            //            'auditor' => $previousDetails['auditor'][$index] ?? null,
+            //            'auditee' => $previousDetails['auditee'][$index] ?? null,
+            //            'remark' => $previousDetails['remark'][$index] ?? null,
+            //        ];
+
+            //        // Current field values from the request
+            //        $fields = [
+            //            'audit' => $audit,
+            //            'scheduled_start_date' => $request->scheduled_start_date[$index],
+            //            'scheduled_start_time' => $request->scheduled_start_time[$index],
+            //            'scheduled_end_date' => $request->scheduled_end_date[$index],
+            //            'scheduled_end_time' => $request->scheduled_end_time[$index],
+            //            'auditor' => $request->auditor[$index],
+            //            'auditee' => $request->auditee[$index],
+            //            'remark' => $request->remark[$index],
+            //        ];
+
+            //        foreach ($fields as $key => $currentValue) {
+            //            // Get the previous value from the previous data
+            //            $previousValue = $previousValues[$key] ?? null;
+
+            //            // Log the changes only if the previous value is different from the current value
+            //            if ($previousValue != $currentValue && !empty($currentValue)) {
+            //                // Check if an audit trail entry for this specific row and field already exists
+            //                $existingAudit = InternalAuditTrial::where('InternalAudit_id', $id)
+            //                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+            //                    ->where('previous', $previousValue)
+            //                    ->where('current', $currentValue)
+            //                    ->exists();
+
+            //                // Only create a new audit trail entry if no existing entry matches
+            //                if (!$existingAudit) {
+            //                    $history = new InternalAuditTrial();
+            //                    $history->InternalAudit_id = $id;
+
+            //                    // Set activity type to include field name and row index using the fieldNames array
+            //                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+            //                    // Assign 'Previous' value explicitly as null if it doesn't exist
+            //                    $history->previous = $previousValue;
+
+            //                    // Assign 'Current' value, which is the new value
+            //                    $history->current = $currentValue;
+
+            //                    // Comments and user details
+            //                    $history->comment = $request->equipment_comments[$index] ?? '';
+            //                    $history->user_id = Auth::user()->id;
+            //                    $history->user_name = Auth::user()->name;
+            //                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    $history->origin_state = $internalAudit->status;
+            //                    $history->change_to = "Not Applicable";
+            //                    $history->change_from = $internalAudit->status;
+            //                    $history->action_name = is_null($previousValue) || $currentValue === '' ? 'New' : 'Update';
+
+            //                    // Save the history record
+            //                    $history->save();
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+
+
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
 
@@ -4149,7 +4719,7 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
-      
+
         // foreach($auditorview as $ss)
         // return $auditorview;
 
@@ -4938,7 +5508,7 @@ if ($areIniAttachmentsSame2 != true) {
             if($request->child_type == 'action_item'){
                 $p_record = InternalAudit::find($id);
                 $data = InternalAudit::find($id);
-                
+
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parent_type = "action_item";
                 return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record', 'data_record','data'));
@@ -5041,7 +5611,7 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
         $grid_Data3 = InternalAuditObservationGrid::where(['io_id' =>$id, 'identifier' => 'observations'])->first();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
-     
+
 
 
 
@@ -5057,7 +5627,7 @@ if ($areIniAttachmentsSame2 != true) {
             $grid_data->remark = unserialize($grid_data->remark);
         }
 
-        
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');

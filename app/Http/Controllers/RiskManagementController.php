@@ -4521,7 +4521,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Required ?';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Required ?';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -4667,7 +4667,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Completed By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Completed By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -4687,7 +4687,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Completed On';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Completed On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -4709,7 +4709,7 @@ class RiskManagementController extends Controller
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Liquid/External preparation Required';
+            $history->activity_type = 'Production Liquid/External preparation Review Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -4849,7 +4849,7 @@ class RiskManagementController extends Controller
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Liquid Review By';
+            $history->activity_type = 'Production Liquid/External preparation Review Completed By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -4869,7 +4869,7 @@ class RiskManagementController extends Controller
         if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Liquid Review On';
+            $history->activity_type = 'Production Liquid/External preparation Review Completed On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $request->ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -4891,7 +4891,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Injection Required';
+            $history->activity_type = 'Production Injection Review Required';
             $history->previous = $lastCft->Production_Injection_Review;
             $history->current = $request->Production_Injection_Review;
             $history->comment = "Not Applicable";
@@ -5034,7 +5034,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Injection Review By';
+            $history->activity_type = 'Production Injection Review Completed By';
             $history->previous = $lastCft->Production_Injection_By;
             $history->current = $request->Production_Injection_By;
             $history->comment = "Not Applicable";
@@ -5054,7 +5054,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Production Injection On';
+            $history->activity_type = 'Production Injection Completed On';
             $history->previous = $lastCft->Production_Injection_On;
             $history->current = $request->Production_Injection_On;
             $history->comment = "Not Applicable";
@@ -5076,7 +5076,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Store Review Required';
+            $history->activity_type = 'Store Review Review Required';
             $history->previous = $lastCft->Store_Review;
             $history->current = $request->Store_Review;
             $history->comment = "Not Applicable";
@@ -5191,7 +5191,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Store Review By';
+            $history->activity_type = 'Store Review Completed By';
             $history->previous = $lastCft->Store_by;
             $history->current = $request->Store_by;
             $history->comment = "Not Applicable";
@@ -5211,7 +5211,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Store Review On';
+            $history->activity_type = 'Store Review Completed On';
             $history->previous = $lastCft->Store_on;
             $history->current = $request->Store_on;
             $history->comment = "Not Applicable";
@@ -5233,7 +5233,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Quality Control Required';
+            $history->activity_type = 'Quality Control Review Required';
             $history->previous = $lastCft->Quality_review;
             $history->current = $request->Quality_review;
             $history->comment = "Not Applicable";
@@ -5345,12 +5345,54 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
+            $history = new RiskAuditTrail;
+            $history->risk_id = $id;
+            $history->activity_type = 'Quality Control Review Completed By';
+            $history->previous = $lastCft->Quality_Control_by;
+            $history->current = $request->Quality_Control_by;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_by) || $lastCft->Quality_Control_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
+            $history = new RiskAuditTrail;
+            $history->risk_id = $id;
+            $history->activity_type = 'Quality Control Review Completed On';
+            $history->previous = $lastCft->Quality_Control_on;
+            $history->current = $request->Quality_Control_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastCft->Quality_Control_on) || $lastCft->Quality_Control_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
 
         /*************** Research & Development ***************/
         if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Research & Development Required';
+            $history->activity_type = 'Research & Development Review Required';
             $history->previous = $lastCft->ResearchDevelopment_Review;
             $history->current = $request->ResearchDevelopment_Review;
             $history->comment = "Not Applicable";
@@ -5430,7 +5472,7 @@ class RiskManagementController extends Controller
         if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Research & Development By';
+            $history->activity_type = 'Research & Development Review Completed By';
             $history->previous = $lastCft->ResearchDevelopment_by;
             $history->current = $request->ResearchDevelopment_by;
             $history->comment = "Not Applicable";
@@ -5450,7 +5492,7 @@ class RiskManagementController extends Controller
         if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Research & Development Completed By';
+            $history->activity_type = 'Research & Development Review Completed On';
             $history->previous = $lastCft->ResearchDevelopment_on;
             $history->current = $request->ResearchDevelopment_on;
             $history->comment = "Not Applicable";
@@ -5798,7 +5840,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Human Resource Review By';
+            $history->activity_type = 'Human Resource Review Completed By';
             $history->previous = $lastCft->Human_Resource_by;
             $history->current = $request->Human_Resource_by;
             $history->comment = "Not Applicable";
@@ -5818,7 +5860,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Human Resource Review On';
+            $history->activity_type = 'Human Resource Review Completed On';
             $history->previous = $lastCft->Human_Resource_on;
             $history->current = $request->Human_Resource_on;
             $history->comment = "Not Applicable";
@@ -5982,7 +6024,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Microbiology Review By';
+            $history->activity_type = 'Microbiology Review Completed By';
             $history->previous = $lastCft->Microbiology_by;
             $history->current = $request->Microbiology_by;
             $history->comment = "Not Applicable";
@@ -6002,7 +6044,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Microbiology Review On';
+            $history->activity_type = 'Microbiology Review Completed On';
             $history->previous = $lastCft->Microbiology_on;
             $history->current = $request->Microbiology_on;
             $history->comment = "Not Applicable";
@@ -6159,7 +6201,7 @@ class RiskManagementController extends Controller
         if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Regulatory Affair Review By';
+            $history->activity_type = 'Regulatory Affair Review Completed By';
             $history->previous = $lastCft->RegulatoryAffair_by;
             $history->current = $request->RegulatoryAffair_by;
             $history->comment = "Not Applicable";
@@ -6179,7 +6221,7 @@ class RiskManagementController extends Controller
         if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Regulatory Affair Review On';
+            $history->activity_type = 'Regulatory Affair Review Completed On';
             $history->previous = $lastCft->RegulatoryAffair_on;
             $history->current = $request->RegulatoryAffair_on;
             $history->comment = "Not Applicable";
@@ -6344,7 +6386,7 @@ class RiskManagementController extends Controller
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance by';
+            $history->activity_type = 'Corporate Quality Assurance Review Completed by';
             $history->previous = $lastCft->CorporateQualityAssurance_by;
             $history->current = $request->CorporateQualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -6364,7 +6406,7 @@ class RiskManagementController extends Controller
         if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance On';
+            $history->activity_type = 'Corporate Quality Assurance Review Completed On';
             $history->previous = $lastCft->CorporateQualityAssurance_on;
             $history->current = $request->CorporateQualityAssurance_on;
             $history->comment = "Not Applicable";
@@ -6523,7 +6565,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Safety Review By';
+            $history->activity_type = 'Safety Review Completed By';
             $history->previous = $lastCft->Environment_Health_Safety_by;
             $history->current = $request->Environment_Health_Safety_by;
             $history->comment = "Not Applicable";
@@ -6543,7 +6585,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Safety Review On';
+            $history->activity_type = 'Safety Review Completed On';
             $history->previous = $lastCft->Environment_Health_Safety_on;
             $history->current = $request->Environment_Health_Safety_on;
             $history->comment = "Not Applicable";
@@ -6727,7 +6769,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 1 Review By';
+            $history->activity_type = 'Other 1 Review Completed By';
             $history->previous = $lastCft->Other1_by;
             $history->current = $request->Other1_by;
             $history->comment = "Not Applicable";
@@ -6747,7 +6789,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 1 Review On';
+            $history->activity_type = 'Other 1 Review Completed On';
             $history->previous = $lastCft->Other1_on;
             $history->current = $request->Other1_on;
             $history->comment = "Not Applicable";
@@ -6892,7 +6934,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 2 Review By';
+            $history->activity_type = 'Other 2 Review Completed By';
             $history->previous = $lastCft->Other2_by;
             $history->current = $request->Other2_by;
             $history->comment = "Not Applicable";
@@ -6912,7 +6954,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 2 Review On';
+            $history->activity_type = 'Other 2 Review Completed On';
             $history->previous = $lastCft->Other2_on;
             $history->current = $request->Other2_on;
             $history->comment = "Not Applicable";
@@ -7055,7 +7097,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 3 Review By';
+            $history->activity_type = 'Other 3 Review Completed By';
             $history->previous = $lastCft->Other3_by;
             $history->current = $request->Other3_by;
             $history->comment = "Not Applicable";
@@ -7075,7 +7117,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 3 Review On';
+            $history->activity_type = 'Other 3 Review Completed On';
             $history->previous = $lastCft->Other3_on;
             $history->current = $request->Other3_on;
             $history->comment = "Not Applicable";
@@ -7219,7 +7261,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 4 Review By';
+            $history->activity_type = 'Other 4 Review Completed By';
             $history->previous = $lastCft->Other4_by;
             $history->current = $request->Other4_by;
             $history->comment = "Not Applicable";
@@ -7239,7 +7281,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 4 Review On';
+            $history->activity_type = 'Other 4 Review Completed On';
             $history->previous = $lastCft->Other4_on;
             $history->current = $request->Other4_on;
             $history->comment = "Not Applicable";
@@ -7383,7 +7425,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 5 Review By';
+            $history->activity_type = 'Other 5 Review Completed By';
             $history->previous = $lastCft->Other5_by;
             $history->current = $request->Other5_by;
             $history->comment = "Not Applicable";
@@ -7403,7 +7445,7 @@ class RiskManagementController extends Controller
         if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Other 5 Review On';
+            $history->activity_type = 'Other 5 Review Completed On';
             $history->previous = $lastCft->Other5_on;
             $history->current = $request->Other5_on;
             $history->comment = "Not Applicable";
@@ -9455,7 +9497,7 @@ class RiskManagementController extends Controller
 
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
-                            $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+                            $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
                             if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
                                 $history->previous = "";

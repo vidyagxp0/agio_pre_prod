@@ -652,7 +652,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a type="button" class="remove-file1"
                                                                     data-file-name="{{ $file }}">
                                                                     <i class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i>
@@ -675,7 +675,7 @@
                                 <input type="hidden" id="deleted_file_Attachments" name="deleted_file_Attachments" value="">
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                        const removeButtons = document.querySelectorAll('.remove-file1');
 
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
@@ -828,7 +828,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
+                                                            <a type="button" class="remove-file2"
                                                                 data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i>
@@ -853,7 +853,7 @@
                                     <input type="hidden" id="deleted_Acknoledge_Attachments" name="deleted_Acknoledge_Attachments" value="">
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
-                                            const removeButtons = document.querySelectorAll('.remove-file');
+                                            const removeButtons = document.querySelectorAll('.remove-file2');
 
                                             removeButtons.forEach(button => {
                                                 button.addEventListener('click', function() {
@@ -1132,7 +1132,7 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file3"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1155,7 +1155,7 @@
                             <input type="hidden" id="deleted_completion_Attachments" name="deleted_completion_Attachments" value="">
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    const removeButtons = document.querySelectorAll('.remove-file');
+                                    const removeButtons = document.querySelectorAll('.remove-file3');
 
                                     removeButtons.forEach(button => {
                                         button.addEventListener('click', function() {
@@ -1230,7 +1230,7 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file3"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1316,7 +1316,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
+                                                            <a type="button" class="remove-file4"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
@@ -1339,7 +1339,7 @@
                                 <input type="hidden" id="deleted_Approval_Attachments" name="deleted_Approval_Attachments" value="">
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                        const removeButtons = document.querySelectorAll('.remove-file4');
 
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
@@ -1414,7 +1414,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
+                                                            <a type="button" class="remove-file4"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
