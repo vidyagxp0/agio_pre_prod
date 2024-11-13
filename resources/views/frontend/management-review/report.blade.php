@@ -974,7 +974,7 @@
 
                     <div class="border-table">
                         <div class="block-head">
-                            Production Injection Attachments 2
+                            Production Injection Attachments
                         </div>
                         <table>
 
@@ -3243,7 +3243,7 @@
 
                             <div class="border-table">
                                 <div class="block-head">
-                                    HOD Production Injection Attachments 2
+                                    HOD Production Injection Attachments
                                 </div>
                                 <table>
 
@@ -3894,8 +3894,8 @@
                                         <th class="w-20">HOD Quality Control Review Completed By</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($data5->hod_Quality_Control_on)
-                                                    {{ $data5->hod_Quality_Control_on }}
+                                                @if ($data5->hod_Quality_Control_by)
+                                                    {{ $data5->hod_Quality_Control_by }}
                                                 @else
                                                     Not Applicable
                                                 @endif
