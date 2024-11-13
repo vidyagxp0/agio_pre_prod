@@ -3439,9 +3439,9 @@ class CapaController extends Controller
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $data1->status;
+                            $history->origin_state = $lastDocument->status;
                             $history->change_to = "Not Applicable";
-                            $history->change_from = $data1->status;
+                            $history->change_from = $lastDocument->status;
                             $history->action_name = "Update";
                             $history->save();
                         }
@@ -3524,9 +3524,9 @@ class CapaController extends Controller
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $data3->status;
+                        $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable"; // Adjust if needed
-                        $history->change_from = $data3->status; // Adjust if needed
+                        $history->change_from = $lastDocument->status; // Adjust if needed
                         $history->action_name = "Update";
                         $history->save();
                     }
