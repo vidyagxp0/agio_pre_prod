@@ -794,56 +794,154 @@ class ErrataController extends Controller
             $history->save();
         }
         //==================GRID=======================
-        $errata_id = $data->id;
-        $newDataGridErrata = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->firstOrCreate();
-        $newDataGridErrata->e_id = $errata_id;
-        $newDataGridErrata->identifier = 'details';
-        $newDataGridErrata->data = $request->details;
-        $newDataGridErrata->save();
-
-
-
-
-
-
-
-        if (is_array($request->details)) {
-            foreach ($request->details as $index => $detailsAction) {
-                $lastdetailsAction = $data->details[$index] ?? null;
-                $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
         
-                // Check if there is a change or an action comment
-                if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
-                    // Check if an existing audit trail entry already exists for this action
-                    $existingHistory = ErrataAuditTrail::where([
-                        'errata_id' => $errata_id, // Corrected to use $errata_id
-                        'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
-                        'previous' => $lastdetailsAction,
-                        'current' => $currentdetailsAction
-                    ])->first();
-        
-                    // If no existing history, create a new entry
-                    if (!$existingHistory) {
+//         $errata_id = $data->id;
+
+// if (!empty($request->details)) {
+//     // Fetch or create the ErrataGrid record
+//     $newDataGridErrata = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->firstOrCreate();
+//     $newDataGridErrata->e_id = $errata_id;
+//     $newDataGridErrata->identifier = 'details';
+//     $newDataGridErrata->data = $request->details;
+//     $newDataGridErrata->save();
+
+//     // Mapping of field keys to descriptive names
+//     $fieldNames = [
+//         'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)',
+//     ];
+
+//     // Track audit trail changes for new entries
+//     if (is_array($request->details)) {
+//         $counter = 1;  // Initialize a sequential counter for indexing
+
+//         foreach ($request->details as $newAuditor) {
+//             foreach ($fieldNames as $fieldKey => $fieldName) {
+//                 $newValue = $newAuditor[$fieldKey] ?? 'Null';
+
+//                 // Log new data entries in the audit trail
+//                 if ($newValue !== 'Null') {
+//                     $auditTrail = new ErrataAuditTrail;
+//                     $auditTrail->errata_id = $errata_id;
+//                     $auditTrail->activity_type = $fieldName . ' ( ' . $counter . ')';
+//                     $auditTrail->previous = 'Null'; // Since this is new data
+//                     $auditTrail->current = $newValue;
+//                     $auditTrail->comment = "";
+//                     $auditTrail->user_id = Auth::user()->id;
+//                     $auditTrail->user_name = Auth::user()->name;
+//                     $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//                     $auditTrail->origin_state = $data->status;
+//                     $auditTrail->change_to = "Not Applicable";
+//                     $auditTrail->change_from = $data->status;
+//                     $auditTrail->action_name = 'Create';
+//                     $auditTrail->save();
+                    
+//                     $counter++; // Increment for each field entry
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+            $data1 = new ErrataGrid();
+            $data1->ert_id = $data->id;
+            $data1->type = "erata_type";
+
+            if (!empty($request->ListOfImpactingDocument)) {
+                $data1->ListOfImpactingDocument = serialize($request->ListOfImpactingDocument);
+            }
+            $data1->save();
+
+            $data1 = new ErrataGrid();
+            $data1->ert_id = $data->id;
+            $data1->type = "erata_type";
+
+            $fieldNames = [
+                'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)'
+            ];
+
+            foreach ($request->ListOfImpactingDocument as $index => $ListOfImpactingDocument) {
+                // Since this is a new entry, there are no previous details
+                $previousDetails = [
+                    'ListOfImpactingDocument' => null,
+                ];
+
+                // Current fields values from the request
+                $fields = [
+                    'ListOfImpactingDocument' => $ListOfImpactingDocument,
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    // Log changes for new rows (no previous value to compare)
+                    if (!empty($currentValue)) {
+                        // Only create an audit trail entry for new values
                         $history = new ErrataAuditTrail();
-                        $history->errata_id = $errata_id; // Manually setting each attribute
-                        $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
-                        $history->previous = $lastdetailsAction;
-                        $history->current = $currentdetailsAction;
-                        $history->comment = $request->action_taken_comment;
+                        $history->errata_id = $data->id;
+
+                        // Set activity type to include field name and row index using the fieldNames array
+                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                        // Since this is a new entry, 'Previous' value is null
+                        $history->previous = 'null'; // Previous value or 'null'
+
+                        // Assign 'Current' value, which is the new value
+                        $history->current = $currentValue; // New value
+
+                        // Comments and user details
+                        $history->comment = 'NA';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $data->status;
-                        $history->change_to = "Not Applicable";
-                        $history->change_from = "Not Applicable";
+                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                        $history->change_to = "Opened";
+                        $history->change_from = "Initiation";
                         $history->action_name = "Create";
-        
-                        // Save the audit trail entry
+
+                        // Save the history record
                         $history->save();
                     }
                 }
             }
-        }
+
+        
+
+        // if (is_array($request->details)) {
+        //     foreach ($request->details as $index => $detailsAction) {
+        //         $lastdetailsAction = $data->details[$index] ?? null;
+        //         $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
+        
+        //         // Check if there is a change or an action comment
+        //         if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
+        //             // Check if an existing audit trail entry already exists for this action
+        //             $existingHistory = ErrataAuditTrail::where([
+        //                 'errata_id' => $errata_id, // Corrected to use $errata_id
+        //                 'activity_type' => "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')',
+        //                 'previous' => $lastdetailsAction,
+        //                 'current' => $currentdetailsAction
+        //             ])->first();
+        
+        //             // If no existing history, create a new entry
+        //             if (!$existingHistory) {
+        //                 $history = new ErrataAuditTrail();
+        //                 $history->errata_id = $errata_id; // Manually setting each attribute
+        //                 $history->activity_type = "List Of Impacting Document (If Any)" . ' (' . ($index+1) . ')';
+        //                 $history->previous = $lastdetailsAction;
+        //                 $history->current = $currentdetailsAction;
+        //                 $history->comment = $request->action_taken_comment;
+        //                 $history->user_id = Auth::user()->id;
+        //                 $history->user_name = Auth::user()->name;
+        //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                 $history->origin_state = $data->status;
+        //                 $history->change_to = "Not Applicable";
+        //                 $history->change_from = "Not Applicable";
+        //                 $history->action_name = "Create";
+        
+        //                 // Save the audit trail entry
+        //                 $history->save();
+        //             }
+        //         }
+        //     }
+        // }
         
         //================================================================
 
@@ -861,7 +959,8 @@ class ErrataController extends Controller
         $errata_id = $id;
         $errata_ids = $showdata->$id;
 
-        $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
+        // $grid_Data = ErrataGrid::where(['ert_id' => $errata_id, 'identifier' => 'details'])->first();
+        $griddata = ErrataGrid::where('ert_id',$showdata->id)->first();
 
         $pre = [
             'DEV' => \App\Models\Deviation::class,
@@ -908,7 +1007,7 @@ class ErrataController extends Controller
 
 
 
-        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number', 'relatedRecords'));
+        return view('frontend.errata.errata_view', compact('showdata', 'griddata', 'errata_id', 'record_number', 'relatedRecords'));
     }
 
     public function stageChange(Request $request, $id)
@@ -2997,86 +3096,151 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         //==================GRID=======================
 //         $errata_id = $data->id;
-//         $newDataGridErrata = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->firstOrCreate();
-//         $newDataGridErrata->e_id = $errata_id;
+//         $newDataGridErrata = ErrataGrid::where(['ert_id' => $errata_id, 'identifier' => 'details'])->firstOrCreate();
+//         $newDataGridErrata->ert_id = $errata_id;
 //         $newDataGridErrata->identifier = 'details';
 //         $newDataGridErrata->data = $request->details;
 //         $newDataGridErrata->save();
 
-//   
+//  
+
+            $data1 = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
+
+            // Safely unserialize and use fallback to empty array if null
+            $previousDetails = [
+                'ListOfImpactingDocument' => !is_null($data1->ListOfImpactingDocument) ? unserialize($data1->ListOfImpactingDocument) : null 
+            ];
+
+                // Serialize fields if they are not empty
+                if (!empty($request->ListOfImpactingDocument)) {
+                    $data1->ListOfImpactingDocument = serialize($request->ListOfImpactingDocument);
+                }
+                $data1->update();
 
 
+            // Define the mapping of database fields to the descriptive field names
+            $fieldNames = [
+                'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)'
+            ];
+
+            if (is_array($request->ListOfImpactingDocument) && !empty($request->ListOfImpactingDocument)) {
+                foreach ($request->ListOfImpactingDocument as $index => $ListOfImpactingDocument) {
+
+                    $previousValues = [
+                        'ListOfImpactingDocument' => isset($previousDetails['ListOfImpactingDocument'][$index]) ? $previousDetails['ListOfImpactingDocument'][$index] : null,
+                    ];
+                    
 
 
-$errata_id = $data->id;
+                    // Current field values
+                    $fields = [
+                        'ListOfImpactingDocument' => $ListOfImpactingDocument
+                    ];
 
-// Fetch existing summary response data
-$existingSummaryData = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
-$existingSummaryDataArray = $existingSummaryData ? $existingSummaryData->data : [];
+                    foreach ($fields as $key => $currentValue) {
+                        $previousValue = $previousValues[$key] ?? null;
 
-// Save the new details data
+                        // Log changes if the current value is different from the previous one
+                        if ($previousValue != $currentValue && !empty($currentValue)) {
+                            // Check if an audit trail entry for this specific row and field already exists
+                            $existingAudit = ErrataAuditTrail::where('errata_id', $id)
+                                ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                                ->where('previous', $previousValue)
+                                ->where('current', $currentValue)
+                                ->exists();
 
-if (!empty($request->details)) {
-    $summaryShow = ErrataGrid::firstOrNew(['e_id' => $errata_id, 'identifier' => 'details']);
-    $summaryShow->e_id = $errata_id;
-    $summaryShow->identifier = 'details';
-    $summaryShow->data = $request->details;
-    $summaryShow->save();
-
-
-
-      // Define the mapping of field keys to more descriptive names
-      $fieldNames = [
-        'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)',
-       
-    ];
-
-    // Track audit trail changes
-    if (is_array($request->details)) {
-        foreach ($request->details as $index => $newSummary) {
-            $previousSummary = $existingSummaryDataArray[$index] ?? [];
-
-            // Track changes for each field
-            $fieldsToTrack = ['ListOfImpactingDocument'];
-            foreach ($fieldsToTrack as $field) {
-                $oldValue = $previousSummary[$field] ?? 'Null';
-                $newValue = $newSummary[$field] ?? 'Null';
-
-                // If there's a change, add an entry to the audit trail
-                if ($oldValue !== $newValue) {
-                    $auditTrail = new ErrataAuditTrail();
-                    $auditTrail->errata_id = $errata_id;
-                    $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
-             
-                    $auditTrail->previous = $oldValue;
-                    $auditTrail->current = $newValue;
-                    $auditTrail->comment = "";
-                    $auditTrail->user_id = Auth::user()->id;
-                    $auditTrail->user_name = Auth::user()->name;
-                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $auditTrail->origin_state = $lastData->status;
-                    $auditTrail->change_to = "Not Applicable";
-                    $auditTrail->change_from = $lastData->status;
-                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
-                    $auditTrail->save();
+                            // Only create a new audit trail entry if no existing entry matches
+                            if (!$existingAudit) {
+                                $history = new ErrataAuditTrail();
+                                $history->errata_id = $data->id;
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                                $history->previous = $previousValue; // Use the previous value
+                                $history->current = $currentValue; // New value
+                                $history->comment = 'NA'; // Use comments if available
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastData->status;
+                                $history->change_to = "Not Applicable"; // Adjust if needed
+                                $history->change_from = $lastData->status; // Adjust if needed
+                                $history->action_name = "Update";
+                                $history->save();
+                            }
+                        }
+                    }
                 }
             }
-        }
-
-    }
-}
 
 
 
 
 
+// $errata_id = $data->id;
 
+// // Fetch existing summary response data
+// $existingSummaryData = ErrataGrid::where(['ert_id' => $errata_id, 'identifier' => 'details'])->first();
 
+// // Ensure data is an array, decoding if necessary
+// $existingSummaryDataArray = is_string($existingSummaryData->data ?? null)
+//     ? json_decode($existingSummaryData->data, true)
+//     : ($existingSummaryData->data ?? []);
 
+// // Save the new details data
+// if (!empty($request->details)) {
+//     // Fetch or create the summary record
+//     $summaryShow = ErrataGrid::firstOrNew(['e_id' => $errata_id, 'identifier' => 'details']);
+//     $summaryShow->e_id = $errata_id;
+//     $summaryShow->identifier = 'details';
+//     $summaryShow->data = $request->details; // Ensure this is stored as JSON or array based on your setup
+//     $summaryShow->save();
 
+//     // Mapping of field keys to descriptive names
+//     $fieldNames = [
+//         'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)',
+//     ];
 
+//     // Track audit trail changes
+//     if (is_array($request->details)) {
+//         foreach ($request->details as $index => $newAuditor) {
+//             // Use corresponding previous data by index, if available
+//             $previousAuditor = $existingSummaryDataArray[$index] ?? [];
 
+//             foreach ($fieldNames as $fieldKey => $fieldName) {
+//                 $oldValue = $previousAuditor[$fieldKey] ?? 'Null';
+//                 $newValue = $newAuditor[$fieldKey] ?? 'Null';
 
+//                 // Proceed if there's a change
+//                 if ($oldValue !== $newValue) {
+//                     // Check if this change is already logged in the audit trail
+//                     $existingAuditTrail = ErrataAuditTrail::where([
+//                         ['errata_id', '=', $errata_id],
+//                         ['activity_type', '=', $fieldName . ' (' . ($index + 1) . ')'],
+//                         ['previous', '=', $oldValue],
+//                         ['current', '=', $newValue]
+//                     ])->first();
+
+//                     // If no existing audit trail entry, log this change
+//                     if (!$existingAuditTrail) {
+//                         $auditTrail = new ErrataAuditTrail;
+//                         $auditTrail->errata_id = $errata_id;
+//                         $auditTrail->activity_type = $fieldName . ' (' . ($index + 1) . ')';
+//                         $auditTrail->previous = $oldValue;
+//                         $auditTrail->current = $newValue;
+//                         $auditTrail->comment = "";
+//                         $auditTrail->user_id = Auth::user()->id;
+//                         $auditTrail->user_name = Auth::user()->name;
+//                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//                         $auditTrail->origin_state = $data->status;
+//                         $auditTrail->change_from = $oldValue; // Correctly set to old value
+//                         $auditTrail->change_to = $newValue;   // Correctly set to new value
+//                         $auditTrail->action_name = "Update";
+//                         $auditTrail->save();
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
         //================================================================
         toastr()->success("Record is Updated Successfully");
@@ -3088,9 +3252,8 @@ if (!empty($request->details)) {
     public function singleReports(Request $request, $id)
     {
         $data = errata::find($id);
-        $grid_Data = ErrataGrid::where(['e_id' => $id, 'identifier' => 'details'])->first();
         if (!empty($data)) {
-            $data->data = ErrataGrid::where('e_id', $id)->where('identifier', "details")->first();
+            $grid_Data = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

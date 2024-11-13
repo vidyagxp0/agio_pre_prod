@@ -561,22 +561,15 @@
                                 <th class="w-20">Checked By</th>
                                 <th class="w-20">Approved By</th> -->
                             </tr>
-                            @if ($grid_Data && is_array($grid_Data->data))
-                                @foreach ($grid_Data->data as $grid_Data)
-                                    <tr>
-                                        <td class="w-20">{{ $loop->index + 1 }}</td>
-                                        <td class="w-20">
-                                            {{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
-                                        </td>
-                                        <!-- <td class="w-20">
-                                            {{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
-                                        <td class="w-20">
-                                            {{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
-                                        <td class="w-20">
-                                            {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td> -->
-                                    </tr>
+                                @if($grid_Data->ListOfImpactingDocument)
+                                @foreach (unserialize($grid_Data->ListOfImpactingDocument) as $key => $dataDemo)
+                                <tr>
+                                    <td class="w-15">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
+        
+                                    <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
+                                </tr>
                                 @endforeach
-                            @else
+                                @else
                                 <tr>
                                     <td>Not Applicable</td>
                                     <td>Not Applicable</td>
