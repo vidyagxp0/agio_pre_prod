@@ -2193,6 +2193,7 @@
                             </div>
                         </div>
                     </div>
+                                        </div>
                 @endif
 
                 <!-- CSS Styling -->
@@ -2484,6 +2485,7 @@
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <div id="CCForm10" class="inner-block cctabcontent">

@@ -210,7 +210,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <label for="remark">Remark</label>
                                     <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here..."></textarea>
                                 </div>
-                            </div>
+                            </div>                          
 
                             <script>
                                 function toggleRemarkInput() {
@@ -226,20 +226,32 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         document.getElementById('remark').value = '';
                                     }
                                 }
-                            </script>
+                            </script> 
 
-
-
-                        <div class="col-lg-6" id="evaluationContainer" style="display: none;">
-                            <div class="group-input">
-                                <label for="evaluation">Evaluation Required</label>
-                                <select name="evaluation_required" id="evaluationRequired">
-                                    <option value="">----Select---</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="trainer-name">Trainer name </label>
+                                    <select class="choices-single-reviewer" name="trainer_name" placeholder="Select Trainers">
+                                        <option value="">Select Trainer</option>
+                                        @foreach ($hods as $trainer)
+                                            <option value="{{ $trainer->id }}" {{ old('trainer_name') == $trainer->id ? 'selected' : '' }}>
+                                                {{ $trainer->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="col-lg-6" id="">
+                                <div class="group-input">
+                                    <label for="evaluation">Evaluation Required</label>
+                                    <select name="evaluation_required" id="evaluationRequired">
+                                        <option value="">----Select---</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
         
                             
                             <script>

@@ -46,75 +46,76 @@ class JobTrainingController extends Controller
 
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
+        $trainers = User::get();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees','trainers'));
     }
 
 
-public function fetchQuestions($id)
-{
-    $document_training = DocumentTraining::where('document_id', $id)->first();
-    if ($document_training) {
-        $training = Training::find($document_training->training_plan); 
-        if ($training && $training->training_plan_type == "Read & Understand with Questions") {
-            $quize = Quize::find($training->quize);
-            $questions = explode(',', $quize->question);
-            $question_list = [];
+    public function fetchQuestions($id)
+    {
+        $document_training = DocumentTraining::where('document_id', $id)->first();
+        if ($document_training) {
+            $training = Training::find($document_training->training_plan); 
+            if ($training && $training->training_plan_type == "Read & Understand with Questions") {
+                $quize = Quize::find($training->quize);
+                $questions = explode(',', $quize->question);
+                $question_list = [];
 
-            foreach ($questions as $question_id) {
-                $question = Question::find($question_id);
-                if ($question) {
-                    $json_options = unserialize($question->options);
-                    $options = [];
-                    foreach ($json_options as $key => $value) {
-                        $options[chr(97 + $key)] = $value; // Format options
+                foreach ($questions as $question_id) {
+                    $question = Question::find($question_id);
+                    if ($question) {
+                        $json_options = unserialize($question->options);
+                        $options = [];
+                        foreach ($json_options as $key => $value) {
+                            $options[chr(97 + $key)] = $value; // Format options
+                        }
+                        $question->options = $options;
+                        $question_list[] = $question;
                     }
-                    $question->options = $options;
-                    $question_list[] = $question;
                 }
+                return response()->json($question_list); // Return questions array as JSON
             }
-            return response()->json($question_list); // Return questions array as JSON
         }
+        return response()->json([]); // Return empty array if no questions found
     }
-    return response()->json([]); // Return empty array if no questions found
-}
 
-public function trainingQuestions($id){
+    public function trainingQuestions($id){
 
-    $document = Document::find($id);
-    $document_training = DocumentTraining::where('document_id',$id)->first();
-    $training = Training::find($document_training->training_plan);
-    if($training->training_plan_type == "Read & Understand with Questions"){
-        $quize = Quize::find($training->quize);
-        $data = explode(',',$quize->question);
-        // dd($document_training);
-        $array = [];
+        $document = Document::find($id);
+        $document_training = DocumentTraining::where('document_id',$id)->first();
+        $training = Training::find($document_training->training_plan);
+        if($training->training_plan_type == "Read & Understand with Questions"){
+            $quize = Quize::find($training->quize);
+            $data = explode(',',$quize->question);
+            // dd($document_training);
+            $array = [];
 
-        for($i = 0; $i<count($data); $i++){
-            $question = Question::find($data[$i]);
-            $question->id = $i+1;
-            $json_option = unserialize($question->options);
-            $options = [];
-            foreach($json_option as $key => $value){
-                $options[chr(97 + $key)] = $value;
+            for($i = 0; $i<count($data); $i++){
+                $question = Question::find($data[$i]);
+                $question->id = $i+1;
+                $json_option = unserialize($question->options);
+                $options = [];
+                foreach($json_option as $key => $value){
+                    $options[chr(97 + $key)] = $value;
+                }
+                $question->options = array($options);
+                $ans = unserialize($question->answers);
+                $question->answers = implode("", $ans);
+                $question->score = 0;
+                $question->status = "";
+
+                array_push($array,$question);
             }
-            $question->options = array($options);
-            $ans = unserialize($question->answers);
-            $question->answers = implode("", $ans);
-            $question->score = 0;
-            $question->status = "";
+            $data_array = implode(',',$array);
 
-            array_push($array,$question);
-        }
-         $data_array = implode(',',$array);
-
-        return view('frontend.TMS.Job_Training.quize',compact('document','data_array','quize'));
-   }
-   else{
-    toastr()->error('Training not specified');
-    return back();
-   }
-}
+            return view('frontend.TMS.Job_Training.quize',compact('document','data_array','quize'));
+    }
+    else{
+        toastr()->error('Training not specified');
+        return back();
+    }
+    }
 
 
     public function getEmployeeDetail($id)
@@ -125,17 +126,17 @@ public function trainingQuestions($id){
 
 
     public function getSopDescription($id)
-{
-    $document = Document::find($id); // Document ka model use karein
-    
-    if ($document) {
-        return response()->json([
-            'short_description' => $document->short_description // Short description field ka naam use karein
-        ]);
-    }
+    {
+        $document = Document::find($id); // Document ka model use karein
+        
+        if ($document) {
+            return response()->json([
+                'short_description' => $document->short_description // Short description field ka naam use karein
+            ]);
+        }
 
-    return response()->json(['short_description' => ''], 404);
-}
+        return response()->json(['short_description' => ''], 404);
+    }
 
 
     public function store(Request $request)
@@ -154,6 +155,7 @@ public function trainingQuestions($id){
         $jobTraining->location = $request->input('location');
 
         $jobTraining->hod = $request->input('hod');
+        $jobTraining->trainer_name = $request->input('trainer_name');
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
@@ -293,9 +295,7 @@ public function trainingQuestions($id){
         $savedSop = $record->sopdocument;
         $employees = Employee::all();
         
-        // $documentData = json_decode($jobTraining->document_data, true);
         $storedData = json_decode($jobTraining->document_data, true);
-
 
         $document_training = DocumentTraining::where('document_id', $id)->first();
          // Use optional() to avoid null errors when training_plan or quize is null
@@ -305,29 +305,28 @@ public function trainingQuestions($id){
         // $quize = Quize::find($training->quize);
         $employee_grid_data = JobTrainingGrid::where(['jobTraining_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
 
-        // dd($jobTraining);
         $departments = Department::all();
         $users = User::all();
+
+        $trainers = User::all();
 
         if (!$jobTraining) {
             return redirect()->route('job_training.index')->with('error', 'Job Training not found');
         }
-        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','quize','training','document_training','employees','employee_grid_data','storedData'));
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','quize','training','document_training','employees','employee_grid_data','storedData','trainers'));
     }
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-
 
         $jobTraining = JobTraining::findOrFail($id);
         $lastDocument = JobTraining::findOrFail($id);
 
-        // Update fields
         $jobTraining->name = $request->input('name');
         $jobTraining->department = $request->input('department');
         $jobTraining->location = $request->input('location');
         $jobTraining->hod = $request->input('hod');
+        $jobTraining->trainer_name = $request->input('trainer_name');
 
         $jobTraining->empcode = $request->input('empcode');
         $jobTraining->type_of_training = $request->input('type_of_training');
@@ -361,17 +360,12 @@ public function trainingQuestions($id){
         $jobTraining->final_review_comment = $request->input('final_review_comment');
         $jobTraining->selected_document_id = $request->input('selected_document_id');
 
-
-        // Retrieve the existing JSON data and decode it
         $existingData = json_decode($jobTraining->document_data, true) ?? [];
     
-        // Get the updated data from the request, defaulting to an empty array if missing
         $updatedData = $request->input('data') ?? [];
     
-        // Merge the existing data with the updated data
         $newData = array_replace($existingData, $updatedData);
     
-        // Encode the updated data back to JSON
         $jobTraining->document_data = json_encode($newData);
 
         // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();

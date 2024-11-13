@@ -409,12 +409,25 @@
                                     });
                                 </script>
 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="trainer-name">Trainer name</label>
+                                        <select name="trainer_name" id="hod">
+                                            <option value="">-- Select Trainer --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == old('trainer_name', $jobTraining->trainer_name) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
-
-                                <div class="col-lg-6" id="evaluationContainer" style="display: none;">
+                                <div class="col-lg-6" id="">
                                     <div class="group-input">
                                         <label for="evaluation">Evaluation Required</label>
-                                        <select name="evaluation_required" id="evaluationRequired">
+                                        <select name="evaluation_required" id="">
                                             <option value="">----Select---</option>
                                             <option value="Yes" {{ $jobTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ $jobTraining->evaluation_required == 'No' ? 'selected' : '' }}>No</option>

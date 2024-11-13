@@ -148,7 +148,6 @@ class InductionTrainingcontroller extends Controller
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
-            // Handle both underscore and hyphen cases
             $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));
             $trainingDate = $request->input($trainingDateKey) ?? $request->input(str_replace('_', '-', $trainingDateKey));
             $remark = $request->input($remarkKey) ?? $request->input(str_replace('_', '-', $remarkKey));
@@ -369,27 +368,23 @@ class InductionTrainingcontroller extends Controller
 
     public function edit($id)
     {
-        // Find the Induction Training record by
         $inductionTraining = Induction_training::find($id);
-        // Fetch the employee details related to this training
+
         $employee = Employee::where('id', $inductionTraining->name_employee)->first();
         $employee_name = $employee ? $employee->employee_name : '';
     
-        // Fetch all employees and documents
         $employees = Employee::all();
         $data = Document::all();
         $users = User::get();
 
         $documents = json_decode($inductionTraining->documents, true);
 
-        // Fetch the record and document training by ID
         $record = Induction_training::findOrFail($id);
         $document_training = DocumentTraining::where('document_id', $id)->first();
     
         $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
         $quize = optional($training)->quize ? Quize::find($training->quize) : null;
     
-        // Get the saved SOP document and employee grid data
         $savedSop = $record->sopdocument;
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
     
@@ -397,7 +392,7 @@ class InductionTrainingcontroller extends Controller
             'Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 
             'AGM and GM', 'Head quality', 'VP quality', 'Plant head'
         ];
-        // Return the view with all necessary data
+        
         return view('frontend.TMS.Induction_training.induction_training_view', compact(
             'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations','documents'
         ));
@@ -1038,14 +1033,23 @@ class InductionTrainingcontroller extends Controller
         $record = str_pad((RecordNumber::first()->value('counter') + 1), 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $due_date = $currentDate->addDays(30)->format('Y-m-d');
+
+        $departmentCode = $mainvalue->department ?? ' ';
+
+        $serialNumber = str_pad((RecordNumber::first()->value('counter') + 1), 3, '0', STR_PAD_LEFT);
+
+        $revisionNumber = '00';
+
+        $jobDescriptionNumber = "JD/{$departmentCode}/{$serialNumber}/{$revisionNumber}";
+        
         $employees = Employee::all(); 
         $data = Document::all(); 
         $hods = User::get();
         $delegate = User::get();
         if ($request->child_type == 'job_training') {
-            return view('frontend.TMS.Job_Training.job_training', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
+            return view('frontend.TMS.Job_Training.job_training', compact('induction','due_date','record','data','hods','delegate', 'mainvalue','jobDescriptionNumber'));
         } else {
-            return view('frontend.TMS.Job_description.job_description', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
+            return view('frontend.TMS.Job_description.job_description', compact('induction','due_date','record','data','hods','delegate', 'mainvalue','jobDescriptionNumber'));
         }
     }
 
@@ -1067,8 +1071,6 @@ class InductionTrainingcontroller extends Controller
         
     //     return view('frontend.TMS.Job_Training.job_training', compact('employees', 'due_date', 'record', 'data', 'hods', 'jobTraining', 'delegate', 'inductionTrainingDetails', 'request'));
     // }
-    
-
     
     public static function inductionReport($id)
     {
@@ -1100,9 +1102,6 @@ class InductionTrainingcontroller extends Controller
     public function viewrendersopinduction($id){
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
-    // public function viewrendersopinduction(){
-    //     return view('frontend.layout.Tms-Training', compact('id'));
-    // }
 
     
     public function showCertificate($employee_id)
@@ -1126,11 +1125,11 @@ class InductionTrainingcontroller extends Controller
 
         // Fetch all questions based on cleaned sopids
         $questions = Question::whereIn('document_id', $sopids)
-        ->inRandomOrder() // Randomize the order
-        ->take(10)        // Limit to 10 records
+        ->inRandomOrder()
+        ->take(10)
         ->get();
-        // Dump the questions for debugging
-            return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+        
+        return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
     }
 
     public function checkAnswerInduction(Request $request)
