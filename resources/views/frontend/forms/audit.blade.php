@@ -516,7 +516,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -719,7 +719,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department Name </label>
+                                        <label for="Initiator Group">Auditee department Name</label>
                                         <select name="auditee_department">
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
@@ -4250,11 +4250,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach1"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attach1')" multiple>
                                         </div>
                                     </div>
                                 </div>
