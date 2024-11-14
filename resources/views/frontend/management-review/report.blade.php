@@ -197,12 +197,6 @@
                     General Information
                 </div>
                 <table>
-                    <tr> {{ $managementReview->created_at }} added by {{ $managementReview->originator }}
-                        <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_id) }}</td>
-                        <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->created_at) }}</td>
-                    </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
@@ -221,6 +215,13 @@
                             @endif
                         </td>
                     </tr>
+                    <tr> {{ $managementReview->created_at }} added by {{ $managementReview->originator }}
+                        <th class="w-20">Initiator</th>
+                        <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_id) }}</td>
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->created_at) }}</td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">Initiator department</th>
                         {{-- <!-- <td class="w-30"> --}}
@@ -321,6 +322,16 @@
                                 Not Applicable
                             @endif
                         </td>
+                        <th class="w-20">Review Period</th>
+                        <td class="w-30">
+                            @if ($managementReview->review_period_monthly)
+                                {{ $managementReview->review_period_monthly }}
+                            @elseif ($managementReview->review_period_six_monthly)
+                                {{ $managementReview->review_period_six_monthly }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                         <th class="w-20">Proposed Schedule Start Date</th>
                         <td class="w-30">
                             {{-- @if ($managementReview->start_date)
@@ -336,7 +347,6 @@
 
                     <tr>
 
-
                         {{-- <th class="w-30"> Schedule End Date</th> --}}
                         {{-- <td class="w-20">
                             {{-- @if ($managementReview->end_date)
@@ -348,29 +358,15 @@
 
                         </td> --}}
 
-
-                        <th class="w-20">Review Period</th>
-                        <td class="w-30">
-                            @if ($managementReview->review_period_monthly)
-                                {{ $managementReview->review_period_monthly }}
-                            @elseif ($managementReview->review_period_six_monthly)
-                                {{ $managementReview->review_period_six_monthly }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Invite Person Notify</th>
+                        {{-- <th class="w-20">Invite Person Notify</th>
                         <td class="w-30">
                             @if ($managementReview->assign_to)
                                 {{ Helpers::getInitiatorName($managementReview->assign_to) }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
-
-
-
 
                 </table>
                 {{-- <div class="inner-block">
@@ -433,10 +429,6 @@
 
                     </div>
                     <table>
-                        <tr>
-                            <
-
-                        </tr>
 
                         <tr>
                             <th class="w-20">Operations </th>
@@ -462,7 +454,6 @@
                                     @else
                                       Not Applicable
                                     @endif</td>
-
 
                         </tr>
 

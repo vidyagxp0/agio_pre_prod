@@ -350,8 +350,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/MR/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                        <input disabled type="text" name="record_number" value=" {{ Helpers::getDivisionName($data->division_id) }}/MR/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -494,18 +493,6 @@
                                     </div>
 
                                 </div>
-                                <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc"  {{ $data->stage != 1 ? 'readonly' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
-
-
-
-
 
 
                                <div class="col-12">
@@ -1112,7 +1099,7 @@
                             <div class="col-md-12">
                                 @if ($data->stage == 2)
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head Review comment <span
+                                        <label for="HOD Remarks">QA Head Review Comment <span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
@@ -1120,7 +1107,7 @@
                                     </div>
                                 @else
                                     <div class="group-input">
-                                        <label for="QA review comment">QA Head Review comment</label>
+                                        <label for="QA review comment">QA Head Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea readonly class="tiny" name="Operations" id="summernote-4">{{ $data->Operations }}</textarea>
@@ -1164,7 +1151,6 @@
                             @enderror
                         </div>
                     </div>
-
 
 
                             {{-- <div class="col-12">
