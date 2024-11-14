@@ -3239,11 +3239,31 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $deviation->who_will_not_be = $request->who_will_not_be;
             $deviation->who_rationable = $request->who_rationable;
 
-            $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
-            $teamInvestigationData->deviation_id = $deviation->id;
-            $teamInvestigationData->identifier = "TeamInvestigation";
-            $teamInvestigationData->data = $request->investigationTeam;
-            $teamInvestigationData->update();
+            // $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
+            // $teamInvestigationData->deviation_id = $deviation->id;
+            // $teamInvestigationData->identifier = "TeamInvestigation";
+            // $teamInvestigationData->data = $request->investigationTeam;
+            // $teamInvestigationData->update();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
             $rootCauseData->deviation_id = $deviation->id;
@@ -3256,6 +3276,13 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $newDataGridWhy->identifier = 'why';
             $newDataGridWhy->data = $request->why;
             $newDataGridWhy->save();
+
+            //---------------------------------------------Grid for why why --------------------------------------------------------------
+
+        
+
+            
+            //---------------------------------------------End Grid for why why --------------------------------------------------------------
 
             $newDataGridFishbone = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
             $newDataGridFishbone->deviation_id = $id;
@@ -3279,6 +3306,142 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
 
         $deviation->update();
+
+        
+//-------------------------------------grid for Investigation team and Responsibilities--------------------------------------------------
+
+
+$teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
+$teamInvestigationData->deviation_id = $deviation->id;
+$teamInvestigationData->identifier = "TeamInvestigation";
+$teamInvestigationData->data = $request->investigationTeam;
+$teamInvestigationData->update();
+
+
+     // Define the mapping of field keys to more descriptive names
+     $fieldNames = [
+        'teamMember' => 'Investigation Team',
+        'desination_dept' => 'Designation & Department',
+        'responsibility' => 'Responsibility',
+        'remarks' => 'Remarks',
+        'investigation_approach'=>'Investigation Approach'
+  
+    ];
+
+    // Track audit trail changes
+    if (is_array($request->investigationTeam)) {
+        foreach ($request->investigationTeam as $index => $newAuditor) {
+           // dd($newAuditor);
+           
+            $previousAuditor = $existingAuditorData[$index] ?? [];
+
+            
+            // Track changes for each field
+            $fieldsToTrack = ['teamMember', 'desination_dept', 'responsibility', 'remarks','investigation_approach'];
+            foreach ($fieldsToTrack as $field) {
+            
+                $oldValue = $previousAuditor[$field] ?? 'Null';
+                $newValue = $newAuditor[$field] ?? 'Null';
+            
+
+                // If there's a change, add an entry to the audit trail
+                if ($oldValue !== $newValue) {
+                    $auditTrail = new DeviationAuditTrail();
+                    $auditTrail->deviation_id = $id;
+                    $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                    $auditTrail->previous = $oldValue;
+                    $auditTrail->current = $newValue;
+                    $auditTrail->comment = "";
+                    $auditTrail->user_id = Auth::user()->id;
+                    $auditTrail->user_name = Auth::user()->name;
+                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $auditTrail->origin_state = $lastDeviation->status;
+                    $auditTrail->change_to = "Not Applicable";
+                    $auditTrail->change_from = $lastDeviation->status;
+                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
+                    $auditTrail->save();
+                }
+            }
+        }
+
+        
+    }
+
+
+
+
+
+//---------------------------------------------- End  -----------------------------------------------------------------
+
+
+
+//-------------------------------------grid for Investigation team and Responsibilities--------------------------------------------------
+
+
+$teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
+$teamInvestigationData->deviation_id = $deviation->id;
+$teamInvestigationData->identifier = "TeamInvestigation";
+$teamInvestigationData->data = $request->investigationTeam;
+$teamInvestigationData->update();
+
+
+     // Define the mapping of field keys to more descriptive names
+     $fieldNames = [
+        'teamMember' => 'Investigation Team',
+        'desination_dept' => 'Designation & Department',
+        'responsibility' => 'Responsibility',
+        'remarks' => 'Remarks',
+        'investigation_approach'=>'Investigation Approach'
+  
+    ];
+
+    // Track audit trail changes
+    if (is_array($request->investigationTeam)) {
+        foreach ($request->investigationTeam as $index => $newAuditor) {
+           // dd($newAuditor);
+           
+            $previousAuditor = $existingAuditorData[$index] ?? [];
+
+            
+            // Track changes for each field
+            $fieldsToTrack = ['teamMember', 'desination_dept', 'responsibility', 'remarks','investigation_approach'];
+            foreach ($fieldsToTrack as $field) {
+            
+                $oldValue = $previousAuditor[$field] ?? 'Null';
+                $newValue = $newAuditor[$field] ?? 'Null';
+            
+
+                // If there's a change, add an entry to the audit trail
+                if ($oldValue !== $newValue) {
+                    $auditTrail = new DeviationAuditTrail();
+                    $auditTrail->deviation_id = $id;
+                    $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                    $auditTrail->previous = $oldValue;
+                    $auditTrail->current = $newValue;
+                    $auditTrail->comment = "";
+                    $auditTrail->user_id = Auth::user()->id;
+                    $auditTrail->user_name = Auth::user()->name;
+                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $auditTrail->origin_state = $lastDeviation->status;
+                    $auditTrail->change_to = "Not Applicable";
+                    $auditTrail->change_from = $lastDeviation->status;
+                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
+                    $auditTrail->save();
+                }
+            }
+        }
+
+        
+    }
+
+
+
+
+
+//---------------------------------------------- End  -----------------------------------------------------------------
+
+
+
         // grid
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
          $previousDetails = [
