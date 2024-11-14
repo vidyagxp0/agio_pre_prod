@@ -2365,6 +2365,7 @@ class IncidentController extends Controller
 
     public function update(Request $request, $id)
     {
+      //  dd($request->all());
         $form_progress = null;
 
         $lastIncident = Incident::find($id);
@@ -2392,8 +2393,7 @@ class IncidentController extends Controller
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
-                'short_description_required' => 'required|in:Recurring,Non-Recurring',
-                'nature_of_repeat' => 'required_if:short_description_required,Recurring',
+              
                 'incident_date' => 'required',
                 'incident_time' => 'required',
                 'incident_reported_date' => 'required',
@@ -2500,8 +2500,7 @@ class IncidentController extends Controller
                 //     },
                 // ],
             ], [
-                'short_description_required.required' => 'Nature of Repeat required!',
-                'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
+                
                 'audit_type' => 'Incident related to field required!'
             ]);
 
@@ -4059,7 +4058,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initiator Group')
+                                ->where('activity_type', 'Initiation Department')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
@@ -4079,13 +4078,54 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initiator Group')
+                                ->where('activity_type', 'Initiation Department Code')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
                 $history->activity_type = 'Initiation Department Code';
                 $history->previous =  $lastIncident->Initiator_Group;
                 $history->current = $incident->Initiator_Group;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->others != $incident->others || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Others')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Others';
+                $history->previous =  $lastIncident->others;
+                $history->current = $incident->others;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+
+            if($lastIncident->due_date != $incident->due_date || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Due Date')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Due Date';
+                $history->previous =  Helpers::getdateFormat($lastIncident->due_date);
+                $history->current =  Helpers::getdateFormat($incident->due_date);
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4522,11 +4562,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             if($lastIncident->Product_Details_Required != $incident->Product_Details_Required || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Product / Material details Required')
+                                ->where('activity_type', 'Product / Material Details Required')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Product / Material details Required';
+                $history->activity_type = 'Product / Material Details Required';
                 $history->previous =  $lastIncident->Product_Details_Required;
                 $history->current = $incident->Product_Details_Required;
                 $history->comment = $request->comment;
@@ -4564,7 +4604,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
              if($lastIncident->investigation != $incident->investigation || !empty($request->comment)) {
                  $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                 ->where('activity_type', 'Immediate Action')
+                                 ->where('activity_type', 'investigation')
                                  ->exists();
                  $history = new IncidentAuditTrail();
                  $history->incident_id = $incident->id;
@@ -8561,6 +8601,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $actionchild = Incident::find($id);
+            $data=Incident::find($id);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             //$p_record = OutOfCalibration::find($id);
@@ -8568,7 +8609,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $actionchild->save();
 
             //return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record','data'));
 
         }
         elseif ($request->child_type == "effectiveness_check")
