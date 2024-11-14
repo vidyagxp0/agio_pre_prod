@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('errata_grids', function (Blueprint $table) {
-            $table->integer('ert_id');
-            $table->string('ListOfImpactingDocument');
-            $table->string('type');
+            $table->integer('ert_id')->nullable();
+            $table->string('ListOfImpactingDocument')->nullable();
+            $table->string('type')->nullable();
         });
     }
 

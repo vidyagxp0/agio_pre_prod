@@ -860,48 +860,52 @@ class ErrataController extends Controller
                 'ListOfImpactingDocument' => 'List Of Impacting Document (If Any)'
             ];
 
-            foreach ($request->ListOfImpactingDocument as $index => $ListOfImpactingDocument) {
-                // Since this is a new entry, there are no previous details
-                $previousDetails = [
-                    'ListOfImpactingDocument' => null,
-                ];
+            // Ensure ListOfImpactingDocument is not null and is an array or object
+            if (!empty($request->ListOfImpactingDocument) && is_array($request->ListOfImpactingDocument)) {
+                foreach ($request->ListOfImpactingDocument as $index => $ListOfImpactingDocument) {
+                    // Since this is a new entry, there are no previous details
+                    $previousDetails = [
+                        'ListOfImpactingDocument' => null,
+                    ];
 
-                // Current fields values from the request
-                $fields = [
-                    'ListOfImpactingDocument' => $ListOfImpactingDocument,
-                ];
+                    // Current fields values from the request
+                    $fields = [
+                        'ListOfImpactingDocument' => $ListOfImpactingDocument,
+                    ];
 
-                foreach ($fields as $key => $currentValue) {
-                    // Log changes for new rows (no previous value to compare)
-                    if (!empty($currentValue)) {
-                        // Only create an audit trail entry for new values
-                        $history = new ErrataAuditTrail();
-                        $history->errata_id = $data->id;
+                    foreach ($fields as $key => $currentValue) {
+                        // Log changes for new rows (no previous value to compare)
+                        if (!empty($currentValue)) {
+                            // Only create an audit trail entry for new values
+                            $history = new ErrataAuditTrail();
+                            $history->errata_id = $data->id;
 
-                        // Set activity type to include field name and row index using the fieldNames array
-                        $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                            // Set activity type to include field name and row index using the fieldNames array
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
 
-                        // Since this is a new entry, 'Previous' value is null
-                        $history->previous = 'null'; // Previous value or 'null'
+                            // Since this is a new entry, 'Previous' value is null
+                            $history->previous = 'null'; // Previous value or 'null'
 
-                        // Assign 'Current' value, which is the new value
-                        $history->current = $currentValue; // New value
+                            // Assign 'Current' value, which is the new value
+                            $history->current = $currentValue; // New value
 
-                        // Comments and user details
-                        $history->comment = 'NA';
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-                        $history->change_to = "Opened";
-                        $history->change_from = "Initiation";
-                        $history->action_name = "Create";
+                            // Comments and user details
+                            $history->comment = 'NA';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                            $history->change_to = "Opened";
+                            $history->change_from = "Initiation";
+                            $history->action_name = "Create";
 
-                        // Save the history record
-                        $history->save();
+                            // Save the history record
+                            $history->save();
+                        }
                     }
                 }
             }
+
 
         
 
