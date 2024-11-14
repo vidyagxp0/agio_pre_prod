@@ -306,13 +306,13 @@
                     // '<option value="">Select a month</option>' +
                     '<option value="Jan">January</option>' +
                     '<option value="Feb">February</option>' +
-                    '<option value="Mar">March</option>' +
-                    '<option value="Apr">April</option>' +
+                    '<option value="March">March</option>' +
+                    '<option value="April">April</option>' +
                     '<option value="May">May</option>' +
-                    '<option value="Jun">June</option>' +
-                    '<option value="Jul">July</option>' +
+                    '<option value="June">June</option>' +
+                    '<option value="July">July</option>' +
                     '<option value="Aug">August</option>' +
-                    '<option value="Sep">September</option>' +
+                    '<option value="Sept">September</option>' +
                     '<option value="Oct">October</option>' +
                     '<option value="Nov">November</option>' +
                     '<option value="Dec">December</option>' +
@@ -736,7 +736,7 @@
                                                 <input disabled type="text" value="{{ $data->initiator_name }}">
                                             </div>
                                         </div>
-                                    
+
                                         <!-- <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due_date">Due Date</label>
@@ -832,7 +832,7 @@
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text" --}}
-                                        {{-- value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                        {{-- value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div> --}}
@@ -1515,7 +1515,7 @@
                                                 });
                                             });
                                         </script>
-                                        {{-- 
+                                        {{--
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -1991,7 +1991,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
 
                             <div id="CCForm3" class="inner-block cctabcontent">
