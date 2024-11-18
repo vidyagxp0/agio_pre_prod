@@ -616,7 +616,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     {{ $prefixAbbreviation . $induction->employee_id }}
                 </td>
                 <td>
-                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                    {{ Helpers::getNameById($induction->name_employee) }}
                 </td>
 
                 <td>{{ $induction->department }}</td>

@@ -17,6 +17,7 @@ use App\Models\EmpTrainingQuizResult;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\Models\Document;
+use App\Models\InductionTrainingDocumentNumber;
 use App\Models\QuestionariesGrid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -84,7 +85,6 @@ class InductionTrainingcontroller extends Controller
     public function store(Request $request)
     {
         $inductionTraining = new Induction_training();
-
 
         $inductionTraining->stage = '1';
         $inductionTraining->status = 'Opened';
@@ -402,7 +402,6 @@ class InductionTrainingcontroller extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
 
         $inductionTraining = Induction_training::find($id);
         $lastdocument = Induction_training::find($id);
@@ -443,7 +442,6 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_13 = $request->training_date_13;
         $inductionTraining->training_date_14 = $request->training_date_14;
         $inductionTraining->training_date_15 = $request->training_date_15;
-        // dd($request->training_date_15);
 
         if ($request->hasFile('final_r_attachment')) {
             $file = $request->file('final_r_attachment');
@@ -520,25 +518,12 @@ class InductionTrainingcontroller extends Controller
     
         $inductionTraining->documents = json_encode($documents);
 
-        // Handle looping through the document fields
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
-            // dd($i);
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
-                    // Handle file upload
-        // if ($request->hasFile($attachmentKey)) {
-        //     // Optionally delete the old file
-        //     if ($inductionTraining->$attachmentKey) {
-        //         Storage::delete('public/' . $inductionTraining->$attachmentKey);
-        //     }
-
-        //     $file = $request->file($attachmentKey);
-        //     $filePath = $file->store('attachments', 'public');
-        //     $inductionTraining->$attachmentKey = $filePath;
-        // }
 
         if ($request->hasFile($attachmentKey)) {
             $file = $request->file($attachmentKey);
@@ -831,6 +816,30 @@ class InductionTrainingcontroller extends Controller
                     $history->stage = 'Submited';
                     $history->save();
 
+                    for ($i = 1; $i <= 16; $i++) {
+                        $documentNumberKey = $jobTraining->{"document_number_$i"};
+                        $trainingDateKey = $jobTraining->{"training_date_$i"};
+
+
+                        if ($documentNumberKey) {
+                            InductionTrainingDocumentNumber::create([
+                                'employee_id' => $jobTraining->id,
+                                'employee_name' => $jobTraining->name_employee,
+                                'employee_code' => $jobTraining->employee_id,
+                                'department' => $jobTraining->department,
+                                'designation' => $jobTraining->designation,
+                                'job_role' => $jobTraining->job_role,
+                                'joining_date' => $jobTraining->joining_date,
+                                'startdate' => $jobTraining->start_date,
+                                'enddate' => $jobTraining->end_date,
+                                'document_number' => $documentNumberKey,
+                                'training_date' => $trainingDateKey,
+
+                            ]);
+                        }
+                    }
+
+
                     $jobTraining->update();
                     return back();
                 }
@@ -1120,50 +1129,48 @@ class InductionTrainingcontroller extends Controller
         $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
         $inductiontrainingid->save();
         
-        // Convert the sopids string to an array and trim any extra whitespace
+        $singleSOPId = $sopids;
         $sopids = array_map('trim', explode(',', $sopids));
-
-        // Fetch all questions based on cleaned sopids
         $questions = Question::whereIn('document_id', $sopids)
         ->inRandomOrder()
         ->take(10)
         ->get();
         
-        return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+        return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid','singleSOPId'));
     }
 
     public function checkAnswerInduction(Request $request)
     {
-        // Fetch all questions in a random order
 
-        $allQuestions = Question::inRandomOrder()->get();
+        // $allQuestions = Question::inRandomOrder()->get();
+        $allQuestions = Question::where('document_id', $request->document_number)
+        ->inRandomOrder()
+        ->get();
 
-        // Filter questions to include only Single and Multi Selection Questions
+        $document_number = $request->input('document_number');
+
         $filteredQuestions = $allQuestions->filter(function ($question) {
             return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
         });
 
-        // Take the first 10 questions from the filtered list
         $questions = $filteredQuestions->take(10);
 
-        $correctCount = 0; // Initialize correct answer count
-        $totalQuestions = count($questions); // Total number of selected questions (should be 10)
-
+        $correctCount = 0; 
+        $totalQuestions = count($questions); 
         foreach ($questions as $question) {
-            // Retrieve user's answer for each question
             $userAnswer = $request->input('question_' . $question->id);
-            $correctAnswers = unserialize($question->answers); // Correct answers for the question
+            $correctAnswers = unserialize($question->answers);
             $questionType = $question->type;
 
             if ($questionType === 'Single Selection Questions') {
-                // If it's a single selection question, check if the user's answer matches the correct answer
+
                 if ($userAnswer == $correctAnswers[0]) {
                     $correctCount++;
                 }
             } elseif ($questionType === 'Multi Selection Questions') {
-                // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+                
                 if (is_array($userAnswer)) {
-                    // Check if the user's answer matches exactly with the correct answer set
+                    
                     if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
                         $correctCount++;
                     }
@@ -1172,7 +1179,7 @@ class InductionTrainingcontroller extends Controller
         }
 
         // Calculate the correct percentage for the 10 questions
-        $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+        $score = ($correctCount / $totalQuestions) * 100;
 
     
         $result = $score >= 80 ? 'Pass' : 'Fail';
@@ -1195,6 +1202,7 @@ class InductionTrainingcontroller extends Controller
             $storeResult->score = $score."%";
             $storeResult->result = $result;
             $storeResult->attempt_number = $request->attempt_count + 1;
+            $storeResult->document_number = $document_number;
             $storeResult->save();        
 
         return view('frontend.TMS.Job_Training.job_quiz_result', [

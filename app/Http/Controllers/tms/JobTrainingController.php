@@ -11,6 +11,7 @@ use App\Models\Training;
 use App\Models\Quize;
 use App\Models\Question;
 use App\Models\JobTrainingGrid;
+use App\Models\JobTrainingDocumentNumber;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
 use Illuminate\Support\Facades\Mail;
@@ -34,13 +35,7 @@ class JobTrainingController extends Controller
     {
 
         $data = Document::all();
-        // $hods = DB::table('user_roles')
-        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
-        //     ->where('user_roles.q_m_s_processes_id', $process->id)
-        //     ->where('user_roles.q_m_s_roles_id', 4)
-        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
-        //     ->get();
+
         $hods = User::get();
         $delegate = User::get();
 
@@ -205,7 +200,6 @@ class JobTrainingController extends Controller
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
-
         $jobTraining->save();
 
         if (!empty($request->name)) {
@@ -368,11 +362,7 @@ class JobTrainingController extends Controller
     
         $jobTraining->document_data = json_encode($newData);
 
-        // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
-        // $employeeJobGrid->employee_id = $employee_id;
-        // $employeeJobGrid->identifier = 'jobResponsibilites';
-        // $employeeJobGrid->data = $request->jobResponsibilities;
-        // $employeeJobGrid->save();
+
 
         if ($request->hasFile('qa_review_attachment')) {
             $file = $request->file('qa_review_attachment');
@@ -572,6 +562,31 @@ class JobTrainingController extends Controller
                     $history->stage = 'Submited';
                     $history->save();
 
+
+                    for ($i = 1; $i <= 5; $i++) {
+                        $documentNumber = $jobTraining->{"reference_document_no_$i"};
+                        $documentTitle = $jobTraining->{"subject_$i"};
+                        $startDate = $jobTraining->{"enddate_$i"};
+                        $endDate = $jobTraining->{"enddate_$i"};
+
+                
+                        if ($documentNumber) {
+                            JobTrainingDocumentNumber::create([
+                                'employee_id' => $jobTraining->id,
+                                'employee_name' => $jobTraining->name,
+                                'employee_code' => $jobTraining->employee_id,
+                                'department' => $jobTraining->department,
+                                'designation' => $jobTraining->designation,
+                                'job_role' => $jobTraining->job_role,
+                                'joining_date' => $jobTraining->joining_date,
+                                'document_number' => $documentNumber,
+                                'document_title' => $documentTitle,
+                                'startdate' => $startDate,
+                                'enddate' => $endDate,
+                            ]);
+                        }
+                    }
+
                     $jobTraining->update();
                     return back();
                 }
@@ -671,48 +686,6 @@ class JobTrainingController extends Controller
                     $jobTraining->update();
                     return back();
                 }
-
-                // if ($jobTraining->stage == 6) {
-                //     $jobTraining->stage = "7";
-                //     $jobTraining->status = "QA/CQA Head Final Review";
-                //     $history = new JobTrainingAudit();
-                //     $history->job_id = $id;
-                //     $history->activity_type = 'Activity Log';
-                //     $history->current = $jobTraining->qualified_by;
-                //     $history->comment = $request->comment;
-                //     $history->user_id = Auth::user()->id;
-                //     $history->user_name = Auth::user()->name;
-                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //     $history->change_to = "QA/CQA Head Final Review";
-                //     $history->change_from = $lastjobTraining->status;
-                //     $history->action = 'Evaluation Complete';
-                //     $history->stage = 'Submited';
-                //     $history->save();
-
-                //     $jobTraining->update();
-                //     return back();
-                // }
-
-                // if ($jobTraining->stage == 7) {
-                //     $jobTraining->stage = "8";
-                //     $jobTraining->status = "Verification and Approval";
-                //     $history = new JobTrainingAudit();
-                //     $history->job_id = $id;
-                //     $history->activity_type = 'Activity Log';
-                //     $history->current = $jobTraining->qualified_by;
-                //     $history->comment = $request->comment;
-                //     $history->user_id = Auth::user()->id;
-                //     $history->user_name = Auth::user()->name;
-                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //     $history->change_to = "Verification and Approval";
-                //     $history->change_from = $lastjobTraining->status;
-                //     $history->action = 'QA/CQA Head Review Complete';
-                //     $history->stage = 'Submited';
-                //     $history->save();
-
-                //     $jobTraining->update();
-                //     return back();
-                // }
 
                 if ($jobTraining->stage == 6) {
                     $jobTraining->stage = "7";
@@ -949,72 +922,72 @@ class JobTrainingController extends Controller
     }
 
     public function questionshow($sopids, $onthejobid){
-        $onthejobid = JobTraining::find($onthejobid);
+        $onthejobid = JobTrainingDocumentNumber::find($onthejobid);
         $onthejobid->attempt_count = $onthejobid->attempt_count == -1 ? 0 : ( $onthejobid->attempt_count == 0 ? 0 : $onthejobid->attempt_count - 1);
 
         $onthejobid->save();
+
+        $singleSOPId = $sopids;
         $sopids = array_map('trim', explode(',', $sopids));
 
         $questions = Question::whereIn('document_id', $sopids)
-        ->inRandomOrder() // Randomize the order
-        ->take(10)        // Limit to 10 records
+        ->inRandomOrder()
+        ->take(10)   
         ->get();
-        return view('frontend.TMS.Job_Training.on_the_job_question_Answer', compact('questions', 'onthejobid'));
+        $document_number = $onthejobid->document_number ?? null;
+
+        return view('frontend.TMS.Job_Training.on_the_job_question_Answer', compact('questions', 'onthejobid','singleSOPId','document_number'));
 
     }
 
-public function checkAnswerOTJ(Request $request)
-
-{
-    // Fetch all questions in a random order
-    $allQuestions = Question::inRandomOrder()->get();
-
-    // Filter questions to include only Single and Multi Selection Questions
-    $filteredQuestions = $allQuestions->filter(function ($question) {
-        return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
-    });
-
-    // Take the first 10 questions from the filtered list
-    $questions = $filteredQuestions->take(10);
-
-    $correctCount = 0; // Initialize correct answer count
-    $totalQuestions = count($questions); // Total number of selected questions (should be 10)
-
-    foreach ($questions as $question) {
-        // Retrieve user's answer for each question
-        $userAnswer = $request->input('question_' . $question->id);
-        $correctAnswers = unserialize($question->answers); // Correct answers for the question
-        $questionType = $question->type;
-
-        if ($questionType === 'Single Selection Questions') {
-            // If it's a single selection question, check if the user's answer matches the correct answer
-            if ($userAnswer == $correctAnswers[0]) {
-                $correctCount++;
-            }
-        } elseif ($questionType === 'Multi Selection Questions') {
-            // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
-            if (is_array($userAnswer)) {
-                // Check if the user's answer matches exactly with the correct answer set
-                if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+    public function checkAnswerOTJ(Request $request)
+    {
+        $allQuestions = Question::where('document_id', $request->document_number)
+            ->inRandomOrder()
+            ->get();
+    
+        $document_number = $request->input('document_number');
+    
+        $filteredQuestions = $allQuestions->filter(function ($question) {
+            return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
+        });
+    
+        $questions = $filteredQuestions->take(10);
+    
+        $correctCount = 0;
+        $totalQuestions = count($questions);
+    
+        foreach ($questions as $question) {
+            $userAnswer = $request->input('question_' . $question->id);
+            $correctAnswers = unserialize($question->answers);
+            $questionType = $question->type;
+    
+            if ($questionType === 'Single Selection Questions') {
+                if ($userAnswer == $correctAnswers[0]) {
                     $correctCount++;
+                }
+            } elseif ($questionType === 'Multi Selection Questions') {
+                if (is_array($userAnswer)) {
+                    if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
+                        $correctCount++;
+                    }
                 }
             }
         }
-    }
-
-    // Calculate the correct percentage for the 10 questions
-    $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
-
-   
-    $result = $score >= 80 ? 'Pass' : 'Fail';
-
-    if($request->attempt_count == 0 || $result == 'Pass'){
-        $induction = JobTraining::find($request->training_id);
-        $induction->stage = 4;
-        $induction->status = "Evaluation";
-        $induction->update();
-    }
-
+    
+        $score = ($correctCount / $totalQuestions) * 100;
+        $result = $score >= 80 ? 'Pass' : 'Fail';
+    
+        // Existing result check
+        $existingResult = EmpTrainingQuizResult::where([
+            ['training_id', '=', $request->training_id],
+            ['document_number', '=', $document_number],
+            ['emp_id', '=', $request->emp_id]
+        ])->latest()->first();
+    
+        $attemptNumber = $existingResult ? $existingResult->attempt_number + 1 : 1;
+    
+        // Store result
         $storeResult = new EmpTrainingQuizResult();
         $storeResult->emp_id = $request->emp_id;
         $storeResult->training_id = $request->training_id;
@@ -1023,17 +996,28 @@ public function checkAnswerOTJ(Request $request)
         $storeResult->correct_answers = $correctCount;
         $storeResult->incorrect_answers = $totalQuestions - $correctCount;
         $storeResult->total_questions = $totalQuestions;
-        $storeResult->score = $score."%";
+        $storeResult->score = $score . "%";
         $storeResult->result = $result;
-        $storeResult->attempt_number = $request->attempt_count + 1;
-        $storeResult->save();       
+        $storeResult->attempt_number = $attemptNumber;
+        $storeResult->document_number = $document_number;
+        $storeResult->save();
+    
+        // Update stage and status if conditions are met
+        if ($request->attempt_count == 0 || $result == 'Pass') {
+            $induction = JobTraining::find($request->training_id);
+            $induction->stage = 4;
+            $induction->status = "Evaluation";
+            $induction->update();
+        }
+    
+        return view('frontend.TMS.Job_Training.job_quiz_result', [
+            'totalQuestions' => $totalQuestions,
+            'correctCount' => $correctCount,
+            'score' => $score,
+            'result' => $result
+        ]);
+    }
+    
 
-    return view('frontend.TMS.Job_Training.job_quiz_result', [
-        'totalQuestions' => $totalQuestions, // Total questions shown
-        'correctCount' => $correctCount, // Number of correctly answered questions
-        'score' => $score, // Final score for these 10 questions
-        'result' => $result // Pass or Fail based on 80%
-    ]);
-}
 
 }
