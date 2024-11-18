@@ -224,7 +224,7 @@
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
@@ -237,7 +237,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Initiaton Department</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
@@ -248,7 +248,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Initiation Department Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}

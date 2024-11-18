@@ -3343,6 +3343,20 @@
 
 
                                 </tr>
+                                <tr>
+                                    <th class="w-20">Others</th>
+                                    <td class="w-30">
+                                        <div>
+                                            @if ($data->others_data)
+                                                {{ $data->others_data }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </div>
+                                    </td>
+
+
+                                </tr>
                             </table>
                             {{-- <div class="inner-block">
                                 <label class="Summer"
@@ -3717,7 +3731,7 @@
                 <th class="thFMEA">Severity (S)</th>
                 <th class="thFMEA">Probability (P)</th>
                 <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">RPN</th>
+                <th class="thFMEA">Risk Level(RPN)</th>
                 <th class="thFMEA">Control Measures</th>
                 <th class="thFMEA">Severity (S)</th>
                 <th class="thFMEA">Probability (P)</th>
@@ -3732,35 +3746,36 @@
             </tr>
         </thead>
         <tbody>
-            @if (!empty($riskEffectAnalysis->risk_factor_1))
-                @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
-                    <tr>
-                        <td class="tdFMEA">{{ $key + 1 }}</td>
-                        <td class="tdFMEA">{{ $riskFactor }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->conclusion)[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->attachment)[$key] ?? null }}</td>
-                    </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td colspan="3">No data available.</td>
-                </tr>
-            @endif
-        </tbody>
+    @if (!empty($riskEffectAnalysis->risk_factor_1) && is_string($riskEffectAnalysis->risk_factor_1) && @unserialize($riskEffectAnalysis->risk_factor_1) !== false)
+        @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
+            <tr>
+                <td class="tdFMEA">{{ $key + 1 }}</td>
+                <td class="tdFMEA">{{ $riskFactor }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->problem_cause_1) && @unserialize($riskEffectAnalysis->problem_cause_1) ? unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->existing_risk_control_1) && @unserialize($riskEffectAnalysis->existing_risk_control_1) ? unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_severity_1) && @unserialize($riskEffectAnalysis->initial_severity_1) ? unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_detectability_1) && @unserialize($riskEffectAnalysis->initial_detectability_1) ? unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_probability_1) && @unserialize($riskEffectAnalysis->initial_probability_1) ? unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_rpn_1) && @unserialize($riskEffectAnalysis->initial_rpn_1) ? unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_control_measure_1) && @unserialize($riskEffectAnalysis->risk_control_measure_1) ? unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_severity_1) && @unserialize($riskEffectAnalysis->residual_severity_1) ? unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_probability_1) && @unserialize($riskEffectAnalysis->residual_probability_1) ? unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_detectability_1) && @unserialize($riskEffectAnalysis->residual_detectability_1) ? unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_rpn_1) && @unserialize($riskEffectAnalysis->residual_rpn_1) ? unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance_1) && @unserialize($riskEffectAnalysis->risk_acceptance_1) ? unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance3) && @unserialize($riskEffectAnalysis->risk_acceptance3) ? unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->mitigation_proposal_1) && @unserialize($riskEffectAnalysis->mitigation_proposal_1) ? unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->conclusion) && @unserialize($riskEffectAnalysis->conclusion) ? unserialize($riskEffectAnalysis->conclusion)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->attachment) && @unserialize($riskEffectAnalysis->attachment) ? unserialize($riskEffectAnalysis->attachment)[$key] ?? null : null }}</td>
+            </tr>
+        @endforeach
+    @else
+        <tr>
+            <td colspan="18">No data available.</td>
+        </tr>
+    @endif
+</tbody>
+
     </table>
 </div>
 
@@ -4536,7 +4551,7 @@
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
                                         <th class="thFMEA">Control Measures</th>
-                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Risk Level(RPN)</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
@@ -4546,25 +4561,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (!empty($riskEffectAnalysis->risk_factor_1))
-                                        @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
+                                    @if (!empty($riskEffectAnalysis->risk_factor))
+                                
+                                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $risk_factor)
                                             <tr>
                                                 <td class="tdFMEA">{{ $key + 1 }}</td>
-                                                <td class="tdFMEA">{{ $riskFactor }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ $risk_factor }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
                                             </tr>
                                         @endforeach
                                         @else

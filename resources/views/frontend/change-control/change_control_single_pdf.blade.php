@@ -229,7 +229,7 @@
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
@@ -241,7 +241,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiaton Department</th>
+                        <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
@@ -3856,6 +3856,25 @@ Not Applicable
                     </td>
                 </tr>
 
+
+                <tr>
+                    <th class="w-20">Cancel By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_by ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20">Cancel On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_on ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20">Cancel Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_comment ?? 'Not Applicable'  }}</div>
+                    </td>
+                </tr>
+
+
+
+
                 <tr>
                     <th class="w-20">QA/CQA Initial Assessment Complete By</th>
                     <td class="w-30">
@@ -3950,6 +3969,26 @@ Not Applicable
                         <div class="static">{{ $data->approved_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
+
+
+
+                <tr>
+                    <th class="w-20">Rejected   By  </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_by ?? 'Not Applicable' }}</div>
+                    </td>
+                    <th class="w-20">Rejected   On </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_on ?? 'Not Applicable' }}</div>
+                    </td>
+                    <th class="w-20">Rejected  Comment </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_comment ?? 'Not Applicable'  }}</div>
+                    </td>
+                </tr>
+
+
+
 
                 <tr>
     <th class="w-20">Initiator Updated Completed By</th>
