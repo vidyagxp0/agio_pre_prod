@@ -3128,11 +3128,11 @@
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_1_by }}</td>
+                        <td class="w-30">{{ $data->cancelled_2_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
                         <th class="w-20"> Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancel_1_comment }}</td>
+                        <td class="w-30">{{ $data->cancel_2_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Acknowledement by</th>
