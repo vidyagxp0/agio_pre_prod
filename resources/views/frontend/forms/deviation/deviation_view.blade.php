@@ -9813,14 +9813,19 @@
                                         <option value="Failure Mode and Effect Analysis"
                                         {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
                                         Failure Mode and Effect Analysis</option>
+                                        <option value="Others"
+                                            {{ strpos($data->investigation_approach, 'Others') !== false ? 'selected' : '' }}>
+                                            Others</option>
                                 </select>
                             </div>
                         </div>
 
-
-
-
-
+                        <div class="col-lg-12 others-section" style="display: none;">
+    <div class="group-input">
+        <label for="other_specify">Others</label>
+        <textarea name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
+    </div>
+</div>
 
 <div class="col-12 mb-4 failure" id="fmea-section">
     <div class="group-input failure">
@@ -9853,7 +9858,7 @@
                         <th>Severity (S)</th>
                         <th>Probability (P)</th>
                         <th>Detection (D)</th>
-                        <th>RPN</th>
+                        <th>Risk Level(RPN)</th>
                         <th>Control Measures recommended/ Risk mitigation proposed</th>
                         <th>Severity (S)</th>
                         <th>Probability (P)</th>
@@ -10411,10 +10416,10 @@
                                                                 <option value="Methods"
                                                                     {{ $inference_type == 'Methods' ? 'selected' : '' }}>
                                                                     Methods</option>
-                                                                <option value="Environment"
+                                                                <option value="Mother Environment"
                                                                     {{ $inference_type == 'Mother Environment' ? 'selected' : '' }}>
                                                                     Mother Environment</option>
-                                                                <option value="Manpower"
+                                                                <option value="Man"
                                                                     {{ $inference_type == 'Man' ? 'selected' : '' }}>
                                                                     Man</option>
                                                                 <option value="Machine"
@@ -10488,6 +10493,18 @@
             } else {
                 $('.failure').hide();
             }
+
+
+            // Toggle Others input field
+        if (selectedValues.includes('Others')) {
+            $('.others-section').show();
+            $('#other_specify').attr('required', true);
+        } else {
+            $('.others-section').hide();
+            $('#other_specify').removeAttr('required');
+        }
+
+            
         }
 
         // Initial check on page load
@@ -12030,7 +12047,7 @@
                                                 <th>Severity (S)</th>
                                                 <th>Probability (P)</th>
                                                 <th>Detection (D)</th>
-                                                <th>RPN</th>
+                                                <th>Risk Level(RPN)</th>
                                                 <th>Control Measures recommended/ Risk mitigation proposed</th>
                                                 <th>Severity (S)</th>
                                                 <th>Probability (P)</th>

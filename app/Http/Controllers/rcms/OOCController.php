@@ -1605,6 +1605,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        
 
         if(!empty($data->is_repeat_realease_stageii_ooc)) {
             $history = new OOCAuditTrail();
@@ -3387,13 +3388,17 @@ class OOCController extends Controller
             $history->save();
         }
 
-        if ($lastDocumentOoc->assignable_cause_identified != $ooc->assignable_cause_identified) {
+        if (
+            isset($ooc->assignable_cause_identified) &&
+            !empty($ooc->assignable_cause_identified) && 
+            ($lastDocumentOoc->assignable_cause_identified !== $ooc->assignable_cause_identified)
+        ) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
             $history->activity_type = 'Assignable cause identified';
             $history->previous = $lastDocumentOoc->assignable_cause_identified;
             $history->current = $ooc->assignable_cause_identified;
-            $history->comment = $request->assignable_cause_identified;
+            $history->comment = $request->assignable_cause_identified ?? null;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3403,7 +3408,7 @@ class OOCController extends Controller
             $history->action_name = is_null($lastDocumentOoc->assignable_cause_identified) ? "New" : "Update";
             $history->save();
         }
-
+        
         if ($lastDocumentOoc->qaHremarksnewfield != $ooc->qaHremarksnewfield) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
@@ -3872,27 +3877,30 @@ class OOCController extends Controller
             $history->save();
         }
 
-        if ($lastDocumentOoc->is_repeat_realease_stageii_ooc != $ooc->is_repeat_realease_stageii_ooc) {
+        if (
+            isset($ooc->is_repeat_realease_stageii_ooc) && 
+            !empty($ooc->is_repeat_realease_stageii_ooc) &&
+            ($lastDocumentOoc->is_repeat_realease_stageii_ooc !== $ooc->is_repeat_realease_stageii_ooc)
+        ) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
             $history->activity_type = 'Release of Instrument for usage';
             $history->previous = $lastDocumentOoc->is_repeat_realease_stageii_ooc;
             $history->current = $ooc->is_repeat_realease_stageii_ooc;
-            $history->comment = $request->is_repeat_realease_stageii_ooc_comment;
+            $history->comment = $request->is_repeat_realease_stageii_ooc_comment ?? null;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->is_repeat_realease_stageii_ooc) || $lastDocumentOoc->is_repeat_realease_stageii_ooc === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        
+            $history->action_name = (is_null($lastDocumentOoc->is_repeat_realease_stageii_ooc) || $lastDocumentOoc->is_repeat_realease_stageii_ooc === '') 
+                                    ? "New" 
+                                    : "Update";
             $history->save();
         }
-
+        
         if ($lastDocumentOoc->qPIBaHremarksnewfield != $ooc->qPIBaHremarksnewfield) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
