@@ -324,7 +324,7 @@ class CapaController extends Controller
             }
             $capa->qah_cq_attachment = json_encode($files);
         }
-        $capa->parent_record_number = $request->parent_record_number; 
+        $capa->parent_record_number = $request->parent_record_number;
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->hod_remarks = $request->hod_remarks;
@@ -526,9 +526,9 @@ class CapaController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             // $history->current = $capa->due_date;
-           
+
             $history->current = Helpers::getdateFormat($capa->due_date);
-           
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -713,7 +713,7 @@ class CapaController extends Controller
         }
 
 
-        
+
 
 
         // if (!empty($capa->parent_record_number)) {
@@ -1282,7 +1282,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-       
+
 
 
 
@@ -1323,10 +1323,10 @@ class CapaController extends Controller
             $history->save();
         }
 
-   
+
         /////////////////////////QA/CQA Closure Approval/////////////////////
-      
-       
+
+
         if (!empty($capa->effectivness_check)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -1412,7 +1412,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-      
+
 
         // if (!empty($capa->effectiveness)) {
         //     $history = new CapaAuditTrial();
@@ -1448,7 +1448,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-     
+
 
 
         // if (!empty($capa->capa_type)) {
@@ -1667,7 +1667,7 @@ class CapaController extends Controller
         // if ($capa->stage == 1) {
         //     $capa->capa_related_record =  implode(',', $request->capa_related_record);
         // }        // $capa->reference_record = $request->reference_record;
-        $capa->parent_record_number_edit = $request->parent_record_number_edit; 
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
         $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
@@ -2007,7 +2007,7 @@ class CapaController extends Controller
 
             $history->save();
         }
-       
+
         if ($lastDocument->initiator_group_code != $capa->initiator_group_code || !empty($request->initiator_group_code_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2502,7 +2502,7 @@ class CapaController extends Controller
 
 
 
-       
+
 
         if ($lastDocument->hod_remarks != $capa->hod_remarks) {
             $history = new CapaAuditTrial();
@@ -2753,7 +2753,7 @@ class CapaController extends Controller
 
             $history->save();
         }
-        
+
         if ($lastDocument->qa_closure_attachment != $capa->qa_closure_attachment || !empty($request->qa_closure_attachment_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2803,9 +2803,9 @@ class CapaController extends Controller
 
 
 
-     
-      
-       
+
+
+
         // if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $id;
@@ -2830,7 +2830,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-     
+
         // if ($lastDocument->reference_record != $capa->reference_record || !empty($request->reference_record_comment)) {
 
         //     $history = new CapaAuditTrial();
@@ -2867,12 +2867,12 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-       
-    
 
-      
 
-       
+
+
+
+
 
         // if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
         //     $history = new CapaAuditTrial();
@@ -2966,12 +2966,12 @@ class CapaController extends Controller
         // }
         /////////////////////HOD Final REview////////////////
 
-       
-       
-     
+
+
+
         ////////////////QA/CQA Closure Review//////////////////
 
-      
+
 
         ////{{-- ==========================QAH/CQAH ================ --}}
 
@@ -2979,16 +2979,16 @@ class CapaController extends Controller
 
 
 
-      
-     
-      
 
-       
 
-      
-       
 
-           
+
+
+
+
+
+
+
         // if ($lastDocument->capa_qa_comments2 != $capa->capa_qa_comments2 || !empty($request->capa_qa_comments2_comment)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $id;
@@ -3194,8 +3194,8 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-       
-      
+
+
         // if ($lastDocument->supervisor_review_comments != $capa->supervisor_review_comments || !empty($request->supervisor_review_comments_comment)) {
 
         //     $history = new CapaAuditTrial();
@@ -3287,18 +3287,18 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-      
-      
-
-     
-
-        
 
 
-      
-      
 
-      
+
+
+
+
+
+
+
+
+
 
 
         //----------------- logic for showing grid data in audit trail -----------------------//
@@ -3379,7 +3379,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
     }
 }
 
-        
+
 
 
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
@@ -3562,7 +3562,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Propose Plan By,Propose Plan On';
+                $history->activity_type = 'Propose Plan By, Propose Plan On';
                 $history->action = 'Propose Plan';
                 $history->previous = "";
                 $history->current = $capa->plan_proposed_by;
@@ -3612,7 +3612,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 2) {
@@ -3640,7 +3640,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->hod_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
+                $history->activity_type = 'HOD Review Complete By, HOD Review Complete On';
                 $history->action = 'HOD Review Complete';
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
@@ -3708,7 +3708,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 // }
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 3) {
@@ -3736,7 +3736,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->qa_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
+                $history->activity_type = 'QA/CQA Review Complete By, QA/CQA Review Complete On';
                 $history->action = 'QA/CQA Review Complete';
                 $history->previous = "";
                 $history->current = $capa->completed_by;
@@ -3802,7 +3802,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 4) {
@@ -3831,7 +3831,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Approved By,Approved On';
+                $history->activity_type = 'Approved By, Approved On';
                 $history->action = 'Approved';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -3878,7 +3878,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 // }
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 5) {
@@ -3907,7 +3907,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Completed By,Completed On';
+                $history->activity_type = 'Completed By, Completed On';
                 $history->action = 'Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -3953,7 +3953,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 6) {
@@ -3982,7 +3982,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'HOD Final Review Completed By,HOD Final Review Completed On';
+                $history->activity_type = 'HOD Final Review Completed By, HOD Final Review Completed On';
                 $history->action = 'HOD Final Review Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -4048,7 +4048,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 7) {
@@ -4077,7 +4077,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'QA/CQA Closure Review Completed By,QA/CQA Closure Review Completed On';
+                $history->activity_type = 'QA/CQA Closure Review Completed By, QA/CQA Closure Review Completed On';
                 $history->action = 'QA/CQA Closure Review Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -4123,7 +4123,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -4298,7 +4298,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
         } else {
@@ -4322,7 +4322,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->cancel_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Cancel By,Cancel On';
+                $history->activity_type = 'Cancel By, Cancel On';
                 $history->action = 'Cancel';
                 $history->previous = "";
                 $history->current = $capa->cancelled_by;
@@ -5061,7 +5061,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
     public function CapaAuditTrial($id)
     {
-        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDESC('id')->paginate();
+        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = Capa::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
