@@ -362,7 +362,7 @@
                         <th class="w-20">Invite Person Notify</th>
                         <td class="w-30">
                             @if ($managementReview->assign_to)
-                                {{ Helpers::getInitiatorName($managementReview->assign_to) }}
+                                {{ $managementReview->assign_to }}
                             @else
                                 Not Applicable
                             @endif
@@ -785,7 +785,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">Production Tablet/Capsule / Powder HOD Person</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder HOD Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Production_Table_Person)
@@ -810,7 +810,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule Powder Status of Action Item</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder Status of Action Item</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -823,7 +823,7 @@
                         </tr>
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule Powder Action Completed By</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder Action Completed By</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -833,7 +833,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule Powder Action Completed On</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder Action Completed On</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_On)
@@ -850,7 +850,7 @@
                 <div class="border-table">
                     <div class="head">
                         <div class="block-head">
-                            Production Tablet/Capsule Powder Attachments
+                            Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
 
@@ -4834,7 +4834,7 @@
                                     <tr class="table_bg">
                                         <th style="width: 6%">Row #</th>
                                         <th>Invited Person</th>
-                                        <th>Designee</th>
+                                        <th>Designation</th>
                                         <th>Department</th>
                                         <th>Meeting Attended</th>
                                     </tr>
