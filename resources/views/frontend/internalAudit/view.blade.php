@@ -2984,28 +2984,32 @@
                                         </div> --}}
 
 
+
+                                        <div class="col-lg-12">
                                         <div class="group-input">
-                                        <label for="Reference Recores">Reference Record</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                             multiple
-                                            id="reference_record" name="reference_record[]"
-                                            placeholder="Select Reference Records">
+                                            <label for="Reference Recores">Reference Record</label>
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                multiple id="reference_record" name="refrence_record[]" id="">
 
                                             @if (!empty($old_record))
                                                 @foreach ($old_record as $new)
                                                     @php
+                                                    
                                                         $recordValue =
                                                             Helpers::getDivisionName($new->division_id) .
                                                             '/IA/' .
                                                             date('Y') .
                                                             '/' .
                                                             Helpers::recordFormat($new->record);
+
+                                                            
                                                         $selected = in_array(
                                                             $recordValue,
-                                                            explode(',', $data->reference_record),
+                                                            explode(',', $data->refrence_record),
                                                         )
                                                             ? 'selected'
                                                             : '';
+                                                         //  dd($recordValue);
                                                     @endphp
                                                     <option value="{{ $recordValue }}" {{ $selected }}>
                                                         {{ $recordValue }}
@@ -3017,7 +3021,8 @@
 
                                 </div>
 
-                                    <div class="col-lg-12">
+
+                                    <!-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -3031,7 +3036,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-12">

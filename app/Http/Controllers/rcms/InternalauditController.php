@@ -1698,6 +1698,7 @@ class InternalauditController extends Controller
 
     public function update(request $request, $id)
     {
+       // dd($request->all());
         $lastDocument = InternalAudit::find($id);
         $internalAudit = InternalAudit::find($id);
 
