@@ -372,6 +372,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
+                        
+                       
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
                         @if (Auth::user()->name == $data->assign_to)
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -658,7 +660,7 @@
                                                 <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $user)
-                                                        <option value="{{ $user->id }}"
+                                                        <option value="{{ $user->name }}"
                                                             @if ($user->id == $data->assign_to) selected @endif>
                                                             {{ $user->name }}
                                                         </option>
@@ -670,6 +672,8 @@
                                                 @endif
                                             </div>
                                         </div>
+
+                                       
                                         <!-- <div class="col-md-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <label for="due-date">Due Date </label>
@@ -1258,7 +1262,7 @@
                                             <button type="submit" id="inv_attachment" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
-                                        <button type="button" id="inv_attachment" class="nextButton">Next</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
@@ -1303,6 +1307,7 @@
                                             @endif
 
                                         </div> --}}
+                                        
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Auditee Comment
@@ -2977,12 +2982,52 @@
                                                 <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
                                             </div>
                                         </div> --}}
-                                    <div class="col-lg-12">
+
+
+
+                                        <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                 multiple id="reference_record" name="refrence_record[]" id="">
-                                                <!-- <option value="">--Select---</option> -->
+
+                                            @if (!empty($old_record))
+                                                @foreach ($old_record as $new)
+                                                    @php
+                                                    
+                                                        $recordValue =
+                                                            Helpers::getDivisionName($new->division_id) .
+                                                            '/IA/' .
+                                                            date('Y') .
+                                                            '/' .
+                                                            Helpers::recordFormat($new->record);
+
+                                                            
+                                                        $selected = in_array(
+                                                            $recordValue,
+                                                            explode(',', $data->refrence_record),
+                                                        )
+                                                            ? 'selected'
+                                                            : '';
+                                                         //  dd($recordValue);
+                                                    @endphp
+                                                    <option value="{{ $recordValue }}" {{ $selected }}>
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                </div>
+
+
+                                    <!-- <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Reference Recores">Reference Record</label>
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                multiple id="reference_record" name="refrence_record[]" id="">
+                                               
                                                 @foreach ($old_record as $new)
                                                     <option value="{{ $new->id }}"
                                                         {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
@@ -2991,7 +3036,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-12">
@@ -3281,20 +3326,20 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancelled By">Cancel By</label>
-                                            <div class="static">{{ $data->cancelled_1_by }}</div>
+                                            <div class="static">{{ $data->cancelled_2_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancel On">Cancel On</label>
-                                            <div class="static">{{ $data->cancelled_1_on }}</div>
+                                            <div class="static">{{ $data->cancelled_2_on }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> Cancelled Comment</label>
-                                            <div class="static">{{ $data->cancel_1_comment }}</div>
+                                            <div class="static">{{ $data->cancel_2_comment }}</div>
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
@@ -3441,9 +3486,7 @@
                                             <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head" style="font-size: 16px">
-                                        No CAPAs Required
-                                    </div>
+
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
@@ -3451,6 +3494,10 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        No CAPAs Required
+                                    </div>
+                                   
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Response Completed By">No CAPAs Required

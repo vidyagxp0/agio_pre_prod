@@ -213,7 +213,7 @@
         <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                 <thead>
                     <tr class="table_bg">
-                        <th class="w-5">S.No</th>
+                        <th class="w-6">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
                         <th class="w-30">Data Field</th>
@@ -305,9 +305,11 @@
                             <td>
                                 <div><strong>Performed By :</strong>
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/m/Y H:i:s') : 'Not Applicable' }}
-                                </div>
+                                    <div style="margin-top: 5px;">
+                                        <strong>Performed On :</strong>
+                                        {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                    </div>
+
                                 <div style="margin-top: 5px;"><strong>Comments :</strong>
                                     {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
                             </td>

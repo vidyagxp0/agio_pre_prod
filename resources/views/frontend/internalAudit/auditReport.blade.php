@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Internal Audit Audit Trail Report
+                    Internal Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

@@ -2256,29 +2256,25 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
  //---------------------------------failure mode- Grid ----------------------------------------------------------------------------------------------------------------
 
 
- 
-//  $previousDetails = [
-//     'risk_factor_1' => is_array(unserialize($data8->risk_factor_1)) ? unserialize($data8->risk_factor_1) : null,
-//     'problem_cause_1' => $data8->problem_cause_1 ? json_decode($data8->problem_cause_1, true) : null,
-//     'existing_risk_control_1' => $data8->existing_risk_control_1 ? json_decode($data8->existing_risk_control_1, true) : null,
-//     'initial_severity_1' => $data8->initial_severity_1 ? json_decode($data8->initial_severity_1, true) : null,
-//     'initial_probability_1' => $data8->initial_probability_1 ? json_decode($data8->initial_probability_1, true) : null,
-//     'initial_detectability_1' => $data8->initial_detectability_1 ? json_decode($data8->initial_detectability_1, true) : null,
-//     'initial_rpn_1' => $data8->initial_rpn_1 ? json_decode($data8->initial_rpn_1, true) : null,
-//     'risk_control_measure_1' => $data8->risk_control_measure_1 ? json_decode($data8->risk_control_measure_1, true) : null,
-//     'residual_severity_1' => $data8->residual_severity_1 ? json_decode($data8->residual_severity_1, true) : null,
-//     'residual_probability_1' => $data8->residual_probability_1 ? json_decode($data8->residual_probability_1, true) : null,
-//     'residual_detectability_1' => $data8->residual_detectability_1 ? json_decode($data8->residual_detectability_1, true) : null,
-//     'residual_rpn_1' => $data8->residual_rpn_1 ? json_decode($data8->residual_rpn_1, true) : null,
-//     'risk_acceptance_1' => $data8->risk_acceptance_1 ? json_decode($data8->risk_acceptance_1, true) : null,
-//     'risk_acceptance3' => $data8->risk_acceptance3 ? json_decode($data8->risk_acceptance3, true) : null,
-//     'mitigation_proposal_1' => $data8->mitigation_proposal_1 ? json_decode($data8->mitigation_proposal_1, true) : null,
-//     'conclusion' => $data8->conclusion ? json_decode($data8->conclusion, true) : null,
+
+// $previousDetails = [
+//     'risk_factor_1' => is_array(@unserialize($data8->risk_factor_1)) ? unserialize($data8->risk_factor_1) : null,
+//     'problem_cause_1' => is_array(@unserialize($data8->problem_cause_1)) ? unserialize($data8->problem_cause_1) : null,
+//     'existing_risk_control_1' => is_array(@unserialize($data8->existing_risk_control_1)) ? unserialize($data8->existing_risk_control_1) : null,
+//     'initial_severity_1' => is_array(@unserialize($data8->initial_severity_1)) ? unserialize($data8->initial_severity_1) : null,
+//     'initial_probability_1' => is_array(@unserialize($data8->initial_probability_1)) ? unserialize($data8->initial_probability_1) : null,
+//     'initial_detectability_1' => is_array(@unserialize($data8->initial_detectability_1)) ? unserialize($data8->initial_detectability_1) : null,
+//     'initial_rpn_1' => is_array(@unserialize($data8->initial_rpn_1)) ? unserialize($data8->initial_rpn_1) : null,
+//     'risk_control_measure_1' => is_array(@unserialize($data8->risk_control_measure_1)) ? unserialize($data8->risk_control_measure_1) : null,
+//     'residual_severity_1' => is_array(@unserialize($data8->residual_severity_1)) ? unserialize($data8->residual_severity_1) : null,
+//     'residual_probability_1' => is_array(@unserialize($data8->residual_probability_1)) ? unserialize($data8->residual_probability_1) : null,
+//     'residual_detectability_1' => is_array(@unserialize($data8->residual_detectability_1)) ? unserialize($data8->residual_detectability_1) : null,
+//     'residual_rpn_1' => is_array(@unserialize($data8->residual_rpn_1)) ? unserialize($data8->residual_rpn_1) : null,
+//     'risk_acceptance_1' => is_array(@unserialize($data8->risk_acceptance_1)) ? unserialize($data8->risk_acceptance_1) : null,
+//     'risk_acceptance3' => is_array(@unserialize($data8->risk_acceptance3)) ? unserialize($data8->risk_acceptance3) : null,
+//     'mitigation_proposal_1' => is_array(@unserialize($data8->mitigation_proposal_1)) ? unserialize($data8->mitigation_proposal_1) : null,
+//     'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
 // ];
-
-//       //dd(unserialize($data8['risk_factor_1'])[1]);
-
-// // Field names for audit trail tracking
 // $fieldNames = [
 //     'risk_factor_1' => 'Activity',
 //     'problem_cause_1' => 'Possible Risk/Failure (Identified Risk)',
@@ -2297,53 +2293,43 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
 //     'mitigation_proposal_1' => 'Traceability document',
 //     'conclusion' => 'Others',
 // ];
-
-
+  
 // foreach ($fieldNames as $key => $label) {
    
 //     $previousValue = $previousDetails[$key] ?? null;
 //     $currentValue = $request->input($key);
-
+//     //dd($request->input($key));
    
-//     if (is_null($previousValue) && (is_null($currentValue) || $currentValue === '')) {
-//         continue;
-//     }
+//     // if (is_null($previousValue) && (is_null($currentValue) || $currentValue === '')) {
+//     //     continue;
+//     // }
 
-//     $actionName = is_null($previousValue) || $previousValue === '' ? 'New' : 'Update';
+//     // $actionName = is_null($previousValue) || $previousValue === '' ? 'New' : 'Update';
 
-//     if ($previousValue === $currentValue) {
-//         continue;
-//     }
+//     // if ($previousValue === $currentValue) {
+//     //     continue;
+//     // }
 
   
 //     if (!empty($currentValue)) {
-//         // Loop through each row for fields with array data (if applicable)
+  
 //         foreach ($currentValue as $index => $currentRowValue) {
-//             // Retrieve the previous value for the current row
+//            // dd($currentRowValue);
 //             $previousRowValue = isset($previousValue[$index]) ? $previousValue[$index] : null;
 
-//             // If there is a change between previous and current values, log the audit entry
 //             if ($previousRowValue !== $currentRowValue) {
-//                 // Check if an audit trail entry already exists for this field and row (to prevent duplication)
 //                 $existingAudit = DeviationAuditTrail::where('deviation_id', $deviation->id)
 //                     ->where('activity_type', $label . ' (' . ($index + 1) . ')')
-//                     ->where('previous', json_encode($previousRowValue))
-//                     ->where('current', json_encode($currentRowValue))
+//                     ->where('previous', $previousRowValue)
+//                     ->where('current', $currentRowValue)
 //                     ->exists();
-
-//                 // Only create a new audit record if it does not exist
-//                 if (!$existingAudit) {
+//                     dd($existingAudit);
+//                    if (!$existingAudit) {
 //                     $history = new DeviationAuditTrail();
 //                     $history->deviation_id = $deviation->id;
-
-               
 //                     $history->activity_type = $label . ' (' . ($index + 1) . ')';
-
-                  
-//                     $history->previous = !is_null($previousRowValue) ? json_encode($previousRowValue) : null;
-//                     $history->current = !is_null($currentRowValue) ? json_encode($currentRowValue) : null;
-
-//                     // Set user details for audit trail
+//                     $history->previous =  $previousRowValue;
+//                     $history->current =  $currentRowValue ;
 //                     $history->user_id = Auth::id();
 //                     $history->user_name = Auth::user()->name;
 //                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2354,6 +2340,7 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
 //         }
 //     }
 // }
+
 
 
  //---------------------------------End of Failure mode Grid--------------------------------------------------------------------------------------------------------
