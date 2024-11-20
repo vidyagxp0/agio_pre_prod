@@ -7536,8 +7536,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $doc = LabIncident::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = LabIncidentAuditTrial::where('LabIncident_id', $id)->get();
-
+            $data = LabIncidentAuditTrial::where('LabIncident_id', $id)->paginate(1000);
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

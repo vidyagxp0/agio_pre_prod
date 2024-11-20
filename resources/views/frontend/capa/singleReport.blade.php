@@ -1000,14 +1000,14 @@ Reference Records<!DOCTYPE html>
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Completed By
+                                    <th class="w-20">Complete By
                                     </th>
                                     <td class="w-30"> @if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">
-                                        Completed On</th>
+                                        Complete On</th>
                                     <td class="w-30"> @if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
-                                        Completed Comment</th>
+                                        Complete Comment</th>
                                     <td class="w-30"> @if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 {{-- <tr>
@@ -1022,21 +1022,21 @@ Reference Records<!DOCTYPE html>
                                     <td class="w-30">{{ $data->qa_more_info_required_on_comment }}</td>
                                 </tr> --}}
                                 <tr>
-                                    <th class="w-20">HOD Final Review Completed By</th>
+                                    <th class="w-20">HOD Final Review Complete By</th>
                                     <td class="w-30">  @if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
                                     <th class="w-20">HOD Final Review Completed On</th>
                                     <td class="w-30"> @if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
-                                        HOD Final Review Completed Comment</th>
+                                        HOD Final Review Complete Comment</th>
                                     <td class="w-30">  @if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">QA/CQA Closure Review Completed By</th>
+                                    <th class="w-20">QA/CQA Closure Review Complete By</th>
                                     <td class="w-30">  @if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">QA/CQA Closure Review Completed On</th>
+                                    <th class="w-20">QA/CQA Closure Review Complete On</th>
                                     <td class="w-30">  @if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
                                     <th class="w-20">
-                                        QA/CQA Closure Review Completed Comment</th>
+                                        QA/CQA Closure Review Complete Comment</th>
                                     <td class="w-30">  @if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
