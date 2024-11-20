@@ -488,7 +488,7 @@ Not Applicable
             </div>
             <table>
                 <tr>
-                    <th class="w-20">Action Start Date</th>
+                    <th class="w-20">Actual Start Date</th>
                     <td class="w-80">
                         @if ($data->start_date)
                             {{ Helpers::getdateFormat($data->start_date) }}
