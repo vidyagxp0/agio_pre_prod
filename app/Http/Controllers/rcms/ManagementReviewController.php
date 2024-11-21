@@ -5731,7 +5731,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other1_Department_person != $Cft->Other1_Department_person && $Cft->Other1_Department_person != null) {
+        if (!is_null($lastCft->Other1_Department_person) != $Cft->Other1_Department_person && $Cft->Other1_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 1 Department';
@@ -5874,7 +5874,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
+        if (!is_null($lastCft->Other2_person) != $request->Other2_person && $request->Other2_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Person';
@@ -5914,7 +5914,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other2_Department_person != $Cft->Other2_Department_person && $Cft->Other2_Department_person != null) {
+        if (!is_null($lastCft->Other2_Department_person) != $Cft->Other2_Department_person && $Cft->Other2_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Department';
@@ -6056,7 +6056,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
+        if (!is_null($lastCft->Other3_person) != $request->Other3_person && $request->Other3_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Person';
@@ -6096,7 +6096,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
+        if (!is_null($lastCft->Other3_Department_person) != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Department';
@@ -6238,7 +6238,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
+        if (!is_null($lastCft->Other4_person) != $request->Other4_person && $request->Other4_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 4 Person';
@@ -6278,7 +6278,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
+        if (!is_null($lastCft->Other4_Department_person) != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Others 4 Department';
@@ -6421,7 +6421,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
+        if (!is_null($lastCft->Other5_person) != $request->Other5_person && $request->Other5_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Person';
@@ -6461,7 +6461,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
+
+        if (!is_null($lastCft->Other5_Department_person) != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Department';
