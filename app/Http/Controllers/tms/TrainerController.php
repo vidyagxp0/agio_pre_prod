@@ -98,8 +98,6 @@ class TrainerController extends Controller
 
     public function store(Request $request)
     {
-        // return $request->all();
-
         $res = [
             'status' => 'ok',
             'message' => 'success',
@@ -128,6 +126,7 @@ class TrainerController extends Controller
         $trainer->assigned_to = $request->assigned_to;
         $trainer->due_date = $request->due_date;
         $trainer->short_description = $request->short_description;
+        $trainer->description = $request->description;
         $trainer->trainer_name = $request->trainer_name;
         $trainer->qualification = $request->qualification;
         $trainer->designation = $request->designation;
@@ -135,11 +134,11 @@ class TrainerController extends Controller
         $trainer->experience = $request->experience;
         $trainer->hod = $request->hod;
         $trainer->trainer = $request->trainer;
-
         $trainer->training_date = $request->training_date;
         $trainer->topic = $request->topic;
         $trainer->type = $request->type;
         $trainer->evaluation = $request->evaluation;
+        $trainer->evaluation_through = $request->evaluation_through;
         
         $trainer->evaluation_criteria_1 = $request->evaluation_criteria_1;
         $trainer->evaluation_criteria_2 = $request->evaluation_criteria_2;
@@ -289,6 +288,96 @@ class TrainerController extends Controller
             $validation2->save();
         }
 
+        if (!empty($request->training_date)) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Schedule Training date';
+            $validation2->previous = "Null";
+            $validation2->current = $request->training_date;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->topic)) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Topic of Training';
+            $validation2->previous = "Null";
+            $validation2->current = $request->topic;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->type)) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Type of Training';
+            $validation2->previous = "Null";
+            $validation2->current = $request->type;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->evaluation)) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Evaluation Required';
+            $validation2->previous = "Null";
+            $validation2->current = $request->evaluation;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+        if (!empty($request->evaluation_through)) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Evaluation Through';
+            $validation2->previous = "Null";
+            $validation2->current = $request->evaluation_through;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
         if (!empty($request->designation)) {
             $validation2 = new TrainerQualificationAuditTrial();
             $validation2->trainer_id = $trainer->id;
@@ -426,6 +515,7 @@ class TrainerController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $res = [
             'status' => 'ok',
             'message' => 'success',
@@ -436,7 +526,6 @@ class TrainerController extends Controller
         $lastdocument = TrainerQualification::findOrFail($id);
 
         $trainer->division_id = $request->division_id;
-        // $trainer->record_number = $request->record_number;
         $trainer->site_code = $request->site_code;
         $trainer->employee_id = $request->employee_id;
         $trainer->employee_name = $request->employee_name;
@@ -445,6 +534,7 @@ class TrainerController extends Controller
         $trainer->assigned_to = $request->assigned_to;
         $trainer->due_date = $request->due_date;
         $trainer->short_description = $request->short_description;
+        $trainer->description = $request->description;
         $trainer->trainer_name = $request->trainer_name;
         $trainer->qualification = $request->qualification;
         $trainer->designation = $request->designation;
@@ -457,10 +547,21 @@ class TrainerController extends Controller
         $trainer->topic = $request->topic;
         $trainer->type = $request->type;
         $trainer->evaluation = $request->evaluation;
+        $trainer->evaluation_through = $request->evaluation_through;
         $trainer->sopdocument = $request->sopdocument;
 
         $trainer->qa_final_comment = $request->qa_final_comment;
         $trainer->hod_comment = $request->hod_comment;
+        $trainer->trainer_acknowledge_comment = $request->trainer_acknowledge_comment;
+        $trainer->start_date = $request->start_date;
+        $trainer->end_date = $request->end_date;
+        $trainer->start_time = $request->start_time;
+        $trainer->end_time = $request->end_time;
+        $trainer->pending_training_comment = $request->pending_training_comment;
+        $trainer->evaluation_by_hod = $request->evaluation_by_hod;
+        $trainer->evaluation_criteria_hod = $request->evaluation_criteria_hod;
+        $trainer->evaluation_by_qa = $request->evaluation_by_qa;
+        $trainer->evaluation_criteria_qa = $request->evaluation_criteria_qa;
 
         $trainer->evaluation_criteria_1 = $request->evaluation_criteria_1;
         $trainer->evaluation_criteria_2 = $request->evaluation_criteria_2;
@@ -493,8 +594,21 @@ class TrainerController extends Controller
             $trainer->initial_attachment = $name;
         }
 
+        if ($request->hasFile('trainer_acknowledge_attachments')) {
+            $file = $request->file('trainer_acknowledge_attachments');
+            $name = $request->employee_id . 'trainer_acknowledge_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $trainer->trainer_acknowledge_attachments = $name;
+        }
+
+        if ($request->hasFile('pending_training_attachments')) {
+            $file = $request->file('pending_training_attachments');
+            $name = $request->employee_id . 'pending_training_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $trainer->pending_training_attachments = $name;
+        }
+
         $trainer->save();
-        // dd($trainer->id);
 
         $trainer_qualification_id = $trainer->id;
 
@@ -510,14 +624,11 @@ class TrainerController extends Controller
         $employeeJobGrid->data = $request->jobResponsibilities;  
         $employeeJobGrid->save();
 
-        $trainerListGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'listOfAttachment'])->firstOrNew();
-        $trainerListGrid->trainer_qualification_id = $trainer_qualification_id;
-        $trainerListGrid->identifier = 'listOfAttachment';
-        $trainerListGrid->data = $request->trainer_listOfAttachment;
-        $trainerListGrid->save();
-
-
-
+        // $trainerListGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'listOfAttachment'])->firstOrNew();
+        // $trainerListGrid->trainer_qualification_id = $trainer_qualification_id;
+        // $trainerListGrid->identifier = 'listOfAttachment';
+        // $trainerListGrid->data = $request->trainer_listOfAttachment;
+        // $trainerListGrid->save();
 
         // } catch (\Exception $e) {
         //     $res['status'] = 'error';
@@ -654,6 +765,114 @@ class TrainerController extends Controller
             $validation2->save();
         }
 
+        if ($lastdocument->training_date != $trainer->training_date) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Schedule Training date';
+            $validation2->previous = $lastdocument->training_date;
+            $validation2->current = $trainer->training_date;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastdocument->status;
+            if (is_null($lastdocument->training_date) || $lastdocument->training_date === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
+        if ($lastdocument->topic != $trainer->topic) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Topic of Training';
+            $validation2->previous = $lastdocument->topic;
+            $validation2->current = $trainer->topic;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastdocument->status;
+            if (is_null($lastdocument->topic) || $lastdocument->topic === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
+        if ($lastdocument->type != $trainer->type) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Type of Training';
+            $validation2->previous = $lastdocument->type;
+            $validation2->current = $trainer->type;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastdocument->status;
+            if (is_null($lastdocument->type) || $lastdocument->type === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
+        if ($lastdocument->evaluation != $trainer->evaluation) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Evaluation Required';
+            $validation2->previous = $lastdocument->evaluation;
+            $validation2->current = $trainer->evaluation;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastdocument->status;
+            if (is_null($lastdocument->evaluation) || $lastdocument->evaluation === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
+        if ($lastdocument->evaluation_through != $trainer->evaluation_through) {
+            $validation2 = new TrainerQualificationAuditTrial();
+            $validation2->trainer_id = $trainer->id;
+            $validation2->activity_type = 'Evaluation Through';
+            $validation2->previous = $lastdocument->evaluation_through;
+            $validation2->current = $trainer->evaluation_through;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastdocument->status;
+            if (is_null($lastdocument->evaluation_through) || $lastdocument->evaluation_through === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
         if ($lastdocument->designation != $trainer->designation) {
             $validation2 = new TrainerQualificationAuditTrial();
             $validation2->trainer_id = $trainer->id;
@@ -694,7 +913,6 @@ class TrainerController extends Controller
             } else {
                 $validation2->action_name = 'Update';
             }
-
             $validation2->save();
         }
 
@@ -808,7 +1026,6 @@ class TrainerController extends Controller
             $validation2->save();
         }
 
-
         toastr()->success("Record is updated Successfully");
         return back();
     }
@@ -822,15 +1039,13 @@ class TrainerController extends Controller
         $employee_grid_data = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'Questionaries'])->first();
         
         $data = Document::all();
-        // Fetch the record and document training by ID
+
         $record = TrainerQualification::findOrFail($id);
         $document_training = DocumentTraining::where('document_id', $id)->first();
     
-        // Use optional() to avoid null errors when training_plan or quize is null
         $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
         $quize = optional($training)->quize ? Quize::find($training->quize) : null;
     
-        // Get the saved SOP document and employee grid data
         $savedSop = $record->sopdocument;
 
         $currentDate = Carbon::now();

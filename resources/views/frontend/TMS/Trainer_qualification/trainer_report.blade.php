@@ -200,12 +200,14 @@
     </table>
 </footer>
 
+<br>
 <div class="inner-block">
     <div class="content-table">
         <div class="block">
             <div class="block-head">
                 Trainer Information
             </div>
+            <br>
             <table>
                 <tr>
                     <th class="w-20">Trainer Name</th>
@@ -284,7 +286,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="w-20">Training Date</th>
+                    <th class="w-20">Schedule Training date</th>
                     <td class="w-30">
                         @if ($data->training_date)
                             {{ Helpers::getdateFormat($data->training_date) }}
@@ -349,15 +351,15 @@
                             Not Applicable
                         @endif
                     </td>
-
-                    <th class="w-20"> Assigned To</th>
+                    <th class="w-20">Evaluation Through</th>
                     <td class="w-30">
-                        @if ($data->assigned_to)
-                            {{ Helpers::getInitiatorName($data->assigned_to) }}
+                        @if ($data->evaluation_through)
+                            {{ $data->evaluation_through }}
                         @else
                             Not Applicable
                         @endif
                     </td>
+                    
                 </tr>
                 <tr>
                     <th class="w-20">Short Description</th>
@@ -370,6 +372,16 @@
                     </td>
                 </tr>
                 <tr>
+
+                    <th class="w-20">Description</th>
+                    <td class="w-30">
+                        @if ($data->description)
+                            {{ $data->description }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
                     <th class="w-20">Qualification Status</th>
                     <td class="w-30">
                         @if ($data->trainer)
@@ -390,6 +402,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <th class="w-20"> Assigned To</th>
+                    <td class="w-30">
+                        @if ($data->assigned_to)
+                            {{ Helpers::getInitiatorName($data->assigned_to) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
                     <th class="w-20">Initial Attachment</th>
                     <td class="w-30">
                         @if ($data->initial_attachment)
@@ -402,7 +423,8 @@
 
             </table>
         </div>
-        <div class="block">
+
+        {{-- <div class="block">
             <div class="block-head">
                 List of Attachments
             </div>
@@ -432,7 +454,8 @@
                     @endif
                 </table>
             </div>
-        </div>
+        </div> --}}
+        <br><br>
         <div class="block">
             <div class="block-head">
                 Evaluation Criteria
@@ -572,7 +595,7 @@
     </div>
 </div>
 
-<div class="inner-block">
+{{-- <div class="inner-block">
     <div class="content-table">
         <div class="block">
             <div class="block-head">
@@ -608,7 +631,8 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
 <div class="inner-block">
     <div class="content-table">
         <div class="block">

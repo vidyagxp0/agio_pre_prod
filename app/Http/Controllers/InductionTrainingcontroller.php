@@ -17,6 +17,7 @@ use App\Models\EmpTrainingQuizResult;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\Models\Document;
+use App\Models\InductionTrainingDocumentNumber;
 use App\Models\QuestionariesGrid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,9 +84,7 @@ class InductionTrainingcontroller extends Controller
     
     public function store(Request $request)
     {
-        //  dd($request->all());
         $inductionTraining = new Induction_training();
-
 
         $inductionTraining->stage = '1';
         $inductionTraining->status = 'Opened';
@@ -118,15 +117,37 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_15 = $request->training_date_15;
         // $inductionTraining->training_date_16 = $request->training_date_16;
 
+        $documents = [];
+    
+        foreach ($request->document_number as $index => $documentNumber) {
+            $documentTitle = $request->document_title[$index];
+            $trainingDate = $request->training_date[$index];
+            $remark = $request->remark[$index];
+    
+            $attachment = null;
+            if ($request->hasFile('attachment.' . $index)) {
+                $file = $request->file('attachment.' . $index);
+                $filePath = $file->store('attachments', 'public');
+                $attachment = $filePath;
+            }
+    
+            $documents[] = [
+                'document_title' => $documentTitle,
+                'document_number' => $documentNumber,
+                'training_date' => $trainingDate,
+                'remark' => $remark,
+                'attachment' => $attachment,
+            ];
+        }
+    
+        $inductionTraining->documents = json_encode($documents);
 
-        // Handle looping through the document fields
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
-            // Handle both underscore and hyphen cases
             $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));
             $trainingDate = $request->input($trainingDateKey) ?? $request->input(str_replace('_', '-', $trainingDateKey));
             $remark = $request->input($remarkKey) ?? $request->input(str_replace('_', '-', $remarkKey));
@@ -153,6 +174,48 @@ class InductionTrainingcontroller extends Controller
                 $inductionTraining->$attachmentKey = $name;
             }
         }
+
+
+        //new code here 
+        // $documentNumbers = $request->input('document_number', []); 
+        // $rowCount = count($documentNumbers);
+    
+        // for ($i = 1; $i <= $rowCount; $i++) {
+        //     $documentNumberKey = "document_number_$i";
+        //     $trainingDateKey = "training_date_$i";
+        //     $remarkKey = "remark_$i";
+        //     $attachmentKey = "attachment_$i";
+    
+        //     // Safely handle the inputs
+        //     $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));
+        //     $trainingDate = $request->input($trainingDateKey) ?? $request->input(str_replace('_', '-', $trainingDateKey));
+        //     $remark = $request->input($remarkKey) ?? $request->input(str_replace('_', '-', $remarkKey));
+    
+        //     // Save or update the induction training record
+        //     $inductionTraining->$documentNumberKey = $documentNumber;
+        //     $inductionTraining->$trainingDateKey = $trainingDate;
+        //     $inductionTraining->$remarkKey = $remark;
+    
+        //     // Handle file uploads
+        //     if ($request->hasFile($attachmentKey)) {
+        //         // Optionally delete the old file
+        //         if ($inductionTraining->$attachmentKey) {
+        //             Storage::delete('public/' . $inductionTraining->$attachmentKey);
+        //         }
+    
+        //         // Store the new file
+        //         $file = $request->file($attachmentKey);
+        //         $filePath = $file->store('attachments', 'public');
+        //         $inductionTraining->$attachmentKey = $filePath;
+        //     }
+        // }
+        
+
+
+  
+        $inductionTraining->save();
+    
+
         $inductionTraining->trainee_name = $request->trainee_name;
         $inductionTraining->training_type = $request->training_type;
 
@@ -305,26 +368,23 @@ class InductionTrainingcontroller extends Controller
 
     public function edit($id)
     {
-        // Find the Induction Training record by ID
         $inductionTraining = Induction_training::find($id);
-    
-        // Fetch the employee details related to this training
+
         $employee = Employee::where('id', $inductionTraining->name_employee)->first();
         $employee_name = $employee ? $employee->employee_name : '';
     
-        // Fetch all employees and documents
         $employees = Employee::all();
         $data = Document::all();
         $users = User::get();
-        // Fetch the record and document training by ID
+
+        $documents = json_decode($inductionTraining->documents, true);
+
         $record = Induction_training::findOrFail($id);
         $document_training = DocumentTraining::where('document_id', $id)->first();
     
-        // Use optional() to avoid null errors when training_plan or quize is null
         $training = optional($document_training)->training_plan ? Training::find($document_training->training_plan) : null;
         $quize = optional($training)->quize ? Quize::find($training->quize) : null;
     
-        // Get the saved SOP document and employee grid data
         $savedSop = $record->sopdocument;
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
     
@@ -332,9 +392,9 @@ class InductionTrainingcontroller extends Controller
             'Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 
             'AGM and GM', 'Head quality', 'VP quality', 'Plant head'
         ];
-        // Return the view with all necessary data
+        
         return view('frontend.TMS.Induction_training.induction_training_view', compact(
-            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations'
+            'inductionTraining', 'employees', 'employee_grid_data', 'employee_name', 'data', 'savedSop', 'quize', 'document_training','users','higherDesignations','documents'
         ));
     }
     
@@ -342,6 +402,7 @@ class InductionTrainingcontroller extends Controller
 
     public function update(Request $request, $id)
     {
+
         $inductionTraining = Induction_training::find($id);
         $lastdocument = Induction_training::find($id);
 
@@ -381,7 +442,6 @@ class InductionTrainingcontroller extends Controller
         $inductionTraining->training_date_13 = $request->training_date_13;
         $inductionTraining->training_date_14 = $request->training_date_14;
         $inductionTraining->training_date_15 = $request->training_date_15;
-        // dd($request->training_date_15);
 
         if ($request->hasFile('final_r_attachment')) {
             $file = $request->file('final_r_attachment');
@@ -432,25 +492,38 @@ class InductionTrainingcontroller extends Controller
         $employeeJobGrid->data = $request->jobResponsibilities;  
         $employeeJobGrid->save();
 
-        // Handle looping through the document fields
+
+        $documents = [];
+    
+        foreach ($request->document_number as $index => $documentNumber) {
+            $documentTitle = $request->document_title[$index];
+            $trainingDate = $request->training_date[$index];
+            $remark = $request->remark[$index];
+    
+            $attachment = null;
+            if ($request->hasFile('attachment.' . $index)) {
+                $file = $request->file('attachment.' . $index);
+                $filePath = $file->store('attachments', 'public');
+                $attachment = $filePath;
+            }
+    
+            $documents[] = [
+                'document_title' => $documentTitle,
+                'document_number' => $documentNumber,
+                'training_date' => $trainingDate,
+                'remark' => $remark,
+                'attachment' => $attachment,
+            ];
+        }
+    
+        $inductionTraining->documents = json_encode($documents);
+
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
-            // dd($i);
             $remarkKey = "remark_$i";
             $attachmentKey = "attachment_$i";
 
-                    // Handle file upload
-        // if ($request->hasFile($attachmentKey)) {
-        //     // Optionally delete the old file
-        //     if ($inductionTraining->$attachmentKey) {
-        //         Storage::delete('public/' . $inductionTraining->$attachmentKey);
-        //     }
-
-        //     $file = $request->file($attachmentKey);
-        //     $filePath = $file->store('attachments', 'public');
-        //     $inductionTraining->$attachmentKey = $filePath;
-        // }
 
         if ($request->hasFile($attachmentKey)) {
             $file = $request->file($attachmentKey);
@@ -743,6 +816,30 @@ class InductionTrainingcontroller extends Controller
                     $history->stage = 'Submited';
                     $history->save();
 
+                    for ($i = 1; $i <= 16; $i++) {
+                        $documentNumberKey = $jobTraining->{"document_number_$i"};
+                        $trainingDateKey = $jobTraining->{"training_date_$i"};
+
+
+                        if ($documentNumberKey) {
+                            InductionTrainingDocumentNumber::create([
+                                'employee_id' => $jobTraining->id,
+                                'employee_name' => $jobTraining->name_employee,
+                                'employee_code' => $jobTraining->employee_id,
+                                'department' => $jobTraining->department,
+                                'designation' => $jobTraining->designation,
+                                'job_role' => $jobTraining->job_role,
+                                'joining_date' => $jobTraining->joining_date,
+                                'startdate' => $jobTraining->start_date,
+                                'enddate' => $jobTraining->end_date,
+                                'document_number' => $documentNumberKey,
+                                'training_date' => $trainingDateKey,
+
+                            ]);
+                        }
+                    }
+
+
                     $jobTraining->update();
                     return back();
                 }
@@ -945,14 +1042,23 @@ class InductionTrainingcontroller extends Controller
         $record = str_pad((RecordNumber::first()->value('counter') + 1), 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $due_date = $currentDate->addDays(30)->format('Y-m-d');
+
+        $departmentCode = $mainvalue->department ?? ' ';
+
+        $serialNumber = str_pad((RecordNumber::first()->value('counter') + 1), 3, '0', STR_PAD_LEFT);
+
+        $revisionNumber = '00';
+
+        $jobDescriptionNumber = "JD/{$departmentCode}/{$serialNumber}/{$revisionNumber}";
+        
         $employees = Employee::all(); 
         $data = Document::all(); 
         $hods = User::get();
         $delegate = User::get();
         if ($request->child_type == 'job_training') {
-            return view('frontend.TMS.Job_Training.job_training', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
+            return view('frontend.TMS.Job_Training.job_training', compact('induction','due_date','record','data','hods','delegate', 'mainvalue','jobDescriptionNumber'));
         } else {
-            return view('frontend.TMS.Job_description.job_description', compact('induction','due_date','record','data','hods','delegate', 'mainvalue'));
+            return view('frontend.TMS.Job_description.job_description', compact('induction','due_date','record','data','hods','delegate', 'mainvalue','jobDescriptionNumber'));
         }
     }
 
@@ -974,8 +1080,6 @@ class InductionTrainingcontroller extends Controller
         
     //     return view('frontend.TMS.Job_Training.job_training', compact('employees', 'due_date', 'record', 'data', 'hods', 'jobTraining', 'delegate', 'inductionTrainingDetails', 'request'));
     // }
-    
-
     
     public static function inductionReport($id)
     {
@@ -1007,9 +1111,6 @@ class InductionTrainingcontroller extends Controller
     public function viewrendersopinduction($id){
         return view('frontend.TMS.induction_training_detail', compact('id'));
     }
-    // public function viewrendersopinduction(){
-    //     return view('frontend.layout.Tms-Training', compact('id'));
-    // }
 
     
     public function showCertificate($employee_id)
@@ -1028,50 +1129,48 @@ class InductionTrainingcontroller extends Controller
         $inductiontrainingid->attempt_count = $inductiontrainingid->attempt_count == -1 ? 0 : ( $inductiontrainingid->attempt_count == 0 ? 0 : $inductiontrainingid->attempt_count - 1);
         $inductiontrainingid->save();
         
-        // Convert the sopids string to an array and trim any extra whitespace
+        $singleSOPId = $sopids;
         $sopids = array_map('trim', explode(',', $sopids));
-
-        // Fetch all questions based on cleaned sopids
         $questions = Question::whereIn('document_id', $sopids)
-        ->inRandomOrder() // Randomize the order
-        ->take(10)        // Limit to 10 records
+        ->inRandomOrder()
+        ->take(10)
         ->get();
-        // Dump the questions for debugging
-            return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid'));
+        
+        return view('frontend.TMS.Induction_training.Induction_training_question_Answer', compact('questions', 'inductiontrainingid','singleSOPId'));
     }
 
     public function checkAnswerInduction(Request $request)
     {
-        // Fetch all questions in a random order
 
-        $allQuestions = Question::inRandomOrder()->get();
+        // $allQuestions = Question::inRandomOrder()->get();
+        $allQuestions = Question::where('document_id', $request->document_number)
+        ->inRandomOrder()
+        ->get();
 
-        // Filter questions to include only Single and Multi Selection Questions
+        $document_number = $request->input('document_number');
+
         $filteredQuestions = $allQuestions->filter(function ($question) {
             return in_array($question->type, ['Single Selection Questions', 'Multi Selection Questions']);
         });
 
-        // Take the first 10 questions from the filtered list
         $questions = $filteredQuestions->take(10);
 
-        $correctCount = 0; // Initialize correct answer count
-        $totalQuestions = count($questions); // Total number of selected questions (should be 10)
-
+        $correctCount = 0; 
+        $totalQuestions = count($questions); 
         foreach ($questions as $question) {
-            // Retrieve user's answer for each question
             $userAnswer = $request->input('question_' . $question->id);
-            $correctAnswers = unserialize($question->answers); // Correct answers for the question
+            $correctAnswers = unserialize($question->answers);
             $questionType = $question->type;
 
             if ($questionType === 'Single Selection Questions') {
-                // If it's a single selection question, check if the user's answer matches the correct answer
+
                 if ($userAnswer == $correctAnswers[0]) {
                     $correctCount++;
                 }
             } elseif ($questionType === 'Multi Selection Questions') {
-                // If it's a multi-selection question, check if the user's answer matches exactly with the correct answer set
+                
                 if (is_array($userAnswer)) {
-                    // Check if the user's answer matches exactly with the correct answer set
+                    
                     if (count(array_diff($correctAnswers, $userAnswer)) === 0 && count(array_diff($userAnswer, $correctAnswers)) === 0) {
                         $correctCount++;
                     }
@@ -1080,7 +1179,7 @@ class InductionTrainingcontroller extends Controller
         }
 
         // Calculate the correct percentage for the 10 questions
-        $score = ($correctCount / $totalQuestions) * 100; // This will be based on 10 questions
+        $score = ($correctCount / $totalQuestions) * 100;
 
     
         $result = $score >= 80 ? 'Pass' : 'Fail';
@@ -1103,6 +1202,7 @@ class InductionTrainingcontroller extends Controller
             $storeResult->score = $score."%";
             $storeResult->result = $result;
             $storeResult->attempt_number = $request->attempt_count + 1;
+            $storeResult->document_number = $document_number;
             $storeResult->save();        
 
         return view('frontend.TMS.Job_Training.job_quiz_result', [
