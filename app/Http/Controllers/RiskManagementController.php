@@ -4637,7 +4637,6 @@ class RiskManagementController extends Controller
 
 
 
-
         // if ($lastCft->Production_Table_Attachment != $data->Production_Table_Attachment || !empty($request->Production_Table_Attachment)) {
 
         //     $history = new RiskAuditTrail();
@@ -9171,6 +9170,80 @@ class RiskManagementController extends Controller
         //         $history->save();
         //     }
         // }
+
+
+
+
+                $risk_id = $data->id;
+
+                // Fetch existing summary response data
+                $existingSummaryData = RiskAssesmentGrid::where(['risk_id' => $risk_id, 'type' => 'effect_analysis'])->first();
+                $existingSummaryDataArray = $existingSummaryData ? $existingSummaryData->data : [];
+
+                // Save the new details data
+
+                if (!empty($request->effect_analysis)) {
+                    $summaryShow = RiskAssesmentGrid::firstOrNew(['risk_id' => $risk_id, 'type' => 'effect_analysis']);
+                    $summaryShow->risk_id = $risk_id;
+                    $summaryShow->type = 'effect_analysis';
+                    $summaryShow->data = $request->effect_analysis;
+                    $summaryShow->save();
+
+                    // Define the mapping of field keys to more descriptive names
+                    $fieldNames = [
+                        'risk_factor' => 'Activity',
+                        // 'risk_element' => 'Responsible',
+                        'problem_cause' => 'Possible Risk/Failure (Identified Risk)',
+                        'existing_risk_control' => 'Consequences of Risk/Potential Causes',
+                        'initial_severity' => 'Severity (S)',
+                        'initial_detectability' => 'Probability (P)',
+                        'initial_probability' => 'Detection (D)',
+                        'initial_rpn' => 'Risk Level (RPN)',
+                        'risk_control_measure' => 'Control Measures recommended/ Risk mitigation proposed',
+                        'residual_severity' => 'Severity (S)',
+                        'residual_probability' => 'Probability (P)',
+                        'residual_detectability' => 'Detection (D)',
+                        'residual_rpn' => 'RPN',
+                        'risk_acceptance' => 'Category of Risk Level (Low, Medium and High)',
+                        'risk_acceptance2' => 'Risk Acceptance (Y/N)',
+                        'mitigation_proposal' => 'Traceability document',
+
+                    ];
+
+                    // Track audit trail changes
+                    if (is_array($request->effect_analysis)) {
+                        foreach ($request->effect_analysis as $index => $newSummary) {
+                            $previousSummary = $existingSummaryDataArray[$index] ?? [];
+
+                            // Track changes for each field
+                            $fieldsToTrack = ['ListOfImpactingDocument'];
+                            foreach ($fieldsToTrack as $field) {
+                                $oldValue = $previousSummary[$field] ?? 'Null';
+                                $newValue = $newSummary[$field] ?? 'Null';
+
+                                // If there's a change, add an entry to the audit trail
+                                if ($oldValue !== $newValue) {
+                                    $auditTrail = new RiskAuditTrail();
+                                    $auditTrail->risk_id = $risk_id;
+                                    $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
+
+                                    $auditTrail->previous = $oldValue;
+                                    $auditTrail->current = $newValue;
+                                    $auditTrail->comment = "";
+                                    $auditTrail->user_id = Auth::user()->id;
+                                    $auditTrail->user_name = Auth::user()->name;
+                                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $auditTrail->origin_state = $lastDocument->status;
+                                    $auditTrail->change_to = "Not Applicable";
+                                    $auditTrail->change_from = $lastDocument->status;
+                                    $auditTrail->action_name = $oldValue == 'Null' ? "New" : "Update";
+                                    $auditTrail->save();
+                                }
+                            }
+                        }
+
+                    }
+                }
 
 
 
