@@ -2192,6 +2192,28 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
 
           
 
+        $previousDetail_1 = [
+            'risk_factor' => is_array(@unserialize($data8->risk_factor)) ? unserialize($data8->risk_factor) : null,
+            'problem_cause' => is_array(@unserialize($data8->problem_cause)) ? unserialize($data8->problem_cause) : null,
+            'existing_risk_control' => is_array(@unserialize($data8->existing_risk_control)) ? unserialize($data8->existing_risk_control) : null,
+            'initial_severity' => is_array(@unserialize($data8->initial_severity)) ? unserialize($data8->initial_severity) : null,
+            'initial_detectability' => is_array(@unserialize($data8->initial_detectability)) ? unserialize($data8->initial_detectability) : null,
+           
+            'initial_probability' => is_array(@unserialize($data8->initial_probability)) ? unserialize($data8->initial_probability) : null,
+            'initial_rpn' => is_array(@unserialize($data8->initial_rpn)) ? unserialize($data8->initial_rpn) : null,
+            'risk_control_measure' => is_array(@unserialize($data8->risk_control_measure)) ? unserialize($data8->risk_control_measure) : null,
+            'residual_severity' => is_array(@unserialize($data8->residual_severity)) ? unserialize($data8->residual_severity) : null,
+            'residual_probability' => is_array(@unserialize($data8->residual_probability)) ? unserialize($data8->residual_probability) : null,
+            'residual_detectability' => is_array(@unserialize($data8->residual_detectability)) ? unserialize($data8->residual_detectability) : null,
+            'residual_rpn' => is_array(@unserialize($data8->residual_rpn)) ? unserialize($data8->residual_rpn) : null,
+            'risk_acceptance' => is_array(@unserialize($data8->risk_acceptance)) ? unserialize($data8->risk_acceptance) : null,
+            'risk_acceptance2' => is_array(@unserialize($data8->risk_acceptance2)) ? unserialize($data8->risk_acceptance2) : null,
+            'mitigation_proposal' => is_array(@unserialize($data8->mitigation_proposal)) ? unserialize($data8->mitigation_proposal) : null,
+        ];
+
+
+       // dd($previousDetail_1);
+
         $data8->deviation_grid_id = $deviation->id;
         $data8->type = "effect_analysis";
 
@@ -2269,7 +2291,63 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         // Store the attachments array in the database (serialized or JSON format)
         $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
         
-       //dd($data8) ;
+ //---------------------------------------------------------ORM Failure Grid data----------------------------------------------------------------------
+ 
+ $fieldName_1 = [
+    'risk_factor' => 'ORM / Activity',
+    'problem_cause' => 'ORM / Possible Risk/Failure (Identified Risk)',
+    'existing_risk_control' => 'ORM / Consequences of Risk/Potential Causes',
+    'initial_severity' => 'ORM / Severity (S)',
+    'initial_detectability' => 'ORM / Probability (P)',
+    'initial_probability' => 'ORM / Detection (D)',
+    
+    'initial_rpn' => 'ORM / Risk Level (RPN)',
+    'risk_control_measure' => 'ORM / Control Measures recommended/ Risk mitigation proposed',
+    'residual_severity' => 'ORM / Severity (S)',
+    'residual_probability' => 'ORM / Probability (P)',
+    'residual_detectability' => 'ORM / Detection (D)',
+    'residual_rpn' => 'ORM / Risk Level (RPN)',
+    'risk_acceptance' => 'ORM / Category of Risk Level (Low, Medium and High)',
+    'risk_acceptance2' => 'ORM / Risk Acceptance (Y/N)',
+    'mitigation_proposal' => 'ORM / Traceability document',
+    
+];
+foreach ($fieldName_1 as $key => $label) {
+    $previousValues = $previousDetail_1[$key] ?? [];
+    $currentValues = $request->input($key, []);
+
+
+    // Ensure both are arrays
+    $previousValues = is_array($previousValues) ? $previousValues : [];
+    $currentValues = is_array($currentValues) ? $currentValues : [];
+
+
+    // Compare values for each entry
+    foreach ($currentValues as $index => $currentValue) {
+        $previousValue = $previousValues[$index] ?? null;
+        // dd($currentValue);
+        // Compare individual values (not the entire array)
+
+        if (($previousValue !== $currentValue) && !is_null($currentValue)) {
+            $existingAudit = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                ->where('activity_type', $label . ' (' . ($index + 1) . ')')
+                ->exists();
+
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = $label . ' (' . ($index + 1) . ')';
+            $history->previous = json_encode($previousValue); // Convert array to JSON
+            $history->current = json_encode($currentValue);   // Convert array to JSON
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->action_name = $existingAudit ? 'Update' : 'New';
+            $history->save();
+        }
+    }
+
+}
+  //--------------------------------------------------------End ORM Failure Grid data----------------------------------------------------------------------
 
  //---------------------------------failure mode- Grid ----------------------------------------------------------------------------------------------------------------
 
@@ -3331,7 +3409,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $teamInvestigationData->data = $request->investigationTeam;
             $teamInvestigationData->update();
 
-                    // Define the mapping of field keys to more descriptive names
+                   
                     // $fieldNames = [
                     //     'teamMember' => 'Investigation Team',
                     //     'desination_dept' => 'Designation & Department',

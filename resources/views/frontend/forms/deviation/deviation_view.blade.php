@@ -10524,6 +10524,7 @@
                                 var newRow = table.insertRow(currentRowCount);
 
                                 newRow.setAttribute("id", "row" + currentRowCount);
+
                                 var cell1 = newRow.insertCell(0);
                                 cell1.innerHTML = currentRowCount;
 
@@ -12012,76 +12013,62 @@
                     <div class="row">
 
 
-
-                        <div class="col-12 mb-4" id="fmea-section">
-                            <div class="group-input">
-                                <label for="agenda">
-                                    Failure Mode and Effect Analysis
-                                    <button type="button" name="agenda"
-                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
-                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#observation-field-instruction-modalInferenceFMEA"
-                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                        (Launch Instruction)
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" style="width: 200%"
-                                        id="risk-assessment-risk-management">
-                                        <thead>
-                                        <tr>
-                                                            <th colspan="1"style="text-align:center;"></th>
-                                                            <th colspan="2"style="text-align:center;">Risk Identification</th>
-                                                            <th colspan="1"style="text-align:center;">Risk Analysis</th>
-                                                            <th colspan="4"style="text-align:center;">Risk Evaluation</th>
-                                                            <th colspan="1"style="text-align:center;">Risk Control</th>
-                                                            <th colspan="6"style="text-align:center;">Risk Evaluation</th>
-                                                            <th colspan="2"style="text-align:center;"></th>
-                                                        </tr>
-                                            <tr>
-                                                <th>Row #</th>
-                                                <th>Activity</th>
-                                                <th>Possible Risk/Failure (Identified Risk)</th>
-                                                <th>Consequences of Risk/Potential Causes</th>
-                                                <th>Severity (S)</th>
-                                                <th>Probability (P)</th>
-                                                <th>Detection (D)</th>
-                                                <th>Risk Level(RPN)</th>
-                                                <th>Control Measures recommended/ Risk mitigation proposed</th>
-                                                <th>Severity (S)</th>
-                                                <th>Probability (P)</th>
-                                                <th>Detection (D)</th>
-                                                <th>Risk Level (RPN)</th>
-                                                <th>Category of Risk Level (Low, Medium and High)</th>
-                                                <th>Risk Acceptance (Y/N)</th>
-                                                <th>Traceability document</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (!empty($riskEffectAnalysis->risk_factor))
-                                                @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                                    <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>
-                                                            <textarea name="risk_factor[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ $riskFactor }}
-                                                            </textarea>
-                                                        </td>
-
-                                                        <td>
-                                                            <textarea name="problem_cause[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}
-                                                            </textarea>
-                                                        </td>
-
-                                                        <td>
-                                                            <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}
-                                                            </textarea>
-                                                        </td>
-
+                    <div class="col-12 mb-4" id="fmea-section">
+    <div class="group-input">
+        <label for="agenda">
+            Failure Mode and Effect Analysis
+            <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
+                <thead>
+                    <!-- First Row: Merged Headers -->
+                    <tr>
+                        <th colspan="1" style="text-align:center;"></th>
+                        <th colspan="2" style="text-align:center;">Risk Identification</th>
+                        <th colspan="1" style="text-align:center;">Risk Analysis</th>
+                        <th colspan="4" style="text-align:center;">Risk Evaluation</th>
+                        <th colspan="1" style="text-align:center;">Risk Control</th>
+                        <th colspan="6" style="text-align:center;">Risk Evaluation</th>
+                        <th colspan="2" style="text-align:center;"></th>
+                    </tr>
+                    <!-- Second Row: Actual Column Headers -->
+                    <tr>
+                        <th style="text-align:center;">Row #</th>
+                        <th style="text-align:center;">Activity</th>
+                        <th style="text-align:center;">Possible Risk/Failure (Identified Risk)</th>
+                        <th style="text-align:center;">Consequences of Risk/Potential Causes</th>
+                        <th style="text-align:center;">Severity (S)</th>
+                        <th style="text-align:center;">Probability (P)</th>
+                        <th style="text-align:center;">Detection (D)</th>
+                        <th style="text-align:center;">Risk Level (RPN)</th>
+                        <th style="text-align:center;">Control Measures recommended/ Risk mitigation proposed</th>
+                        <th style="text-align:center;">Severity (S)</th>
+                        <th style="text-align:center;">Probability (P)</th>
+                        <th style="text-align:center;">Detection (D)</th>
+                        <th style="text-align:center;">Risk Level (RPN)</th>
+                        <th style="text-align:center;">Category of Risk Level (Low, Medium and High)</th>
+                        <th style="text-align:center;">Risk Acceptance (Y/N)</th>
+                        <th style="text-align:center;">Traceability document</th>
+                        <th style="text-align:center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($riskEffectAnalysis->risk_factor))
+                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>
+                                    <textarea name="risk_factor[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea name="problem_cause[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</textarea>
+                                </td>
+                
                                                         <td>
                                                             <select onchange="calculateInitialResult(this)"
                                                                 class="fieldR" name="initial_severity[]"
@@ -12254,9 +12241,9 @@
                                                                 </textarea>
                                                          </td>
 
-                                                        <td> <button class="btn btn-dark removeBtn"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
-                                                        </td>
+                                                         <td>
+                                                                <button class="btn btn-dark removeBtn" type="button" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} onclick="removeRow(this)">Remove</button>
+                                                            </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

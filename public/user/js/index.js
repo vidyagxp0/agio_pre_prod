@@ -1177,26 +1177,28 @@ function handleMonthInput(element, textInputID) {
     textInput.setAttribute('value', `${month}-${year}`)
   }
 
-
 function addRiskAssessmentdata(tableId) {
     var table = document.getElementById(tableId);
-    var currentRowCount = table.rows.length;
-    var newRow = table.insertRow(currentRowCount);
-    newRow.setAttribute("id", "row" + currentRowCount);
-
+    var currentRowCount = table.rows.length; // Counting rows (including header)
+    var newRow = table.insertRow(table.rows.length); // Insert a new row at the end of the table body
+    newRow.setAttribute("id", "row" + currentRowCount);  // Set a unique ID for the new row
+    // Insert Row #
     var cell1 = newRow.insertCell(0);
-    cell1.innerHTML = currentRowCount;
+    cell1.innerHTML = currentRowCount;  // This will show the Row # as per the current row count
 
+    // Insert Risk Factor Textarea
     var cell2 = newRow.insertCell(1);
-    cell2.innerHTML = "<textarea name='risk_factor[]' ></textarea>";
-    
+    cell2.innerHTML = "<textarea name='risk_factor[]'></textarea>";
 
+    // Insert Problem Cause Textarea
     var cell4 = newRow.insertCell(2);
-    cell4.innerHTML = "<textarea name='problem_cause[]' ></textarea>";
+    cell4.innerHTML = "<textarea name='problem_cause[]'></textarea>";
 
+    // Insert Existing Risk Control Textarea
     var cell5 = newRow.insertCell(3);
-    cell5.innerHTML = "<textarea name='existing_risk_control[]' ></textarea>";
+    cell5.innerHTML = "<textarea name='existing_risk_control[]'></textarea>";
 
+    // Insert Severity dropdown (initial)
     var cell6 = newRow.insertCell(4);
     cell6.innerHTML =
         "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'>" +
@@ -1208,6 +1210,7 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Catastrophic</option>" +
         "</select>";
 
+    // Insert Probability dropdown (initial)
     var cell7 = newRow.insertCell(5);
     cell7.innerHTML =
         "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'>" +
@@ -1219,6 +1222,7 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Almost certain (every time)</option>" +
         "</select>";
 
+    // Insert Detection dropdown (initial)
     var cell8 = newRow.insertCell(6);
     cell8.innerHTML =
         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'>" +
@@ -1230,12 +1234,15 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Not detectable</option>" +
         "</select>";
 
+    // Insert Risk Level (RPN) (readonly)
     var cell9 = newRow.insertCell(7);
     cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
+    // Insert Risk Control Measure Textarea
     var cell11 = newRow.insertCell(8);
     cell11.innerHTML = "<textarea name='risk_control_measure[]'></textarea>";
-   
+
+    // Insert Residual Severity dropdown
     var cell12 = newRow.insertCell(9);
     cell12.innerHTML =
         "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
@@ -1247,6 +1254,7 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Catastrophic</option>" +
         "</select>";
 
+    // Insert Residual Probability dropdown
     var cell13 = newRow.insertCell(10);
     cell13.innerHTML =
         "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'>" +
@@ -1258,6 +1266,7 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Almost certain (every time)</option>" +
         "</select>";
 
+    // Insert Residual Detection dropdown
     var cell14 = newRow.insertCell(11);
     cell14.innerHTML =
         "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'>" +
@@ -1269,11 +1278,13 @@ function addRiskAssessmentdata(tableId) {
         "<option value='5'>5-Not detectable</option>" +
         "</select>";
 
+    // Insert Residual RPN (readonly)
     var cell15 = newRow.insertCell(12);
     cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
 
-    var cell10 = newRow.insertCell(13);
-    cell10.innerHTML =
+    // Insert Risk Acceptance dropdown
+    var cell16 = newRow.insertCell(13);
+    cell16.innerHTML =
         "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
         "<option value=''>-- Select --</option>" +
         "<option value='Low'>Low</option>" +
@@ -1281,39 +1292,79 @@ function addRiskAssessmentdata(tableId) {
         "<option value='High'>High</option>" +
         "</select>";
 
-    var cell16 = newRow.insertCell(14);
-    cell16.innerHTML =
+    // Insert Risk Acceptance Yes/No
+    var cell17 = newRow.insertCell(14);
+    cell17.innerHTML =
         "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
-    var cell17 = newRow.insertCell(15);
-    cell17.innerHTML = "<textarea name='mitigation_proposal[]' ></textarea>";
-   
+    // Insert Mitigation Proposal Textarea
+    var cell18 = newRow.insertCell(15);
+    cell18.innerHTML = "<textarea name='mitigation_proposal[]'></textarea>";
 
-    var cell18 = newRow.insertCell(16);
-    cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
+    // Insert Remove Button
+    var cell19 = newRow.insertCell(16);
+    cell19.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
 
-    // Update row numbers
-    for (var i = 1; i <= currentRowCount; i++) {
-        var row = table.rows[i];
-        row.cells[0].innerHTML = i;
-    }
+    
+    // Add event listener to the remove button using event delegation
+    document.querySelector('table').addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('removeBtn')) {
+            removeRow(event.target);  // Calls the removeRow function
+        }
+    });
 
-    initializeRiskAcceptance();
+    // Update Row Numbers after adding a new row
+    updateRowNumbers();
 }
-function calculateResidualResult(element) {
+
+// Function to remove a row when the Remove button is clicked
+function removeRow(button) {
+   
+    var row = button.closest('tr');
+
+    row.remove();  
+}
+
+// Function to update the row numbers
+function updateRowNumbers() {
+    var table = document.getElementById('risk-assessment-risk-management');
+    for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        if (row.rowIndex > 1) {  // Skip header rows
+            row.cells[0].innerHTML = row.rowIndex - 1;  // Update the Row # cell with the current row index (adjusted for header)
+        }
+    }
+}
+
+// Example function to handle calculations (you can replace with your calculation logic)
+function calculateInitialResult(element) {
     var row = element.closest('tr');
-    var severity = parseInt(row.querySelector('.residual-fieldR').value) || 0;
-    var probability = parseInt(row.querySelector('.residual-fieldP').value) || 0;
-    var detectability = parseInt(row.querySelector('.residual-fieldN').value) || 0;
+    var severity = parseInt(row.querySelector('.fieldR').value) || 0;
+    var probability = parseInt(row.querySelector('.fieldP').value) || 0;
+    var detectability = parseInt(row.querySelector('.fieldN').value) || 0;
 
     var rpn = severity * probability * detectability;
+    row.querySelector('.initial-rpn').value = rpn;
 
-    row.querySelector('.residual-rpn').value = rpn;
-
-    // Update risk acceptance based on the new RPN value
+    // Optionally update the risk acceptance (not shown in full here)
     updateRiskAcceptance(row);
 }
 
+// Initialize the risk acceptance values for existing rows (when page loads)
+document.addEventListener('DOMContentLoaded', function() {
+    initializeRiskAcceptance();
+});
+
+// Function to initialize risk acceptance based on the RPN values
+function initializeRiskAcceptance() {
+    var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
+    riskAcceptanceElements.forEach(function(element) {
+        var row = element.closest('tr');
+        updateRiskAcceptance(row);
+    });
+}
+
+// Function to update risk acceptance based on RPN value (you can modify this logic)
 function updateRiskAcceptance(row) {
     var rpnValue = parseInt(row.querySelector('.residual-rpn').value, 10);
     var riskAcceptanceField = row.querySelector('.risk-acceptance');
@@ -1332,18 +1383,3 @@ function updateRiskAcceptance(row) {
         riskAcceptanceField.value = '';
     }
 }
-
-// Function to ensure risk acceptance is properly initialized
-function initializeRiskAcceptance() {
-    var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
-    riskAcceptanceElements.forEach(function(element) {
-        var row = element.closest('tr');
-        updateRiskAcceptance(row);
-    });
-}
-
-// Call initializeRiskAcceptance when the document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    initializeRiskAcceptance();
-});
-
