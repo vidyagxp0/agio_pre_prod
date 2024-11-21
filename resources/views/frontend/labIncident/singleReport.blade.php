@@ -205,7 +205,7 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        
+
                         <!-- <th class="w-20">Assigned To</th>
                         <td class="w-30">@isset($data->assign_to) {{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endisset</td> -->
                         <th class="w-20">Due Date</th>
@@ -217,7 +217,7 @@
                     </tr>
 
                     <tr>
-                  
+
                         <th class="w-20">Short Description</th>
                         <td class="w-30">
                             @if($data->short_desc){{ $data->short_desc }}@else Not Applicable @endif
@@ -273,51 +273,58 @@
                         <td class="w-30">@if(!empty($data->severity_level2)){{ $data->severity_level2 }} @else Not Applicable @endif</td> -->
                         <th class="w-20">Instrument Involved</th>
                         <td class="w-30">@if($data->incident_involved_others_gi){{ $data->incident_involved_others_gi }} @else Not Applicable @endif</td>
-                        <th class="w-20">Stage</th>
-                        <td class="w-30">@if($data->stage_stage_gi){{ $data->stage_stage_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        
-                        <th class="w-20">Stability Condition (If Applicable)</th>
-                        <td class="w-30">@if($data->incident_stability_cond_gi){{ $data->incident_stability_cond_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Interval (If Applicable)</th>
-                        <td class="w-30">@if($data->incident_interval_others_gi){{ $data->incident_interval_others_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                     
-                        <th class="w-20">Test</th>
-                        <td class="w-30">@if($data->test_gi){{ $data->test_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Date Of Analysis</th>
-                        <td class="w-30">@if($data->incident_date_analysis_gi){{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}@else Not Applicable @endif</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">Specification Number</th>
-                        <td class="w-30">@if($data->incident_specification_no_gi){{ $data->incident_specification_no_gi }}@else Not Applicable @endif</td>
-                    
-                        <th class="w-20">STP Number</th>
-                        <td class="w-30">@if($data->incident_stp_no_gi){{ $data->incident_stp_no_gi }}@else Not Applicable @endif</td>
+                        <th class="w-20">Stage</th>
+                        <td class="w-30">@if($data->stage_stage_gi){{ $data->stage_stage_gi }}@else Not Applicable @endif</td>
+                        <th class="w-20">Stability Condition (If Applicable)</th>
+                        <td class="w-30">@if($data->incident_stability_cond_gi){{ $data->incident_stability_cond_gi }}@else Not Applicable @endif</td>
+
                     </tr>
                     <tr>
+                        <th class="w-20">Interval (If Applicable)</th>
+                        <td class="w-30">@if($data->incident_interval_others_gi){{ $data->incident_interval_others_gi }}@else Not Applicable @endif</td>
+
+                        <th class="w-20">Test</th>
+                        <td class="w-30">@if($data->test_gi){{ $data->test_gi }}@else Not Applicable @endif</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Date Of Analysis</th>
+                        <td class="w-30">@if($data->incident_date_analysis_gi){{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}@else Not Applicable @endif</td>
+
+                        <th class="w-20">Specification Number</th>
+                        <td class="w-30">@if($data->incident_specification_no_gi){{ $data->incident_specification_no_gi }}@else Not Applicable @endif</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">STP Number</th>
+                        <td class="w-30">@if($data->incident_stp_no_gi){{ $data->incident_stp_no_gi }}@else Not Applicable @endif</td>
+
                         <th class="w-20">Date Of Incidence</th>
                         <td class="w-30">@if($data->incident_date_incidence_gi){{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}@else Not Applicable @endif</td>
-                  
+
+                    </tr>
+                    <tr>
                         <th class="w-20">Description Of Incidence</th>
                         <td class="w-30" colspan="3">@if($data->description_incidence_gi){{ $data->description_incidence_gi }}@else Not Applicable @endif</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Reported By</th>
                         <td class="w-30">@isset($data->analyst_sign_date_gi) {{ $data->analyst_sign_date_gi }} @else Not Applicable @endisset</td>
-                        <th class="w-20">QC Head/HOD Person</th>
-                        <td class="w-30">@isset($data->investigator_qc) {{ Helpers::getInitiatorName($data->investigator_qc) }} @else Not Applicable @endisset</td>
-                        
                     </tr>
+
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->Incident_Category_others){{ $data->Incident_Category_others }}@else Not Applicable @endif</td>
+
+                       </tr>
+                    <tr>
                         <th class="w-20">Immediate Action</th>
                         <td class="w-30">@if($data->immediate_action_ia){{ $data->immediate_action_ia }}@else Not Applicable @endif</td>
-                       </tr>
+                    </tr>
                 </table>
             </div>
             <div class="border-table">
@@ -349,12 +356,15 @@
             </div>
                 <table>
                     <tr>
+                        <th class="w-20">QC Head/HOD Person</th>
+                        <td class="w-30">@isset($data->investigator_qc) {{ Helpers::getInitiatorName($data->investigator_qc) }} @else Not Applicable @endisset</td>
+
                         <th class="w-20">QA Reviewer</th>
                         <td class="w-30">@if($data->qc_review_to){{ Helpers::getInitiatorName($data->qc_review_to) }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
 
-               
+
             <div class="block">
                 <div class="block-head">
                 QC Initial Review
@@ -395,9 +405,10 @@
                     </table>
             </div>
 
+<br>
             <div class="block">
                 <div class="block-head">
-                QA Initial Review 
+                QA Initial Review
                 </div>
                 <table>
                     <tr>
@@ -406,7 +417,7 @@
 
                     </tr>
                 </table>
-            </div>    
+            </div>
 
             <div class="border-table">
                     <div class="block-head">
@@ -436,21 +447,25 @@
                     </table>
             </div>
 
+<br>
             <div class="block">
                 <div class="block-head">
                 Investigation Details
                 </div>
                 <table>
                     <tr>
-                    <th>Investigation Details</th>
-                    <td>@if($data->Investigation_Details){{ $data->Investigation_Details }}@else Not Applicable @endif</td>
-                    <th>Action Taken</th>
-                    <td>@if($data->Action_Taken){{ $data->Action_Taken }}@else Not Applicable @endif</td>
+                        <th>Investigation Details</th>
+                        <td>@if($data->Investigation_Details){{ $data->Investigation_Details }}@else Not Applicable @endif</td>
                     </tr>
 
                     <tr>
-                    <th>Root Cause</th>
-                    <td class="w-30">@if($data->Root_Cause){{ $data->Root_Cause }}@else Not Applicable @endif</td>
+                        <th>Action Taken</th>
+                        <td>@if($data->Action_Taken){{ $data->Action_Taken }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th>Root Cause</th>
+                        <td class="w-30">@if($data->Root_Cause){{ $data->Root_Cause }}@else Not Applicable @endif</td>
                     </tr>
 
                 </table>
@@ -489,42 +504,54 @@
                 <tr>
                     <th>Detail Investigation / Probable Root Cause</th>
                     <td>@if($data->details_investigation_ia){{ $data->details_investigation_ia }}@else Not Applicable @endif</td>
+                </tr>
+
+                <tr>
                     <th>Proposed Corrective Action/Corrective Action Taken</th>
                     <td>@if($data->proposed_correctivei_ia){{ $data->proposed_correctivei_ia }}@else Not Applicable @endif</td>
-                </tr>   
-                
+                </tr>
+
                 <tr>
                     <th>Repeat Analysis Plan</th>
                     <td>@if($data->repeat_analysis_plan_ia){{ $data->repeat_analysis_plan_ia }}@else Not Applicable @endif</td>
+                </tr>
+
+                <tr>
                     <th>Result Of Repeat Analysis</th>
                     <td>@if($data->result_of_repeat_analysis_ia){{ $data->result_of_repeat_analysis_ia }}@else Not Applicable @endif</td>
-                    </tr>   
-                    
-                    <tr>
+                </tr>
+
+                <tr>
                     <th>Corrective and Preventive Action</th>
                     <td>@if($data->corrective_and_preventive_action_ia){{ $data->corrective_and_preventive_action_ia }}@else Not Applicable @endif</td>
-                    <th>CAPA Number</th>
-                    <td>@if($data->capa_number_im){{ $data->capa_number_im }}@else Not Applicable @endif</td>
-                    </tr>   
-                    
+                </tr>
+
                     <tr>
                     <th>Investigation Summary</th>
                     <td>@if($data->investigation_summary_ia){{ $data->investigation_summary_ia }}@else Not Applicable @endif</td>
-                    <th>Type of Incidence</th>
-                    <td>@if($data->type_incidence_ia){{ $data->type_incidence_ia }}@else Not Applicable @endif</td>
-                    </tr>   
-                    
-                    <tr>
-                    <th>Other Incidence</th>
-                    <td>@if($data->other_incidence){{ $data->other_incidence }}@else Not Applicable @endif</td>
-                    <th>QC Investigator</th>
-                    <td>@if($data->investigator_data){{ $data->investigator_data }}@else Not Applicable @endif</td>
                     </tr>
 
                     <tr>
+                        <th>CAPA Number</th>
+                        <td>@if($data->capa_number_im){{ $data->capa_number_im }}@else Not Applicable @endif</td>
+                        <th>Type of Incidence</th>
+                        <td>@if($data->type_incidence_ia){{ $data->type_incidence_ia }}@else Not Applicable @endif</td>
+                    </tr>
+
+                <tr>
+                    <th>Other Incidence</th>
+                    <td>@if($data->other_incidence){{ $data->other_incidence }}@else Not Applicable @endif</td>
+                </tr>
+
+                <tr>
+                    <th>QC Investigator</th>
+                    <td>@if($data->investigator_data){{ $data->investigator_data }}@else Not Applicable @endif</td>
+                </tr>
+
+                <tr>
                     <th>QC Review</th>
                     <td class="w-30">@if($data->qc_review_data){{ Helpers::getInitiatorName($data->qc_review_data) }}@else Not Applicable @endif</td>
-                    </tr>
+                </tr>
                 </table>
             </div>
 
@@ -555,7 +582,7 @@
 
                     </table>
             </div>
-            
+
             <br>
 
             <div class="block">
@@ -615,7 +642,7 @@
                     <td>@if($data->QA_secondry_Comments){{ $data->QA_secondry_Comments }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-            </div>                
+            </div>
 
             <div class="border-table">
                     <div class="block-head">
@@ -644,7 +671,7 @@
 
                     </table>
             </div>
-     
+
             <div class="block">
                 <div class="block-head">
                 Closure

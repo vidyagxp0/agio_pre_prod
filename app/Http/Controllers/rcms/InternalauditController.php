@@ -92,6 +92,7 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Category= $request->Audit_Category;
         // dd($internalAudit->Audit_Category);
         $internalAudit->res_ver = $request->res_ver;
+
         if (!empty($request->attach_file_rv)) {
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
@@ -2429,6 +2430,7 @@ $Checklist_Capsule->save();
 
             $internalAudit->supproting_attachment = json_encode($files);
         }
+
         if (!empty($request->tablet_coating_supporting_attachment)) {
             $files = [];
             if ($request->hasfile('tablet_coating_supporting_attachment')) {
@@ -2625,6 +2627,7 @@ $Checklist_Capsule->save();
 
             $internalAudit->file_attach_add_1 = json_encode($files);
         }
+
         if (!empty($request->file_attach)) {
             $files = [];
             if ($request->hasfile('file_attach')) {
