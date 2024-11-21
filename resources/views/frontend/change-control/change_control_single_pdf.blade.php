@@ -1315,7 +1315,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Person</th>
+                                <th class="w-20">Store Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_person)
@@ -1327,7 +1327,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Stores)</th>
+                                <th class="w-20">Impact Assessment (By Store)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->Store_assessment)
@@ -1351,7 +1351,7 @@ Not Applicable
                                 </td>
                             </tr> -->
                             <tr>
-                                <th class="w-20">Stores Review Completed By</th>
+                                <th class="w-20">Store Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_by)
@@ -1361,7 +1361,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Review Completed On</th>
+                                <th class="w-20">Store Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_on)
@@ -1376,7 +1376,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Stores Attachments
+                            Store Attachments
                         </div>
                         <table>
 
@@ -1939,11 +1939,11 @@ Not Applicable
                     </div>
                     <div class="head">
                         <div class="block-head">
-                            Regulatory Affairs
+                            Regulatory Affair
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Required ?
+                                <th class="w-20">Regulatory Affair Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1954,7 +1954,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affairs Person</th>
+                                <th class="w-20">Regulatory Affair Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_person)
@@ -1966,7 +1966,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Regulatory Affairs)</th>
+                                <th class="w-20">Impact Assessment (By Regulatory Affair)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_assessment)
@@ -1990,7 +1990,7 @@ Not Applicable
                                 </td>
                             </tr> -->
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Completed By</th>
+                                <th class="w-20">Regulatory Affair Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_by)
@@ -2000,7 +2000,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affairs Review Completed On</th>
+                                <th class="w-20">Regulatory Affair Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_on)
@@ -2015,7 +2015,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Regulatory Affairs Attachments
+                            Regulatory Affair Attachments
                         </div>
                         <table>
 

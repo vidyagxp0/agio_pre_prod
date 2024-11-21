@@ -1039,7 +1039,7 @@ class CCController extends Controller
 
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator';
+            $history->activity_type = 'Initiator';
             $history->previous = "NULL";
             $history->current = Auth::user()->name;
             $history->comment = "Not Applicable";

@@ -3403,76 +3403,79 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $deviation->who_will_not_be = $request->who_will_not_be;
             $deviation->who_rationable = $request->who_rationable;
 
-            $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
-            $teamInvestigationData->deviation_id = $deviation->id;
-            $teamInvestigationData->identifier = "TeamInvestigation";
-            $teamInvestigationData->data = $request->investigationTeam;
-            $teamInvestigationData->update();
+        //---------------------------------------------------------TeamInvestigation------------------------------------------------------------------   
 
-                   
-                    // $fieldNames = [
-                    //     'teamMember' => 'Investigation Team',
-                    //     'desination_dept' => 'Designation & Department',
-                    //     'responsibility' => 'Responsibility',
-                    //     'remarks' => 'Remarks',
-                    //     'investigation_approach' => 'Investigation Approach'
-                    // ];
+                        $fieldNames = [
+                        'teamMember' => 'Investigation Team',
+                        'desination_dept' => 'Designation & Department',
+                        'responsibility' => 'Responsibility',
+                        'remarks' => 'Remarks',
+                        'investigation_approach' => 'Investigation Approach'
+                    ];
 
-                    // // Track audit trail changes
-                    // if (is_array($request->investigationTeam)) {
-                    //     foreach ($request->investigationTeam as $index => $newAuditor) {
-                    //         $previousAuditor = $existingAuditorData[$index] ?? null; // Ensure previous data exists or is null
+                    // Fetch or create the relevant grid data
+                    $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
 
-                    //         // Track changes for each field
-                    //         $fieldsToTrack = ['teamMember', 'desination_dept', 'responsibility', 'remarks', 'investigation_approach'];
-                    //         foreach ($fieldsToTrack as $field) {
-                    //             // Retrieve old and new values
-                    //             $oldValue = $previousAuditor[$field] ?? null;  // Default to null if not set
-                    //             $newValue = $newAuditor[$field] ?? null;      // Default to null if not set
+                    $existingData = $teamInvestigationData->data;
 
-                    //             // Ensure we are tracking only meaningful changes
-                    //             if (isset($newValue) && $newValue !== $oldValue) {
-                    //                 // If new value is non-null and different from the old value, create the audit trail entry
-                    //                 $auditTrail = new DeviationAuditTrail();
-                    //                 $auditTrail->deviation_id = $id;
-                    //                 $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
-                    //                 $auditTrail->previous = $oldValue ?? 'Null';  // Use 'Null' if no previous value
-                    //                 $auditTrail->current = $newValue;
-                    //                 $auditTrail->comment = "";  // You can add comments if needed
-                    //                 $auditTrail->user_id = Auth::user()->id;
-                    //                 $auditTrail->user_name = Auth::user()->name;
-                    //                 $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //                 $auditTrail->origin_state = $lastDeviation->status;
-                    //                 $auditTrail->change_to = "Not Applicable";
-                    //                 $auditTrail->change_from = $lastDeviation->status;
-                    //                 $auditTrail->action_name = is_null($oldValue) ? "New" : "Update";
-                    //                 $auditTrail->save();
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    // Decode existing data from JSON, or initialize as an empty array
+                    if (is_string($existingData)) {
+                        $existingData = json_decode($existingData, true) ?: [];
+                    }
+
+                    $TeamInvestigation_data = $request->investigationTeam;
+
+                    if (is_array($TeamInvestigation_data)) {
+                        // Loop through each entry in the new data
+                        foreach ($TeamInvestigation_data as $newIndex => $newEntry) {
+                            $oldEntry = $existingData[$newIndex] ?? []; // Get the corresponding old entry, or empty if non-existent
+
+                            // Loop through each field to compare and process changes
+                            foreach ($fieldNames as $fieldKey => $fieldName) {
+                                $oldValue = $oldEntry[$fieldKey] ?? null; // Safely access the old value
+                                $newValue = $newEntry[$fieldKey] ?? null; // Safely access the new value
+
+                                // Log the change if the value has been updated
+                                if ($oldValue !== $newValue) {
+                                    // Format activity_type to include the index
+                                
+                                    $activityType = $fieldName . ' (' . ($newIndex + 1) . ')';
+
+                                    // Check for existing audit trail for the specific activity type
+                                    $lastDeviationAuditTrailExists = DeviationAuditTrail::where('deviation_id', $id)
+                                        ->where('activity_type', $activityType)
+                                        ->exists();
+
+                                    // Create a new audit trail record
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = $activityType; // Include row index in activity_type
+                                    $history->previous = json_encode($oldValue); // Log the old value
+                                    $history->current = json_encode($newValue); // Log the new value
+                                    $history->comment = $request->input('comment', '');
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $deviation->status;
+                                    $history->change_to = "Not Applicable"; // Adjust as needed
+                                    $history->change_from = $deviation->status; // Adjust as needed
+                                    $history->action_name = $lastDeviationAuditTrailExists ? "Update" : "New";
+                                    $history->save();
+                                }
+                            }
+                        }
+
+                        // Save the updated data
+                        $teamInvestigationData->deviation_id = $id;
+                        $teamInvestigationData->identifier = 'TeamInvestigation';
+                        $teamInvestigationData->data = json_encode($TeamInvestigation_data); // Ensure data is saved as a JSON string
+                        $teamInvestigationData->save();
+                    }
 
 
+    //---------------------------------------------------------TeamInvestigation------------------------------------------------------------------   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
+    $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
             $rootCauseData->deviation_id = $deviation->id;
             $rootCauseData->identifier = "RootCause";
             $rootCauseData->data = $request->rootCauseData;
@@ -11657,6 +11660,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //     ]);
                     // }
 
+
+                    if (!$deviation->QA_Feedbacks) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA/CQA Implementation Verification is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Head QA/CQA / Designee Closure Approval'
+                        ]);
+                    }
                     $extension = Extension::where('parent_id', $deviation->id)->first();
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
@@ -11744,6 +11764,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
                     // return "PAUSE";
+
+                    if (!$deviation->Closure_Comments) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Head QA/CQA / Designee Closure Approval is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Close-Done'
+                        ]);
+                    }
 
                     $deviation->stage = "12";
                     $deviation->status = "Closed-Done";

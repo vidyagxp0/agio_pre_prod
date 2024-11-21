@@ -13331,7 +13331,10 @@
                             <div class="col-md-12">
                                 @if ($data->stage == 9)
                                     <div class="group-input">
-                                        <label for="QA Evaluation ">QA/CQA Implementation Verification  </label>
+                                        <label for="QA Evaluation ">QA/CQA Implementation Verification<span
+                                        class="text-danger">*</span></label>
+                                            
+                                        </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
@@ -13467,7 +13470,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="Closure Comments">Head QA/CQA / Designee Closure Approval Comments
+                                    <label for="Closure Comments">Head QA/CQA / Designee Closure Approval Comments<span
+                                    class="text-danger">*</span></label>
 
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
