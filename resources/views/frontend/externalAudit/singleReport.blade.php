@@ -224,7 +224,7 @@
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
@@ -237,7 +237,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Initiaton Department</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
@@ -248,7 +248,7 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Initiation Department Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
@@ -576,7 +576,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule/Powder Person</th>
+                            <th class="w-20">Production Tablet/Capsule Powder Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Person)
@@ -591,7 +591,7 @@
 
                         <tr>
 
-                            <th class="w-20">Review comment (By Production Tablet/Capsule Powder)
+                            <th class="w-20">Review comment (By Production Tablet/Capsule Powder)  
                             </th>
                             <td class="w-80" colspan="3">
                                 <div>
@@ -644,7 +644,7 @@ Not Applicable
                 <div class="border-table">
                     <div class="head">
                         <div class="block-head">
-                            Production Tablet/Capsule/Powder Attachments
+                        Production Tablet/Capsule Powder Attachments
                         </div>
                         <table>
 
@@ -806,7 +806,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Review comment (By Research & Development)</th>
+                                <th class="w-20">Review comment (By Research Development)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->ResearchDevelopment_assessment)
@@ -845,7 +845,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Research & Development Attachments
+                        Research Development Attachments
                         </div>
                         <table>
 
@@ -1074,7 +1074,7 @@ Not Applicable
                 <div class="block">
                     <div class="head">
                         <div class="block-head">
-                            Stores
+                            Store
                         </div>
                         <table>
 
@@ -1091,7 +1091,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Person</th>
+                                <th class="w-20">Store Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_person)
@@ -1105,7 +1105,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Review comment (By Stores)</th>
+                                <th class="w-20">Review comment (By Store)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_assessment)
@@ -1119,7 +1119,7 @@ Not Applicable
                             </tr>
                             <tr>
 
-                                <th class="w-20">Stores Review Completed By</th>
+                                <th class="w-20">Store Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_by)
@@ -1129,7 +1129,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Review Completed On</th>
+                                <th class="w-20">Store Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_on)
@@ -1144,7 +1144,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Stores Attachments
+                            Store Attachments
                         </div>
                         <table>
 
@@ -1490,7 +1490,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Liquid/Ointment) Person</th>
+                                <th class="w-20">Production Liquid/ointment Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_person)
@@ -1504,7 +1504,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Review comment (By Production (Liquid/Ointment))</th>
+                                <th class="w-20">Review Comment (By Production Liquid/ointment)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->ProductionLiquid_assessment)
@@ -1518,7 +1518,7 @@ Not Applicable
                             </tr>
                             <tr>
 
-                                <th class="w-20">Production (Liquid/Ointment) Review Completed By</th>
+                                <th class="w-20">Production Liquid/ointment Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_by)
@@ -1528,7 +1528,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Liquid/Ointment) Review Completed On</th>
+                                <th class="w-20">Production Liquid/ointment Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_on)

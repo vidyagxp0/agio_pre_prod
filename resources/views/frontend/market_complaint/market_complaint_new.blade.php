@@ -515,7 +515,7 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="complaint_dat" name="complaint_reported_on_gi"
-                                                placeholder="Select Due Date" value="" readonly />
+                                                placeholder="Select Due Date" value="" readonly/>
                                         </div>
                                         <script>
                                             $(document).ready(function() {
@@ -1255,12 +1255,11 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">QA/CQA Head Comment <span
-                                                class="text-danger">*</span></label>
+                                        <label for="Closure Comment">QA/CQA Head Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
-                                        <textarea class="summernote" name="qa_head_comment" id="qa_head_comment">
+                                        <textarea class="tiny" readonly name="qa_head_comment" id="qa_head_comment">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1388,7 +1387,7 @@
                                             Record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1402,7 +1401,7 @@
                                             manufacturing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1413,7 +1412,7 @@
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1">
+                                        <textarea class="tiny"  name="review_of_Batch_Packing_record_bpr_gi" id="summernote-4" readonly>
                                     </textarea>
                                     </div>
                                 </div>
@@ -1425,7 +1424,7 @@
                                             Packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1435,7 +1434,7 @@
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_analytical_data_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1446,7 +1445,7 @@
                                             of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1457,7 +1456,7 @@
                                             of Equipment/Instrument qualification/Calibration record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly  name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1468,7 +1467,7 @@
                                             Equipment Break-down And Maintainance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1479,7 +1478,7 @@
                                             Product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="review_of_past_history_of_product_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1572,7 +1571,7 @@
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_pi" id="summernote-1">
+                                        <textarea class="tiny" readonly name="conclusion_pi" id="summernote-1">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1581,7 +1580,7 @@
                                         <label for="Conclusion">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1590,7 +1589,7 @@
                                         <label for="Root Cause Analysis">Other Methodology</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="root_cause_analysis_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1600,7 +1599,7 @@
                                             Root Cause </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="the_probable_root" id="summernote-1">
+                                        <textarea class="tiny" readonly name="the_probable_root" id="summernote-1">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1638,7 +1637,7 @@
                                         <label for="Impact Assessment">Impact Assessment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="impact_assessment_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1649,7 +1648,7 @@
                                         <label for="Corrective Action">Corrective Action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="corrective_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1660,7 +1659,7 @@
                                         <label for="Preventive Action">Preventive Action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="preventive_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1670,18 +1669,10 @@
                                         <label for="Summary and Conclusion">Summary And Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">
+                                        <textarea class="tiny" readonly name="summary_and_conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
 
 
                                 {{-- <div class="col-12">
@@ -1750,7 +1741,7 @@
                                     <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="manufacturer_name_address_ca" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -1909,11 +1900,6 @@
                             </script>
 
 
-
-
-
-
-
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
@@ -1938,7 +1924,7 @@
                                     <label for="Analytical Data review observation">Complaint Sample Status</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="complaint_sample_status_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="complaint_sample_status_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1948,7 +1934,7 @@
                                     <label for="Brief Description of complaint">Brief Description of complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="brief_description_of_complaint_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1958,7 +1944,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="batch_record_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1968,7 +1954,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="analytical_data_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1978,7 +1964,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="retention_sample_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1987,7 +1973,7 @@
                                     <label for="Stablity study data review">Stablity Study Data Review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="stability_study_data_review_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1997,7 +1983,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="qms_events_ifany_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2007,7 +1993,7 @@
                                         For Product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="repeated_complaints_queries_for_product_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2017,7 +2003,7 @@
                                         Sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2026,7 +2012,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">
+                                    <textarea class="tiny" readonly name="comments_ifany_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -4580,6 +4566,151 @@
 
 
 
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Closure
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">Closure Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="closure_comment_c" id="summernote-1">
+                            </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">Closure Attachment</label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="initial_attachment_c"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="initial_attachment_c"
+                                                name="initial_attachment_c[]"
+                                                oninput="addMultipleFiles(this,'initial_attachment_c')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm7" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            All Action Completion Verification by QA/CQA
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="tiny" readonly name="qa_cqa_comments" id="qa_cqa_comments">
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA/CQA Attachment</label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_cqa_attachments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="qa_cqa_attachments" name="qa_cqa_attachments[]"
+                                                oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm8" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            QA/CQA Head Approval
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Head Approval Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="tiny" readonly name="qa_cqa_head_comm" id="qa_cqa_head_comm">
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA/CQA Head Approval Attachment</label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_cqa_head_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="qa_cqa_head_attach" name="qa_cqa_head_attach[]"
+                                                oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 
@@ -4835,149 +4966,6 @@
                         <div class="button-block">
                             <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="CCForm4" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            Closure
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Closure Comment">Closure Comment</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea class="summernote" name="closure_comment_c" id="summernote-1">
-                            </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Closure Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="initial_attachment_c"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="initial_attachment_c"
-                                                name="initial_attachment_c[]"
-                                                oninput="addMultipleFiles(this,'initial_attachment_c')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton on-submit-disable-button" id="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="CCForm7" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            All Action Completion Verification by QA/CQA
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Comment</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea class="summernote" name="qa_cqa_comments" id="qa_cqa_comments">
-                                    </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">QA/CQA Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="qa_cqa_attachments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="qa_cqa_attachments" name="qa_cqa_attachments[]"
-                                                oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div id="CCForm8" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            QA/CQA Head Approval
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Head Approval Comment</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea class="summernote" name="qa_cqa_head_comm" id="qa_cqa_head_comm">
-                                    </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">QA/CQA Head Approval Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="qa_cqa_head_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="qa_cqa_head_attach" name="qa_cqa_head_attach[]"
-                                                oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>

@@ -36,7 +36,7 @@
                     '_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' +
                     serialNumber + '`);checkDate(`start_date' + serialNumber + '_checkdate`,`end_date' +
                     serialNumber + '_checkdate`)" /></div></div></div></td>' +
-                    // '<td><input type="date" name="end_date[]"></td>' 
+                    // '<td><input type="date" name="end_date[]"></td>'
                     // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="end_date' + serialNumber +'_checkdate" readonly placeholder="DD-MMM-YYYY" /><input type="date" id="end_date' + serialNumber +'"  name="end_date[]" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>'
                     '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' +
                     serialNumber +
@@ -221,7 +221,7 @@ DATA FIELDS
                                 <input disabled type="text" name="division_code" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiator Department</b></label>
@@ -696,9 +696,9 @@ DATA FIELDS
                                                             <input class="click_date" id="End_date_0" type="text"
                                                                 name="audit_program[0][End_date]"
                                                                 placeholder="DD-MMM-YYYY" readonly />
-                                                            <input type="date" name="audit_program[0][End_date]" 
+                                                            <input type="date" name="audit_program[0][End_date]"
                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                class="hide-input" id="End_date_0_input" 
+                                                                class="hide-input" id="End_date_0_input"
                                                                 class="hide-input show_date"
                                                                 style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                                 onchange="handleDateInput(this, 'End_date_0'); checkDate('Due_Date_0_input', 'End_date_0_input')" />
@@ -796,11 +796,11 @@ DATA FIELDS
                                     @endforeach
                                     return options;
                                 }
-                        
+
                                 // Function to generate a new row in the table
                                 function generateTableRow(serialNumber) {
                                     var departmentOptions = generateOptions(); // Call to get the department options
-                        
+
                                     var html = '<tr>' +
                                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                                         '<td>' +
@@ -812,13 +812,13 @@ DATA FIELDS
                                         '<select id="Months' + serialNumber + '" multiple name="Self_Inspection[' + serialNumber + '][Months]">' +
                                         '<option value="Jan">January</option>' +
                                         '<option value="Feb">February</option>' +
-                                        '<option value="Mar">March</option>' +
-                                        '<option value="Apr">April</option>' +
+                                        '<option value="March">March</option>' +
+                                        '<option value="April">April</option>' +
                                         '<option value="May">May</option>' +
-                                        '<option value="Jun">June</option>' +
-                                        '<option value="Jul">July</option>' +
+                                        '<option value="June">June</option>' +
+                                        '<option value="July">July</option>' +
                                         '<option value="Aug">August</option>' +
-                                        '<option value="Sep">September</option>' +
+                                        '<option value="Sept">September</option>' +
                                         '<option value="Oct">October</option>' +
                                         '<option value="Nov">November</option>' +
                                         '<option value="Dec">December</option>' +
@@ -829,40 +829,40 @@ DATA FIELDS
                                         '</tr>';
                                     return html;
                                 }
-                        
+
                                 // Event listener for adding new rows
                                 $('#Self_Inspection').click(function (e) {
                                     e.preventDefault();
-                        
+
                                     var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
                                     var rowCount = tableBody.children('tr').length;
                                     var newRow = generateTableRow(rowCount + 1); // Pass the correct serial number
                                     tableBody.append(newRow);
-                        
+
                                     // Initialize VirtualSelect only for the new Months select
                                     VirtualSelect.init({
                                         ele: '#Months' + (rowCount + 1) // Initialize only for the new row's select box
                                     });
                                 });
-                        
+
                                 // Event delegation for remove button
                                 $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
                                     $(this).closest('tr').remove();
                                 });
                             });
                         </script>
-                        
-                        
+
+
                         {{-- <script>
                             document.getElementById('Self_Inspection').addEventListener('click', function() {
                                 const tableBody = document.querySelector('#Self_Inspection-field-instruction-modal tbody');
                                 const newRow = document.createElement('tr');
-                        
+
                                 const rowCount = tableBody.rows.length + 1;
-                        
+
                                 // Get the department dropdown from the first row
                                 const departmentDropdown = document.querySelector('#Self_Inspection-field-instruction-modal tbody tr td select[name^="Self_Inspection[0][department]"]').outerHTML;
-                        
+
                                 newRow.innerHTML = `
                                     <td><input disabled type="text" name="serial[]" value="${rowCount}"></td>
                                     <td>${departmentDropdown.replace('Self_Inspection[0][department]', `Self_Inspection[${rowCount - 1}][department]`)}</td>
@@ -885,11 +885,11 @@ DATA FIELDS
                                     <td><input type="text" name="Self_Inspection[${rowCount - 1}][Remarked]"></td>
                                     <td><button type="button" class="removeBtn">Remove</button></td>
                                 `;
-                        
+
                                 tableBody.appendChild(newRow);
                                 updateRemoveBtnListeners();
                             });
-                        
+
                             function updateRemoveBtnListeners() {
                                 document.querySelectorAll('.removeBtn').forEach(button => {
                                     button.addEventListener('click', function() {
@@ -898,18 +898,18 @@ DATA FIELDS
                                     });
                                 });
                             }
-                        
+
                             function updateRowNumbers() {
                                 document.querySelectorAll('#Self_Inspection-field-instruction-modal tbody tr').forEach((row, index) => {
                                     row.querySelector('input[name="serial[]"]').value = index + 1;
                                 });
                             }
-                        
+
                             // Initial call to set up the listeners for the existing row
                             updateRemoveBtnListeners();
                         </script> --}}
-                        
-                        
+
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="comments">Comments</label>
@@ -943,7 +943,7 @@ DATA FIELDS
                                 <input type="text" name="url_description" id="url_description" />
                             </div>
                         </div>
-                      
+
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -1134,7 +1134,7 @@ DATA FIELDS
                     </div>
                 </div>
             </div>
-           
+
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">

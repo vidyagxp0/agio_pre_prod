@@ -31,7 +31,7 @@
             }
         }
     </script>
-    
+
 
     <div class="form-field-head">
 
@@ -66,7 +66,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
 
 
-               
+
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
             </div>
 
@@ -94,18 +94,18 @@
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             {{-- <input disabled type="text" name="record" value=""> --}}
                                             {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record }}">
-                                            <input disabled type="text" name="record_number" id="record" 
+                                            <input disabled type="text" name="record_number" id="record"
                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record_number }}">
                                         </div>
                                     </div>
-                                    
-                                </div> --}} 
+
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
-                                        <input disabled type="text" name="record" id="record" 
+                                        <input disabled type="text" name="record" id="record"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
+
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
@@ -204,20 +204,20 @@
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                         document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                    
+
                                     // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
                                         handleDateInput(dateInput, 'due_date_display');
                                     });
                                     </script>
-                                    
+
                                     <style>
                                     .hide-input {
                                         display: none;
                                     }
                                     </style>
-                              
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Department<span
@@ -273,7 +273,7 @@
                                     </div>
                                 </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
-                               
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -384,7 +384,7 @@
                                         <label for="Reference Records">Reference Records</label>
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
                                             id="">
-                                            
+
                                             @foreach ($old_records as $new)
                                                 <option value="{{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -401,7 +401,7 @@
                                 </div> --}}
 
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Reference Records</b></label>
                                         @if (!empty($reference_record))
                                         <input readonly type="text" name="parent_record_number"
@@ -447,7 +447,7 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                          
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Observation">Initial Observation</label>
@@ -479,7 +479,7 @@
                                         <label for="CAPA Attachments">CAPA Attachments </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        
+
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
@@ -668,7 +668,7 @@ $(document).ready(function() {
                                     });
                                 </script>
 
-                          
+
 
 
 
@@ -711,9 +711,9 @@ $(document).ready(function() {
                                     document.getElementById('addequipment').addEventListener('click', function() {
                                         const tableBody = document.querySelector('#equipment_de tbody');
                                         const newRow = document.createElement('tr');
-                            
+
                                         const rowCount = tableBody.rows.length + 1;
-                            
+
                                         newRow.innerHTML = `
                                             <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
                                             <td><input type="text" name="equipment[]"></td>
@@ -721,12 +721,12 @@ $(document).ready(function() {
                                             <td><input type="text" name="equipment_comments[]"></td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         `;
-                            
+
                                         tableBody.appendChild(newRow);
-                            
+
                                         updateRemoveRowListeners();
                                     });
-                            
+
                                     function updateRemoveRowListeners() {
                                         document.querySelectorAll('.removeRowBtn').forEach(button => {
                                             button.addEventListener('click', function() {
@@ -735,13 +735,13 @@ $(document).ready(function() {
                                             });
                                         });
                                     }
-                            
+
                                     function updateRowNumbers() {
                                         document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
                                             row.querySelector('input[name="serial_number[]"]').value = index + 1;
                                         });
                                     }
-                            
+
                                     // Initial call to set up the listeners for the existing row
                                     updateRemoveRowListeners();
                                 </script>
@@ -804,7 +804,7 @@ $(document).ready(function() {
                                                     <textarea name="supervisor_review_comments"></textarea>
                                                 </div>
                                             </div> --}}
-                
+
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Closure Attachments">File Attachment</label>
@@ -821,12 +821,12 @@ $(document).ready(function() {
                                                     </div>
                                                 </div>
                                             </div>
-                
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="on-submit-disable-button">Save</button>
                                              <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                                 </a> </button>
                                         </div>
@@ -848,7 +848,7 @@ $(document).ready(function() {
                     <label for="Closure Attachments">HOD Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
-                   
+
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="hod_attachment"></div>
                         <div class="add-btn">
@@ -918,8 +918,8 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
@@ -939,7 +939,7 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments">  QA/CQA Review Comment 
+                    <label for="Comments">  QA/CQA Review Comment
                     </label>
                     <textarea name="capa_qa_comments"></textarea>
                 </div>
@@ -1003,13 +1003,13 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -1105,7 +1105,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>--}}
-                            </div> 
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="on-submit-disable-button">Save</button>
                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1184,13 +1184,13 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -1264,13 +1264,13 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -1343,13 +1343,13 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -1424,13 +1424,13 @@ $(document).ready(function() {
                     <textarea name="effective_check_plan"></textarea>
                 </div>
             </div> -->
-           
-          
+
+
         </div>
         <div class="button-block">
             <button type="submit" class="on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -1442,11 +1442,11 @@ $(document).ready(function() {
 
 
                 <!-- Project Study content****************************** -->
-                
 
 
-               
-                    
+
+
+
 
 
                 <!-- Activity Log content -->
@@ -1530,7 +1530,7 @@ $(document).ready(function() {
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                    
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">QA/CQA Review Complete By</label>
@@ -1604,21 +1604,21 @@ $(document).ready(function() {
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected By">Completed By</label>
+                                    <label for="Rejected By">Complete By</label>
                                     <input type="hidden" name="completed_by">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="completed On">Completed On</label>
+                                    <label for="completed On">Complete On</label>
                                     <input type="hidden" name="completed_on">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Completed Comment</label>
+                                    <label for="Plan Proposed By">Complete Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static">Not Applicable</div>
                                 </div>
@@ -1629,7 +1629,7 @@ $(document).ready(function() {
                                     <input type="hidden" name="com_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
@@ -1639,21 +1639,21 @@ $(document).ready(function() {
                             </div>~ --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected By">HOD Final Review Completed By</label>
+                                    <label for="Rejected By">HOD Final Review Complete By</label>
                                     <input type="hidden" name="hod_final_review_completed_by">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">HOD Final Review Completed On</label>
+                                    <label for="Rejected On">HOD Final Review Complete On</label>
                                     <input type="hidden" name="hod_final_review_completed_on">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">HOD Final Review Completed Comment</label>
+                                    <label for="Plan Proposed By">HOD Final Review Complete Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static">Not Applicable</div>
                                 </div>
@@ -1674,21 +1674,22 @@ $(document).ready(function() {
                             </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
+                                    <label for="QA More Info Required By"> QA/CQA Closure Review Complete By</label>
                                     <input type="hidden" name="">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Completed On</label>
+                                    <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Complete On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on">
                                     <div class="static">Not Applicable</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">QA/CQA Closure Review Completed Comment</label>
+                                    <label for="Plan Proposed By">QA/CQA Closure Review Complete Comment</label>
                                     <input type="hidden" name="">
                                     <div class="static">Not Applicable</div>
                                 </div>
@@ -1744,10 +1745,10 @@ $(document).ready(function() {
                                     <div class="static"></div>
                                 </div>
                             </div>
-                                 
+
                         </div> --}}
                         <div class="button-block">
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button> 
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"
                                     href="#"> Exit </a> </button>
                         </div>
@@ -1902,55 +1903,55 @@ $(document).ready(function() {
             });
         });
     </script>
-    
+
 
     {{-- =======================================================record number ============================================ --}}
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
         var originalRecordNumber = document.getElementById('record').value;
         var initialPlaceholder = '---';
-        
+
             document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
             var recordNumberElement = document.getElementById('record');
             var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
-        
+
             // Update the initiator group code
             initiatorGroupCodeElement.value = selectedValue;
-        
+
             // Update the record number by replacing the initial placeholder with the selected initiator group code
             var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
             recordNumberElement.value = newRecordNumber;
-        
+
             // Update the original record number to keep track of changes
             originalRecordNumber = newRecordNumber;
             initialPlaceholder = selectedValue;
         });
         });
-    
+
     </script> --}}
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var originalRecordNumber = document.getElementById('record').value;
             var initialPlaceholder = '---';
-    
+
             document.getElementById('initiator_group').addEventListener('change', function() {
                 var selectedValue = this.value;
                 var recordNumberElement = document.getElementById('record');
                 var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
-    
+
                 // Update the initiator group code
                 initiatorGroupCodeElement.value = selectedValue;
-    
+
                 // Update the record number by replacing the initial placeholder with the selected initiator group code
                 var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
                 recordNumberElement.value = newRecordNumber;
-    
+
                 // Update the original record number to keep track of changes
                 originalRecordNumber = newRecordNumber;
                 initialPlaceholder = selectedValue;
             });
         });
     </script> --}}
-    
+
 @endsection

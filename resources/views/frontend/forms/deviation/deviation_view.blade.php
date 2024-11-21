@@ -9813,14 +9813,19 @@
                                         <option value="Failure Mode and Effect Analysis"
                                         {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
                                         Failure Mode and Effect Analysis</option>
+                                        <option value="Others"
+                                            {{ strpos($data->investigation_approach, 'Others') !== false ? 'selected' : '' }}>
+                                            Others</option>
                                 </select>
                             </div>
                         </div>
 
-
-
-
-
+                        <div class="col-lg-12 others-section" style="display: none;">
+    <div class="group-input">
+        <label for="other_specify">Others</label>
+        <textarea name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
+    </div>
+</div>
 
 <div class="col-12 mb-4 failure" id="fmea-section">
     <div class="group-input failure">
@@ -9853,7 +9858,7 @@
                         <th>Severity (S)</th>
                         <th>Probability (P)</th>
                         <th>Detection (D)</th>
-                        <th>RPN</th>
+                        <th>Risk Level(RPN)</th>
                         <th>Control Measures recommended/ Risk mitigation proposed</th>
                         <th>Severity (S)</th>
                         <th>Probability (P)</th>
@@ -10411,10 +10416,10 @@
                                                                 <option value="Methods"
                                                                     {{ $inference_type == 'Methods' ? 'selected' : '' }}>
                                                                     Methods</option>
-                                                                <option value="Environment"
+                                                                <option value="Mother Environment"
                                                                     {{ $inference_type == 'Mother Environment' ? 'selected' : '' }}>
                                                                     Mother Environment</option>
-                                                                <option value="Manpower"
+                                                                <option value="Man"
                                                                     {{ $inference_type == 'Man' ? 'selected' : '' }}>
                                                                     Man</option>
                                                                 <option value="Machine"
@@ -10488,6 +10493,18 @@
             } else {
                 $('.failure').hide();
             }
+
+
+            // Toggle Others input field
+        if (selectedValues.includes('Others')) {
+            $('.others-section').show();
+            $('#other_specify').attr('required', true);
+        } else {
+            $('.others-section').hide();
+            $('#other_specify').removeAttr('required');
+        }
+
+            
         }
 
         // Initial check on page load
@@ -10507,6 +10524,7 @@
                                 var newRow = table.insertRow(currentRowCount);
 
                                 newRow.setAttribute("id", "row" + currentRowCount);
+
                                 var cell1 = newRow.insertCell(0);
                                 cell1.innerHTML = currentRowCount;
 
@@ -11995,76 +12013,62 @@
                     <div class="row">
 
 
-
-                        <div class="col-12 mb-4" id="fmea-section">
-                            <div class="group-input">
-                                <label for="agenda">
-                                    Failure Mode and Effect Analysis
-                                    <button type="button" name="agenda"
-                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"
-                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#observation-field-instruction-modalInferenceFMEA"
-                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                        (Launch Instruction)
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" style="width: 200%"
-                                        id="risk-assessment-risk-management">
-                                        <thead>
-                                        <tr>
-                                                            <th colspan="1"style="text-align:center;"></th>
-                                                            <th colspan="2"style="text-align:center;">Risk Identification</th>
-                                                            <th colspan="1"style="text-align:center;">Risk Analysis</th>
-                                                            <th colspan="4"style="text-align:center;">Risk Evaluation</th>
-                                                            <th colspan="1"style="text-align:center;">Risk Control</th>
-                                                            <th colspan="6"style="text-align:center;">Risk Evaluation</th>
-                                                            <th colspan="2"style="text-align:center;"></th>
-                                                        </tr>
-                                            <tr>
-                                                <th>Row #</th>
-                                                <th>Activity</th>
-                                                <th>Possible Risk/Failure (Identified Risk)</th>
-                                                <th>Consequences of Risk/Potential Causes</th>
-                                                <th>Severity (S)</th>
-                                                <th>Probability (P)</th>
-                                                <th>Detection (D)</th>
-                                                <th>RPN</th>
-                                                <th>Control Measures recommended/ Risk mitigation proposed</th>
-                                                <th>Severity (S)</th>
-                                                <th>Probability (P)</th>
-                                                <th>Detection (D)</th>
-                                                <th>Risk Level (RPN)</th>
-                                                <th>Category of Risk Level (Low, Medium and High)</th>
-                                                <th>Risk Acceptance (Y/N)</th>
-                                                <th>Traceability document</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (!empty($riskEffectAnalysis->risk_factor))
-                                                @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
-                                                    <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>
-                                                            <textarea name="risk_factor[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ $riskFactor }}
-                                                            </textarea>
-                                                        </td>
-
-                                                        <td>
-                                                            <textarea name="problem_cause[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}
-                                                            </textarea>
-                                                        </td>
-
-                                                        <td>
-                                                            <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                                {{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}
-                                                            </textarea>
-                                                        </td>
-
+                    <div class="col-12 mb-4" id="fmea-section">
+    <div class="group-input">
+        <label for="agenda">
+            Failure Mode and Effect Analysis
+            <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
+                <thead>
+                    <!-- First Row: Merged Headers -->
+                    <tr>
+                        <th colspan="1" style="text-align:center;"></th>
+                        <th colspan="2" style="text-align:center;">Risk Identification</th>
+                        <th colspan="1" style="text-align:center;">Risk Analysis</th>
+                        <th colspan="4" style="text-align:center;">Risk Evaluation</th>
+                        <th colspan="1" style="text-align:center;">Risk Control</th>
+                        <th colspan="6" style="text-align:center;">Risk Evaluation</th>
+                        <th colspan="2" style="text-align:center;"></th>
+                    </tr>
+                    <!-- Second Row: Actual Column Headers -->
+                    <tr>
+                        <th style="text-align:center;">Row #</th>
+                        <th style="text-align:center;">Activity</th>
+                        <th style="text-align:center;">Possible Risk/Failure (Identified Risk)</th>
+                        <th style="text-align:center;">Consequences of Risk/Potential Causes</th>
+                        <th style="text-align:center;">Severity (S)</th>
+                        <th style="text-align:center;">Probability (P)</th>
+                        <th style="text-align:center;">Detection (D)</th>
+                        <th style="text-align:center;">Risk Level (RPN)</th>
+                        <th style="text-align:center;">Control Measures recommended/ Risk mitigation proposed</th>
+                        <th style="text-align:center;">Severity (S)</th>
+                        <th style="text-align:center;">Probability (P)</th>
+                        <th style="text-align:center;">Detection (D)</th>
+                        <th style="text-align:center;">Risk Level (RPN)</th>
+                        <th style="text-align:center;">Category of Risk Level (Low, Medium and High)</th>
+                        <th style="text-align:center;">Risk Acceptance (Y/N)</th>
+                        <th style="text-align:center;">Traceability document</th>
+                        <th style="text-align:center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($riskEffectAnalysis->risk_factor))
+                        @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>
+                                    <textarea name="risk_factor[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea name="problem_cause[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</textarea>
+                                </td>
+                
                                                         <td>
                                                             <select onchange="calculateInitialResult(this)"
                                                                 class="fieldR" name="initial_severity[]"
@@ -12237,9 +12241,9 @@
                                                                 </textarea>
                                                          </td>
 
-                                                        <td> <button class="btn btn-dark removeBtn"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
-                                                        </td>
+                                                         <td>
+                                                                <button class="btn btn-dark removeBtn" type="button" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} onclick="removeRow(this)">Remove</button>
+                                                            </td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -13327,7 +13331,10 @@
                             <div class="col-md-12">
                                 @if ($data->stage == 9)
                                     <div class="group-input">
-                                        <label for="QA Evaluation ">QA/CQA Implementation Verification  </label>
+                                        <label for="QA Evaluation ">QA/CQA Implementation Verification<span
+                                        class="text-danger">*</span></label>
+                                            
+                                        </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
@@ -13463,7 +13470,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="Closure Comments">Head QA/CQA / Designee Closure Approval Comments
+                                    <label for="Closure Comments">Head QA/CQA / Designee Closure Approval Comments<span
+                                    class="text-danger">*</span></label>
 
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not

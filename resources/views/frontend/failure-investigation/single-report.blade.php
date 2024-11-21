@@ -3064,7 +3064,7 @@
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
                                                 <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rooCauseSubCategory'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['probability'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
@@ -3140,7 +3140,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -3170,7 +3170,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -3200,7 +3200,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -3230,7 +3230,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -3260,7 +3260,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -3318,7 +3318,7 @@
                                             <td>{{ $data->skill_issues}}</td>
                                             <td>{{ $data->skill_actions}}</td>
                                             <td>{{ $data->skill_remarks}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -3369,7 +3369,7 @@
                                             <td>{{ $data->who_will_be}}</td>
                                             <td>{{ $data->who_will_not_be}}</td>
                                             <td>{{ $data->who_rationable}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -3608,7 +3608,7 @@
                                                     <td>{{$grid_item['initial_rpn']}}</td>
                                                     <td>{{$grid_item['risk_acceptance']}}</td>
                                                     <td>{{$grid_item['proposed_additional_risk_control']}}</td>
-                                                </tr>                                                
+                                                </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -3631,7 +3631,7 @@
                                         <th>Residual RPN</th>
                                         <th>Risk Acceptance (Y/N)</th>
                                         <th>Mitigation proposal</th>
-                                    </tr> 
+                                    </tr>
 
                                     <tbody>
                                         @if ($grid_data_qrms && is_array($grid_data_qrms->data))
@@ -3662,7 +3662,7 @@
                                     </tbody>
                                 </table>
 
-                               
+
                             </div>
 
                             <div class="border-table">

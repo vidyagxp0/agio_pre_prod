@@ -405,7 +405,7 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
-                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklisthtfutrdcfyjtfu6trfrtu - Production (Tablet Dispensing & Tablet Granulation)</button>
+                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
                      <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
                      <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
                      <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
@@ -999,13 +999,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditee Comment</label>
-                                        <textarea  name="Auditee_comment"></textarea>
+                                        <textarea name="Auditee_comment" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditor Comment</label>
-                                        <textarea  name="Auditor_comment"></textarea>
+                                        <textarea  name="Auditor_comment" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1019,7 +1019,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="file_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'file_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'file_attachment')" multiple disabled>
                                             </div>
                                         </div>
 
@@ -1588,7 +1588,7 @@
                                             <input type="text" id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="audit_start_date" id="audit_start_date_checkdate"
-                                                class="hide-input"
+                                                class="hide-input" disabled
                                                 oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -1601,7 +1601,7 @@
                                             <input type="text" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="audit_end_date_checkdate" name="audit_end_date"
-                                                class="hide-input"
+                                                class="hide-input" disabled
                                                 oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -1610,7 +1610,7 @@
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-table">+</button>
+                                                id="internalaudit-table" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit">
                                             <thead>
@@ -1629,7 +1629,7 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td><input type="text" name="audit[]"></td>
+                                                <td><input type="text" name="audit[]" disabled></td>
                                                 {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
@@ -1641,13 +1641,13 @@
                                                                 <input type="date" id="scheduled_start_date1_checkdate"
                                                                     name="scheduled_start_date[]"
                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
+                                                                    class="hide-input" disabled
                                                                     oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><input type="time" name="scheduled_start_time[]"></td>
+                                                <td><input type="time" name="scheduled_start_time[]" disabled></td>
                                                 {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
@@ -1659,29 +1659,29 @@
                                                                 <input type="date" id="scheduled_end_date1_checkdate"
                                                                     name="scheduled_end_date[]"
                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
+                                                                    class="hide-input" disabled
                                                                     oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
 
-                                                <td><input type="time" name="scheduled_end_time[]"></td>
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
+                                                <td><input type="time" name="scheduled_end_time[]" disabled></td>
+                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]" disabled>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
                                                     </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
+                                                <td><select id="select-state" placeholder="Select..." name="auditee[]" disabled>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
                                                     </select></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <td><input type="text" name="remarks[]" disabled></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -1691,7 +1691,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="checklists">Checklists</label>
-                                        <select multiple  id="checklists" class="abc" name="checklists[]">
+                                        <select multiple  id="checklists" class="abc" name="checklists[]" disabled>
                                             <option value="1">Checklist - Production(Tablet Dispensing & Granulation)</option>
                                             <option value="2">Checklist - Production (Tablet Compression)</option>
                                             <option value="3">Checklist - Tablet Coating</option>
@@ -1717,7 +1717,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea name="Comments"></textarea>
+                                        <textarea name="Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1730,7 +1730,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="file_attachment_guideline[]"
-                                                    oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
+                                                    oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2041,7 +2041,7 @@
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Internal Audit (Observations/Discrepancy)<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-observation">+</button>
+                                                id="internalaudit-observation" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit-odtable">
                                             <thead>
@@ -2056,9 +2056,9 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="observations[0][serial_number]" value="1">
                                                 </td>
-                                                <td><input type="text" name="observations[0][observation]"></td>
-                                                <td><input type="text" name="observations[0][category]"></td>
-                                                <td><input type="text" name="observations[0][remarks]"></td>
+                                                <td><input type="text" name="observations[0][observation]" disabled></td>
+                                                <td><input type="text" name="observations[0][category]" disabled></td>
+                                                <td><input type="text" name="observations[0][remarks]" disabled></td>
                                                 <td>
                                                     <button type="text"class="removeRowBtn">Remove</button>
                                                 </td>
@@ -2140,7 +2140,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
-                                        <select multiple id="reference_record" name="refrence_record[]" id="">
+                                        <select multiple id="reference_record" name="refrence_record[]" id="" disabled>
                                             <!-- <option value="">--Select---</option> -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
@@ -2155,7 +2155,7 @@
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Initial Response<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-initial">+</button>
+                                                id="internalaudit-initial" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit-initialtable">
                                             <thead>
@@ -2171,11 +2171,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="Initial[0][serial_number]" value="1">
+                                                <td><input disabled type="text" name="Initial[0][serial_number]" value="1" disabled>
                                                 </td>
-                                                <td><input type="text" name="Initial[0][observation]"></td>
-                                                <td><input type="text" name="Initial[0][impact_assesment]"></td>
-                                                <td><input type="text" name="Initial[0][responsiblity]"></td>
+                                                <td><input type="text" name="Initial[0][observation]" disabled></td>
+                                                <td><input type="text" name="Initial[0][impact_assesment]" disabled></td>
+                                                <td><input type="text" name="Initial[0][responsiblity]" disabled></td>
                                                 {{-- <td><input type="text" name="Initial[0][remarks]"></td> --}}
                                                 {{-- <td><input type="text" name="Initial[0][closure_date]"></td> --}}
                                                 {{-- <td>
@@ -2267,7 +2267,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="report_file[]"
-                                                    oninput="addMultipleFiles(this, 'report_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'report_attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2289,7 +2289,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="myfile[]"
-                                                    oninput="addMultipleFiles(this, 'myfile_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'myfile_attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -2297,7 +2297,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Comments">Audit Comments</label>
-                                        <textarea name="Audit_Comments2"></textarea>
+                                        <textarea name="Audit_Comments2" disabled></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-12">
@@ -2329,7 +2329,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Remarks">Response Verification Comment</label>
-                                        <textarea name="res_ver"></textarea>
+                                        <textarea name="res_ver" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -2343,7 +2343,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attach_file_rv[]"
-                                                    oninput="addMultipleFiles(this, 'attach_file_rv')" multiple>
+                                                    oninput="addMultipleFiles(this, 'attach_file_rv')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -5631,16 +5631,16 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <label for="Audit Attachments">Supporting Attachment</label>
                                     <small class="text-primary">
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach2"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="supproting_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach2')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -6979,11 +6979,11 @@
                                             Please Attach all relevant or supporting documents
                                         </small>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="file_attach3"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attach[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                <input type="file" id="myfile" name="tablet_coating_supporting_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'file_attach3')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -7726,11 +7726,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach4"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="tablet_capsule_packing_attachmen[]"
+                                                oninput="addMultipleFiles(this, 'file_attach4')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -9023,11 +9023,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach5"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="file_attach_add_1[]"
+                                                oninput="addMultipleFiles(this, 'file_attach5')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -10732,11 +10732,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach6"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="dispensing_and_manufacturing_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach6')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -12100,11 +12100,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach7"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="file_attach_add_2[]"
+                                                oninput="addMultipleFiles(this, 'file_attach7')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -13461,11 +13461,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach8"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="ointment_packing_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach8')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -14565,11 +14565,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach9"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="auditSheChecklist_attachment_main[]"
+                                                oninput="addMultipleFiles(this, 'file_attach9')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -17490,11 +17490,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach10"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="quality_control_response_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach10')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -18259,11 +18259,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach11"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="checklist_stores_response_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach11')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -19189,11 +19189,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach12"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="checklist_hr_response_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach12')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -20990,11 +20990,11 @@
                                                                 Please Attach all relevant or supporting documents
                                                             </small>
                                                             <div class="file-attachment-field">
-                                                                <div class="file-attachment-list" id="file_attach"></div>
+                                                                <div class="file-attachment-list" id="file_attach13"></div>
                                                                 <div class="add-btn">
                                                                     <div>Add</div>
-                                                                    <input type="file" id="myfile" name="file_attach[]"
-                                                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                    <input type="file" id="myfile" name="remark_documentation_name_attachment[]"
+                                                                        oninput="addMultipleFiles(this, 'file_attach13')" multiple>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -22274,11 +22274,11 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="file_attach14"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="remark_injection_packing_attachment[]"
+                                            oninput="addMultipleFiles(this, 'file_attach14')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -23877,11 +23877,11 @@
                                             Please Attach all relevant or supporting documents
                                         </small>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="file_attach15"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attach[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                <input type="file" id="myfile" name="remark_powder_manufacturing_filling_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'file_attach15')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -24585,11 +24585,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach16"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="remark_analytical_research_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach16')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -25251,11 +25251,11 @@
                                         Please Attach all relevant or supporting documents
                                     </small>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="file-attachment-list" id="file_attach17"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            <input type="file" id="myfile" name="remark_formulation_research_development_attachment[]"
+                                                oninput="addMultipleFiles(this, 'file_attach17')" multiple>
                                         </div>
                                     </div>
                                 </div>

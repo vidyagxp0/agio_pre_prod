@@ -1266,112 +1266,114 @@ class ManagementReviewController extends Controller
         }
         $data5->save();
 
-          if (!empty($management->record_number)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Record Number';
-        $history->previous = "Null";
-        $history->current =Helpers::getDivisionName($management->division_id). '/RA/'. Helpers::year($management->created). '/'.str_pad($management->record, 4, '0', STR_PAD_LEFT);
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            //if (!empty($management->record_number)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current =Helpers::getDivisionName($management->division_id). '/RA/'. Helpers::year($management->created). '/'.str_pad($management->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
-          if (!empty($management->division_code)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Site/Location Code';
-        $history->previous = "Null";
-        $history->current = $management->division_code;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-        }
+        //}
 
-          if (!empty($management->initiator_name)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Initiator';
-        $history->previous = "Null";
-        $history->current = $management->initiator_name;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            if (!empty($management->division_code)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = $management->division_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
-          if (!empty($management->intiation_date)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Date of Initiation';
-        $history->previous = "Null";
-        $history->current =  Helpers::getdateFormat($management->intiation_date);
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            }
+
+            if (!empty($management->initiator_name)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $management->initiator_name;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
-            if (!empty($management->initiator_Group)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Initiator department';
-        $history->previous = "Null";
-        $history->current =Helpers::getFullDepartmentName( $management->initiator_Group);
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            }
+
+            if (!empty($management->intiation_date)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current =  Helpers::getdateFormat($management->intiation_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
+            }
 
-
-        if (!empty($management->initiator_group_code)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Initiator department Code';
-        $history->previous = "Null";
-        $history->current = $management->initiator_group_code;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            if(!empty($management->initiator_Group)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Initiator department';
+            $history->previous = "Null";
+            $history->current = Helpers::getFullDepartmentName($management->initiator_Group);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
+            }
+
+            if(!empty($management->initiator_group_code)) {
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $management->id;
+                $history->activity_type = 'Initiator department Code';
+                $history->previous = "Null";
+                $history->current = $management->initiator_Group;
+                $history->comment = "NA";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to= "Opened";
+                $history->change_from= "Initiation";
+                $history->action_name="Create";
+                $history->save();
+                }
 
 
-        if (!empty($management->short_description)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = "Null";
-        $history->current = $management->short_description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            if (!empty($management->short_description)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $management->short_description;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
@@ -1423,36 +1425,37 @@ class ManagementReviewController extends Controller
             $history->save();
         }
          if (!empty($management->start_date)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Proposed Scheduled Start Date';
-        $history->previous = "Null";
-        $history->current =Helpers::getdateFormat ( $management->start_date);
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Proposed Scheduled Start Date';
+            $history->previous = "Null";
+            $history->current =Helpers::getdateFormat ( $management->start_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
+            }
 
-        if (!empty($management->assign_to)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Invite Person Notify';
-        $history->previous = "Null";
-        $history->current = $management->assign_to;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            if (!empty($management->assign_to)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Invite Person Notify';
+            $history->previous = "Null";
+            $history->current = $management->assign_to;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
+            }
+
         if (!empty($management->meeting_and_summary_attachment)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1469,35 +1472,35 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
-  if (!empty($management->description)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Description';
-        $history->previous = "Null";
-        $history->current = $management->description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+         if (!empty($management->description)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'Description';
+            $history->previous = "Null";
+            $history->current = $management->description;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-        }
+          }
 
 
 
          if (!empty($management->inv_attachment)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'GI Attachment';
-        $history->previous = "Null";
-        $history->current = $management->inv_attachment;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'GI Attachment';
+            $history->previous = "Null";
+            $history->current = $management->inv_attachment;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
@@ -1517,17 +1520,17 @@ class ManagementReviewController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        if (!empty($management->file_attchment_if_any)) {
-        $history = new ManagementAuditTrial();
-        $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'QA Head Review Attachment';
-        $history->previous = "Null";
-        $history->current = $management->file_attchment_if_any;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-           $history->change_to= "Opened";
+            if (!empty($management->file_attchment_if_any)) {
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $management->id;
+            $history->activity_type = 'QA Head Review Attachment';
+            $history->previous = "Null";
+            $history->current = $management->file_attchment_if_any;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
@@ -3114,13 +3117,13 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-          if($lastDocument->initiator_group_code !=$management->initiator_group_code || !empty($request->initiator_group_code_comment)) {
+          if($lastDocument->initiator_group_code != $management->initiator_group_code || !empty($request->initiator_group_code_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Initiator Department Code')
                             ->exists();
@@ -3133,10 +3136,10 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastDocument->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
             if($lastDocument->summary_recommendation !=$management->summary_recommendation || !empty($request->summary_recommendation_comment)) {
@@ -3562,7 +3565,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Action Required';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Action Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -3582,7 +3585,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Person';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
             $history->previous = $lastCft->Production_Table_Person;
             $history->current = $request->Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -3602,7 +3605,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->hod_Production_Table_Person != $request->hod_Production_Table_Person && $request->hod_Production_Table_Person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet/Capsule Powder Person';
+            $history->activity_type = 'HOD Production Tablet/Capsule/Powder Person';
             $history->previous = $lastCft->hod_Production_Table_Person;
             $history->current = $request->hod_Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -3622,7 +3625,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Description of Action Item';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Description of Action Item';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -3642,7 +3645,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Status of Action Item';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Status of Action Item';
             $history->previous = $lastCft->Production_Table_Feedback;
             $history->current = $request->Production_Table_Feedback;
             $history->comment = "Not Applicable";
@@ -3662,7 +3665,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Attachment';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
             $history->previous = $lastCft->Production_Table_Attachment;
             $history->current = implode(',',$request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -3683,7 +3686,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
           if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Action By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Action By';
             $history->previous = $lastCft->Production_Table_By;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -5728,7 +5731,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other1_Department_person != $Cft->Other1_Department_person && $Cft->Other1_Department_person != null) {
+        if (!is_null($lastCft->Other1_Department_person) != $Cft->Other1_Department_person && $Cft->Other1_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 1 Department';
@@ -5871,7 +5874,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
+        if (!is_null($lastCft->Other2_person) != $request->Other2_person && $request->Other2_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Person';
@@ -5911,7 +5914,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other2_Department_person != $Cft->Other2_Department_person && $Cft->Other2_Department_person != null) {
+        if (!is_null($lastCft->Other2_Department_person) != $Cft->Other2_Department_person && $Cft->Other2_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 2 Department';
@@ -6053,7 +6056,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
+        if (!is_null($lastCft->Other3_person) != $request->Other3_person && $request->Other3_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Person';
@@ -6093,7 +6096,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
+        if (!is_null($lastCft->Other3_Department_person) != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 3 Department';
@@ -6235,7 +6238,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
+        if (!is_null($lastCft->Other4_person) != $request->Other4_person && $request->Other4_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 4 Person';
@@ -6275,7 +6278,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
+        if (!is_null($lastCft->Other4_Department_person) != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Others 4 Department';
@@ -6418,7 +6421,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
+        if (!is_null($lastCft->Other5_person) != $request->Other5_person && $request->Other5_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Person';
@@ -6458,7 +6461,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
             $history->save();
         }
-        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
+
+        if (!is_null($lastCft->Other5_Department_person) != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Other 5 Department';
@@ -8531,14 +8535,14 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                         ]);
                     }
                 $changeControl->stage = "2";
-                $changeControl->status = 'In Progress';
+                $changeControl->status = 'QA Head Review';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Submited_Comment  =
                 $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'Submit By ,   Submit On';
+                $history->activity_type = 'Submit By, Submit On';
                 $history->action ='Submit';
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->previous = "Null";
@@ -8552,8 +8556,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
-                $history->change_to= "In Progress";
-                $history->change_from= "Opened";
+                $history->change_to = "QA Head Review";
+                $history->change_from = "Opened";
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->action_name = 'New';
                 } else {
@@ -8582,7 +8586,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             // if ($changeControl->stage == 2) {
@@ -8675,8 +8679,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='QA Head Review Complete';
-                $history->change_to= "Meeting And Summary";
-                $history->change_from= $lastDocument->status;
+                $history->change_to = "Meeting And Summary";
+                $history->change_from = $lastDocument->status;
                 if (is_null($lastDocument->qaHeadReviewComplete_By) || $lastDocument->qaHeadReviewComplete_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -8721,7 +8725,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 3) {
@@ -8831,7 +8835,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -9595,7 +9599,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
                         $changeControl->update();
                     }
-                    toastr()->success('Document Sent');
+                    //toastr()->success('Document Sent');
                     return back();
                 }
 
@@ -10393,7 +10397,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
                         $changeControl->update();
                     }
-                    toastr()->success('Document Sent');
+                    //toastr()->success('Document Sent');
                     return back();
                 }
 
@@ -10518,7 +10522,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -10626,7 +10630,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -10671,9 +10675,9 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='More Information Required By';
-                $history->change_to= "Opened";
-                $history->change_from= $lastDocument->status;
+                $history->stage = 'More Information Required By';
+                $history->change_to = "Opened";
+                $history->change_from = $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
                 //     $history->action_name = 'New';
@@ -10716,7 +10720,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action ='More Information Required';
+                $history->action = 'More Information Required';
                 $history->previous = "Not Applicable";
                 // $history->previous = $lastDocument->completed_by;
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
@@ -10731,8 +10735,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "CFT actions ";
-                $history->change_from= $lastDocument->status;
+                $history->change_to = "Meeting and Summary";
+                $history->change_from = $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
                 //     $history->action_name = 'Not Applicable';
@@ -10787,8 +10791,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "HOD Final Review";
-                $history->change_from= $lastDocument->status;
+                $history->change_to = "CFT HOD Review";
+                $history->change_from = $lastDocument->status;
                 $history->action_name = "Not Applicable";
 
                 // if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
@@ -10844,8 +10848,8 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "CFT actions";
-                $history->change_from= $lastDocument->status;
+                $history->change_to = "QA Verification";
+                $history->change_from = $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
                 //     $history->action_name = 'New';

@@ -1039,7 +1039,7 @@ class CCController extends Controller
 
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator';
+            $history->activity_type = 'Initiator';
             $history->previous = "NULL";
             $history->current = Auth::user()->name;
             $history->comment = "Not Applicable";
@@ -1054,7 +1054,7 @@ class CCController extends Controller
 
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Initiation Date';
+            $history->activity_type = 'Date of Initiation';
             $history->previous = "NULL";
             $history->current = Helpers::getdateFormat($openState->intiation_date);
             $history->comment = "Not Applicable";
@@ -1812,6 +1812,26 @@ class CCController extends Controller
             $history->save();
         }
 
+
+
+        
+        if(!empty($request->risk_identification)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Justification';
+            $history->previous = "NULL";
+            $history->current = $openState->risk_identification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+            $history->save();
+        }
+
         if(!empty($request->Division_Code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
@@ -2368,78 +2388,78 @@ class CCController extends Controller
         //     $history->save();
         // }
 
-        if(!empty($request->Occurance)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $openState->id;
-            $history->activity_type = 'Occurance';
-            $history->previous = "NULL";
+        // if(!empty($request->Occurance)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'Occurance';
+        //     $history->previous = "NULL";
 
-            if($request->Occurance == 1){
-                $history->current = "Very Likely";
-            } elseif($request->Occurance == 2){
-                $history->current = "Likely";
-            } elseif($request->Occurance == 3){
-                $history->current = "Unlikely";
-            }elseif ($request->Occurance == 4){
-                $history->current = "Rare";
-            }else {
-                $history->current = "Extremely Unlikely";
-            }
+        //     if($request->Occurance == 1){
+        //         $history->current = "Very Likely";
+        //     } elseif($request->Occurance == 2){
+        //         $history->current = "Likely";
+        //     } elseif($request->Occurance == 3){
+        //         $history->current = "Unlikely";
+        //     }elseif ($request->Occurance == 4){
+        //         $history->current = "Rare";
+        //     }else {
+        //         $history->current = "Extremely Unlikely";
+        //     }
 
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
-        if(!empty($request->Detection)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $openState->id;
-            $history->activity_type = 'Detection';
-            $history->previous = "NULL";
+        // if(!empty($request->Detection)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'Detection';
+        //     $history->previous = "NULL";
 
-            if($request->Detection == 1){
-                $history->current = "Likely";
-            } elseif($request->Detection == 2){
-                $history->current = "Unlikely";
-            } elseif($request->Detection == 3){
-                $history->current = "Rare";
-            } else {
-                $history->current = "Impossible";
-            }
+        //     if($request->Detection == 1){
+        //         $history->current = "Likely";
+        //     } elseif($request->Detection == 2){
+        //         $history->current = "Unlikely";
+        //     } elseif($request->Detection == 3){
+        //         $history->current = "Rare";
+        //     } else {
+        //         $history->current = "Impossible";
+        //     }
 
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
-        if(!empty($request->RPN)){
-            $history = new RcmDocHistory;
-            $history->cc_id = $openState->id;
-            $history->activity_type = 'RPN';
-            $history->previous = "NULL";
-            $history->current = $openState->RPN;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-                $history->change_from = "Initiation";
-                $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->RPN)){
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'RPN';
+        //     $history->previous = "NULL";
+        //     $history->current = $openState->RPN;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //         $history->change_from = "Initiation";
+        //         $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
 
         if(!empty($request->risk_evaluation)){
@@ -5232,87 +5252,87 @@ if (!$areRegAffairAttachSame && !empty($request->RegulatoryAffair_attachment)) {
         //     $history->save();
         // }
 
-        if ($lastDocument->Occurance != $openState->Occurance) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Occurance')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Occurance';
+        // if ($lastDocument->Occurance != $openState->Occurance) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'Please specify')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Please specify';
 
-            if ($request->Occurance == 1) {
-                $history->previous = "Very Likely";
-            } elseif ($request->Occurance == 2) {
-                $history->previous = "Likely";
-            } elseif ($request->Occurance == 3) {
-                $history->previous = "Unlikely";
-            } elseif ($request->Occurance == 4) {
-                $history->previous = "Rare";
-            } else {
-                $history->previous = "Extremely Unlikely";
-            }
+        //     if ($request->Occurance == 1) {
+        //         $history->previous = "Very Likely";
+        //     } elseif ($request->Occurance == 2) {
+        //         $history->previous = "Likely";
+        //     } elseif ($request->Occurance == 3) {
+        //         $history->previous = "Unlikely";
+        //     } elseif ($request->Occurance == 4) {
+        //         $history->previous = "Rare";
+        //     } else {
+        //         $history->previous = "Extremely Unlikely";
+        //     }
 
-            if ($request->Occurance == 1) {
-                $history->current = "Very Likely";
-            } elseif ($request->Occurance == 2) {
-                $history->current = "Likely";
-            } elseif ($request->Occurance == 3) {
-                $history->current = "Unlikely";
-            } elseif ($request->Occurance == 4) {
-                $history->current = "Rare";
-            } else {
-                $history->current = "Extremely Unlikely";
-            }
+        //     if ($request->Occurance == 1) {
+        //         $history->current = "Very Likely";
+        //     } elseif ($request->Occurance == 2) {
+        //         $history->current = "Likely";
+        //     } elseif ($request->Occurance == 3) {
+        //         $history->current = "Unlikely";
+        //     } elseif ($request->Occurance == 4) {
+        //         $history->current = "Rare";
+        //     } else {
+        //         $history->current = "Extremely Unlikely";
+        //     }
 
-            $history->comment = "";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        //     $history->comment = "";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
-        if ($lastDocument->Detection != $openState->Detection) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Detection')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Detection';
+        // if ($lastDocument->Detection != $openState->Detection) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'Detection')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Detection';
 
-            if ($request->Detection == 1) {
-                $history->previous = "Likely";
-            } elseif ($request->Detection == 2) {
-                $history->previous = "Unlikely";
-            } elseif ($request->Detection == 3) {
-                $history->previous = "Rare";
-            } else {
-                $history->previous = "Impossible";
-            }
+        //     if ($request->Detection == 1) {
+        //         $history->previous = "Likely";
+        //     } elseif ($request->Detection == 2) {
+        //         $history->previous = "Unlikely";
+        //     } elseif ($request->Detection == 3) {
+        //         $history->previous = "Rare";
+        //     } else {
+        //         $history->previous = "Impossible";
+        //     }
 
-            if ($request->Detection == 1) {
-                $history->current = "Likely";
-            } elseif ($request->Detection == 2) {
-                $history->current = "Unlikely";
-            } elseif ($request->Detection == 3) {
-                $history->current = "Rare";
-            } else {
-                $history->current = "Impossible";
-            }
+        //     if ($request->Detection == 1) {
+        //         $history->current = "Likely";
+        //     } elseif ($request->Detection == 2) {
+        //         $history->current = "Unlikely";
+        //     } elseif ($request->Detection == 3) {
+        //         $history->current = "Rare";
+        //     } else {
+        //         $history->current = "Impossible";
+        //     }
 
-            $history->comment = "";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        //     $history->comment = "";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
         if ($lastDocument->RPN != $openState->RPN) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)

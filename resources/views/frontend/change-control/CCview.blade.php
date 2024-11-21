@@ -2613,7 +2613,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule/Powde rReview Completed By</label>
+                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Review Completed By</label>
                                                     <input readonly type="text" value="{{ $data1->Production_Table_By }}" name="Production_Table_By"
                                                         id="Production_Table_By">
 
@@ -3338,7 +3338,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Store"> Store Review Required ? <span
+                                                    <label for="Store"> Stores Review Required ? <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Store_Review" id="Store_Review" required>
                                                         <option value="">-- Select --</option>
@@ -3504,7 +3504,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Store">Store Review Required ?</label>
+                                                    <label for="Store">Stores Review Required ?</label>
                                                     <select name="Store_Review" disabled id="Store_Review">
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Store_Review == 'yes') selected @endif value='yes'>

@@ -229,7 +229,7 @@
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
@@ -241,7 +241,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiaton Department</th>
+                        <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
@@ -1315,7 +1315,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Person</th>
+                                <th class="w-20">Store Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_person)
@@ -1327,7 +1327,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Stores)</th>
+                                <th class="w-20">Impact Assessment (By Store)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->Store_assessment)
@@ -1351,7 +1351,7 @@ Not Applicable
                                 </td>
                             </tr> -->
                             <tr>
-                                <th class="w-20">Stores Review Completed By</th>
+                                <th class="w-20">Store Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_by)
@@ -1361,7 +1361,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores Review Completed On</th>
+                                <th class="w-20">Store Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Store_on)
@@ -1376,7 +1376,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Stores Attachments
+                            Store Attachments
                         </div>
                         <table>
 
@@ -1939,11 +1939,11 @@ Not Applicable
                     </div>
                     <div class="head">
                         <div class="block-head">
-                            Regulatory Affairs
+                            Regulatory Affair
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Required ?
+                                <th class="w-20">Regulatory Affair Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1954,7 +1954,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affairs Person</th>
+                                <th class="w-20">Regulatory Affair Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_person)
@@ -1966,7 +1966,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Regulatory Affairs)</th>
+                                <th class="w-20">Impact Assessment (By Regulatory Affair)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_assessment)
@@ -1990,7 +1990,7 @@ Not Applicable
                                 </td>
                             </tr> -->
                             <tr>
-                                <th class="w-20">Regulatory Affairs Review Completed By</th>
+                                <th class="w-20">Regulatory Affair Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_by)
@@ -2000,7 +2000,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affairs Review Completed On</th>
+                                <th class="w-20">Regulatory Affair Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->RegulatoryAffair_on)
@@ -2015,7 +2015,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Regulatory Affairs Attachments
+                            Regulatory Affair Attachments
                         </div>
                         <table>
 
@@ -3856,6 +3856,25 @@ Not Applicable
                     </td>
                 </tr>
 
+
+                <tr>
+                    <th class="w-20">Cancel By</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_by ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20">Cancel On</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_on ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20">Cancel Comment</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->cancelled_comment ?? 'Not Applicable'  }}</div>
+                    </td>
+                </tr>
+
+
+
+
                 <tr>
                     <th class="w-20">QA/CQA Initial Assessment Complete By</th>
                     <td class="w-30">
@@ -3950,6 +3969,26 @@ Not Applicable
                         <div class="static">{{ $data->approved_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
+
+
+
+                <tr>
+                    <th class="w-20">Rejected   By  </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_by ?? 'Not Applicable' }}</div>
+                    </td>
+                    <th class="w-20">Rejected   On </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_on ?? 'Not Applicable' }}</div>
+                    </td>
+                    <th class="w-20">Rejected  Comment </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->Training_complete_comment ?? 'Not Applicable'  }}</div>
+                    </td>
+                </tr>
+
+
+
 
                 <tr>
     <th class="w-20">Initiator Updated Completed By</th>
