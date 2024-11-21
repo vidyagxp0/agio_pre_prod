@@ -142,7 +142,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                             </button>
-                            @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
+                            @if($extensionNew->count == 3)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                    Send for CQA
+                                </button>
+                            @endif
+                            <!-- @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
                                 </button>
@@ -234,7 +239,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
                                 </button>
-                            @endif
+                            @endif -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
                             </button>
@@ -259,6 +264,10 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
+                    @elseif ($extensionNew->stage == 4)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Rejected</div>
+                        </div>
                     @else
                         <div class="progress-bars d-flex">
                             @if ($extensionNew->stage >= 1)
@@ -273,7 +282,25 @@
                                 <div class="">In Review</div>
                             @endif
 
-                            {{-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||  ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
+                            @if ($extensionNew->stage >= 3)
+                                <div class="active">In Approved</div>
+                            @else
+                                <div class="">In Approved</div>
+                            @endif
+
+                            @if($extensionNew->count == 3 && $extensionNew->stage >= 5)
+                                <div class="active">In CQA Approval</div>
+                            @else
+                                <div class="" style="display: none;">In CQA Approval</div>
+                            @endif
+                            
+                            @if ($extensionNew->stage >= 6)
+                                <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
+                            @else
+                                <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
+                            @endif
+
+                            <!-- {{-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||  ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
                                 <div class="active">In Approved</div>
                             @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
                                 <div style="display: none" class="active">In Approved</div>
@@ -282,8 +309,8 @@
                             @else
                                 <div class="">In Approved</div>
                             @endif
-                            <div style="display: none" class=""> In CQA Approval</div> --}}
-                            @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
+                            <div style="display: none" class=""> In CQA Approval</div> --}} -->
+                            <!-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
                                 <div class="active">In Approved</div>
                             @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
                                 <div style="display: none" class="active">In Approved</div>
@@ -291,13 +318,13 @@
                                 <div class="" style="display: none;">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
-                            @endif
-                            {{-- @if ($extensionNew->parent_type == 'number'|| $extensionNew->count == 3) --}}
-                            <div class="" style="display: none;"> In CQA Approval</div>
-                            {{-- @endif --}}
+                            @endif -->
+                            <!-- {{-- @if ($extensionNew->parent_type == 'number'|| $extensionNew->count == 3) --}} -->
+                            <!-- <div class="" style="display: none;"> In CQA Approval</div> -->
+                            <!-- {{-- @endif --}} -->
 
 
-                            @if ($extensionNew->stage == 4 )
+                            <!-- @if ($extensionNew->stage == 4 )
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
                                 <div style="display: none" class="">Closed - Done</div>
                                 <div style="display: none" class=""> In CQA Approval</div>
@@ -310,11 +337,11 @@
                                 <div class="" style="display: none; border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @else
                                 <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>    
-                            @endif
-                            @if ( $extensionNew->stage_hide == "stage-6")
+                            @endif -->
+                            <!-- @if ( $extensionNew->stage_hide == "stage-6")
                             <div class="active"> In CQA Approval</div>
-                            @endif
-                            @if ($extensionNew->stage == 5)
+                            @endif -->
+                            <!-- @if ($extensionNew->stage == 5)
                                 <div class="bg-danger" style="display: none" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
                                 <div class="active"> In CQA Approval</div>
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
@@ -324,14 +351,7 @@
                             @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
                                 <div class=""> In CQA Approval</div>
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @endif
-                            @if ($extensionNew->stage >= 6)
-                                <div class="bg-danger" style="display: none">Closed - Reject</div>
-                                <div style="display: none" class=""> In CQA Approval</div>
-
-
-                                <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </div>
