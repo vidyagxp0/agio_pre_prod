@@ -255,17 +255,20 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-12">
                                 <div class="group-input">
                                     <div class="why-why-chart">
-                                        <table class="table table-bordered">
+
+                                    <button type="button" onclick="addNewRow()"  class="btn btn-primary">+ Add</button>
+
+                                    <table class="table table-bordered" id="documentTable">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 5%;">Sr.No.</th>
                                                     <th style="width: 30%;">Name of Document</th>
                                                     <th>Document Number</th>
                                                     <th>Training Date</th>
-                                                    {{-- <th>Trainee Sign/Date </th>--}}
-                                                        <th>Attachment</th>
+                                                    <th>Attachment</th>
                                                     <th>Remark</th>
                                                     <th>View SOP</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -724,7 +727,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . h</td>
                                                     <td style="background: #DCD8D8"> Utilities</td>
                                                     <td>
-                                                        <!-- <textarea name="document_number_13"></textarea> -->
                                                         <select name="document_number_13" id="document_number_13" onchange="fetchSopLink13(this)">
                                                         <option value="">----Select---</option>
                                                         @foreach ($data as $item)
@@ -828,13 +830,115 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <a href="#" id="view_sop_link15" target="_blank" style="display: none;">View SOP</a>
                                                     </td>
-                                                </tr>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+        <tr id="row_17">
+            <td>17</td>
+            <td>
+               <input type="text" name="document_title[]" />
+            </td>
+            <td>
+                <select name="document_number[]" id="document_number_17" onchange="fetchSopLink0(this, 17)">
+                    <option value="">----Select---</option>
+                    @foreach ($data as $item)
+                    <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
+                        {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <input type="date" name="training_date[]" />
+            </td>
+            <td>
+                <input type="file" name="attachment[]" />
+            </td>
+            <td>
+                <textarea name="remark[]"></textarea>
+            </td>
+            <td>
+                <a href="#" id="view_sop_link_17" target="_blank" style="display: none;">View SOP</a>
+            </td>
+        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+
+<script>
+    let rowCount = 17; // Current row count
+
+    function addNewRow() {
+        rowCount++;
+        const tableBody = document.querySelector('#documentTable tbody');
+        
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('id', `row_${rowCount}`);
+        
+        newRow.innerHTML = `
+            <td>${rowCount}</td>
+            <td>
+               <input type="text" name="document_title[]" />
+            </td>
+            <td>
+                <select name="document_number[]" id="document_number_${rowCount}" onchange="fetchSopLink0(this, ${rowCount})">
+                    <option value="">----Select---</option>
+                    @foreach ($data as $item)
+                    <option value="{{ $item->id }}" data-sop-link="{{ $item->id }}">
+                        {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <input type="date" name="training_date[]" />
+            </td>
+            <td>
+                <input type="file" name="attachment[]" />
+            </td>
+            <td>
+                <textarea name="remark[]"></textarea>
+            </td>
+            <td>
+                <a href="#" id="view_sop_link_${rowCount}" target="_blank" style="display: none;">View SOP</a>
+            </td>
+        `;
+        
+        tableBody.appendChild(newRow);
+    }
+
+    function fetchSopLink0(selectElement, row) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const documentId = selectedOption.getAttribute('data-sop-link');
+        const sopLink = document.getElementById(`view_sop_link_${row}`);
+
+        if (documentId) {
+            sopLink.href = `/documents/view/${documentId}`;
+            sopLink.style.display = 'inline';
+        } else {
+            sopLink.style.display = 'none';
+        }
+        console.log('Selected Document ID: ', documentId);
+    }
+</script>
+
+
+                                <!-- <script>
+                                    function fetchSopLink0(selectElement) {
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var documentId = selectedOption.getAttribute('data-sop-link');
+                                        var sopLink = document.getElementById('view_sop_link_17');
+                                        
+                                        if (documentId) {
+                                            sopLink.href = `/documents/view/${documentId}`;
+                                            sopLink.style.display = 'inline';
+                                        } else {
+                                            sopLink.style.display = 'none';
+                                        }
+                                        console.log('Selected Document ID: ', documentId);
+                                    }
+                                </script> -->
+
 
 
                             <script>
@@ -865,7 +969,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     } else {
                                         sopLink.style.display = 'none';
                                     }
-                                    console.log('Selected Document ID: ', documentId); // For debugging to check selected ID
+                                    console.log('Selected Document ID: ', documentId);
                                 }
                             </script>
 

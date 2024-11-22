@@ -2167,10 +2167,52 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         // $deviation->rpn = $request->rpn ? $request->rpn: $deviation->rpn;
         $deviation->rpn = $request->rpn;
 
-         $data8 = DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', 'effect_analysis')->first();
 
-         $data8 = new DeviationGrid();
+
+        $data8 = DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', 'effect_analysis')->firstOrNew();
+        
+        $previousDetails = [
+            'risk_factor_1' => is_array(@unserialize($data8->risk_factor_1)) ? unserialize($data8->risk_factor_1) : null,
+            'problem_cause_1' => is_array(@unserialize($data8->problem_cause_1)) ? unserialize($data8->problem_cause_1) : null,
+            'existing_risk_control_1' => is_array(@unserialize($data8->existing_risk_control_1)) ? unserialize($data8->existing_risk_control_1) : null,
+            'initial_severity_1' => is_array(@unserialize($data8->initial_severity_1)) ? unserialize($data8->initial_severity_1) : null,
+            'initial_probability_1' => is_array(@unserialize($data8->initial_probability_1)) ? unserialize($data8->initial_probability_1) : null,
+            'initial_detectability_1' => is_array(@unserialize($data8->initial_detectability_1)) ? unserialize($data8->initial_detectability_1) : null,
+            'initial_rpn_1' => is_array(@unserialize($data8->initial_rpn_1)) ? unserialize($data8->initial_rpn_1) : null,
+            'risk_control_measure_1' => is_array(@unserialize($data8->risk_control_measure_1)) ? unserialize($data8->risk_control_measure_1) : null,
+            'residual_severity_1' => is_array(@unserialize($data8->residual_severity_1)) ? unserialize($data8->residual_severity_1) : null,
+            'residual_probability_1' => is_array(@unserialize($data8->residual_probability_1)) ? unserialize($data8->residual_probability_1) : null,
+            'residual_detectability_1' => is_array(@unserialize($data8->residual_detectability_1)) ? unserialize($data8->residual_detectability_1) : null,
+            'residual_rpn_1' => is_array(@unserialize($data8->residual_rpn_1)) ? unserialize($data8->residual_rpn_1) : null,
+            'risk_acceptance_1' => is_array(@unserialize($data8->risk_acceptance_1)) ? unserialize($data8->risk_acceptance_1) : null,
+            'risk_acceptance3' => is_array(@unserialize($data8->risk_acceptance3)) ? unserialize($data8->risk_acceptance3) : null,
+            'mitigation_proposal_1' => is_array(@unserialize($data8->mitigation_proposal_1)) ? unserialize($data8->mitigation_proposal_1) : null,
+            'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
+        ];
+
           
+
+        $previousDetail_1 = [
+            'risk_factor' => is_array(@unserialize($data8->risk_factor)) ? unserialize($data8->risk_factor) : null,
+            'problem_cause' => is_array(@unserialize($data8->problem_cause)) ? unserialize($data8->problem_cause) : null,
+            'existing_risk_control' => is_array(@unserialize($data8->existing_risk_control)) ? unserialize($data8->existing_risk_control) : null,
+            'initial_severity' => is_array(@unserialize($data8->initial_severity)) ? unserialize($data8->initial_severity) : null,
+            'initial_detectability' => is_array(@unserialize($data8->initial_detectability)) ? unserialize($data8->initial_detectability) : null,
+           
+            'initial_probability' => is_array(@unserialize($data8->initial_probability)) ? unserialize($data8->initial_probability) : null,
+            'initial_rpn' => is_array(@unserialize($data8->initial_rpn)) ? unserialize($data8->initial_rpn) : null,
+            'risk_control_measure' => is_array(@unserialize($data8->risk_control_measure)) ? unserialize($data8->risk_control_measure) : null,
+            'residual_severity' => is_array(@unserialize($data8->residual_severity)) ? unserialize($data8->residual_severity) : null,
+            'residual_probability' => is_array(@unserialize($data8->residual_probability)) ? unserialize($data8->residual_probability) : null,
+            'residual_detectability' => is_array(@unserialize($data8->residual_detectability)) ? unserialize($data8->residual_detectability) : null,
+            'residual_rpn' => is_array(@unserialize($data8->residual_rpn)) ? unserialize($data8->residual_rpn) : null,
+            'risk_acceptance' => is_array(@unserialize($data8->risk_acceptance)) ? unserialize($data8->risk_acceptance) : null,
+            'risk_acceptance2' => is_array(@unserialize($data8->risk_acceptance2)) ? unserialize($data8->risk_acceptance2) : null,
+            'mitigation_proposal' => is_array(@unserialize($data8->mitigation_proposal)) ? unserialize($data8->mitigation_proposal) : null,
+        ];
+
+
+       // dd($previousDetail_1);
 
         $data8->deviation_grid_id = $deviation->id;
         $data8->type = "effect_analysis";
@@ -2195,7 +2237,6 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         $data8->risk_acceptance = serialize($request->risk_acceptance ?? []);
         $data8->risk_acceptance2 = serialize($request->risk_acceptance2 ?? []);
         $data8->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
-
 
 
 
@@ -2250,96 +2291,125 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         // Store the attachments array in the database (serialized or JSON format)
         $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
         
-       //dd($data8) ;
-        $data8->save();
+ //---------------------------------------------------------ORM Failure Grid data----------------------------------------------------------------------
+ 
+ $fieldName_1 = [
+    'risk_factor' => 'ORM / Activity',
+    'problem_cause' => 'ORM / Possible Risk/Failure (Identified Risk)',
+    'existing_risk_control' => 'ORM / Consequences of Risk/Potential Causes',
+    'initial_severity' => 'ORM / Severity (S)',
+    'initial_detectability' => 'ORM / Probability (P)',
+    'initial_probability' => 'ORM / Detection (D)',
+    
+    'initial_rpn' => 'ORM / Risk Level (RPN)',
+    'risk_control_measure' => 'ORM / Control Measures recommended/ Risk mitigation proposed',
+    'residual_severity' => 'ORM / Severity (S)',
+    'residual_probability' => 'ORM / Probability (P)',
+    'residual_detectability' => 'ORM / Detection (D)',
+    'residual_rpn' => 'ORM / Risk Level (RPN)',
+    'risk_acceptance' => 'ORM / Category of Risk Level (Low, Medium and High)',
+    'risk_acceptance2' => 'ORM / Risk Acceptance (Y/N)',
+    'mitigation_proposal' => 'ORM / Traceability document',
+    
+];
+foreach ($fieldName_1 as $key => $label) {
+    $previousValues = $previousDetail_1[$key] ?? [];
+    $currentValues = $request->input($key, []);
+
+
+    // Ensure both are arrays
+    $previousValues = is_array($previousValues) ? $previousValues : [];
+    $currentValues = is_array($currentValues) ? $currentValues : [];
+
+
+    // Compare values for each entry
+    foreach ($currentValues as $index => $currentValue) {
+        $previousValue = $previousValues[$index] ?? null;
+        // dd($currentValue);
+        // Compare individual values (not the entire array)
+
+        if (($previousValue !== $currentValue) && !is_null($currentValue)) {
+            $existingAudit = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                ->where('activity_type', $label . ' (' . ($index + 1) . ')')
+                ->exists();
+
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = $label . ' (' . ($index + 1) . ')';
+            $history->previous = json_encode($previousValue); // Convert array to JSON
+            $history->current = json_encode($currentValue);   // Convert array to JSON
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->action_name = $existingAudit ? 'Update' : 'New';
+            $history->save();
+        }
+    }
+
+}
+  //--------------------------------------------------------End ORM Failure Grid data----------------------------------------------------------------------
 
  //---------------------------------failure mode- Grid ----------------------------------------------------------------------------------------------------------------
 
 
 
-// $previousDetails = [
-//     'risk_factor_1' => is_array(@unserialize($data8->risk_factor_1)) ? unserialize($data8->risk_factor_1) : null,
-//     'problem_cause_1' => is_array(@unserialize($data8->problem_cause_1)) ? unserialize($data8->problem_cause_1) : null,
-//     'existing_risk_control_1' => is_array(@unserialize($data8->existing_risk_control_1)) ? unserialize($data8->existing_risk_control_1) : null,
-//     'initial_severity_1' => is_array(@unserialize($data8->initial_severity_1)) ? unserialize($data8->initial_severity_1) : null,
-//     'initial_probability_1' => is_array(@unserialize($data8->initial_probability_1)) ? unserialize($data8->initial_probability_1) : null,
-//     'initial_detectability_1' => is_array(@unserialize($data8->initial_detectability_1)) ? unserialize($data8->initial_detectability_1) : null,
-//     'initial_rpn_1' => is_array(@unserialize($data8->initial_rpn_1)) ? unserialize($data8->initial_rpn_1) : null,
-//     'risk_control_measure_1' => is_array(@unserialize($data8->risk_control_measure_1)) ? unserialize($data8->risk_control_measure_1) : null,
-//     'residual_severity_1' => is_array(@unserialize($data8->residual_severity_1)) ? unserialize($data8->residual_severity_1) : null,
-//     'residual_probability_1' => is_array(@unserialize($data8->residual_probability_1)) ? unserialize($data8->residual_probability_1) : null,
-//     'residual_detectability_1' => is_array(@unserialize($data8->residual_detectability_1)) ? unserialize($data8->residual_detectability_1) : null,
-//     'residual_rpn_1' => is_array(@unserialize($data8->residual_rpn_1)) ? unserialize($data8->residual_rpn_1) : null,
-//     'risk_acceptance_1' => is_array(@unserialize($data8->risk_acceptance_1)) ? unserialize($data8->risk_acceptance_1) : null,
-//     'risk_acceptance3' => is_array(@unserialize($data8->risk_acceptance3)) ? unserialize($data8->risk_acceptance3) : null,
-//     'mitigation_proposal_1' => is_array(@unserialize($data8->mitigation_proposal_1)) ? unserialize($data8->mitigation_proposal_1) : null,
-//     'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
-// ];
-// $fieldNames = [
-//     'risk_factor_1' => 'Activity',
-//     'problem_cause_1' => 'Possible Risk/Failure (Identified Risk)',
-//     'existing_risk_control_1' => 'Consequences of Risk/Potential Causes',
-//     'initial_severity_1' => 'Severity (S)',
-//     'initial_probability_1' => 'Probability (P)',
-//     'initial_detectability_1' => 'Detection (D)',
-//     'initial_rpn_1' => 'RPN',
-//     'risk_control_measure_1' => 'Control Measures recommended/ Risk mitigation proposed',
-//     'residual_severity_1' => 'Severity (S)',
-//     'residual_probability_1' => 'Probability (P)',
-//     'residual_detectability_1' => 'Detection (D)',
-//     'residual_rpn_1' => 'Risk Level (RPN)',
-//     'risk_acceptance_1' => 'Category of Risk Level (Low, Medium and High)',
-//     'risk_acceptance3' => 'Risk Acceptance (Y/N)',
-//     'mitigation_proposal_1' => 'Traceability document',
-//     'conclusion' => 'Others',
-// ];
-  
-// foreach ($fieldNames as $key => $label) {
-   
-//     $previousValue = $previousDetails[$key] ?? null;
-//     $currentValue = $request->input($key);
-//     //dd($request->input($key));
-   
-//     // if (is_null($previousValue) && (is_null($currentValue) || $currentValue === '')) {
-//     //     continue;
-//     // }
 
-//     // $actionName = is_null($previousValue) || $previousValue === '' ? 'New' : 'Update';
+// dd($request->risk_control_measure_1);
 
-//     // if ($previousValue === $currentValue) {
-//     //     continue;
-//     // }
+$fieldNames = [
+    'risk_factor_1' => 'Activity',
+    'problem_cause_1' => 'Possible Risk/Failure (Identified Risk)',
+    'existing_risk_control_1' => 'Consequences of Risk/Potential Causes',
+    'initial_severity_1' => 'Severity (S)',
+    'initial_probability_1' => 'Probability (P)',
+    'initial_detectability_1' => 'Detection (D)',
+    'initial_rpn_1' => 'RPN',
+    'risk_control_measure_1' => 'Control Measures recommended/ Risk mitigation proposed',
+    'residual_severity_1' => 'Severity (S)',
+    'residual_probability_1' => 'Probability (P)',
+    'residual_detectability_1' => 'Detection (D)',
+    'residual_rpn_1' => 'Risk Level (RPN)',
+    'risk_acceptance_1' => 'Category of Risk Level (Low, Medium and High)',
+    'risk_acceptance3' => 'Risk Acceptance (Y/N)',
+    'mitigation_proposal_1' => 'Traceability document',
+    'conclusion' => 'Others',
+];
+foreach ($fieldNames as $key => $label) {
+    $previousValues = $previousDetails[$key] ?? [];
+    $currentValues = $request->input($key, []);
 
-  
-//     if (!empty($currentValue)) {
-  
-//         foreach ($currentValue as $index => $currentRowValue) {
-//            // dd($currentRowValue);
-//             $previousRowValue = isset($previousValue[$index]) ? $previousValue[$index] : null;
 
-//             if ($previousRowValue !== $currentRowValue) {
-//                 $existingAudit = DeviationAuditTrail::where('deviation_id', $deviation->id)
-//                     ->where('activity_type', $label . ' (' . ($index + 1) . ')')
-//                     ->where('previous', $previousRowValue)
-//                     ->where('current', $currentRowValue)
-//                     ->exists();
-//                     dd($existingAudit);
-//                    if (!$existingAudit) {
-//                     $history = new DeviationAuditTrail();
-//                     $history->deviation_id = $deviation->id;
-//                     $history->activity_type = $label . ' (' . ($index + 1) . ')';
-//                     $history->previous =  $previousRowValue;
-//                     $history->current =  $currentRowValue ;
-//                     $history->user_id = Auth::id();
-//                     $history->user_name = Auth::user()->name;
-//                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//                    $history->action_name = $actionName; // 'New' or 'Update'
-//                     $history->save();
-//                 }
-//             }
-//         }
-//     }
-// }
+    // Ensure both are arrays
+    $previousValues = is_array($previousValues) ? $previousValues : [];
+    $currentValues = is_array($currentValues) ? $currentValues : [];
+
+
+    // Compare values for each entry
+    foreach ($currentValues as $index => $currentValue) {
+        $previousValue = $previousValues[$index] ?? null;
+        // dd($currentValue);
+        // Compare individual values (not the entire array)
+
+        if (($previousValue !== $currentValue) && !is_null($currentValue)) {
+            $existingAudit = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                ->where('activity_type', $label . ' (' . ($index + 1) . ')')
+                ->exists();
+
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = $label . ' (' . ($index + 1) . ')';
+            $history->previous = json_encode($previousValue); // Convert array to JSON
+            $history->current = json_encode($currentValue);   // Convert array to JSON
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->action_name = $existingAudit ? 'Update' : 'New';
+            $history->save();
+        }
+    }
+
+}
+$data8->save();
 
 
 
@@ -3333,76 +3403,79 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
             $deviation->who_will_not_be = $request->who_will_not_be;
             $deviation->who_rationable = $request->who_rationable;
 
-            $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
-            $teamInvestigationData->deviation_id = $deviation->id;
-            $teamInvestigationData->identifier = "TeamInvestigation";
-            $teamInvestigationData->data = $request->investigationTeam;
-            $teamInvestigationData->update();
+        //---------------------------------------------------------TeamInvestigation------------------------------------------------------------------   
 
-                    // Define the mapping of field keys to more descriptive names
-                    // $fieldNames = [
-                    //     'teamMember' => 'Investigation Team',
-                    //     'desination_dept' => 'Designation & Department',
-                    //     'responsibility' => 'Responsibility',
-                    //     'remarks' => 'Remarks',
-                    //     'investigation_approach' => 'Investigation Approach'
-                    // ];
+                        $fieldNames = [
+                        'teamMember' => 'Investigation Team',
+                        'desination_dept' => 'Designation & Department',
+                        'responsibility' => 'Responsibility',
+                        'remarks' => 'Remarks',
+                        'investigation_approach' => 'Investigation Approach'
+                    ];
 
-                    // // Track audit trail changes
-                    // if (is_array($request->investigationTeam)) {
-                    //     foreach ($request->investigationTeam as $index => $newAuditor) {
-                    //         $previousAuditor = $existingAuditorData[$index] ?? null; // Ensure previous data exists or is null
+                    // Fetch or create the relevant grid data
+                    $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
 
-                    //         // Track changes for each field
-                    //         $fieldsToTrack = ['teamMember', 'desination_dept', 'responsibility', 'remarks', 'investigation_approach'];
-                    //         foreach ($fieldsToTrack as $field) {
-                    //             // Retrieve old and new values
-                    //             $oldValue = $previousAuditor[$field] ?? null;  // Default to null if not set
-                    //             $newValue = $newAuditor[$field] ?? null;      // Default to null if not set
+                    $existingData = $teamInvestigationData->data;
 
-                    //             // Ensure we are tracking only meaningful changes
-                    //             if (isset($newValue) && $newValue !== $oldValue) {
-                    //                 // If new value is non-null and different from the old value, create the audit trail entry
-                    //                 $auditTrail = new DeviationAuditTrail();
-                    //                 $auditTrail->deviation_id = $id;
-                    //                 $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
-                    //                 $auditTrail->previous = $oldValue ?? 'Null';  // Use 'Null' if no previous value
-                    //                 $auditTrail->current = $newValue;
-                    //                 $auditTrail->comment = "";  // You can add comments if needed
-                    //                 $auditTrail->user_id = Auth::user()->id;
-                    //                 $auditTrail->user_name = Auth::user()->name;
-                    //                 $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //                 $auditTrail->origin_state = $lastDeviation->status;
-                    //                 $auditTrail->change_to = "Not Applicable";
-                    //                 $auditTrail->change_from = $lastDeviation->status;
-                    //                 $auditTrail->action_name = is_null($oldValue) ? "New" : "Update";
-                    //                 $auditTrail->save();
-                    //             }
-                    //         }
-                    //     }
-                    // }
+                    // Decode existing data from JSON, or initialize as an empty array
+                    if (is_string($existingData)) {
+                        $existingData = json_decode($existingData, true) ?: [];
+                    }
+
+                    $TeamInvestigation_data = $request->investigationTeam;
+
+                    if (is_array($TeamInvestigation_data)) {
+                        // Loop through each entry in the new data
+                        foreach ($TeamInvestigation_data as $newIndex => $newEntry) {
+                            $oldEntry = $existingData[$newIndex] ?? []; // Get the corresponding old entry, or empty if non-existent
+
+                            // Loop through each field to compare and process changes
+                            foreach ($fieldNames as $fieldKey => $fieldName) {
+                                $oldValue = $oldEntry[$fieldKey] ?? null; // Safely access the old value
+                                $newValue = $newEntry[$fieldKey] ?? null; // Safely access the new value
+
+                                // Log the change if the value has been updated
+                                if ($oldValue !== $newValue) {
+                                    // Format activity_type to include the index
+                                
+                                    $activityType = $fieldName . ' (' . ($newIndex + 1) . ')';
+
+                                    // Check for existing audit trail for the specific activity type
+                                    $lastDeviationAuditTrailExists = DeviationAuditTrail::where('deviation_id', $id)
+                                        ->where('activity_type', $activityType)
+                                        ->exists();
+
+                                    // Create a new audit trail record
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = $activityType; // Include row index in activity_type
+                                    $history->previous = json_encode($oldValue); // Log the old value
+                                    $history->current = json_encode($newValue); // Log the new value
+                                    $history->comment = $request->input('comment', '');
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $deviation->status;
+                                    $history->change_to = "Not Applicable"; // Adjust as needed
+                                    $history->change_from = $deviation->status; // Adjust as needed
+                                    $history->action_name = $lastDeviationAuditTrailExists ? "Update" : "New";
+                                    $history->save();
+                                }
+                            }
+                        }
+
+                        // Save the updated data
+                        $teamInvestigationData->deviation_id = $id;
+                        $teamInvestigationData->identifier = 'TeamInvestigation';
+                        $teamInvestigationData->data = json_encode($TeamInvestigation_data); // Ensure data is saved as a JSON string
+                        $teamInvestigationData->save();
+                    }
 
 
+    //---------------------------------------------------------TeamInvestigation------------------------------------------------------------------   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
+    $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
             $rootCauseData->deviation_id = $deviation->id;
             $rootCauseData->identifier = "RootCause";
             $rootCauseData->data = $request->rootCauseData;
@@ -3447,12 +3520,10 @@ foreach ($fieldNamewhys as $fieldKey => $fieldName) {
         ? $fieldNamewhy[$fieldKey]
         : null;
 
-    if ((is_null($oldValue) && (is_null($newValue) || $newValue === '')) || is_null($newValue) || $newValue === '') {
-            continue;
-        }
+    
 
     // If there's a change, create an audit trail record
-    if ($oldValue !== $newValue) {
+    if ($oldValue !== $newValue && !is_null($oldValue) && !is_null($newValue) ) {
         $lastDeviationAuditTrailExists = DeviationAuditTrail::where('deviation_id', $id)
             ->where('activity_type', $fieldName)
             ->exists();
@@ -3460,8 +3531,8 @@ foreach ($fieldNamewhys as $fieldKey => $fieldName) {
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
         $history->activity_type = $fieldName;
-        $history->previous = is_array($oldValue) ? json_encode($oldValue) : ($oldValue ?? 'Null');
-        $history->current = is_array($newValue) ? json_encode($newValue) : ($newValue ?? 'Null');
+        $history->previous = json_encode($oldValue);
+        $history->current = json_encode($newValue);
         $history->comment = $request->input('comment', '');
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3473,7 +3544,6 @@ foreach ($fieldNamewhys as $fieldKey => $fieldName) {
         $history->save();
     }
 }
-
 // Save the updated fishbone data as a JSON string
 $newDataGridWhy->deviation_id = $id;
 $newDataGridWhy->identifier = 'why';
@@ -3570,7 +3640,8 @@ foreach ($fieldNames as $fieldKey => $fieldName) {
     }
 
     // If there's a change, create an audit trail record
-    if ($oldValue !== $newValue) {
+    if ($oldValue !== $newValue && !is_null($oldValue) && !is_null($newValue)) 
+     {
         $lastDeviationAuditTrailExists = DeviationAuditTrail::where('deviation_id', $id)
             ->where('activity_type', $fieldName)
             ->exists();
@@ -11589,6 +11660,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //     ]);
                     // }
 
+
+                    if (!$deviation->QA_Feedbacks) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QA/CQA Implementation Verification is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Head QA/CQA / Designee Closure Approval'
+                        ]);
+                    }
                     $extension = Extension::where('parent_id', $deviation->id)->first();
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
@@ -11676,6 +11764,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
                     // return "PAUSE";
+
+                    if (!$deviation->Closure_Comments) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Head QA/CQA / Designee Closure Approval is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Close-Done'
+                        ]);
+                    }
 
                     $deviation->stage = "12";
                     $deviation->status = "Closed-Done";

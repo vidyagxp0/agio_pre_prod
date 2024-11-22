@@ -459,17 +459,20 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HOD Evaluation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Pending Trainer Update</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Pending Training </button>
 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head Approval</button>
-            @if ($trainer->stage >= 5 && $trainer->trainer == 'Qualified')
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Evaluation</button>
+
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Approval</button>
+            @if ($trainer->stage >= 5)
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Certificate</button>
             @endif
-            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button> -->
+            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Certificate</button> --}}
 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
         </div>
+
         <script>
             $(document).ready(function() {
                 <?php if ($trainer->stage == 6) : ?>
@@ -483,7 +486,6 @@
             @csrf
             <div id="step-form">
 
-                <!-- General information content -->
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -525,43 +527,39 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Department">Department</label>
-                                    <select name="department">
+                                    <input type="text" name="department"
+                                    value="{{ $trainer->department }}" readonly>
+
+                                    {{-- <select name="department">
                                         <option>-- Select --</option>
-                                        {{-- @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
-                                        @endforeach --}}
-
-
-
                                         @php
                                             $savedDepartmentId = old('department', $trainer->department);
                                         @endphp
-
                                         @foreach (Helpers::getDepartments() as $code => $department)
                                             <option value="{{ $code }}"
                                                 @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                             </option>
-                                        @endforeach
-                                    </select>
+                                        @endforeach 
+                                    </select> --}}
                                 </div>
                             </div>
 
-                            <!-- <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Designation">Designation</label>
-                        <select name="designation" id="designation">
-                            <option>Select</option>
-                            <option value="lead_trainer" @if ($trainer->designation == 'lead_trainer') selected @endif>Lead Trainer</option>
-                            <option value="senior_trainer" @if ($trainer->designation == 'senior_trainer') selected @endif>Senior Trainer</option>
-                            <option value="Instructor" @if ($trainer->designation == 'Instructor') selected @endif>Instructor</option>
-                            <option value="Evaluator" @if ($trainer->designation == 'Evaluator') selected @endif>Evaluator</option>
-                        </select>
-                    </div>
-                </div> -->
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Designation">Designation</label>
+                                    <select name="designation" id="designation">
+                                        <option>Select</option>
+                                        <option value="lead_trainer" @if ($trainer->designation == 'lead_trainer') selected @endif>Lead Trainer</option>
+                                        <option value="senior_trainer" @if ($trainer->designation == 'senior_trainer') selected @endif>Senior Trainer</option>
+                                        <option value="Instructor" @if ($trainer->designation == 'Instructor') selected @endif>Instructor</option>
+                                        <option value="Evaluator" @if ($trainer->designation == 'Evaluator') selected @endif>Evaluator</option>
+                                    </select>
+                                </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
+                                    <label for="Job Title">Designation</label>
                                     <select name="designation" id="job_title" required onchange="checkDesignation()"
                                         readonly>
                                         <option value="">----Select---</option>
@@ -611,11 +609,11 @@
                                     <input type="number" name="experience" min="1"
                                         value ="{{ $trainer->experience }}" id="experience">
                                     <!-- <select name="experience" id="experience">
-                            <option>Select </option>
-                            @for ($experience = 1; $experience <= 70; $experience++)
-    <option value="{{ $experience }}" @if ($experience == $trainer->experience) selected @endif>{{ $experience }}</option>
-    @endfor
-                        </select> -->
+                                            <option>Select </option>
+                                            @for ($experience = 1; $experience <= 70; $experience++)
+                                            <option value="{{ $experience }}" @if ($experience == $trainer->experience) selected @endif>{{ $experience }}</option>
+                                            @endfor
+                                    </select> -->
                                 </div>
                             </div>
 
@@ -626,13 +624,14 @@
                                         value="{{ $trainer->hod }}">
 
                                     <!-- <select name="hod" id="hod">
-                            <option value="">-- Select HOD --</option>
-                            @foreach ($users as $user)
-    <option value="{{ $user->id }}" {{ $user->id == old('hod', $trainer->hod) ? 'selected' : '' }}>
-                                {{ $user->name }}
-                            </option>
-    @endforeach
-                        </select> -->
+                                            <option value="">-- Select HOD --</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" {{ $user->id == old('hod', $trainer->hod) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                            @endforeach
+                                    </select> -->
+                                    
                                 </div>
                             </div>
 
@@ -646,13 +645,12 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="training_date">Training Date</label>
+                                    <label for="training_date">Schedule Training date</label>
                                     <input type="date" id="training_date" name="training_date"
                                         value="{{ $trainer->training_date }}">
                                 </div>
                             </div>
 
-                            <!-- Topic of Training -->
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="topic">Topic of Training</label>
@@ -660,24 +658,22 @@
                                 </div>
                             </div>
 
-                            <!-- Type of Training -->
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="type">Type of Training</label>
                                     <select name="type" id="type">
                                         <option value="">--Select--</option>
-                                        <option value="technical" @if ($trainer->type == 'technical') selected @endif>
-                                            Technical</option>
-                                        <option value="non-technical" @if ($trainer->type == 'non-technical') selected @endif>
-                                            Non-Technical</option>
-                                        <option value="safety" @if ($trainer->type == 'technical') selected @endif>Safety
+                                        <option value="Planned/ Schedule Training" @if ($trainer->type == 'Planned/ Schedule Training') selected @endif>
+                                        Planned/ Schedule Training</option>
+                                        <option value="Unplanned/ Unschedule Training" @if ($trainer->type == 'Unplanned/ Unschedule Training') selected @endif>
+                                            Unplanned/ Unschedule Training</option>
+                                        <option value="External Training" @if ($trainer->type == 'External Training') selected @endif>External Training
                                         </option>
                                     </select>
                                 </div>
                             </div>
 
-                            <!-- Evaluation Required -->
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="evaluation">Evaluation Required</label>
                                     <select name="evaluation">
@@ -688,11 +684,45 @@
                                         </option>
                                     </select>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="evaluation">Evaluation Required</label>
+                                    <select name="evaluation" id="evaluation">
+                                        <option value="">--Select--</option>
+                                        <option value="yes" @if ($trainer->evaluation == 'yes') selected @endif>Yes</option>
+                                        <option value="no" @if ($trainer->evaluation == 'no') selected @endif>No</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="col-lg-6" id="evaluation-through-container" style="display: {{ $trainer->evaluation == 'yes' ? 'block' : 'none' }};">
+                                <div class="group-input">
+                                    <label for="evaluation-through">Evaluation Through</label>
+                                    <select name="evaluation_through" id="evaluation-through">
+                                        <option value="">--Select--</option>
+                                        <option value="questionnaire" @if ($trainer->evaluation_through == 'questionnaire') selected @endif>Questionnaire</option>
+                                        <option value="group_interaction" @if ($trainer->evaluation_through == 'group_interaction') selected @endif>Group Interaction</option>
+                                        <option value="viva_voice" @if ($trainer->evaluation_through == 'viva_voice') selected @endif>Viva Voice</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.getElementById('evaluation').addEventListener('change', function () {
+                                    var evaluationThroughContainer = document.getElementById('evaluation-through-container');
+                                    if (this.value === 'yes') {
+                                        evaluationThroughContainer.style.display = 'block';
+                                    } else {
+                                        evaluationThroughContainer.style.display = 'none';
+                                    }
+                                });
+                            </script>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="site_name">Site Division/Project </label>
-                                    <!-- <input type="text" id="site_code" name="site_code" value="{{ $trainer->site_code }}" required> -->
                                     <select name="site_code">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Corporate" @if ($trainer->site_code == 'Corporate') selected @endif>
@@ -704,37 +734,6 @@
                                 </div>
                             </div>
 
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Site Division/Project">Site Division/Project</label>
-                                    <input value="{{ $trainer->site_code }}" name="site_code" readonly >
-                            <select name="division_id">
-                                <option>-- Select --</option>
-                                @foreach ($divisions as $division)
-                                <option value="{{ $division->id }}" @if ($division->id == $trainer->division_id) selected @endif >{{ $division->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div> --}}
-
-                            {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Division Code"><b>Site/Location Code </b></label>
-                                        <input readonly type="text" name="site_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                </div>
-            </div> --}}
-
-                            {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="site_code" value="PLANT">
-                                        <input type="hidden" name="site_code" value="PLANT">
-
-                                    </div>
-                                </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Initiator</b></label>
@@ -774,18 +773,6 @@
                             </div>
 
 
-                            {{-- <div class="col-lg-6 new-date-data-field">
-                <div class="group-input input-date">
-                    <label for="Date Due">Due Date</label>
-                    <div class="calenderauditee">
-
-                        <input type="hidden" value="{{$due_date}}" name="due_date">
-                        <input disabled type="text" value="{{Helpers::getdateFormat($due_date)}}">
-                    </div>
-                </div>
-            </div> --}}
-
-
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span
@@ -796,45 +783,52 @@
                                 </div>
                             </div>
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Description">Description </label>
+                                        <input id="short_description" type="text" name="description" value="{{$trainer->description }}">
+                                    </div>
+                                </div>
+
                             <div class="">
                                 {{-- <div class="group-input">
-                    <label for="audit-agenda-grid">
-                        Trainer Skill Set<button type="button" name="audit-agenda-grid" id="Trainer_Skill_table">+</button>
-                    </label>
-                    <table class="table table-bordered" id="Trainer_Skill_table_details">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">Sr. No.</th>
-                                <th>Trainer Skill Set</th>
+                                    <label for="audit-agenda-grid">
+                                        Trainer Skill Set<button type="button" name="audit-agenda-grid" id="Trainer_Skill_table">+</button>
+                                    </label>
+                                    <table class="table table-bordered" id="Trainer_Skill_table_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr. No.</th>
+                                                <th>Trainer Skill Set</th>
 
-                                <th>Remarks</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($trainer_skill && is_array($trainer_skill->data))
-                            @foreach ($trainer_skill->data as $index => $skill)
-                            <tr>
-                                <td><input disabled type="text" name="trainer_skill[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
-                                </td>
-                                <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
-                                <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
-                                <td>
-                                    <button type="button" onclick="removeRow(this)">Remove</button>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
-                                </td>
-                                <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
-                                <td><input type="text" name="trainer_skill[0][remarks]"></td>
-                            </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div> --}}
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($trainer_skill && is_array($trainer_skill->data))
+                                            @foreach ($trainer_skill->data as $index => $skill)
+                                            <tr>
+                                                <td><input disabled type="text" name="trainer_skill[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
+                                                </td>
+                                                <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
+                                                <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
+                                                <td>
+                                                    <button type="button" onclick="removeRow(this)">Remove</button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
+                                                <td><input type="text" name="trainer_skill[0][remarks]"></td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div> --}}
 
                                 <script>
                                     function removeRow(button) {
@@ -843,7 +837,7 @@
                                     }
                                 </script>
 
-                                <div class="group-input">
+                                {{-- <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         List of Attachments<button type="button" name="audit-agenda-grid"
                                             id="attachmentgrid-table">+</button>
@@ -899,7 +893,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="sub-head">Evaluation Criteria</div>
@@ -922,14 +916,14 @@
                                                     <td>
                                                         <select name="evaluation_criteria_1" id="">
                                                             <option> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_1 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_1 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_1 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_1 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_1 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_1 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
                                                         </select>
                                                     </td>
@@ -940,14 +934,14 @@
                                                     <td>
                                                         <select name="evaluation_criteria_2" id="">
                                                             <option> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_2 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_2 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_2 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_2 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_2 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_2 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
 
                                                         </select>
@@ -959,15 +953,15 @@
                                                         Style Was Clear, Easily understood , Pleasant to hear)</td>
                                                     <td>
                                                         <select name="evaluation_criteria_3" id="">
-                                                            <option> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_3 == '1') selected @endif> 1
+                                                            <option> -- Select -- </option>
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_3 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_3 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_3 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_3 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_3 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
 
                                                         </select>
@@ -979,16 +973,15 @@
                                                     <td>
                                                         <select name="evaluation_criteria_4" id="">
                                                             <option> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_4 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_4 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_4 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_4 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_4 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_4 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
-
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -998,20 +991,17 @@
                                                     <td>
                                                         <select name="evaluation_criteria_5" id="">
                                                             <option value=""> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_5 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_5 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_5 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_5 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_5 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_5 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
-
                                                         </select>
                                                     </td>
-
-
                                                 </tr>
                                                 <tr>
                                                     <td>6</td>
@@ -1019,20 +1009,17 @@
                                                     <td>
                                                         <select name="evaluation_criteria_6" id="">
                                                             <option value=""> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_6 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_6 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_6 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_6 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_6 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_6 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
-
                                                         </select>
                                                     </td>
-
-
                                                 </tr>
                                                 <tr>
                                                     <td>7</td>
@@ -1040,20 +1027,17 @@
                                                     <td>
                                                         <select name="evaluation_criteria_7" id="">
                                                             <option value=""> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_7 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_7 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_7 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_7 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_7 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_7 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
-
                                                         </select>
                                                     </td>
-
-
                                                 </tr>
                                                 <tr>
                                                     <td>8</td>
@@ -1062,23 +1046,19 @@
                                                     <td>
                                                         <select name="evaluation_criteria_8" id="">
                                                             <option value=""> -- Select --</option>
-                                                            <option value="1"
-                                                                @if ($trainer->evaluation_criteria_8 == '1') selected @endif> 1
+                                                            <option value="Poor"
+                                                                @if ($trainer->evaluation_criteria_8 == 'Poor') selected @endif> Poor
                                                             </option>
-                                                            <option value="2"
-                                                                @if ($trainer->evaluation_criteria_8 == '2') selected @endif> 2
+                                                            <option value="Good"
+                                                                @if ($trainer->evaluation_criteria_8 == 'Good') selected @endif> Good
                                                             </option>
-                                                            <option value="3"
-                                                                @if ($trainer->evaluation_criteria_8 == '3') selected @endif> 3
+                                                            <option value="Satisfactory"
+                                                                @if ($trainer->evaluation_criteria_8 == 'Satisfactory') selected @endif> Satisfactory
                                                             </option>
 
                                                         </select>
                                                     </td>
-
-
                                                 </tr>
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -1086,7 +1066,7 @@
                             </div>
                         </div>
 
-                        <div class="">
+                        {{-- <div class="">
                             <div class="group-input">
                                 <label for="trainingQualificationStatus">Qualification Status</label>
                                 <select name="trainer" id="trainingQualificationStatus">
@@ -1104,7 +1084,7 @@
                                 <label for="Q_comment">Qualification Comments</label>
                                 <textarea class="" name="qualification_comments">{{ $trainer->qualification_comments }}</textarea>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-12">
                             <div class="group-input">
@@ -1112,7 +1092,8 @@
                                 <input type="file" id="myfile" name="initial_attachment"
                                     value="{{ $trainer->initial_attachment }}">
                                 <a href="{{ asset('upload/' . $trainer->initial_attachment) }}"
-                                    target="_blank">{{ $trainer->initial_attachment }}</a>
+                                    target="_blank">{{ $trainer->initial_attachment }}
+                                </a>
                             </div>
                         </div>
                         <script>
@@ -1168,7 +1149,7 @@
                         <script>
                             function removeHtmlTags() {
                                 var textarea = document.getElementById("summernote-16");
-                                var cleanValue = textarea.value.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
+                                var cleanValue = textarea.value.replace(/<[^>]*>?/gm, '');
                                 textarea.value = cleanValue;
                             }
                         </script>
@@ -1181,8 +1162,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="CCForm2" class="inner-block cctabcontent">
+            </div>
+                {{-- <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="col-12 sub-head">
                             Questionaries
@@ -1263,8 +1244,8 @@
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
-                </div>
-                <script>
+                </div> --}}
+                {{-- <script>
                     $(document).ready(function() {
                         $('#ObservationAdd').click(function(e) {
                             function generateTableRow(serialNumber) {
@@ -1291,14 +1272,124 @@
                             tableBody.append(newRow);
                         });
                     });
-                </script>
+                </script> --}}
 
-                <div id="CCForm3" class="inner-block cctabcontent">
+
+                <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Activated On">Remarks</label>
+                                    <label for="Activated On">Trainer Acknowledge Comment</label>
+                                    <textarea name="trainer_acknowledge_comment">{{ $trainer->trainer_acknowledge_comment }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Trainer Acknowledge Attachments</label>
+                                    <input type="file" id="myfile" name="trainer_acknowledge_attachments"
+                                        value="{{ $trainer->trainer_acknowledge_attachments }}">
+                                    <a href="{{ asset('upload/' . $trainer->trainer_acknowledge_attachments) }}"
+                                        target="_blank">{{ $trainer->trainer_acknowledge_attachments }}</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                            <div class="col-6">
+                              <div class="group-input">
+                                    <label for="start_date">Start Date of Training</label>
+                                    <input type="date" id="start_date" name="start_date" class="" value="{{$trainer->start_date}}">
+                              </div>  
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="end_date">End Date of Training</label>
+                                    <input type="date" id="end_date" name="end_date" class="" value="{{$trainer->end_date}}">
+                                </div>    
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="start_time">Start Time of Training</label>
+                                    <input type="time" id="start_time" name="start_time" value="{{$trainer->start_time}}">
+                                </div>    
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="end_time">End Time of Training</label>
+                                    <input type="time" id="end_time" name="end_time" value="{{$trainer->end_time}}">
+                                </div>    
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Pending Training Comment</label>
+                                    <textarea name="pending_training_comment">{{ $trainer->pending_training_comment }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Pending Training Attachments</label>
+                                    <input type="file" id="myfile" name="pending_training_attachments"
+                                        value="{{ $trainer->pending_training_attachments }}">
+                                    <a href="{{ asset('upload/' . $trainer->pending_training_attachments) }}"
+                                        target="_blank">{{ $trainer->pending_training_attachments }}</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Evaluation by HOD">Evaluation by HOD</label>
+                                    <select name="evaluation_by_hod" id="hod">
+                                            <option value="">-- Select Evaluation by HOD --</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" {{ $user->id == old('evaluation_by_hod', $trainer->evaluation_by_hod) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                           @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Evaluation by HOD">Evaluation Criteria</label>
+                                    <input type="text" name ="evaluation_criteria_hod" value="{{$trainer->evaluation_criteria_hod}}">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">HOD Evaluation Comment</label>
                                     <textarea name="hod_comment">{{ $trainer->hod_comment }}</textarea>
                                 </div>
                             </div>
@@ -1322,15 +1413,37 @@
                     </div>
                 </div>
 
-                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Persons">Evaluation by QA/CQA</label>
+                                    <select name="evaluation_by_qa" placeholder="Select Evaluation by QA/CQA" data-search="false" data-silent-initial-value-set="true" id="hod">
+                                        <option value="">-- Select Evaluation by QA/CQA --</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" {{ $user->id == old('evaluation_by_qa', $trainer->evaluation_by_qa) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Evaluation by Criteria">Evaluation Criteria</label>
+                                    <input type="text" name ="evaluation_criteria_qa" value="{{$trainer->evaluation_criteria_qa}}">
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Activated On">Remarks</label>
+                                    <label for="QA/CQA Head Approval Comment">QA/CQA Head Approval Comment</label>
                                     <textarea name="qa_final_comment">{{ $trainer->qa_final_comment }}</textarea>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">QA/CQA Attachment</label>
@@ -1340,8 +1453,8 @@
                                         target="_blank">{{ $trainer->qa_final_attachment }}</a>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton">Back</button>
@@ -1350,206 +1463,314 @@
                         </div>
                     </div>
                 </div>
+                </div>
 
-                {{-- @if ($trainer->stage >= 5)
-                    <div id="CCForm5" class="inner-block cctabcontent">
+                @if ($trainer->stage >= 5)
+                <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i>Print
+                                        <button type="button" class="printButton" onclick="downloadCertificate()">
+                                            <i class="fas fa-print"></i> Print
                                         </button>
                                     </div>
-                                    <div class="certificate-container">
-                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
 
-                                        <div class="certificate-description"><br><br>
-                                            This is to certify that Mr./Ms./Mrs.
-                                            <strong>{{ $trainer->employee_name }}</strong>.
-                                            has undergone Training Qualification including the requirement of cGMP and has
-                                            shown a good attitude and thorough understanding in the subject.
+                                <div >
+                                <div class="pm-certificate-container">
+                                    <div class="outer-border"></div>
+                                    <div class="inner-border"></div>
+                                    
+                                    <div class="pm-certificate-border">
+                                        <div class="pm-certificate-logos text-center">
+                                            <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="Agio Logo" class="logo logo-left">
+                                            <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="Vidhya GxP Logo" class="logo logo-right">
                                         </div>
 
-                                        <div class="certificate-description">
-                                            Therefore we certify that Mr. Ms. / Mrs.
-                                            <strong>{{ $trainer->name_employee }}</strong>.
-                                            is capable of performing his/her assigned duties in the
-                                            <strong>{{ $trainer->department }}</strong> Department independently.
-                                        </div>
-
-                                        <div class="date-container">
-                                            <div class="signature-block">
-                                                <strong>Sign/Date:</strong>_________
-                                                <div>HR Head</div>
+                                        <div class="pm-certificate-header">
+                                            <div class="pm-certificate-title cursive text-center">
+                                                <h2>Trainer Certificate</h2>
                                             </div>
+                                        </div>
 
-                                            <div>
-                                                <strong>Sign/Date:</strong>_________
-                                                <div class="signature">Head QA/CQA<div></div>
+                                        <div class="pm-certificate-body">
+                                            <div class="pm-certificate-block">
+                                                <p class="text-center">
+                                                    This is to certify that Mr. / Ms. / Mrs.
+                                                    <strong>{{ $trainer->employee_name }}</strong>
+                                                    has appropriate Qualification / skill / thorough knowledge/ and experience in the
+                                                    <strong>{{$trainer->department}}</strong> section/Department for more than
+                                                    <strong>{{$trainer->experience}}</strong> years, and hence is declared as the trainer of
+                                                    <strong>{{$trainer->department}}</strong> Department.
+                                                </p>
+
+                                            </div>       
+
+                                            <div class="pm-certificate-footer">
+                                                <div class="pm-certified text-center">
+                                                    <span class="bold block">Sign / Date:</span>
+                                                    <strong>{{ $trainer->evaluation_complete_by }} /
+                                                    {{ Helpers::getdateFormat($trainer->evaluation_complete_on) }}
+                                                    </strong>
+                                                    <span class="pm-empty-space block underline"></span>
+                                                    <span class="bold block">HR Head</span>
+                                                </div>
+                                                <div class="pm-certified text-center">
+                                                    <span class="bold block">Sign / Date:</span>
+                                                    <strong>{{ $trainer->qualified_by }} 
+                                                        {{  Helpers::getdateFormat($trainer->qualified_on) }}</strong>
+                                                    <span class="pm-empty-space block underline"></span>
+                                                    <span class="bold block">Head QA/CQA</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="margin-top: 40px;" class="button-block">
-                                    <button type="submit" class=" btn btn saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton"
-                                        class=" btn btn nextButton">Next</button>
+                                    <div style="margin-top: 40px;" class="button-block">
+                                        {{-- <button type="submit" class="btn btn saveButton">Save</button>
+                                        <button type="button" id="ChangeNextButton"
+                                            class="btn btn nextButton">Next</button> --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endif --}}
-
-                @if ($trainer->stage >= 5)
-                    <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="button-block">
-                                        <button type="button" class="printButton" onclick="printCertificate()">
-                                            <i class="fas fa-print"></i>Print
-                                        </button>
-                                    </div>
-                                    <div class="certificate-container">
-                                    <h1 class="certificate-title">TRAINER CERTIFICATE</h1>
-                                        <p class="certificate-content">
-                                            This is to certify that Mr. / Ms. / Mrs. <strong>{{$trainer->employee_name}}</strong> 
-                                            has appropriate Qualification / skill / thorough knowledge/ and experience in the 
-                                            <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> section/Department for more than
-                                            <strong>{{$trainer->experience_if_any}}</strong> years, and hence is declared as the trainer of 
-                                            <strong>{{ Helpers::getFullDepartmentName($trainer->department ) }}</strong> Department.
-                                        </p>
-                                        <div class="signature-section">
-                                            <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
-                                                Sign / Date: _______________ <br>Head of Department
-                                            </div>
-                                            <div class="signature">
-                                                <!-- <div class="signature-line"></div> -->
-                                                Sign / Date: <span>{{$trainer->qualified_by}} / {{$trainer->qualified_on }}</span>QA/CQA Head 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="margin-top: 40px;" class="button-block">
-                                    {{-- <button type="submit" class=" btn btn saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton"
-                                        class=" btn btn nextButton">Next</button> --}}
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 @endif
 
+                <!-- CSS Styling -->
+            
 
-                    <style>
-                        .certificate-container {
-                            width: 100%; /* Ensure it takes full width when printed */
-                            max-width: 685px; /* For regular view */
-                            height: auto;
-                            border: 4px solid #3d6186;
-                            padding: 18px;
-                            background-color: white;
-                            margin: auto;
-                            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-                            position: relative;
-                            page-break-inside: avoid; /* Avoid breaking the certificate into multiple pages */
-                        }
+            <style>
+              @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
 
-                        .certificate-title {
-                            font-size: 30px;
-                            font-weight: bold;
-                            color: #677078;
-                            text-align: center; /* Align title to the center */
-                        }
+                .cursive {
+                    font-family: 'Pinyon Script', cursive;
+                }
 
-                        .certificate-content {
-                            font-size: 18px;
-                            color: #333;
-                            text-align: justify;
-                            margin-top: 20px;
-                        }
+                .sans {
+                    font-family: 'Open Sans', sans-serif;
+                }
 
-                        .signature-section {
-                            display: flex;
-                            justify-content: space-between;
-                            margin-top: 40px;
-                        }
+                .bold {
+                    font-weight: bold;
+                }
 
-                        .signature {
-                            text-align: center;
-                            font-size: 18px;
-                        }
+                .block {
+                    display: block;
+                }
 
-                        .signature-line {
-                            width: 200px;
-                            border-top: 1px solid black;
-                            margin-bottom: 10px;
-                        }
+                .underline {
+                    border-bottom: 1px solid #777;
+                    padding: 5px;
+                    margin-bottom: 15px;
+                }
 
-                        .button-block {
-                            display: flex;
-                            justify-content: flex-end;
-                            margin-top: 30px;
-                        }
+                .text-center {
+                    text-align: center;
+                }
 
-                        .printButton, .saveButton, .nextButton {
-                            background-color: #2c3e50;
-                            color: white;
-                            border: none;
-                            padding: 12px 24px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            border-radius: 5px;
-                            transition: background-color 0.3s ease;
-                            margin-left: 10px;
-                        }
+                .pm-empty-space {
+                    /* height: 40px; */
+                    width: 100%;
+                }
 
-                        .printButton:hover, .saveButton:hover, .nextButton:hover {
-                            background-color: #1a252f;
-                        }
+                .pm-certificate-container {
+                    position: relative;
+                    width: 90%;
+                    max-width: 800px;
+                    background-color: #618597;
+                    padding: 30px;
+                    color: #333;
+                    font-family: 'Open Sans', sans-serif;
+                    box-shadow: 0 9px 15px rgb(18 5 23 / 60%);
+                    margin-left: 325px;
+                }
 
-                        @media print {
-                            .button-block {
-                                display: none !important; /* Hide all buttons on print */
-                            }
+                .outer-border {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
 
-                            body {
-                                visibility: hidden;
-                            }
+                .inner-border {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    right: 10px;
+                    bottom: 10px;
+                    border: 2px solid #fff;
+                    pointer-events: none;
+                }
 
-                            .certificate-container, .certificate-container * {
-                                visibility: visible;
-                            }
+                .pm-certificate-border {
+                    position: relative;
+                    padding: 20px;
+                    border: 1px solid #E1E5F0;
+                    background-color: rgba(255, 255, 255, 1);
+                }
 
-                            .certificate-container {
-                                position: absolute;
-                                left: 0;
-                                top: 0;
-                                width: 100%;
-                            }
 
-                            .signature-section {
-                                page-break-inside: avoid; /* Avoid breaking signatures across pages */
-                            }
-                        }
-                    </style>
+                .pm-certificate-logos {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                
+                }
+
+                .logo {
+                    max-width: 100px;
+                }
+
+                .logo-left {
+                    transform: scale(0.7);
+                    margin-bottom: 14px;
+                }
+
+                .logo-right {
+                    transform: scale(1.8);
+                    margin-right: 65px;
+                }
+
+                .pm-certificate-header {
+                    margin-bottom: 10px;
+                }
+
+                .pm-certificate-title h2 {
+                    font-size: 34px;
+                }
+
+                .pm-certificate-body {
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .pm-certificate-block {
+                    text-align: center;
+                }
+
+                .pm-name-text {
+                    font-size: 20px;
+                }
+
+                .pm-earned {
+                    margin: 15px 0 20px;
+                }
+
+                .pm-earned-text {
+                    font-size: 20px;
+                }
+
+                .pm-credits-text {
+                    font-size: 15px;
+                }
+
+                .pm-course-title {
+                    margin-bottom: 15px;
+                }
+
+                .pm-certified {
+                    font-size: 12px;
+                    width: 300px; 
+                    margin-top: 0; 
+                    text-align: center;
+                }
+
+                .pm-certificate-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center; 
+                    width: 100%;
+                    margin-top: 20px;
+                    flex-wrap: nowrap
+                }
+                @media print {
+                    .print-button {
+                        display: none;
+                    }
+                    .print-button-container {
+                        display: none;
+                    }
+                }
+
+                .print-button {
+                    padding: 10px 20px;
+                    background-color: #007bff; 
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin-block-end: 700px;
+                }
+
+
+                @media print {
+                    body {
+                        background: none;
+                        -webkit-print-color-adjust: exact; 
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                    }
+
+                    .pm-certificate-container {
+                        page-break-inside: avoid; 
+                        page-break-after: avoid; 
+                        width: 100%;
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden; 
+                        box-shadow: none; 
+                        background-color: #618597; 
+                        padding: 30px;
+                        margin: 0 auto; 
+                    }
+
+                    .outer-border, .inner-border {
+                        border-color: #d3d0d0; 
+                    }
+
+                    .print-button, .print-button-container {
+                        display: none; 
+                        
+                    }
+
+                
+                    html, body {
+                        height: auto; 
+                        max-height: 100vh; 
+                        overflow: hidden;
+                    }
+                }
+
+            </style>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 
                 <script>
-                    // function printCertificate() {
-                    //     var buttons = document.querySelector(".button-block");
-                    //     buttons.style.display = 'none';
-                    //     window.print();
-                    //     buttons.style.display = 'block';
-                    // }
-                    function printCertificate() {
-                        window.print();
+                    function downloadCertificate() {
+                        const element = document.querySelector('.pm-certificate-container');
+                        const options = {
+                            margin: 19,
+                        
+                            filename: 'trainer-qualification-certificate.pdf',
+                            html2canvas: { scale: 2 },
+                            jsPDF: { orientation: 'landscape' }
+                        };
+                        html2pdf().from(element).set(options).save();
                     }
                 </script>
-                <!-- Activity Log content -->
-                <div id="CCForm6" class="inner-block cctabcontent">
+
+                <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-4">
@@ -1669,7 +1890,8 @@
                             </a>
                             <button type="submit">Submit</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                                    Exit </a> 
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1716,7 +1938,7 @@
                             </div>
                             Submit
                         </button>
-                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
@@ -1727,7 +1949,6 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -1735,7 +1956,6 @@
 
                 <form action="{{ url('tms/trainer/rejectStage', $trainer->id) }}" method="POST">
                     @csrf
-                    <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
                             Please select a meaning and a outcome for this task and enter your username
@@ -1756,11 +1976,6 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1780,11 +1995,10 @@
         }
     </style>
 
-
     <script>
         document.getElementById('myfile').addEventListener('change', function() {
             var fileListDiv = document.querySelector('.file-list');
-            fileListDiv.innerHTML = ''; // Clear previous entries
+            fileListDiv.innerHTML = '';
 
             for (var i = 0; i < this.files.length; i++) {
                 var file = this.files[i];
@@ -1794,7 +2008,6 @@
             }
         });
     </script>
-
 
     <script>
         VirtualSelect.init({
@@ -1830,10 +2043,8 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
 
-            // Find the index of the clicked tab button
             const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
 
-            // Update the currentStep to the index of the clicked tab
             currentStep = index;
         }
 
@@ -1845,21 +2056,17 @@
         let currentStep = 0;
 
         function nextStep() {
-            // Check if there is a next step
+
             if (currentStep < steps.length - 1) {
-                // Hide current step
+
                 steps[currentStep].style.display = "none";
 
-                // Show next step
                 steps[currentStep + 1].style.display = "block";
 
-                // Add active class to next button
                 stepButtons[currentStep + 1].classList.add("active");
 
-                // Remove active class from current button
                 stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
                 currentStep++;
             }
         }
@@ -1891,6 +2098,7 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

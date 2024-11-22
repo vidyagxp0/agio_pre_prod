@@ -248,16 +248,16 @@
                 <div class="block-head">General Information</div>
                 <table>
                     <tr>
+                        <th class="w-20">Type</th>
+                        <td class="w-30">{{ $data->Form_type }}</td>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             {{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
                         </td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Type</th>
-                        <td class="w-30">{{ $data->Form_type }}</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                     </tr>
@@ -346,6 +346,30 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Immediate Action</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->immediate_action ){{ $data->immediate_action  }} @else Not Applicable @endif</span>
                 </div>
+
+                <div class="block-head">Initial Attachement</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                            @if ($data->initial_attachment_gi)
+                            @foreach ($data->initial_attachment_gi as $key => $file)
+                                 <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-80">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div><br>
+
                 <div class="block-head">OOS/OOT Information</div>
                 <table>
                     <tr>
@@ -377,28 +401,6 @@
             <!-- Info. On Product/ Material -->
 
             <div class="block">
-                <div class="block-head">Initial Attachement</div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
-                            </tr>
-                            @if ($data->initial_attachment_gi)
-                            @foreach ($data->initial_attachment_gi as $key => $file)
-                                 <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-80">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                      </div>
                 <div class="block-head"> Info. On Product/ Material</div>
                 <div class="border-table">
                     <table>

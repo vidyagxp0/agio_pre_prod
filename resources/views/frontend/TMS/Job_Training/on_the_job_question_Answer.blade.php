@@ -107,11 +107,13 @@
         <form action="{{ route('check_answer_otj') }}" method="POST"> 
             @csrf 
             <input type="hidden"  name="training_id" value="{{ $onthejobid->id }}">
-            <input type="hidden"  name="emp_id" value="{{ $onthejobid->employee_id }}">
-            <input type="hidden"  name="employee_name" value="{{ $onthejobid->name }}">
-            <input type="hidden"  name="training_type" value="Induction Training">
+            <input type="hidden" name="emp_id" value="{{ $onthejobid->employee_code }}">
+            <input type="hidden" name="employee_name" value="{{ $onthejobid->employee_name }}">
+            <input type="hidden"  name="training_type" value="On The Job Training">
             <input type="hidden"  name="attempt_count" value="{{ $onthejobid->attempt_count }}">
-            @foreach ($questions as $index => $question) <!-- Use $index to display question number -->
+            <input type="hidden" name="document_number" value="{{ $singleSOPId }}">
+
+            @foreach ($questions as $index => $question)
                 <div class="question">
                     <p class="question-text"><strong>Question {{ $index + 1 }}:</strong> {{ $question->question }} (<span class="question-type">{{ $question->type }}</span>)</p> <!-- Display index here -->
 

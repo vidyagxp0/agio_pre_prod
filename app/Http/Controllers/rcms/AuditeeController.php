@@ -730,7 +730,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inititator';
+            $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current =Auth::user()->name;
             $history->comment = "Not Applicable";
@@ -3990,7 +3990,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Quality Assurance Assessment';
+            $history->activity_type = 'Review Comment (By Quality Assurance)';
             $history->previous = $lastCft->QualityAssurance_assessment;
             $history->current = $request->QualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -4133,7 +4133,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Assessment';
+            $history->activity_type = 'Review comment (By Production Tablet/Capsule Powder)';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -6159,12 +6159,12 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             }
             $history->save();
         }
-        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
+        if ($lastCft->Other2_Assessment != $request->Other2_Assessment && $request->Other2_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Review Comment (By Others 2)';
-            $history->previous = $lastCft->Other2_assessment;
-            $history->current = $request->Other2_assessment;
+            $history->activity_type = 'Review Comment(By Others 2)';
+            $history->previous = $lastCft->Other2_Assessment;
+            $history->current = $request->Other2_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6172,7 +6172,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other2_assessment) || $lastCft->Other2_assessment === '') {
+             if (is_null($lastCft->Other2_Assessment) || $lastCft->Other2_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6321,12 +6321,12 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             }
             $history->save();
         }
-        if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
+        if ($lastCft->Other3_Assessment != $request->Other3_Assessment && $request->Other3_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Review Comment (By Others 3)';
-            $history->previous = $lastCft->Other3_assessment;
-            $history->current = $request->Other3_assessment;
+            $history->previous = $lastCft->Other3_Assessment;
+            $history->current = $request->Other3_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6334,7 +6334,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other3_assessment) || $lastCft->Other3_assessment === '') {
+             if (is_null($lastCft->Other3_Assessment) || $lastCft->Other3_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6483,12 +6483,12 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             }
             $history->save();
         }
-        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
+        if ($lastCft->Other4_Assessment != $request->Other4_Assessment && $request->Other4_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Review Comment (By Others 4)';
-            $history->previous = $lastCft->Other4_assessment;
-            $history->current = $request->Other4_assessment;
+            $history->previous = $lastCft->Other4_Assessment;
+            $history->current = $request->Other4_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6496,7 +6496,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other4_assessment) || $lastCft->Other4_assessment === '') {
+             if (is_null($lastCft->Other4_Assessment) || $lastCft->Other4_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -6646,12 +6646,12 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             }
             $history->save();
         }
-        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
+        if ($lastCft->Other5_Assessment != $request->Other5_Assessment && $request->Other5_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Review Comment (By Others 5)';
-            $history->previous = $lastCft->Other5_assessment;
-            $history->current = $request->Other5_assessment;
+            $history->previous = $lastCft->Other5_Assessment;
+            $history->current = $request->Other5_Assessment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6659,7 +6659,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->Other5_assessment) || $lastCft->Other5_assessment === '') {
+             if (is_null($lastCft->Other5_Assessment) || $lastCft->Other5_Assessment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

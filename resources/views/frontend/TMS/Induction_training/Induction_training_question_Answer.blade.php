@@ -24,7 +24,7 @@
 
     .quiz-container {
         width: 80%;
-        max-width: 600px;
+        /* max-width: 600px; */
         margin: 20px auto;
         padding: 20px;
         background: white;
@@ -115,6 +115,7 @@
             <input type="hidden"  name="employee_name" value="{{ Helpers::getEmpName($inductiontrainingid->name_employee) }}">
             <input type="hidden"  name="training_type" value="Induction Training">
             <input type="hidden"  name="attempt_count" value="{{ $inductiontrainingid->attempt_count }}">
+            <input type="hidden" name="document_number" value="{{ $singleSOPId }}">
 
             @foreach ($questions as $question)
                 <div class="question">

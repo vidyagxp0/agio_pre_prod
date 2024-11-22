@@ -327,62 +327,69 @@
                             </tr>
                         </thead>
                         <tbody id="searchTable">
-                        @foreach ($paginatedData as $temp)
-                            @php
-                                $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
-                                $dateValue = []; 
+                    @foreach ($paginatedData as $temp)
+                        @php
+                            $getSOPNo = ['document_number_1', 'document_number_2', 'document_number_3', 'document_number_4', 'document_number_5','document_number_6', 'document_number_7', 'document_number_8', 'document_number_9', 'document_number_10', 'document_number_11', 'document_number_12', 'document_number_13', 'document_number_14', 'document_number_15','document_number_16'];
+                            $documents = []; 
 
-                                if ($temp) {
-                                    foreach ($getSOPNo as $key => $document) {
-                                      
-                                        $startDateColumn = 'document_number_' .($key + 1);
-
-                                      
-                                        if (isset($temp->$startDateColumn) && !is_null($temp->$startDateColumn)) {
-                                            $dateValue[] = $temp->$startDateColumn; 
-                                        }
-                                    }
+                            foreach ($getSOPNo as $key => $document) {
+                                if (!empty($temp->$document)) {
+                                    $documents[] = $temp->$document;
                                 }
-                                $inductionResult = DB::table('emp_training_quiz_results')->where(['training_id' => $temp->id, 'training_type' => "Induction Training", 'emp_id' => Auth::guard('employee')->user()->full_employee_id, 'result' => 'Pass'])->latest()->first();
-                             
-                                $commaSeparatedStartDates = implode(', ', $dateValue);
+                            }
+                        @endphp
+
+                        @foreach ($documents as $docNumber)
+                            @php
+                                $inductionResult = DB::table('emp_training_quiz_results')
+                                    ->where([
+                                        'training_id' => $temp->id,
+                                        'document_number' => $docNumber, // Added to filter by document
+                                        'training_type' => "Induction Training",
+                                        'emp_id' => Auth::guard('employee')->user()->full_employee_id,
+                                        'result' => 'Pass'
+                                    ])->latest()->first();
                             @endphp
-                            @if($temp->stage >= 2)
-                                <tr>
-                                    <td>{{ $temp->employee_id }}</td>
-                                    <td>{{ Helpers::getEmpNameByCode($temp->employee_id) }}</td>
-                                    <td>{{ $temp->designation }}</td>
-                                    <td>{{ $commaSeparatedStartDates }}</td>
-                                    <td>{{  Helpers::getdateFormat($temp->start_date) }}</td>
-                                    <td>{{  Helpers::getdateFormat($temp->end_date) }}</td>
-                                    <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
-                                    <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at): "-" }}</td>
-                                    <td><a href="{{ url("induction_training-details/$commaSeparatedStartDates") }}"><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>
-                                            @if ($inductionResult && $inductionResult->result == "Pass")
-                                                Pass
-                                            @elseif($temp->attempt_count <= 0)
-                                                Attempts completed (Failed)
-                                            @else
-                                                <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" onclick="window.location.href='/induction_question_training/{{$commaSeparatedStartDates}}/{{$temp->id}}';">
-                                                    Attempt Quiz
-                                                </button>
-                                            @endif
-                                    </td>
-                                    <td>
-                                        @if($temp->stage >=6)
-                                            <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;" 
-                                                    onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
-                                                <i class="fa fa-certificate"></i>
-                                            </button>
-                                        @endif 
-                                    </td>
-                                    
-                                
-                                </tr>
-                            @endif
-                            @endforeach
-                        </tbody>
+
+                            <tr>
+                                <td>{{ $temp->employee_id }}</td>
+                                <td>{{ Helpers::getEmpNameByCode($temp->employee_id) }}</td>
+                                <td>{{ $temp->designation }}</td>
+                                <td>{{ $docNumber }}</td>
+                                <td>{{ Helpers::getdateFormat($temp->start_date) }}</td>
+                                <td>{{ Helpers::getdateFormat($temp->end_date) }}</td>
+                                <td>{{ $temp->attempt_count == -1 ? 0 : $temp->attempt_count }}</td>
+                                <td>{{ $inductionResult ? Helpers::getdateFormat1($inductionResult->created_at): "-" }}</td>
+                                <td>
+                                    <a href="{{ url("induction_training-details/$docNumber") }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    @if ($inductionResult && $inductionResult->result == "Pass")
+                                        Pass
+                                    @elseif($temp->attempt_count <= 0)
+                                        Attempts completed (Failed)
+                                    @else
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
+                                            onclick="window.location.href='/induction_question_training/{{$docNumber}}/{{$temp->id}}';">
+                                            Attempt Quiz
+                                        </button>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($temp->stage >=6)
+                                        <button type="button" class="btn btn-outline" style="background-color: #4274da; color: white;"
+                                                onclick="window.location.href='/induction_training_certificate/{{$temp->employee_id}}';">
+                                            <i class="fa fa-certificate"></i>
+                                        </button>
+                                    @endif 
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                    </tbody>
+
                     </table>
 
                     <!-- Pagination Links -->

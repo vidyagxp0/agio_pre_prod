@@ -9,4 +9,6 @@ class EmpTrainingQuizResult extends Model
 {
     use HasFactory;
     protected $table = 'emp_training_quiz_results';
+
+    protected $fillable = ['training_id',];
 }

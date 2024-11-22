@@ -324,7 +324,7 @@ class CapaController extends Controller
             }
             $capa->qah_cq_attachment = json_encode($files);
         }
-        $capa->parent_record_number = $request->parent_record_number; 
+        $capa->parent_record_number = $request->parent_record_number;
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->hod_remarks = $request->hod_remarks;
@@ -526,9 +526,9 @@ class CapaController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             // $history->current = $capa->due_date;
-           
+
             $history->current = Helpers::getdateFormat($capa->due_date);
-           
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -713,7 +713,7 @@ class CapaController extends Controller
         }
 
 
-        
+
 
 
         // if (!empty($capa->parent_record_number)) {
@@ -1282,7 +1282,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-       
+
 
 
 
@@ -1323,10 +1323,10 @@ class CapaController extends Controller
             $history->save();
         }
 
-   
+
         /////////////////////////QA/CQA Closure Approval/////////////////////
-      
-       
+
+
         if (!empty($capa->effectivness_check)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -1412,7 +1412,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-      
+
 
         // if (!empty($capa->effectiveness)) {
         //     $history = new CapaAuditTrial();
@@ -1448,7 +1448,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-     
+
 
 
         // if (!empty($capa->capa_type)) {
@@ -1474,7 +1474,7 @@ class CapaController extends Controller
         // Create a new CapaGrid instance for storing the new data
         $data1 = new CapaGrid();
         $data1->capa_id = $capa->id;
-        $data1->type = "Product_Details";
+        $data1->type = "Material_Details";
 
         // Define the mapping of database fields to the descriptive field names
         $fieldNames = [
@@ -1487,42 +1487,60 @@ class CapaController extends Controller
             'material_batch_status' => 'Product Batch Status',
         ];
 
-        // If the material name and other data fields are not empty and is an array, loop through the data
-        if (!empty($request->material_name) && is_array($request->material_name)) {
-            foreach ($request->material_name as $index => $materialName) {
-                // Current fields values for new data
-                $fields = [
-                    'material_name' => $materialName,
-                    'material_batch_no' => $request->material_batch_no[$index],
-                    'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
-                    'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
-                    'material_batch_desposition' => $request->material_batch_desposition[$index],
-                    'material_remark' => $request->material_remark[$index],
-                    'material_batch_status' => $request->material_batch_status[$index],
-                ];
+        foreach ($request->material_name as $index => $material_name) {
+            // Since this is a new entry, there are no previous details
+            $previousDetails = [
+                'material_name' => null,
+                'material_batch_no' => null,
+                'material_mfg_date' => null,
+                'material_expiry_date' => null,
+                'material_batch_desposition' => null,
+                'material_remark' => null,
+                'material_expiry_date' => null,
+            ];
 
-                foreach ($fields as $key => $currentValue) {
-                    if (!empty($currentValue)) {
-                    // For a store function, there are no previous values to compare, so we only log the current value.
+            $fields = [
+                'material_name' => $material_name,
+                'material_batch_no' => $request->material_batch_no[$index],
+                'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
+                'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
+                'material_batch_desposition' => $request->material_batch_desposition[$index],
+                'material_remark' => $request->material_remark[$index],
+                'material_expiry_date' => $request->material_expiry_date[$index],
+            ];
+
+            foreach ($fields as $key => $currentValue) {
+                // Log changes for new rows (no previous value to compare)
+                if (!empty($currentValue)) {
+                    // Only create an audit trail entry for new values
                     $history = new CapaAuditTrial();
                     $history->capa_id = $capa->id;
-                    // Set activity type to use the field name from the mapping
+
+                    // Set activity type to include field name and row index using the fieldNames array
                     $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-                    $history->previous = null; // No previous value in create/store function
+
+                    // Since this is a new entry, 'Previous' value is null
+                    $history->previous = 'null'; // Previous value or 'null'
+
+                    // Assign 'Current' value, which is the new value
                     $history->current = $currentValue; // New value
-                    $history->comment = $request->material_comment[$index] ?? '';
+
+                    // Comments and user details
+                    $history->comment = 'NA';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
+                    $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
-                    $history->action_name = "Create"; // Since it's a new record, set action as 'New'
+                    $history->action_name = "Create";
+
+                    // Save the history record
                     $history->save();
                 }
             }
         }
-    }
+     //----------------------------------------------------------------------------
 
         $data3 = new CapaGrid();
         $data3->capa_id = $capa->id;
@@ -1667,7 +1685,7 @@ class CapaController extends Controller
         // if ($capa->stage == 1) {
         //     $capa->capa_related_record =  implode(',', $request->capa_related_record);
         // }        // $capa->reference_record = $request->reference_record;
-        $capa->parent_record_number_edit = $request->parent_record_number_edit; 
+        $capa->parent_record_number_edit = $request->parent_record_number_edit;
         $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
@@ -1819,90 +1837,90 @@ class CapaController extends Controller
 
 
         // -----------------------grid--------------------
-        if ($request->product_name) {
-            $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
-            $data1->capa_id = $capa->id;
-            $data1->type = "Product_Details";
-            if (!empty($request->product_name)) {
-                $data1->product_name = serialize($request->product_name);
-            }
-            if (!empty($request->product_batch_no)) {
-                $data1->batch_no = serialize($request->product_batch_no);
-            }
-            if (!empty($request->mfg_date)) {
-                $data1->mfg_date = serialize($request->mfg_date);
-            }
-            if (!empty($request->product_expiry_date)) {
-                $data1->expiry_date = serialize($request->product_expiry_date);
-            }
-            if (!empty($request->product_batch_desposition)) {
-                $data1->batch_desposition = serialize($request->product_batch_desposition);
-            }
+        // if ($request->product_name) {
+        //     $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
+        //     $data1->capa_id = $capa->id;
+        //     $data1->type = "Product_Details";
+        //     if (!empty($request->product_name)) {
+        //         $data1->product_name = serialize($request->product_name);
+        //     }
+        //     if (!empty($request->product_batch_no)) {
+        //         $data1->batch_no = serialize($request->product_batch_no);
+        //     }
+        //     if (!empty($request->mfg_date)) {
+        //         $data1->mfg_date = serialize($request->mfg_date);
+        //     }
+        //     if (!empty($request->product_expiry_date)) {
+        //         $data1->expiry_date = serialize($request->product_expiry_date);
+        //     }
+        //     if (!empty($request->product_batch_desposition)) {
+        //         $data1->batch_desposition = serialize($request->product_batch_desposition);
+        //     }
 
-            if (!empty($request->product_remark)) {
-                $data1->remark = serialize($request->product_remark);
-            }
-            if (!empty($request->product_batch_status)) {
-                $data1->batch_status = serialize($request->product_batch_status);
-            }
-            $data1->update();
-        }
+        //     if (!empty($request->product_remark)) {
+        //         $data1->remark = serialize($request->product_remark);
+        //     }
+        //     if (!empty($request->product_batch_status)) {
+        //         $data1->batch_status = serialize($request->product_batch_status);
+        //     }
+        //     $data1->update();
+        // }
 
         // // --------------------------
 
-        if ($request->material_name) {
-            $data2 = CapaGrid::where('type', 'Material_Details')->where('capa_id', $id)->first();
-            if (empty($data2)) {
-                $data2 = new CapaGrid();
-            }
+        // if ($request->material_name) {
+        //     $data2 = CapaGrid::where('type', 'Material_Details')->where('capa_id', $id)->first();
+        //     if (empty($data2)) {
+        //         $data2 = new CapaGrid();
+        //     }
 
-            $data2->capa_id = $capa->id;
-            $data2->type = "Material_Details";
-            if (!empty($request->material_name)) {
-                $data2->material_name = serialize($request->material_name);
-            }
-            if (!empty($request->material_batch_no)) {
-                $data2->material_batch_no = serialize($request->material_batch_no);
-            }
+        //     $data2->capa_id = $capa->id;
+        //     $data2->type = "Material_Details";
+        //     if (!empty($request->material_name)) {
+        //         $data2->material_name = serialize($request->material_name);
+        //     }
+        //     if (!empty($request->material_batch_no)) {
+        //         $data2->material_batch_no = serialize($request->material_batch_no);
+        //     }
 
-            if (!empty($request->material_mfg_date)) {
-                $data2->material_mfg_date = serialize($request->material_mfg_date);
-            }
-            if (!empty($request->material_expiry_date)) {
-                $data2->material_expiry_date = serialize($request->material_expiry_date);
-            }
-            if (!empty($request->material_batch_desposition)) {
-                $data2->material_batch_desposition = serialize($request->material_batch_desposition);
-            }
-            if (!empty($request->material_remark)) {
-                $data2->material_remark = serialize($request->material_remark);
-            }
+        //     if (!empty($request->material_mfg_date)) {
+        //         $data2->material_mfg_date = serialize($request->material_mfg_date);
+        //     }
+        //     if (!empty($request->material_expiry_date)) {
+        //         $data2->material_expiry_date = serialize($request->material_expiry_date);
+        //     }
+        //     if (!empty($request->material_batch_desposition)) {
+        //         $data2->material_batch_desposition = serialize($request->material_batch_desposition);
+        //     }
+        //     if (!empty($request->material_remark)) {
+        //         $data2->material_remark = serialize($request->material_remark);
+        //     }
 
-            if ($capa->stage == 1) {
-                if (!empty($request->material_batch_status)) {
-                    $data2->material_batch_status = serialize($request->material_batch_status);
-                }
-            }
+        //     if ($capa->stage == 1) {
+        //         if (!empty($request->material_batch_status)) {
+        //             $data2->material_batch_status = serialize($request->material_batch_status);
+        //         }
+        //     }
 
-            $data2->update();
-        }
+        //     $data2->update();
+        // }
 
         // // ----------------------------------------
-        if ($request->equipment) {
-            $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-            $data3->capa_id = $capa->id;
-            $data3->type = "Instruments_Details";
-            if (!empty($request->equipment)) {
-                $data3->equipment = serialize($request->equipment);
-            }
-            if (!empty($request->equipment_instruments)) {
-                $data3->equipment_instruments = serialize($request->equipment_instruments);
-            }
-            if (!empty($request->equipment_comments)) {
-                $data3->equipment_comments = serialize($request->equipment_comments);
-            }
-        }
-        $data3->save();
+        // if ($request->equipment) {
+        //     $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
+        //     $data3->capa_id = $capa->id;
+        //     $data3->type = "Instruments_Details";
+        //     if (!empty($request->equipment)) {
+        //         $data3->equipment = serialize($request->equipment);
+        //     }
+        //     if (!empty($request->equipment_instruments)) {
+        //         $data3->equipment_instruments = serialize($request->equipment_instruments);
+        //     }
+        //     if (!empty($request->equipment_comments)) {
+        //         $data3->equipment_comments = serialize($request->equipment_comments);
+        //     }
+        // }
+        // $data3->save();
         $capa->update();
 
         //     $record = RecordNumber::first();
@@ -2007,7 +2025,7 @@ class CapaController extends Controller
 
             $history->save();
         }
-       
+
         if ($lastDocument->initiator_group_code != $capa->initiator_group_code || !empty($request->initiator_group_code_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2502,7 +2520,7 @@ class CapaController extends Controller
 
 
 
-       
+
 
         if ($lastDocument->hod_remarks != $capa->hod_remarks) {
             $history = new CapaAuditTrial();
@@ -2753,7 +2771,7 @@ class CapaController extends Controller
 
             $history->save();
         }
-        
+
         if ($lastDocument->qa_closure_attachment != $capa->qa_closure_attachment || !empty($request->qa_closure_attachment_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -2803,9 +2821,9 @@ class CapaController extends Controller
 
 
 
-     
-      
-       
+
+
+
         // if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $id;
@@ -2830,7 +2848,7 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-     
+
         // if ($lastDocument->reference_record != $capa->reference_record || !empty($request->reference_record_comment)) {
 
         //     $history = new CapaAuditTrial();
@@ -2867,12 +2885,12 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-       
-    
 
-      
 
-       
+
+
+
+
 
         // if ($lastDocument->due_date_extension != $capa->due_date_extension || !empty($request->due_date_extension_comment)) {
         //     $history = new CapaAuditTrial();
@@ -2966,12 +2984,12 @@ class CapaController extends Controller
         // }
         /////////////////////HOD Final REview////////////////
 
-       
-       
-     
+
+
+
         ////////////////QA/CQA Closure Review//////////////////
 
-      
+
 
         ////{{-- ==========================QAH/CQAH ================ --}}
 
@@ -2979,16 +2997,16 @@ class CapaController extends Controller
 
 
 
-      
-     
-      
 
-       
 
-      
-       
 
-           
+
+
+
+
+
+
+
         // if ($lastDocument->capa_qa_comments2 != $capa->capa_qa_comments2 || !empty($request->capa_qa_comments2_comment)) {
         //     $history = new CapaAuditTrial();
         //     $history->capa_id = $id;
@@ -3194,8 +3212,8 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-       
-      
+
+
         // if ($lastDocument->supervisor_review_comments != $capa->supervisor_review_comments || !empty($request->supervisor_review_comments_comment)) {
 
         //     $history = new CapaAuditTrial();
@@ -3287,121 +3305,196 @@ class CapaController extends Controller
         //     $history->save();
         // }
 
-      
-      
-
-     
-
-        
 
 
-      
-      
 
-      
+
+
+
+
+
+
+
+
+
 
 
         //----------------- logic for showing grid data in audit trail -----------------------//
 
-        // Assuming you already have $data1 containing the previous data and $request contains the new data
-        $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
+        $data1 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
 
-$data1->capa_id = $capa->id;
-$data1->type = "Product_Details";
-
-// Define the mapping of database fields to the descriptive field names
-$fieldNames = [
-    'material_name' => 'Product / Material Name',
-    'material_batch_no' => 'Product / Material Batch No./Lot No./AR No.',
-    'material_mfg_date' => 'Product / Material Manufacturing Date',
-    'material_expiry_date' => 'Product / Material Date of Expiry',
-    'material_batch_desposition' => 'Product Batch Disposition Decision',
-    'material_remark' => 'Product Remark',
-    'material_batch_status' => 'Product Batch Status',
-];
-
-if (!empty($request->material_name) && is_array($request->material_name)) {
-    foreach ($request->material_name as $index => $materialName) {
-        // Safely unserialize and use fallback to empty array if null
+        // Safely unserialize fields with a fallback to null if fields are empty
         $previousDetails = [
-            'material_name' => !is_null($data1->material_name) ? unserialize($data1->material_name)[$index] ?? null : null,
-            'material_batch_no' => !is_null($data1->material_batch_no) ? unserialize($data1->material_batch_no)[$index] ?? null : null,
-            'material_mfg_date' => !is_null($data1->material_mfg_date) ? unserialize($data1->material_mfg_date)[$index] ?? null : null,
-            'material_expiry_date' => !is_null($data1->material_expiry_date) ? unserialize($data1->material_expiry_date)[$index] ?? null : null,
-            'material_batch_desposition' => !is_null($data1->material_batch_desposition) ? unserialize($data1->material_batch_desposition)[$index] ?? null : null,
-            'material_remark' => !is_null($data1->material_remark) ? unserialize($data1->material_remark)[$index] ?? null : null,
-            'material_batch_status' => !is_null($data1->material_batch_status) ? unserialize($data1->material_batch_status)[$index] ?? null : null
+            'material_name' => !is_null($data1->material_name) ? unserialize($data1->material_name) : null,
+            'material_batch_no' => !is_null($data1->material_batch_no) ? unserialize($data1->material_batch_no) : null,
+            'material_mfg_date' => !is_null($data1->material_mfg_date) ? unserialize($data1->material_mfg_date) : null,
+            'material_expiry_date' => !is_null($data1->material_expiry_date) ? unserialize($data1->material_expiry_date) : null,
+            'material_batch_desposition' => !is_null($data1->material_batch_desposition) ? unserialize($data1->material_batch_desposition) : null,
+            'material_remark' => !is_null($data1->material_remark) ? unserialize($data1->material_remark) : null,
+            'material_batch_status' => !is_null($data1->material_batch_status) ? unserialize($data1->material_batch_status) : null,
         ];
 
-        // Current fields values with null checks for request fields
-        $fields = [
-            'material_name' => $materialName,
-            'material_batch_no' => $request->material_batch_no[$index] ?? null,
-            'material_mfg_date' => isset($request->material_mfg_date[$index]) ? Helpers::getdateFormat($request->material_mfg_date[$index]) : null,
-            'material_expiry_date' => isset($request->material_expiry_date[$index]) ? Helpers::getdateFormat($request->material_expiry_date[$index]) : null,
-            'material_batch_desposition' => $request->material_batch_desposition[$index] ?? null,
-            'material_remark' => $request->material_remark[$index] ?? null,
-            'material_batch_status' => $request->material_batch_status[$index] ?? null,
+        // Serialize fields if they are not empty
+        if (!empty($request->material_name)) {
+            $data1->material_name = serialize($request->material_name);
+        }
+        if (!empty($request->material_batch_no)) {
+            $data1->material_batch_no = serialize($request->material_batch_no);
+        }
+        if (!empty($request->material_mfg_date)) {
+            $data1->material_mfg_date = serialize($request->material_mfg_date);
+        }
+        if (!empty($request->material_expiry_date)) {
+            $data1->material_expiry_date = serialize($request->material_expiry_date);
+        }
+        if (!empty($request->material_batch_desposition)) {
+            $data1->material_batch_desposition = serialize($request->material_batch_desposition);
+        }
+        if (!empty($request->material_remark)) {
+            $data1->material_remark = serialize($request->material_remark);
+        }
+        if (!empty($request->material_batch_status)) {
+            $data1->material_batch_status = serialize($request->material_batch_status);
+        }
+
+        // Save updated data
+        $data1->update();
+
+        // Map database fields to descriptive field names
+        $fieldNames = [
+            'material_name' => 'Product / Material Name',
+            'material_batch_no' => 'Product / Material Batch No./Lot No./AR No.',
+            'material_mfg_date' => 'Product / Material Manufacturing Date',
+            'material_expiry_date' => 'Product / Material Date of Expiry',
+            'material_batch_desposition' => 'Product Batch Disposition Decision',
+            'material_remark' => 'Product Remark',
+            'material_batch_status' => 'Product Batch Status',
         ];
 
-        foreach ($fields as $key => $currentValue) {
-            $previousValue = $previousDetails[$key];
+        if (is_array($request->material_name) && !empty($request->material_name)) {
+            foreach ($request->material_name as $index => $material_name) {
 
-            // Log changes if the current value is different from the previous one
-            if (($previousValue != $currentValue || !empty($request->material_comment[$index])) && !empty($currentValue)) {
-                // Check if an audit trail entry for this specific row and field already exists
-                $existingAudit = CapaAuditTrial::where('capa_id', $id)
-                    ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
-                    ->where('previous', $previousValue)
-                    ->where('current', $currentValue)
-                    ->exists();
+                $previousValues = [
+                    'material_name' => $previousDetails['material_name'][$index] ?? null,
+                    'material_batch_no' => $previousDetails['material_batch_no'][$index] ?? null,
+                    'material_mfg_date' => Helpers::getdateFormat($previousDetails['material_mfg_date'][$index] ?? null),
+                    'material_expiry_date' => Helpers::getdateFormat($previousDetails['material_expiry_date'][$index] ?? null),
+                    'material_batch_desposition' => $previousDetails['material_batch_desposition'][$index] ?? null,
+                    'material_remark' => $previousDetails['material_remark'][$index] ?? null,
+                    'material_batch_status' => $previousDetails['material_batch_status'][$index] ?? null,
+                ];
 
-                // Only create a new audit trail entry if no existing entry matches
-                if (!$existingAudit) {
-                    $history = new CapaAuditTrial();
-                    $history->capa_id = $id;
-                    // Set activity type to use the field name from the mapping
-                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-                    $history->previous = $previousValue; // Previous value
-                    $history->current = $currentValue; // New value
-                    $history->comment = $request->material_comment[$index] ?? '';
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $data1->status;
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = $data1->status;
-                    $history->action_name = "Update";
-                    $history->save();
+                $previousValues = [
+                    'material_name' => isset($previousDetails['material_name'][$index]) ? $previousDetails['material_name'][$index] : null,
+                    
+                    'material_batch_no' => isset($previousDetails['material_batch_no'][$index]) ? $previousDetails['material_batch_no'][$index] : null,
+                    
+                    'material_mfg_date' => isset($previousDetails['material_mfg_date'][$index]) ? Helpers::getdateFormat($previousDetails['material_mfg_date'][$index]) : null,
+                    
+                    'material_expiry_date' => isset($previousDetails['material_expiry_date'][$index]) ? Helpers::getdateFormat($previousDetails['material_expiry_date'][$index]) : null,
+
+                    'material_batch_desposition' => isset($previousDetails['material_batch_desposition'][$index]) ? $previousDetails['material_batch_desposition'][$index] : null,
+                    
+                    'material_remark' => isset($previousDetails['material_remark'][$index]) ? $previousDetails['material_remark'][$index] : null,
+                    
+                    'material_batch_status' => isset($previousDetails['material_batch_status'][$index]) ? $previousDetails['material_batch_status'][$index] : null,
+        
+                    // 'action' => $previousDetails['action'][$index] ?? null,
+                    // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
+                    // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
+                    // 'item_status' => $previousDetails['item_status'][$index] ?? null,
+                ];
+
+                // Current field values
+                $fields = [
+                    'material_name' => $material_name,
+                    'material_batch_no' => $request->material_batch_no[$index],
+                    'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
+                    'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
+                    'material_batch_desposition' => $request->material_batch_desposition[$index],
+                    'material_remark' => $request->material_remark[$index],
+                    'material_batch_status' => $request->material_batch_status[$index],
+                ];
+
+                foreach ($fields as $key => $currentValue) {
+                    $previousValue = $previousValues[$key] ?? null;
+
+                    // Log changes if the current value is different from the previous one
+                    if ($previousValue != $currentValue && !empty($currentValue)) {
+                        // Check if an audit trail entry for this specific row and field already exists
+                        $existingAudit = CapaAuditTrial::where('capa_id', $id)
+                            ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+                            ->where('previous', $previousValue)
+                            ->where('current', $currentValue)
+                            ->exists();
+
+                        // Only create a new audit trail entry if no existing entry matches
+                        if (!$existingAudit) {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+                            $history->previous = $previousValue;
+                            $history->current = $currentValue;
+                            $history->comment = $request->material_comment[$index] ?? 'NA';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->action_name = "Update";
+                            $history->save();
+                        }
+                    }
                 }
             }
         }
-    }
-}
+
+
 
         
+//---------------------------------------------------------------------------------------------------------------------------
 
+    $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
 
-        $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-        $data3->capa_id = $capa->id;
-        $data3->type = "Instruments_Details";
+    // Safely unserialize fields and fallback to null if they are empty
+    $previousDetails = [
+        'equipment' => !is_null($data3->equipment) ? unserialize($data3->equipment) : null,
+        'equipment_instruments' => !is_null($data3->equipment_instruments) ? unserialize($data3->equipment_instruments) : null,
+        'equipment_comments' => !is_null($data3->equipment_comments) ? unserialize($data3->equipment_comments) : null,
+    ];
 
-        // Define an associative array to map the field keys to display names
-        $fieldNames = [
-            'equipment' => 'Equipment/Instruments Name',
-            'equipment_instruments' => 'Equipment/Instrument ID',
-            'equipment_comments' => 'Equipment/Instruments Comments'
-        ];
+    // Serialize fields if they are not empty
+    if (!empty($request->equipment)) {
+        $data3->equipment = serialize($request->equipment);
+    }
+    if (!empty($request->equipment_instruments)) {
+        $data3->equipment_instruments = serialize($request->equipment_instruments);
+    }
+    if (!empty($request->equipment_comments)) {
+        $data3->equipment_comments = serialize($request->equipment_comments);
+    }
 
+    $data3->update();
+
+    // Define the mapping of database fields to the descriptive field names
+    $fieldNames = [
+        'equipment' => 'Equipment/Instruments Name',
+        'equipment_instruments' => 'Equipment/Instrument ID',
+        'equipment_comments' => 'Equipment/Instruments Comments',
+    ];
+
+    if (is_array($request->equipment) && !empty($request->equipment)) {
         foreach ($request->equipment as $index => $equipment) {
-            // Retrieve previous details for comparison
-            $previousDetails = [
-                'equipment' => unserialize($data3->equipment)[$index] ?? null,
-                'equipment_instruments' => unserialize($data3->equipment_instruments)[$index] ?? null,
-                'equipment_comments' => unserialize($data3->equipment_comments)[$index] ?? null,
+
+            // Fetch previous values
+            $previousValues = [
+                'equipment' => isset($previousDetails['equipment'][$index]) ? $previousDetails['equipment'][$index] : null,
+                'equipment_instruments' => isset($previousDetails['equipment_instruments'][$index]) ? $previousDetails['equipment_instruments'][$index] : null,
+                'equipment_comments' => isset($previousDetails['equipment_comments'][$index]) ? $previousDetails['equipment_comments'][$index] : null,
             ];
 
-            // Current fields values
+            // Current field values
             $fields = [
                 'equipment' => $equipment,
                 'equipment_instruments' => $request->equipment_instruments[$index],
@@ -3409,11 +3502,10 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
             ];
 
             foreach ($fields as $key => $currentValue) {
-                // Ensure null is explicitly stored if no previous value exists
-                $previousValue = $previousDetails[$key] ?? null;
+                $previousValue = $previousValues[$key] ?? null;
 
-                // Log changes for new or updated rows
-                if (($previousValue != $currentValue || !empty($request->equipment_comments[$index])) && !empty($currentValue)) {
+                // Log changes if the current value is different from the previous one
+                if ($previousValue != $currentValue && !empty($currentValue)) {
                     // Check if an audit trail entry for this specific row and field already exists
                     $existingAudit = CapaAuditTrial::where('capa_id', $id)
                         ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
@@ -3425,32 +3517,83 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                     if (!$existingAudit) {
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-
-                        // Set activity type to include field name and row index using the fieldNames array
                         $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-                        // Assign 'Previous' value explicitly as null if it doesn't exist
-                        $history->previous =  'null'; // Previous value or 'null'
-
-                        // Assign 'Current' value, which is the new value
+                        $history->previous = $previousValue; // Use the previous value
                         $history->current = $currentValue; // New value
-
-                        // Comments and user details
-                        $history->comment = $request->equipment_comments[$index] ?? '';
+                        $history->comment = 'NA'; // Use comments if available
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $data3->status;
-                        $history->change_to = "Not Applicable";
-                        $history->change_from = $data3->status;
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable"; // Adjust if needed
+                        $history->change_from = $lastDocument->status; // Adjust if needed
                         $history->action_name = "Update";
-
-                        // Save the history record
                         $history->save();
                     }
                 }
             }
         }
+    }
+
+//-----------------------------------------------------------------------------------------------------------------
+        // foreach ($request->equipment as $index => $equipment) {
+        //     // Retrieve previous details for comparison
+        //     $previousDetails = [
+        //         'equipment' => unserialize($data3->equipment)[$index] ?? null,
+        //         'equipment_instruments' => unserialize($data3->equipment_instruments)[$index] ?? null,
+        //         'equipment_comments' => unserialize($data3->equipment_comments)[$index] ?? null,
+        //     ];
+
+        //     // Current fields values
+        //     $fields = [
+        //         'equipment' => $equipment,
+        //         'equipment_instruments' => $request->equipment_instruments[$index],
+        //         'equipment_comments' => $request->equipment_comments[$index],
+        //     ];
+
+        //     foreach ($fields as $key => $currentValue) {
+        //         // Ensure null is explicitly stored if no previous value exists
+        //         $previousValue = $previousDetails[$key] ?? null;
+
+        //         // Log changes for new or updated rows
+        //         if (($previousValue != $currentValue || !empty($request->equipment_comments[$index])) && !empty($currentValue)) {
+        //             // Check if an audit trail entry for this specific row and field already exists
+        //             $existingAudit = CapaAuditTrial::where('capa_id', $id)
+        //                 ->where('activity_type', $fieldNames[$key] . ' (' . ($index + 1) . ')')
+        //                 ->where('previous', $previousValue)
+        //                 ->where('current', $currentValue)
+        //                 ->exists();
+
+        //             // Only create a new audit trail entry if no existing entry matches
+        //             if (!$existingAudit) {
+        //                 $history = new CapaAuditTrial();
+        //                 $history->capa_id = $id;
+
+        //                 // Set activity type to include field name and row index using the fieldNames array
+        //                 $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+        //                 // Assign 'Previous' value explicitly as null if it doesn't exist
+        //                 $history->previous =  'null'; // Previous value or 'null'
+
+        //                 // Assign 'Current' value, which is the new value
+        //                 $history->current = $currentValue; // New value
+
+        //                 // Comments and user details
+        //                 $history->comment = $request->equipment_comments[$index] ?? '';
+        //                 $history->user_id = Auth::user()->id;
+        //                 $history->user_name = Auth::user()->name;
+        //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                 $history->origin_state = $data3->status;
+        //                 $history->change_to = "Not Applicable";
+        //                 $history->change_from = $data3->status;
+        //                 $history->action_name = "Update";
+
+        //                 // Save the history record
+        //                 $history->save();
+        //             }
+        //         }
+        //     }
+        // }
 
 
         // DocumentService::update_qms_numbers();
@@ -3562,7 +3705,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Propose Plan By,Propose Plan On';
+                $history->activity_type = 'Propose Plan By, Propose Plan On';
                 $history->action = 'Propose Plan';
                 $history->previous = "";
                 $history->current = $capa->plan_proposed_by;
@@ -3612,7 +3755,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 2) {
@@ -3640,7 +3783,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->hod_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
+                $history->activity_type = 'HOD Review Complete By, HOD Review Complete On';
                 $history->action = 'HOD Review Complete';
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
@@ -3708,7 +3851,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 // }
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 3) {
@@ -3736,7 +3879,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->qa_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
+                $history->activity_type = 'QA/CQA Review Complete By, QA/CQA Review Complete On';
                 $history->action = 'QA/CQA Review Complete';
                 $history->previous = "";
                 $history->current = $capa->completed_by;
@@ -3802,7 +3945,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 4) {
@@ -3831,7 +3974,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Approved By,Approved On';
+                $history->activity_type = 'Approved By, Approved On';
                 $history->action = 'Approved';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -3878,7 +4021,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 // }
 
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 5) {
@@ -3907,7 +4050,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Completed By,Completed On';
+                $history->activity_type = 'Completed By, Completed On';
                 $history->action = 'Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -3953,7 +4096,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 6) {
@@ -3982,7 +4125,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'HOD Final Review Completed By,HOD Final Review Completed On';
+                $history->activity_type = 'HOD Final Review Completed By, HOD Final Review Completed On';
                 $history->action = 'HOD Final Review Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -4048,7 +4191,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($capa->stage == 7) {
@@ -4077,7 +4220,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'QA/CQA Closure Review Completed By,QA/CQA Closure Review Completed On';
+                $history->activity_type = 'QA/CQA Closure Review Completed By, QA/CQA Closure Review Completed On';
                 $history->action = 'QA/CQA Closure Review Completed';
                 $history->previous = "";
                 $history->current = $capa->approved_by;
@@ -4123,7 +4266,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -4298,7 +4441,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 //     // }
                 // }
                 $capa->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
         } else {
@@ -4322,7 +4465,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
                 $capa->cancel_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Cancel By,Cancel On';
+                $history->activity_type = 'Cancel By, Cancel On';
                 $history->action = 'Cancel';
                 $history->previous = "";
                 $history->current = $capa->cancelled_by;
@@ -5061,7 +5204,7 @@ if (!empty($request->material_name) && is_array($request->material_name)) {
 
     public function CapaAuditTrial($id)
     {
-        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDESC('id')->paginate();
+        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = Capa::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

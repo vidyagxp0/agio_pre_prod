@@ -341,7 +341,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                     <div class="inner-block-content">
                         <div class="row">
                  
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="location">Name of Employee</label>
@@ -352,7 +351,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" id="" disabled >
+                                    <input type="text" name="job_description_no" id="" value="{{ $jobDescriptionNumber }}" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -362,12 +361,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </div>
                             </div>
 
-                            <!-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="employee_id">Employee Code </label>
-                                    <input type="text" name="employee_id" id="employee_ids" readonly>
-                                </div>
-                            </div> -->
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Employee Code </label>

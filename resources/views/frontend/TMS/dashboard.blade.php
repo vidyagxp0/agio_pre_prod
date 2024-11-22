@@ -451,7 +451,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <td>{{ $index + 1 }}</td>                            
                                 <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td> -->
                                 <td>{{ $trainer->employee_name}}</td>
-                                <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
+                                <td>{{ $trainer->department }}</td>
                                 <td>{{ Helpers::getdateFormat($trainer->training_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
                                 <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
@@ -489,7 +489,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <!-- <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td> -->
                                 <td>{{ $trainer->employee_name ? $trainer->employee_name : 'NA' }}</td>
                                 <td>{{ $trainer->designation ? $trainer->designation : 'NA' }}</td>
-                                <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
+                                <td>{{ $trainer->department }}</td>
                                 {{-- <td>{{ $trainer->trainer ? $trainer->trainer: 'NA' }}</td> --}}
                                 <td>{{ $trainer->status }}</td>
                                 <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}"><i class="fa-solid fa-pencil" style="color: #355cab;"></i></a></td>
@@ -616,7 +616,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     {{ $prefixAbbreviation . $induction->employee_id }}
                 </td>
                 <td>
-                    {{ \App\Models\Employee::find($induction->name_employee)?->employee_name ?? 'Employee not found' }}
+                    {{ Helpers::getNameById($induction->name_employee) }}
                 </td>
 
                 <td>{{ $induction->department }}</td>

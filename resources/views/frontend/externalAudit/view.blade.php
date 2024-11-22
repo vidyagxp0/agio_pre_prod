@@ -2946,7 +2946,7 @@
                                             <div class="col-md-6 mb-3 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection Completed By">Production Injection Review Completed By
-                                                        By</label>
+                                                        </label>
                                                     <input readonly type="text"
                                                         value="{{ $data1->Production_Injection_By }}"
                                                         name="Production_Injection_By" id="Production_Injection_By">
@@ -5716,7 +5716,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid notification">Production Liquid Person
+                                                    <label for="Production Liquid notification">Production Liquid/ointment Person 
                                                         <span id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
                                                     <select name="ProductionLiquid_person" disabled
@@ -5733,9 +5733,7 @@
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Review Comment (By
-                                                            Production
-                                                            Liquid)</label>
+                                                        <label for="Production Liquid assessment">Review Comment (By Production Liquid/ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
                                                                 it
@@ -5757,9 +5755,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Review Comment (By
-                                                            Production
-                                                            Liquid)</label>
+                                                        <label for="Production Liquid assessment">Review Comment (By Production Liquid/ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data
                                                                 field if
                                                                 it
@@ -5781,8 +5777,7 @@
                                             @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid attachment">Production Liquid
-                                                        Attachments</label>
+                                                    <label for="Production Liquid attachment">Production Liquid/ointment Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
                                                             supporting
                                                             documents</small></div>
@@ -5907,7 +5902,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Review Comment Required <span
+                                                    <label for="Quality Control notification">Quality Control Person <span
                                                             id="asteriskPT"
                                                             style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
@@ -6097,7 +6092,7 @@
                                             @endphp
                                             <div class="col-lg-6 qualityControl">
                                                 <div class="group-input">
-                                                    <label for="Quality Control notification">Quality Control Review Comment Required ? <span
+                                                    <label for="Quality Control notification">Quality Control Person <span
                                                             id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Control_Person" disabled

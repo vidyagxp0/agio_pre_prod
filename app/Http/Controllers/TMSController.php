@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Department;
 use App\Models\Training;
 use App\Models\QMSDivision;
+use App\Models\InductionTrainingDocumentNumber;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,7 @@ use App\Models\JobDescription;
 use App\Models\TrainingAudit;
 use App\Models\TrainingHistory;
 use App\Models\TrainingStatus;
+use App\Models\JobTrainingDocumentNumber;
 use App\Models\Employee;
 use App\Models\Induction_training;
 use App\Models\TrainerQualification;
@@ -33,7 +35,7 @@ use Helpers;
 class TMSController extends Controller
 {
     public function index(){
-        // return dd(Helpers::checkRoles(6));
+        
         $inductionTraining = Induction_training::get();  
         $jobTraining = JobDescription::get();      
         $jobTrainings = JobTraining::get();
@@ -986,14 +988,12 @@ class TMSController extends Controller
 
 
 
-public function TMSTraining(Request $request)
-    {
+        public function TMSTraining(Request $request)
+        {
       
-         
-            // return dd(Helpers::checkRoles(6));
-            $inductionTraining = Induction_training::get();  
+            $inductionTraining = InductionTrainingDocumentNumber::get();  
             $jobTraining = JobDescription::get();      
-            $jobTrainings = JobTraining::get();
+            $jobTrainings = JobTrainingDocumentNumber::get();
                 $documents = DocumentTraining::where('trainer', Auth::guard('employee')->user()->employee_name)->with('root_document')->orderByDesc('id')->get();
                if($documents){
                    foreach($documents as $temp){
@@ -1102,5 +1102,5 @@ public function TMSTraining(Request $request)
                 return view('frontend.layout.TMS-Training', compact('useDocFromJobTraining', 'useDocFromInductionTraining', 'documents2','documents','due','pending','complete', 'employees', 'trainers', 'inductionTraining', 'jobTrainings'));
            
 
-    }
+        }
 }
