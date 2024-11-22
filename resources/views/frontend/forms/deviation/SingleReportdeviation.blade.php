@@ -856,7 +856,7 @@
                         @endif
                     </span>
                 </div> --}}
-                <div class="inner-block">
+                <!-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">
                         Investigation Required? </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -866,12 +866,10 @@
                             Not Applicable
                         @endif
                     </span>
-                </div>
+                </div> -->
 
                 <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA
-                        Initial
-                        Assessment </label>
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA Initial Assessment Comment </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->QAInitialRemark)
                             {{ $data->QAInitialRemark }}
@@ -1472,7 +1470,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Stores Impact Assessment Required ?
+                                    <th class="w-20">Store Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
                                         <div>
@@ -1483,7 +1481,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Stores Person</th>
+                                    <th class="w-20">Store Person</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_person)
@@ -1497,7 +1495,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">Impact Assessment (By Stores)</th>
+                                    <th class="w-20">Impact Assessment (By Store)</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_assessment)
@@ -1520,7 +1518,7 @@
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">Stores Impact Assessment Completed By</th>
+                                    <th class="w-20">Store Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_by)
@@ -1530,7 +1528,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Stores Impact Assessment Completed On</th>
+                                    <th class="w-20">Store Impact Assessment Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Store_on)
@@ -3655,8 +3653,10 @@
                                     Problem Statement
                                 </label>
                                 <span style="font-size: 0.8rem; margin-left: 60px;">
-                                    {{ $fishboneData->data['problem_statement'] ?? 'Not Applicable' }}
-                                </span>
+                                    {{ $decodedData['fishbone_problem_statement'] ?? 'Not Applicable' }}
+                                </span> 
+                               
+                                
                             </div>
                         @endif
 
@@ -4609,32 +4609,10 @@
                             </div>
                             <table>
                             
-                                <tr>
-                                    <th class="w-20">Source of CAPA</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->source_of_capa)
-                                                {{ $data->source_of_capa }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
+                                 <tr>
                                     </td>
-                                    <th class="w-20">Description of Discrepancy</th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($data->Description_of_Discrepancy)
-                                                {{ strip_tags($data->Description_of_Discrepancy) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr> -->
-
-                                <tr>
-                                    <th class="w-20">Root Cause</th>
-                                    <td class="w-80">
+                                     <th class="w-20">Root Cause</th>
+                                       <td class="w-80">
                                         <div>
                                             @if ($data->capa_root_cause)
                                                 {{ strip_tags($data->capa_root_cause) }}
@@ -4642,17 +4620,21 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
-                                    <th class="w-20">Immediate Action Taken</th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($data->Immediate_Action_Take)
-                                                {{ strip_tags($data->Immediate_Action_Take) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
+                                     </td>
+                                </tr>
+
+                                <tr>
+
+                                    <th class="w-20">Immediate Action Taken (If Applicable)</th>
+                                            <td class="w-80">
+                                                <div>
+                                                    @if ($data->Immediate_Action_Take)
+                                                        {{ strip_tags($data->Immediate_Action_Take) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
                                 </tr>
 
                                 <tr>
@@ -4666,8 +4648,10 @@
                                             @endif
                                         </div>
                                     </td>
-
-                                    <th class="w-20">Preventive Action Details</th>
+                                </tr>       
+                                <tr>
+                                    
+                                <th class="w-20">Preventive Action Details</th>
                                     <td class="w-80">
                                         <div>
                                             @if ($data->Preventive_Action_Details)
@@ -4678,6 +4662,14 @@
                                         </div>
                                     </td>
                                 </tr>
+
+
+                                 
+
+                                
+                               
+
+                                   
 
                             </table>
                         </div>
@@ -4692,8 +4684,8 @@
                                             <th class="w-20">S.N.</th>
                                             <th class="w-60">Attachment</th>
                                         </tr>
-                                        @if ($data->Capa_attachment)
-                                            @foreach (json_decode($data->Capa_attachment) as $key => $file)
+                                        @if ($data->CAPA_Closure_attachment)
+                                            @foreach (json_decode($data->CAPA_Closure_attachment) as $key => $file)
                                                 <tr>
                                                     <td class="w-20">{{ $key + 1 }}</td>
                                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"

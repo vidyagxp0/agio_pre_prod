@@ -3200,7 +3200,7 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA Initial Remarks</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Assessment Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="tiny"
@@ -12520,7 +12520,7 @@
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
                                                         </a>
-                                                        <input type="hidden" name="existing_CAPA_Closure_attachment[]" value="{{ $file }}">
+                                                        <input type="hidden" name="CAPA_Closure_attachment[]" value="{{ $file }}">
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -12604,7 +12604,7 @@
 
                             <!-- Form Buttons -->
                             <div class="button-block">
-                                <button type="submit"
+                                <!-- <button type="submit"
                                         class="saveAuditFormBtn d-flex"
                                         id="ChangesaveButton0411"
                                         style="justify-content: center; width: 4rem; margin-left: 1px;"
@@ -12613,7 +12613,17 @@
                                         <span class="sr-only">Loading...</span>
                                     </div>
                                     Save
-                                </button>
+                                </button> -->
+                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                id="ChangesaveButton02221">
+                                <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                    role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Save
+                            </button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()" style="justify-content: center; width: 4rem; margin-left: 1px;">Next</button>
                                 <button type="button" style="justify-content: center; width: 4rem; margin-left: 1px;">

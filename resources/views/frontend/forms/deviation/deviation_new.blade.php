@@ -1867,7 +1867,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA/CQA Initial Assessment</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Assessment Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny"disabled name="QAInitialRemark" id="summernote-7"></textarea>
