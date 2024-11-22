@@ -1600,7 +1600,7 @@ class ActionItemController extends Controller
                 //     // }
                 // }
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
 
                 return back();
             }
@@ -1673,7 +1673,7 @@ class ActionItemController extends Controller
                 //     // }
                 // }
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -1790,7 +1790,7 @@ public function lastStage(Request $request, $id){
             //     // }
             // }
             $history->save();
-            toastr()->success('Document Sent');
+            //toastr()->success('Document Sent');
             return back();
         }
 

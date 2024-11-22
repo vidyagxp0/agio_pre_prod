@@ -6382,7 +6382,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 2) {
@@ -6453,7 +6453,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 3) {
@@ -6525,7 +6525,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
                 if ($changeControl->stage == 4) {
@@ -6598,7 +6598,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     // }
 
                     $changeControl->update();
-                    toastr()->success('Document Sent');
+                    //toastr()->success('Document Sent');
                     return back();
 
 
@@ -6673,7 +6673,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
@@ -6747,7 +6747,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -6820,7 +6820,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 8) {
@@ -6875,7 +6875,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -6931,7 +6931,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -6988,7 +6988,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
