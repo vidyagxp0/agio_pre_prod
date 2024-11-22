@@ -1813,10 +1813,37 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->capa_required = $request->capa_required;
         $deviation->qrm_required = $request->qrm_required;
 
-        // $deviation->capa_root_cause = $request->capa_root_cause;
-        // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
-        // $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
-        // $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+        $deviation->capa_root_cause = $request->capa_root_cause;
+        $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
+        $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
+        $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+
+        if (!empty($request->CAPA_Closure_attachment) || !empty($request->deleted_CAPA_Closure_attachment)) {
+            $existingFiles = json_decode($deviation->CAPA_Closure_attachment, true) ?? [];
+     
+         // Handle deleted files
+         if (!empty($request->deleted_CAPA_Closure_attachment)) {
+             $filesToDelete = explode(',', $request->deleted_CAPA_Closure_attachment);
+             $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                 return !in_array($file, $filesToDelete);
+             });
+         }
+     
+         // Handle new files
+         $newFiles = [];
+         if ($request->hasFile('CAPA_Closure_attachment')) {
+             foreach ($request->file('CAPA_Closure_attachment') as $file) {
+                 $name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                 $file->move(public_path('upload/'), $name);
+                 $newFiles[] = $name;
+             }
+         }
+     
+         // Merge existing and new files
+         $allFiles = array_merge($existingFiles, $newFiles);
+         $deviation->CAPA_Closure_attachment = json_encode($allFiles);
+     }
+     
 
 
 
@@ -4764,11 +4791,11 @@ $newDataGridFishbone->save();
 
         if ($lastDeviation->QAInitialRemark != $deviation->QAInitialRemark || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA Initial Assessment')
+                            ->where('activity_type', 'QA/CQA Initial Assessment Comment')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA Initial Assessment';
+            $history->activity_type = 'QA/CQA Initial Assessment Comment';
              $history->previous = $lastDeviation->QAInitialRemark;
             $history->current = $deviation->QAInitialRemark;
             $history->comment = $deviation->submit_comment;
@@ -9238,7 +9265,8 @@ if (!empty($lastDeviation->inference_remarks) || !empty($deviation->inference_re
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
-
+            
+            
             return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 
