@@ -1161,7 +1161,7 @@ Not Applicable
                                 <th style="font-size: 7px" class="rotate th">Probability (P)</th>
                                 <th style="font-size: 7px" class="rotate th">Detection (D)</th>
                                 <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
-                                <th style="font-size: 7px">Category of Risk Level (Low, Medium, High)</th>
+                                <th style="font-size: 7px">Category of Risk Level (Low, Medium and High)</th>
                                 <th style="font-size: 7px">Risk Acceptance (Y/N)</th>
                                 <th style="font-size: 7px">Traceability Document</th>
                             </tr>
@@ -1858,7 +1858,7 @@ Not Applicable
                                             <td class="w-30">{{ $data->More_Info_hfr_comment }}</td>
                                         </tr> --}}
                                     <tr>
-                                        <th class="w-20"> FinalQA/CQA Review Complete By</th>
+                                        <th class="w-20"> Final QA/CQA Review Complete By</th>
                                         <td class="w-30">
                                             @if ($data->Final_QA_Review_Complete_By)
                                                 {{ $data->Final_QA_Review_Complete_By }}
@@ -1866,7 +1866,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20"> FinalQA/CQA Review Complete On</th>
+                                        <th class="w-20"> Final QA/CQA Review Complete On</th>
                                         <td class="w-30">
                                             @if ($data->Final_QA_Review_Complete_On)
                                                 {{ Helpers::getdateFormat($data->Final_QA_Review_Complete_On) }}
@@ -1874,7 +1874,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20"> FinalQA/CQA Review Completed Comment</th>
+                                        <th class="w-20"> Final QA/CQA Review Completed Comment</th>
                                         <td class="w-80">
                                             @if ($data->evalution_Closure_comment)
                                                 {{ $data->Final_QA_Review_Complete_Comment }}

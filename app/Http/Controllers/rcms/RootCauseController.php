@@ -3467,7 +3467,7 @@ class RootCauseController extends Controller
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'QA Review Complete By,QA Review Complete On';
+                $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
                 $history->previous = "Initial QA/CQA Review";
                 $history->current = $root->QQQA_Review_Complete_By;
                 $history->comment = $request->comment;
