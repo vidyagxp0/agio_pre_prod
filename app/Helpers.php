@@ -4,6 +4,7 @@
 use App\Http\Controllers\ExtensionNewController;
 use App\Models\ActionItem;
 use App\Models\Division;
+use App\Models\Document;
 use App\Models\extension_new;
 use App\Models\QMSDivision;
 use App\Models\QMSProcess;
@@ -1581,8 +1582,8 @@ class Helpers
         }
         return $count;
     }
-          public static function checkControlAccess()
-        {
+    public static function checkControlAccess()
+    {
     // Retrieve the user's roles
     $userRoles = UserRole::where('user_id', Auth::user()->id)->pluck('role_id')->toArray();
 
@@ -1591,12 +1592,42 @@ class Helpers
 
     // Return true if controls exist, false otherwise
     return $controls;
-}
+    }
 
-public static function getEmpNameByCode($code){
-    return   Employee::where('full_employee_id',$code)->value('employee_name');
-}
+    public static function getEmpNameByCode($code){
+        return   Employee::where('full_employee_id',$code)->value('employee_name');
+    }
 
+    public static function getFormattedDocumentNumbers($documentIds) {
+
+        // Ensure document IDs are not null and is a string or array
+        if (is_null($documentIds)) {
+            return ''; // or handle error as needed
+        }
+
+        if (is_string($documentIds)) {
+            $documentIds = explode(',', $documentIds);
+        }
+
+        // Fetch documents only if $documentIds is an array and has items
+        if (is_array($documentIds) && count($documentIds) > 0) {
+            $documents = Document::whereIn('id', $documentIds)->get();
+        } else {
+            $documents = collect(); // Empty collection if no valid IDs
+        }
+        
+        $formattedDocuments = [];
+
+        foreach ($documents as $document) {
+            $formattedDocuments[] = "{$document->sop_type_short}/{$document->department_id}/000{$document->id}/R{$document->major}";
+        }
+
+        return implode(', ', $formattedDocuments);
+    }
+
+    public static function getNameById($id){
+        return   Employee::where('id',$id)->value('employee_name');
+    }
 
 
 }

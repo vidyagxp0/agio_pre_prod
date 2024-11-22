@@ -250,10 +250,10 @@
                             @endif
                         </td>
 
-                       
+
                     </tr>
                     <tr>
-                        
+
 
 
                          <th class="w-20">Assigned To</th>
@@ -273,10 +273,10 @@
                                 Not Applicable
                             @endif
                         </td>
-                      
+
                     </tr>
 
-                    
+
                 </table>
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Short Description
@@ -309,6 +309,14 @@
                             @endif
                         </td>
                       @endif
+                      <th class="w-20">Initiated through</th>
+                      <td class="w-80">
+                          @if ($data->year)
+                              {{ $data->year }}
+                          @else
+                              Not Applicable
+                          @endif
+                      </td>
                     </tr>
                 </table>
                 <!-- <div class="inner-block">
@@ -324,14 +332,7 @@
                 </div> -->
                 <table>
                     <tr>
-                        <th class="w-20">Initiated through</th>
-                        <td class="w-80">
-                            @if ($data->year)
-                                {{ $data->year }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+
                         @if ($data->yearly_other == 'Other')
                         <th class="w-20">Initiated through(Others)</th>
                         <td class="w-80">
@@ -378,16 +379,16 @@
                                         {{ isset($grid_Data['Auditees']) ? $grid_Data['Auditees'] : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['Due_Date']) ? Helpers::getdateFormat( $grid_Data['Due_Date']) : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['Due_Date']) ? Helpers::getdateFormat( $grid_Data['Due_Date']) : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['End_date']) ?  Helpers::getdateFormat( $grid_Data['End_date']) : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['End_date']) ?  Helpers::getdateFormat( $grid_Data['End_date']) : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['Lead_Investigator']) ? $grid_Data['Lead_Investigator'] : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['Lead_Investigator']) ? $grid_Data['Lead_Investigator'] : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['Comment']) ? $grid_Data['Comment'] : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['Comment']) ? $grid_Data['Comment'] : 'Not Applicable' }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -407,7 +408,7 @@
                                 <th class="w-20">Department</th>
                                 <th class="w-20">Months</th>
                                 <th class="w-20">Remarks</th>
-                               
+
                             </tr>
                             @if ($grid_Data4 && is_array($grid_Data4->data))
                                     @foreach ($grid_Data4->data as $grid_Data)
@@ -417,10 +418,10 @@
                                         {{ isset($grid_Data['department']) ? $grid_Data['department'] : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['Months']) ? $grid_Data['Months'] : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['Months']) ? $grid_Data['Months'] : 'Not Applicable' }}
                                     </td>
                                     <td>
-                                        {{ isset($grid_Data['Remarked']) ? $grid_Data['Remarked'] : 'Not Applicable' }} 
+                                        {{ isset($grid_Data['Remarked']) ? $grid_Data['Remarked'] : 'Not Applicable' }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -434,8 +435,8 @@
 
 
 
-                
-             
+
+
                     {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
                     </label>
@@ -496,8 +497,8 @@
                     </tr>
                 </table>
                 </div>
-                
-         
+
+
             </div>
         </div>
     </div>
@@ -506,12 +507,12 @@
 
     <div class="inner-block">
         <div class="content-table">
-            <div class="block">
+            {{--<div class="block">
                 <div class="block-head">
                         Self Inspection Circular
-                </div>
+                </div>--}}
 
-                
+
             <div class="block">
                 <div class="block-head">
                     Self Inspection Circular
@@ -532,10 +533,10 @@
                                     {{ isset($grid_Data['departments']) ? $grid_Data['departments'] : 'Not Applicable' }}
                                 </td>
                                 <td>
-                                    {{ isset($grid_Data['info_mfg_date']) ? Helpers::getdateFormat( $grid_Data['info_mfg_date']) : 'Not Applicable' }} 
+                                    {{ isset($grid_Data['info_mfg_date']) ? Helpers::getdateFormat( $grid_Data['info_mfg_date']) : 'Not Applicable' }}
                                 </td>
                                 <td>
-                                    {{ isset($grid_Data['Auditor']) ? $grid_Data['Auditor'] : 'Not Applicable' }} 
+                                    {{ isset($grid_Data['Auditor']) ? $grid_Data['Auditor'] : 'Not Applicable' }}
                                 </td>
                             </tr>
                         @endforeach
@@ -559,7 +560,7 @@
                                 @endif
                             </td>
                         </table>
-          
+
                       <div class="border-table">
                             <div class="block-head">
                                 Attached Files
@@ -589,7 +590,7 @@
 
                         </div>
                     </div>
-{{-- 
+{{--
             <div class="block">
                 <div class="block-head">
                     HOD/Designee Review
@@ -687,7 +688,7 @@
                 <div class="block-head">
                     Activity Log
                 </div>
-                
+
                 <!-- <div class="block-head">
                     Submit
                 </div> -->
@@ -698,12 +699,11 @@
                         <th class="w-20">
                             Submit On</th>
                         <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">
                             Submit Comment</th>
                         <td class="w-30">@if($data->Submitted_comment){{ $data->Submitted_comment }}@else Not Applicable @endif</td>
                     </tr>
+
                     <!-- </table>
                     <div class="block-head">
                         Approve
@@ -714,16 +714,16 @@
                         <td class="w-30">@if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
                         <th class="w-20">Approve On</th>
                         <td class="w-30">{{ $data->approved_on }}@if($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">
                             Approve Comment</th>
                         <td class="w-30">@if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
                     </tr>
+
+
                     <!-- </table>
 
                     <div class="block-head">
-                        More Info Required 
+                        More Info Required
                     </div>
                     <table> -->
                     <tr>
@@ -731,12 +731,10 @@
                         <td class="w-30">@if($data->rejected_by){{ $data->rejected_by }}@else Not Applicable @endif</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">@if($data->rejected_on){{ $data->rejected_on }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">
-                            More Info Required Comment</th>
+                        <th class="w-20">More Info Required Comment</th>
                         <td class="w-30">@if($data->reject_comment){{ $data->reject_comment }}@else Not Applicable @endif</td>
                     </tr>
+
                     <!-- </table>
                     <div class="block-head">
                         Audit Completed
@@ -749,14 +747,13 @@
                         <th class="w-20">
                             Audit Completed On</th>
                         <td class="w-30">@if($data->Audit_Completed_On){{ $data->Audit_Completed_On }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">
                             Audit Completed Comment</th>
                         <td class="w-30">@if($data->Audit_Completed_comment){{ $data->Audit_Completed_comment }}@else Not Applicable @endif</td>
                     </tr>
+
                     <!-- </table>
-                    
+
                     <div class="block-head">
                         Cancel
                     </div>
@@ -766,17 +763,15 @@
                         <td class="w-30">@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
                         <th class="w-20">Cancel On</th>
                         <td class="w-30">@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">
-                            Cancel Comment</th>
+                        <th class="w-20">Cancel Comment</th>
                         <td class="w-30">@if($data->Cancelled_comment){{ $data->Cancelled_comment }}@else Not Applicable @endif</td>
                     </tr>
+
                 </table>
             </div>
 
-            <!-- ------------------------------- audit program grid--------------------------------------- -->     
-            
+            <!-- ------------------------------- audit program grid--------------------------------------- -->
+
         </div>
     </div>
     <!--  ------------------------------- audit program grid--------------------------------------- -->

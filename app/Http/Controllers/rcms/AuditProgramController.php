@@ -2453,7 +2453,7 @@ class AuditProgramController extends Controller
         public function AuditProgramTrialShow($id)
     {
         $data= AuditProgram::find($id);
-        $audit = AuditProgramAuditTrial::where('AuditProgram_id', $id)->orderByDesc('id')->get();
+        $audit = AuditProgramAuditTrial::where('AuditProgram_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = AuditProgram::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

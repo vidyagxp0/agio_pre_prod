@@ -333,18 +333,19 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Questionaries</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">HOD Evaluation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Pending Trainer Update</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Pending Training </button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Evaluation</button>
+
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
             <form id="auditform" action="{{ route('trainer.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
-                    <!-- General information content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -372,6 +373,7 @@
                                             <option value="">Select an employee</option>
                                             @foreach ($employees as $emp)
                                                 <option value="{{ $emp->id }}" data-name="{{ $emp->employee_name }}"
+                                                    data-department="{{ Helpers::getFullDepartmentName($emp->department) ?? 'NA' }}"
                                                     {{ isset($employee) && $employee->id == $emp->id ? 'selected' : '' }}>
                                                     {{ $emp->employee_name }}
                                                 </option>
@@ -421,20 +423,20 @@
                                         <label for="HOD Persons">HOD </label>
                                         <input id="" type="text" name="hod">
                                         <!-- <select name="hod" placeholder="Select HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
-                            <option value="">-- Select Hod --</option>
-                            @foreach ($users as $value)
-    <option value="{{ $value->id }}">{{ $value->name }}</option>
-    @endforeach
-                        </select> -->
+                                                                        <option value="">-- Select Hod --</option>
+                                                                        @foreach ($users as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                @endforeach
+                                        </select> -->
                                     </div>
                                 </div>
 
                                 <!-- <div class="col-6">
-                    <div class="group-input">
-                        <label for="qualification">Qualification</label>
-                        <input id="qualification" type="text" name="qualification" maxlength="255" >
-                    </div>
-                </div> -->
+                                    <div class="group-input">
+                                        <label for="qualification">Qualification</label>
+                                        <input id="qualification" type="text" name="qualification" maxlength="255" >
+                                    </div> -->
+
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Short Description">Qualification </label>
@@ -443,18 +445,20 @@
                                             name="qualification" readonly>
                                     </div>
                                 </div>
+
                                 <script>
                                     document.getElementById('select-state').addEventListener('change', function() {
                                         var selectedOption = this.options[this.selectedIndex];
                                         var employeeId = selectedOption.value;
                                         var employeeName = selectedOption.getAttribute('data-name');
+                                        var department = selectedOption.getAttribute('data-department');
 
                                         if (employeeId) {
                                             fetch(`/employees/${employeeId}`)
                                                 .then(response => response.json())
                                                 .then(data => {
                                                     document.getElementById('employee_id').value = data.full_employee_id;
-                                                    document.getElementById('department').value = data.department;
+                                                    document.getElementById('department').value = department;
                                                     document.getElementById('designee').value = data.job_title;
                                                     // document.getElementById('experience').value = data.experience;
                                                     document.getElementById('qualification').value = data.qualification;
@@ -467,7 +471,6 @@
                                             // document.getElementById('experience').value = '';
                                             document.getElementById('qualification').value = '';
                                             document.getElementById('employee_name').value = '';
-
                                         }
                                     });
 
@@ -485,7 +488,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="training_date">Training Date</label>
+                                        <label for="training_date">Schedule Training date</label>
                                         <input type="date" id="training_date" name="training_date">
                                     </div>
                                 </div>
@@ -504,18 +507,17 @@
                                         <label for="type">Type of Training</label>
                                         <select name="type" id="type">
                                             <option value="">--Select--</option>
-                                            <option value="technical">Technical</option>
-                                            <option value="non-technical">Non-Technical</option>
-                                            <option value="safety">Safety</option>
+                                            <option value="Planned/ Schedule Training">Planned/ Schedule Training </option>
+                                            <option value="Unplanned/ Unschedule Training">Unplanned/ Unschedule Training </option>
+                                            <option value="External Training">External Training </option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <!-- Evaluation Required -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="evaluation">Evaluation Required</label>
-                                        <select name="evaluation">
+                                        <select name="evaluation" id="evaluation">
                                             <option value="">--Select--</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -523,6 +525,28 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-6" id="evaluation-through-container" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="evaluation-through">Evaluation Through</label>
+                                        <select name="evaluation_through" id="evaluation-through">
+                                            <option value="">--Select--</option>
+                                            <option value="questionnaire">Questionnaire</option>
+                                            <option value="group_interaction">Group Interaction</option>
+                                            <option value="viva_voice">Viva Voice</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById('evaluation').addEventListener('change', function () {
+                                        var evaluationThroughContainer = document.getElementById('evaluation-through-container');
+                                        if (this.value === 'yes') {
+                                            evaluationThroughContainer.style.display = 'block';
+                                        } else {
+                                            evaluationThroughContainer.style.display = 'none';
+                                        }
+                                    });
+                                </script>
 
 
                                 <div class="col-lg-6">
@@ -542,10 +566,10 @@
                                         <option value="">-- Select --</option>
                                         @foreach ($divisions as $division)
                                         <option value="{{ $division->id }}">{{ $division->name }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                    </div> --}}
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -557,9 +581,9 @@
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="site_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                </div>
-            </div> --}}
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                    </div>
+                                </div> --}}
 
 
                                 <div class="col-lg-6">
@@ -598,15 +622,15 @@
 
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
-                <div class="group-input input-date">
-                    <label for="Date Due">Due Date <span class="text-danger">*</span></label>
-                    <div class="calenderauditee">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
 
-                        <input type="hidden" value="{{$due_date}}" name="due_date">
-                        <input disabled type="text" value="{{Helpers::getdateFormat($due_date)}}">
-                    </div>
-                </div>
-            </div> --}}
+                                            <input type="hidden" value="{{$due_date}}" name="due_date">
+                                            <input disabled type="text" value="{{Helpers::getdateFormat($due_date)}}">
+                                        </div>
+                                    </div>
+                                </div> --}}
 
 
                                 <div class="col-12">
@@ -619,9 +643,16 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Description">Description </label>
+                                        <input id="description" type="text" name="description">
+                                    </div>
+                                </div>
 
 
-                                {{-- <div class="">
+
+            {{-- <div class="">
                 <div class="group-input">
                     <label for="audit-agenda-grid">
                         Trainer Skill Set<button type="button" name="audit-agenda-grid" id="Trainer_Skill_table">+</button>
@@ -692,9 +723,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_1" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
@@ -706,13 +737,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_2" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
-
 
                                                     </tr>
                                                     <tr>
@@ -722,13 +752,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_3" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
-
 
                                                     </tr>
                                                     <tr>
@@ -737,13 +766,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_4" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
-
 
                                                     </tr>
                                                     <tr>
@@ -752,13 +780,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_5" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
-
 
                                                     </tr>
                                                     <tr>
@@ -767,13 +794,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_6" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
 
                                                             </select>
                                                         </td>
-
 
                                                     </tr>
                                                     <tr>
@@ -782,13 +808,11 @@
                                                         <td>
                                                             <select name="evaluation_criteria_7" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
-
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
                                                             </select>
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>8</td>
@@ -797,17 +821,12 @@
                                                         <td>
                                                             <select name="evaluation_criteria_8" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
-
+                                                                <option value="Poor">Poor</option>
+                                                                <option value="Good">Good</option>
+                                                                <option value="Satisfactory">Satisfactory</option>
                                                             </select>
                                                         </td>
-
-
                                                     </tr>
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -815,7 +834,7 @@
                                 </div>
                             </div>
 
-                            <div class="">
+                            {{-- <div class="">
                                 <div class="group-input">
                                     <label for="trainingQualificationStatus">Qualification Status</label>
                                     <select name="trainer" id="trainingQualificationStatus">
@@ -830,7 +849,7 @@
                                     <label for="Q_comment">Qualification Comments</label>
                                     <textarea class="" name="qualification_comments"></textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -875,15 +894,15 @@
                                     let newReference = document.createElement('div');
                                     newReference.classList.add('row', 'reference-data-' + referenceCount);
                                     newReference.innerHTML = `
-                            <div class="col-lg-6">
-                                <input type="text" name="reference-text">
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="file" name="references" class="myclassname">
-                            </div><div class="col-lg-6">
-                                <input type="file" name="references" class="myclassname">
-                            </div>
-                        `;
+                                        <div class="col-lg-6">
+                                            <input type="text" name="reference-text">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div><div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div>
+                                    `;
                                     let referenceContainer = document.querySelector('.reference-data');
                                     referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
                                 }
@@ -897,27 +916,6 @@
                                 }
                             </script>
 
-
-
-
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <input type="file" id="myfile" name="inv_attachment[]" multiple>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="audit_file_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="initial_attachment"
-                                                oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div> --}}
-
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -928,7 +926,7 @@
                         </div>
                     </div>
 
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="col-12 sub-head">
                             Questionaries
@@ -986,8 +984,8 @@
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         </div>
                     </div>
-                </div>
-                <script>
+                </div> --}}
+                {{-- <script>
                     $(document).ready(function() {
                         $('#ObservationAdd').click(function(e) {
                             function generateTableRow(serialNumber) {
@@ -1014,14 +1012,120 @@
                             tableBody.append(newRow);
                         });
                     });
-                </script>
+                </script> --}}
 
-                <div id="CCForm3" class="inner-block cctabcontent">
+                <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Activated On">Remarks</label>
+                                    <label for="Activated On">Trainer Acknowledge Comment</label>
+                                    <textarea name="trainer_acknowledge_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Trainer Acknowledge Attachments</label>
+                                    <input type="file" id="myfile" name="trainer_acknowledge_attachments"
+                                        value="">
+                                    <a href=""
+                                        target="_blank"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                            <div class="col-6">
+                              <div class="group-input">
+                                    <label for="start_date">Start Date of Training</label>
+                                    <input type="date" id="start_date" name="start_date" class="" onchange="setMinEndDate()">
+                              </div>  
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="end_date">End Date of Training</label>
+                                    <input type="date" id="end_date" name="end_date" class="" onchange="setMaxStartDate()">
+                                </div>    
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="start_time">Start Time of Training</label>
+                                    <input type="time" id="start_time" name="start_time">
+                                </div>    
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="end_time">End Time of Training</label>
+                                    <input type="time" id="end_time" name="end_time">
+                                </div>    
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Pending Training Comment</label>
+                                    <textarea name="pending_training_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">Pending Training Attachments</label>
+                                    <input type="file" id="myfile" name="pending_training_attachments"
+                                        value="">
+                                    <a href=""
+                                        target="_blank"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Persons">Evaluation by HOD</label>
+                                    <select name="evaluation_by_hod" placeholder="Select Evaluation by HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
+                                            <option value="">-- Select Evaluation by HOD --</option>
+                                            @foreach ($users as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Evaluation by HOD">Evaluation Criteria</label>
+                                    <input type="text" name ="evaluation_criteria_hod">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">HOD Evaluation Comment</label>
                                     <textarea name="hod_comment"></textarea>
                                 </div>
                             </div>
@@ -1044,18 +1148,38 @@
                     </div>
                 </div>
 
-                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+
+                        <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Persons">Evaluation by QA/CQA</label>
+                                    <select name="evaluation_by_qa" placeholder="Select Evaluation by QA/CQA" data-search="false" data-silent-initial-value-set="true" id="hod">
+                                            <option value="">-- Select Evaluation by QA/CQA --</option>
+                                            @foreach ($users as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Evaluation by Criteria">Evaluation Criteria</label>
+                                    <input type="text" name ="evaluation_criteria_qa">
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Activated On">Remarks</label>
+                                    <label for="QA/CQA Head Approval Comment">QA/CQA Head Approval Comment</label>
                                     <textarea name="qa_final_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="External Attachment">QA/CQA Attachment</label>
+                                    <label for="QA/CQA Head Approval Attachment">QA/CQA Head Approval Attachment</label>
                                     <input type="file" id="myfile" name="qa_final_attachment"
                                         value="">
                                     <a href=""
@@ -1074,7 +1198,7 @@
 
 
                     <!-- Activity Log content -->
-                    <div id="CCForm5" class="inner-block cctabcontent">
+                    <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-4">
@@ -1216,6 +1340,19 @@
             display: block;
         }
     </style>
+
+    <script>
+        function setMinEndDate() {
+            var startDate = document.getElementById('start_date').value;
+            document.getElementById('end_date').min = startDate; 
+        }
+
+        function setMaxStartDate() {
+            var endDate = document.getElementById('end_date').value;
+            document.getElementById('start_date').max = endDate;
+        }
+    </script>
+
     <script>
         document.getElementById('myfile').addEventListener('change', function() {
             var fileListDiv = document.querySelector('.file-list');

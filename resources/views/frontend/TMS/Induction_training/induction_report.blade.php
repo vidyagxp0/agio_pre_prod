@@ -236,7 +236,7 @@
 
                     <td class="w-30">
                         @if ($data->department)
-                            {{ Helpers::getFullDepartmentName($data->department) }}
+                            {{ $data->department }}
                         @else
                             Not Applicable
                         @endif

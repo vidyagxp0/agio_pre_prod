@@ -278,44 +278,11 @@
                         </td>
 
                     </tr>
-                    <tr>
-                        <th class="w-20">HOD Persons</th>
-                        <td class="w-80">
-                            @if ($data->hod_preson)
-                                {{ $data->hod_preson }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Responsible Department</th>
-                        <td class="w-80">
-                            @if ($data->departments)
-                                {{ $data->departments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-
-
-
 
                 </table>
+
                 <div class="block">
                     <table>
-                        <tr>
-                            <th class="w-20">Description</th>
-                            <td class="w-80">
-                                @if ($data->description)
-                                    {{ $data->description }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-
-
-                        </tr>
 
                         <tr>
                             <th class="w-20">Short Description</th>
@@ -327,6 +294,37 @@
                                 @endif
                             </td>
 
+
+                        </tr>
+                        <tr>
+                            <th class="w-20">Description</th>
+                            <td class="w-80">
+                                @if ($data->description)
+                                    {{ $data->description }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th class="w-20">HOD Persons</th>
+                            <td class="w-80">
+                                @if ($data->hod_preson)
+                                    {{ $data->hod_preson }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Responsible Department</th>
+                            <td class="w-80">
+                                @if ($data->departments)
+                                    {{ $data->departments }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
 
                         </tr>
 
@@ -377,12 +375,12 @@
                             <th class="w-20">CAPA Related Records</th>
                             {{-- <td class="w-80">@if ($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td> --}}
                         </tr>
-                    
+
 
                         </table>
                       </div>
                     </table>
-                   
+
                 </div>
             </div> -->
 
@@ -550,7 +548,7 @@
 
 
             <div class="block-head">
-            QA/CQA Verification Attachment
+            QA/CQA Verification Attachments
             </div>
             <div class="border-table">
                 <table>

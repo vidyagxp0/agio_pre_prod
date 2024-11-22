@@ -431,6 +431,7 @@
                     color: #fff !important;
                 }
             </style>
+             {{ $audit->links() }}
         </div>
 
         </body>

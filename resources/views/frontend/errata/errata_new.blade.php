@@ -468,9 +468,18 @@
 
 
                                 <div class="group-input">
-                                    <label for="audit-agenda-grid">
+                                    <!-- <label for="audit-agenda-grid">
                                         Details
                                         <button type="button" name="details" id="Details-add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Launch Deviation
+                                        </span>
+                                    </label> -->
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -491,9 +500,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="details[0][serial]"
+                                                <!-- <td><input disabled type="text" name="details[0][serial]"
                                                         value="1"></td>
-                                                <td><input type="text" name="details[0][ListOfImpactingDocument]"></td>
+                                                <td><input type="text" name="details[0][ListOfImpactingDocument]"></td> -->
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="ListOfImpactingDocument[]"></td>
                                                 <!-- <td><input type="text" name="details[0][PreparedBy]"></td>
                                                 <td><input type="text" name="details[0][CheckedBy]"></td>
                                                 <td><input type="text" name="details[0][ApprovedBy]"></td> -->
@@ -2485,7 +2497,7 @@
         }
     </script>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $('#Details-add').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -2520,6 +2532,33 @@
                 tableBody.append(newRow);
             });
         });
+    </script> -->
+
+    <script>
+        $(document).ready(function() {
+            $('#Details_add').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="ListOfImpactingDocument[]"></td>' +
+
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                            '</tr>';
+
+
+                        return html;
+                    }
+
+                    var tableBody = $('#Details-table tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
+            });
     </script>
 
     <script>

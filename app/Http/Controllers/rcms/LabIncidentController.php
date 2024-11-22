@@ -1519,7 +1519,7 @@ class LabIncidentController extends Controller
         if (!empty($data->QC_head_hod_secondry_Comments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QC Head/HOD Secondary Review Comment';
+            $history->activity_type = 'QC Head/HOD Secondary Review Comments';
             $history->previous = "Null";
             $history->current = $data->QC_head_hod_secondry_Comments;
             $history->comment = "Not Applicable";
@@ -1698,7 +1698,7 @@ class LabIncidentController extends Controller
         if (!empty($data->type_incidence_ia)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Type Incidence';
+            $history->activity_type = 'Type of Incidence';
             $history->previous = "Null";
             $history->current = $data->type_incidence_ia;
             $history->comment = "Not Applicable";
@@ -4399,7 +4399,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QC Head/HOD Secondary Review Comment';
+            $history->activity_type = 'QC Head/HOD Secondary Review Comments';
             $history->previous = $lastDocument->QC_head_hod_secondry_Comments;
             $history->current = $data->QC_head_hod_secondry_Comments;
             $history->comment = $request->QA_Review_Comments_comment;
@@ -5558,7 +5558,7 @@ if ($lastDocument->investigation_summary_ia != $data->investigation_summary_ia) 
 if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
-    $history->activity_type = 'Type Of Incidence';
+    $history->activity_type = 'Type of Incidence';
     $history->previous = $lastDocument->type_incidence_ia;
     $history->current = $data->type_incidence_ia;
     $history->comment = $request->type_incidence_ia_comment ?? "Not Applicable";
@@ -7536,8 +7536,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $doc = LabIncident::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = LabIncidentAuditTrial::where('LabIncident_id', $id)->get();
-
+            $data = LabIncidentAuditTrial::where('LabIncident_id', $id)->paginate(1000);
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

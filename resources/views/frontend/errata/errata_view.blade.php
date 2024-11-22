@@ -739,10 +739,8 @@
                                 <div class="group-input">
 
 
-                                    <label for="audit-agenda-grid">
+                                    <!-- <label for="audit-agenda-grid">
                                         <div class="sub-head">Details
-
-
                                             <button type="button" name="details" id="Details-add"
                                                 {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
@@ -751,6 +749,15 @@
                                                 Launch Deviation
                                             </span>
                                         </div>
+                                    </label> -->
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Launch Deviation
+                                        </span>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table"
@@ -767,10 +774,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if ($grid_Data && is_array($grid_Data->data))
-                                                    @foreach ($grid_Data->data as $grid_Data)
+                                                    @foreach (unserialize($griddata->ListOfImpactingDocument) as $key => $temps)
                                                         <tr>
-                                                            <td><input disabled type="text"
+                                                            <!-- <td><input disabled type="text"
                                                                     name="details[{{ $loop->index }}][serial]"
                                                                     value="{{ $loop->index + 1 }}"
                                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
@@ -781,7 +787,16 @@
                                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td>
+                                                            </td> -->
+
+                                                                <td><input disabled type="text" name="serial_number[]"
+                                                                        value="{{ $key + 1 }}">
+                                                                </td>
+                                                                <td><input type="text" name="ListOfImpactingDocument[]"
+                                                                        {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                                        value="{{ unserialize($griddata->ListOfImpactingDocument)[$key] ? unserialize($griddata->ListOfImpactingDocument)[$key] : '' }}">
+                                                                </td>
+
                                                             <!-- <td><input type="text"
                                                                                 name="details[{{ $loop->index }}][PreparedBy]"
                                                                                 {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
@@ -804,7 +819,6 @@
                                                                     class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
-                                                @endif
                                             </tbody>
 
                                         </table>
@@ -4088,41 +4102,33 @@
         }
     </script>
 
+
+
     <script>
         $(document).ready(function() {
-            $('#Details-add').click(function(e) {
+            $('#Details_add').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    var data = @json($grid_Data);
-                    var html = '';
-                    html += '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber +
-                        '][ListOfImpactingDocument]"></td>' +
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                            '<tr>' +
+                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="ListOfImpactingDocument[]"></td>' +
 
-                        // '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        // '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        // '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                            '</tr>';
 
-                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
-                        '</tr>';
-                    for (var i = 0; i < data.length; i++) {
-                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        return html;
                     }
 
-                    html += '</select></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#Details-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
+                    var tableBody = $('#Details-table tbody');
+                    var rowCount = tableBody.children('tr').length;
+                    var newRow = generateTableRow(rowCount + 1);
+                    tableBody.append(newRow);
+                });
             });
-        });
     </script>
 
     <script>

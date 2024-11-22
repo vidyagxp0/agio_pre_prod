@@ -287,7 +287,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 6) disabled @endif>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" readonly>
                                 </div>
                             </div>
 
@@ -303,9 +303,6 @@
                                 <div class="group-input">
                                     <label for="employee_id">Employee ID </label>
                                     <input disabled type="text" name="employee_id" value="{{ $jobTraining->employee_id }}" id="employee_ids" readonly>
-
-
-                                    
                                 </div>
                             </div>
 
@@ -324,10 +321,9 @@
                                                     @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
                                                 </option>
                                             @endforeach
-                                        </select> --}}
+                                    </select> --}}
                                 </div>
                             </div>
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -452,12 +448,11 @@
                             </div>
 
                             <script>
-                                // Initialize visibility of the revision reason field based on the current status
+                                
                                 document.addEventListener('DOMContentLoaded', function() {
                                     var statusSelect = document.getElementById('jd_type');
                                     var selectedValue = statusSelect.value;
 
-                                    // Show or hide the reason for revision field based on selection
                                     if (selectedValue === 'old') {
                                         document.getElementById('revision_reason_div').style.display = 'block';
                                     } else {
@@ -468,12 +463,11 @@
                                 document.getElementById('jd_type').addEventListener('change', function() {
                                     var selectedValue = this.value;
 
-                                    // Show or hide the reason for revision field based on selection
                                     if (selectedValue === 'old') {
                                         document.getElementById('revision_reason_div').style.display = 'block';
                                     } else {
                                         document.getElementById('revision_reason_div').style.display = 'none';
-                                        document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
+                                        document.getElementById('reason_for_revision').value = '';
                                     }
                                 });
                             </script>
