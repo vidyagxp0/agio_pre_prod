@@ -531,54 +531,54 @@
                         Audit Agenda
                         </div>
 
-                     <div class="border-table">
-                            <table>
-                                <tr class="table_bg">
-                                    <th class="w-20">SR no.</th>
-                                    <th>Area of Audit</th>
-                                    <th>Start Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Date</th>
-                                    <th>End Time</th>
-                                    <th>Auditor</th>
-                                    <th>Auditee</th>
-                                    <th>Remark</th>
-                                </tr>
-                                @if ($grid_data)
-                                    @php
-                                        // Getting the maximum number of entries in any of the arrays to loop through all rows
-                                        $maxRows = max(
-                                            count($grid_data->area_of_audit ?? []),
-                                            count($grid_data->start_date ?? []),
-                                            count($grid_data->start_time ?? []),
-                                            count($grid_data->end_date ?? []),
-                                            count($grid_data->end_time ?? []),
-                                            count($grid_data->auditor ?? []),
-                                            count($grid_data->auditee ?? []),
-                                            count($grid_data->remark ?? [])
-                                        );
-                                    @endphp
+                        <div class="border-table">
+    <table>
+        <tr class="table_bg">
+            <th class="w-20">SR no.</th>
+            <th>Area of Audit</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Auditor</th>
+            <th>Auditee</th>
+            <th>Remark</th>
+        </tr>
+        @if ($grid_data && is_array($grid_data->area_of_audit) && count($grid_data->area_of_audit) > 0)
+            @php
+                $maxRows = max(
+                    count($grid_data->area_of_audit ?? []),
+                    count($grid_data->start_date ?? []),
+                    count($grid_data->start_time ?? []),
+                    count($grid_data->end_date ?? []),
+                    count($grid_data->end_time ?? []),
+                    count($grid_data->auditor ?? []),
+                    count($grid_data->auditee ?? []),
+                    count($grid_data->remark ?? [])
+                );
+            @endphp
 
-                                    @for ($i = 0; $i < $maxRows; $i++)
-                                        <tr>
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>{{ $grid_data->area_of_audit[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->start_date[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->start_time[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->end_date[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->end_time[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->auditor[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->auditee[$i] ?? 'Not Applicable' }}</td>
-                                            <td>{{ $grid_data->remark[$i] ?? 'Not Applicable' }}</td>
-                                        </tr>
-                                    @endfor
-                                @else
-                                    <tr>
-                                        <td colspan="9">No Data Available</td>
-                                    </tr>
-                                @endif
-                            </table>
-                        </div>
+            @for ($i = 0; $i < $maxRows; $i++)
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $grid_data->area_of_audit[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->start_date[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->start_time[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->end_date[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->end_time[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->auditor[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->auditee[$i] ?? 'Not Applicable' }}</td>
+                    <td>{{ $grid_data->remark[$i] ?? 'Not Applicable' }}</td>
+                </tr>
+            @endfor
+        @else
+            <tr>
+                <td colspan="9">No Data Available</td>
+            </tr>
+        @endif
+    </table>
+</div>
+
                     </div>
 
 
@@ -593,7 +593,7 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">Batch No</th>
                     </tr>
-                        @if($data->file_attachment)
+                        @if($data->file_attachment_guideline)
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
@@ -1054,7 +1054,7 @@
                                         "Current version of SOP's is available in respective areas?",
                                     ];
                                             @endphp   
-                                            @if(!empty($data->checklist3))
+                                            @if(!empty($checklist3))
                 
                                                     <div class="inner-block">
                                                         <div class="content-table">
@@ -1181,7 +1181,7 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                         @endphp
-                                   @if(!empty($data->checklist3))
+                                   @if(!empty($checklist3))
 
                                         <div class="inner-block">
                                             <div class="content-table">
@@ -1310,7 +1310,7 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                     @endphp
-                               @if(!empty($data->checklist2))
+                               @if(!empty($checklist2))
                                <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1445,7 +1445,7 @@
                                                 //     'Is there any area cleaning record available for all individual areas?',
                                                 //     'Current version  of SOPs available in respective areas?'];
                                             @endphp
-                                    @if(!empty($data->checklist4))
+                                    @if(!empty($checklist4))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1576,7 +1576,7 @@
                                         'Current version of SOP’s is available in respective areas?',
                                     ];
                                 @endphp
-                                    @if(!empty($data->checklist5))
+                                    @if(!empty($checklist5))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1717,7 +1717,7 @@
 
                                
                             @endphp
-                             @if(!empty($data->checklist6))
+                             @if(!empty($checklist6))
                              <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1829,7 +1829,7 @@
 
                                 
                             @endphp
-                                 @if(!empty($data->checklist7))
+                                 @if(!empty($checklist7))
                                  <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -1946,7 +1946,7 @@
                                 ];
                                 @endphp
 
-                                @if(!empty($data->checklist9))
+                                @if(!empty($checklist9))
                                 <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -2129,7 +2129,7 @@
                                 ];
                                 @endphp
 
-                                    @if(!empty($data->checklist10))
+                                    @if(!empty($checklist10))
                                     <div class="inner-block">
                                         <div class="content-table">
                                           <!-- <div class="border-table"> -->
@@ -2229,7 +2229,7 @@
                                                         ];
                                                     @endphp
                                                         
-                                                        @if(!empty($data->checklist11))
+                                                        @if(!empty($checklist11))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2334,7 +2334,7 @@
                                                                 ];
                                                             @endphp
                                                             
-                                                            @if(!empty($data->checklist12))
+                                                            @if(!empty($checklist12))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2479,7 +2479,7 @@
                                                                     'Current version of SOP’s is available in respective areas?',
                                                                 ];
                                                             @endphp       
-                                                        @if(!empty($data->checklist13))
+                                                        @if(!empty($checklist13))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2619,7 +2619,7 @@
                                                                 ];
                                                             @endphp  
                                                             
-                                                            @if(!empty($data->checklist14))
+                                                            @if(!empty($checklist14))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2831,7 +2831,7 @@
                                                                 <!-- </div> -->
                                                                 </div>
                                                             </div> --}}
-                                                            @if(!empty($data->checklist15))
+                                                            @if(!empty($checklist15))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2854,7 +2854,7 @@
                                                                                 ],
                                                                                 [
                                                                                         'title' => 'STAGE 3: DOCUMENTATION ',
-                                                                                        'questions' => $powder_questions_packing_manufacturing,
+                                                                                        'questions' => $questions_documentation,
                                                                                         'prefix' => 2
                                                                                 ],
                                     
@@ -2941,7 +2941,7 @@
                                                             ];
                                                         @endphp
                                                         
-                                                        @if(!empty($data->checklist16))
+                                                        @if(!empty($checklist16))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                              <!-- <div class="border-table"> -->
@@ -3039,7 +3039,7 @@
                                                             ];
                                                     @endphp
 
-                                            @if(!empty($data->checklist17))
+                                            @if(!empty($checklist17))
                                             <div class="inner-block">
                                                 <div class="content-table">
                                                     <div class="block-head">

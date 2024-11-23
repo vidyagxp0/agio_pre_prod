@@ -1903,8 +1903,8 @@ class InternalauditController extends Controller
         $internalAudit->remark_62 = $request->remark_62;
         $internalAudit->remark_63 = $request->remark_63;
         $internalAudit->Description_Deviation = $request->Description_Deviation;
-
-        // dd($request->Description_Deviation);
+     //   $internalAudit->save();
+    // dd($request->Description_Deviation);
 
         // =======================new teblet compresion ====
         $checklistTabletCompression = IA_checklist_tablet_compression::where(['ia_id' => $id])->firstOrCreate();

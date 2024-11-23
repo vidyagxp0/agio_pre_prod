@@ -657,11 +657,11 @@
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif>
+                                                <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1)  @endif>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $user)
                                                         <option value="{{ $user->name }}"
-                                                            @if ($user->id == $data->assign_to) selected @endif>
+                                                            @if ($user->name == $data->assign_to) selected @endif>
                                                             {{ $user->name }}
                                                         </option>
                                                     @endforeach
@@ -9637,10 +9637,7 @@
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
                                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                            <textarea  name="tablet_coating_remark_comment" >
-                                                                @if ($checklist2 && $checklist2->tablet_coating_remark_comment)
-                                                            {{ $checklist2->tablet_coating_remark_comment }}
-                                                            @endif </textarea>
+                                            <textarea  name="tablet_coating_remark_comment" >@if ($checklist2 && $checklist2->tablet_coating_remark_comment){{ $checklist2->tablet_coating_remark_comment }}@endif </textarea>
                                         </div>
                                     </div>
 
@@ -9849,11 +9846,8 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="tablet_capsule_packing_comment" >
-                        @if ($checklist3 && $checklist3->{"tablet_capsule_packing_comment"})
-                               {{ $checklist3->{"tablet_capsule_packing_comment"} }}
-@endif
-</textarea>
+                                            
+                                            <textarea  name="tablet_capsule_packing_comment" >@if ($checklist3 && $checklist3->{"tablet_capsule_packing_comment"}){{ $checklist3->{"tablet_capsule_packing_comment"} }}@endif </textarea>
                                         </div>
                                     </div>
 
@@ -11783,7 +11777,8 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="Description_Deviation_capsule" >@if ($checklist4 && $checklist4->{"Description_Deviation_capsule"}){{ $checklist4->{"Description_Deviation_capsule"} }}@endif</textarea>
+
+                                        <textarea  name="Description_Deviation" >@if ($data && $data->{"Description_Deviation"}){{ $data->{"Description_Deviation"} }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -12107,11 +12102,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="dispensing_and_manufacturing_comment" >
-@if ($checklist6 && $checklist6->{"dispensing_and_manufacturing_comment"})
-{{ $checklist6->{"dispensing_and_manufacturing_comment"} }}
-@endif
-</textarea>
+                                        <textarea  name="dispensing_and_manufacturing_comment" >@if ($checklist6 && $checklist6->{"dispensing_and_manufacturing_comment"}){{ $checklist6->{"dispensing_and_manufacturing_comment"} }}@endif</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -12393,11 +12384,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="Description_oinments_comment" >
-@if ($checklist5 && $checklist5->{"Description_oinments_comment"})
-{{ $checklist5->{"Description_oinments_comment"} }}
-@endif
-</textarea>
+                                        <textarea  name="Description_oinments_comment" >@if ($checklist5 && $checklist5->{"Description_oinments_comment"}){{ $checklist5->{"Description_oinments_comment"} }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -12641,10 +12628,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="ointment_packing_comment" >   @if ($checklist7 && $checklist7->{"ointment_packing_comment"})
-                                            {{ $checklist7->{"ointment_packing_comment"} }}
-                                            @endif
-                                            </textarea>
+                                        <textarea  name="ointment_packing_comment" >   @if ($checklist7 && $checklist7->{"ointment_packing_comment"}){{ $checklist7->{"ointment_packing_comment"} }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -12959,11 +12943,7 @@
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="engineering_response_comment" >
-@if ($checklist9 && $checklist9->engineering_response_comment)
-{{ $checklist9->engineering_response_comment }}
-@endif
-</textarea>
+                                        <textarea  name="engineering_response_comment" >@if ($checklist9 && $checklist9->engineering_response_comment){{ $checklist9->engineering_response_comment }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -13856,8 +13836,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="remark_documentation_name_comment" >
-@if ($checklist13 && $checklist13->{"remark_documentation_name_comment"}){{ $checklist13->{"remark_documentation_name_comment"} }}@endif</textarea>
+                                            <textarea  name="remark_documentation_name_comment" >@if ($checklist13 && $checklist13->{"remark_documentation_name_comment"}){{ $checklist13->{"remark_documentation_name_comment"} }}@endif</textarea>
 
                                         </div>
                                     </div>
@@ -14107,11 +14086,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="response_injection_packing_comment" >
-@if ($checklist14 && $checklist14->{"response_injection_packing_comment"})
-{{ $checklist14->{"response_injection_packing_comment"} }}
-@endif
-</textarea>
+                                            <textarea  name="response_injection_packing_comment" >@if ($checklist14 && $checklist14->{"response_injection_packing_comment"}){{ $checklist14->{"response_injection_packing_comment"} }}@endif</textarea>
                                         </div>
                                     </div>
 
@@ -14432,11 +14407,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="remark_powder_manufacturing_filling_comment" >
-@if ($checklist15 && $checklist15->{"remark_powder_manufacturing_filling_comment"})
-{{ $checklist15->{"remark_powder_manufacturing_filling_comment"} }}
-@endif
-</textarea>
+                                            <textarea  name="remark_powder_manufacturing_filling_comment" >@if ($checklist15 && $checklist15->{"remark_powder_manufacturing_filling_comment"}){{ $checklist15->{"remark_powder_manufacturing_filling_comment"} }}@endif</textarea>
                                         </div>
                                     </div>
 
@@ -14607,11 +14578,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="remark_analytical_research_comment" >
-@if ($checklist16 && $checklist16->{"remark_analytical_research_comment"})
-{{ $checklist16->{"remark_analytical_research_comment"} }}
-@endif
-</textarea>
+                                            <textarea  name="remark_analytical_research_comment" >@if ($checklist16 && $checklist16->{"remark_analytical_research_comment"}){{ $checklist16->{"remark_analytical_research_comment"} }}@endif</textarea>
                                         </div>
                                     </div>
 
@@ -14778,11 +14745,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="remark_formulation_research_development_comment" >
-@if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"})
-{{ $checklist17->{"remark_formulation_research_development_comment"} }}
-@endif
-</textarea>
+                                            <textarea  name="remark_formulation_research_development_comment" >@if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"}){{ $checklist17->{"remark_formulation_research_development_comment"} }}@endif</textarea>
                                         </div>
                                     </div>
 
