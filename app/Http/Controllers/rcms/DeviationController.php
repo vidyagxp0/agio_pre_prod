@@ -3759,17 +3759,9 @@ $newDataGridFishbone->save();
                                 if (!$existingAudit) {
                                     $history = new DeviationAuditTrail();
                                     $history->deviation_id = $id;
-
-                                    // Set activity type to include field name and row index using the fieldNames array
-                              
-
-                                    // Assign 'Previous' value explicitly as null if it doesn't exist
+                                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
                                     $history->previous = $previousValue; // Previous value or 'null'
-
-                                    // Assign 'Current' value, which is the new value
                                     $history->current = $currentValue; // New value
-
-                                    // Comments and user details
                                     $history->comment = $request->equipment_comments[$index] ?? '';
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
