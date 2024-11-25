@@ -9070,6 +9070,45 @@ if (!empty($lastDeviation->inference_remarks) || !empty($deviation->inference_re
 }
 
 
+if ($lastDeviation->qa_final_assement != $deviation->qa_final_assement || !empty ($request->comment)) {
+    $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                    ->where('activity_type', 'QA/CQA Final Assessment Comment')
+                    ->exists();
+    $history = new DeviationAuditTrail;
+    $history->deviation_id = $id;
+    $history->activity_type = 'QA/CQA Final Assessment Comment';
+     $history->previous = $lastDeviation->qa_final_assement;
+    $history->current = $deviation->qa_final_assement;
+    $history->comment = $deviation->submit_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDeviation->status;
+    $history->change_to =   "Not Applicable";
+    $history->change_from = $lastDeviation->status;
+    $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+    $history->save();
+}
+
+if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_attach || !empty ($request->comment)) {
+    $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                    ->where('activity_type', 'QA/CQA Final Assessment attachment')
+                    ->exists();
+    $history = new DeviationAuditTrail;
+    $history->deviation_id = $id;
+    $history->activity_type = 'QA/CQA Final Assessment attachment';
+     $history->previous = $lastDeviation->qa_final_assement_attach;
+    $history->current = $deviation->qa_final_assement_attach;
+    $history->comment = $deviation->submit_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDeviation->status;
+    $history->change_to =   "Not Applicable";
+    $history->change_from = $lastDeviation->status;
+    $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+    $history->save();
+}
 
 
         toastr()->success('Record is Update Successfully');
