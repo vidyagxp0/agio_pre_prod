@@ -1456,15 +1456,6 @@
 
 <div class="col-lg-6">
     <div class="group-input">
-        <!-- @php
-            $users = DB::table('users')->get();
-        @endphp
-        <label for="If Other">Deviation Observed By <span class="text-danger">*</span></label>
-        <input type="text"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} name="Facility" placeholder="Select Facility Name"
-            value="{{ $data->Facility }}">
-        @error('Facility')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror -->
         <label for="Facility">Deviation Observed By</label>
 
         <select name="Facility[]" id="Facility" multiple 
@@ -1473,7 +1464,7 @@
             @if ($users->isNotEmpty())
                 @foreach ($users as $value)
                     <option 
-                        {{ in_array($value->name, explode(',', old('Facility', $data->Facility))) ? 'selected' : '' }} 
+                        {{ in_array($value->name, (array) old('Facility', explode(',', $data->Facility))) ? 'selected' : '' }} 
                         value="{{ $value->name }}">
                         {{ $value->name }}
                     </option>
@@ -1482,6 +1473,7 @@
         </select>
     </div>
 </div>
+
 
 <div class="col-6 new-date-data-field">
     <div class="group-input input-date">
