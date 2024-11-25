@@ -2214,7 +2214,7 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
             'risk_acceptance_1' => is_array(@unserialize($data8->risk_acceptance_1)) ? unserialize($data8->risk_acceptance_1) : null,
             'risk_acceptance3' => is_array(@unserialize($data8->risk_acceptance3)) ? unserialize($data8->risk_acceptance3) : null,
             'mitigation_proposal_1' => is_array(@unserialize($data8->mitigation_proposal_1)) ? unserialize($data8->mitigation_proposal_1) : null,
-            'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
+          //  'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
         ];
 
           
@@ -2284,39 +2284,39 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         $data8->risk_acceptance_1 = serialize($request->input('risk_acceptance_1', []));
         $data8->risk_acceptance3 = serialize($request->input('risk_acceptance3', []));
         $data8->mitigation_proposal_1 = serialize($request->input('mitigation_proposal_1', []));
-        $data8->conclusion = serialize($request->input('conclusion', []));
+        // $data8->conclusion = serialize($request->input('conclusion', []));
 
        
         
     
-        $allAttachments = [];
+        // $allAttachments = [];
 
-        // Loop through each attachment group (key) in the request
-        if ($request->has('attachment')) {
-            foreach ($request->attachment as $key => $files) {
-                $attachmentFiles = []; // Initialize an array to store files for the current key
+        // // Loop through each attachment group (key) in the request
+        // if ($request->has('attachment')) {
+        //     foreach ($request->attachment as $key => $files) {
+        //         $attachmentFiles = []; // Initialize an array to store files for the current key
         
-                // Check if the files array is valid
-                if (is_array($files)) {
-                    foreach ($files as $file) {
-                        if ($file instanceof \Illuminate\Http\UploadedFile) {
-                            // Generate a unique name for the file
-                            $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
-                            // Move the file to the upload directory
-                            $file->move(public_path('upload'), $name);
-                            // Add the file name to the array for the current key
-                            $attachmentFiles[] = $name;
-                        }
-                    }
-                }
+        //         // Check if the files array is valid
+        //         if (is_array($files)) {
+        //             foreach ($files as $file) {
+        //                 if ($file instanceof \Illuminate\Http\UploadedFile) {
+        //                     // Generate a unique name for the file
+        //                     $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //                     // Move the file to the upload directory
+        //                     $file->move(public_path('upload'), $name);
+        //                     // Add the file name to the array for the current key
+        //                     $attachmentFiles[] = $name;
+        //                 }
+        //             }
+        //         }
         
-                // Assign the array of files for the current key
-                $allAttachments[$key] = $attachmentFiles;
-            }
-        }
+        //         // Assign the array of files for the current key
+        //         $allAttachments[$key] = $attachmentFiles;
+        //     }
+        // }
         
-        // Store the attachments array in the database (serialized or JSON format)
-        $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
+        // // Store the attachments array in the database (serialized or JSON format)
+        // $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
         
  //---------------------------------------------------------ORM Failure Grid data----------------------------------------------------------------------
  
@@ -3437,7 +3437,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                         'desination_dept' => 'Designation & Department',
                         'responsibility' => 'Responsibility',
                         'remarks' => 'Remarks',
-                        'investigation_approach' => 'Investigation Approach'
+                        // 'investigation_approach' => 'Investigation Approach'
                     ];
 
                     // Fetch or create the relevant grid data

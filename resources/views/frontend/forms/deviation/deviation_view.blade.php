@@ -397,8 +397,8 @@
                     '<td><textarea class="remarks" name="investigationTeam[' +
                     investigationTeamDataIndex + '][remarks]"></textarea></td>' +
 
-                    '<td><textarea class="investigation_approach" name="investigationTeam[' +
-                    investigationTeamDataIndex + '][investigation_approach]"></textarea></td>' +
+                    // '<td><textarea class="investigation_approach" name="investigationTeam[' +
+                    // investigationTeamDataIndex + '][investigation_approach]"></textarea></td>' +
 
                     '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
@@ -1926,7 +1926,7 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="Document Details Required">Product/Batch Details Required? <span
+                                            <label for="Document Details Required">Product / Material Batch Details Required<span
                                                     class="text-danger">*</span></label>
                                             <select
                                                 name="Product_Details_Required"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
@@ -2921,7 +2921,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="QAInitialRemark">QA/CQA Initial Assessment<span
+                                            <label for="QAInitialRemark">QA/CQA Initial Assessment Comment<span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -4720,8 +4720,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource Completed By">Human Resource Completed Impact Assessment
-                                                By</label>
+                                            <label for="Human Resource Completed By">Human Resource Impact Assessment  Completed By</label>
                                             <input readonly type="text" value="{{ $data1->Human_Resource_by }}"
                                                 name="Human_Resource_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                 id="Human_Resource_by">
@@ -4904,8 +4903,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource Completed By">Human Resource Impact Assessment Completed
-                                                By</label>
+                                            <label for="Human Resource Completed By">Human Resource Impact Assessment  Completed By</label>
                                             <input readonly type="text" value="{{ $data1->Human_Resource_by }}"
                                                 name="Human_Resource_by" id="Human_Resource_by">
 
@@ -8385,7 +8383,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                    
+                                       
                                         </select>
                                     </div>
                                 </div>
@@ -8537,7 +8537,8 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                    
                                         </select>
                                     </div>
                                 </div>
@@ -8631,7 +8632,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other2_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -8778,7 +8780,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other3_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -8927,7 +8930,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other4_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -9080,7 +9084,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other5_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -9708,7 +9713,7 @@
                                                 <th style="width: 16%">Responsibility</th>
                                                 <th style="width: 16%">Remarks</th>
 
-                                                <th style="width: 16%">Investigation Approach</th>
+                                                <!-- <th style="width: 16%">Investigation Approach</th> -->
 
                                                 <th style="width: 8%">Action</th>
                                             </tr>
@@ -9753,9 +9758,9 @@
                                                                 </textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea class="investigation_approach" name="investigationTeam[{{ $loop->index }}][investigation_approach]">
+                                                                <!-- <textarea class="investigation_approach" name="investigationTeam[{{ $loop->index }}][investigation_approach]">
                                                                     {{ isset($investigation_data['investigation_approach']) ? $investigation_data['investigation_approach'] : '' }}
-                                                                </textarea>
+                                                                </textarea> -->
                                                             </td>
 
                                                         <td><button type="text" class="removeRowBtn"
@@ -9781,8 +9786,8 @@
                                                         name="investigationTeam[0][responsibility]"></td>
                                                 <td><input type="text" class="remarks"
                                                         name="investigationTeam[0][remarks]"></td>
-                                                 <td><input type="text" class="investigation_approach"
-                                                        name="investigationTeam[0][investigation_approach]"></td>
+                                                 <!-- <td><input type="text" class="investigation_approach"
+                                                        name="investigationTeam[0][investigation_approach]"></td> -->
 
                                                 <td><button type="text" class="removeRowBtn"
                                                         name="Action[]">Remove</button></td>
@@ -9867,8 +9872,8 @@
                         <th>Category of Risk Level (Low, Medium and High)</th>
                         <th>Risk Acceptance (Y/N)</th>
                         <th>Traceability document</th>
-                        <th>Others</th>
-                        <th>Attchment</th>
+                        <!-- <th>Others</th>
+                        <th>Attchment</th> -->
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -10032,7 +10037,7 @@
                             </td>
 
 
-                            <td>
+                            <!-- <td>
                                 <textarea name="conclusion[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                     {{ unserialize($riskEffectAnalysis->conclusion)[$key] ?? null }}
                                 </textarea>
@@ -10068,7 +10073,7 @@
                                         <div>Add</div>
                                         <input type="file" name="attachment[{{ $key }}][]" oninput="addMultipleFiles(this, 'file_{{ $key }}')" multiple>
                                     </div>
-                                </div>
+                                </div> -->
                             </td>
                                 <td>
                                 <button type="button" class="btn btn-dark" onclick="removeRow(this)" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
@@ -10207,18 +10212,7 @@
             </td>
 
          <td><textarea name="mitigation_proposal_1[]"></textarea></td>
-        <td><textarea name='conclusion[]' ></textarea></td>
-     
-
-  <td>
-                <div class="file-attachment-field">
-                    <div class="file-attachment-list" id="${currentRowId}"></div>
-                    <div class="add-btn">
-                        <div>Add</div>
-                        <input type="file" name="attachment[${rowCount}][]" oninput="addMultipleFiles(this, '${currentRowId}')" multiple>
-                    </div>
-                </div>
-            </td>
+        
             <td><button type="button" class="btn btn-dark" onclick="removeRow(this)">Remove</button></td>
     
                 `;

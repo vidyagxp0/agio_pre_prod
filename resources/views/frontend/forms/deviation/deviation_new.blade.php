@@ -1271,7 +1271,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Product Details Required">Product/Batch Details Required?</label>
+                                        <label for="Product Details Required">Product / Material Batch Details Required</label>
                                         <select name=" Product_Details_Required" id="Product_Details_Required">
                                             <option value="">--Select --</option>
                                             <option value="yes">Yes</option>
