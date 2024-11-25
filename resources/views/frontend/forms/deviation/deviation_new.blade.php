@@ -319,7 +319,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -815,10 +815,10 @@
                                         <select name="short_description_required" id="short_description_required"
                                             required>
                                             <option value="0">-- Select --</option>
-                                            <option value="Recurring" @if (old('short_description_required') == 'Recurring') selected @endif>
+                                            <option value="Yes" @if (old('short_description_required') == 'Yes') selected @endif>
                                                 Yes</option>
-                                            <option value="Non_Recurring"
-                                                @if (old('short_description_required') == 'Non_Recurring') selected @endif>
+                                            <option value="No"
+                                                @if (old('short_description_required') == 'No') selected @endif>
                                                 No</option>
                                         </select>
                                     </div>
@@ -849,7 +849,7 @@
 
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Recurring';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 if (!isRequired) {
@@ -862,7 +862,7 @@
                                             });
 
                                             // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                            var asteriskIcon = document.getElementById('asteriskInviYes');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });

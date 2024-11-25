@@ -267,7 +267,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
+                        '<td> <select name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment">Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>' +
                         '<td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +

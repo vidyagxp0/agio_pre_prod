@@ -549,7 +549,7 @@ class DeviationController extends Controller
         }
         $data3->save();
         $fieldNames = [
-            'facility_name' => 'Document facility_name',
+            'facility_name' => 'Related to',
             'IDnumber' => 'Document Name',
             'Remarks' => 'Remarks'
         ];
@@ -1393,7 +1393,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = "Null";
-            $history->current = $deviation->Deviation_reported_date;
+            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3731,7 +3731,7 @@ $newDataGridFishbone->save();
                 $data3->update();
 
                 $fieldNames = [
-                    'facility_name' => 'Document Name',
+                    'facility_name' => 'Related to',
                     'IDnumber' => 'Document Number',
                     'Remarks' => 'Remarks'
                 ];
@@ -3813,8 +3813,8 @@ $newDataGridFishbone->save();
             }
             $data4->update();
             $fieldNames = [
-                'ReferenceDocumentName' => 'Document Name',
-                'Number' => 'Document Number',
+                'ReferenceDocumentName' => 'Document Number',
+                'Number' => 'Document Name',
                 'Document_Remarks' => 'Remarks'
             ];
 
@@ -7888,7 +7888,7 @@ $newDataGridFishbone->save();
         }
 
         /*************** Other 3 ***************/
-        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
+        if (!is_null($lastCft->Other3_review) != is_null($request->Other3_review) &&  !is_null($request->Other3_review)) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 3 Impact Assessment Required';
