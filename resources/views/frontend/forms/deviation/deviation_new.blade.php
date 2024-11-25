@@ -913,13 +913,30 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
                                         <input type="text" name="Facility" id="deviation_observed_by"
                                             placeholder="Enter Facility Name">
                                     </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Facility">Deviation Observed By <span class="text-danger">*</span></label>
+                                        <select name="Facility[]" id="Facility" multiple
+                                            @if ($users->isNotEmpty())
+                                                @foreach ($users as $value)
+                                                    <option value='{{ $value->name }}'>{{ $value->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        @error('Facility')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
+
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">

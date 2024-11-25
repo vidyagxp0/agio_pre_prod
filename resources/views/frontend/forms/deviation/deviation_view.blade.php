@@ -9727,10 +9727,7 @@
                                                 <th style="width: 16%">Designation & Department</th>
                                                 <th style="width: 16%">Responsibility</th>
                                                 <th style="width: 16%">Remarks</th>
-
-                                                <!-- <th style="width: 16%">Investigation Approach</th> -->
-
-                                                <th style="width: 8%">Action</th>
+                                                 <th style="width: 8%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -9772,11 +9769,11 @@
                                                                     {{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}
                                                                 </textarea>
                                                             </td>
-                                                            <td>
-                                                                <!-- <textarea class="investigation_approach" name="investigationTeam[{{ $loop->index }}][investigation_approach]">
+                                                            <!-- <td>
+                                                                <textarea class="investigation_approach" name="investigationTeam[{{ $loop->index }}][investigation_approach]">
                                                                     {{ isset($investigation_data['investigation_approach']) ? $investigation_data['investigation_approach'] : '' }}
-                                                                </textarea> -->
-                                                            </td>
+                                                                </textarea>
+                                                            </td> -->
 
                                                         <td><button type="text" class="removeRowBtn"
                                                                 name="Action[]">Remove</button></td>

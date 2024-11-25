@@ -376,7 +376,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Product/Batch Details Required?</th>
+                        <th class="w-20">Product / Material Batch Details Required</th>
                         <td class="w-30">
                             @if ($data->Product_Details_Required)
                                 {{ Ucfirst(strip_tags($data->Product_Details_Required)) }}
@@ -3391,7 +3391,6 @@
                                         <th class="w-60">Investigation Team</th>
                                          <th class="w-60">Designation & Department  </th>
                                         <th class="w-60">Responsibility</th>
-                                        <th class="w-60">Investigation Approach</th>
                                         <th class="w-60">Remarks</th>
 
                                     </tr>
@@ -3406,7 +3405,7 @@
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     <td class="w-20">
-                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : 'Unknown User' }}
+                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : '' }}
                                                     </td>
 
                                                     <td class="w-20">{{ $investigation_item['desination_dept'] }}
@@ -3415,18 +3414,12 @@
                                                     <td class="w-20">{{ $investigation_item['responsibility'] }}
                                                     </td>
                                                     <td class="w-20">{{ $investigation_item['remarks'] }}</td>
-                                                    <td class="w-20">{{ $investigation_item['investigation_approach'] }}</td>
-                                                </tr>
+                                                 </tr>
                                             @endforeach
                                         @else
-                                            <tr>
-                                                <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                            </tr>
+                                        <tr>
+                                                                <td colspan="5">No  data available.</td>
+                                                            </tr>
                                         @endif
                                     </tbody>
                                 </table>
@@ -3531,7 +3524,7 @@
                                                             @endforeach
                                                         @else
                                                             <tr>
-                                                                <td colspan="3">No inference data available.</td>
+                                                                <td colspan="3">No  data available.</td>
                                                             </tr>
                                                         @endif
                                                     </tbody>
@@ -3720,8 +3713,8 @@
                 {{-- <th class="thFMEA">Risk Level</th>
                 <th class="thFMEA">Risk Acceptance (Y/N)</th> --}}
                 <th class="thFMEA" rowspan="2">Traceability Document</th>
-                <th class="thFMEA"></th>
-                <th class="thFMEA"></th>
+                <!-- <th class="thFMEA"></th>
+                <th class="thFMEA"></th> -->
                 
             </tr>
             <tr class="table_bg">
@@ -3739,8 +3732,8 @@
                 <th class="thFMEA">RPN</th>
                 <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
                 <th class="thFMEA">Risk Acceptance (Y/N)</th>
-                <th class="thFMEA">Others</th>
-                <th class="thFMEA">Attchment</th>
+                <!-- <th class="thFMEA">Others</th>
+                <th class="thFMEA">Attchment</th> -->
                 
                 {{-- <th></th> --}}
             </tr>
@@ -3765,8 +3758,8 @@
                 <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance_1) && @unserialize($riskEffectAnalysis->risk_acceptance_1) ? unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null : null }}</td>
                 <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance3) && @unserialize($riskEffectAnalysis->risk_acceptance3) ? unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null : null }}</td>
                 <td class="tdFMEA">{{ is_string($riskEffectAnalysis->mitigation_proposal_1) && @unserialize($riskEffectAnalysis->mitigation_proposal_1) ? unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->conclusion) && @unserialize($riskEffectAnalysis->conclusion) ? unserialize($riskEffectAnalysis->conclusion)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->attachment) && @unserialize($riskEffectAnalysis->attachment) ? unserialize($riskEffectAnalysis->attachment)[$key] ?? null : null }}</td>
+                <!-- <td class="tdFMEA">{{ is_string($riskEffectAnalysis->conclusion) && @unserialize($riskEffectAnalysis->conclusion) ? unserialize($riskEffectAnalysis->conclusion)[$key] ?? null : null }}</td>
+                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->attachment) && @unserialize($riskEffectAnalysis->attachment) ? unserialize($riskEffectAnalysis->attachment)[$key] ?? null : null }}</td> -->
             </tr>
         @endforeach
     @else
