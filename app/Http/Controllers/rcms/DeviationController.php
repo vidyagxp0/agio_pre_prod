@@ -106,7 +106,10 @@ class DeviationController extends Controller
         //  $deviation->record_number = $request->record_number;
         $deviation->division_id = $request->division_id;
         $deviation->assign_to = $request->assign_to;
-        $deviation->Facility = $request->Facility;
+        //$deviation->Facility = $request->Facility;
+        if (is_array($request->Facility)) {
+            $deviation->Facility = implode(',', $request->Facility);
+        }
         $deviation->due_date = $request->due_date;
         $deviation->intiation_date = $initiationDate;
         $deviation->Deviation_category = $deviationCategory;
@@ -1785,7 +1788,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     public function update(Request $request, $id)
     {
 
-      //  dd($request->all());
+      // dd($request->all());
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
@@ -2138,9 +2141,15 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($request->related_records) {
             $deviation->Related_Records1 =  implode(',', $request->related_records);
         }
-        $deviation->Facility = $request->Facility;
 
+        
+    //    $deviation->Facility = $request->Facility;
 
+        $deviation->Facility = is_array($request->Facility)
+        ? implode(',', $request->Facility)
+        : $request->Facility;
+
+        
         // Ensure Immediate_Action is an array before using implode
 $deviation->Immediate_Action = is_array($request->Immediate_Action)
 ? implode(',', $request->Immediate_Action)

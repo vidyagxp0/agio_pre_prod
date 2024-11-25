@@ -1456,7 +1456,7 @@
 
 <div class="col-lg-6">
     <div class="group-input">
-        @php
+        <!-- @php
             $users = DB::table('users')->get();
         @endphp
         <label for="If Other">Deviation Observed By <span class="text-danger">*</span></label>
@@ -1464,7 +1464,22 @@
             value="{{ $data->Facility }}">
         @error('Facility')
             <div class="text-danger">{{ $message }}</div>
-        @enderror
+        @enderror -->
+        <label for="Facility">Deviation Observed By</label>
+
+        <select name="Facility[]" id="Facility" multiple 
+        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+            <option value="">Select a value</option>
+            @if ($users->isNotEmpty())
+                @foreach ($users as $value)
+                    <option 
+                        {{ in_array($value->name, explode(',', old('Facility', $data->Facility))) ? 'selected' : '' }} 
+                        value="{{ $value->name }}">
+                        {{ $value->name }}
+                    </option>
+                @endforeach
+            @endif
+        </select>
     </div>
 </div>
 
@@ -14880,7 +14895,7 @@
     </script>
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #related_records, #investigation_approach, #audit_type'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #related_records, #investigation_approach, #audit_type',
         });
 
         function openCity(evt, cityName) {
