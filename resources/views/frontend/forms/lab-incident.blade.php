@@ -986,13 +986,25 @@
                     <div id="CCForm14" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                            <div class="col-lg-12">
+                            {{--<div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
                                         <select name="Incident_Category" id="Incident_Category_data">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Biological">Biological</option>
                                             <option value="Chemical">Chemical</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>--}}
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">Incident Category</label>
+                                        <select name="Incident_Category" id="Incident_Category_data">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Analyst Error">Analyst Error</option>
+                                            <option value="Instrument Error">Instrument Error</option>
+                                            <option value="Atypical Error">Atypical Error</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>

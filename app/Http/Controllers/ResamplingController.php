@@ -2001,7 +2001,7 @@ foreach ($pre as $processName => $modelClass) {
             //         }
             //     // }
             // }
-              
+
             // $list = Helpers::getCQAUsersList($lastopenState->division_id);
             // foreach ($list as $u) {
             //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2226,7 +2226,7 @@ foreach ($pre as $processName => $modelClass) {
             //         }
             //     // }
             // }
-               
+
             toastr()->success('Document Sent');
 
                 return back();
@@ -2320,7 +2320,7 @@ public function resamplingStageCancel(Request $request, $id)
             //          }
             //       }
 
-                
+
 
                 //   $list = Helpers::getHodUserList($lastopenState->division_id);
 
@@ -2474,7 +2474,7 @@ public function resamplingmoreinfo(Request $request, $id)
                 toastr()->success('Document Sent');
                 return redirect('resampling_view/'.$id);
             }
-           
+
         //     $list = Helpers::getInitiatorUserList();
         //     foreach ($list as $u) {
         //         if($u->q_m_s_divisions_id == $openState->division_id){
@@ -2492,7 +2492,7 @@ public function resamplingmoreinfo(Request $request, $id)
         //             }
         //      }
         //   }
-       
+
         if ($changeControl->stage == 3) {
             $changeControl->stage = "2";
             $changeControl->status = "Acknowledgement";
@@ -2572,7 +2572,7 @@ public function resamplingmoreinfo(Request $request, $id)
             // }
             // $list = Helpers::getCQAHeadUsersList($lastopenState->division_id);
 
-            
+
             // foreach ($list as $u) {
             //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
             //         $email = Helpers::getUserEmail($u->user_id);
@@ -2592,14 +2592,14 @@ public function resamplingmoreinfo(Request $request, $id)
             //         }
             //     // }
             // }
-          
-              
+
+
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
-           
 
-         
+
+
         if ($changeControl->stage == 4) {
             $changeControl->stage = "3";
             $changeControl->status = "Acknowledge";
@@ -2676,15 +2676,15 @@ public function resamplingmoreinfo(Request $request, $id)
             //         }
             //     // }
             // }
-       
+
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
-        
 
 
 
-         
+
+
 
     } else {
         toastr()->error('E-signature Not match');

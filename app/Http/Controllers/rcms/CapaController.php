@@ -1754,6 +1754,7 @@ class CapaController extends Controller
             }
             $capa->hod_attachment = json_encode($files);
         }
+
         if (!empty($request->qa_attachment)) {
             $files = [];
             if ($request->hasfile('qa_attachment')) {
@@ -1765,6 +1766,7 @@ class CapaController extends Controller
             }
             $capa->qa_attachment = json_encode($files);
         }
+
         if (!empty($request->capafileattachement)) {
             $files = [];
             if ($request->hasfile('capafileattachement')) {
@@ -3386,19 +3388,19 @@ class CapaController extends Controller
 
                 $previousValues = [
                     'material_name' => isset($previousDetails['material_name'][$index]) ? $previousDetails['material_name'][$index] : null,
-                    
+
                     'material_batch_no' => isset($previousDetails['material_batch_no'][$index]) ? $previousDetails['material_batch_no'][$index] : null,
-                    
+
                     'material_mfg_date' => isset($previousDetails['material_mfg_date'][$index]) ? Helpers::getdateFormat($previousDetails['material_mfg_date'][$index]) : null,
-                    
+
                     'material_expiry_date' => isset($previousDetails['material_expiry_date'][$index]) ? Helpers::getdateFormat($previousDetails['material_expiry_date'][$index]) : null,
 
                     'material_batch_desposition' => isset($previousDetails['material_batch_desposition'][$index]) ? $previousDetails['material_batch_desposition'][$index] : null,
-                    
+
                     'material_remark' => isset($previousDetails['material_remark'][$index]) ? $previousDetails['material_remark'][$index] : null,
-                    
+
                     'material_batch_status' => isset($previousDetails['material_batch_status'][$index]) ? $previousDetails['material_batch_status'][$index] : null,
-        
+
                     // 'action' => $previousDetails['action'][$index] ?? null,
                     // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
                     // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
@@ -3408,13 +3410,14 @@ class CapaController extends Controller
                 // Current field values
                 $fields = [
                     'material_name' => $material_name,
-                    'material_batch_no' => $request->material_batch_no[$index],
-                    'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
-                    'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
-                    'material_batch_desposition' => $request->material_batch_desposition[$index],
-                    'material_remark' => $request->material_remark[$index],
-                    'material_batch_status' => $request->material_batch_status[$index],
+                    'material_batch_no' => isset($request->material_batch_no[$index]) ? $request->material_batch_no[$index] : null,
+                    'material_mfg_date' => isset($request->material_mfg_date[$index]) ? Helpers::getdateFormat($request->material_mfg_date[$index]) : null,
+                    'material_expiry_date' => isset($request->material_expiry_date[$index]) ? Helpers::getdateFormat($request->material_expiry_date[$index]) : null,
+                    'material_batch_desposition' => isset($request->material_batch_desposition[$index]) ? $request->material_batch_desposition[$index] : null,
+                    'material_remark' => isset($request->material_remark[$index]) ? $request->material_remark[$index] : null,
+                    'material_batch_status' => isset($request->material_batch_status[$index]) ? $request->material_batch_status[$index] : null,
                 ];
+
 
                 foreach ($fields as $key => $currentValue) {
                     $previousValue = $previousValues[$key] ?? null;
@@ -3452,7 +3455,7 @@ class CapaController extends Controller
 
 
 
-        
+
 //---------------------------------------------------------------------------------------------------------------------------
 
     $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();

@@ -46,6 +46,7 @@ class LabIncidentController extends Controller
     }
     public function create(request $request)
     {
+//dd($request->all());
         // analyst_sign_date_gi
         // section_sign_date_gi
         // return $request->all();
