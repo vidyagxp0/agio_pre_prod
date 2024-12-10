@@ -1821,11 +1821,13 @@ class ExtensionNewController extends Controller
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
+             //   dd($extensionNew);
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 3) {
                     if (empty($extensionNew->approver_remarks))
                     {
+                        dd($extensionNew->approver_remarks);
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',

@@ -176,27 +176,27 @@
                                         display: none;
                                     }
                                 </style> --}}
+                   
 
+            @if (!empty($parent_type))
+            <div class="col-lg-6 new-date-data-field">
+            <label for="Audit Schedule Start Date">Due Date</label>
+            <input type="text" name="due_date" value="{{ Helpers::getdateFormat($data->due_date) }}"  style="font-size: 14px;" />
+            </div>
+            @else
+            <div class="col-lg-6 new-date-data-field">
+            <div class="group-input input-date">
+                <label for="Audit Schedule Start Date">Due Date</label>
+                <div class="calenderauditee">
+                    <input type="text" id="due_dateq" placeholder="DD-MM-YYYY" />
+                    <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                        value="{{ $due_date }}" class="hide-input"
+                        oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                </div>
+            </div>
+            </div>
+            @endif
 
-                                @if (!empty($parent_type))
-                                    <div class="col-lg-6 new-date-data-field">
-                                    <label for="Audit Schedule Start Date">Due Date</label>
-                                    <input type="text" name="due_date_action" value="{{ Helpers::getdateFormat($data->due_date) }}" readonly style="font-size: 14px;" />
-                                    </div>
-                                @else
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_dateq" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
-                                        </div>
-
-                                    </div>
-                                </div>
-                                @endif
 
                                 <script>
                                     function handleDateInput(dateInput, displayId) {

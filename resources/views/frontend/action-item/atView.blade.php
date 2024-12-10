@@ -313,21 +313,7 @@
                                     </div> --}}
 
 
-                                   @if (!empty($data->parent_type) && $data->due_date_action == null)
-                                    <div class="col-lg-6">
-                                    <div class="group-input">
-                                            <label for="Audit Schedule Start Date">Due Date</label>
-                                            <input type="text" name="due_date_action" value="{{ Helpers::getdateFormat($due_date_data ) }}" readonly style="font-size: 14px;" />
-                                            </div>
-                                    </div>
-                                   @elseif($data->due_date_action)
-                                   <div class="col-lg-6">
-                                    <div class="group-input">
-                                            <label for="Audit Schedule Start Date">Due Date</label>
-                                            <input type="text" value="{{ Helpers::getdateFormat($data->due_date_action ) }}" readonly style="font-size: 14px;" />
-                                            </div>
-                                    </div>
-                                   @else
+                                   
                                         <div class="col-md-6 new-date-data-field">
                                                     <div class="group-input input-date ">
                                                         <label for="capa_date_due">Due Date</label>
@@ -346,8 +332,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                   @endif
-
+                                 
                                     <!-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Due Date"> Due Date</label>
