@@ -16,7 +16,11 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
+            @if(!empty($parent_division_id))
+                {{ Helpers::getDivisionName($parent_division_id) }} / Action Item
+            @else
             {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
+            @endif
         </div>
     </div>
     @php
@@ -62,7 +66,7 @@
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
@@ -70,7 +74,22 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
+                                </div> -->
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input disabled type="text" name="site_location_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="site_location_code"
+                                            value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"
+                                            value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                    </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
@@ -178,6 +197,9 @@
                                 </style> --}}
                    
 
+
+
+                   
             @if (!empty($parent_type))
             <div class="col-lg-6 new-date-data-field">
             <label for="Audit Schedule Start Date">Due Date</label>
