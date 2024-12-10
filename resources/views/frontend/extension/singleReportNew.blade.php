@@ -493,6 +493,7 @@
                     </table>
                 </div>
             </div>
+            @if ($data->count == 3) 
             <div class="block">
                 <div class="block-head">CQA Approval</div>
 
@@ -509,14 +510,16 @@
                     </tr>
                 </table> --}}
 
-                <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
-                <div class="div-data">
-                    @if ($data->QAapprover_remarks)
-                        {{ $data->QAapprover_remarks }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                
+                    <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
+                    <div class="div-data">
+                        @if (!empty($data->QAapprover_remarks))
+                            {{ $data->QAapprover_remarks }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </div>
+                
 
             </div>
             <div class="block">
@@ -544,7 +547,7 @@
                     </table>
                 </div>
             </div>
-
+            @endif
             <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
