@@ -143,9 +143,9 @@
                                 Approved
                             </button>
                             @if($extensionNew->count == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
-                                </button>
+                                </button> -->
                             @endif
                             <!-- @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">

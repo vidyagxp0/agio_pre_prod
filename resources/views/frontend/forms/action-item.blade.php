@@ -1,4 +1,4 @@
-vi@extends('frontend.layout.main')
+@extends('frontend.layout.main')
 @section('container')
     <style>
         textarea.note-codable {

@@ -70,6 +70,7 @@ class ActionItemController extends Controller
 
     public function store(Request $request)
     {
+        //return dd($request->all());
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -91,14 +92,16 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-         $openState->related_records = $request->related_records;
-        // if (is_array($request->related_records)) {
-        //     $openState->related_records = implode(',', $request->related_records);
-        // }
+       //  $openState->related_records = $request->related_records;
+        if (is_array($request->related_records)) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
+       if (is_array($request->hod_preson)) {
+        $openState->hod_preson = implode(',', $request->hod_preson);
+    }
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -1597,7 +1600,7 @@ class ActionItemController extends Controller
                 //     // }
                 // }
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
 
                 return back();
             }
@@ -1670,7 +1673,7 @@ class ActionItemController extends Controller
                 //     // }
                 // }
                 $changeControl->update();
-                toastr()->success('Document Sent');
+                //toastr()->success('Document Sent');
                 return back();
             }
 
@@ -1787,7 +1790,7 @@ public function lastStage(Request $request, $id){
             //     // }
             // }
             $history->save();
-            toastr()->success('Document Sent');
+            //toastr()->success('Document Sent');
             return back();
         }
 

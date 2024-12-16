@@ -106,7 +106,10 @@ class DeviationController extends Controller
         //  $deviation->record_number = $request->record_number;
         $deviation->division_id = $request->division_id;
         $deviation->assign_to = $request->assign_to;
-        $deviation->Facility = $request->Facility;
+        //$deviation->Facility = $request->Facility;
+        if (is_array($request->Facility)) {
+            $deviation->Facility = implode(',', $request->Facility);
+        }
         $deviation->due_date = $request->due_date;
         $deviation->intiation_date = $initiationDate;
         $deviation->Deviation_category = $deviationCategory;
@@ -546,7 +549,7 @@ class DeviationController extends Controller
         }
         $data3->save();
         $fieldNames = [
-            'facility_name' => 'Document facility_name',
+            'facility_name' => 'Related to',
             'IDnumber' => 'Document Name',
             'Remarks' => 'Remarks'
         ];
@@ -1390,7 +1393,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = "Null";
-            $history->current = $deviation->Deviation_reported_date;
+            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1785,7 +1788,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     public function update(Request $request, $id)
     {
 
-      //  dd($request->all());
+      // dd($request->all());
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
@@ -1813,10 +1816,37 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->capa_required = $request->capa_required;
         $deviation->qrm_required = $request->qrm_required;
 
-        // $deviation->capa_root_cause = $request->capa_root_cause;
-        // $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
-        // $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
-        // $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+        $deviation->capa_root_cause = $request->capa_root_cause;
+        $deviation->Immediate_Action_Take = $request->Immediate_Action_Take;
+        $deviation->Corrective_Action_Details = $request->Corrective_Action_Details;
+        $deviation->Preventive_Action_Details = $request->Preventive_Action_Details;
+
+        if (!empty($request->CAPA_Closure_attachment) || !empty($request->deleted_CAPA_Closure_attachment)) {
+            $existingFiles = json_decode($deviation->CAPA_Closure_attachment, true) ?? [];
+     
+         // Handle deleted files
+         if (!empty($request->deleted_CAPA_Closure_attachment)) {
+             $filesToDelete = explode(',', $request->deleted_CAPA_Closure_attachment);
+             $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                 return !in_array($file, $filesToDelete);
+             });
+         }
+     
+         // Handle new files
+         $newFiles = [];
+         if ($request->hasFile('CAPA_Closure_attachment')) {
+             foreach ($request->file('CAPA_Closure_attachment') as $file) {
+                 $name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                 $file->move(public_path('upload/'), $name);
+                 $newFiles[] = $name;
+             }
+         }
+     
+         // Merge existing and new files
+         $allFiles = array_merge($existingFiles, $newFiles);
+         $deviation->CAPA_Closure_attachment = json_encode($allFiles);
+     }
+     
 
 
 
@@ -2111,9 +2141,15 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if ($request->related_records) {
             $deviation->Related_Records1 =  implode(',', $request->related_records);
         }
-        $deviation->Facility = $request->Facility;
 
+        
+    //    $deviation->Facility = $request->Facility;
 
+        $deviation->Facility = is_array($request->Facility)
+        ? implode(',', $request->Facility)
+        : $request->Facility;
+
+        
         // Ensure Immediate_Action is an array before using implode
 $deviation->Immediate_Action = is_array($request->Immediate_Action)
 ? implode(',', $request->Immediate_Action)
@@ -2187,7 +2223,7 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
             'risk_acceptance_1' => is_array(@unserialize($data8->risk_acceptance_1)) ? unserialize($data8->risk_acceptance_1) : null,
             'risk_acceptance3' => is_array(@unserialize($data8->risk_acceptance3)) ? unserialize($data8->risk_acceptance3) : null,
             'mitigation_proposal_1' => is_array(@unserialize($data8->mitigation_proposal_1)) ? unserialize($data8->mitigation_proposal_1) : null,
-            'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
+          //  'conclusion' => is_array(@unserialize($data8->conclusion)) ? unserialize($data8->conclusion) : null,
         ];
 
           
@@ -2257,39 +2293,39 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
         $data8->risk_acceptance_1 = serialize($request->input('risk_acceptance_1', []));
         $data8->risk_acceptance3 = serialize($request->input('risk_acceptance3', []));
         $data8->mitigation_proposal_1 = serialize($request->input('mitigation_proposal_1', []));
-        $data8->conclusion = serialize($request->input('conclusion', []));
+        // $data8->conclusion = serialize($request->input('conclusion', []));
 
        
         
     
-        $allAttachments = [];
+        // $allAttachments = [];
 
-        // Loop through each attachment group (key) in the request
-        if ($request->has('attachment')) {
-            foreach ($request->attachment as $key => $files) {
-                $attachmentFiles = []; // Initialize an array to store files for the current key
+        // // Loop through each attachment group (key) in the request
+        // if ($request->has('attachment')) {
+        //     foreach ($request->attachment as $key => $files) {
+        //         $attachmentFiles = []; // Initialize an array to store files for the current key
         
-                // Check if the files array is valid
-                if (is_array($files)) {
-                    foreach ($files as $file) {
-                        if ($file instanceof \Illuminate\Http\UploadedFile) {
-                            // Generate a unique name for the file
-                            $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
-                            // Move the file to the upload directory
-                            $file->move(public_path('upload'), $name);
-                            // Add the file name to the array for the current key
-                            $attachmentFiles[] = $name;
-                        }
-                    }
-                }
+        //         // Check if the files array is valid
+        //         if (is_array($files)) {
+        //             foreach ($files as $file) {
+        //                 if ($file instanceof \Illuminate\Http\UploadedFile) {
+        //                     // Generate a unique name for the file
+        //                     $name = 'DOC-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //                     // Move the file to the upload directory
+        //                     $file->move(public_path('upload'), $name);
+        //                     // Add the file name to the array for the current key
+        //                     $attachmentFiles[] = $name;
+        //                 }
+        //             }
+        //         }
         
-                // Assign the array of files for the current key
-                $allAttachments[$key] = $attachmentFiles;
-            }
-        }
+        //         // Assign the array of files for the current key
+        //         $allAttachments[$key] = $attachmentFiles;
+        //     }
+        // }
         
-        // Store the attachments array in the database (serialized or JSON format)
-        $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
+        // // Store the attachments array in the database (serialized or JSON format)
+        // $data8->attachment = json_encode($allAttachments); // Or use serialize($allAttachments) for serialized format
         
  //---------------------------------------------------------ORM Failure Grid data----------------------------------------------------------------------
  
@@ -3410,7 +3446,7 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
                         'desination_dept' => 'Designation & Department',
                         'responsibility' => 'Responsibility',
                         'remarks' => 'Remarks',
-                        'investigation_approach' => 'Investigation Approach'
+                        // 'investigation_approach' => 'Investigation Approach'
                     ];
 
                     // Fetch or create the relevant grid data
@@ -3695,7 +3731,7 @@ $newDataGridFishbone->save();
                 $data3->update();
 
                 $fieldNames = [
-                    'facility_name' => 'Document Name',
+                    'facility_name' => 'Related to',
                     'IDnumber' => 'Document Number',
                     'Remarks' => 'Remarks'
                 ];
@@ -3732,17 +3768,9 @@ $newDataGridFishbone->save();
                                 if (!$existingAudit) {
                                     $history = new DeviationAuditTrail();
                                     $history->deviation_id = $id;
-
-                                    // Set activity type to include field name and row index using the fieldNames array
-                              
-
-                                    // Assign 'Previous' value explicitly as null if it doesn't exist
+                                    $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
                                     $history->previous = $previousValue; // Previous value or 'null'
-
-                                    // Assign 'Current' value, which is the new value
                                     $history->current = $currentValue; // New value
-
-                                    // Comments and user details
                                     $history->comment = $request->equipment_comments[$index] ?? '';
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
@@ -3785,8 +3813,8 @@ $newDataGridFishbone->save();
             }
             $data4->update();
             $fieldNames = [
-                'ReferenceDocumentName' => 'Document Name',
-                'Number' => 'Document Number',
+                'ReferenceDocumentName' => 'Document Number',
+                'Number' => 'Document Name',
                 'Document_Remarks' => 'Remarks'
             ];
 
@@ -4764,11 +4792,11 @@ $newDataGridFishbone->save();
 
         if ($lastDeviation->QAInitialRemark != $deviation->QAInitialRemark || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA Initial Assessment')
+                            ->where('activity_type', 'QA/CQA Initial Assessment Comment')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA Initial Assessment';
+            $history->activity_type = 'QA/CQA Initial Assessment Comment';
              $history->previous = $lastDeviation->QAInitialRemark;
             $history->current = $deviation->QAInitialRemark;
             $history->comment = $deviation->submit_comment;
@@ -7860,7 +7888,7 @@ $newDataGridFishbone->save();
         }
 
         /*************** Other 3 ***************/
-        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
+        if (!is_null($lastCft->Other3_review) != is_null($request->Other3_review) &&  !is_null($request->Other3_review)) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 3 Impact Assessment Required';
@@ -9051,6 +9079,45 @@ if (!empty($lastDeviation->inference_remarks) || !empty($deviation->inference_re
 }
 
 
+if ($lastDeviation->qa_final_assement != $deviation->qa_final_assement || !empty ($request->comment)) {
+    $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                    ->where('activity_type', 'QA/CQA Final Assessment Comment')
+                    ->exists();
+    $history = new DeviationAuditTrail;
+    $history->deviation_id = $id;
+    $history->activity_type = 'QA/CQA Final Assessment Comment';
+     $history->previous = $lastDeviation->qa_final_assement;
+    $history->current = $deviation->qa_final_assement;
+    $history->comment = $deviation->submit_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDeviation->status;
+    $history->change_to =   "Not Applicable";
+    $history->change_from = $lastDeviation->status;
+    $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+    $history->save();
+}
+
+if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_attach || !empty ($request->comment)) {
+    $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                    ->where('activity_type', 'QA/CQA Final Assessment attachment')
+                    ->exists();
+    $history = new DeviationAuditTrail;
+    $history->deviation_id = $id;
+    $history->activity_type = 'QA/CQA Final Assessment attachment';
+     $history->previous = $lastDeviation->qa_final_assement_attach;
+    $history->current = $deviation->qa_final_assement_attach;
+    $history->comment = $deviation->submit_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDeviation->status;
+    $history->change_to =   "Not Applicable";
+    $history->change_from = $lastDeviation->status;
+    $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+    $history->save();
+}
 
 
         toastr()->success('Record is Update Successfully');
@@ -9238,7 +9305,8 @@ if (!empty($lastDeviation->inference_remarks) || !empty($deviation->inference_re
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
-
+            
+            
             return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 

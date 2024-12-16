@@ -319,7 +319,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -815,10 +815,10 @@
                                         <select name="short_description_required" id="short_description_required"
                                             required>
                                             <option value="0">-- Select --</option>
-                                            <option value="Recurring" @if (old('short_description_required') == 'Recurring') selected @endif>
+                                            <option value="Yes" @if (old('short_description_required') == 'Yes') selected @endif>
                                                 Yes</option>
-                                            <option value="Non_Recurring"
-                                                @if (old('short_description_required') == 'Non_Recurring') selected @endif>
+                                            <option value="No"
+                                                @if (old('short_description_required') == 'No') selected @endif>
                                                 No</option>
                                         </select>
                                     </div>
@@ -849,7 +849,7 @@
 
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Recurring';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 if (!isRequired) {
@@ -862,7 +862,7 @@
                                             });
 
                                             // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                            var asteriskIcon = document.getElementById('asteriskInviYes');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
@@ -913,13 +913,30 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
                                         <input type="text" name="Facility" id="deviation_observed_by"
                                             placeholder="Enter Facility Name">
                                     </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Facility">Deviation Observed By <span class="text-danger">*</span></label>
+                                        <select name="Facility[]" id="Facility" multiple
+                                            @if ($users->isNotEmpty())
+                                                @foreach ($users as $value)
+                                                    <option value='{{ $value->name }}'>{{ $value->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        @error('Facility')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
+
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -1271,7 +1288,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Product Details Required">Product/Batch Details Required?</label>
+                                        <label for="Product Details Required">Product / Material Batch Details Required</label>
                                         <select name=" Product_Details_Required" id="Product_Details_Required">
                                             <option value="">--Select --</option>
                                             <option value="yes">Yes</option>
@@ -1867,7 +1884,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QAInitialRemark">QA/CQA Initial Assessment</label>
+                                        <label for="QAInitialRemark">QA/CQA Initial Assessment Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny"disabled name="QAInitialRemark" id="summernote-7"></textarea>
