@@ -2593,7 +2593,7 @@
                                                         value='Yes'>
                                                         Yes</option>
                                                     <option @if ($data1->ResearchDevelopment_Review == 'No') selected @endif
-                                                        value='no'>
+                                                        value='No'>
                                                         No</option>
                                                     {{-- <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
                                                         value='na'>

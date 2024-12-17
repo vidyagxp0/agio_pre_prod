@@ -4603,7 +4603,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
 
             // Convert arrays to comma-separated strings
@@ -4611,15 +4611,15 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Production_Table_Attachment)
                 : $lastCft->Production_Table_Attachment;
 
-            $currentAttachment = is_array($Cft->Production_Table_Attachment)
-                ? implode(', ', $Cft->Production_Table_Attachment)
-                : $Cft->Production_Table_Attachment;
+            // $currentAttachment = is_array($Cft->Production_Table_Attachment)
+            //     ? implode(', ', $Cft->Production_Table_Attachment)
+            //     : $Cft->Production_Table_Attachment;
 
                 
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
-            $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Production_Table_Attachment_comment;
+            $history->current = str_replace(',', ', ', $data->Production_Table_Attachment);
+            $history->comment = $data->Production_Table_Attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4972,7 +4972,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Production Injection Attachment';
 
             // Convert arrays to comma-separated strings
@@ -4980,13 +4980,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Production_Injection_Attachment)
                 : $lastCft->Production_Injection_Attachment;
 
-            $currentAttachment = is_array($Cft->Production_Injection_Attachment)
-                ? implode(', ', $Cft->Production_Injection_Attachment)
-                : $Cft->Production_Injection_Attachment;
+            $currentAttachment = is_array($data->Production_Injection_Attachment)
+                ? implode(', ', $data->Production_Injection_Attachment)
+                : $data->Production_Injection_Attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Production_Injection_Attachment_comment;
+            $history->comment = $data->Production_Injection_Attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5513,7 +5513,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data1->id;
             $history->activity_type = 'Research & Development Attachment';
 
             // Convert arrays to comma-separated strings
@@ -5521,13 +5521,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->ResearchDevelopment_attachment)
                 : $lastCft->ResearchDevelopment_attachment;
 
-            $currentAttachment = is_array($Cft->ResearchDevelopment_attachment)
-                ? implode(', ', $Cft->ResearchDevelopment_attachment)
-                : $Cft->ResearchDevelopment_attachment;
+            $currentAttachment = is_array($data1->ResearchDevelopment_attachment)
+                ? implode(', ', $data1->ResearchDevelopment_attachment)
+                : $data1->ResearchDevelopment_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ',  $currentAttachment);
-            $history->comment = $Cft->ResearchDevelopment_attachment_comment;
+            $history->comment = $data1->ResearchDevelopment_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
