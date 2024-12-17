@@ -686,30 +686,31 @@
 
                 </style>
 
-                <div class="block-head">Failure Mode And Effect Analysis</div>
+                <div class="block-head">Failure Mode and Effect Analysis</div>
                             <div class="table-responsive">
                             <table class="tableFMEA">
                                 <thead>
                                     <tr class="table_bg">
                                         <th class="thFMEA" rowspan="2">Row #</th>
                                         <th class="thFMEA" colspan="2">Risk Identification</th>
-                                        <th class="thFMEA" rowspan="2">Risk Analysis</th>
+                                        <th class="thFMEA" rowspan="1">Risk Analysis</th>
                                         <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">RPN</th>
-                                        <th class="thFMEA" colspan="2">Risk Control</th>
+                                        <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
+                                        <th class="thFMEA" colspan="1">Risk Control</th>
                                         <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level</th>
+                                        <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
                                         <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
                                         <th class="thFMEA" rowspan="2">Traceability Document</th>
                                     </tr>
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
-                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
+                                        <th class="thFMEA">Consequences of Risk/Potential Causes</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
-                                        <th class="thFMEA">Control Measures</th>
-                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
+                                        {{--<th class="thFMEA">RPN</th>--}}
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
@@ -728,7 +729,7 @@
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                {{--<td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>--}}
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
@@ -1132,6 +1133,17 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th class="w-80">Root Cause</th>
+                        <td class="w-80">
+                            @if ($data->why_root_cause)
+                                {{ $data->why_root_cause }}
+                            @else
+                                Not Applicable
+                            @endif
+
+                        </td>
+                    </tr>
                     {{-- <tr>
                         <th class="w-20">Root Cause :</th>
                         <td class="w-80">@if ($riskgrdwhy_chart->why_root_cause){{ $riskgrdwhy_chart->why_root_cause }}@else Not Applicable @endif</td>
@@ -1144,17 +1156,7 @@
                 <div class="border">
                     <table>
 
-                        <tr>
-                            <th class="w-80">Other</th>
-                            <td class="w-80">
-                                @if ($data->other_root_cause_methodology)
-                                    {{ $data->other_root_cause_methodology }}
-                                @else
-                                    Not Applicable
-                                @endif
 
-                            </td>
-                        </tr>
 
                         <tr>
                             <th class="w-20">Risk Assessment Summary</th>
@@ -1521,7 +1523,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    {{--<tr>
                         <th class="w-20">Production Injection Feedback(By Production Injection) </th>
                         <td class="w-80">
                             @if ($data1->Production_Injection_Feedback)
@@ -1531,7 +1533,7 @@
                             @endif
                         </td>
 
-                    </tr>
+                    </tr>--}}
 
                     <tr>
                         <th class="w-20">Production Injection Review Completed by</th>
@@ -3245,12 +3247,12 @@
                     <th class="w-20">HOD Review Complete By</th>
                     <td class="w-30">@if($data->evaluated_by){{ $data->evaluated_by }}@else Not Applicable @endif</td>
                     <th class="w-20">HOD Review Complete On</th>
-                    <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->evaluated_on){{ $data->evaluated_on }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         HOD Review Complete Comment</th>
-                    <td class="w-30">@if($data->evaluation_complete_comment){{ $data->evaluation_complete_comment }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->cft_comments){{ $data->cft_comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3263,7 +3265,7 @@
                     <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">
                         CFT Review Complete On</th>
-                    <td class="w-30">@if($data->CFT_Review_Complete_on){{ Helpers::getdateFormat($data->CFT_Review_Complete_on) }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->CFT_Review_Complete_On){{ Helpers::getdateFormat($data->CFT_Review_Complete_On) }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
@@ -3280,12 +3282,12 @@
                     <th class="w-20">QA/CQA Review Complete By</th>
                     <td class="w-30">@if($data->QA_Initial_Review_Complete_By){{ $data->QA_Initial_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">QA/CQA Review Complete On</th>
-                    <td class="w-30">@if($data->QA_Initial_Review_Complete_on){{ $data->QA_Initial_Review_Complete_on }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->QA_Initial_Review_Complete_On){{ $data->QA_Initial_Review_Complete_On }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         QA/CQA Review Complete Comment</th>
-                    <td class="w-30">@if($data->QA_Initial_Review_Complete_On){{ $data->QA_Initial_Review_Complete_On }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->QA_Initial_Review_Comments){{ $data->QA_Initial_Review_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
