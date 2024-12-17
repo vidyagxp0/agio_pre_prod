@@ -4603,7 +4603,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $request->id;
+            $history->risk_id = $Cft->id;
             $history->activity_type = 'Production Tablet/Capsule/Powder Attachment';
 
             // Convert arrays to comma-separated strings
@@ -4615,9 +4615,11 @@ class RiskManagementController extends Controller
                 ? implode(', ', $Cft->Production_Table_Attachment)
                 : $Cft->Production_Table_Attachment;
 
+                
+
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $request->Production_Table_Attachment_comment;
+            $history->comment = $Cft->Production_Table_Attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5524,7 +5526,7 @@ class RiskManagementController extends Controller
                 : $Cft->ResearchDevelopment_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
-            $history->current = str_replace(',', ', ', $currentAttachment);
+            $history->current = str_replace(',', ', ',  $currentAttachment);
             $history->comment = $Cft->ResearchDevelopment_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6975,7 +6977,11 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 2 Attachment';
             $history->previous = $lastCft->Other2_attachment;
-            $history->current =implode(',', $Cft->Other2_attachment);
+            // $history->current =implode(',', $Cft->Other2_attachment);
+            $history->current = is_array($Cft->Other2_attachment) 
+                    ? implode(',', $Cft->Other2_attachment) 
+                    : $Cft->Other2_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7138,7 +7144,11 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 3 Attachment';
             $history->previous = $lastCft->Other3_attachment;
-            $history->current =implode(',', $Cft->Other3_attachment);
+            // $history->current =implode(',', $Cft->Other3_attachment);
+            $history->current = is_array($Cft->Other3_attachment) 
+                    ? implode(',', $Cft->Other3_attachment) 
+                    : $Cft->Other3_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7302,7 +7312,11 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 4 Attachment';
             $history->previous = $lastCft->Other4_attachment;
-            $history->current =implode(',', $Cft->Other4_attachment);
+            // $history->current =implode(',', $Cft->Other4_attachment);
+            $history->current = is_array($Cft->Other4_attachment) 
+                    ? implode(',', $Cft->Other4_attachment) 
+                    : $Cft->Other4_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7466,7 +7480,11 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 5 Attachment';
             $history->previous = $lastCft->Other5_attachment;
-            $history->current = implode(',',$Cft->Other5_attachment);
+            // $history->current = implode(',',$Cft->Other5_attachment);
+            $history->current = is_array($Cft->Other5_attachment) 
+                    ? implode(',', $Cft->Other5_attachment) 
+                    : $Cft->Other5_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
