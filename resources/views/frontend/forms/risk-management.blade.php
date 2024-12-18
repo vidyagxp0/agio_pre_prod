@@ -1585,7 +1585,7 @@
                                             $('.CQA').hide();
 
                                             $('[name="CorporateQualityAssurance_Review"]').change(function() {
-                                                if ($(this).val() === 'yes') {
+                                                if ($(this).val() === 'Yes') {
 
                                                     $('.CQA').show();
                                                     $('.CQA span').show();

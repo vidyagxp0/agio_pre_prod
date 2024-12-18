@@ -3084,7 +3084,6 @@
                         </table>
                     </div>
                 </table>
-
             </div>
 
 
@@ -3171,55 +3170,6 @@
                 Activity Log
             </div>
 
-            {{-- <div class="block-head">
-                        Submit
-                    </div>
-                        <table>
-                            <tr>
-                                <th class="w-20">Submit By</th>
-                                <td class="w-30">{{ $data->submit_by }}</td>
-                                <th class="w-20">Submit On</th>
-                                <td class="w-30">{{ $data->submit_on }}</td>
-                                <th class="w-20">Submit Comments</th>
-                                <td class="w-30">{{ $data->submit_on }}</td>
-                            </tr>
-                        </table>
-                        <table>
-
-                            <tr>
-                                <th class="w-20">Evaluated Complete By</th>
-                                <td class="w-30">{{ $data->evaluated_by }}</td>
-                                <th class="w-20">Evaluated Complete On</th>
-                                <td class="w-30">{{ $data->evaluated_on }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-20">CFT Review Complete By</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_by }}</td>
-                                <th class="w-20">CFT Review Complete On</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-20">QA/CQA Review Complete By</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_by }}</td>
-                                <th class="w-20">QA/CQA Review Complete On</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
-                            </tr>
-
-                            <tr>
-                                <th class="w-20">Approve  By</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_by }}</td>
-                                <th class="w-20">Approve On</th>
-                                <td class="w-30">{{ $data->CFT_Review_Complete_On }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-20">More Information Required(Risk Analysis & Work Group
-                                    Assignment) By</th>
-                                <td class="w-30">{{ $data->cancelled_by }}</td>
-                                <th class="w-20">More Information Required(Risk Analysis & Work Group
-                                    Assignment) On</th>
-                                <td class="w-30">{{ $data->cancelled_on }}</td>
-                            </tr>
-                        </table> --}}
 
             <div class="block-head">
                 Submit
@@ -3277,7 +3227,6 @@
                 QA/CQA Review Complete
             </div>
             <table>
-
                 <tr>
                     <th class="w-20">QA/CQA Review Complete By</th>
                     <td class="w-30">@if($data->QA_Initial_Review_Complete_By){{ $data->QA_Initial_Review_Complete_By }}@else Not Applicable @endif</td>
@@ -3323,12 +3272,7 @@
                     <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                 </tr>
             </table>
-
-
         </div>
-
-
-
 
         <footer>
             <table>

@@ -1033,7 +1033,7 @@
                                                                                         </td> --}}
 
                                                                                         <td>
-                                                                                            <textarea name="risk_factor[]" 
+                                                                                            <textarea name="risk_factor[]"
                                                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
                                                                                         </td>
 
@@ -1048,13 +1048,13 @@
                                                                                         </td> --}}
 
                                                                                         <td>
-                                                                                            <textarea name="problem_cause[]" 
+                                                                                            <textarea name="problem_cause[]"
                                                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                                 {{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}
                                                                                             </textarea>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <textarea name="existing_risk_control[]" 
+                                                                                            <textarea name="existing_risk_control[]"
                                                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                                 {{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}
                                                                                             </textarea>
@@ -1139,7 +1139,7 @@
                                                                                         </td> --}}
 
                                                                                         <td>
-                                                                                            <textarea name="risk_control_measure[]" 
+                                                                                            <textarea name="risk_control_measure[]"
                                                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                                 {{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}
                                                                                             </textarea>
@@ -1243,7 +1243,7 @@
                                                                                         </td> --}}
 
                                                                                         <td>
-                                                                                            <textarea name="mitigation_proposal[]" 
+                                                                                            <textarea name="mitigation_proposal[]"
                                                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                                 {{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}
                                                                                             </textarea>
@@ -1292,8 +1292,8 @@
                                                                                             @foreach (unserialize($whyChart->why_1) as $key => $measure)
                                                                                                 <div class="why-field-wrapper" style="">
                                                                                                     <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_1[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field" 
-                                                                                                        onclick="removeWhyField(this)" 
+                                                                                                    <span class="remove-field"
+                                                                                                        onclick="removeWhyField(this)"
                                                                                                         style="cursor: pointer; color: red;">
                                                                                                         Remove
                                                                                                     </span>
@@ -1321,8 +1321,8 @@
                                                                                             @foreach (unserialize($whyChart->why_2) as $key => $measure)
                                                                                                 <div class="why-field-wrapper" style="">
                                                                                                     <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field" 
-                                                                                                        onclick="removeWhyField(this)" 
+                                                                                                    <span class="remove-field"
+                                                                                                        onclick="removeWhyField(this)"
                                                                                                         style="cursor: pointer; color: red;">
                                                                                                         Remove
                                                                                                     </span>
@@ -1349,8 +1349,8 @@
                                                                                             @foreach (unserialize($whyChart->why_3) as $key => $measure)
                                                                                                 <div class="why-field-wrapper" style="">
                                                                                                     <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field" 
-                                                                                                        onclick="removeWhyField(this)" 
+                                                                                                    <span class="remove-field"
+                                                                                                        onclick="removeWhyField(this)"
                                                                                                         style="cursor: pointer; color: red;">
                                                                                                         Remove
                                                                                                     </span>
@@ -1377,8 +1377,8 @@
                                                                                             @foreach (unserialize($whyChart->why_4) as $key => $measure)
                                                                                                 <div class="why-field-wrapper" style="">
                                                                                                     <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field" 
-                                                                                                        onclick="removeWhyField(this)" 
+                                                                                                    <span class="remove-field"
+                                                                                                        onclick="removeWhyField(this)"
                                                                                                         style="cursor: pointer; color: red;">
                                                                                                         Remove
                                                                                                     </span>
@@ -1405,8 +1405,8 @@
                                                                                             @foreach (unserialize($whyChart->why_5) as $key => $measure)
                                                                                                 <div class="why-field-wrapper" style="">
                                                                                                     <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field" 
-                                                                                                        onclick="removeWhyField(this)" 
+                                                                                                    <span class="remove-field"
+                                                                                                        onclick="removeWhyField(this)"
                                                                                                         style="cursor: pointer; color: red;">
                                                                                                         Remove
                                                                                                     </span>
@@ -1436,13 +1436,13 @@
 
                                             function addWhyField(blockClass, fieldName) {
                                                 const block = document.querySelector(`.${blockClass}`);
-                                                
+
                                                 const fieldWrapper = document.createElement('div');
                                                 fieldWrapper.className = 'why-field-wrapper';
                                                 // fieldWrapper.style.display = 'flex';
                                                 // fieldWrapper.style.gap = '10px';
                                                 // fieldWrapper.style.marginBottom = '5px';
-                                                
+
                                                 const textarea = document.createElement('textarea');
                                                 textarea.name = fieldName;
 
@@ -1457,7 +1457,7 @@
                                                 fieldWrapper.appendChild(textarea);
                                                 fieldWrapper.appendChild(removeButton);
 
-                                               
+
                                                 block.appendChild(fieldWrapper);
                                             }
 
@@ -4506,7 +4506,7 @@
 
                                         });
                                     </script>
-                                    
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Quality Assurance Review Required">Quality Assurance Review
@@ -6253,15 +6253,11 @@
                                                     id="Environment_Health_review"
                                                     @if ($data->stage == 3) disabled @endif>
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data1->Environment_Health_review == 'Yes') selected @endif
-                                                        value='Yes'>
+                                                    <option @if ($data1->Environment_Health_review == 'Yes') selected @endif value='Yes'>
                                                         Yes</option>
-                                                    <option @if ($data1->Environment_Health_review == 'No') selected @endif
-                                                        value='No'>
+                                                    <option @if ($data1->Environment_Health_review == 'No') selected @endif value='No'>
                                                         No</option>
-                                                    {{-- <option @if ($data1->Environment_Health_review == 'na') selected @endif
-                                                        value='na'>
-                                                        NA</option> --}}
+
                                                         <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
 
                                                 </select>
