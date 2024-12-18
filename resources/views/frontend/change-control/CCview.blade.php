@@ -284,11 +284,15 @@
                                   <!--
     @endif  -->
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                            
+                            
+                      
 
-
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                                    
+                            <button id="approval-button" class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal" style="display: none;">
                                 RA Approval Required
                             </button>
+                          
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
@@ -7857,18 +7861,43 @@
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RA notification">RA Approval required
-                                                        @if($data->stage==5) <span class="text-danger">*</span>@endif
-                                                    </label>
-                                                    <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
-                                                        <option value="">--Select--</option>
-                                                        <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-                                                        <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="RA notification">RA Approval required
+            @if($data->stage==5) <span class="text-danger">*</span>@endif
+        </label>
+        <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
+                {{ $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
+            <option value="">--Select--</option>
+            <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
+            <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+        </select>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Initially check dropdown and textarea
+        toggleButton($('#RA_head_required').val(), $('#ra_tab_comments').val());
+
+        // On dropdown value change
+        $('#RA_head_required').change(function () {
+            toggleButton($(this).val(), $('#ra_tab_comments').val());
+        });
+
+        // On textarea input
+        $('#ra_tab_comments').on('input', function () {
+            toggleButton($('#RA_head_required').val(), $(this).val());
+        });
+
+        // Function to check conditions and toggle button visibility
+        function toggleButton(selectValue, textareaValue) {
+            if (selectValue === 'Yes' && textareaValue.trim() === '') {
+                $('#approval-button').show();  // Show the button
+            } else {
+                $('#approval-button').hide();  // Hide the button
+            }
+        }
+    });
+</script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
@@ -8009,14 +8038,16 @@
                                             RA
                                         </div>
                                         <div class="col-md-12">
-                                                    <div class="group-input">
-                                                        <label for="RA feedback">RA Approval Comment</label>
-                                                    @if($data->stage==6) <span class="text-danger">*</span>@endif
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="ra_tab_comments" id="summernote-18" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
-                                                    </div>
-                                                </div>
+                                        <div class="group-input">
+                                            <label for="RA feedback">RA Approval Comment<span class="text-danger">*</span></label>
+                                            @if($data->stage==6) @endif
+                                            <div>
+                                                <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                            </div>
+                                            <textarea class="tiny" name="ra_tab_comments" id="ra_tab_comments"
+                                                {{ $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
+                                        </div>
+                                    </div>
 
                                                 <div class="col-12">
                                     <div class="group-input">

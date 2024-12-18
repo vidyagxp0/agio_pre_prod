@@ -10145,8 +10145,8 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
 
 
 
-                $changeControl->stage = "7";
-                $changeControl->status = "QA/CQA Head / Designee Approval";
+                $changeControl->stage = "5";
+                $changeControl->status = "QA/CQA Final Review";
 
 
                 $changeControl->RA_review_completed_by = Auth::user()->name;
@@ -10175,7 +10175,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "QA/CQA Head/Manager Designee Approval";
+                $history->change_to = "QA/CQA Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
