@@ -140,17 +140,26 @@
         let newRow = table.insertRow(currentRowCount);
         newRow.setAttribute("id", "row" + currentRowCount);
 
+        let sopTypeShort = "{{ $document->sop_type_short }}";
+        let departmentId = "{{ $document->department_id }}";
+        let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
+        let major = "{{ $document->major }}";
+
         let cell1 = newRow.insertCell(0);
         cell1.innerHTML = currentRowCount;
 
         let cell2 = newRow.insertCell(1);
-        cell2.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 10rem;" name="distribution[${currentRowCount}][document_title]"></textarea>`;
+        cell2.innerHTML =
+            `<textarea style="overflow: hidden;
+    border: none; width: 10rem;" name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
 
         let cell3 = newRow.insertCell(2);
-        cell3.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_number]"></textarea>`;
-
+        cell3.innerHTML = `
+    <textarea style="overflow: hidden; border: none; width: 6rem;"
+              type="text"
+              name="distribution[${currentRowCount}][document_number]" readonly>
+        ${sopTypeShort}/${departmentId}/${documentId}/R${major}
+    </textarea>`;
         let cell4 = newRow.insertCell(3);
         cell4.innerHTML = `<textarea style="overflow: hidden;
     border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
@@ -293,7 +302,7 @@
             $('#responsibilitydiv').append(html);
 
         });
-        
+
         $('#accountabilitybtnadd').click(function(e) {
 
             var html =

@@ -3020,11 +3020,13 @@
                                                     {{ $loop->index + 1 }}
                                                     {{-- <input type="text" value="{{ $loop->index }}" name="distribution[{{ $loop->index }}][serial_number]"> --}}
                                                 </td>
-                                                <td><input type="text" value="{{ $grid->document_title }}"
-                                                        name="distribution[{{ $loop->index }}][document_title]">
+                                                <td><input type="text"
+                                                    name="distribution[{{ $loop->index }}][document_title]"
+                                                    value="{{ $document->document_name }}" readonly>
                                                 </td>
-                                                <td><input type="text" value="{{ $grid->document_number }}"
-                                                        name="distribution[{{ $loop->index }}][document_number]">
+                                                <td><input type="text"
+                                                        name="distribution[{{ $loop->index }}][document_number]"
+                                                        value="{{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}/R{{ $document->major }}" readonly>
                                                 </td>
                                                 <td><input type="text" value="{{ $grid->document_printed_by }}"
                                                         name="distribution[{{ $loop->index }}][document_printed_by]">
