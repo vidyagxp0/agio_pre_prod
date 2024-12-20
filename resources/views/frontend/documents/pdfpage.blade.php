@@ -287,14 +287,13 @@
             margin-bottom: 15px;
         }
 
-        @page {
+        /* @page {
             size: A4;
             margin-top: 220px;
             margin-bottom: 60px;
+        } */
 
-        }
-
-        header {
+        /* header {
             width: 100%;
             position: fixed;
             top: -215px;
@@ -302,10 +301,9 @@
             left: 0;
             display: block;
 
-        }
+        } */
 
-
-        .footer {
+        /* .footer {
             position: fixed;
             bottom: -45px;
             left: 0;
@@ -313,8 +311,33 @@
             width: 100%;
             display: block;
             border-top: 1px solid #ddd;
-            /* Optional: Add a border at the top of the footer */
+        } */
+
+        @page {
+            size: A4;
         }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        body {
+            margin-top: 320px;
+            margin-bottom: 50px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
 
 
         .other-container {
@@ -443,77 +466,91 @@
 <body>
 
     <header class="">
-        <table class="border" style="height: 80px;">
+        <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <!-- <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100"> -->
-
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                            style="max-height: 55px; max-width: 40px;">
                     </td>
-                    <td class="title w-60" style="height: 90px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
-                        <p style="margin-top: -0.1rem; border-bottom: 0px solid rgb(104, 104, 104);">{{ config('site.pdf_title') }}</p>
-                        <hr style="border: 0; border-top: 1px solid rgb(104, 104, 104); margin: 0;">
-                        <p style="margin-top: -2rem; margin-bottom: 0px;">
-                            {{ $data->document_name }}
-                        </p>
+                    <td class="title w-60"
+                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                        <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
+                        {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
+                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
-
                     <td class="logo w-20">
-                        <!-- <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;"> -->
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" style="max-height: 55px; max-width: 40px;">
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none p-7">
-            <tbody>
-                <tr>
-                    <td class="doc-num w-30">
-                        {{($data->sop_type)}}
-
-                    </td>
-                    <td class="doc-num w-40">
-                        {{-- @php
-                        $temp = DB::table('document_types')
-                        ->where('name', $data->document_type_name)
-                        ->value('typecode');
-                        @endphp 
-                        @if($data->revised === 'Yes')
-
-                        {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-
-                        @else
-                        {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-                        @endif --}}
-
-                        @if($data->revised === 'Yes')
-                        
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
-
-                   
-                       {{--     {{ Helpers::getSopTypeShortName($data->document_id) }}
-                        /@if($data->sop_type_short){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
-
-                        @else
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
-                        @endif
-
-                    </td>
-                    <td class="doc-num w-30">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="Logo"
+                            style="margin: 0.5rem 0;">
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <table class="border border-top-none p-8">
+        <table class="border border-top-none" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>{{ $data->sop_type }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tbody>
+                <tr>
+                    <td style="width: 20%; padding: 5px; text-align: left" class="doc-num">Department:</td>
+                    <td style="width: 50%; padding: 5px; text-align: left">
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
+                    <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
+                    <td style="width: 15%; padding: 5px; text-align: left"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tbody>
+
+                <tr>
+                    <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Title:</td>
+                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}
+                    </td>
+                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
+                    <td style="width: 23%;padding: 5px; text-align: left">
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
+                    <td style="width: 23%; padding: 5px; text-align: left">
+                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tbody>
+
+                <tr>
+                    <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Area:</td>
+                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">
+                        {{ Helpers::getDivisionName($data->division_id) }}</td>
+                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Next Review Date:</td>
+                    <td style="width: 23%; padding: 5px; text-align: left">
+                        {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Supersedes No.:</td>
+                    <td style="width: 23%; padding: 5px; text-align: left"></td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+
+
+    {{-- <table class="border border-top-none p-8">
             <tbody>
                 <tr>
                     <td class="doc-num w-60">
@@ -522,40 +559,41 @@
 
                 </tr>
             </tbody>
-        </table>
+        </table> --}}
 
-        <table class="border border-top-none p-6">
+    {{-- <table class="border border-top-none p-6">
             <tbody>
                 <tr>
                     <td class="doc-num w-50">
-                        Effective Date: {{ $data->effective_date == null ? '-' : \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') }}
+                        Effective Date:
+                        {{ $data->effective_date == null ? '-' : \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') }}
                     </td>
                     <td class="doc-num w-50">
-                        Next Review Date: {{ $data->next_review_date == null ? '-' :\Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') }}
+                        Next Review Date:
+                        {{ $data->next_review_date == null ? '-' : \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') }}
                     </td>
 
                 </tr>
             </tbody>
-        </table>
-    </header>
+        </table> --}}
+
     <footer class="footer">
         <table class="border p-10">
             <tbody>
                 <tr>
                     <td class="text-left w-30">
                         @php
-                        $temp = DB::table('document_types')
-                        ->where('name', $data->document_type_name)
-                        ->value('typecode');
+                            $temp = DB::table('document_types')
+                                ->where('name', $data->document_type_name)
+                                ->value('typecode');
                         @endphp
-                        @if($data->revised === 'Yes')
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
-                        {{-- {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
+                        @if ($data->revised === 'Yes')
+                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
+                            {{-- {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if ($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
-
                         @else
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
+                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
                         @endif
 
                     <td class="w-42">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
@@ -565,381 +603,416 @@
         </table>
     </footer>
 
-    <section class="main-section" id="pdf-page" style="margin-top: 15px;">
-        <section style="page-break-after: never;">
-            <div class="other-container" style="margin-bottom: 15px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="text-right">
-                                <div> <span class="bold">Legacy Document Number:</span> {{ !empty($document->legacy_number) ? $document->legacy_number : 'NA' }}</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+    <div>
+        <section class="main-section" id="pdf-page">
+            <section style="page-break-after: never;">
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-right">
+                                    <div> <span class="bold">Legacy Document Number:</span>
+                                        {{ !empty($document->legacy_number) ? $document->legacy_number : 'NA' }}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
 
-            <div class="other-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="w-5">1.</th>
-                            <th class="text-left">
-                                <div class="bold">Objective</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="scope-block">
-                    <div class="w-100">
-                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                            <div class="w-100">
-                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">1.</th>
+                                <th class="text-left">
+                                    <div class="bold">Objective</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="other-container">
-                <table>
-                    <thead>
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">2.</th>
+                                <th class="text-left">
+                                    <div class="bold">Scope</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div class="text-justify"
+                                        style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="mb-15">
+                    <tbody>
                         <tr>
-                            <th class="w-5">2.</th>
-                            <th class="text-left">
-                                <div class="bold">Scope</div>
+                            <th class="w-5 vertical-baseline">3.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Responsibility</div>
                             </th>
                         </tr>
-                    </thead>
+                    </tbody>
                 </table>
-                <div class="scope-block">
+
+                <div class="procedure-block">
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
-                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->responsibility) &&
+                                            is_array(unserialize($data->document_content->materials_and_equipments)))
+                                        @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">3.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">Responsibility</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                $i = 1;
-                                @endphp
-                                @if ($data->document_content && !empty($data->document_content->responsibility) && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                @foreach (unserialize($data->document_content->responsibility) as $key => $res)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">4.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">Accountability</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                $i = 1;
-                                @endphp
-                                @if ($data->document_content && !empty($data->document_content->accountability) && is_array(unserialize($data->document_content->accountability)))
-                                @foreach (unserialize($data->document_content->accountability) as $key => $res)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- REFERENCES START --}}
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">5.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold"> References</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php $i = 1; @endphp
-                                @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
-                                @foreach (unserialize($data->document_content->references) as $key => $res)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- REFERENCES END --}}
-
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">6.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">Abbreviation</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                $i = 1;
-                                @endphp
-                                @if ($data->document_content && !empty($data->document_content->abbreviation) && is_array(unserialize($data->document_content->abbreviation)))
-                                @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- DEFINITIONS START --}}
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">7.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">Definitions</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                $i = 1;
-                                $definitions = $data->document_content ? unserialize($data->document_content->defination) : [];
-                                @endphp
-                                @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
-                                @foreach ($definitions as $key => $definition)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- DEFINITIONS END --}}
-
-            {{-- MATERIALS AND EQUIPMENTS START --}}
-            <table class="mb-15">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">8.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">General Instructions</div>
-                        </th>
-                    </tr>
-                    <tr>
-                </tbody>
-            </table>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
-                                @php $i = 1; $sub_index = 1; @endphp
-                                @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
-                                @php
-                                $isSub = str_contains($key, 'sub');
-                                @endphp
-                                @if (!empty($res))
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                </div>
-                                @endif
-                                @php
-                                if (!$isSub) {
-                                $i++;
-                                $sub_index = 1;
-                                } else {
-                                $sub_index++;
-                                }
-                                @endphp
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- MATERIALS AND EQUIPMENTS END --}}
-
-
-            {{-- PROCEDURE START --}}
-            <div class="other-container ">
-                <table>
-                    <thead>
+                <table class="mb-15">
+                    <tbody>
                         <tr>
-                            <th class="w-5">9.</th>
-                            <th class="text-left">
-                                <div class="bold">Procedure</div>
+                            <th class="w-5 vertical-baseline">4.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Accountability</div>
                             </th>
                         </tr>
-                    </thead>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->accountability) &&
+                                            is_array(unserialize($data->document_content->accountability)))
+                                        @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- REFERENCES START --}}
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">5.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold"> References</div>
+                            </th>
+                        </tr>
+                    </tbody>
                 </table>
                 <div class="procedure-block">
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    @if ($data->document_content)
-                                    {!! strip_tags($data->document_content->procedure, '<br>
-                                    <table>
-                                        <th>
-                                        <td>
-                                            <tbody>
-                                                <tr>
-                                                    <p><img><a><img><span>
-                                                                <h1>
-                                                                    <h2>
-                                                                        <h3>
-                                                                            <h4>
-                                                                                <h5>
-                                                                                    <h6>
-                                                                                        <div><b>
-                                                                                                <ol>
-                                                                                                    <li>') !!}
-                                                                                                        @endif
-                                                                                        </div>
+                                    @php $i = 1; @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->references) &&
+                                            is_array(unserialize($data->document_content->references)))
+                                        @foreach (unserialize($data->document_content->references) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- REFERENCES END --}}
+
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">6.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Abbreviation</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->abbreviation) &&
+                                            is_array(unserialize($data->document_content->abbreviation)))
+                                        @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- DEFINITIONS START --}}
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">7.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Definitions</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                        $definitions = $data->document_content
+                                            ? unserialize($data->document_content->defination)
+                                            : [];
+                                    @endphp
+                                    @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
+                                        @foreach ($definitions as $key => $definition)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($definition) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- DEFINITIONS END --}}
+
+                {{-- MATERIALS AND EQUIPMENTS START --}}
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">8.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">General Instructions</div>
+                            </th>
+                        </tr>
+                        <tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                                    @php
+                                        $i = 1;
+                                        $sub_index = 1;
+                                    @endphp
+                                    @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
+                                        @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- MATERIALS AND EQUIPMENTS END --}}
+
+
+                {{-- PROCEDURE START --}}
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">9.</th>
+                                <th class="text-left">
+                                    <div class="bold">Procedure</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        @if ($data->document_content)
+                                            {!! strip_tags(
+                                                $data->document_content->procedure,
+                                                '<br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <table>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <tbody>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p><img><a><img><span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <h1>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h2>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <h3>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <h4>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <h5>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h6>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div><b>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <ol>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li>',
+                                            ) !!}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -964,25 +1037,30 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if ($data->document_content && !empty($data->document_content->reporting) && is_array(unserialize($data->document_content->reporting)))
-                                    @foreach (unserialize($data->document_content->reporting) as $key => $res)
-                                    @php
-                                    $isSub = str_contains($key, 'sub');
-                                    @endphp
-                                    @if (!empty($res))
-                                    <div style="position: relative;">
-                                        <span style="position: absolute; left: -3rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                    </div>
-                                    @endif
-                                    @php
-                                    if (!$isSub) {
-                                    $i++;
-                                    $sub_index = 1;
-                                    } else {
-                                    $sub_index++;
-                                    }
-                                    @endphp
-                                    @endforeach
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->reporting) &&
+                                            is_array(unserialize($data->document_content->reporting)))
+                                        @foreach (unserialize($data->document_content->reporting) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -3rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
                                     @endif
                                 </div>
                             </div>
@@ -1011,25 +1089,30 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if ($data->document_content && !empty($data->document_content->ann) && is_array(unserialize($data->document_content->ann)))
-                                    @foreach (unserialize($data->document_content->ann) as $key => $res)
-                                    @php
-                                    $isSub = str_contains($key, 'sub');
-                                    @endphp
-                                    @if (!empty($res))
-                                    <div style="position: relative;">
-                                        <span style="position: absolute; left: -3rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                    </div>
-                                    @endif
-                                    @php
-                                    if (!$isSub) {
-                                    $i++;
-                                    $sub_index = 1;
-                                    } else {
-                                    $sub_index++;
-                                    }
-                                    @endphp
-                                    @endforeach
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->ann) &&
+                                            is_array(unserialize($data->document_content->ann)))
+                                        @foreach (unserialize($data->document_content->ann) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -3rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
                                     @endif
                                 </div>
                             </div>
@@ -1039,7 +1122,7 @@
                 {{-- ANNEXSURE END --}}
 
                 @php
-                $i = 1;
+                    $i = 1;
                 @endphp
                 {{-- @if ($data->document_content && !empty($data->document_content->annexuredata))
                     @foreach (unserialize($data->document_content->annexuredata) as $res)
@@ -1059,397 +1142,444 @@
                         @endif
                     @endforeach
                 @endif --}}
-        </section>
 
-        <section class="doc-control" style="page-break-after: never;">
-            <div class="head">
-                <div>
-                    Document Control Information
-                </div>
-            </div>
-            <div class="body">
-                <div class="block mb-40">
-                    <div class="block-head">
-                        General Information
-                    </div>
-                    <div class="block-content">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                    <td class="w-70 text-left">
-                                        @php
-                                        $temp = DB::table('document_types')
-                                        ->where('name', $data->document_type_name)
-                                        ->value('typecode');
-                                        @endphp
-                                        @if($data->revised === 'Yes')
-
-                                        {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-
-                                        @else
-                                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">Title</th>
-                                    <td class="w-70 text-left">{{ $data->document_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">
-                                        Short Description
-                                    </th>
-                                    <td class="w-70 text-left">
-                                        {{ $data->short_description }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">Description</th>
-                                    <td class="w-70 text-left">
-                                        {{ $data->description }}
-                                    </td>
-                                </tr>
-                                @php
-                                $last = DB::table('document_histories')
-                                ->where('document_id', $data->id)
-                                ->latest()
-                                ->first();
-                                @endphp
-
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">Last Changed</th>
-                                    <td class="w-70 text-left">
-                                        @if ($last)
-                                        <!-- {{ $last->created_at }} -->
-                                        {{ \Carbon\Carbon::parse($last->created_at )->format('d-M-Y') }}
-                                        @else
-                                        <!-- {{ $data->created_at }} -->
-                                        {{ \Carbon\Carbon::parse($data->created_at )->format('d-M-Y') }}
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-30 text-left vertical-baseline">Changed By</th>
-                                    <td class="w-70 text-left">
-                                        @if ($last)
-                                        {{ $last->user_name }}
-                                        @else
-                                        {{ $data->originator }}
-                                        @endif
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">12.</th>
+                                <th class="text-left">
+                                    <div class="bold">Revision History</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                @php
-                $signatureOriginatorData = DB::table('stage_manages')
-                ->where('document_id', $data->id)
-                ->where(function ($query) {
-                $query->where('stage', '4')
-                ->orWhere('stage', 'In-HOD Review')
-                ->orWhere('stage', 'In-Approval');
-                })
-                ->latest()
-                ->first();
-
-                $signatureReviewerData = DB::table('stage_manages')
-                ->where('document_id', $data->id)
-                ->where('stage', 'Reviewed')
-                ->get();
-                // dd($signatureReviewerData);
-                $signatureApprovalData = DB::table('stage_manages')
-                ->where('document_id', $data->id)
-                ->where('stage', 'Approved')
-                ->latest()
-                ->first();
-                @endphp
-                <div class="block mb-40">
-                    <div class="block-head">
-                        Originator
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">Originator</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                    <th class="text-left w-25">Comments</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-left w-25">{{ $data->originator }}</td>
-                                    <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
-                                    <td class="text-left w-25">Initiation Completed</td>
-                                    <td class="text-left w-25">{{ $data->originator_email }}</td>
-                                    <td class="text-left w-25">{{ !$signatureOriginatorData || $signatureOriginatorData->comment == null ? " " : $signatureOriginatorData->comment }}</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
+            <section class="doc-control" style="page-break-after: never;">
+                <div class="head">
+                    <div>
+                        Document Control Information
                     </div>
                 </div>
-                <div class="block mb-40">
-                    <div class="block-head">
-                        HOD
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">HOD</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                    <th class="text-left w-25">Comments</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($data->hods)
-                                @php
-                                $hod = explode(',', $data->hods);
-                                $i = 0;
-                                @endphp
-                                @for ($i = 0; $i < count($hod); $i++) @php $user=DB::table('users') ->where('id', $hod[$i])
-                                    ->first();
-                                    $dept = DB::table('departments')
-                                    ->where('id', $user->departmentid)
-                                    ->value('name');
-                                    $date = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $hod[$i])
-                                    ->where('stage', 'HOD Review Complete')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-                                    $comment = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $hod[$i])
-                                    ->where('stage', 'HOD Review Complete')
-                                    ->latest()
-                                    ->first();
-                                    $reject = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $hod[$i])
-                                    ->where('stage', 'Cancel-by-HOD')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-
-                                    @endphp
+                <div class="body">
+                    <div class="block mb-40">
+                        <div class="block-head">
+                            General Information
+                        </div>
+                        <div class="block-content">
+                            <table>
+                                <tbody>
                                     <tr>
-                                        <td class="text-left w-25">{{ $user->name }}</td>
+                                        <th class="w-30 text-left vertical-baseline">Document Number</th>
+                                        <td class="w-70 text-left">
+                                            @php
+                                                $temp = DB::table('document_types')
+                                                    ->where('name', $data->document_type_name)
+                                                    ->value('typecode');
+                                            @endphp
+                                            @if ($data->revised === 'Yes')
 
-                                        <td class="text-left w-25">{{ $dept }}</td>
-                                        @if ($date)
-                                        <td class="text-left w-25">HOD Review Complete</td>
-                                        @elseif(!empty($reject))
-                                        <td>HOD Rejected</td>
-                                        @else
-                                        <td class="text-left w-25">HOD Review Pending</td>
-                                        @endif
-
-                                        <td class="text-left w-25">{{ $user->email }}</td>
-                                        <td class="text-left w-25">
-                                            @if($comment)
-                                            {{ $comment->comment }}
+                                                {{ Helpers::getDivisionName($data->division_id) }}
+                                                /@if ($data->document_type_name)
+                                                    {{ $temp }} /
+                                                @endif{{ $data->year }}
+                                                /000{{ $data->document_number }}/R{{ $data->major }}.{{ $data->minor }}
+                                            @else
+                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}.{{ $data->minor }}
                                             @endif
                                         </td>
                                     </tr>
-                                    @endfor
+                                    <tr>
+                                        <th class="w-30 text-left vertical-baseline">Title</th>
+                                        <td class="w-70 text-left">{{ $data->document_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-30 text-left vertical-baseline">
+                                            Short Description
+                                        </th>
+                                        <td class="w-70 text-left">
+                                            {{ $data->short_description }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-30 text-left vertical-baseline">Description</th>
+                                        <td class="w-70 text-left">
+                                            {{ $data->description }}
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $last = DB::table('document_histories')
+                                            ->where('document_id', $data->id)
+                                            ->latest()
+                                            ->first();
+                                    @endphp
+
+                                    <tr>
+                                        <th class="w-30 text-left vertical-baseline">Last Changed</th>
+                                        <td class="w-70 text-left">
+                                            @if ($last)
+                                                <!-- {{ $last->created_at }} -->
+                                                {{ \Carbon\Carbon::parse($last->created_at)->format('d-M-Y') }}
+                                            @else
+                                                <!-- {{ $data->created_at }} -->
+                                                {{ \Carbon\Carbon::parse($data->created_at)->format('d-M-Y') }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-30 text-left vertical-baseline">Changed By</th>
+                                        <td class="w-70 text-left">
+                                            @if ($last)
+                                                {{ $last->user_name }}
+                                            @else
+                                                {{ $data->originator }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @php
+                        $signatureOriginatorData = DB::table('stage_manages')
+                            ->where('document_id', $data->id)
+                            ->where(function ($query) {
+                                $query
+                                    ->where('stage', '4')
+                                    ->orWhere('stage', 'In-HOD Review')
+                                    ->orWhere('stage', 'In-Approval');
+                            })
+                            ->latest()
+                            ->first();
+
+                        $signatureReviewerData = DB::table('stage_manages')
+                            ->where('document_id', $data->id)
+                            ->where('stage', 'Reviewed')
+                            ->get();
+                        // dd($signatureReviewerData);
+                        $signatureApprovalData = DB::table('stage_manages')
+                            ->where('document_id', $data->id)
+                            ->where('stage', 'Approved')
+                            ->latest()
+                            ->first();
+                    @endphp
+                    <div class="block mb-40">
+                        <div class="block-head">
+                            Originator
+                        </div>
+                        <div class="block-content">
+                            <table class="table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left w-25">Originator</th>
+                                        <th class="text-left w-25">Department</th>
+                                        <th class="text-left w-25">Status</th>
+                                        <th class="text-left w-25">E-Signature</th>
+                                        <th class="text-left w-25">Comments</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-left w-25">{{ $data->originator }}</td>
+                                        <td class="text-left w-25">
+                                            {{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}
+                                        </td>
+                                        <td class="text-left w-25">Initiation Completed</td>
+                                        <td class="text-left w-25">{{ $data->originator_email }}</td>
+                                        <td class="text-left w-25">
+                                            {{ !$signatureOriginatorData || $signatureOriginatorData->comment == null ? ' ' : $signatureOriginatorData->comment }}
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="block mb-40">
+                        <div class="block-head">
+                            HOD
+                        </div>
+                        <div class="block-content">
+                            <table class="table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left w-25">HOD</th>
+                                        <th class="text-left w-25">Department</th>
+                                        <th class="text-left w-25">Status</th>
+                                        <th class="text-left w-25">E-Signature</th>
+                                        <th class="text-left w-25">Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($data->hods)
+                                        @php
+                                            $hod = explode(',', $data->hods);
+                                            $i = 0;
+                                        @endphp
+                                        @for ($i = 0; $i < count($hod); $i++)
+                                            @php
+                                                $user = DB::table('users')
+                                                    ->where('id', $hod[$i])
+                                                    ->first();
+                                                $dept = DB::table('departments')
+                                                    ->where('id', $user->departmentid)
+                                                    ->value('name');
+                                                $date = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $hod[$i])
+                                                    ->where('stage', 'HOD Review Complete')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
+                                                $comment = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $hod[$i])
+                                                    ->where('stage', 'HOD Review Complete')
+                                                    ->latest()
+                                                    ->first();
+                                                $reject = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $hod[$i])
+                                                    ->where('stage', 'Cancel-by-HOD')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
+
+                                            @endphp ?> ?> ?> ?>
+                                            <tr>
+                                                <td class="text-left w-25">{{ $user->name }}</td>
+
+                                                <td class="text-left w-25">{{ $dept }}</td>
+                                                @if ($date)
+                                                    <td class="text-left w-25">HOD Review Complete</td>
+                                                @elseif(!empty($reject))
+                                                    <td>HOD Rejected</td>
+                                                @else
+                                                    <td class="text-left w-25">HOD Review Pending</td>
+                                                @endif
+
+                                                <td class="text-left w-25">{{ $user->email }}</td>
+                                                <td class="text-left w-25">
+                                                    @if ($comment)
+                                                        {{ $comment->comment }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endfor
                                     @endif
                                     @if ($data->approver_group)
-                                    @php
-                                    $group = explode(',', $data->approver_group);
-                                    $i = 0;
+                                        @php
+                                            $group = explode(',', $data->approver_group);
+                                            $i = 0;
 
-                                    @endphp
-                                    @for ($i = 0; $i < count($group); $i++) @php $users_id=DB::table('group_permissions') ->where('id', $group[$i])
-                                        ->value('user_ids');
-                                        $reviewer = explode(',', $users_id);
-                                        $i = 0;
                                         @endphp
-                                        @if ($users_id)
-                                        @for ($i = 0; $i < count($reviewer); $i++) @php $user=DB::table('users') ->where('id', $reviewer[$i])
-                                            ->first();
-                                            $dept = DB::table('departments')
-                                            ->where('id', $user->departmentid)
-                                            ->value('name');
-                                            $date = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Approval-Submit')
-                                            ->latest()
-                                            ->first();
-                                            $reject = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Cancel-by-Approver')
-                                            ->latest()
-                                            ->first();
+                                        @for ($i = 0; $i < count($group); $i++)
+                                            @php
+                                                $users_id = DB::table('group_permissions')
+                                                    ->where('id', $group[$i])
+                                                    ->value('user_ids');
+                                                $reviewer = explode(',', $users_id);
+                                                $i = 0;
+                                            @endphp ?> ?> ?> ?> ?>
+                                            @if ($users_id)
+                                                @for ($i = 0; $i < count($reviewer); $i++)
+                                                    @php
+                                                        $user = DB::table('users')
+                                                            ->where('id', $reviewer[$i])
+                                                            ->first();
+                                                        $dept = DB::table('departments')
+                                                            ->where('id', $user->departmentid)
+                                                            ->value('name');
+                                                        $date = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Approval-Submit')
+                                                            ->latest()
+                                                            ->first();
+                                                        $reject = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Cancel-by-Approver')
+                                                            ->latest()
+                                                            ->first();
 
-                                            @endphp
-                                            <tr>
-                                                <td class="text-left w-25">{{ $user->name }}</td>
-                                                <td class="text-left w-25">{{ $dept }}</td>
-                                                @if ($date)
-                                                <td class="text-left w-25">Approval Completed</td>
-                                                @elseif(!empty($reject))
-                                                <td class="text-left w-25">Approval Rejected </td>
-                                                @else
-                                                <td class="text-left w-25">Approval Pending</td>
-                                                @endif
+                                                    @endphp ?> ?> ?> ?> ?>
+                                                    <tr>
+                                                        <td class="text-left w-25">{{ $user->name }}</td>
+                                                        <td class="text-left w-25">{{ $dept }}</td>
+                                                        @if ($date)
+                                                            <td class="text-left w-25">Approval Completed</td>
+                                                        @elseif(!empty($reject))
+                                                            <td class="text-left w-25">Approval Rejected </td>
+                                                        @else
+                                                            <td class="text-left w-25">Approval Pending</td>
+                                                        @endif
 
-                                                <td class="text-left w-25">{{ $user->email }}</td>
-                                            </tr>
-                                            @endfor
+                                                        <td class="text-left w-25">{{ $user->email }}</td>
+                                                    </tr>
+                                                @endfor
                                             @endif
-                                            @endfor
+                                        @endfor
 
 
-                                            @endif
+                                    @endif
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="block mb-40">
-                    <div class="block-head">
-                        Reviews
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">Reviewer</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                    <th class="text-left w-25">Comments</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($data->reviewers)
-                                @php
-                                $reviewer = explode(',', $data->reviewers);
-                                $i = 0;
-                                @endphp
-                                @for ($i = 0; $i < count($reviewer); $i++) @php $user=DB::table('users') ->where('id', $reviewer[$i])
-                                    ->first();
-                                    $dept = DB::table('departments')
-                                    ->where('id', $user->departmentid)
-                                    ->value('name');
-                                    $date = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Reviewed')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-
-                                    $comment = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Reviewed')
-                                    ->latest()
-                                    ->first();
-
-
-                                    $reject = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Cancel-by-Reviewer')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-
-                                    @endphp
+                    <div class="block mb-40">
+                        <div class="block-head">
+                            Reviews
+                        </div>
+                        <div class="block-content">
+                            <table class="table-bordered">
+                                <thead>
                                     <tr>
-                                        <td class="text-left w-25">{{ $user->name }}</td>
-                                        <td class="text-left w-25">{{ $dept }}</td>
-                                        @if ($date)
-                                        <td class="text-left w-25">Review Completed</td>
-                                        @elseif(!empty($reject))
-                                        <td class="text-left w-25">Review Rejected </td>
-                                        @else
-                                        <td class="text-left w-25">Review Pending</td>
-                                        @endif
-
-                                        <td class="text-left w-25">{{ $user->email }}</td>
-                                        <td class="text-left w-25">
-                                            @if($comment)
-                                            {{ $comment->comment }}
-                                            @endif
-                                        </td>
-                                        {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
+                                        <th class="text-left w-25">Reviewer</th>
+                                        <th class="text-left w-25">Department</th>
+                                        <th class="text-left w-25">Status</th>
+                                        <th class="text-left w-25">E-Signature</th>
+                                        <th class="text-left w-25">Comments</th>
 
                                     </tr>
-                                    @endfor
-                                    @endif
-                                    @if ($data->reviewers_group)
-                                    @php
-                                    $group = explode(',', $data->reviewers_group);
-                                    $i = 0;
-
-                                    @endphp
-                                    @for ($i = 0; $i < count($group); $i++) @php $users_id=DB::table('group_permissions') ->where('id', $group[$i])
-                                        ->value('user_ids');
-                                        $reviewer = explode(',', $users_id);
-                                        $i = 0;
+                                </thead>
+                                <tbody>
+                                    @if ($data->reviewers)
+                                        @php
+                                            $reviewer = explode(',', $data->reviewers);
+                                            $i = 0;
                                         @endphp
-                                        @if ($users_id)
-                                        @for ($i = 0; $i < count($reviewer); $i++) @php $user=DB::table('users') ->where('id', $reviewer[$i])
-                                            ->first();
-                                            $dept = DB::table('departments')
-                                            ->where('id', $user->departmentid)
-                                            ->value('name');
-                                            $date = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Review-Submit')
-                                            ->where('deleted_at', null)
-                                            ->latest()
-                                            ->first();
+                                        @for ($i = 0; $i < count($reviewer); $i++)
+                                            @php
+                                                $user = DB::table('users')
+                                                    ->where('id', $reviewer[$i])
+                                                    ->first();
+                                                $dept = DB::table('departments')
+                                                    ->where('id', $user->departmentid)
+                                                    ->value('name');
+                                                $date = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Reviewed')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
 
-                                            $reject = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Cancel-by-Reviewer')
-                                            ->latest()
-                                            ->first();
+                                                $comment = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Reviewed')
+                                                    ->latest()
+                                                    ->first();
 
-                                            @endphp
+                                                $reject = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Cancel-by-Reviewer')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
+
+                                            @endphp ?> ?> ?> ?> ?>
                                             <tr>
                                                 <td class="text-left w-25">{{ $user->name }}</td>
                                                 <td class="text-left w-25">{{ $dept }}</td>
                                                 @if ($date)
-                                                <td class="text-left w-25">Review Completed</td>
+                                                    <td class="text-left w-25">Review Completed</td>
                                                 @elseif(!empty($reject))
-                                                <td class="text-left w-25">Review Rejected </td>
+                                                    <td class="text-left w-25">Review Rejected </td>
                                                 @else
-                                                <td class="text-left w-25">Review Pending</td>
+                                                    <td class="text-left w-25">Review Pending</td>
                                                 @endif
 
                                                 <td class="text-left w-25">{{ $user->email }}</td>
+                                                <td class="text-left w-25">
+                                                    @if ($comment)
+                                                        {{ $comment->comment }}
+                                                    @endif
+                                                </td>
+                                                {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
+
                                             </tr>
-                                            @endfor
+                                        @endfor
+                                    @endif
+                                    @if ($data->reviewers_group)
+                                        @php
+                                            $group = explode(',', $data->reviewers_group);
+                                            $i = 0;
+
+                                        @endphp
+                                        @for ($i = 0; $i < count($group); $i++)
+                                            @php
+                                                $users_id = DB::table('group_permissions')
+                                                    ->where('id', $group[$i])
+                                                    ->value('user_ids');
+                                                $reviewer = explode(',', $users_id);
+                                                $i = 0;
+                                            @endphp ?> ?> ?> ?> ?>
+                                            @if ($users_id)
+                                                @for ($i = 0; $i < count($reviewer); $i++)
+                                                    @php
+                                                        $user = DB::table('users')
+                                                            ->where('id', $reviewer[$i])
+                                                            ->first();
+                                                        $dept = DB::table('departments')
+                                                            ->where('id', $user->departmentid)
+                                                            ->value('name');
+                                                        $date = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Review-Submit')
+                                                            ->where('deleted_at', null)
+                                                            ->latest()
+                                                            ->first();
+
+                                                        $reject = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Cancel-by-Reviewer')
+                                                            ->latest()
+                                                            ->first();
+
+                                                    @endphp ?> ?> ?> ?> ?>
+                                                    <tr>
+                                                        <td class="text-left w-25">{{ $user->name }}</td>
+                                                        <td class="text-left w-25">{{ $dept }}</td>
+                                                        @if ($date)
+                                                            <td class="text-left w-25">Review Completed</td>
+                                                        @elseif(!empty($reject))
+                                                            <td class="text-left w-25">Review Rejected </td>
+                                                        @else
+                                                            <td class="text-left w-25">Review Pending</td>
+                                                        @endif
+
+                                                        <td class="text-left w-25">{{ $user->email }}</td>
+                                                    </tr>
+                                                @endfor
                                             @endif
-                                            @endfor
+                                        @endfor
 
 
-                                            @endif
+                                    @endif
 
-                            </tbody>
-                            {{-- <tbody>
+                                </tbody>
+                                {{-- <tbody>
                                     <tr>
                                         <td class="text-left w-25">Vivek</td>
                                         <td class="text-left w-25">Quality Control</td>
@@ -1457,136 +1587,146 @@
                                         <td class="text-left w-25">vivek@gmail.com</td>
                                     </tr>
                                 </tbody> --}}
-                        </table>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="block mb-40">
-                    <div class="block-head">
-                        Approvals
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">Approver</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                    <th class="text-left w-25">Comments</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($data->approvers)
-                                @php
-                                $reviewer = explode(',', $data->approvers);
-                                $i = 0;
-                                @endphp
-                                @for ($i = 0; $i < count($reviewer); $i++) @php $user=DB::table('users') ->where('id', $reviewer[$i])
-                                    ->first();
-                                    $dept = DB::table('departments')
-                                    ->where('id', $user->departmentid)
-                                    ->value('name');
-                                    $date = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Approved')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-                                    $comment = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Approved')
-                                    ->latest()
-                                    ->first();
-                                    $reject = DB::table('stage_manages')
-                                    ->where('document_id', $data->id)
-                                    ->where('user_id', $reviewer[$i])
-                                    ->where('stage', 'Cancel-by-Approver')
-                                    ->where('deleted_at', null)
-                                    ->latest()
-                                    ->first();
-
-                                    @endphp
+                    <div class="block mb-40">
+                        <div class="block-head">
+                            Approvals
+                        </div>
+                        <div class="block-content">
+                            <table class="table-bordered">
+                                <thead>
                                     <tr>
-                                        <td class="text-left w-25">{{ $user->name }}</td>
-                                        <td class="text-left w-25">{{ $dept }}</td>
-                                        @if ($date)
-                                        <td class="text-left w-25">Approval Completed</td>
-                                        @elseif(!empty($reject))
-                                        <td>Approval Rejected</td>
-                                        @else
-                                        <td class="text-left w-25">Approval Pending</td>
-                                        @endif
-
-                                        <td class="text-left w-25">{{ $user->email }}</td>
-                                        <td class="text-left w-25">
-                                            @if($comment)
-                                            {{ $comment->comment }}
-                                            @endif
-                                        </td>
+                                        <th class="text-left w-25">Approver</th>
+                                        <th class="text-left w-25">Department</th>
+                                        <th class="text-left w-25">Status</th>
+                                        <th class="text-left w-25">E-Signature</th>
+                                        <th class="text-left w-25">Comments</th>
                                     </tr>
-                                    @endfor
-                                    @endif
-                                    @if ($data->approver_group)
-                                    @php
-                                    $group = explode(',', $data->approver_group);
-                                    $i = 0;
-
-                                    @endphp
-                                    @for ($i = 0; $i < count($group); $i++) @php $users_id=DB::table('group_permissions') ->where('id', $group[$i])
-                                        ->value('user_ids');
-                                        $reviewer = explode(',', $users_id);
-                                        $i = 0;
+                                </thead>
+                                <tbody>
+                                    @if ($data->approvers)
+                                        @php
+                                            $reviewer = explode(',', $data->approvers);
+                                            $i = 0;
                                         @endphp
-                                        @if ($users_id)
-                                        @for ($i = 0; $i < count($reviewer); $i++) @php $user=DB::table('users') ->where('id', $reviewer[$i])
-                                            ->first();
-                                            $dept = DB::table('departments')
-                                            ->where('id', $user->departmentid)
-                                            ->value('name');
-                                            $date = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Approval-Submit')
-                                            ->latest()
-                                            ->first();
-                                            $reject = DB::table('stage_manages')
-                                            ->where('document_id', $data->id)
-                                            ->where('user_id', $reviewer[$i])
-                                            ->where('stage', 'Cancel-by-Approver')
-                                            ->latest()
-                                            ->first();
+                                        @for ($i = 0; $i < count($reviewer); $i++)
+                                            @php
+                                                $user = DB::table('users')
+                                                    ->where('id', $reviewer[$i])
+                                                    ->first();
+                                                $dept = DB::table('departments')
+                                                    ->where('id', $user->departmentid)
+                                                    ->value('name');
+                                                $date = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Approved')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
+                                                $comment = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Approved')
+                                                    ->latest()
+                                                    ->first();
+                                                $reject = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->where('stage', 'Cancel-by-Approver')
+                                                    ->where('deleted_at', null)
+                                                    ->latest()
+                                                    ->first();
 
                                             @endphp
                                             <tr>
                                                 <td class="text-left w-25">{{ $user->name }}</td>
                                                 <td class="text-left w-25">{{ $dept }}</td>
                                                 @if ($date)
-                                                <td class="text-left w-25">Approval Completed</td>
+                                                    <td class="text-left w-25">Approval Completed</td>
                                                 @elseif(!empty($reject))
-                                                <td class="text-left w-25">Approval Rejected </td>
+                                                    <td>Approval Rejected</td>
                                                 @else
-                                                <td class="text-left w-25">Approval Pending</td>
+                                                    <td class="text-left w-25">Approval Pending</td>
                                                 @endif
 
                                                 <td class="text-left w-25">{{ $user->email }}</td>
+                                                <td class="text-left w-25">
+                                                    @if ($comment)
+                                                        {{ $comment->comment }}
+                                                    @endif
+                                                </td>
                                             </tr>
-                                            @endfor
+                                        @endfor
+                                    @endif
+                                    @if ($data->approver_group)
+                                        @php
+                                            $group = explode(',', $data->approver_group);
+                                            $i = 0;
+
+                                        @endphp
+                                        @for ($i = 0; $i < count($group); $i++)
+                                            @php
+                                                $users_id = DB::table('group_permissions')
+                                                    ->where('id', $group[$i])
+                                                    ->value('user_ids');
+                                                $reviewer = explode(',', $users_id);
+                                                $i = 0;
+                                            @endphp ?> ?> ?>
+                                            @if ($users_id)
+                                                @for ($i = 0; $i < count($reviewer); $i++)
+                                                    @php
+                                                        $user = DB::table('users')
+                                                            ->where('id', $reviewer[$i])
+                                                            ->first();
+                                                        $dept = DB::table('departments')
+                                                            ->where('id', $user->departmentid)
+                                                            ->value('name');
+                                                        $date = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Approval-Submit')
+                                                            ->latest()
+                                                            ->first();
+                                                        $reject = DB::table('stage_manages')
+                                                            ->where('document_id', $data->id)
+                                                            ->where('user_id', $reviewer[$i])
+                                                            ->where('stage', 'Cancel-by-Approver')
+                                                            ->latest()
+                                                            ->first();
+
+                                                    @endphp ?> ?> ?> ?>
+                                                    <tr>
+                                                        <td class="text-left w-25">{{ $user->name }}</td>
+                                                        <td class="text-left w-25">{{ $dept }}</td>
+                                                        @if ($date)
+                                                            <td class="text-left w-25">Approval Completed</td>
+                                                        @elseif(!empty($reject))
+                                                            <td class="text-left w-25">Approval Rejected </td>
+                                                        @else
+                                                            <td class="text-left w-25">Approval Pending</td>
+                                                        @endif
+
+                                                        <td class="text-left w-25">{{ $user->email }}</td>
+                                                    </tr>
+                                                @endfor
                                             @endif
-                                            @endfor
+                                        @endfor
 
 
-                                            @endif
+                                    @endif
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </section>
+        </section>
+    </div>
 
 
     <script type="text/php">
@@ -1595,9 +1735,9 @@
                 if ($PAGE_COUNT > 1) {
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
-                    $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 788;
-                    $x = 485;
+                    $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
+                    $y = 105;
+                    $x = 490;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
             ');

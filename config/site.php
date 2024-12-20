@@ -3,5 +3,5 @@
 return [
     'site_title' => 'Agio',
     'site_name' => 'Agio',
-    'pdf_title' => 'Agio Pharmaceuticals'
+    'pdf_title' => 'AGIO PHARMACEUTICALS LTD.'
 ];
