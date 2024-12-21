@@ -1331,7 +1331,7 @@
                                 <label for="distriution_retrieval">
                                     Distribution & Retrieval
                                     <button type="button" name="    "
-                                        onclick="addDistributionRetrieval('distribution-retrieval-grid')">+</button>
+                                        onclick="addDistributionRetrieval('distribution-retrieval-grid')" disabled>+</button>
                                 </label>
                                 <div class="table-responsive retrieve-table">
                                     <table class="table table-bordered" id="distribution-retrieval-grid">

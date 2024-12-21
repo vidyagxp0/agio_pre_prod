@@ -468,7 +468,8 @@
                                         @endphp
                                         @if ($document->revised === 'Yes')
 
-                                            {{ Helpers::getDivisionName($document->division_id) }}
+                                            {{-- {{ Helpers::getDivisionName($document->division_id) }} --}}
+                                            {{ $document->sop_type_short }}
                                             /@if ($document->document_type_name)
                                                 {{ $temp }} /@endif{{ $year }}
                                             /000{{ $document->id }}/R{{ $document->major }}

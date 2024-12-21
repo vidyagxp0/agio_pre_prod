@@ -490,7 +490,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>{{ $data->sop_type }}</td>
+                    <td>{{ $data->sop_type ? $data->sop_type : '-' }}</td>
                 </tr>
             </tbody>
         </table>
@@ -581,7 +581,7 @@
         <table class="border p-10">
             <tbody>
                 <tr>
-                    <td class="text-left w-30">
+                    <td class=" w-50">
                         @php
                             $temp = DB::table('document_types')
                                 ->where('name', $data->document_type_name)
@@ -596,8 +596,8 @@
                             {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
                         @endif
 
-                    <td class="w-42">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
-                    <td class="text-right w-20"></td>
+                    <td class="w-50">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
+                    {{-- <td class="text-right w-20"></td> --}}
                 </tr>
             </tbody>
         </table>
