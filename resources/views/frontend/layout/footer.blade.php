@@ -140,44 +140,35 @@
         let newRow = table.insertRow(currentRowCount);
         newRow.setAttribute("id", "row" + currentRowCount);
 
-        let sopTypeShort = "{{ $document->sop_type_short }}";
-        let departmentId = "{{ $document->department_id }}";
-        let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
-        let major = "{{ $document->major }}";
-
         let cell1 = newRow.insertCell(0);
         cell1.innerHTML = currentRowCount;
 
         let cell2 = newRow.insertCell(1);
-        cell2.innerHTML =
-            `<textarea style="overflow: hidden;
-    border: none; width: 10rem;" name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
+        cell2.innerHTML = `<textarea style="overflow: hidden;
+        border: none; width: 10rem;" name="distribution[${currentRowCount}][document_title]"></textarea>`;
 
         let cell3 = newRow.insertCell(2);
-        cell3.innerHTML = `
-    <textarea style="overflow: hidden; border: none; width: 6rem;"
-              type="text"
-              name="distribution[${currentRowCount}][document_number]" readonly>
-        ${sopTypeShort}/${departmentId}/${documentId}/R${major}
-    </textarea>`;
+        cell3.innerHTML = `<textarea style="overflow: hidden;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_number]"></textarea>`;
+
         let cell4 = newRow.insertCell(3);
         cell4.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
 
         let cell5 = newRow.insertCell(4);
         cell5.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_on]"> </textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_on]"> </textarea>`;
 
         let cell6 = newRow.insertCell(5);
         cell6.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_copies]"> </textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_copies]"> </textarea>`;
 
         let cell7 = newRow.insertCell(6);
         cell7.innerHTML = '<div class="group-input new-date-data-field mb-0"> <div class="input-date "><div class="calenderauditee"><input style="width: 6rem;" type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style="width:4rem" type="date" name="distribution['+ currentRowCount +'][issuance_date]" class="hide-input" oninput="handleDateInput(this, `issuance_date' + currentRowCount +'`)" /></div></div></div>';
 
         let cell8 = newRow.insertCell(7)
         cell8.innerHTML = `<select style="
-     width: 6rem;" id="select-state" placeholder="Select..."
+        width: 6rem;" id="select-state" placeholder="Select..."
             name="distribution[${currentRowCount}][issuance_to]">
             <option value='0'>-- Select --</option>
             ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
@@ -186,7 +177,7 @@
 
         let cell9 = newRow. insertCell(8)
         cell9.innerHTML = `<select style="
-    width: 6rem;" id="select-state" placeholder="Select..."
+        width: 6rem;" id="select-state" placeholder="Select..."
             name="distribution[${currentRowCount}][location]">
             <option value='0'>-- Select --</option>
             ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
@@ -194,18 +185,18 @@
 
         let cell10 = newRow.insertCell(9);
         cell10.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_copies]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_copies]"></textarea>`;
 
         let cell11 = newRow.insertCell(10);
         cell11.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_reason]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_reason]"></textarea>`;
 
         let cell12 = newRow.insertCell(11);
         cell12.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input style=" width: 6rem;" type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style=" width: 4rem;" type="date" name="distribution['+currentRowCount+'][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + currentRowCount +'`)" /></div></div></div>';
 
         let cell13 = newRow.insertCell(12)
         cell13.innerHTML = `<select style="
-   width: 6rem;" id="select-state" placeholder="Select..."
+        width: 6rem;" id="select-state" placeholder="Select..."
             name="distribution[${currentRowCount}][retrieval_by]">
             <option value='0'>-- Select --</option>
             ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
@@ -213,7 +204,7 @@
 
         let cell14 = newRow.insertCell(13)
         cell14.innerHTML = `<select style="
-    width: 6rem;" id="select-state" placeholder="Select..."
+        width: 6rem;" id="select-state" placeholder="Select..."
             name="distribution[${currentRowCount}][retrieved_department]">
             <option value='0'>-- Select --</option>
             ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
@@ -221,15 +212,15 @@
 
         let cell15 = newRow.insertCell(14);
         cell15.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_copies]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_copies]"></textarea>`;
 
         let cell16 = newRow.insertCell(15);
         cell16.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
 
         let cell17 = newRow.insertCell(16);
         cell17.innerHTML = `<textarea style="overflow: hidden;
-    border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][remark]"></textarea>`;
+        border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][remark]"></textarea>`;
 
         var cell18 = newRow.insertCell(17);
         cell18.innerHTML = "<button class='removeTrainRow'>Remove</button>";
