@@ -802,6 +802,10 @@ class DocumentController extends Controller
 
     public function update($id, Request $request)
     {
+        $document = Document::find($id);
+        $document->document_number = $request->document_number;
+        $document->update();
+
 
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
@@ -2348,12 +2352,12 @@ class DocumentController extends Controller
                 $pdf = App::make('dompdf.wrapper');
                 $time = Carbon::now();
                 $pdf = PDF::loadview('frontend.documents.reports.annexure_report', compact('data', 'time', 'document', 'annexure_number', 'annexure_data'))
-                    ->setOptions([
-                        'defaultFont' => 'sans-serif',
-                        'isHtml5ParserEnabled' => true,
-                        'isRemoteEnabled' => true,
-                        'isPhpEnabled' => true,
-                    ]);
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
                 $pdf->setPaper('A4');
                 $pdf->render();
                 $canvas = $pdf->getDomPDF()->getCanvas();

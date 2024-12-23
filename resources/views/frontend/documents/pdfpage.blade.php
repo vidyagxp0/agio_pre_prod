@@ -543,7 +543,18 @@
                 </tr>
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Supersedes No.:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left"></td>
+                    <td style="width: 23%; padding: 5px; text-align: left">
+                        @php
+                            $temp = DB::table('document_types')
+                                ->where('name', $document->document_type_name)
+                                ->value('typecode');
+                        @endphp
+                        @if ($document->revised === 'Yes')
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/000{{ $document->revised_doc }}/R{{ $document->major }}
+                        @else
+                        -
+                        @endif
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -460,28 +460,23 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-num">Document Number</label>
-                                    <div class="default-name">
-                                        @php
+                                    <input type="text" id="doc-num" name="document_number" class="default-name" readonly
+                                        value="@php
                                             $temp = DB::table('document_types')
                                                 ->where('name', $document->document_type_name)
                                                 ->value('typecode');
                                         @endphp
                                         @if ($document->revised === 'Yes')
-
-                                            {{-- {{ Helpers::getDivisionName($document->division_id) }} --}}
                                             {{ $document->sop_type_short }}
                                             /@if ($document->document_type_name)
                                                 {{ $temp }} /@endif{{ $year }}
                                             /000{{ $document->id }}/R{{ $document->major }}
                                         @else
                                             {{ $document->sop_type_short }}/{{ $document->department_id }}/000{{ $document->id }}/R{{ $document->major }}
-
-                                        @endif
-                                    </div>
-
-                                    {{-- {{ $document->division_name }} --}}
+                                        @endif">
                                 </div>
                             </div>
+
 
                             <div class="col-md-6">
                                 <div class="group-input">
