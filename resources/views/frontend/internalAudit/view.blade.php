@@ -375,11 +375,11 @@
                         
                        
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
-                        @if (Auth::user()->name == $data->assign_to)
+                        @if (Auth::user()->id == $data->assign_to)
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Acknowledgement
                         </button>
-                    @endif
+                        @endif
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
