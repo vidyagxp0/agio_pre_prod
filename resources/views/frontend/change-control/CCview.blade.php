@@ -444,13 +444,12 @@
                             @else
                                 <div class="">QA/CQA Final Review</div>
                             @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">Pending RA
-                                    Approval</div>
-                            @else
-                                <div class="">Pending RA
-                                    Approval</div>
-                            @endif
+                            @if (($data->stage > 6 || $data->status == 'QA/CQA Final Review') )
+    <div id="pending-ra-stage" class="active">Pending RA Approval</div>
+@else
+    <div id="pending-ra-stage" class="">Pending RA Approval</div>
+@endif
+
                             @if ($data->stage >= 7)
                                 <div class="active">QA/CQA Head/Manager Designee Approval</div>
                             @else
@@ -7861,49 +7860,59 @@
                                             </div>
 
                                             <div class="col-lg-6">
-    <div class="group-input">
-        <label for="RA notification">RA Approval required
-            @if($data->stage==5) <span class="text-danger">*</span>@endif
-        </label>
-        <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                {{ $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
-            <option value="">--Select--</option>
-            <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-            <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
-        </select>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        // Initially check dropdown and textarea
-        toggleButton($('#RA_head_required').val(), $('#ra_tab_comments').val());
+                                        <div class="group-input">
+                                            <label for="RA notification">RA Approval required
+                                                @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                            </label>
+                                            <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
+                                                    {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                <option value="">--Select--</option>
+                                                <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
+                                                <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <script>
+                                        $(document).ready(function () {
+                                            // Initially check dropdown and textarea
+                                            toggleElements($('#RA_head_required').val(), $('#ra_tab_comments').val());
 
-        // On dropdown value change
-        $('#RA_head_required').change(function () {
-            toggleButton($(this).val(), $('#ra_tab_comments').val());
-        });
+                                            // On dropdown value change
+                                            $('#RA_head_required').change(function () {
+                                                toggleElements($(this).val(), $('#ra_tab_comments').val());
+                                            });
 
-        // On textarea input
-        $('#ra_tab_comments').on('input', function () {
-            toggleButton($('#RA_head_required').val(), $(this).val());
-        });
+                                            // On textarea input
+                                            $('#ra_tab_comments').on('input', function () {
+                                                toggleElements($('#RA_head_required').val(), $(this).val());
+                                            });
 
-        // Function to check conditions and toggle button visibility
-        function toggleButton(selectValue, textareaValue) {
-            if (selectValue === 'Yes' && textareaValue.trim() === '') {
-                $('#approval-button').show();  // Show the button
-            } else {
-                $('#approval-button').hide();  // Hide the button
-            }
-        }
-    });
-</script>
+                                            // Function to toggle button visibility and stage
+                                            function toggleElements(selectValue, textareaValue) {
+                                                if (selectValue === 'Yes') {
+                                                    // Show the button if textarea is empty
+                                                    if (textareaValue.trim() === '') {
+                                                        $('#approval-button').show();
+                                                    } else {
+                                                        $('#approval-button').hide();
+                                                    }
+
+                                                    // Show the stage
+                                                    $('#pending-ra-stage').show();
+                                                } else {
+                                                    // Hide the button and stage when "No" is selected
+                                                    $('#approval-button').hide();
+                                                    $('#pending-ra-stage').hide();
+                                                }
+                                            }
+                                        });
+                                        </script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     <select name="QA_CQA_person" class="QA_CQA_person"
-                                                        id="QA_CQA_person" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
+                                                        id="QA_CQA_person"  {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
