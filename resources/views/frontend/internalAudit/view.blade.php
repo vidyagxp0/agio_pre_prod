@@ -501,74 +501,72 @@
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm29')">Acknowledgment</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> --}}
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm28')">Audit Preparation and
-                            Execution</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm28')">Audit Preparation and Execution</button>
+                        <button class="cctablinks" style="display:none;" id="button1"
+                        onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
+                    <button class="cctablinks" style="display:none;" id="button2"
+                        onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
+                    <button class="cctablinks" style="display:none;" id="button3"
+                        onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
+                    <button class="cctablinks" style="display:none;" id="button4"
+                        onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
+                    </button>
+                    <button class="cctablinks" style="display:none;" id="button5"
+                        onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button6"
+                        onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
+                    </button>
+                    <button class="cctablinks" style="display:none;" id="button7"
+                        onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button8"
+                        onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button9"
+                        onclick="openCity(event, 'CCForm15')">Checklist - Engineering
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button10"
+                        onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button11"
+                        onclick="openCity(event, 'CCForm17')">Checklist - Stores
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button12"
+                        onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button13"
+                        onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button14"
+                        onclick="openCity(event, 'CCForm20')">Checklist -
+                        Production (Injection Packing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button15"
+                        onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button16"
+                        onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button17"
+                        onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
+                    </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
-                        <button class="cctablinks" style="display:none;" id="button1"
-                            onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
-                        <button class="cctablinks" style="display:none;" id="button2"
-                            onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
-                        <button class="cctablinks" style="display:none;" id="button3"
-                            onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                        <button class="cctablinks" style="display:none;" id="button4"
-                            onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
-                        </button>
-                        <button class="cctablinks" style="display:none;" id="button5"
-                            onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button6"
-                            onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
-                        </button>
-                        <button class="cctablinks" style="display:none;" id="button7"
-                            onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button8"
-                            onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button9"
-                            onclick="openCity(event, 'CCForm15')">Checklist - Engineering
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button10"
-                            onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button11"
-                            onclick="openCity(event, 'CCForm17')">Checklist - Stores
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button12"
-                            onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button13"
-                            onclick="openCity(event, 'CCForm19')">Checklist - Production (   Dispensing &
-                            Manufacturing)
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button14"
-                            onclick="openCity(event, 'CCForm20')">Checklist -
-                            Production (Injection Packing)
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button15"
-                            onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button16"
-                            onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
-                        </button>
-
-                        <button class="cctablinks" style="display:none;" id="button17"
-                            onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
-                        </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
 
@@ -5705,10 +5703,10 @@
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="tablet_compress_remark_1" style="border-radius: 7px; border: 1.5px solid black;">
-@if ($checklist1 && $checklist1->tablet_compress_remark_1)
-{{ $checklist1->tablet_compress_remark_1 }}
-@endif
-</textarea>
+                                                                        @if ($checklist1 && $checklist1->tablet_compress_remark_1)
+                                                                        {{ $checklist1->tablet_compress_remark_1 }}
+                                                                        @endif
+                                                                        </textarea>
                                                                 </div>
                                                             </td>
 
@@ -5716,7 +5714,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.2</td>
-                                                            <td>1.2 Equipment cleanliness, check few equipments.</td>
+                                                            <td>Equipment cleanliness, check few equipments</td>
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -12261,8 +12259,8 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        STAGE 1 : LIQUIDE/OINTMENT PACKING
-                                                                        </div>
+                                        STAGE 1 : LIQUID/OINTMENT PACKING
+                                    </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -13463,7 +13461,7 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        Checklist for Human Resource
+                                        Checklist for Human Resource and Administration
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">

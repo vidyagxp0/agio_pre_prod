@@ -527,11 +527,11 @@
                 </div>
             </div>
                 <div class="block">
-                        <div class="block-head">
+                        {{-- <div class="block-head">
                         Audit Agenda
                         </div>
-
-                     <div class="border-table">
+ --}}
+                     {{-- <div class="border-table">
                             <table>
                                 <tr class="table_bg">
                                     <th class="w-20">SR no.</th>
@@ -579,7 +579,7 @@
                                 @endif
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
@@ -948,79 +948,79 @@
                         @endphp
 
 
-                                                
-                                <div class="inner-block">
-                                    <div class="content-table">
-                                        <!-- <div class="border-table"> -->
-                                            <div class="block-head">
-                                                Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
-                                            <div>
-                                                @php
-                                                    $checklists = [
-                                                        [
-                                                            'title' => 'STAGE 1 : DISPENSING',
-                                                            'questions' => $questions_packing,
-                                                            'prefix' => 1
-                                                        ],
-                                                        [
-                                                            'title' => 'Stage -02 Granulation',
-                                                            'questions' => $questions_documentation,
-                                                            'prefix' => 2
-                                                        ],
-                                                        [
-                                                            'title' => 'Stage -03 Documentation',
-                                                            'questions' => $questions_documentation_table,
-                                                            'prefix' => 3
-                                                        ]
-                                                    ];
-                                                @endphp
+                                 @if(!empty($da ta->checklist))                
+                                    <div class="inner-block">
+                                        <div class="content-table">
+                                            <!-- <div class="border-table"> -->
+                                                <div class="block-head">
+                                                    Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
+                                                <div>
+                                                    @php
+                                                        $checklists = [
+                                                            [
+                                                                'title' => 'STAGE 1 : DISPENSING',
+                                                                'questions' => $questions_packing,
+                                                                'prefix' => 1
+                                                            ],
+                                                            [
+                                                                'title' => 'Stage -02 Granulation',
+                                                                'questions' => $questions_documentation,
+                                                                'prefix' => 2
+                                                            ],
+                                                            [
+                                                                'title' => 'Stage -03 Documentation',
+                                                                'questions' => $questions_documentation_table,
+                                                                'prefix' => 3
+                                                            ]
+                                                        ];
+                                                    @endphp
 
-                                                @foreach ($checklists as $checklist)
-                                                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                        {{ $checklist['title'] }}
-                                                    </div>
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 5%;">Sr. No.</th>
-                                                                <th style="width: 40%;">Question</th>
-                                                                <th style="width: 20%;">Response</th>
-                                                                <th>Remarks</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($checklist['questions'] as $index => $question)
-                                                                @php
-                                                                    $response = $data->{"response_" . ($index + 1)};
-                                                                    $remark = $data->{"remark_" . ($index + 1)};
-                                                                @endphp
+                                                    @foreach ($checklists as $checklist)
+                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                            {{ $checklist['title'] }}
+                                                        </div>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                    @php
+                                                                        $response = $data->{"response_" . ($index + 1)};
+                                                                        $remark = $data->{"remark_" . ($index + 1)};
+                                                                    @endphp
 
-                                                                <!-- Check if either response or remark is not empty -->
-                                                                @if($response || $remark)
-                                                                    <tr>
-                                                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                        <td>{{ $question }}</td>
-                                                                        <td>
-                                                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                                {{ $response }}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td style="vertical-align: middle;">
-                                                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                                                {{ $remark }}
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endif
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                @endforeach
-                                            </div>
-                                        <!-- </div> -->
+                                                                    <!-- Check if either response or remark is not empty -->
+                                                                    @if($response || $remark)
+                                                                        <tr>
+                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                            <td>{{ $question }}</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                    {{ $response }}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td style="vertical-align: middle;">
+                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                    {{ $remark }}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @endforeach
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                         
+                                 @endif        
                                 @php
                                     $questions_packing = [
                                         'Check for area activity record.',
@@ -2854,7 +2854,7 @@
                                                                                 ],
                                                                                 [
                                                                                         'title' => 'STAGE 3: DOCUMENTATION ',
-                                                                                        'questions' => $powder_questions_packing_manufacturing,
+                                                                                        'questions' => $questions_documentation,
                                                                                         'prefix' => 2
                                                                                 ],
                                     
