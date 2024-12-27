@@ -490,7 +490,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>{{ $data->sop_type ? $data->sop_type : '-' }}</td>
+                    <td>{{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }}</td>
                 </tr>
             </tbody>
         </table>
@@ -622,18 +622,51 @@
         <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                    <th style="padding: 10px; border: 1px solid #ddd;"></th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Prepared By</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Checked By</th>
-                    <th style="padding: 10px; border: 1px solid #ddd;">Approved By</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
                 </tr>
             </thead>
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
-                    <th style="padding: 10px; border: 1px solid #ddd;">Sign & Date</th>
+                    @php
+                        $inreviews = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Review-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign & Date</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->reviewers) }}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">{{ Helpers::getInitiatorName($data->approvers) }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">  
+                        @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif          
+                    @php
+                        $inreview = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Approval-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+
+                    @endphp
+                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">  
+                        @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif                    
                 </tr>
             </tbody>
         </table>
@@ -1011,7 +1044,7 @@
                 </div>
                 {{-- MATERIALS AND EQUIPMENTS END --}}
 
-
+                 <br><br>
                 {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
@@ -1200,21 +1233,21 @@
                             <table class="table table-bordered" id="distribution-list">
                                 <thead>
                                     <tr>
-                                        <th>Row</th>
-                                        <th class="copy-name">Copy</th>
-                                        <th class="copy-name">No. of Copies</th>
-                                        <th class="copy-name">User Department</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Row</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Copy</th>
+                                        <th style="font-size: 16px; font-weight: bold;">No. of Copies</th>
+                                        <th style="font-size: 16px; font-weight: bold;">User Department</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
+                                        <td style="font-size: 16px; font-weight: bold;">1</td>
                                         <td style="font-weight: bold;">Master Copy</td>
                                         <td>{{ $data->master_copy_number}}</td>
                                         <td>{{ $data->master_user_department}}</td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                        <td style="font-size: 16px; font-weight: bold;">2</td>
                                         <td style="font-weight: bold;">Controlled Copy</td>
                                         <td>{{ $data->controlled_copy_number}}</td>
                                          <td>
@@ -1223,7 +1256,7 @@
                                        
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                        <td style="font-size: 16px; font-weight: bold;">3</td>
                                         <td style="font-weight: bold;">Display Copy</td>
                                         <td>{{ $data->display_copy_number}}</td>
                                         <td>
@@ -1236,7 +1269,7 @@
                     </div>
                 </div>
             </section>
-
+            <br><br>
             <section class="doc-control" style="page-break-after: never;">
                 <div class="head">
                     <div>
