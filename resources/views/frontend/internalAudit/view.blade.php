@@ -631,23 +631,6 @@
                                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Assigned to">Auditee Department Head
-
-
-                                                </label>
-                                                <select
-                                                    name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
-                                                    @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->id }}"
-                                                            @if ($data->assign_to == $value->id) selected @endif>
-                                                            {{ $value->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Auditee Department Head">Auditee Department Head
@@ -657,12 +640,19 @@
                                                 </label>
                                                 <select name="assign_to" class="assign_to" id="assign_to" @if ($data->stage != 1) disabled @endif>
                                                     <option value="">-- Select --</option>
-                                                    @foreach ($users as $key => $user)
+
+                                                    @foreach ($users as $value)
+                                                     <option @if ($data->assign_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                                   @endforeach
+
+
+
+                                                    <!-- @foreach ($users as $key => $user)
                                                         <option value="{{ $user->name }}"
                                                             @if ($user->id == $data->assign_to) selected @endif>
                                                             {{ $user->name }}
                                                         </option>
-                                                    @endforeach
+                                                    @endforeach -->
                                                 </select>
                                                 @if ($data->stage != 1)
                                                 <!-- Hidden field to retain the value if select is disabled -->
@@ -14055,7 +14045,7 @@
                                                     <tbody>
                                                         @foreach ($questions_documentation as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">{{ '1.' .$index + 1 }}</td>
+                                                                <td class="flex text-center">{{ '2.' .$index + 1 }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php

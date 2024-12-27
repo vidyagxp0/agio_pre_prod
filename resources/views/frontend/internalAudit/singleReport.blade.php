@@ -216,7 +216,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Auditee Department Head</th>
-                        <td class="w-30">@if($data->assign_to){{ ($data->assign_to) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{  Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
              
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
@@ -330,7 +330,7 @@
     
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->inv_attachment)
                             @foreach(json_decode($data->inv_attachment) as $key => $file)
@@ -373,7 +373,7 @@
             
                                 <tr class="table_bg">
                                     <th class="w-20">S.N.</th>
-                                    <th class="w-60">Batch No</th>
+                                    <th class="w-60">File No.</th>
                                 </tr>
                                     @if($data->file_attachment)
                                     @foreach(json_decode($data->file_attachment) as $key => $file)
@@ -501,8 +501,8 @@
                     <table>
                    
                         <tr>
-                            <th class="w-20">Audit Start Date</th>
-                            <td class="w-30">
+                            <th class="w-18">Audit Start Date</th>
+                            <td class="w-20">
                                 <div>
                                     @if($data->audit_start_date){{ Helpers::getdateFormat($data->audit_start_date) }}@else Not Applicable @endif
                                 </div>
@@ -591,7 +591,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">File No.</th>
                     </tr>
                         @if($data->file_attachment)
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
@@ -617,7 +617,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->Audit_file)
                             @foreach(json_decode($data->Audit_file) as $key => $file)
@@ -775,7 +775,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->report_file)
                             @foreach(json_decode($data->report_file) as $key => $file)
@@ -801,7 +801,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)
@@ -844,7 +844,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->attach_file_rv)
                             @foreach(json_decode($data->attach_file_rv) as $key => $file)
@@ -3142,14 +3142,7 @@
                         <th class="w-20"> Acknowledement Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required by</th>
-                        <td class="w-30">{{ $data->more_info_2_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
-                        <th class="w-20"> More Info Required Comment</th>
-                        <td class="w-30">{{ $data->more_info_2_comment }}</td>
-                    </tr>
+
                     {{-- <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_2_by }}</td>
@@ -3166,23 +3159,8 @@
                         <th class="w-20"> Issue Report Comment</th>
                         <td class="w-30">{{ $data->issue_report_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By
-                        </th>
-                        <td class="w-30">{{ $data->more_info_3_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
-                        <th class="w-20"> More Info Required Comment</th>
-                        <td class="w-30">{{ $data->more_info_3_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20"> Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancel_3_comment }}</td>
-                    </tr>
+                   
+                 
                     <tr>
                         <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
