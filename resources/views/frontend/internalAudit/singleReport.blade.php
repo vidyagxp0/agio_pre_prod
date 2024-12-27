@@ -947,8 +947,7 @@
                                 ];
                         @endphp
 
-
-                                 @if(!empty($da ta->checklist))                
+                                 @if(!empty($data))                
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1054,7 +1053,7 @@
                                         "Current version of SOP's is available in respective areas?",
                                     ];
                                             @endphp   
-                                            @if(!empty($data->checklist3))
+                                            @if(!empty($checklist3))
                 
                                                     <div class="inner-block">
                                                         <div class="content-table">
@@ -1181,7 +1180,8 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                         @endphp
-                                   @if(!empty($data->checklist3))
+                                   @if(!empty($checklist1))
+
 
                                         <div class="inner-block">
                                             <div class="content-table">
@@ -1310,7 +1310,7 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                     @endphp
-                               @if(!empty($data->checklist2))
+                               @if(!empty($checklist2))
                                <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1445,7 +1445,7 @@
                                                 //     'Is there any area cleaning record available for all individual areas?',
                                                 //     'Current version  of SOPs available in respective areas?'];
                                             @endphp
-                                    @if(!empty($data->checklist4))
+                                    @if(!empty($checklist4))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1576,7 +1576,7 @@
                                         'Current version of SOP’s is available in respective areas?',
                                     ];
                                 @endphp
-                                    @if(!empty($data->checklist5))
+                                    @if(!empty($checklist5))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1717,7 +1717,7 @@
 
                                
                             @endphp
-                             @if(!empty($data->checklist6))
+                             @if(!empty($checklist6))
                              <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1829,7 +1829,7 @@
 
                                 
                             @endphp
-                                 @if(!empty($data->checklist7))
+                                 @if(!empty($checklist7))
                                  <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -1946,7 +1946,7 @@
                                 ];
                                 @endphp
 
-                                @if(!empty($data->checklist9))
+                                @if(!empty($checklist9))
                                 <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -2129,7 +2129,7 @@
                                 ];
                                 @endphp
 
-                                    @if(!empty($data->checklist10))
+                                    @if(!empty($checklist10))
                                     <div class="inner-block">
                                         <div class="content-table">
                                           <!-- <div class="border-table"> -->
@@ -2229,7 +2229,7 @@
                                                         ];
                                                     @endphp
                                                         
-                                                        @if(!empty($data->checklist11))
+                                                        @if(!empty($checklist11))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2334,7 +2334,7 @@
                                                                 ];
                                                             @endphp
                                                             
-                                                            @if(!empty($data->checklist12))
+                                                            @if(!empty($checklist12))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2479,7 +2479,7 @@
                                                                     'Current version of SOP’s is available in respective areas?',
                                                                 ];
                                                             @endphp       
-                                                        @if(!empty($data->checklist13))
+                                                        @if(!empty($checklist13))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2619,7 +2619,7 @@
                                                                 ];
                                                             @endphp  
                                                             
-                                                            @if(!empty($data->checklist14))
+                                                            @if(!empty($checklist14))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2831,7 +2831,7 @@
                                                                 <!-- </div> -->
                                                                 </div>
                                                             </div> --}}
-                                                            @if(!empty($data->checklist15))
+                                                            @if(!empty($checklist15))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2941,7 +2941,7 @@
                                                             ];
                                                         @endphp
                                                         
-                                                        @if(!empty($data->checklist16))
+                                                        @if(!empty($checklist16))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                              <!-- <div class="border-table"> -->
@@ -3039,7 +3039,7 @@
                                                             ];
                                                     @endphp
 
-                                            @if(!empty($data->checklist17))
+                                            @if(!empty($checklist17))
                                             <div class="inner-block">
                                                 <div class="content-table">
                                                     <div class="block-head">
