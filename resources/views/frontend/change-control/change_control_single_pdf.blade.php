@@ -3325,7 +3325,7 @@ Not Applicable
 
             
 
-             <div class="border-table">
+             <!-- <div class="border-table"> -->
                 
                             <div class="block-head">
                                 Initiator Update
@@ -3345,7 +3345,7 @@ Not Applicable
                             </table>
                         
 
-                    <div class="border-table">
+                <div class="border-table">
                     <div class="block-head">
                         Initiator Update Attachments
                         </div>
@@ -3372,7 +3372,7 @@ Not Applicable
                         </table>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
 
 
 
