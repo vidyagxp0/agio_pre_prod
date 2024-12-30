@@ -469,7 +469,7 @@ class DocumentController extends Controller
                     $document->next_review_date = $next_review_date;
                 }
             } catch (\Exception $e) {
-                // 
+                //
             }
 
             $document->review_period = $request->review_period;
@@ -484,6 +484,14 @@ class DocumentController extends Controller
             $document->sop_type = $request->sop_type;
             $document->sop_type_short = $request->sop_type_short;
             $document->notify_to = json_encode($request->notify_to);
+
+            $document->master_copy_number = $request->master_copy_number;
+            $document->controlled_copy_number = $request->controlled_copy_number;
+            $document->display_copy_number = $request->display_copy_number;
+            $document->master_user_department = $request->master_user_department;
+            $document->controlled_user_department = $request->controlled_user_department;
+            $document->display_user_department = $request->display_user_department;
+
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -702,7 +710,7 @@ class DocumentController extends Controller
                 }
             }
         }
-        
+
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
             ->join('divisions', 'documents.division_id', 'divisions.id')->leftjoin('departments', 'documents.department_id', 'departments.id')
@@ -731,18 +739,18 @@ class DocumentController extends Controller
         $reviewer = User::get();
         // $reviewer = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
         //     ->where('user_roles.q_m_s_processes_id', 89)
         //     ->where('user_roles.q_m_s_roles_id', 2)
-        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
         //     ->get();
         $approvers = User::get();
         // $approvers = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
         //     ->where('user_roles.q_m_s_processes_id', 89)
         //     ->where('user_roles.q_m_s_roles_id', 1)
-        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
         //     ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
@@ -794,6 +802,10 @@ class DocumentController extends Controller
 
     public function update($id, Request $request)
     {
+        $document = Document::find($id);
+        $document->document_number = $request->document_number;
+        $document->update();
+
 
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
@@ -820,12 +832,19 @@ class DocumentController extends Controller
                 //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
                 //     $document->next_review_date = $next_review_date;
                 // } catch (\Exception $e) {
-                //     // 
+                //     //
                 // }
                 // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
                 $document->attach_draft_doocument = $request->attach_draft_doocument;
                 $document->notify_to = json_encode($request->notify_to);
+
+                $document->master_copy_number = $request->master_copy_number;
+                $document->controlled_copy_number = $request->controlled_copy_number;
+                $document->display_copy_number = $request->display_copy_number;
+                $document->master_user_department = $request->master_user_department;
+                $document->controlled_user_department = $request->controlled_user_department;
+                $document->display_user_department = $request->display_user_department;
 
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
@@ -2145,7 +2164,7 @@ class DocumentController extends Controller
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            
+
             $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document', 'issue_copies', 'print_reason'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
@@ -2161,7 +2180,7 @@ class DocumentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
 
-            
+
             $canvas2->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($issue_copies, $canvas2) {
                 // $page_switch_at = floor($pageCount/$issue_copies);
 
@@ -2174,7 +2193,7 @@ class DocumentController extends Controller
                 $width = $fontMetrics->getTextWidth($text, null, $size);
                 $canvas2->text($pageWidth - $width - 50, $pageHeight - 30, $text, null, $size);
             });
-                        
+
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text(
                 $width / 4,
@@ -2333,12 +2352,12 @@ class DocumentController extends Controller
                 $pdf = App::make('dompdf.wrapper');
                 $time = Carbon::now();
                 $pdf = PDF::loadview('frontend.documents.reports.annexure_report', compact('data', 'time', 'document', 'annexure_number', 'annexure_data'))
-                    ->setOptions([
-                        'defaultFont' => 'sans-serif',
-                        'isHtml5ParserEnabled' => true,
-                        'isRemoteEnabled' => true,
-                        'isPhpEnabled' => true,
-                    ]);
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
                 $pdf->setPaper('A4');
                 $pdf->render();
                 $canvas = $pdf->getDomPDF()->getCanvas();
@@ -2360,7 +2379,7 @@ class DocumentController extends Controller
                 );
 
                 return $pdf->stream('SOP'.$documentId.'.pdf');
-                
+
             } else {
                 throw new \Exception('Annexure Data Not Found');
             }

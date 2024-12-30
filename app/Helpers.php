@@ -687,6 +687,28 @@ class Helpers
         return $departments;
     }
 
+    static function SOPtype($type)
+    {
+        $soptype = '';
+
+        switch ($type) {
+            case 'SOP (Standard Operating procedure)':
+                $soptype = "STANDARD OPERATING PROCEDURE";
+                break;
+            case 'EOP (Equipment Operating procedure)':
+                $soptype = "EQUIMENT OPERATING PROCEDURE";
+                break;
+            case 'IOP (Instrument Operating Procedure)':
+                $soptype = "INSTRUMENT OPERATING PROCEDURE";
+                break;
+
+            default:
+                break;
+        }
+
+        return $soptype;
+    }
+
 
     static function getDocumentTypes()
     {

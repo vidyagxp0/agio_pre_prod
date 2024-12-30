@@ -444,13 +444,12 @@
                             @else
                                 <div class="">QA/CQA Final Review</div>
                             @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">Pending RA
-                                    Approval</div>
-                            @else
-                                <div class="">Pending RA
-                                    Approval</div>
-                            @endif
+                            @if (($data->stage > 6 || $data->status == 'QA/CQA Final Review') )
+    <div id="pending-ra-stage" class="active">Pending RA Approval</div>
+@else
+    <div id="pending-ra-stage" class="">Pending RA Approval</div>
+@endif
+
                             @if ($data->stage >= 7)
                                 <div class="active">QA/CQA Head/Manager Designee Approval</div>
                             @else
@@ -2018,7 +2017,7 @@
                                                       
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value='na'>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
                                                             NA</option>
                                                     </select>
 
@@ -2184,7 +2183,7 @@
                                                       
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value='na'>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
                                                             NA</option>
                                                     </select>
 
@@ -2354,7 +2353,7 @@
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
                                                      
-                                                        <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>  
+                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
                                                               
                                                     </select>
 
@@ -2512,7 +2511,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>  
+                                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
                                                     </select>
 
                                                 </div>
@@ -2682,7 +2681,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                         <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>  
+                                                         <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>  
                                                     </select>
 
                                                 </div>
@@ -2841,7 +2840,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option> 
+                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option> 
                                                     </select>
 
                                                 </div>
@@ -3005,7 +3004,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option> 
+                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option> 
                                                     </select>
 
                                                 </div>
@@ -3170,7 +3169,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3350,7 +3349,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Store_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3515,7 +3514,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Store_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3687,7 +3686,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Quality_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3852,7 +3851,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Quality_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4020,7 +4019,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4191,7 +4190,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4361,7 +4360,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Engineering_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4526,7 +4525,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Engineering_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4697,7 +4696,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Human_Resource_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4862,7 +4861,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Human_Resource_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5031,7 +5030,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Microbiology_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5196,7 +5195,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Microbiology_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5366,7 +5365,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5531,7 +5530,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5702,7 +5701,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5867,7 +5866,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6037,7 +6036,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Environment_Health_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6202,7 +6201,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Environment_Health_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6373,7 +6372,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Information_Technology_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Information_Technology_review == 'na' || empty($data1->Information_Technology_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Information_Technology_review == 'NA' || empty($data1->Information_Technology_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6538,7 +6537,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Information_Technology_review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Information_Technology_review == 'na' || empty($data1->Information_Technology_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Information_Technology_review == 'NA' || empty($data1->Information_Technology_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6708,7 +6707,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ContractGiver_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->ContractGiver_Review == 'NA' || empty($data1->ContractGiver_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6865,7 +6864,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ContractGiver_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->ContractGiver_Review == 'NA' || empty($data1->ContractGiver_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -7008,7 +7007,7 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif>NA</option>
+                                            <option value="NA" @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif>NA</option>
 
                                             
                                         </select>
@@ -7171,7 +7170,7 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif>NA</option>
+                                            <option value="NA" @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif>NA</option>
 
                                         </select>
                                     </div>
@@ -7266,7 +7265,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif>NA</option>
+                                        <option value="NA" @if ($data1->Other2_review == 'NA' || empty($data1->Other2_review)) selected @endif>NA</option>
 
                                     </select>
                                 </div>
@@ -7414,7 +7413,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif>NA</option>
+                                        <option value="NA" @if ($data1->Other3_review == 'NA' || empty($data1->Other3_review)) selected @endif>NA</option>
 
                                     </select>
                                 </div>
@@ -7564,7 +7563,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif>NA</option>
+                                        <option value="NA" @if ($data1->Other4_review == 'NA' || empty($data1->Other4_review)) selected @endif>NA</option>
 
                                     </select>
                                 </div>
@@ -7718,7 +7717,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif>NA</option>
+                                        <option value="NA" @if ($data1->Other5_review == 'NA' || empty($data1->Other5_review)) selected @endif>NA</option>
 
                                     </select>
                                 </div>
@@ -7861,49 +7860,59 @@
                                             </div>
 
                                             <div class="col-lg-6">
-    <div class="group-input">
-        <label for="RA notification">RA Approval required
-            @if($data->stage==5) <span class="text-danger">*</span>@endif
-        </label>
-        <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                {{ $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
-            <option value="">--Select--</option>
-            <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-            <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
-        </select>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        // Initially check dropdown and textarea
-        toggleButton($('#RA_head_required').val(), $('#ra_tab_comments').val());
+                                        <div class="group-input">
+                                            <label for="RA notification">RA Approval required
+                                                @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                            </label>
+                                            <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
+                                                    {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                <option value="">--Select--</option>
+                                                <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
+                                                <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <script>
+                                        $(document).ready(function () {
+                                            // Initially check dropdown and textarea
+                                            toggleElements($('#RA_head_required').val(), $('#ra_tab_comments').val());
 
-        // On dropdown value change
-        $('#RA_head_required').change(function () {
-            toggleButton($(this).val(), $('#ra_tab_comments').val());
-        });
+                                            // On dropdown value change
+                                            $('#RA_head_required').change(function () {
+                                                toggleElements($(this).val(), $('#ra_tab_comments').val());
+                                            });
 
-        // On textarea input
-        $('#ra_tab_comments').on('input', function () {
-            toggleButton($('#RA_head_required').val(), $(this).val());
-        });
+                                            // On textarea input
+                                            $('#ra_tab_comments').on('input', function () {
+                                                toggleElements($('#RA_head_required').val(), $(this).val());
+                                            });
 
-        // Function to check conditions and toggle button visibility
-        function toggleButton(selectValue, textareaValue) {
-            if (selectValue === 'Yes' && textareaValue.trim() === '') {
-                $('#approval-button').show();  // Show the button
-            } else {
-                $('#approval-button').hide();  // Hide the button
-            }
-        }
-    });
-</script>
+                                            // Function to toggle button visibility and stage
+                                            function toggleElements(selectValue, textareaValue) {
+                                                if (selectValue === 'Yes') {
+                                                    // Show the button if textarea is empty
+                                                    if (textareaValue.trim() === '') {
+                                                        $('#approval-button').show();
+                                                    } else {
+                                                        $('#approval-button').hide();
+                                                    }
+
+                                                    // Show the stage
+                                                    $('#pending-ra-stage').show();
+                                                } else {
+                                                    // Hide the button and stage when "No" is selected
+                                                    $('#approval-button').hide();
+                                                    $('#pending-ra-stage').hide();
+                                                }
+                                            }
+                                        });
+                                        </script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     <select name="QA_CQA_person" class="QA_CQA_person"
-                                                        id="QA_CQA_person" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
+                                                        id="QA_CQA_person"  {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
