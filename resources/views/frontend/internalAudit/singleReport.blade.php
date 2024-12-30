@@ -216,7 +216,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Auditee Department Head</th>
-                        <td class="w-30">@if($data->assign_to){{ ($data->assign_to) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{  Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
              
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
@@ -330,7 +330,7 @@
     
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->inv_attachment)
                             @foreach(json_decode($data->inv_attachment) as $key => $file)
@@ -373,7 +373,7 @@
             
                                 <tr class="table_bg">
                                     <th class="w-20">S.N.</th>
-                                    <th class="w-60">Batch No</th>
+                                    <th class="w-60">File No.</th>
                                 </tr>
                                     @if($data->file_attachment)
                                     @foreach(json_decode($data->file_attachment) as $key => $file)
@@ -501,8 +501,8 @@
                     <table>
                    
                         <tr>
-                            <th class="w-20">Audit Start Date</th>
-                            <td class="w-30">
+                            <th class="w-18">Audit Start Date</th>
+                            <td class="w-20">
                                 <div>
                                     @if($data->audit_start_date){{ Helpers::getdateFormat($data->audit_start_date) }}@else Not Applicable @endif
                                 </div>
@@ -527,11 +527,11 @@
                 </div>
             </div>
                 <div class="block">
-                        <div class="block-head">
+                        {{-- <div class="block-head">
                         Audit Agenda
                         </div>
-
-                     <div class="border-table">
+ --}}
+                     {{-- <div class="border-table">
                             <table>
                                 <tr class="table_bg">
                                     <th class="w-20">SR no.</th>
@@ -579,7 +579,7 @@
                                 @endif
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
@@ -591,7 +591,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">File No.</th>
                     </tr>
                         @if($data->file_attachment)
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
@@ -617,7 +617,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->Audit_file)
                             @foreach(json_decode($data->Audit_file) as $key => $file)
@@ -775,7 +775,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->report_file)
                             @foreach(json_decode($data->report_file) as $key => $file)
@@ -801,7 +801,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)
@@ -844,7 +844,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File No.</th>
                         </tr>
                             @if($data->attach_file_rv)
                             @foreach(json_decode($data->attach_file_rv) as $key => $file)
@@ -947,80 +947,79 @@
                                 ];
                         @endphp
 
+                                 @if(!empty($data))                
+                                    <div class="inner-block">
+                                        <div class="content-table">
+                                            <!-- <div class="border-table"> -->
+                                                <div class="block-head">
+                                                    Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
+                                                <div>
+                                                    @php
+                                                        $checklists = [
+                                                            [
+                                                                'title' => 'STAGE 1 : DISPENSING',
+                                                                'questions' => $questions_packing,
+                                                                'prefix' => 1
+                                                            ],
+                                                            [
+                                                                'title' => 'Stage -02 Granulation',
+                                                                'questions' => $questions_documentation,
+                                                                'prefix' => 2
+                                                            ],
+                                                            [
+                                                                'title' => 'Stage -03 Documentation',
+                                                                'questions' => $questions_documentation_table,
+                                                                'prefix' => 3
+                                                            ]
+                                                        ];
+                                                    @endphp
 
-                                                
-                                <div class="inner-block">
-                                    <div class="content-table">
-                                        <!-- <div class="border-table"> -->
-                                            <div class="block-head">
-                                                Checklist - Production (Tablet Dispensing & Tablet Granulation)                                            </div>
-                                            <div>
-                                                @php
-                                                    $checklists = [
-                                                        [
-                                                            'title' => 'STAGE 1 : DISPENSING',
-                                                            'questions' => $questions_packing,
-                                                            'prefix' => 1
-                                                        ],
-                                                        [
-                                                            'title' => 'Stage -02 Granulation',
-                                                            'questions' => $questions_documentation,
-                                                            'prefix' => 2
-                                                        ],
-                                                        [
-                                                            'title' => 'Stage -03 Documentation',
-                                                            'questions' => $questions_documentation_table,
-                                                            'prefix' => 3
-                                                        ]
-                                                    ];
-                                                @endphp
+                                                    @foreach ($checklists as $checklist)
+                                                        <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                            {{ $checklist['title'] }}
+                                                        </div>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($checklist['questions'] as $index => $question)
+                                                                    @php
+                                                                        $response = $data->{"response_" . ($index + 1)};
+                                                                        $remark = $data->{"remark_" . ($index + 1)};
+                                                                    @endphp
 
-                                                @foreach ($checklists as $checklist)
-                                                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                        {{ $checklist['title'] }}
-                                                    </div>
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 5%;">Sr. No.</th>
-                                                                <th style="width: 40%;">Question</th>
-                                                                <th style="width: 20%;">Response</th>
-                                                                <th>Remarks</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($checklist['questions'] as $index => $question)
-                                                                @php
-                                                                    $response = $data->{"response_" . ($index + 1)};
-                                                                    $remark = $data->{"remark_" . ($index + 1)};
-                                                                @endphp
-
-                                                                <!-- Check if either response or remark is not empty -->
-                                                                @if($response || $remark)
-                                                                    <tr>
-                                                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                                                        <td>{{ $question }}</td>
-                                                                        <td>
-                                                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                                                                {{ $response }}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td style="vertical-align: middle;">
-                                                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                                                {{ $remark }}
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endif
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                @endforeach
-                                            </div>
-                                        <!-- </div> -->
+                                                                    <!-- Check if either response or remark is not empty -->
+                                                                    @if($response || $remark)
+                                                                        <tr>
+                                                                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                            <td>{{ $question }}</td>
+                                                                            <td>
+                                                                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                    {{ $response }}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td style="vertical-align: middle;">
+                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                    {{ $remark }}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @endforeach
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                         
+                                 @endif        
                                 @php
                                     $questions_packing = [
                                         'Check for area activity record.',
@@ -1054,7 +1053,7 @@
                                         "Current version of SOP's is available in respective areas?",
                                     ];
                                             @endphp   
-                                            @if(!empty($data->checklist3))
+                                            @if(!empty($checklist3))
                 
                                                     <div class="inner-block">
                                                         <div class="content-table">
@@ -1181,7 +1180,8 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                         @endphp
-                                   @if(!empty($data->checklist3))
+                                   @if(!empty($checklist1))
+
 
                                         <div class="inner-block">
                                             <div class="content-table">
@@ -1310,7 +1310,7 @@
                                                 'Current version of SOP’s is available in respective areas?',
                                             ];
                                     @endphp
-                               @if(!empty($data->checklist2))
+                               @if(!empty($checklist2))
                                <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1445,7 +1445,7 @@
                                                 //     'Is there any area cleaning record available for all individual areas?',
                                                 //     'Current version  of SOPs available in respective areas?'];
                                             @endphp
-                                    @if(!empty($data->checklist4))
+                                    @if(!empty($checklist4))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1576,7 +1576,7 @@
                                         'Current version of SOP’s is available in respective areas?',
                                     ];
                                 @endphp
-                                    @if(!empty($data->checklist5))
+                                    @if(!empty($checklist5))
                                     <div class="inner-block">
                                         <div class="content-table">
                                             <!-- <div class="border-table"> -->
@@ -1717,7 +1717,7 @@
 
                                
                             @endphp
-                             @if(!empty($data->checklist6))
+                             @if(!empty($checklist6))
                              <div class="inner-block">
                                 <div class="content-table">
                                     <!-- <div class="border-table"> -->
@@ -1829,7 +1829,7 @@
 
                                 
                             @endphp
-                                 @if(!empty($data->checklist7))
+                                 @if(!empty($checklist7))
                                  <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -1946,7 +1946,7 @@
                                 ];
                                 @endphp
 
-                                @if(!empty($data->checklist9))
+                                @if(!empty($checklist9))
                                 <div class="inner-block">
                                     <div class="content-table">
                                         <!-- <div class="border-table"> -->
@@ -2129,7 +2129,7 @@
                                 ];
                                 @endphp
 
-                                    @if(!empty($data->checklist10))
+                                    @if(!empty($checklist10))
                                     <div class="inner-block">
                                         <div class="content-table">
                                           <!-- <div class="border-table"> -->
@@ -2229,7 +2229,7 @@
                                                         ];
                                                     @endphp
                                                         
-                                                        @if(!empty($data->checklist11))
+                                                        @if(!empty($checklist11))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2334,7 +2334,7 @@
                                                                 ];
                                                             @endphp
                                                             
-                                                            @if(!empty($data->checklist12))
+                                                            @if(!empty($checklist12))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2479,7 +2479,7 @@
                                                                     'Current version of SOP’s is available in respective areas?',
                                                                 ];
                                                             @endphp       
-                                                        @if(!empty($data->checklist13))
+                                                        @if(!empty($checklist13))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                             <!-- <div class="border-table"> -->
@@ -2619,7 +2619,7 @@
                                                                 ];
                                                             @endphp  
                                                             
-                                                            @if(!empty($data->checklist14))
+                                                            @if(!empty($checklist14))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2831,7 +2831,7 @@
                                                                 <!-- </div> -->
                                                                 </div>
                                                             </div> --}}
-                                                            @if(!empty($data->checklist15))
+                                                            @if(!empty($checklist15))
                                                             <div class="inner-block">
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
@@ -2854,7 +2854,7 @@
                                                                                 ],
                                                                                 [
                                                                                         'title' => 'STAGE 3: DOCUMENTATION ',
-                                                                                        'questions' => $powder_questions_packing_manufacturing,
+                                                                                        'questions' => $questions_documentation,
                                                                                         'prefix' => 2
                                                                                 ],
                                     
@@ -2941,7 +2941,7 @@
                                                             ];
                                                         @endphp
                                                         
-                                                        @if(!empty($data->checklist16))
+                                                        @if(!empty($checklist16))
                                                         <div class="inner-block">
                                                             <div class="content-table">
                                                              <!-- <div class="border-table"> -->
@@ -3039,7 +3039,7 @@
                                                             ];
                                                     @endphp
 
-                                            @if(!empty($data->checklist17))
+                                            @if(!empty($checklist17))
                                             <div class="inner-block">
                                                 <div class="content-table">
                                                     <div class="block-head">
@@ -3142,14 +3142,7 @@
                         <th class="w-20"> Acknowledement Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required by</th>
-                        <td class="w-30">{{ $data->more_info_2_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
-                        <th class="w-20"> More Info Required Comment</th>
-                        <td class="w-30">{{ $data->more_info_2_comment }}</td>
-                    </tr>
+
                     {{-- <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_2_by }}</td>
@@ -3166,23 +3159,8 @@
                         <th class="w-20"> Issue Report Comment</th>
                         <td class="w-30">{{ $data->issue_report_comment }}</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">More Info Required By
-                        </th>
-                        <td class="w-30">{{ $data->more_info_3_by }}</td>
-                        <th class="w-20">More Info Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
-                        <th class="w-20"> More Info Required Comment</th>
-                        <td class="w-30">{{ $data->more_info_3_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        <th class="w-20"> Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancel_3_comment }}</td>
-                    </tr>
+                   
+                 
                     <tr>
                         <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
