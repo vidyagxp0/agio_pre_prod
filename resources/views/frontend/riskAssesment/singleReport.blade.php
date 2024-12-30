@@ -694,10 +694,10 @@
                                         <th class="thFMEA" rowspan="2">Row #</th>
                                         <th class="thFMEA" colspan="2">Risk Identification</th>
                                         <th class="thFMEA" rowspan="1">Risk Analysis</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
+                                        <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                        {{-- <th class="thFMEA" rowspan="2">Risk Level (RPN)</th> --}}
                                         <th class="thFMEA" colspan="1">Risk Control</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
+                                        <th class="thFMEA" colspan="4">Risk Evaluation</th>
                                         <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
                                         <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
                                         <th class="thFMEA" rowspan="2">Traceability Document</th>
@@ -709,11 +709,12 @@
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level (RPN)</th>
                                         <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
-                                        {{--<th class="thFMEA">RPN</th>--}}
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level (RPN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -735,6 +736,7 @@
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
                                             </tr>
                                         @endforeach
@@ -1028,7 +1030,7 @@
                 <div class="block-head">
                     Why-Why Chart
                 </div>
-                <table>
+                {{-- <table>
                     <tr>
                         <th class="w-20">Problem Statement</th>
                         <td class="w-80">
@@ -1144,20 +1146,154 @@
 
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">Root Cause :</th>
-                        <td class="w-80">@if ($riskgrdwhy_chart->why_root_cause){{ $riskgrdwhy_chart->why_root_cause }}@else Not Applicable @endif</td>
 
-                    </tr> --}}
+                </table> --}}
+                <style>
+                    .why-why-chart {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    .why-why-chart,
+                    .why-why-chart th,
+                    .why-why-chart td {
+                        border: 1px solid #000; /* Black border */
+                    }
+                    .why-why-chart th,
+                    .why-why-chart td {
+                        padding: 8px; /* Add some padding for better readability */
+                        text-align: left;
+                    }
+                </style>
+
+
+                <div class="block-head">
+                    Why-Why Chart
+                </div>
+                <table class="why-why-chart">
+                    <thead>
+                        <tr>
+                            <th class="w-20">Details</th>
+                            <th class="w-20">Problem Statement</th>
+                            <th class="w-20">Why 1</th>
+                            <th class="w-20">Why 2</th>
+                            <th class="w-20">Why 3</th>
+                            <th class="w-20">Why 4</th>
+                            <th class="w-20">Why 5</th>
+                            <th class="w-20">Root Cause</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Data</th>
+                            <td>
+                                @if ($riskgrdwhy_chart->why_problem_statement)
+                                    {{ $riskgrdwhy_chart->why_problem_statement }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $why_1 = unserialize($riskgrdwhy_chart->why_1);
+                                @endphp
+                                @if (is_array($why_1))
+                                    @foreach ($why_1 as $value)
+                                        {{ htmlspecialchars($value) }}<br>
+                                    @endforeach
+                                @elseif(is_string($why_1))
+                                    {{ htmlspecialchars($why_1) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $why_2 = unserialize($riskgrdwhy_chart->why_2);
+                                @endphp
+                                @if (is_array($why_2))
+                                    @foreach ($why_2 as $value)
+                                        {{ htmlspecialchars($value) }}<br>
+                                    @endforeach
+                                @elseif(is_string($why_2))
+                                    {{ htmlspecialchars($why_2) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $why_3 = unserialize($riskgrdwhy_chart->why_3);
+                                @endphp
+                                @if (is_array($why_3))
+                                    @foreach ($why_3 as $value)
+                                        {{ htmlspecialchars($value) }}<br>
+                                    @endforeach
+                                @elseif(is_string($why_3))
+                                    {{ htmlspecialchars($why_3) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $why_4 = unserialize($riskgrdwhy_chart->why_4);
+                                @endphp
+                                @if (is_array($why_4))
+                                    @foreach ($why_4 as $value)
+                                        {{ htmlspecialchars($value) }}<br>
+                                    @endforeach
+                                @elseif(is_string($why_4))
+                                    {{ htmlspecialchars($why_4) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $why_5 = unserialize($riskgrdwhy_chart->why_5);
+                                @endphp
+                                @if (is_array($why_5))
+                                    @foreach ($why_5 as $value)
+                                        {{ htmlspecialchars($value) }}<br>
+                                    @endforeach
+                                @elseif(is_string($why_5))
+                                    {{ htmlspecialchars($why_5) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <td>
+                            @php
+                                $why_root_cause = $riskgrdwhy_chart->why_root_cause;
+
+                                // Check if string is serialized
+                                if (is_string($why_root_cause) && @unserialize($why_root_cause) !== false) {
+                                    $why_root_cause = unserialize($why_root_cause);
+                                }
+
+                                if (is_array($why_root_cause)) {
+                                    foreach ($why_root_cause as $value) {
+                                        echo htmlspecialchars($value) . "<br>";
+                                    }
+                                } elseif (is_string($why_root_cause)) {
+                                    echo htmlspecialchars($why_root_cause);
+                                } else {
+                                    echo "Not Applicable";
+                                }
+                            @endphp
+                             </td>
+
+                        </tr>
+                    </tbody>
                 </table>
+
+
+
 
 
 
                 <div class="border">
                     <table>
-
-
-
                         <tr>
                             <th class="w-20">Risk Assessment Summary</th>
                             <td class="w-80">
