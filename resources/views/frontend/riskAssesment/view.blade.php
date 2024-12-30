@@ -5233,15 +5233,15 @@
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 productionLiquid">
-                                    <div class="group-input ">
-                                        <label for="Production Liquid Completed On">Production Liquid Completed
-                                            On</label>
-                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                        <input type="date"id="ProductionLiquid_on"
-                                            name="ProductionLiquid_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            value="{{ $data1->ProductionLiquid_on }}">
-                                    </div>
-                                </div> --}}
+                                            <div class="group-input ">
+                                                <label for="Production Liquid Completed On">Production Liquid Completed
+                                                    On</label>
+                                                <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                                <input type="date"id="ProductionLiquid_on"
+                                                    name="ProductionLiquid_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    value="{{ $data1->ProductionLiquid_on }}">
+                                            </div>
+                                            </div> --}}
                                         <div class="col-lg-6 productionLiquid new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Production Liquid Completed On">Production Liquid/External Preparation Review
@@ -5996,15 +5996,15 @@
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 Engineering">
-                                    <div class="group-input ">
-                                        <label for="Engineering Completed On">Engineering Completed
-                                            On</label>
-                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                        <input type="date"id="Engineering_on"
-                                            name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            value="{{ $data1->Engineering_on }}">
-                                    </div>
-                                </div> --}}
+                                            <div class="group-input ">
+                                                <label for="Engineering Completed On">Engineering Completed
+                                                    On</label>
+                                                <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                                <input type="date"id="Engineering_on"
+                                                    name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    value="{{ $data1->Engineering_on }}">
+                                            </div>
+                                         </div> --}}
                                         <div class="col-lg-6 Engineering new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Store Completed On">Engineering Review
@@ -6383,7 +6383,7 @@
                                             name="Environment_Health_Safety_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             value="{{ $data1->Environment_Health_Safety_on }}">
                                     </div>
-                                </div> --}}
+                                     </div> --}}
                                         <div class="col-lg-6 safety new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Safety Completed On">Safety Review
@@ -6752,7 +6752,7 @@
                                             });
                                         });
                                     </script>
-    {{--
+                                 {{--
                                 @else
                                     <div class="sub-head">
                                         Other's 1 (Additional Person Review From Departments If Required)
@@ -7597,7 +7597,6 @@
 
 
                         <!------------------------------------------------ QA/CQA Head Approval--------------------------------------------------->
-
                         <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
@@ -7725,12 +7724,12 @@
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-
+                                    <div class="sub-head">
+                                        Activity Log
+                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
                                         Submit
                                     </div>
-
-
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
