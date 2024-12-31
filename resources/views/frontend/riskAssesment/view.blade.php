@@ -1010,7 +1010,7 @@
                                                                                 <th>Severity (S)</th>
                                                                                 <th>Probability (P)</th>
                                                                                 <th>Detection (D)</th>
-                                                                                <th>RPN</th>
+                                                                                <th>Risk Level (RPN)</th>
                                                                                 <th>Control Measures recommended/ Risk mitigation proposed</th>
                                                                                 <th>Severity (S)</th>
                                                                                 <th>Probability (P)</th>
@@ -5694,7 +5694,8 @@
                                                     {{-- <option @if ($data1->Microbiology_Review == 'na') selected @endif
                                                         value='na'>
                                                         NA</option> --}}
-                                                        <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
+
 
                                                 </select>
 
@@ -6440,7 +6441,7 @@
                                     @else
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Safety">Safety Required ?</label>
+                                                <label for="Safety">Safety Review Required ?</label>
                                                 <select name="Environment_Health_review" disabled
                                                     id="Environment_Health_review">
                                                     <option value="">-- Select --</option>
@@ -6453,7 +6454,7 @@
                                                     {{-- <option @if ($data1->Environment_Health_review == 'na') selected @endif
                                                         value='na'>
                                                         NA</option> --}}
-                                                        <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
 
                                                 </select>
 
