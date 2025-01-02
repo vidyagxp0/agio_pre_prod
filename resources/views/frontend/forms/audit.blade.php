@@ -1607,86 +1607,199 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-table" disabled>+</button>
+                                        <label style="display: flex; justify-content: space-between;" for="audit-agenda-grid">
+                                           <div>
+                                            Sample Management<button disabled type="button" name="audit-agenda-grid"
+                                            id="addSamplePlanning">+</button>
+                                           </div>
                                         </label>
-                                        <table class="table table-bordered" id="internalaudit">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row#</th>
-                                                    <th>Area of Audit</th>
-                                                    <th>Scheduled Start Date</th>
-                                                    <th>Scheduled Start Time</th>
-                                                    <th>Scheduled End Date</th>
-                                                    <th>Scheduled End Time</th>
-                                                    <th>Auditor</th>
-                                                    <th>Auditee</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="audit[]" disabled></td>
-                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text" class="test"
-                                                                    id="scheduled_start_date1" readonly
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="scheduled_start_date1_checkdate"
-                                                                    name="scheduled_start_date[]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input" disabled
-                                                                    oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="time" name="scheduled_start_time[]" disabled></td>
-                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text" class="test"
-                                                                    id="scheduled_end_date1" readonly
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="scheduled_end_date1_checkdate"
-                                                                    name="scheduled_end_date[]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input" disabled
-                                                                    oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                        
 
-                                                <td><input type="time" name="scheduled_end_time[]" disabled></td>
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]" disabled>
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]" disabled>
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><input type="text" name="remarks[]" disabled></td>
-                                            </tbody>
-                                        </table>
+                                        <div class="responsive-table table-container" style="overflow-x: auto;  width: 100% !important;">
+                                            <table class="table table-bordered" id="addSamplePlanningTable"style="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Area of Audit</th>
+                                                        <th>Scheduled Start Date</th>
+                                                        <th>Scheduled Start Time</th>
+                                                        <th>Scheduled End Date</th>
+                                                        <th>Scheduled End Time</th>
+                                                        <th>Auditor</th>
+                                                        <th>Auditee</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input readonly type="number" name="auditAgendaData[0][auditArea]">
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input readonly type="text" id="scheduleStartDate" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input readonly type="date" name="auditAgendaData[0][scheduleStartDate]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input readonly type="time" name="auditAgendaData[0][scheduleStartTime]">
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input readonly type="text" id="scheduleEndDate" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input readonly type="date" name="auditAgendaData[0][scheduleEndDate]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input readonly type="time" name="auditAgendaData[0][scheduleEndTime]">
+                                                        </td>
+                                                        <td>
+                                                            <select multiple name="auditAgendaData[0][auditors]" id="auditorsData" readonly>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $item)
+                                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select multiple name="auditAgendaData[0][auditee]" id="auditeeData" readonly>
+                                                                @if(!empty($users))
+                                                                    @foreach($users as $item)
+                                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <textarea readonly name="auditAgendaData[0][auditComment]"></textarea>
+                                                        </td>
+                                                        <td><button class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        let rowIndex = 1;
+                                        const analysts = @json($users->toArray() ?? []);
+                                        
+                                        document.getElementById("addSamplePlanning").addEventListener("click", function() {
+                                            const tableBody = document.querySelector("#addSamplePlanningTable tbody");
+                                            const newRow = document.createElement("tr");
+
+                                            let analystOptions = `<option value="">Select Auditor</option>`;
+                                            if (Array.isArray(analysts)) {
+                                                analysts.forEach(analyst => {
+                                                    analystOptions += `<option value="${analyst.id}">${analyst.name}</option>`;
+                                                });
+                                            } else {
+                                                console.warn("Auditor data is not an array");
+                                            }
+
+                                            newRow.innerHTML = `
+                                            
+                                                                <td>
+                                                                    <input type="text" name="auditAgendaData[0][auditArea]">
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-md-6 new-date-data-field">
+                                                                        <div class="group-input input-date">
+                                                                            <div class="calenderauditee">
+                                                                                <input type="text" id="scheduleStartDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                                                                                <input type="date" name="auditAgendaData[${rowIndex}][scheduleStartDate]"
+                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                    class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate${rowIndex}')" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]">
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <div class="col-md-6 new-date-data-field">
+                                                                        <div class="group-input input-date">
+                                                                            <div class="calenderauditee">
+                                                                                <input type="text" id="scheduleEndDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                                                                                <input type="date" name="auditAgendaData[${rowIndex}][scheduleEndDate]"
+                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                    class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate${rowIndex}')" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]">
+                                                                </td>
+
+                                                                <td>
+                                                                    <select multiple id="auditorsData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditors]">
+                                                                        ${analystOptions}
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select multiple id="auditeeData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditee]">
+                                                                        ${analystOptions}
+                                                                    </select>
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea>
+                                                                </td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            `;
+
+                                            tableBody.appendChild(newRow);
+                                            rowIndex++;
+                                            
+                                            VirtualSelect.init({
+                                                ele: '#auditorsData_' + (rowIndex - 1),
+                                                multiple: true
+                                            }); 
+
+                                            VirtualSelect.init({
+                                                ele: '#auditeeData_' + (rowIndex - 1),
+                                                multiple: true
+                                            }); 
+                                        });
+
+                                        document.querySelector("#addSamplePlanningTable tbody").addEventListener("click", function (e) {
+                                            if (e.target && e.target.classList.contains("removeRowBtn")) {
+                                                const row = e.target.closest("tr");
+                                                row.remove();
+                                            }
+                                        });                                        
+                                    });
+                                </script>
+
+
 
 
                                 <div class="col-lg-12">
@@ -25310,7 +25423,7 @@
 
 <script>
                 VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record, #auditeeData, #auditorsData'
                 });
 
                 function openCity(evt, cityName) {

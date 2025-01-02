@@ -928,15 +928,20 @@
                         This is an automatically generated or manually assigned number for each row of data.
                     </div>--}}
                     <div class="mb-2">
-                        <strong>Name :&nbsp;</strong>
+                        <strong>Auditor Name :&nbsp;</strong>
                         Enter the full name or title of the item. Make sure the name is clear, concise, and easily recognizable.
                     </div>
                     <div class="mb-2">
-                        <strong>ID Number :&nbsp;</strong>
+                        <strong>Department :&nbsp;</strong>
                         Use the official or standardized ID number if it exists.
                     </div>
                     <div class="mb-2">
-                        <strong>Remarks :&nbsp;</strong>
+                            <strong>Designation :&nbsp;</strong>
+                            This section includes two designations: Lead Auditor and Auditor. 
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Remark :&nbsp;</strong>
                         Provide relevant comments that might include the item's condition, special features, or specific usage instructions. Keep the remarks clear and brief but informative.
                     </div>
                     {{--<div class="mb-2">

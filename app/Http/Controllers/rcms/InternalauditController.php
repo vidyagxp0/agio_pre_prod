@@ -45,7 +45,6 @@ class InternalauditController extends Controller
     }
     public function create(request $request)
     {
-        // dd($request->all());
         // return "breaking";
        $internalAudit = new InternalAudit();
         $internalAudit->form_type = "Internal-audit";
@@ -287,6 +286,25 @@ class InternalauditController extends Controller
         $AuditorsNew->identifier = 'Auditors';
         $AuditorsNew->data = $request->AuditorNew;
         $AuditorsNew->save();
+
+        $auditorsNew = InternalAuditGrid::where(['audit_id' => $internalAudit->id, 'identifier' => 'Audit Agenda'])->firstOrCreate();
+        $auditorsNew->audit_id = $internalAudit->id;
+        $auditorsNew->identifier = 'Audit Agenda';
+        $auditAgendaData = $request->auditAgendaData;
+        if (!empty($auditAgendaData) && is_array($auditAgendaData)) {
+            foreach ($auditAgendaData as $index => $row) {
+                if (isset($row['auditors']) && is_array($row['auditors'])) {
+                    $row['auditors'] = implode(',', $row['auditors']);
+                }
+
+                if (isset($row['auditee']) && is_array($row['auditee'])) {
+                    $row['auditee'] = implode(',', $row['auditee']);
+                }
+            }
+        }
+        $auditorsNew->data = $auditAgendaData;
+        $auditorsNew->save();
+
 
         //if (!empty($request->AuditorNew)) {
         //    // Save the new auditor data
@@ -1699,6 +1717,7 @@ class InternalauditController extends Controller
 
     public function update(request $request, $id)
     {
+        
        // dd($request->all());
         $lastDocument = InternalAudit::find($id);
         $internalAudit = InternalAudit::find($id);
@@ -2642,6 +2661,23 @@ $Checklist_Capsule->save();
             $internalAudit->file_attach = json_encode($files);
         }
 
+        $auditorsNew = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->firstOrCreate();
+        $auditorsNew->audit_id = $id;
+        $auditorsNew->identifier = 'Audit Agenda';
+        $auditAgendaData = $request->auditAgendaData;
+        if (!empty($auditAgendaData) && is_array($auditAgendaData)) {
+            foreach ($auditAgendaData as $index => $row) {
+                if (isset($row['auditors']) && is_array($row['auditors'])) {
+                    $row['auditors'] = implode(',', $row['auditors']);
+                }
+
+                if (isset($row['auditee']) && is_array($row['auditee'])) {
+                    $row['auditee'] = implode(',', $row['auditee']);
+                }
+            }
+        }
+        $auditorsNew->data = $auditAgendaData;
+        $auditorsNew->update();
 
 
 
@@ -4483,6 +4519,8 @@ if ($areIniAttachmentsSame2 != true) {
         $internalAuditComments->save();
 
 
+        
+
         // Fetch the existing record from the database based on the incident ID
             $data3 = InternalAuditGrid::where('audit_id', $internalAudit->id)
                 ->where('type', 'internal_audit')
@@ -4504,15 +4542,25 @@ if ($areIniAttachmentsSame2 != true) {
             if (!empty($request->scheduled_end_time)) {
                 $data3->end_time = serialize($request->scheduled_end_time);
             }
+            // if (!empty($request->auditor)) {
+            //     $data3->auditor = serialize($request->auditor);
+            // }
+            // if (!empty($request->auditee)) {
+            //     $data3->auditee = serialize($request->auditee);
+            // }
             if (!empty($request->auditor)) {
-                $data3->auditor = serialize($request->auditor);
+                dd(implode(',', $request->auditor));
+                $data3->auditor = implode(',', $request->auditor); // Save as a comma-separated string
             }
             if (!empty($request->auditee)) {
-                $data3->auditee = serialize($request->auditee);
+                $data3->auditee = implode(',', $request->auditee); // Save as a comma-separated string
             }
+
+            
             if (!empty($request->remark)) {
                 $data3->remark = serialize($request->remark);
             }
+            // dd(json_encode($request->auditor));
 
             // Update the record in the database
             $data3->update();
@@ -4761,13 +4809,19 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
 
-        // foreach($auditorview as $ss)
-        // return $auditorview;
+        
+        $auditAgendaData =InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
+        $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
+        // dd($json);
+        // dd($auditAgendaData->data);
+        // $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
+        // $rowIndex = 0;
+        // if ($auditAgendaData && property_exists($auditAgendaData, 'data') && is_array($auditAgendaData->data)) {
+        //     $rowIndex = count($auditAgendaData->data);
+        // }
+        // $auditJson = json_decode($auditAgendaData->data, true);
 
-
-            // dd($gridcomment);
-        // return $grid_Data2;
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment','grid_Data3','grid_Data4','grid_Data5','auditorview'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment','grid_Data3','grid_Data4','grid_Data5','auditorview','auditAgendaData','json'));
     }
     public function InternalAuditStateChange(Request $request, $id)
     {
