@@ -4615,7 +4615,7 @@ class RiskManagementController extends Controller
             //     ? implode(', ', $Cft->Production_Table_Attachment)
             //     : $Cft->Production_Table_Attachment;
 
-                
+
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $data->Production_Table_Attachment);
@@ -6978,8 +6978,8 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Other 2 Attachment';
             $history->previous = $lastCft->Other2_attachment;
             // $history->current =implode(',', $Cft->Other2_attachment);
-            $history->current = is_array($Cft->Other2_attachment) 
-                    ? implode(',', $Cft->Other2_attachment) 
+            $history->current = is_array($Cft->Other2_attachment)
+                    ? implode(',', $Cft->Other2_attachment)
                     : $Cft->Other2_attachment;
 
             $history->comment = "Not Applicable";
@@ -7145,8 +7145,8 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Other 3 Attachment';
             $history->previous = $lastCft->Other3_attachment;
             // $history->current =implode(',', $Cft->Other3_attachment);
-            $history->current = is_array($Cft->Other3_attachment) 
-                    ? implode(',', $Cft->Other3_attachment) 
+            $history->current = is_array($Cft->Other3_attachment)
+                    ? implode(',', $Cft->Other3_attachment)
                     : $Cft->Other3_attachment;
 
             $history->comment = "Not Applicable";
@@ -7313,8 +7313,8 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Other 4 Attachment';
             $history->previous = $lastCft->Other4_attachment;
             // $history->current =implode(',', $Cft->Other4_attachment);
-            $history->current = is_array($Cft->Other4_attachment) 
-                    ? implode(',', $Cft->Other4_attachment) 
+            $history->current = is_array($Cft->Other4_attachment)
+                    ? implode(',', $Cft->Other4_attachment)
                     : $Cft->Other4_attachment;
 
             $history->comment = "Not Applicable";
@@ -7481,8 +7481,8 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Other 5 Attachment';
             $history->previous = $lastCft->Other5_attachment;
             // $history->current = implode(',',$Cft->Other5_attachment);
-            $history->current = is_array($Cft->Other5_attachment) 
-                    ? implode(',', $Cft->Other5_attachment) 
+            $history->current = is_array($Cft->Other5_attachment)
+                    ? implode(',', $Cft->Other5_attachment)
                     : $Cft->Other5_attachment;
 
             $history->comment = "Not Applicable";
@@ -10954,26 +10954,18 @@ class RiskManagementController extends Controller
     public static function singleReport($id)
     {
         $data = RiskManagement::find($id);
-
         $data1 =  RiskManagmentCft::where('risk_id', $id)->first();
-        // dd($data);
         if (!empty($data)) {
             $users = User::all();
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
-            // $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
-            // dd($failure_mode);
-        // $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->first();
-        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->latest()->first();
-        //  dd($riskEffectAnalysis);
-
-
+            $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->latest()->first();
 
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
+            // dd($riskgrdwhy_chart->why_1);
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
             $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
             $mitigation = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Mitigation_Plan_Details')->first();
 
-            // dd($riskgrdwhat_who_where);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

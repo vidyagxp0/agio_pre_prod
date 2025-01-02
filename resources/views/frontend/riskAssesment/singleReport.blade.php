@@ -694,12 +694,12 @@
                                         <th class="thFMEA" rowspan="2">Row #</th>
                                         <th class="thFMEA" colspan="2">Risk Identification</th>
                                         <th class="thFMEA" rowspan="1">Risk Analysis</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
+                                        <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                        {{-- <th class="thFMEA" rowspan="2">Risk Level (RPN)</th> --}}
                                         <th class="thFMEA" colspan="1">Risk Control</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
-                                        <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
+                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        {{-- <th class="thFMEA" rowspan="2">Risk Level (RPN)</th> --}}
+                                        {{-- <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th> --}}
                                         <th class="thFMEA" rowspan="2">Traceability Document</th>
                                     </tr>
                                     <tr class="table_bg">
@@ -709,11 +709,14 @@
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level (RPN)</th>
                                         <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
-                                        {{--<th class="thFMEA">RPN</th>--}}
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level (RPN)</th>
+                                        <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
+                                        <th class="thFMEA">Risk Acceptance (Y/N)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -735,6 +738,7 @@
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
                                             </tr>
                                         @endforeach
@@ -1040,7 +1044,7 @@
                         </td>
 
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Why 1 </th>
                         <td class="w-80">
                             @php
@@ -1057,7 +1061,28 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr> --}}
+                    <tr>
+                        <th class="w-20">Why 1</th>
+                        <td class="w-80">
+                            @php
+                                $why_1 = unserialize($riskgrdwhy_chart->why_1);
+                            @endphp
+
+                            @if (is_array($why_1))
+                                <ul>
+                                    @foreach ($why_1 as $value)
+                                        <li>{{ htmlspecialchars($value) }}</li>
+                                    @endforeach
+                                </ul>
+                            @elseif(is_string($why_1))
+                                <p>{{ htmlspecialchars($why_1) }}</p>
+                            @else
+                                <p>Not Applicable</p>
+                            @endif
+                        </td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Why 2</th>
                         <td class="w-80">
@@ -1066,13 +1091,15 @@
                             @endphp
 
                             @if (is_array($why_2))
+                            <ul>
                                 @foreach ($why_2 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
+                              <li>{{ htmlspecialchars($value) }}</li>
+                            </ul>
+                            @endforeach
                             @elseif(is_string($why_2))
-                                {{ htmlspecialchars($why_2) }}
+                               <p>{{ htmlspecialchars($why_2) }}</p>
                             @else
-                                Not Applicable
+                               <p>Not Applicable</p>
                             @endif
                         </td>
 
@@ -1085,13 +1112,15 @@
                             @endphp
 
                             @if (is_array($why_3))
+                            <ul>
                                 @foreach ($why_3 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
+                               <li> {{ htmlspecialchars($value) }}</li>
+                            @endforeach
+                            </ul>
                             @elseif(is_string($why_3))
-                                {{ htmlspecialchars($why_3) }}
+                               <p>{{ htmlspecialchars($why_3) }}</p>
                             @else
-                                Not Applicable
+                                <p>>Not Applicable</p>
                             @endif
                         </td>
                     </tr>
@@ -1103,13 +1132,15 @@
                             @endphp
 
                             @if (is_array($why_4))
+                            <ul>
                                 @foreach ($why_4 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
+                                <li>{{ htmlspecialchars($value) }}</li>
+                            @endforeach
+                            </ul>
                             @elseif(is_string($why_4))
-                                {{ htmlspecialchars($why_4) }}
+                               <p> {{ htmlspecialchars($why_4) }}</p>
                             @else
-                                Not Applicable
+                               <p> Not Applicable</p>
                             @endif
                         </td>
 
@@ -1121,43 +1152,36 @@
                                 $why_5 = unserialize($riskgrdwhy_chart->why_5);
                             @endphp
 
-
                             @if (is_array($why_5))
+                            <ul>
                                 @foreach ($why_5 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
+                                {{ htmlspecialchars($value) }}
+                                 @endforeach
+                            </ul>
+
                             @elseif(is_string($why_5))
-                                {{ htmlspecialchars($why_5) }}
+                              <p>{{ htmlspecialchars($why_5) }}</p>
                             @else
-                                Not Applicable
+                              <p>Not Applicable</p>
                             @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-80">Root Cause</th>
                         <td class="w-80">
-                            @if ($data->why_root_cause)
-                                {{ $data->why_root_cause }}
+                            @if ($riskgrdwhy_chart->why_root_cause)
+                                {{ $riskgrdwhy_chart->why_root_cause }}
                             @else
                                 Not Applicable
                             @endif
 
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">Root Cause :</th>
-                        <td class="w-80">@if ($riskgrdwhy_chart->why_root_cause){{ $riskgrdwhy_chart->why_root_cause }}@else Not Applicable @endif</td>
 
-                    </tr> --}}
                 </table>
-
-
 
                 <div class="border">
                     <table>
-
-
-
                         <tr>
                             <th class="w-20">Risk Assessment Summary</th>
                             <td class="w-80">
