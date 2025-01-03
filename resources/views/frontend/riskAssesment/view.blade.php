@@ -5134,7 +5134,7 @@
                                         @endphp
                                         <div class="col-lg-6 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid notification">Production Liquid//External preparation Person
+                                                <label for="Production Liquid notification">Production Liquid/External preparation Person
                                                     <span id="asteriskPT"
                                                         style="display: {{ $data1->ProductionLiquid_Review == 'Yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
