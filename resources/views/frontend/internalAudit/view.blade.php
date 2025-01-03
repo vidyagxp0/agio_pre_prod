@@ -372,8 +372,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        
-                       
+
+
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
                         @if (Auth::user()->id == $data->assign_to)
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -661,7 +661,7 @@
                                             </div>
                                         </div>
 
-                                       
+
                                         <!-- <div class="col-md-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <label for="due-date">Due Date </label>
@@ -1295,7 +1295,7 @@
                                             @endif
 
                                         </div> --}}
-                                        
+
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Auditee Comment
@@ -2845,13 +2845,18 @@
                                                                     <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
+                                                                     <textarea name="observations[{{ $loop->index }}][observation]">{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
+                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}"> --}}
+                                                                    <textarea name="observations[{{ $loop->index }}][category]">{{ isset($item['category']) ? $item['category'] : '' }}</textarea>
+
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
+                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"> --}}
+                                                                    <textarea name="observations[{{ $loop->index }}][remarks]">{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
+
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn">Remove</button>
@@ -2982,7 +2987,7 @@
                                             @if (!empty($old_record))
                                                 @foreach ($old_record as $new)
                                                     @php
-                                                    
+
                                                         $recordValue =
                                                             Helpers::getDivisionName($new->division_id) .
                                                             '/IA/' .
@@ -2990,7 +2995,7 @@
                                                             '/' .
                                                             Helpers::recordFormat($new->record);
 
-                                                            
+
                                                         $selected = in_array(
                                                             $recordValue,
                                                             explode(',', $data->refrence_record),
@@ -3015,7 +3020,7 @@
                                             <label for="Reference Recores">Reference Record</label>
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                 multiple id="reference_record" name="refrence_record[]" id="">
-                                               
+
                                                 @foreach ($old_record as $new)
                                                     <option value="{{ $new->id }}"
                                                         {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
@@ -3053,17 +3058,19 @@
                                                                 <td><input disabled type="text"
                                                                         name="Initial[0][serial_number]" value="1">
                                                                 </td>
-                                                                <td><input type="text"
-                                                                        name="Initial[{{ $loop->index }}][observation]"
-                                                                        value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                                                                <td>
+                                                                    {{-- <input type="text" name="Initial[{{ $loop->index }}][observation]"value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
+                                                                    <textarea name="Initial[{{ $loop->index }}][observation]">{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
-                                                                <td><input type="text"
-                                                                        name="Initial[{{ $loop->index }}][impact_assesment]"
-                                                                        value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}">
+                                                                <td>
+                                                                    {{-- <input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"> --}}
+                                                                    <textarea name="Initial[{{ $loop->index }}][impact_assesment]">{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}</textarea>
+
                                                                 </td>
-                                                                <td><input type="text"
-                                                                        name="Initial[{{ $loop->index }}][responsiblity]"
-                                                                        value="{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}">
+                                                                <td>
+                                                                    {{-- <input type="text" name="Initial[{{ $loop->index }}][responsiblity]" value="{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}"> --}}
+                                                                    <textarea name="Initial[{{ $loop->index }}][responsiblity]">{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}</textarea>
+
                                                                 </td>
                                                                 {{-- <td><input type="text" name="Initial[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td> --}}
                                                                 <td>
@@ -3485,7 +3492,7 @@
                                     <div class="col-12 sub-head" style="font-size: 16px">
                                         No CAPAs Required
                                     </div>
-                                   
+
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Response Completed By">No CAPAs Required
@@ -15166,7 +15173,7 @@
     </style>
 
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#internalaudit-observation').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -15177,13 +15184,11 @@
                         '<td><input disabled type="text" name="observations[0][serial_number]" value="' +
                         serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="observations[' + serialNumber +'][observation]"></td>' +
-                        '<td><input type="text" name="observations[' + serialNumber + '][category]"></td>' +
-                        '<td><input type="text" name="observations[' + serialNumber + '][remarks]"></td>' +
+                        '<td>"<textarea type="text" name="observations[' + serialNumber +'][observation]">"</td>' +
+                        '<td>"<textarea type="text" name="observations[' + serialNumber + '][category]">"</td>' +
+                        '<td>"<textarea type="text" name="observations[' + serialNumber + '][remarks]">"</td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
-
-
                     return html;
                 }
 
@@ -15193,7 +15198,41 @@
                 tableBody.append(newRow);
             });
         });
+    </script> --}}
+
+    <script>
+        $(document).ready(function () {
+            $('#internalaudit-observation').click(function (e) {
+                e.preventDefault(); // Prevent default action if required
+
+                function generateTableRow(serialNumber) {
+                    var html = '';
+                    html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="observations[0][serial_number]" value="' +
+                        serialNumber +
+                        '"></td>' +
+                        '<td><textarea name="observations[' + serialNumber + '][observation]"></textarea></td>' +
+                        '<td><textarea name="observations[' + serialNumber + '][category]"></textarea></td>' +
+                        '<td><textarea name="observations[' + serialNumber + '][remarks]"></textarea></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-odtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+
+            // Event delegation for dynamically added rows
+            $(document).on('click', '.removeRowBtn', function () {
+                $(this).closest('tr').remove();
+            });
+        });
     </script>
+
 
     <script>
         $(document).ready(function() {
@@ -15286,10 +15325,12 @@
                         '<td><input disabled type="text" name="Initial[0][serial_number]" value="' +
                         serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber +
-                        '][impact_assesment]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
+                        '<td><textarea name="Initial[' + serialNumber + '][observation]"></textarea></td>' +
+                        '<td><textarea name="Initial[' + serialNumber + '][impact_assesment]"></textarea></td>' +
+                        '<td><textarea name="Initial[' + serialNumber + '][responsiblity]"></textarea></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
                         // '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
                         '<td>' +
                         '<div class="group-input new-date-data-field mb-0">' +
