@@ -1114,26 +1114,16 @@
                                                     <tr>
                                                         <td>1</td>
                                                         <td style="font-weight: bold;">Master Copy</td>
-                                                        <td><input type="number" id="copies-master" min="0"
+                                                        <td><input type="text" id="copies-master"
                                                                 name="master_copy_number" value=""
                                                                 class="form-control">
                                                         </td>
-                                                        {{-- <td>
-                                                            <select id="department-master" class="form-control"
-                                                                placeholder="Select..." name="master_user_department">
-                                                                <option value="">Select the departments</option>
-                                                                @foreach ($departments as $department)
-                                                                    <option value="{{ $department->id }}"
-                                                                        {{ $document->master_user_department == $department->id ? 'selected' : '' }}>
-                                                                        {{ $department->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </td> --}}
+
                                                         <td>
                                                             <div class="col-md-6">
                                                                 <div class="group-input">
-                                                                    <select name="master_user_department"
+                                                                    <input type="text" name="master_user_department">
+                                                                    {{-- <select name="master_user_department"
                                                                         class="form-control" id="master_user_department">
                                                                         <option value="" selected>Select the
                                                                             departments</option>
@@ -1141,7 +1131,7 @@
                                                                             <option value="{{ $code }}">
                                                                                 {{ $department }}</option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -1149,14 +1139,16 @@
                                                     <tr>
                                                         <td>2</td>
                                                         <td style="font-weight: bold;">Controlled Copy</td>
-                                                        <td><input type="number" id="copies-controlled" min="0"
+                                                        <td><input type="text" id="copies-controlled" 
                                                                 name="controlled_copy_number" value=""
                                                                 class="form-control"></td>
 
                                                         <td>
                                                             <div class="col-md-6">
                                                                 <div class="group-input">
-                                                                    <select name="controlled_user_department"
+                                                                <input type="text" name="controlled_user_department">
+
+                                                                    {{-- <select name="controlled_user_department"
                                                                         class="form-control"
                                                                         id="controlled_user_department">
                                                                         <option value="" selected>Select the
@@ -1165,33 +1157,24 @@
                                                                             <option value="{{ $code }}">
                                                                                 {{ $department }}</option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        {{-- <td>
-                                                            <select id="department-controlled" class="form-control"
-                                                                placeholder="Select..." name="controlled_user_department">
-                                                                <option value="">Select the departments</option>
-                                                                @foreach ($departments as $department)
-                                                                    <option value="{{ $department->id }}">
-                                                                        {{ $department->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </td> --}}
+                                              
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
                                                         <td style="font-weight: bold;">Display Copy</td>
-                                                        <td><input type="number" id="copies-display" min="0"
+                                                        <td><input type="text" id="copies-display"
                                                                 name="display_copy_number" value=""
                                                                 class="form-control">
                                                         </td>
                                                         <td>
                                                             <div class="col-md-6">
                                                                 <div class="group-input">
-                                                                    <select name="display_user_department"
+                                                                    <input type="text" name="display_user_department">
+                                                                    {{-- <select name="display_user_department"
                                                                         class="form-control" id="display_user_department">
                                                                         <option value="" selected>Select the
                                                                             departments</option>
@@ -1199,21 +1182,11 @@
                                                                             <option value="{{ $code }}">
                                                                                 {{ $department }}</option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        {{-- <td>
-                                                            <select id="department-display" class="form-control"
-                                                                placeholder="Select..." name="display_user_department">
-                                                                <option value="">Select the departments</option>
-                                                                @foreach ($departments as $department)
-                                                                    <option value="{{ $department->id }}">
-                                                                        {{ $department->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </td> --}}
+                                                     
                                                     </tr>
                                                 </tbody>
                                             </table>

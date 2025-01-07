@@ -1762,13 +1762,19 @@ class DocumentController extends Controller
         $data['year'] = Carbon::parse($data->created_at)->format('Y');
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
+        $documentContent = DocumentContent::where('document_id', $id)->first();
+        $annexures = [];
+        if (!empty($documentContent->annexuredata)) {
+            $annexures = unserialize($documentContent->annexuredata);
+        }
+
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
 
         // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
         // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
-        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
+        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

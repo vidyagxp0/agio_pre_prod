@@ -517,7 +517,7 @@
                     </td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
                     <td style="width: 23%;padding: 5px; text-align: left">
-                        {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}-R{{ $data->major }}
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/0{{ $data->id }}-0{{ $data->major }}
                     </td>
                 </tr>
                 <tr>
@@ -550,7 +550,7 @@
                                 ->value('typecode');
                         @endphp
                         @if ($document->revised === 'Yes')
-                        {{ $document->department_id }}/000{{ $document->revised_doc }}-R{{ $document->major }}
+                        {{ $document->department_id }}/0{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
                         -
                         @endif
@@ -1270,6 +1270,30 @@
                 </div>
             </section>
             <br><br>
+        <div class="procedure-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block;">
+                    <div class="w-100">
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @if (!empty($annexures))
+                                <h3 style="text-align: center; margin-bottom: 1rem;">Annexures</h3>
+                                @foreach ($annexures as $index => $content)
+                                    @if (!empty($content))
+                                        <div class="annexure-block" style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+                                            <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Annexure {{ $index + 1 }}</h4>
+                                            <p style="line-height: 1.6; font-size: 1rem; color: #333;">{!! nl2br(e($content)) !!}</p>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @else
+                                <p style="text-align: center; color: #999; font-size: 1rem;">No Annexures Available.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <section class="doc-control" style="page-break-after: never;">
                 <div class="head">
                     <div>
@@ -1298,9 +1322,9 @@
                                                 /@if ($data->document_type_name)
                                                     {{ $temp }} /
                                                 @endif{{ $data->year }}
-                                                /000{{ $data->document_number }}-R{{ $data->major }}.{{ $data->minor }}
+                                                /0{{ $data->document_number }}-0{{ $data->major }}.{{ $data->minor }}
                                             @else
-                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}-R{{ $data->major }}.{{ $data->minor }}
+                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/0{{ $data->id }}-0{{ $data->major }}.{{ $data->minor }}
                                             @endif
                                         </td>
                                     </tr>

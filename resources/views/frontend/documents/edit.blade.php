@@ -2705,14 +2705,15 @@
                                         <tr>
                                             <td>1</td>
                                             <td style="font-weight: bold;">Master Copy</td>
-                                            <td><input type="number" id="copies-master" min="0"
+                                            <td><input type="text" id="copies-master"
                                                     name="master_copy_number"
                                                     value="{{ $document->master_copy_number }}" class="form-control">
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <select name="master_user_department"
+                                                        <input type="text" name="master_user_department" value="{{$document->master_user_department}}">
+                                                        {{-- <select name="master_user_department"
                                                             id="master_user_department" class="form-control"
                                                             {{ Helpers::isRevised($document->stage) }}>
                                                             <option value="" disabled selected>Enter your Selection
@@ -2724,7 +2725,7 @@
                                                                     {{ $department }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -2744,7 +2745,7 @@
                                         <tr>
                                             <td>2</td>
                                             <td style="font-weight: bold;">Controlled Copy</td>
-                                            <td><input type="number" id="copies-controlled" min="0"
+                                            <td><input type="text" id="copies-controlled"
                                                     name="controlled_copy_number"
                                                     value="{{ $document->controlled_copy_number }}"
                                                     class="form-control">
@@ -2752,7 +2753,8 @@
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <select name="controlled_user_department"
+                                                        <input type="text" name="controlled_user_department" value="{{$document->controlled_user_department}}">
+                                                        {{-- <select name="controlled_user_department"
                                                             id="controlled_user_department" class="form-control"
                                                             {{ Helpers::isRevised($document->stage) }}>
                                                             <option value="" disabled selected>Enter your Selection
@@ -2764,7 +2766,7 @@
                                                                     {{ $department }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -2784,14 +2786,15 @@
                                         <tr>
                                             <td>3</td>
                                             <td style="font-weight: bold;">Display Copy</td>
-                                            <td><input type="number" id="copies-display" min="0"
+                                            <td><input type="text" id="copies-display"
                                                     name="display_copy_number"
                                                     value="{{ $document->display_copy_number }}" class="form-control">
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <select name="display_user_department"
+                                                        <input type="text" name="display_user_department" value="{{$document->display_user_department}}">
+                                                        {{-- <select name="display_user_department"
                                                             id="display_user_department" class="form-control"
                                                             {{ Helpers::isRevised($document->stage) }}>
                                                             <option value="" disabled selected>Enter your Selection
@@ -2803,7 +2806,7 @@
                                                                     {{ $department }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                             </td>
