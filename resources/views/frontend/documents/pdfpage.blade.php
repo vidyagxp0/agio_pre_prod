@@ -523,7 +523,14 @@
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
-                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+
+                    @if ($data->status == 'Effective' || $data->status > 'Effective')
+                        : {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                    @else
+                        :
+                    @endif
+
+                        {{-- {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }} --}}
                     </td>
                 </tr>
             </tbody>
@@ -642,7 +649,7 @@
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign & Date</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
                     <td style="padding: 10px; border: 1px solid #ddd;">  
-                        @if ($inreviews->isEmpty())
+                    @if ($inreviews->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreviews as $temp)
@@ -742,7 +749,8 @@
                 <table class="mb-15">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">3.</th>
+       
+                        <th class="w-5 vertical-baseline">3.</th>
                             <th class="w-95 text-left">
                                 <div class="bold">Responsibility</div>
                             </th>
@@ -1274,7 +1282,7 @@
                 <div class="w-100">
                     <div class="w-100" style="display:inline-block;">
                         <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            <div style="height:auto; overflow-x:hidden; width:600px; margin-left: 2.5rem;">
                                 @if (!empty($annexures))
                                     <h3 style="text-align: center; margin-bottom: 1rem;">Annexures</h3>
                                     @foreach ($annexures as $index => $annexure)
