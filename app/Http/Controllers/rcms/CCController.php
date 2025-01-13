@@ -9277,108 +9277,372 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             }
            if ($changeControl->stage == 4) {
 
-                    // CFT review state update form_progress
-                    // if ($changeControl->form_progress !== 'cft')
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'CFT Tab is yet to be filled'
-                    //     ]);
 
-                    //     return redirect()->back();
-                    // }
-                    //  else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Investigation and CAPA review state'
-                    //     ]);
-                    // }
+                // First check for QualityAssurance_person
+                // if (isset($updateCFT->QualityAssurance_person) && Auth::user()->name == $updateCFT->QualityAssurance_person) {
 
+                //     // User is authorized for QualityAssurance_person
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Access Granted!',
+                //         'message' => 'You are authorized to proceed.'
+                //     ]);
+
+                //     // Check if QualityAssurance_assessment is empty
+                //     if (empty($updateCFT->QualityAssurance_assessment)) {
+                //         Session::flash('swal', [
+                //             'type' => 'warning',
+                //             'title' => 'Mandatory Fields!',
+                //             'message' => 'Please fill in all required fields for Quality Assurance before proceeding.'
+                //         ]);
+                //         return redirect()->back();
+                //     }
+
+                // } elseif (isset($updateCFT->Production_Table_Person) && Auth::user()->name == $updateCFT->Production_Table_Person) {
+
+                //     // User is authorized for Production_Table_Person
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Access Granted!',
+                //         'message' => 'You are authorized to proceed.'
+                //     ]);
+
+                //     // Check if Production_Table_Assessment is empty
+                //     if (empty($updateCFT->Production_Table_Assessment)) {
+                //         Session::flash('swal', [
+                //             'type' => 'warning',
+                //             'title' => 'Mandatory Fields!',
+                //             'message' => 'Please fill in all required fields for Production Table before proceeding.'
+                //         ]);
+                //         return redirect()->back();
+                //     }
+
+                // } else {
+                //     // User is not authorized
+                //     Session::flash('swal', [
+                //         'type' => 'error',
+                //         'title' => 'Access Denied!',
+                //         'message' => 'You are not authorized to perform this action.'
+                //     ]);
+
+                //     return redirect()->back();
+                // }
+
+
+                // $roles = [
+                //     'QualityAssurance_person' => 'QualityAssurance_assessment',
+                //     'Production_Table_Person' => 'Production_Table_Assessment',
+                //     'ProductionLiquid_person' => 'ProductionLiquid_assessment',
+                //     'Production_Injection_Person' => 'Production_Injection_Assessment',
+                //     'Store_person' => 'Store_assessment',
+                //     'Quality_Control_Person' => 'Quality_Control_assessment',
+                //     'Human_Resource_person' => 'Human_Resource_assessment',
+                //     'Microbiology_person' => 'Microbiology_assessment',
+                //     'RegulatoryAffair_person' => 'RegulatoryAffair_assessment',
+                //     'CorporateQualityAssurance_person' => 'CorporateQualityAssurance_assessment',
+                //     'Environment_Health_Safety_person' => 'Health_Safety_assessment',
+                //     'Information_Technology_person' => 'Information_Technology_assessment',
+                //     'ContractGiver_person' => 'ContractGiver_assessment',
+                // ];
+                
+                // $accessGranted = false;
+                
+                // // Check roles and assessments
+                // foreach ($roles as $role => $assessment) {
+                //     if (isset($updateCFT->$role) && Auth::user()->name == $updateCFT->$role) {
+                //         $accessGranted = true;
+                
+                //         // Check if the required assessment field is empty
+                //         if (empty($updateCFT->$assessment)) {
+                //             Session::flash('swal', [
+                //                 'type' => 'warning',
+                //                 'title' => 'Mandatory Fields!',
+                //                 'message' => "Please fill in all required fields for Impact Assessment (By " . str_replace('_', ' ', ucfirst($role)) . ") before proceeding.",
+                //             ]);
+                //             return redirect()->back();
+                //         }
+                
+                //         // If assessment is completed, allow the user to proceed
+                //         Session::flash('swal', [
+                //             'type' => 'success',
+                //             'title' => 'Access Granted!',
+                //             'message' => 'You are authorized to proceed.',
+                //         ]);
+                //     }
+                // }
+                
+
+                $roles = [
+                    'QualityAssurance_person' => 'QualityAssurance_assessment',
+                    'Production_Table_Person' => 'Production_Table_Assessment',
+                    'ProductionLiquid_person' => 'ProductionLiquid_assessment',
+                    'Production_Injection_Person' => 'Production_Injection_Assessment',
+                    'Store_person' => 'Store_assessment',
+                    'Quality_Control_Person' => 'Quality_Control_assessment',
+                    'ResearchDevelopment_person' => 'ResearchDevelopment_assessment',
+                    'Engineering_person' => 'Engineering_assessment',
+                    'Human_Resource_person' => 'Human_Resource_assessment',
+                    'Microbiology_person' => 'Microbiology_assessment',
+                    'RegulatoryAffair_person' => 'RegulatoryAffair_assessment',
+                    'CorporateQualityAssurance_person' => 'CorporateQualityAssurance_assessment',
+                    'Environment_Health_Safety_person' => 'Health_Safety_assessment',
+                    'Information_Technology_person' => 'Information_Technology_assessment',
+                    'ContractGiver_person' => 'ContractGiver_assessment',
+                ];
+                
+                $accessGranted = false;
+                
+                // Check roles and assessments
+                foreach ($roles as $role => $assessment) {
+                    if (isset($updateCFT->$role) && Auth::user()->name == $updateCFT->$role) {
+                        $accessGranted = true;
+                
+                        // Custom message for Environment_Health_Safety_person
+                        if ($role === 'Environment_Health_Safety_person') {
+                            if (empty($updateCFT->$assessment)) {
+                                Session::flash('swal', [
+                                    'type' => 'warning',
+                                    'title' => 'Mandatory Fields!',
+                                    'message' => "Please fill in all required fields for Impact Assessment (By Safety) before proceeding.",
+                                ]);
+                                return redirect()->back();
+                            }
+                        } 
+                        // Custom message for Production_Table_Person
+                        elseif ($role === 'Production_Table_Person') {
+                            if (empty($updateCFT->$assessment)) {
+                                Session::flash('swal', [
+                                    'type' => 'warning',
+                                    'title' => 'Mandatory Fields!',
+                                    'message' => "Please fill in all required fields for Impact Assessment (By Production (Tablet/Capsule/Powder)) before proceeding.",
+                                ]);
+                                return redirect()->back();
+                            }
+                        } 
+                        // Default message for other roles
+                        else {
+                            if (empty($updateCFT->$assessment)) {
+                                Session::flash('swal', [
+                                    'type' => 'warning',
+                                    'title' => 'Mandatory Fields!',
+                                    'message' => "Please fill in all required fields for Impact Assessment (By " . str_replace('_', ' ', ucfirst($role)) . ") before proceeding.",
+                                ]);
+                                return redirect()->back();
+                            }
+                        }
+                
+                        // If assessment is completed, allow the user to proceed
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Access Granted!',
+                            'message' => 'You are authorized to proceed.',
+                        ]);
+                    }
+                }
+                
+                // Handle "Other" fields with `elseif` conditions
+                for ($i = 1; $i <= 5; $i++) {
+                    $personField = "Other{$i}_person";
+                    $assessmentField = "Other{$i}_assessment";
+                    if (isset($updateCFT->$personField) && Auth::user()->name == $updateCFT->$personField) {
+                        $accessGranted = true;
+                
+                        if (empty($updateCFT->$assessmentField)) {
+                            Session::flash('swal', [
+                                'type' => 'warning',
+                                'title' => 'Mandatory Fields!',
+                                'message' => "Please fill in all required fields for Impact Assessment (By Others {$i}) before proceeding.",
+                            ]);
+                            return redirect()->back();
+                        }
+                
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Access Granted!',
+                            'message' => 'You are authorized to proceed.',
+                        ]);
+                    }
+                }
+                if (isset($updateCFT->Other1_person) && Auth::user()->name == $updateCFT->Other1_person) {
+                    $accessGranted = true;
+                
+                    if (empty($updateCFT->Other1_assessment)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill in all required fields for Impact Assessment (By Others 1) before proceeding.",
+                        ]);
+                        return redirect()->back();
+                    }
+                
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Access Granted!',
+                        'message' => 'You are authorized to proceed.',
+                    ]);
+                } elseif (isset($updateCFT->Other2_person) && Auth::user()->name == $updateCFT->Other2_person) {
+                    $accessGranted = true;
+                
+                    if (empty($updateCFT->Other2_Assessment)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill in all required fields for Impact Assessment (By Others 2) before proceeding.",
+                        ]);
+                        return redirect()->back();
+                    }
+                
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Access Granted!',
+                        'message' => 'You are authorized to proceed.',
+                    ]);
+                } elseif (isset($updateCFT->Other3_person) && Auth::user()->name == $updateCFT->Other3_person) {
+                    $accessGranted = true;
+                
+                    if (empty($updateCFT->Other3_Assessment)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill in all required fields for Impact Assessment (By Others 3) before proceeding.",
+                        ]);
+                        return redirect()->back();
+                    }
+                
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Access Granted!',
+                        'message' => 'You are authorized to proceed.',
+                    ]);
+                } elseif (isset($updateCFT->Other4_person) && Auth::user()->name == $updateCFT->Other4_person) {
+                    $accessGranted = true;
+                
+                    if (empty($updateCFT->Other4_Assessment)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill in all required fields for Impact Assessment (By Others 4) before proceeding.",
+                        ]);
+                        return redirect()->back();
+                    }
+                
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Access Granted!',
+                        'message' => 'You are authorized to proceed.',
+                    ]);
+                } elseif (isset($updateCFT->Other5_person) && Auth::user()->name == $updateCFT->Other5_person) {
+                    $accessGranted = true;
+                
+                    if (empty($updateCFT->Other5_Assessment)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill in all required fields for Impact Assessment (By Others 5) before proceeding.",
+                        ]);
+                        return redirect()->back();
+                    }
+                
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Access Granted!',
+                        'message' => 'You are authorized to proceed.',
+                    ]);
+                }
+                
+                // If the user is not authorized for any role
+                if (!$accessGranted) {
+                    Session::flash('swal', [
+                        'type' => 'error',
+                        'title' => 'Access Denied!',
+                        'message' => 'You are not authorized to perform this action. Please fill all sections of CFT Impact Assessment assigned to you.',
+                    ]);
+                    return redirect()->back();
+                }
+                
+                
+                
 
                     $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                     $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
                     // Define the column names
                     $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
-                    // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
-                    // Initialize an array to store the values
+                    
                     $valuesArray = [];
 
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->Quality_Control_by = Auth::user()->name;
-    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->Quality_Control_by = Auth::user()->name;
+                            $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-    $history = new RcmDocHistory();
-    $history->cc_id = $id;
-    $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
+                            $history = new RcmDocHistory();
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+                            }
 
-    $history->action = 'CFT Review Complete';
+                            $history->action = 'CFT Review Complete';
 
-    // Make sure you're using the updated $updateCFT object here
-    $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+                            // Make sure you're using the updated $updateCFT object here
+                            $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->name;
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
-                     if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->QualityAssurance_by = Auth::user()->name;
-    $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+                                            if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
+                            $updateCFT->QualityAssurance_by = Auth::user()->name;
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-    $history = new RcmDocHistory();
-    $history->cc_id = $id;
-    $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
+                            $history = new RcmDocHistory();
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+                            }
 
-    $history->action = 'CFT Review Complete';
-    $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->action = 'CFT Review Complete';
+                            $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
                         if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;
@@ -9951,7 +10215,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
                     $checkCFTCount = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'Completed', 'cc_id' => $id])->count();
                     $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
 
-                    // dd(count(array_unique($valuesArray)), $checkCFTCount);
+                   //  dd(count(array_unique($valuesArray)), $checkCFTCount);
 
                     //  if (!$Cft->Production_Table_Assessment) {
 
