@@ -38,7 +38,7 @@
         td,
         th {
             text-align: center;
-
+         
         }
 
         .w-5 {
@@ -327,7 +327,7 @@
 
         body {
             margin-top: 320px;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
         }
 
         footer {
@@ -336,6 +336,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            margin-top: 20px;
         }
 
 
@@ -490,7 +491,10 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>{{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }}</td>
+                    <td>
+                        {{-- {{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }} --}}
+                        Standard Operating Procedure
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -511,24 +515,54 @@
             style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
 
-                <tr>
+                <tr style="height:10px">
                     <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Title:</td>
                     <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}
                     </td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
-                    <td style="width: 23%;padding: 5px; text-align: left">
-                        {{ $data->sop_type_short }}/{{ $data->department_id }}/00{{ $data->id }}-0{{ $data->major }}
+
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                        @else
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                        @endif
+                    </td> --}}
+
+                    <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif
                     </td>
+
+
                 </tr>
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
 
-                    @if ($data->status == 'Effective' || $data->status > 'Effective')
+                    {{-- @if ($data->status == 'Effective')
+                        : {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                    @else
+                        :
+                    @endif --}}
+
+                    @if ($data->status == 'Effective' || $data->stage > 7)
                         : {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                     @else
                         :
                     @endif
+
 
                         {{-- {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }} --}}
                     </td>
@@ -625,7 +659,7 @@
             </tbody>
         </table>
     </footer> --}}
-    <footer class="footer" style="margin-top: 20px; font-family: Arial, sans-serif; font-size: 14px;">
+    <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
@@ -684,7 +718,7 @@
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
-                <div class="other-container">
+                {{-- <div class="other-container" style="">
                     <table>
                         <thead>
                             <tr>
@@ -695,7 +729,7 @@
                             </tr>
                         </thead>
                     </table>
-                </div>
+                </div> --}}
 
                 <div class="other-container">
                     <table>
@@ -1067,15 +1101,15 @@
                     </table>
                     <div class="procedure-block">
                         <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            <div class="w-100" style="display:inline-block;" id="table2">
+                                <div class="new_procedure">
+                                    <div style="height:auto; overflow-x:hidden; width:500px; margin-left: 2.5rem;">
                                         @if ($data->document_content)
-                                            {!! strip_tags(
+                                            {{-- {!! strip_tags(
                                                 $data->document_content->procedure,
-                                                '<br>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li>',
-                                            ) !!}
+                                                '<br><li>',) !!} --}}
+                                           {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+
                                         @endif
                                     </div>
                                 </div>
@@ -1084,6 +1118,19 @@
                     </div>
                 </div>
                 {{-- PROCEDURE END --}}
+
+                <style>
+                    .new_procedure {
+                        width: 400px;
+                        overflow-x: hidden;
+                    }
+                    #table2
+                    {
+                        margin-right:25px;
+                        /* padding:30px */
+                    }
+
+                </style>
 
                 {{-- REPORTING START --}}
                 <table class="mb-15 ">
@@ -1280,16 +1327,21 @@
             <br><br>
             <div class="procedure-block">
                 <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
+                    <div class="w-100" style="display:inline-block;" id=table1>
                         <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:600px; margin-left: 2.5rem;">
+                            <div class="anne">
                                 @if (!empty($annexures))
                                     <h3 style="text-align: center; margin-bottom: 1rem;">Annexures</h3>
                                     @foreach ($annexures as $index => $annexure)
                                         @if (!empty($annexure))
                                             <div style="margin-bottom: 1rem;">
                                                 <h4>Annexure {{ $index + 1 }}</h4>
-                                                <div>{!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}</div>
+                                                <!-- Wrapping table with scrollable container -->
+                                                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                                                    <div style="max-width: 100%; overflow-x: auto;">
+                                                        {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                    </div>
+                                                </div>
                                             </div>
                                         @endif
                                     @endforeach
@@ -1299,6 +1351,18 @@
                     </div>
                 </div>
             </div>
+            <style>
+                .anne {
+                    width: 500px;
+                    overflow-x: hidden;
+                }
+                #table1
+                {
+                    margin-right:25px;
+                    /* padding:30px */
+                }
+
+            </style>
 
 
             <section class="doc-control" style="page-break-after: never;">
@@ -1329,9 +1393,11 @@
                                                 /@if ($data->document_type_name)
                                                     {{ $temp }} /
                                                 @endif{{ $data->year }}
-                                                /0{{ $data->document_number }}-0{{ $data->major }}.{{ $data->minor }}
+                                                /{{ $data->document_number }}-0{{ $data->major }}.{{ $data->minor }}
                                             @else
-                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/0{{ $data->id }}-0{{ $data->major }}.{{ $data->minor }}
+                                                {{-- {{ $data->sop_type_short }}/{{ $data->department_id }}/0{{ $data->id }}-0{{ $data->major }}.{{ $data->minor }} --}}
+                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+
                                             @endif
                                         </td>
                                     </tr>

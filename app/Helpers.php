@@ -687,6 +687,43 @@ class Helpers
         return $departments;
     }
 
+    static function getDmsDepartments()
+    {
+        $departments = [
+            'CQA' => 'Corporate Quality Assurance',
+            'QA' => 'Quality Assurance',
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance',
+            'SA' => 'Safety',
+            'AC' => 'Accounts',
+            'FN' => 'Finance',
+            'AW' => 'Artwork',
+            'CS' => 'Company Secretary',
+            'EX' => 'Exports',
+            'MK' => 'Marketing',
+        ];
+
+        return $departments;
+    }
+
+
     static function SOPtype($type)
     {
         $soptype = '';
@@ -696,7 +733,7 @@ class Helpers
                 $soptype = "STANDARD OPERATING PROCEDURE";
                 break;
             case 'EOP (Equipment Operating procedure)':
-                $soptype = "EQUIMENT OPERATING PROCEDURE";
+                $soptype = "EQUIPMENT OPERATING PROCEDURE";
                 break;
             case 'IOP (Instrument Operating Procedure)':
                 $soptype = "INSTRUMENT OPERATING PROCEDURE";

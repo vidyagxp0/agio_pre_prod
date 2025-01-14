@@ -578,7 +578,7 @@
                                         {{ Helpers::isRevised($document->stage) }}>
                                         <option value="" disabled selected>Enter your Selection</option>
 
-                                        @foreach (Helpers::getDepartments() as $code => $department)
+                                        @foreach (Helpers::getDmsDepartments() as $code => $department)
                                             <option value="{{ $code }}"
                                                 @if ($document->department_id == $code) selected @endif>{{ $department }}
                                             </option>
@@ -3072,13 +3072,10 @@
                                                 <td>
                                                     <select id="select-state" placeholder="Select..."
                                                         name="distribution[{{ $loop->index }}][location]">
-                                                        <option value='0'
-                                                            {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --
-                                                        </option>
-                                                        @foreach ($departments as $department)
-                                                            <option value='{{ $department->id }}'
-                                                                {{ $grid->location == $department->id ? 'selected' : '' }}>
-                                                                {{ $department->name }}
+                                                        <option value="0" {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                        @foreach (Helpers::getDmsDepartments() as $code => $department)
+                                                            <option value="{{ $code }}" {{ $grid->location == $code ? 'selected' : '' }}>
+                                                                {{ $department }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -3122,7 +3119,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select id="select-state" placeholder="Select..."
+                                                    {{-- <select id="select-state" placeholder="Select..."
                                                         name="distribution[{{ $loop->index }}][retrieved_department]">
                                                         <option value='0'
                                                             {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>--
@@ -3131,6 +3128,16 @@
                                                             <option value='{{ $department->id }}'
                                                                 {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
                                                                 {{ $department->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select> --}}
+
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="distribution[{{ $loop->index }}][retrieved_department]">
+                                                        <option value='0' {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>--Select --</option>
+                                                        @foreach (Helpers::getDmsDepartments() as $code => $department)
+                                                            <option value="{{ $code }}" {{ $grid->retrieved_department == $code ? 'selected' : '' }}>
+                                                                {{ $department }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -3162,6 +3169,10 @@
                             let table = document.getElementById(tableId);
                             let currentRowCount = table.rows.length;
                             let newRow = table.insertRow(currentRowCount);
+                            let departmentsData = @json(Helpers::getDmsDepartments());
+                            let savedLocation = rowData.location || "0";
+                            let savedRetrival = rowData.retrieved_department || "0";
+
                             newRow.setAttribute("id", "row" + currentRowCount);
 
                             let sopTypeShort = "{{ $document->sop_type_short }}";
@@ -3205,13 +3216,16 @@
                             </select>`
 
 
-                            let cell9 = newRow. insertCell(8)
-                            cell9.innerHTML = `<select style="
-                            width: 6rem;" id="select-state" placeholder="Select..."
-                                name="distribution[${currentRowCount}][location]">
-                                <option value='0'>-- Select --</option>
-                                ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
-                            </select>`
+                            let cell9 = newRow.insertCell(8);
+                            cell9.innerHTML = `
+                                <select style="width: 6rem;" id="select-state" placeholder="Select..."
+                                    name="distribution[${currentRowCount}][location]">
+                                    <option value="0" ${savedLocation === "0" ? "selected" : ""}>-- Select --</option>
+                                    ${Object.entries(departmentsData).map(([code, name]) =>
+                                        `<option value="${code}" ${savedLocation === code ? "selected" : ""}>${name}</option>`
+                                    ).join('')}
+                                </select>
+                            `;
 
                             let cell10 = newRow.insertCell(9);
                             cell10.innerHTML = `<textarea style="overflow: hidden;
@@ -3233,12 +3247,22 @@
                             </select>`
 
                             let cell14 = newRow.insertCell(13)
-                            cell14.innerHTML = `<select style="
-                            width: 6rem;" id="select-state" placeholder="Select..."
-                                name="distribution[${currentRowCount}][retrieved_department]">
-                                <option value='0'>-- Select --</option>
-                                ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
-                            </select>`;
+                            // cell14.innerHTML = `<select style="
+                            // width: 6rem;" id="select-state" placeholder="Select..."
+                            //     name="distribution[${currentRowCount}][retrieved_department]">
+                            //     <option value='0'>-- Select --</option>
+                            //     ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
+                            // </select>`;
+                            let cell14 = newRow.insertCell(13)
+                            cell14.innerHTML = `
+                                <select style="width: 6rem;" id="select-state" placeholder="Select..."
+                                    name="distribution[${currentRowCount}][retrieved_department]">
+                                    <option value="0" ${savedRetrival === "0" ? "selected" : ""}>-- Select --</option>
+                                    ${Object.entries(departmentsData).map(([code, name]) =>
+                                        `<option value="${code}" ${savedRetrival === code ? "selected" : ""}>${name}</option>`
+                                    ).join('')}
+                                </select>
+                            `;
 
                             let cell15 = newRow.insertCell(14);
                             cell15.innerHTML = `<textarea style="overflow: hidden;
@@ -3263,6 +3287,7 @@
                             }
                         }
                     </script>
+
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>

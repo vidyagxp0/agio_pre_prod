@@ -338,7 +338,7 @@
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
                                             <option value="" selected>Enter your Selection</option>
-                                            @foreach (Helpers::getDepartments() as $code => $department)
+                                            @foreach (Helpers::getDmsDepartments() as $code => $department)
                                                 <option value="{{ $code }}">{{ $department }}</option>
                                             @endforeach
                                             {{-- @foreach ($departments as $department)
