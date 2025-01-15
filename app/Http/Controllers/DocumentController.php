@@ -243,7 +243,9 @@ class DocumentController extends Controller
                 }
             }
         }
-        $departments = Department::all();
+        // $departments = Department::all();
+        $departments = Helper::getDepartments($departmentId);
+
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
@@ -1746,6 +1748,31 @@ class DocumentController extends Controller
         $department = Department::find(Auth::user()->departmentid);
         $document = Document::find($id);
 
+
+        // department code wise number
+        // $documents = Document::orderBy('department_id')->get();
+        $departmentId = $document->department_id;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+        
+        // उस department_id के आधार पर सभी डॉक्युमेंट्स को क्रमबद्ध करें
+        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+        // विभाग के लिए काउंटर सेट करें
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+        
+            // यदि यह वर्तमान डॉक्युमेंट है, तो उसकी currentId सेट करें
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+
         if ($department) {
             $data['department_name'] = $department->name;
         } else {
@@ -1767,6 +1794,7 @@ class DocumentController extends Controller
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
         }
+        
 
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
@@ -1774,7 +1802,7 @@ class DocumentController extends Controller
 
         // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
         // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
-        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures'))
+        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

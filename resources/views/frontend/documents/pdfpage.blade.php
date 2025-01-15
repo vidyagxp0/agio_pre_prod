@@ -327,7 +327,7 @@
 
         body {
             margin-top: 320px;
-            margin-bottom: 80px;
+            margin-bottom: 120px;
         }
 
         footer {
@@ -529,7 +529,7 @@
                         @endif
                     </td> --}}
 
-                    <td style="width: 23%; padding: 5px; text-align: left">
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
                         @if($data->revised == 'Yes')
                             @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
                                 {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
@@ -543,7 +543,26 @@
                                 {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
                             @endif
                         @endif
-                    </td>
+                    </td> --}}
+
+@<td style="width: 23%; padding: 5px; text-align: left">
+    @if($document->revised == 'Yes')
+        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+        @else
+            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+        @endif
+    @else
+        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+        @else
+            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+        @endif
+    @endif
+</td>
+
+
+
 
 
                 </tr>
@@ -680,7 +699,7 @@
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign & Date</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
                     <td style="padding: 10px; border: 1px solid #ddd;">  
                     @if ($inreviews->isEmpty())
@@ -701,7 +720,7 @@
 
                     @endphp
                     <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">  
-                        @if ($inreview->isEmpty())
+                    @if ($inreview->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreview as $temp)
@@ -709,6 +728,31 @@
                         @endforeach
                     @endif                    
                 </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                     {{ $document->created_at }}
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->created_at ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif 
+                    </td>
+
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->created_at ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif                    
+                    </td>
+                </tr> 
             </tbody>
         </table>
     </footer>
@@ -1331,7 +1375,7 @@
                         <div class="w-100">
                             <div class="anne">
                                 @if (!empty($annexures))
-                                    <h3 style="text-align: center; margin-bottom: 1rem;">Annexures</h3>
+                                    <h3 style="text-align: left; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
                                     @foreach ($annexures as $index => $annexure)
                                         @if (!empty($annexure))
                                             <div style="margin-bottom: 1rem;">
