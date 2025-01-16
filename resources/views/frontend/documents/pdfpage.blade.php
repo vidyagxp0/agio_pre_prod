@@ -545,39 +545,50 @@
                         @endif
                     </td> --}}
 
-@<td style="width: 23%; padding: 5px; text-align: left">
-    @if($document->revised == 'Yes')
-        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
-        @else
-            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
-        @endif
-    @else
-        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-        @else
-            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-        @endif
-    @endif
-</td>
+                    <td style="width: 23%; padding: 5px; text-align: left">
+                        {{-- @if($document->revised == 'Yes')
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif --}}
 
-
-
-
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = $document->minor + 1;
+                                if ($revisionNumber > 9) {
+                                    $revisionNumber = 9;
+                                }
+                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            @endphp
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                        @else
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif
+                    </td>
 
                 </tr>
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
 
-                    {{-- @if ($data->status == 'Effective')
-                        : {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                    @else
-                        :
-                    @endif --}}
-
                     @if ($data->status == 'Effective' || $data->stage > 7)
-                        : {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                         {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                     @else
                         :
                     @endif

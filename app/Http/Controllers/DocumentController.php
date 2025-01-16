@@ -1748,6 +1748,14 @@ class DocumentController extends Controller
         $department = Department::find(Auth::user()->departmentid);
         $document = Document::find($id);
 
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                       ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
 
         // department code wise number
         // $documents = Document::orderBy('department_id')->get();
@@ -1757,16 +1765,14 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
         
-        // उस department_id के आधार पर सभी डॉक्युमेंट्स को क्रमबद्ध करें
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
         
-        // विभाग के लिए काउंटर सेट करें
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
         
-            // यदि यह वर्तमान डॉक्युमेंट है, तो उसकी currentId सेट करें
+
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
             }
@@ -1802,7 +1808,7 @@ class DocumentController extends Controller
 
         // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
         // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
-        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId'))
+        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','revisionNumber'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -2065,105 +2071,186 @@ class DocumentController extends Controller
         return back();
     }
 
+    // public function revision(Request $request, $id)
+    // {
+
+    //     $document = Document::find($id);
+
+    //     $revisionExists = Document::where([
+    //         'document_type_id' => $document->document_type_id,
+    //         'document_number' => $document->document_number,
+    //         'major' => $request->major,
+    //         'minor' => $request->minor
+    //     ])->first();
+
+    //     if ($revisionExists) {
+    //         toastr()->error('Same version of document is already revised!!');
+    //         return redirect()->back();
+    //     } else {
+    //         $document->revision = 'Yes';
+    //         $document->revision_policy = $request->revision;
+    //         $document->update();
+    //         $newdoc = new Document();
+    //         $newdoc->originator_id = $document->originator_id;
+    //         $newdoc->division_id = $document->division_id;
+    //         $newdoc->process_id = $document->process_id;
+    //         $newdoc->revised = 'Yes';
+    //         $newdoc->revised_doc = $document->id;
+    //         $newdoc->document_name = $document->document_name;
+    //         $newdoc->major = $request->major;
+    //         $newdoc->minor = $document->minor + 1;
+    //         $newdoc->sop_type = $request->sop_type;
+    //         $newdoc->short_description = $document->short_description;
+    //         $newdoc->due_dateDoc = $document->due_dateDoc;
+    //         $newdoc->description = $document->description;
+    //         $newdoc->notify_to = json_encode($document->notify_to);
+    //         $newdoc->reference_record = $document->reference_record;
+    //         $newdoc->department_id = $document->department_id;
+    //         $newdoc->document_type_id = $document->document_type_id;
+    //         $newdoc->document_subtype_id = $document->document_subtype_id;
+    //         $newdoc->document_language_id = $document->document_language_id;
+    //         $newdoc->keywords = $document->keywords;
+    //         // $newdoc->effective_date = $document->effective_date;
+    //         $newdoc->next_review_date = $document->next_review_date;
+    //         // $newdoc->review_period = $document->review_period;
+    //         $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
+    //         $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
+    //         $newdoc->approvers = $document->approvers;
+    //         $newdoc->reviewers = $document->reviewers;
+    //         $newdoc->approver_group = $document->approver_group;
+    //         $newdoc->reviewers_group = $document->reviewers_group;
+    //         $newdoc->revision_summary = $document->revision_summary;
+    //         $newdoc->training_required = $document->training_required;
+    //         $newdoc->trainer = $request->trainer;
+    //         $newdoc->hods = $document->hods;
+    //         $newdoc->document_number = $document->document_number;
+    //         $newdoc->comments = $request->comments;
+    //         //$newdoc->purpose = $request->purpose;
+    //         $newdoc->stage = 1;
+    //         $newdoc->status = Stage::where('id', 1)->value('name');
+    //         $newdoc->save();
+
+    //         $doc_content = new DocumentContent();
+    //         $doc_content->document_id = $newdoc->id;
+    //         $doc_content->purpose = $doc_content->purpose;
+    //         $doc_content->scope = $doc_content->scope;
+    //         $doc_content->responsibility = $doc_content->responsibility;
+    //         $doc_content->abbreviation = $doc_content->abbreviation;
+    //         $doc_content->defination = $doc_content->defination;
+    //         $doc_content->materials_and_equipments = $doc_content->materials_and_equipments;
+    //         $doc_content->procedure = $doc_content->procedure;
+    //         $doc_content->reporting = $doc_content->reporting;
+    //         $doc_content->references = $doc_content->references;
+    //         $doc_content->ann = $doc_content->ann;
+    //         $doc_content->distribution = $doc_content->distribution;
+    //         $doc_content->save();
+
+    //         if ($document->training_required == 'yes') {
+    //             $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+    //             if (!empty($docTrain)) {
+    //                 $trainning = new DocumentTraining();
+    //                 $trainning->document_id = $newdoc->id;
+    //                 $trainning->trainer = $docTrain->trainer;
+    //                 $trainning->cbt = $docTrain->cbt;
+    //                 $trainning->type = $docTrain->type;
+    //                 $trainning->comments = $docTrain->comments;
+    //                 $trainning->save();
+    //             }
+    //         }
+
+    //         $annexure = Annexure::where('document_id', $id)->first();
+    //         $new_annexure = new Annexure();
+    //         $new_annexure->document_id = $newdoc->id;
+    //         $new_annexure->sno = $annexure->sno;
+    //         $new_annexure->annexure_no = $annexure->annexure_no;
+    //         $new_annexure->annexure_title = $annexure->annexure_title;
+    //         $new_annexure->save();
+
+    //         toastr()->success('Document is revised, you can change the body!!');
+    //         return redirect()->route('documents.edit', $newdoc->id);
+    //     }
+    // }
+
     public function revision(Request $request, $id)
     {
+    $document = Document::find($id);
 
-        $document = Document::find($id);
+    if (!$document) {
+        toastr()->error('Document not found!');
+        return redirect()->back();
+    }
 
-        $revisionExists = Document::where([
-            'document_type_id' => $document->document_type_id,
-            'document_number' => $document->document_number,
-            'major' => $request->major,
-            'minor' => $request->minor
-        ])->first();
+    $requestedMajor = (int)$document->major;
+    $requestedMinor = (int)$document->minor;
 
-        if ($revisionExists) {
-            toastr()->error('Same version of document is already revised!!');
-            return redirect()->back();
-        } else {
-            $document->revision = 'Yes';
-            $document->revision_policy = $request->revision;
-            $document->update();
-            $newdoc = new Document();
-            $newdoc->originator_id = $document->originator_id;
-            $newdoc->division_id = $document->division_id;
-            $newdoc->process_id = $document->process_id;
-            $newdoc->revised = 'Yes';
-            $newdoc->revised_doc = $document->id;
-            $newdoc->document_name = $document->document_name;
-            $newdoc->major = $request->major;
-            $newdoc->minor = $document->minor + 1;
-            $newdoc->sop_type = $request->sop_type;
-            $newdoc->short_description = $document->short_description;
-            $newdoc->due_dateDoc = $document->due_dateDoc;
-            $newdoc->description = $document->description;
-            $newdoc->notify_to = json_encode($document->notify_to);
-            $newdoc->reference_record = $document->reference_record;
-            $newdoc->department_id = $document->department_id;
-            $newdoc->document_type_id = $document->document_type_id;
-            $newdoc->document_subtype_id = $document->document_subtype_id;
-            $newdoc->document_language_id = $document->document_language_id;
-            $newdoc->keywords = $document->keywords;
-            // $newdoc->effective_date = $document->effective_date;
-            $newdoc->next_review_date = $document->next_review_date;
-            // $newdoc->review_period = $document->review_period;
-            $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
-            $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
-            $newdoc->approvers = $document->approvers;
-            $newdoc->reviewers = $document->reviewers;
-            $newdoc->approver_group = $document->approver_group;
-            $newdoc->reviewers_group = $document->reviewers_group;
-            $newdoc->revision_summary = $document->revision_summary;
-            $newdoc->training_required = $document->training_required;
-            $newdoc->trainer = $request->trainer;
-            $newdoc->hods = $document->hods;
-            $newdoc->document_number = $document->document_number;
-            $newdoc->comments = $request->comments;
-            //$newdoc->purpose = $request->purpose;
-            $newdoc->stage = 1;
-            $newdoc->status = Stage::where('id', 1)->value('name');
-            $newdoc->save();
+    if ($requestedMinor < 9) {
+        $requestedMinor += 1;
+    } else {
+        $requestedMinor = 1;
+        $requestedMajor += 1;
+    }
 
-            $doc_content = new DocumentContent();
-            $doc_content->document_id = $newdoc->id;
-            $doc_content->purpose = $doc_content->purpose;
-            $doc_content->scope = $doc_content->scope;
-            $doc_content->responsibility = $doc_content->responsibility;
-            $doc_content->abbreviation = $doc_content->abbreviation;
-            $doc_content->defination = $doc_content->defination;
-            $doc_content->materials_and_equipments = $doc_content->materials_and_equipments;
-            $doc_content->procedure = $doc_content->procedure;
-            $doc_content->reporting = $doc_content->reporting;
-            $doc_content->references = $doc_content->references;
-            $doc_content->ann = $doc_content->ann;
-            $doc_content->distribution = $doc_content->distribution;
-            $doc_content->save();
+    \Log::info("Incremented Major: $requestedMajor, Minor: $requestedMinor");
 
-            if ($document->training_required == 'yes') {
-                $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-                if (!empty($docTrain)) {
-                    $trainning = new DocumentTraining();
-                    $trainning->document_id = $newdoc->id;
-                    $trainning->trainer = $docTrain->trainer;
-                    $trainning->cbt = $docTrain->cbt;
-                    $trainning->type = $docTrain->type;
-                    $trainning->comments = $docTrain->comments;
-                    $trainning->save();
-                }
-            }
+    $revisionExists = Document::where([
+        'document_type_id' => $document->document_type_id,
+        'document_number' => $document->document_number,
+        'major' => $requestedMajor,
+        'minor' => $requestedMinor
+    ])->first();
 
-            $annexure = Annexure::where('document_id', $id)->first();
-            $new_annexure = new Annexure();
-            $new_annexure->document_id = $newdoc->id;
-            $new_annexure->sno = $annexure->sno;
-            $new_annexure->annexure_no = $annexure->annexure_no;
-            $new_annexure->annexure_title = $annexure->annexure_title;
-            $new_annexure->save();
+    if ($revisionExists) {
+        toastr()->error('A document with this version already exists!');
+        return redirect()->back();
+    }
 
-            toastr()->success('Document is revised, you can change the body!!');
-            return redirect()->route('documents.edit', $newdoc->id);
+    $document->revision = 'Yes';
+    $document->revision_policy = $request->revision;
+    $document->update();
+
+    $newdoc = $document->replicate();
+    $newdoc->revised = 'Yes';
+    $newdoc->revised_doc = $document->id;
+    $newdoc->major = $requestedMajor;
+    $newdoc->minor = $requestedMinor;
+    $newdoc->trainer = $request->trainer;
+    $newdoc->comments = $request->comment;
+    $newdoc->stage = 1;
+    $newdoc->status = Stage::where('id', 1)->value('name');
+    $newdoc->save();
+
+    \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+
+    $docContent = DocumentContent::where('document_id', $document->id)->first();
+    if ($docContent) {
+        $newDocContent = $docContent->replicate();
+        $newDocContent->document_id = $newdoc->id;
+        $newDocContent->save();
+    }
+
+    $annexure = Annexure::where('document_id', $document->id)->first();
+    if ($annexure) {
+        $newAnnexure = $annexure->replicate();
+        $newAnnexure->document_id = $newdoc->id;
+        $newAnnexure->save();
+    }
+
+    if ($document->training_required == 'yes') {
+        $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+        if ($docTrain) {
+            $newTraining = $docTrain->replicate();
+            $newTraining->document_id = $newdoc->id;
+            $newTraining->save();
         }
     }
+
+    DocumentService::update_document_numbers();
+
+    toastr()->success('Document has been revised successfully! You can now edit the content.');
+    return redirect()->route('documents.edit', $newdoc->id);
+}
+
+
     public function printPDFAnx($id)
     {
 
