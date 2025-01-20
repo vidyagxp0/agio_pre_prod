@@ -277,6 +277,8 @@
 
                             <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                            <iframe id="theFrame" width="100%" height="800"
+                                src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
                         </div>
                     </div>
 

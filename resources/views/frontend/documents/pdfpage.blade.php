@@ -33,12 +33,14 @@
 
         table {
             width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
         }
 
         td,
         th {
             text-align: center;
-         
+            padding: 8px;
         }
 
         .w-5 {
@@ -327,7 +329,7 @@
 
         body {
             margin-top: 320px;
-            margin-bottom: 120px;
+            margin-bottom: 135px;
         }
 
         footer {
@@ -376,6 +378,8 @@
         .table-responsive {
             overflow-x: auto;
             max-width: 100%;
+            box-sizing: border-box;
+
         }
 
         .MsoNormalTable tr {
@@ -384,6 +388,10 @@
 
         .MsoNormalTable td {
             text-align: left !important;
+        }
+        .MsoNormalTable td, .table td {
+            word-wrap: break-word;
+            padding: 10px;
         }
 
         .MsoNormalTable tbody {
@@ -403,7 +411,8 @@
         .MsoNormalTable,
         .table {
             table-layout: fixed;
-            width: 650px !important;
+            width: 100% !important;
+            box-sizing: border-box;
         }
 
         /* CSS to allow page breaks after and inside common HTML elements */
@@ -493,7 +502,7 @@
                 <tr>
                     <td>
                         {{-- {{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }} --}}
-                        Standard Operating Procedure
+                        STANDARD OPERATING PROCEDURE
                     </td>
                 </tr>
             </tbody>
@@ -742,14 +751,14 @@
                 <tr style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
                     <td style="padding: 10px; border: 1px solid #ddd;">
-                     {{ $document->created_at }}
+                     {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
                     </td>
                     <td style="padding: 10px; border: 1px solid #ddd;">
                     @if ($inreviews->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreviews as $temp)
-                            <div>{{ $temp->created_at ?: 'Yet Not Performed' }}</div>
+                           <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                         @endforeach
                     @endif 
                     </td>
@@ -759,7 +768,7 @@
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreview as $temp)
-                            <div>{{ $temp->created_at ?: 'Yet Not Performed' }}</div>
+                           <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                         @endforeach
                     @endif                    
                     </td>
@@ -792,7 +801,7 @@
                             <tr>
                                 <th class="w-5">1.</th>
                                 <th class="text-left">
-                                    <div class="bold">Objective</div>
+                                    <div class="bold">OBJECTIVE</div>
                                 </th>
                             </tr>
                         </thead>
@@ -816,7 +825,7 @@
                             <tr>
                                 <th class="w-5">2.</th>
                                 <th class="text-left">
-                                    <div class="bold">Scope</div>
+                                    <div class="bold">SCOPE</div>
                                 </th>
                             </tr>
                         </thead>
@@ -841,7 +850,7 @@
        
                         <th class="w-5 vertical-baseline">3.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Responsibility</div>
+                                <div class="bold">RESPONSIBILITY</div>
                             </th>
                         </tr>
                     </tbody>
@@ -893,7 +902,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">4.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Accountability</div>
+                                <div class="bold">ACCOUNTABILITY</div>
                             </th>
                         </tr>
                     </tbody>
@@ -946,7 +955,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">5.</th>
                             <th class="w-95 text-left">
-                                <div class="bold"> References</div>
+                                <div class="bold">REFERENCES</div>
                             </th>
                         </tr>
                     </tbody>
@@ -994,7 +1003,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">6.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Abbreviation</div>
+                                <div class="bold">ABBREVIATION</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1045,7 +1054,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">7.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Definitions</div>
+                                <div class="bold">DEFINITIONS</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1097,7 +1106,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">8.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">General Instructions</div>
+                                <div class="bold">GENERAL INSTRUCTIONS</div>
                             </th>
                         </tr>
                         <tr>
@@ -1149,7 +1158,7 @@
                             <tr>
                                 <th class="w-5">9.</th>
                                 <th class="text-left">
-                                    <div class="bold">Procedure</div>
+                                    <div class="bold">PROCEDURE</div>
                                 </th>
                             </tr>
                         </thead>
@@ -1193,7 +1202,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">10.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Cross References</div>
+                                <div class="bold">CROSS REFERENCES</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1244,7 +1253,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">11.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Annexure</div>
+                                <div class="bold">ANNEXURE</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1310,35 +1319,20 @@
                     @endforeach
                 @endif --}}
 
-                <div class="other-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="w-5">12.</th>
-                                <th class="text-left">
-                                    <div class="bold">Revision History</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="scope-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                <div class="w-100">
-                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="input-fields">
                     <div class="group-input">
-                        <label for="distribution-list" style="font-weight: bold;">
-                            Distribution List
-                        </label>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-5">12.</th>
+                                    <th class="text-left">
+                                        <div class="bold">DISTRIBUTION LIST</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
                         <div class="table-responsive retrieve-table">
                             <table class="table table-bordered" id="distribution-list">
                                 <thead>
@@ -1378,8 +1372,32 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">13.</th>
+                                <th class="text-left">
+                                    <div class="bold">REVISION HISTORY</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
-            <br><br>
+            {{-- <br><br>
             <div class="procedure-block">
                 <div class="w-100">
                     <div class="w-100" style="display:inline-block;" id=table1>
@@ -1417,7 +1435,7 @@
                     /* padding:30px */
                 }
 
-            </style>
+            </style> --}}
 
 
             <section class="doc-control" style="page-break-after: never;">
@@ -1990,7 +2008,7 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 105;
+                    $y = 115;
                     $x = 490;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }

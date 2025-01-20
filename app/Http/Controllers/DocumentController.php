@@ -1870,6 +1870,137 @@ class DocumentController extends Controller
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
+    public function annexureviewPdf($id)
+    {
+
+        $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
+        $data = Document::find($id);
+        //$data->department = Department::find($data->department_id);
+        $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
+
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                       ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        // department code wise number
+        // $documents = Document::orderBy('department_id')->get();
+        $departmentId = $document->department_id;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+        
+        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+        
+
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+
+        if ($department) {
+            $data['department_name'] = $department->name;
+        } else {
+            $data['department_name'] = '';
+        }
+        $data->department = $department;
+
+        $data['originator'] = User::where('id', $data->originator_id)->value('name');
+        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+
+        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+        $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+
+        $documentContent = DocumentContent::where('document_id', $id)->first();
+        $annexures = [];
+        if (!empty($documentContent->annexuredata)) {
+            $annexures = unserialize($documentContent->annexuredata);
+        }
+        
+
+        // pdf related work
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+
+        // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
+        // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
+        $pdf = PDF::loadview('frontend.documents.annexure-pdf', compact('data', 'time', 'document','annexures','currentId','revisionNumber'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $canvas->set_default_view('FitB');
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+        $canvas->page_text(
+            $width / 4,
+            $height / 2,
+            Helpers::getDocStatusByStage($data->stage),
+            null,
+            25,
+            [0, 0, 0],
+            2,
+            6,
+            -20
+        );
+
+        if ($data->documents) {
+
+            $pdfArray = explode(',', $data->documents);
+            foreach ($pdfArray as $pdfFile) {
+                $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
+                $permissions = 0644; // Example permission value, change it according to your needs
+                if (file_exists($existingPdfPath)) {
+                    // Create a new Dompdf instance
+                    $options = new Options();
+                    $options->set('chroot', public_path());
+                    $options->set('isPhpEnabled', true);
+                    $options->set('isRemoteEnabled', true);
+                    $options->set('isHtml5ParserEnabled', true);
+                    $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
+
+                    $dompdf = new Dompdf($options);
+
+                    chmod($existingPdfPath, $permissions);
+
+                    // Load the existing PDF file
+                    $dompdf->loadHtmlFile($existingPdfPath);
+
+                    // Render the PDF
+                    $dompdf->render();
+
+                    // Output the PDF to the browser
+                    $dompdf->stream();
+                }
+            }
+        }
+
+        return $pdf->stream('SOP' . $id . '.pdf');
+    }
+
 
     public function printPDF($id)
     {
