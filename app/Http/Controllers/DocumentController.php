@@ -1584,6 +1584,40 @@ class DocumentController extends Controller
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
+        $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
+
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                       ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        // department code wise number
+        // $documents = Document::orderBy('department_id')->get();
+        $departmentId = $document->department_id;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+        
+        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+        
+
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+
         if ($controls) {
             set_time_limit(30);
             $document = Document::find($id);
@@ -1601,7 +1635,7 @@ class DocumentController extends Controller
             // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
             $pdf = App::make('dompdf.wrapper');
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
+            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','documents','currentId'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -2007,6 +2041,40 @@ class DocumentController extends Controller
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
+        $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
+
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                       ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        // department code wise number
+        // $documents = Document::orderBy('department_id')->get();
+        $departmentId = $document->department_id;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+        
+        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+        
+
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+
         if ($controls) {
             set_time_limit(30);
             $document = Document::find($id);
@@ -2025,7 +2093,7 @@ class DocumentController extends Controller
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
+            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','currentId','documents'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
