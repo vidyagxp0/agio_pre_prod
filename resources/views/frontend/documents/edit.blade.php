@@ -3164,68 +3164,65 @@
                             </div>
                         </div>
                     </div>
-                    <script>
+                   
+
+                    {{-- <script>
                         function addDistributionRetrieval1(tableId) {
                             let table = document.getElementById(tableId);
-                            let currentRowCount = table.rows.length;
-                            let newRow = table.insertRow(currentRowCount);
-                            let departmentsData = @json(Helpers::getDmsDepartments());
-                            let savedLocation = rowData.location || "0";
-                            let savedRetrival = rowData.retrieved_department || "0";
+                            let currentRowCount = table.rows.length; // Existing rows count including the header
+                            let newRow = table.insertRow(currentRowCount); // Insert new row at the end
 
+                            // Mock data for departments and users if not available
+                            let departmentsData = @json(Helpers::getDmsDepartments()); // Use PHP helper
+                            
                             newRow.setAttribute("id", "row" + currentRowCount);
 
+                            // Document details
                             let sopTypeShort = "{{ $document->sop_type_short }}";
                             let departmentId = "{{ $document->department_id }}";
                             let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
                             let major = "{{ $document->major }}";
 
+                            // Create cells for the new row
                             let cell1 = newRow.insertCell(0);
                             cell1.innerHTML = currentRowCount;
 
                             let cell2 = newRow.insertCell(1);
-                            cell2.innerHTML =`<textarea style="overflow: hidden;
-                            border: none; width: 10rem;" name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
+                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;" 
+                            name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
 
                             let cell3 = newRow.insertCell(2);
-                            cell3.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem; "type="text" name="distribution[${currentRowCount}][document_number]" readonly>
+                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            name="distribution[${currentRowCount}][document_number]" readonly>
                             ${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea>`;
 
                             let cell4 = newRow.insertCell(3);
-                            cell4.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
+                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
 
                             let cell5 = newRow.insertCell(4);
-                            cell5.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_on]"> </textarea>`;
+                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            name="distribution[${currentRowCount}][document_printed_on]"></textarea>`;
 
                             let cell6 = newRow.insertCell(5);
-                            cell6.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][document_printed_copies]"> </textarea>`;
+                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            name="distribution[${currentRowCount}][document_printed_copies]"></textarea>`;
 
                             let cell7 = newRow.insertCell(6);
                             cell7.innerHTML = '<div class="group-input new-date-data-field mb-0"> <div class="input-date "><div class="calenderauditee"><input style="width: 6rem;" type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style="width:4rem" type="date" name="distribution['+ currentRowCount +'][issuance_date]" class="hide-input" oninput="handleDateInput(this, `issuance_date' + currentRowCount +'`)" /></div></div></div>';
 
-                            let cell8 = newRow.insertCell(7)
-                            cell8.innerHTML = `<select style="
-                            width: 6rem;" id="select-state" placeholder="Select..."
-                                name="distribution[${currentRowCount}][issuance_to]">
-                                <option value='0'>-- Select --</option>
-                                ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                            </select>`
-
+                            let cell8 = newRow.insertCell(7);
+                            cell8.innerHTML = `<select style="width: 6rem;" name="distribution[${currentRowCount}][issuance_to]">
+                            <option value='0'>-- Select --</option>
+                            ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
+                            </select>`;
 
                             let cell9 = newRow.insertCell(8);
-                            cell9.innerHTML = `
-                                <select style="width: 6rem;" id="select-state" placeholder="Select..."
-                                    name="distribution[${currentRowCount}][location]">
-                                    <option value="0" ${savedLocation === "0" ? "selected" : ""}>-- Select --</option>
-                                    ${Object.entries(departmentsData).map(([code, name]) =>
-                                        `<option value="${code}" ${savedLocation === code ? "selected" : ""}>${name}</option>`
-                                    ).join('')}
-                                </select>
-                            `;
+                            cell9.innerHTML = `<select style="width: 6rem;" name="distribution[${currentRowCount}][location]">
+                            <option value="0">-- Select --</option>
+                            ${Object.entries(departmentsData).map(([code, name]) =>
+                                `<option value="${code}">${name}</option>`).join('')}
+                            </select>`;
 
                             let cell10 = newRow.insertCell(9);
                             cell10.innerHTML = `<textarea style="overflow: hidden;
@@ -3238,22 +3235,15 @@
                             let cell12 = newRow.insertCell(11);
                             cell12.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input style=" width: 6rem;" type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style=" width: 4rem;" type="date" name="distribution['+currentRowCount+'][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + currentRowCount +'`)" /></div></div></div>';
 
-                            let cell13 = newRow.insertCell(12)
+                            let cell13 = newRow.insertCell(12);
                             cell13.innerHTML = `<select style="
                             width: 6rem;" id="select-state" placeholder="Select..."
                                 name="distribution[${currentRowCount}][retrieval_by]">
                                 <option value='0'>-- Select --</option>
                                 ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                            </select>`
+                            </select>`;
 
-                            let cell14 = newRow.insertCell(13)
-                            // cell14.innerHTML = `<select style="
-                            // width: 6rem;" id="select-state" placeholder="Select..."
-                            //     name="distribution[${currentRowCount}][retrieved_department]">
-                            //     <option value='0'>-- Select --</option>
-                            //     ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
-                            // </select>`;
-                            let cell14 = newRow.insertCell(13)
+                            let cell14 = newRow.insertCell(13);
                             cell14.innerHTML = `
                                 <select style="width: 6rem;" id="select-state" placeholder="Select..."
                                     name="distribution[${currentRowCount}][retrieved_department]">
@@ -3273,20 +3263,120 @@
                             border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
 
                             let cell17 = newRow.insertCell(16);
-                            cell17.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][remark]"></textarea>`;
+                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            name="distribution[${currentRowCount}][remark]"></textarea>`;
 
-                            var cell18 = newRow.insertCell(17);
-                            cell18.innerHTML = "<button class='removeTrainRow'>Remove</button>";
+                            let cell18 = newRow.insertCell(17);
+                            cell18.innerHTML = `<button class='removeTrainRow' onclick="removeRow(this)">Remove</button>`;
+                        }
 
-                            cell18.appendChild(element18);
+                        function removeRow(button) {
+                            let row = button.parentNode.parentNode;
+                            row.parentNode.removeChild(row);
+                        }
+                    </script> --}}
 
-                            for (let i = 1; i < currentRowCount; i++) {
-                                let row = table.rows[i];
-                                row.cells[0].innerHTML = i;
-                            }
+                    <script>
+                        function addDistributionRetrieval1(tableId) {
+                            let table = document.getElementById(tableId);
+                            let currentRowCount = table.rows.length; // Including the header
+                            let newRow = table.insertRow(currentRowCount); // Insert a new row
+
+                            // Fetch PHP data and escape properly
+                            let departmentsData = @json(Helpers::getDmsDepartments());
+                            let users = @json($users); // Assuming you pass users as a variable
+
+                            // Document details
+                            let sopTypeShort = "{{ $document->sop_type_short }}";
+                            let departmentId = "{{ $document->department_id }}";
+                            let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
+                            let major = "{{ $document->major }}";
+                            let documentName = "{{ $document->document_name }}";
+
+                            newRow.setAttribute("id", "row" + currentRowCount);
+
+                            // Create and populate cells
+                            newRow.innerHTML = `
+                                <td>${currentRowCount}</td>
+                                <td><textarea style="overflow: hidden; border: none; width: 10rem;" 
+                                    name="distribution[${currentRowCount}][document_title]" readonly>${documentName}</textarea></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][document_number]" readonly>${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][document_printed_by]"></textarea></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][document_printed_on]"></textarea></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][document_printed_copies]"></textarea></td>
+                                <td>
+                                    <div class="group-input new-date-data-field mb-0">
+                                        <div class="input-date">
+                                            <div class="calenderauditee">
+                                                <input style="width: 6rem;" type="text" id="issuance_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
+                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]" 
+                                                    class="hide-input" oninput="handleDateInput(this, 'issuance_date${currentRowCount}')">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][issuance_to]">
+                                        <option value="0">-- Select --</option>
+                                        ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][location]">
+                                        <option value="0">-- Select --</option>
+                                        ${Object.entries(departmentsData).map(([code, name]) =>
+                                            `<option value="${code}">${name}</option>`).join('')}
+                                    </select>
+                                </td>
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][issued_copies]"></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][issued_reason]"></textarea></td>
+                                <td>
+                                    <div class="group-input new-date-data-field mb-0">
+                                        <div class="input-date">
+                                            <div class="calenderauditee">
+                                                <input style="width: 6rem;" type="text" id="retrieval_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
+                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]" 
+                                                    class="hide-input" oninput="handleDateInput(this, 'retrieval_date${currentRowCount}')">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][retrieval_by]">
+                                        <option value="0">-- Select --</option>
+                                        ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][retrieved_department]">
+                                        <option value="0">-- Select --</option>
+                                        ${Object.entries(departmentsData).map(([code, name]) =>
+                                            `<option value="${code}">${name}</option>`).join('')}
+                                    </select>
+                                </td>
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][retrieved_copies]"></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][retrieved_reason]"></textarea></td>
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                    name="distribution[${currentRowCount}][remark]"></textarea></td>
+                                <td><button class="removeTrainRow" onclick="removeRow(this)">Remove</button></td>
+                            `;
+                        }
+
+                        function removeRow(button) {
+                            let row = button.parentNode.parentNode;
+                            row.parentNode.removeChild(row);
                         }
                     </script>
+
+
 
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>

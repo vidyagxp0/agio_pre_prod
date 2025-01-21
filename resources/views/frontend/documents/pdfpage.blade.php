@@ -596,14 +596,21 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
 
-                    @if ($data->status == 'Effective' || $data->stage > 7)
+                    {{-- @if ($data->stage > 7 || $data->stage >= 10)
                          {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                     @else
-                        :
+                        
+                    @endif --}}
+
+                    @if ($data->training_required == 'yes')
+                        @if ($data->stage >= 10)
+                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                        @endif
+                    @else
+                        @if ($data->stage > 7)
+                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                        @endif
                     @endif
-
-
-                        {{-- {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }} --}}
                     </td>
                 </tr>
             </tbody>
@@ -1163,17 +1170,14 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;" id="table2">
-                                <div class="new_procedure">
-                                    <div style="height:auto; overflow-x:hidden; width:500px; margin-left: 2.5rem;">
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
                                         @if ($data->document_content)
-                                            {{-- {!! strip_tags(
-                                                $data->document_content->procedure,
-                                                '<br><li>',) !!} --}}
-                                           {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-
+                                            {!! strip_tags($data->document_content->procedure, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         @endif
                                     </div>
                                 </div>
@@ -1183,18 +1187,51 @@
                 </div>
                 {{-- PROCEDURE END --}}
 
-                <style>
-                    .new_procedure {
-                        width: 400px;
-                        overflow-x: hidden;
-                    }
-                    #table2
-                    {
-                        margin-right:25px;
-                        /* padding:30px */
-                    }
+                    <style>
+                        .custom-procedure-block {
+                            width: 100%;
+                        }
 
-                </style>
+                        .custom-container {
+                            width: 100%;
+                            display: inline-block;
+                        }
+
+                        .custom-table-wrapper {
+                            margin-right: 20px;
+                        }
+
+                        .custom-procedure-content {
+                            width: 100%;
+                            overflow-x: auto;
+                        }
+
+                        .custom-content-wrapper {
+                            height: auto;
+                            overflow-x: auto;
+                            width: 500px;
+                            margin-left: 0.5rem;
+                        }
+
+                        .custom-table-wrapper table {
+                            width: 100%; 
+                            border-collapse: collapse;
+                            overflow: auto;
+                        }
+
+                        .custom-table-wrapper table td, 
+                        .custom-table-wrapper table th {
+                            word-wrap: break-word;
+                            text-align: center;
+                            padding: 5px;
+                        }
+
+                        .custom-table-wrapper table img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+
+                    </style>
 
                 {{-- REPORTING START --}}
                 <table class="mb-15 ">
@@ -1384,7 +1421,46 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="scope-block">
+                    <div class="table-responsive retrieve-table">
+                            <table class="table table-bordered" id="distribution-list">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 16px; font-weight: bold;">Rev. No.</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Change Control No.</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Effective Date</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Details of revision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">1</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                        <td>
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        </td>
+                                    </tr>
+                                    {{-- <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">2</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                         <td>
+                                         {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        </td>
+                                       
+                                        </tr>
+                                        <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">3</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                        <td>
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        </td>
+                                    </tr> --}}
+                                </tbody>
+                            </table>
+                        </div>
+                    {{-- <div class="scope-block">
                         <div class="w-100">
                             <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                 <div class="w-100">
@@ -1394,7 +1470,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
             {{-- <br><br>
