@@ -751,6 +751,12 @@ class Helpers
     {
         $document_types = [
             'SOP' => 'SOP’s (All types)',
+            'FPICVS' => 'Finished product / inprocess / cleaning validation specification',
+            'RAWMS' => 'Raw Material Specification',
+            'PAMS' =>'Packing Material Specification',
+            'PIAS' =>'Product / Item Information-Addendum for Specification',
+            'MFPS' =>'Master Finished Product Specification',
+            'MFPSTP' =>'Master Finished Product Standard Testing Procedure',
             'BOM' => 'Bill of Material',
             'BMR' => 'Batch Manufacturing Record',
             'BPR' => 'Batch Packing Record',
