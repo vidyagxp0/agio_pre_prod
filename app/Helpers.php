@@ -752,7 +752,9 @@ class Helpers
         $document_types = [
             'SOP' => 'SOP’s (All types)',
             'FPICVS' => 'Finished product / inprocess / cleaning validation specification',
+            'FPICVSTP' => 'Finished product / inprocess / cleaning validation Standard Testing Procedure (Commercial / Registration / Re-Registration)',
             'RAWMS' => 'Raw Material Specification',
+            'RMSTP' => 'Raw Material Standard Testing Procedure',
             'PAMS' =>'Packing Material Specification',
             'PIAS' =>'Product / Item Information-Addendum for Specification',
             'MFPS' =>'Master Finished Product Specification',

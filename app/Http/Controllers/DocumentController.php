@@ -36,6 +36,8 @@ use App\Models\User;
 use App\Services\DocumentService;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use Mpdf\Mpdf;
+use Clegginabox\PDFMerger\PDFMerger;
 use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -1773,6 +1775,140 @@ class DocumentController extends Controller
         }
     }
 
+    // working code here 
+    // public function viewPdf($id)
+    // {
+
+    //     $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
+    //     $data = Document::find($id);
+    //     //$data->department = Department::find($data->department_id);
+    //     $department = Department::find(Auth::user()->departmentid);
+    //     $document = Document::find($id);
+
+    //     if ($document->revised == 'Yes') {
+    //         $latestRevision = Document::where('revised_doc', $document->id)
+    //                                    ->max('minor');
+    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     // department code wise number
+    //     // $documents = Document::orderBy('department_id')->get();
+    //     $departmentId = $document->department_id;
+
+    //     if (!$departmentId) {
+    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    //     }
+        
+    //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+    //     $counter = 0;
+    //     foreach ($documents as $doc) {
+    //         $counter++;
+    //         $doc->currentId = $counter;
+        
+
+    //         if ($doc->id == $id) {
+    //             $currentId = $doc->currentId;
+    //         }
+    //     }
+
+
+    //     if ($department) {
+    //         $data['department_name'] = $department->name;
+    //     } else {
+    //         $data['department_name'] = '';
+    //     }
+    //     $data->department = $department;
+
+    //     $data['originator'] = User::where('id', $data->originator_id)->value('name');
+    //     $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+    //     $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+    //     $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+
+    //     $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+    //     $data['year'] = Carbon::parse($data->created_at)->format('Y');
+    //     $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+
+    //     $documentContent = DocumentContent::where('document_id', $id)->first();
+    //     $annexures = [];
+    //     if (!empty($documentContent->annexuredata)) {
+    //         $annexures = unserialize($documentContent->annexuredata);
+    //     }
+        
+
+    //     // pdf related work
+    //     $pdf = App::make('dompdf.wrapper');
+    //     $time = Carbon::now();
+
+    //     // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
+    //     // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
+    //     $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','revisionNumber'))
+    //         ->setOptions([
+    //             'defaultFont' => 'sans-serif',
+    //             'isHtml5ParserEnabled' => true,
+    //             'isRemoteEnabled' => true,
+    //             'isPhpEnabled' => true,
+    //         ]);
+    //     $pdf->setPaper('A4');
+    //     $pdf->render();
+    //     $canvas = $pdf->getDomPDF()->getCanvas();
+    //     $canvas->set_default_view('FitB');
+    //     $height = $canvas->get_height();
+    //     $width = $canvas->get_width();
+
+    //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+    //     $canvas->page_text(
+    //         $width / 4,
+    //         $height / 2,
+    //         Helpers::getDocStatusByStage($data->stage),
+    //         null,
+    //         25,
+    //         [0, 0, 0],
+    //         2,
+    //         6,
+    //         -20
+    //     );
+
+    //     if ($data->documents) {
+
+    //         $pdfArray = explode(',', $data->documents);
+    //         foreach ($pdfArray as $pdfFile) {
+    //             $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
+    //             $permissions = 0644; // Example permission value, change it according to your needs
+    //             if (file_exists($existingPdfPath)) {
+    //                 // Create a new Dompdf instance
+    //                 $options = new Options();
+    //                 $options->set('chroot', public_path());
+    //                 $options->set('isPhpEnabled', true);
+    //                 $options->set('isRemoteEnabled', true);
+    //                 $options->set('isHtml5ParserEnabled', true);
+    //                 $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
+
+    //                 $dompdf = new Dompdf($options);
+
+    //                 chmod($existingPdfPath, $permissions);
+
+    //                 // Load the existing PDF file
+    //                 $dompdf->loadHtmlFile($existingPdfPath);
+
+    //                 // Render the PDF
+    //                 $dompdf->render();
+
+    //                 // Output the PDF to the browser
+    //                 $dompdf->stream();
+    //             }
+    //         }
+    //     }
+
+    //     return $pdf->stream('SOP' . $id . '.pdf');
+    // }
+
+
+    //working code according to document
     public function viewPdf($id)
     {
 
@@ -1834,21 +1970,70 @@ class DocumentController extends Controller
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
         }
+        if (empty($data->document_type_id)) {
+            return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
+        }
         
+        $viewName = match ($data->document_type_id) {
+            'SOP' => 'frontend.documents.pdfpage',
+            'BOM' => 'frontend.documents.bom-pdf',
+            'FPICVS' => 'frontend.documents.fpicvs-pdf',
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'PIAS' => 'frontend.documents.product_item-pdf',
+            'MFPS' => 'frontend.documents.mfps-pdf',
+            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+            'FPICVSTP' => 'frontend.documents.fpicvstp-pdf',
+            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+            'BMR' => 'frontend.documents.bmr-pdf',
+            'BPR' => 'frontend.documents.bpr-pdf',
+            'SPEC' => 'frontend.documents.spec-pdf',
+            'STP' => 'frontend.documents.stp-pdf',
+            'TDS' => 'frontend.documents.tds-pdf',
+            'GTP' => 'frontend.documents.gtp-pdf',
+            'PROTO' => 'frontend.documents.proto-pdf',
+            'REPORT' => 'frontend.documents.report-pdf',
+            'SMF' => 'frontend.documents.smf-pdf',
+            'VMP' => 'frontend.documents.vmp-pdf',
+            'QM' => 'frontend.documents.qm-pdf',
+            default => 'frontend.documents.pdfpage',
+        };
 
+        // $viewName = match ($data->document_type_id) {
+        //     'SOP' => 'frontend.documents.pdfpage',
+        //     'FPICVS' => 'frontend.documents.fpicvs-pdf',
+        //     'RAWMS' => 'frontend.documents.raw_ms-pdf',
+        //     'PAMS' => 'frontend.documents.package_ms-pdf',
+        //     'PIAS' => 'frontend.documents.product_item-pdf',
+        //     'MFPS' => 'frontend.documents.mfps-pdf',
+        //     'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+        //     'BOM' => 'frontend.documents.bom-pdf',
+        //     'BMR' => 'frontend.documents.bmr-pdf',
+        //     'BPR' => 'frontend.documents.bpr-pdf',
+        //     'SPEC' => 'frontend.documents.spec-pdf',
+        //     'STP' => 'frontend.documents.stp-pdf',
+        //     'TDS' => 'frontend.documents.tds-pdf',
+        //     'GTP' => 'frontend.documents.gtp-pdf',
+        //     'PROTO' => 'frontend.documents.proto-pdf',
+        //     'REPORT' => 'frontend.documents.report-pdf',
+        //     'SMF' => 'frontend.documents.smf-pdf',
+        //     'VMP' => 'frontend.documents.vmp-pdf',
+        //     'QM' => 'frontend.documents.qm-pdf',
+        //     default => 'frontend.documents.pdfpage',
+        // };
+        
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
 
-        // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
-        // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
-        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','revisionNumber'))
-            ->setOptions([
-                'defaultFont' => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isPhpEnabled' => true,
-            ]);
+        try {
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();
@@ -1901,8 +2086,13 @@ class DocumentController extends Controller
             }
         }
 
-        return $pdf->stream('SOP' . $id . '.pdf');
+          return $pdf->stream($data['document_type_code'] . '_' . $id . '.pdf');
+        } catch (\Exception $e) {
+            \Log::error('PDF Generation Error: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
+        }
     }
+
 
     public function annexureviewPdf($id)
     {
@@ -2035,7 +2225,6 @@ class DocumentController extends Controller
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
-
     public function printPDF($id)
     {
         $roles = explode(',', Auth::user()->role);
@@ -2090,10 +2279,15 @@ class DocumentController extends Controller
             $data['year'] = Carbon::parse($data->created_at)->format('Y');
             // $document = Document::where('id', $id)->get();
             // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+            $documentContent = DocumentContent::where('document_id', $id)->first();
+            $annexures = [];
+            if (!empty($documentContent->annexuredata)) {
+                $annexures = unserialize($documentContent->annexuredata);
+            }
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','currentId','documents'))
+            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','documents'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -2101,6 +2295,7 @@ class DocumentController extends Controller
                     'isPhpEnabled' => true,
                 ]);
             $pdf->setPaper('A4');
+
             $pdf->render();
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
@@ -2229,6 +2424,208 @@ class DocumentController extends Controller
             return back();
         }
     }
+
+    public function printAnnexurePDF($id)
+    {
+        $roles = explode(',', Auth::user()->role);
+        $controls = PrintControl::whereIn('role_id', $roles)->first();
+
+        $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
+
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                       ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        // department code wise number
+        // $documents = Document::orderBy('department_id')->get();
+        $departmentId = $document->department_id;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+        
+        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+        
+
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+
+        if ($controls) {
+            set_time_limit(30);
+            $document = Document::find($id);
+            $data = Document::find($id);
+            $data->department = Department::find($data->department_id);
+            $data['originator'] = User::where('id', $data->originator_id)->value('name');
+            $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+            $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+            $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+            $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+
+            $data['year'] = Carbon::parse($data->created_at)->format('Y');
+            // $document = Document::where('id', $id)->get();
+            // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+            $documentContent = DocumentContent::where('document_id', $id)->first();
+            $annexures = [];
+            if (!empty($documentContent->annexuredata)) {
+                $annexures = unserialize($documentContent->annexuredata);
+            }
+
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.documents.annexure-pdf', compact('data', 'time', 'document','annexures','currentId','documents'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+            $canvas->page_text(
+                $width / 4,
+                $height / 2,
+                $data->status,
+                null,
+                25,
+                [0, 0, 0],
+                2,
+                6,
+                -20
+            );
+
+            if ($controls->daily != 0) {
+                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
+                if ($user + 1 <= $controls->daily) {
+                    //Downlad History
+                    $download = new PrintHistory;
+                    $download->document_id = $id;
+                    $download->user_id = Auth::user()->id;
+                    $download->role_id = Auth::user()->role;
+                    $download->date = Carbon::now()->format('d-m-Y');
+                    $download->save();
+
+                    // download PDF file with download method
+
+                    return $pdf->stream('SOP' . $id . '.pdf');
+                } else {
+                    toastr()->error('You breach your daily print limit.');
+
+                    return back();
+                }
+            } elseif ($controls->weekly != 0) {
+                $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
+                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+                if ($user + 1 <= $controls->weekly) {
+                    //Downlad History
+                    $download = new PrintHistory;
+                    $download->document_id = $id;
+                    $download->user_id = Auth::user()->id;
+                    $download->role_id = Auth::user()->role;
+                    $download->date = Carbon::now()->format('d-m-Y');
+                    $download->save();
+
+                    // download PDF file with download method
+                    return $pdf->stream('SOP' . $id . '.pdf');
+                } else {
+                    toastr()->error('You breach your weekly print limit.');
+
+                    return back();
+                }
+            } elseif ($controls->monthly != 0) {
+                $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
+                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+                if ($user + 1 <= $controls->monthly) {
+                    //Downlad History
+                    $download = new PrintHistory;
+                    $download->document_id = $id;
+                    $download->user_id = Auth::user()->id;
+                    $download->role_id = Auth::user()->role;
+                    $download->date = Carbon::now()->format('d-m-Y');
+                    $download->save();
+
+                    // download PDF file with download method
+
+                    return $pdf->download('SOP' . $id . '.pdf');
+                } else {
+                    toastr()->error('You breach your monthly print limit.');
+
+                    return back();
+                }
+            } elseif ($controls->quatarly != 0) {
+                $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
+                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+                if ($user + 1 <= $controls->quatarly) {
+                    //Downlad History
+                    $download = new PrintHistory;
+                    $download->document_id = $id;
+                    $download->user_id = Auth::user()->id;
+                    $download->role_id = Auth::user()->role;
+                    $download->date = Carbon::now()->format('d-m-Y');
+                    $download->save();
+
+                    // download PDF file with download method
+
+                    return $pdf->stream('SOP' . $id . '.pdf');
+                } else {
+                    toastr()->error('You breach your quaterly print limit.');
+
+                    return back();
+                }
+            } elseif ($controls->yearly != 0) {
+                $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
+                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+                if ($user + 1 <= $controls->yearly) {
+                    //Downlad History
+                    $download = new PrintHistory;
+                    $download->document_id = $id;
+                    $download->user_id = Auth::user()->id;
+                    $download->role_id = Auth::user()->role;
+                    $download->date = Carbon::now()->format('d-m-Y');
+                    $download->save();
+
+                    // download PDF file with download method
+
+                    return $pdf->stream('SOP' . $id . '.pdf');
+                } else {
+                    toastr()->error('You breach your yearly print limit.');
+
+                    return back();
+                }
+            } else {
+                toastr()->error('There is no controls provide for your role.');
+
+                return back();
+            }
+        } else {
+            toastr()->error('There is no controls provide for your role.');
+
+            return back();
+        }
+    }
+    
+
 
     public function import(Request $request)
     {
@@ -2443,6 +2840,14 @@ class DocumentController extends Controller
         }
     }
 
+    $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
+    if ($distribution_grid) {
+        $distribution = $distribution_grid->replicate();
+        $distribution->document_id = $newdoc->id;
+        $distribution->save();
+    }
+
+    
     DocumentService::update_document_numbers();
 
     toastr()->success('Document has been revised successfully! You can now edit the content.');

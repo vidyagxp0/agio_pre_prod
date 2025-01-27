@@ -124,6 +124,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::get('documents/annexureviewpdf/{id}', [DocumentController::class, 'annexureviewPdf']);
+    Route::get('documents/printAnnexurePDF/{id}', [DocumentController::class, 'printAnnexurePDF']);
+        
     Route::resource('documentsContent', DocumentContentController::class);
     Route::get('doc-details/{id}', [DocumentDetailsController::class, 'viewdetails']);
     Route::put('sendforstagechanage', [DocumentDetailsController::class, 'sendforstagechanage']);

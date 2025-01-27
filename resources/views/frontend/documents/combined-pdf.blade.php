@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DMS Document</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    {{-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> --}}
+    <title>Print Preview</title>
 
     <style>
         * {
@@ -289,31 +282,7 @@
             margin-bottom: 15px;
         }
 
-        /* @page {
-            size: A4;
-            margin-top: 220px;
-            margin-bottom: 60px;
-        } */
-
-        /* header {
-            width: 100%;
-            position: fixed;
-            top: -215px;
-            right: 0;
-            left: 0;
-            display: block;
-
-        } */
-
-        /* .footer {
-            position: fixed;
-            bottom: -45px;
-            left: 0;
-            right: 0;
-            width: 100%;
-            display: block;
-            border-top: 1px solid #ddd;
-        } */
+        
 
         @page {
             size: A4;
@@ -470,12 +439,97 @@
             text-align: left;
         }
         
+        
     </style>
 
+    <style>
+
+        /* Second PDF Header */
+        .second-pdf-header {
+            background-color: #f8f9fa; /* Light Gray */
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .second-pdf-header table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .second-pdf-header td.logo img {
+            max-height: 55px;
+            max-width: 40px;
+        }
+
+        .second-pdf-header td.title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Second PDF Footer */
+        .second-pdf-footer {
+            background-color: #f1f1f1; /* Light Gray */
+            padding: 10px;
+            font-size: 12px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 2px solid #ddd;
+        }
+
+        .second-pdf-footer table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .second-pdf-footer th,
+        .second-pdf-footer td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* Content Styling */
+        .second-pdf-content {
+            margin: 20px;
+        }
+
+        .second-pdf-content .procedure-block {
+            margin-bottom: 20px;
+        }
+
+        .second-pdf-content .procedure-block h3 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .second-pdf-content .procedure-block h4 {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .second-pdf-content .procedure-block table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .second-pdf-content .procedure-block table th,
+        .second-pdf-content .procedure-block table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .second-pdf-content .procedure-block .anne {
+            margin: 10px 0;
+        }
+
+    </style>
 </head>
-
 <body>
-
+    <!-- First pdf Code here -->
     <header class="">
         <table class="border" style="width: 100%;">
             <tbody>
@@ -490,6 +544,10 @@
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
+                    {{-- <td class="logo w-20">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="Logo"
+                            style="margin: 0.5rem 0;">
+                    </td> --}}
                 </tr>
             </tbody>
         </table>
@@ -523,11 +581,50 @@
 
                 <tr style="height:10px">
                     <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Title:</td>
-                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}</td>
+                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}
+                    </td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
 
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                        @else
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                        @endif
+                    </td> --}}
+
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif
+                    </td> --}}
+
                     <td style="width: 23%; padding: 5px; text-align: left">
-                    @if($document->revised == 'Yes')
+                        {{-- @if($document->revised == 'Yes')
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif --}}
+
+                        @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = $document->minor + 1;
                                 if ($revisionNumber > 9) {
@@ -546,12 +643,20 @@
                             @else
                                 {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                             @endif
-                    @endif
+                        @endif
                     </td>
+
                 </tr>
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
+
+                    {{-- @if ($data->stage > 7 || $data->stage >= 10)
+                         {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                    @else
+                        
+                    @endif --}}
+
                     @if ($data->training_required == 'yes')
                         @if ($data->stage >= 10)
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
@@ -1962,25 +2067,97 @@
                     </div>
                 </div>
             </section>
-
         </section>
     </div>
 
+    <!-- <span style="page-break-after: always;"></span> -->
 
-    <script type="text/php">
-        if ( isset($pdf) ) {
-            $pdf->page_script('
-                if ($PAGE_COUNT > 1) {
-                    $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                    $size = 12;
-                    $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 115;
-                    $x = 490;
-                    $pdf->text($x, $y, $pageText, $font, $size);
-                }
-            ');
+<div style="page-break-before: always;">
+    <header class="second-pdf-header">
+        <table class="border" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td class="logo w-20">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" style="max-height: 55px; max-width: 40px;">
+                    </td>
+                    <td class="title w-60" style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                        <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
+                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+
+    <footer class="second-pdf-footer">
+        <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    @php
+                        $inreviews = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Review-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <td style="padding: 20px; border: 1px solid #ddd;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
+
+    <div class="second-pdf-content">
+        <section>
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;" id="table1">
+                        <div class="w-100">
+                            <div class="anne">
+                                @if (!empty($annexures))
+                                    <h3 style="text-align: center; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
+                                    @foreach ($annexures as $index => $annexure)
+                                        @if (!empty($annexure))
+                                            <div style="margin-bottom: 1rem;">
+                                                <h4>Annexure {{ $index + 1 }}</h4>
+                                                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                                                    <div style="max-width: 100%; overflow-x: auto;">
+                                                        {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+    <!-- <script type="text/php">	// (activate dompdf option isPhpEnabled)
+        if (isset($pdf))
+        {
+            $font = $fontMetrics->get_font("helvetica", "bold");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            //
+            $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+            $text_width = $fontMetrics->getTextWidth($text, $font, $size);
+            //
+            $x = 690 - $text_width;
+            $y = 825;
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
         }
-    </script>
+    </script> -->
 </body>
-
 </html>

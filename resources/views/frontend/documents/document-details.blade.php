@@ -21,6 +21,7 @@
                                     <button onclick="location.href='{{ url('audit-trial', $document->id) }}';">
                                         Audit Trail
                                     </button>
+
                                     @if ($document->status !== 'Obsolete')
                                         <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit
                                         </button>
@@ -35,6 +36,12 @@
                                         <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">
                                             Print
+                                        </button>
+                                    @endif
+                                    @if (Helpers::checkControlAccess())
+                                        <button onclick="location.href='{{ url('documents/printAnnexurePDF', $document->id) }}';"
+                                            target="__blank">
+                                            Print Annexure
                                         </button>
                                     @endif
                                     {{-- @if ($document->stage >= 7)

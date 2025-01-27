@@ -329,7 +329,7 @@
 
         body {
             margin-top: 320px;
-            margin-bottom: 140px;
+            margin-bottom: 135px;
         }
 
         footer {
@@ -469,7 +469,6 @@
         .main-section {
             text-align: left;
         }
-        
     </style>
 
 </head>
@@ -490,6 +489,10 @@
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
+                    {{-- <td class="logo w-20">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="Logo"
+                            style="margin: 0.5rem 0;">
+                    </td> --}}
                 </tr>
             </tbody>
         </table>
@@ -523,11 +526,50 @@
 
                 <tr style="height:10px">
                     <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Title:</td>
-                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}</td>
+                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}
+                    </td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
 
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                        @else
+                        {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                        @endif
+                    </td> --}}
+
+                    {{-- <td style="width: 23%; padding: 5px; text-align: left">
+                        @if($data->revised == 'Yes')
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($data->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($data->sop_type_short, ['EOP', 'IOP']))
+                                {{ $data->department_id }}/{{ $data->sop_type_short }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif
+                    </td> --}}
+
                     <td style="width: 23%; padding: 5px; text-align: left">
-                    @if($document->revised == 'Yes')
+                        {{-- @if($document->revised == 'Yes')
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($document->major, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        @else
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif --}}
+
+                        @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = $document->minor + 1;
                                 if ($revisionNumber > 9) {
@@ -546,12 +588,20 @@
                             @else
                                 {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                             @endif
-                    @endif
+                        @endif
                     </td>
+
                 </tr>
                 <tr>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
+
+                    {{-- @if ($data->stage > 7 || $data->stage >= 10)
+                         {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                    @else
+                        
+                    @endif --}}
+
                     @if ($data->training_required == 'yes')
                         @if ($data->stage >= 10)
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
@@ -596,6 +646,38 @@
             </tbody>
         </table>
     </header>
+
+
+    {{-- <footer class="footer">
+        <table class="border p-10">
+            <tbody>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                </tr>
+                <tr>
+                    <td class=" w-50">
+                        @php
+                            $temp = DB::table('document_types')
+                                ->where('name', $data->document_type_name)
+                                ->value('typecode');
+                        @endphp
+                        @if ($data->revised === 'Yes')
+                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
+                            {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if ($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} 
+                        @else
+                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
+                        @endif
+
+                    <td class="w-50">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
+                    <td class="text-right w-20"></td> 
+                </tr>
+            </tbody>
+        </table>
+    </footer> --}}
     
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -676,6 +758,8 @@
         </table>
     </footer>
     
+    
+
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
@@ -1088,7 +1172,7 @@
                         }
 
                         .custom-table-wrapper {
-                            margin-right: 40px;
+                            margin-right: 20px;
                         }
 
                         .custom-procedure-content {
