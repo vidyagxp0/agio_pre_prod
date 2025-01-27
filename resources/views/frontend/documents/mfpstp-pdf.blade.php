@@ -334,76 +334,36 @@
             <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
+                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
+                        <th colspan="2" style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
+                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Reviewed By</th>
+                        <th colspan="2" style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        @php
-                            $inreviews = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Review-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-                        @endphp
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
-                        <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">  
-                        @if ($inreviews->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreviews as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif          
-                        @php
-                            $inreview = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Approval-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-
-                        @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">  
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif                    
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                        </td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreviews->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreviews as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif 
-                        </td>
-
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif                    
-                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                    </tr> 
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Analytical R&D</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Formulation R&D</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Quality Control</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Regulatory</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">R&D QA</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Quality Assurance</td>
                     </tr> 
                 </tbody>
             </table>
@@ -420,8 +380,8 @@
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
                 </tr>
             </tbody>
@@ -522,8 +482,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $y = 805;
+                $x = 450;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }
