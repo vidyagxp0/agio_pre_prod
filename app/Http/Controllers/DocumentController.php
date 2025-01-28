@@ -1918,36 +1918,38 @@ class DocumentController extends Controller
         $department = Department::find(Auth::user()->departmentid);
         $document = Document::find($id);
 
+            // Check revision
         if ($document->revised == 'Yes') {
             $latestRevision = Document::where('revised_doc', $document->id)
-                                       ->max('minor');
+                                    ->max('minor');
             $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
             $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
         } else {
             $revisionNumber = '00';
         }
 
-        // department code wise number
-        // $documents = Document::orderBy('department_id')->get();
+        // Filter documents by department_id and sop_type_short
         $departmentId = $document->department_id;
+        $sopTypeShort = $document->sop_type_short;
 
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
-        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
+        $documents = Document::where('department_id', $departmentId)
+            ->where('sop_type_short', $sopTypeShort)
+            ->orderBy('id')
+            ->get();
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
             }
         }
-
 
         if ($department) {
             $data['department_name'] = $department->name;
@@ -1999,29 +2001,6 @@ class DocumentController extends Controller
             default => 'frontend.documents.pdfpage',
         };
 
-        // $viewName = match ($data->document_type_id) {
-        //     'SOP' => 'frontend.documents.pdfpage',
-        //     'FPICVS' => 'frontend.documents.fpicvs-pdf',
-        //     'RAWMS' => 'frontend.documents.raw_ms-pdf',
-        //     'PAMS' => 'frontend.documents.package_ms-pdf',
-        //     'PIAS' => 'frontend.documents.product_item-pdf',
-        //     'MFPS' => 'frontend.documents.mfps-pdf',
-        //     'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-        //     'BOM' => 'frontend.documents.bom-pdf',
-        //     'BMR' => 'frontend.documents.bmr-pdf',
-        //     'BPR' => 'frontend.documents.bpr-pdf',
-        //     'SPEC' => 'frontend.documents.spec-pdf',
-        //     'STP' => 'frontend.documents.stp-pdf',
-        //     'TDS' => 'frontend.documents.tds-pdf',
-        //     'GTP' => 'frontend.documents.gtp-pdf',
-        //     'PROTO' => 'frontend.documents.proto-pdf',
-        //     'REPORT' => 'frontend.documents.report-pdf',
-        //     'SMF' => 'frontend.documents.smf-pdf',
-        //     'VMP' => 'frontend.documents.vmp-pdf',
-        //     'QM' => 'frontend.documents.qm-pdf',
-        //     default => 'frontend.documents.pdfpage',
-        // };
-        
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();

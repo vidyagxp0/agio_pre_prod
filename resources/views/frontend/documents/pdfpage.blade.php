@@ -527,7 +527,7 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
 
                     <td style="width: 23%; padding: 5px; text-align: left">
-                    @if($document->revised == 'Yes')
+                    {{-- @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = $document->minor + 1;
                                 if ($revisionNumber > 9) {
@@ -546,6 +546,15 @@
                             @else
                                 {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                             @endif
+                    @endif --}}
+                    
+                    @if($document->revised == 'Yes')
+                        @php
+                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                        @endphp
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                    @else
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                     @endif
                     </td>
                 </tr>
@@ -1047,7 +1056,6 @@
                 </div>
                 {{-- MATERIALS AND EQUIPMENTS END --}}
 
-                 <br><br>
                 {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
@@ -1100,7 +1108,9 @@
                             height: auto;
                             overflow-x: auto;
                             width: 500px;
-                            margin-left: 0.5rem;
+                            margin-left: 0.8rem;
+                            margin-right: 0.8rem;
+
                         }
 
                         .custom-table-wrapper table {
@@ -1122,7 +1132,7 @@
                         }
 
                     </style>
-
+                <br>
                 {{-- REPORTING START --}}
                 <table class="mb-15 ">
                     <tbody>
@@ -1327,7 +1337,7 @@
                                         <td style="font-weight: bold;"></td>
                                         <td>{{ $data->effective_date}}</td>
                                         <td>
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        
                                         </td>
                                     </tr>
                                     {{-- <tr>
