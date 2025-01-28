@@ -329,7 +329,7 @@
 
         body {
             margin-top: 320px;
-            margin-bottom: 140px;
+            margin-bottom: 160px;
         }
 
         footer {
@@ -480,13 +480,13 @@
         <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td class="logo w-20">
+                    <td class="logo w-15">
                         <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
                             style="max-height: 55px; max-width: 40px;">
                     </td>
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
+                        <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
@@ -497,7 +497,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>
+                    <td class="doc-num">
                         {{-- {{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }} --}}
                         STANDARD OPERATING PROCEDURE
                     </td>
@@ -510,10 +510,10 @@
             <tbody>
                 <tr>
                     <td style="width: 20%; padding: 5px; text-align: left" class="doc-num">Department:</td>
-                    <td style="width: 50%; padding: 5px; text-align: left">
+                    <td style="width: 35%; padding: 5px; text-align: left">
                         {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-                    <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
-                    <td style="width: 15%; padding: 5px; text-align: left"></td>
+                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
+                    <td style="width: 23%; padding: 5px; text-align: left"></td>
                 </tr>
             </tbody>
         </table>
@@ -552,9 +552,21 @@
                         @php
                             $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
                         @endphp
-                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
                     @else
-                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00 --}}
+                        
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
                     @endif
                     </td>
                 </tr>
@@ -683,6 +695,7 @@
                 </tr> 
             </tbody>
         </table>
+        <span>Format No.: CQA/001/F2-00</span>
     </footer>
     
     <div>

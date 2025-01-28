@@ -386,7 +386,7 @@
                         @endif                    
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
+                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
                         <td style="padding: 5px; border: 1px solid #ddd;">
                         {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
                         </td>
