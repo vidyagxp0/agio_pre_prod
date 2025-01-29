@@ -73,7 +73,34 @@
             /* Pushes the icon to the right */
             cursor: pointer;
         }
+        .hidden-tabs {
+            display: none;
+        }
+
     </style>
+
+    <script>
+        function handleDocumentTypeChange(selectElement) {
+            // Get the selected value
+            const selectedType = selectElement.value;
+
+            // Get all hidden tabs
+            const tabs = document.querySelectorAll('.hidden-tabs');
+
+            // Hide all tabs initially
+            tabs.forEach(tab => {
+                tab.style.display = 'none'; // Hide all tabs with "hidden-tabs" class
+            });
+
+            // Show the matching tab
+            tabs.forEach(tab => {
+                const tabType = tab.getAttribute('data-id');
+                if (tabType === selectedType) {
+                    tab.style.display = 'block'; // Show the matching tab
+                }
+            });
+        }
+    </script>
     <?php $division_id = isset($_GET['id']) ? $_GET['id'] : ''; ?>
     <div id="data-field-head">
         <div class="pr-id">
@@ -91,27 +118,37 @@
     <div id="data-fields">
 
         <div class="container-fluid">
-            <div class="tab">
+            {{-- <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
                     information</button>
-                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
-                <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button>
-                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button> --}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                {{-- <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button> --}}
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
                     Retrieval</button>
-                {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
                 <button class="tablinks printdoc" style="float: right;"
                     onclick="window.print();return false;">Print</button>
+            </div> --}}
+
+            <div class="tab">
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
+                 information</button>
+                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
+                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <!-- Tabs that should be hidden initially -->
+                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
+                <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;">Print</button>
             </div>
+
+
 
             <form id="document-form" action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -373,17 +410,17 @@
                                 </div>
 
                                 {{-- <div class="col-6">
-            <div class="group-input">
-                <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
-                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
-                        (Launch Instruction)
-                    </span>
-                </label>
-                <input type="number" name="minor" id="minor" min="0" max="9" required>
+                                        <div class="group-input">
+                                            <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
+                                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <input type="number" name="minor" id="minor" min="0" max="9" required>
 
-            </div>
-        </div> --}}
-                                <div class="col-md-6">
+                                        </div>
+                                    </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>
                                         <select name="document_type_id" id="doc-type" required>
@@ -396,33 +433,36 @@
                                         </select>
                                     </div>
                                     <p id="doc-typeError" style="color:red">** Department is required</p>
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document Type Code</label>
                                         <div class="default-name"> <span id="document_type_code">Not selected</span></div>
                                     </div>
-                                </div>
-                                {{-- <div class="col-md-6">
+                                </div> --}}
+
+                                <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="doc-type">Document Sub Type<span class="text-danger">*</span></label>
-                                        <select name="document_subtype_id" id="doc-subtype">
+                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                        <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
                                             <option value="" selected>Enter your Selection</option>
-                                            @foreach ($documentsubTypes as $type)
-                                                <option data-id="{{ $type->code }}" value="{{ $type->id }}">
-        {{ $type->docSubtype }}</option>
-        @endforeach
-        </select>
-    </div>
-</div> --}}
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-code">Document SubType Code</label>
-                                        <div class="default-name"> <span id="document_subtype_code">Not selected</span>
-                                        </div>
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option value="{{ $code }}">
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    </div> --}}
+                                    <p id="doc-typeError" style="color:red">** Department is required</p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-code">Document Type Code</label>
+                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language</label>
