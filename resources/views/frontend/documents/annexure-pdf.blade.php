@@ -308,7 +308,7 @@
                         <div class="w-100">
                             <div class="anne">
                                 @if (!empty($annexures))
-                                    <h3 style="text-align: left; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
+                                    <h3 style="text-align: center; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
                                     @foreach ($annexures as $index => $annexure)
                                         @if (!empty($annexure))
                                             <div style="margin-bottom: 1rem;">

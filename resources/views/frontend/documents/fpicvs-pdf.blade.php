@@ -386,7 +386,7 @@
                         @endif                    
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
+                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
                         <td style="padding: 5px; border: 1px solid #ddd;">
                         {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
                         </td>
@@ -543,31 +543,31 @@
         <tbody>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;">Test 1</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: left;">Reference 1</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: left;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;">Test 2</td>
-                <td style="border: 1px solid black; text-align: center;">Fail</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: left;">Reference 2</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: left;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;">Test 3</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: left;">Reference 3</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: left;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;">Test 4</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: left;">Reference 4</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: left;"></td>
             </tr>
         </tbody>
     </table>
@@ -604,27 +604,27 @@
         <tbody>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;">Test 1</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;">Test 2</td>
-                <td style="border: 1px solid black; text-align: center;">Fail</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;">Test 3</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;">Test 4</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
         </tbody>
     </table>
@@ -650,23 +650,23 @@
         <tbody>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;">Test 1</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;">Test 2</td>
-                <td style="border: 1px solid black; text-align: center;">Fail</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;">Test 3</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;">Test 4</td>
-                <td style="border: 1px solid black; text-align: center;">Pass</td>
+                <td style="border: 1px solid black; text-align: left;"></td>
+                <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
         </tbody>
     </table>
