@@ -200,7 +200,7 @@
                 <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
@@ -1303,6 +1303,116 @@
                             </button>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!------------------------ RMSTP tab ------------------------------------>
+  <div id="doc_rmstp" class="tabcontent">
+                        <div class="orig-head">
+                            RAW MATERIAL STANDARD TESTING PROCEDURE
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+                            <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 12%">Test</th>
+                                                    <th style="width: 3%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="test[]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                </div>
+                            </div>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+            <script>
+                    $(document).ready(function() {
+                        $('#Details_add').click(function(e) {
+                            function generateTableRow(serialNumber) {
+                                var users = @json($users);
+                                console.log(users);
+                                var html =
+                                        '<tr>' +
+                                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                                        '"></td>' +
+                                        '<td><input type="text" name="test[]"></td>' +
+
+                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+
+
+                                    return html;
+                                }
+
+                                var tableBody = $('#Details-table tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount + 1);
+                                tableBody.append(newRow);
+                            });
+                        });
+            </script>
+
+            <script>
+                $(document).on('click', '.removeRowBtn', function() {
+                    $(this).closest('tr').remove();
+                })
+            </script>
+
+
+
+
+
+
+
+
+
+
 
 
                     <!-- TDS Tabs -->
