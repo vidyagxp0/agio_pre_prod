@@ -78,6 +78,62 @@
         }
 
     </style>
+    <style>
+        .tab {
+            display: flex; /* Flexbox layout */
+            flex-wrap: wrap; /* Tabs will wrap to the next line if needed */
+            gap: 10px; /* Space between tabs */
+            background-color: #f1f1f1; /* Optional background for better visibility */
+            padding: 10px; /* Padding around the tab container */
+            border: 1px solid #ccc; /* Optional border for styling */
+        }
+
+        .tab button {
+            padding: 10px 15px; /* Padding inside each button */
+            border: 1px solid #ccc; /* Border for each button */
+            background-color: #fff; /* Button background color */
+            cursor: pointer;
+            border-radius: 5px; /* Rounded corners */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+        }
+
+        .tab button:hover {
+            background-color: #ddd; /* Button hover effect */
+        }
+
+        .tab button.active {
+            background-color: #007bff; /* Active tab background */
+            color: white;
+        }
+
+        .printdoc {
+            margin-left: auto; /* Push the print button to the right */
+        }
+    </style>
+
+
+    {{-- <script>
+        function handleDocumentTypeChange(selectElement) {
+            // Get the selected value
+            const selectedType = selectElement.value;
+
+            // Get all hidden tabs
+            const tabs = document.querySelectorAll('.hidden-tabs');
+
+            // Hide all tabs initially
+            tabs.forEach(tab => {
+                tab.style.display = 'none'; // Hide all tabs with "hidden-tabs" class
+            });
+
+            // Show the matching tab
+            tabs.forEach(tab => {
+                const tabType = tab.getAttribute('data-id');
+                if (tabType === selectedType) {
+                    tab.style.display = 'block'; // Show the matching tab
+                }
+            });
+        }
+    </script> --}}
 
     <script>
         function handleDocumentTypeChange(selectElement) {
@@ -99,6 +155,10 @@
                     tab.style.display = 'block'; // Show the matching tab
                 }
             });
+
+            // Update the document type code display
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            document.getElementById('document_type_code').innerText = selectedOption.value || "Not selected";
         }
     </script>
     <?php $division_id = isset($_GET['id']) ? $_GET['id'] : ''; ?>
@@ -142,6 +202,8 @@
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
+                <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -622,39 +684,8 @@
                             </div>
                             <div class="row">
 
-                                {{-- <div class="col-md-6">
-
-                                    <div class="group-input">
-                                        <label for="reviewers-group">Reviewers Group</label>
-                                        <select id="choices-multiple-remove-button" name="reviewers_group[]"
-                                            placeholder="Select Reviewers" class="is-hidden" aria-hidden="true" multiple>
-
-                                            @if (count($reviewergroup) > 0)
-                                                @foreach ($reviewergroup as $lan)
-                                                    <option value="{{ $lan->id }}">
-        {{ $lan->name }}
-        </option>
-        @endforeach
-        @endif
-        </select>
-    </div>
-</div> --}}
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="approvers-group">Approvers Group</label>
-
-                                        <select id="choices-multiple-remove-button" name="approver_group[]"
-                                            placeholder="Select Approvers" multiple>
-                                            @if (count($approversgroup) > 0)
-                                                @foreach ($approversgroup as $lan)
-                                                    <option value="{{ $lan->id }}">
-{{ $lan->name }}
-</option>
-@endforeach
-@endif
-</select>
-</div>
-</div> --}}
+                               
+                               
                                 {{-- <div class="col-12">
     <div class="group-input">
         <label for="revision-type">Revision Type</label>
@@ -1273,6 +1304,281 @@
                         </div>
                     </div>
 
+
+                    <!-- TDS Tabs -->
+                    <div id="doc-tds" class="tabcontent">
+                        <div class="orig-head">
+                            TEST  DATA SHEET
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Product/Material Name</label>
+                                        <input type="text" name="product_material_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">TDS No.</label>
+                                        <input type="text" name="tds_no">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">Reference Standard/General Testing Procédure No</label>
+                                        <input type="text" name="Reference_Standard">
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="batch_no">Batch No</label>
+                                        <input type="text" name="batch_no">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">A.R. No.</label>
+                                        <input type="text" name="ar_no">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">Mfg. Date</label>
+                                        <input type="date" name="mfg_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">Exp. Date</label>
+                                        <input type="date" name="exp_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">Analysis start date</label>
+                                        <input type="date" name="analysis_start_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">Analysis completion date </label>
+                                        <input type="date" name="analysis_completion_date ">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="ar_no">Specification No</label>
+                                        <input type="date" name="specification_no">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 sub-head">
+                                        Summary of Results
+                                </div>
+                                <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr No.</th>
+                                                    <th>Test </th>
+                                                    <th>Result</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="summaryResult[0][test]"></td>
+                                                    <td><input type="text" name="summaryResult[0][result]"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#ObservationAdd').click(function(e) {
+                                        function generateTableRow(serialNumber) {
+
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="summaryResult[' + serialNumber +
+                                                '][serial]" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                '][job]"></td>' +
+                                                '<td><input type="text" class="Document_Remarks" name="summaryResult[' +
+                                                serialNumber + '][remarks]"></td>' +
+                                                '</tr>';
+
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#job-responsibilty-table tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="tds_remark">Remark</label>
+                                    <textarea name="tds_remark"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="orig-head">
+                               SAMPLE RECONCILATION
+                            </div>
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="name_of_material/sample">Name of Material/Sample</label>
+                                    <input type="text" name="name_of_material_sample">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="name_of_material/sample">Batch No.</label>
+                                    <input type="text" name="sample_reconcilation_batchNo">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="name_of_material/sample">A.R.No.</label>
+                                    <input type="text" name="sample_reconcilation_arNo">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="name_of_material/sample">Total Quantity Received</label>
+                                    <input type="text" name="sample_quatity_received">
+                                </div>
+                            </div>
+
+                                <div class="col-12 sub-head">
+                                        Sample Reconcilation
+                                </div>
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            <button type="button" name="audit-agenda-grid" id="ObservationSample">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="job-ObservationSample-table" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr No.</th>
+                                                        <th>Test Name</th>
+                                                        <th>Quantity Required for test as per STP</th>
+                                                        <th>Quantity Used for test</th>
+                                                        <th>Used by (Sign/Date)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input disabled type="text" name="sampleReconcilation[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
+                                                        <td><input type="date" name="sampleReconcilation[0][used_by]"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#ObservationSample').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="sampleReconcilation[' + serialNumber +
+                                                    '][serial]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
+                                                    '][test_name]"></td>' +
+                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
+                                                    '][quantity_test_stp]"></td>' +
+                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
+                                                    '][quantity_userd_test]"></td>' +
+                                                    
+                                                    '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
+                                                    serialNumber + '][used_by]"></td>' +
+                                                    '</tr>';
+
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#job-ObservationSample-table tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="name_of_material/sample">Total Quantity Consumed</label>
+                                        <input type="text" name="total_quantity_consumed">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="name_of_material/sample">Balance Quantity</label>
+                                        <input type="text" name="balance_quantity">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">Balance Quantity Destructed</label>
+                                        <select name="balance_quantity_destructed" required>
+                                            <option value="">Enter your Selection</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No" selected>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
 
 
                     <div id="annexures" class="tabcontent">
