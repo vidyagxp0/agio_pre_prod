@@ -133,7 +133,7 @@
             margin-top: 250px;
             margin-bottom: 160px;
             padding-top: 60px;
-            padding-bottom: 50px; 
+            padding-bottom: 50px;
         }
 
         footer {
@@ -280,7 +280,7 @@
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
-                       RAW MATERIAL SPECIFICATION  
+                       RAW MATERIAL SPECIFICATION
                     </td>
                 </tr>
             </tbody>
@@ -353,14 +353,14 @@
                         @endphp
                         <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
                         <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">  
+                        <td style="padding: 5px; border: 1px solid #ddd;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreviews as $temp)
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif          
+                        @endif
                         @php
                             $inreview = DB::table('stage_manages')
                                 ->join('users', 'stage_manages.user_id', '=', 'users.id')
@@ -371,14 +371,14 @@
                                 ->get();
 
                         @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">  
+                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
                         @if ($inreview->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreview as $temp)
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif                    
+                        @endif
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
@@ -392,7 +392,7 @@
                             @foreach ($inreviews as $temp)
                             <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif 
+                        @endif
                         </td>
 
                         <td style="padding: 5px; border: 1px solid #ddd;">
@@ -402,9 +402,9 @@
                             @foreach ($inreview as $temp)
                             <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif                    
+                        @endif
                         </td>
-                    </tr> 
+                    </tr>
                 </tbody>
             </table>
 
@@ -422,7 +422,7 @@
                     @endphp
                     <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
                     <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
+                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>
                 </tr>
             </tbody>
         </table>
@@ -447,27 +447,27 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">CAS No.
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->molecular_formula_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->molecular_weight_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Retest Period
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->retest_period_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling procedure
@@ -477,10 +477,10 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Item Code
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Refer to “Details of Item Code”</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Refer to “Details of Item Code” {{ $data->item_code_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis{{ $data->sample_quantity_row_material }}
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
                                     Chemical Analysis: ______<br>
@@ -508,7 +508,7 @@
             </section>
         </section>
     </div>
-   
+
     <table>
         <thead>
             <tr>
