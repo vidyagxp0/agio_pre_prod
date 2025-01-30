@@ -1523,6 +1523,46 @@
                                 </div>
                             </div>
 
+                            <script>
+                            $(document).ready(function() {
+                                let investdetails = 1;
+                                $('#Details_add_data').click(function(e) {
+                                    function generateTableRow(serialNumber) {
+                                        var users = @json($users);
+                                        console.log(users);
+                                        var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][tests]" value=""></td>' +
+                                            
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][specification]" value=""></td>' +
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][gtp_no]" value=""></td>' +
+                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+
+
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Details-table-data tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                    </script>
+
+                    <script>
+                        $(document).on('click', '.removeRowBtn', function() {
+                            $(this).closest('tr').remove();
+                        })
+                    </script>
+
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1538,44 +1578,7 @@
 
 
 
-            <script>
-                    $(document).ready(function() {
-                        let investdetails = 1;
-                        $('#Details_add_data').click(function(e) {
-                            function generateTableRow(serialNumber) {
-                                var users = @json($users);
-                                console.log(users);
-                                var html =
-                                        '<tr>' +
-                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
-                                        '"></td>' +
-                                        '<td><input type="text" name="packingtest[' + investdetails +
-                                        '][tests]" value=""></td>' +
-                                       
-                                        '<td><input type="text" name="packingtest[' + investdetails +
-                                        '][specification]" value=""></td>' +
-                                        '<td><input type="text" name="packingtest[' + investdetails +
-                                        '][gtp_no]" value=""></td>' +
-                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                                        '</tr>';
-
-
-                                    return html;
-                                }
-
-                                var tableBody = $('#Details-table-data tbody');
-                                var rowCount = tableBody.children('tr').length;
-                                var newRow = generateTableRow(rowCount + 1);
-                                tableBody.append(newRow);
-                            });
-                        });
-            </script>
-
-            <script>
-                $(document).on('click', '.removeRowBtn', function() {
-                    $(this).closest('tr').remove();
-                })
-            </script>
+         
 
 
 

@@ -819,8 +819,20 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
+  
 
         $hods = User::get();
+
+        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
+        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+      
+        
+        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
+          $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+      //  dd($testDataDecoded);
+
+
+      
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
         //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
@@ -850,7 +862,11 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grid'
+            'document_distribution_grid',
+            'testDataDecoded',
+            'PackingGridData',
+            'MaterialSpecification',
+            'ProductSpecification'
         ));
     }
 
@@ -888,6 +904,21 @@ class DocumentController extends Controller
                 $document->document_type_id = $request->document_type_id;
                 $document->document_subtype_id = $request->document_subtype_id;
                 $document->document_language_id = $request->document_language_id;
+
+
+
+
+                
+                $document->name_pack_material = $request->name_pack_material;
+                $document->standard_pack = $request->standard_pack;
+                $document->sampling_plan = $request->sampling_plan;
+                $document->sampling_instruction = $request->sampling_instruction;
+                $document->sample_analysis = $request->sample_analysis;
+                $document->control_sample = $request->control_sample;
+                $document->safety_precaution = $request->safety_precaution;
+                $document->storage_condition = $request->storage_condition;
+                $document->approved_vendor = $request->approved_vendor;
+
                 // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
                 // try {
                 //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
@@ -1606,6 +1637,41 @@ class DocumentController extends Controller
                 $history->save();
             }
 
+
+
+            $DocumentGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest']);
+            $DocumentGridData->document_type_id = $document->id;
+            $DocumentGridData->identifier = 'Rowmaterialtest';
+            $DocumentGridData->data = $request->test;
+            $DocumentGridData->save();
+
+
+            
+
+            $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
+            $PackingGridData->document_type_id = $document->id;
+            $PackingGridData->identifier = 'Packingmaterialdata';
+            $PackingGridData->data = $request->packingtest;
+            $PackingGridData->save();
+
+
+
+            $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
+            $ProductSpecification->document_type_id = $document->id;
+            $ProductSpecification->identifier = 'ProductSpecification';
+            $ProductSpecification->data = $request->product;
+            $ProductSpecification->save();
+
+
+
+            $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
+            $MaterialSpecification->document_type_id = $document->id;
+            $MaterialSpecification->identifier = 'MaterialSpecification';
+            $MaterialSpecification->data = $request->row_material;
+            // dd($MaterialSpecification);
+            $MaterialSpecification->save();
+
+
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/' . $id);
@@ -2024,11 +2090,22 @@ class DocumentController extends Controller
         $data['year'] = Carbon::parse($data->created_at)->format('Y');
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
-        $testDataDecoded = DocumentGrid::where([
-            'document_type_id' => $id, 
-            'identifier' => 'Rowmaterialtest'
-        ])->first();
-       // dd($testDataDecoded);
+
+
+        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
+            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+            ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
+        
+        
+        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data) 
+            ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
+        
+
+        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
+        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+ 
+      //  dd($testDataDecoded);
       //  $testDataDecoded = json_decode($testData->data, true);
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
@@ -2069,7 +2146,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testDataDecoded'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
