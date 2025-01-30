@@ -136,7 +136,7 @@
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'add-fpicvs')">FPICVS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
@@ -789,7 +789,7 @@
                             </div>
 
 
-                            
+
 
                             <!-- testing code -->
                             <div class="col-md-6">
@@ -798,7 +798,7 @@
         <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
             <option value="">Enter your Selection</option>
             @foreach (Helpers::getDocumentTypes() as $code => $type)
-                <option data-id="{{ $code }}" value="{{ $code }}" 
+                <option data-id="{{ $code }}" value="{{ $code }}"
                     {{ $code == $document->document_type_id ? 'selected' : '' }}>
                     {{ $type }}
                 </option>
@@ -2861,7 +2861,7 @@
                                         <input type="text" name="Reference_Standard">
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="batch_no">Batch No</label>
@@ -2876,7 +2876,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
@@ -3057,7 +3057,7 @@
                                                     '][quantity_test_stp]"></td>' +
                                                     '<td><input type="text" name="sampleReconcilation[' + serialNumber +
                                                     '][quantity_userd_test]"></td>' +
-                                                    
+
                                                     '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
                                                     serialNumber + '][used_by]"></td>' +
                                                     '</tr>';
@@ -3110,6 +3110,276 @@
                         </div>
                     </div>
 
+
+{{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
+
+                    <div id="add-fpicvs" class="tabcontent">
+                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+(COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Generic Name</label>
+                                        <input type="text" name="generic_name" value="{{ $document->generic_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Brand Name</label>
+                                        <input type="text" name="brand_name" value="{{ $document->brand_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Label Claim</label>
+                                        <input type="text" name="label_claim" value="{{ $document->label_claim }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Product Code</label>
+                                        <input type="text" name="product_code" value="{{ $document->product_code }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="storage-condition">Storage Condition</label>
+                                        <input type="text" name="storage_condition" value="{{ $document->storage_condition }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity">
+                                            <option value="" selected>Enter your Selection</option>
+                                            <option value="Chemical Analysis" {{ $document->sample_quantity == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
+                                            <option value="Microbial Analysis" {{ $document->sample_quantity == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample" value="{{ $document->reserve_sample }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="custom-sample">Custom Sample</label>
+                                        <input type="text" name="custom_sample" value="{{ $document->custom_sample }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Reference</label>
+                                        <input type="text" name="reference" value="{{ $document->reference }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions" value="{{ $document->sampling_instructions }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">
+                                    SPECIFICATION
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Specification Details">
+                                            Specification Details
+                                            <button type="button" id="specification_add">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="specification_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Sr. No.</th>
+                                                        <th>Test</th>
+                                                        <th>Release</th>
+                                                        <th>Shelf life</th>
+                                                        <th>Reference</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($SpecificationData) && is_array($SpecificationData->data))
+                                                        @foreach ($SpecificationData->data as $index => $spec)
+                                                            <tr>
+                                                                <td><input disabled type="text" name="specification_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][release]" value="{{ $spec['release'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][shelf_life]" value="{{ $spec['shelf_life'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr class="no-data">
+                                                            <td colspan="6">No data found</td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Add new row in Specification table
+                                        $('#specification_add').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateSpecificationRow(serialNumber) {
+                                                return (
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="specification_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][test]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][release]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][shelf_life]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][reference]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>'
+                                                );
+                                            }
+
+                                            var tableBody = $('#specification_details tbody');
+                                            var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                            // Remove "No data found" row if it exists
+                                            if (rowCount === 0) {
+                                                tableBody.find('.no-data').remove();
+                                                rowCount = 0; // Start count from 0 if no rows exist
+                                            }
+
+                                            var newRow = generateSpecificationRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+
+                                        // Remove row in Specification table
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+
+                                            // Check if table is empty after deletion, add "No data found" row if so
+                                            if ($('#specification_details tbody tr').length === 0) {
+                                                $('#specification_details tbody').append('<tr class="no-data"><td colspan="6">No data found</td></tr>');
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+<div class="col-12 sub-head">
+    Validation Specification
+</div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="Specification Details">
+            Specification Details
+            <button type="button" id="specification_validation_add">+</button>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="specification_validation_details" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 100px;">Sr. No.</th>
+                        <th>Test</th>
+                        <th>Specification</th>
+                        <th>Reference</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($Specification_Validation_Data) && is_array($Specification_Validation_Data->data))
+                        @foreach ($Specification_Validation_Data->data as $index => $spec)
+                            <tr>
+                                <td><input disabled type="text" name="specification_validation_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                <td><input type="text" name="specification_validation_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                <td><input type="text" name="specification_validation_details[{{ $index }}][specification]" value="{{ $spec['specification'] }}"></td>
+                                <td><input type="text" name="specification_validation_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr class="no-data">
+                            <td colspan="5">No data found</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Add new row in Specification Validation table
+        $('#specification_validation_add').click(function(e) {
+            e.preventDefault();
+
+            function generateSpecificationRow(serialNumber) {
+                return (
+                    '<tr>' +
+                    '<td><input disabled type="text" name="specification_validation_details[' + serialNumber +
+                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
+                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
+                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>'
+                );
+            }
+
+            var tableBody = $('#specification_validation_details tbody');
+            var rowCount = tableBody.children('tr').not('.no-data').length;
+
+            // Remove "No data found" row if it exists
+            if (rowCount === 0) {
+                tableBody.find('.no-data').remove();
+                rowCount = 0; // Start count from 0 if no rows exist
+            }
+
+            var newRow = generateSpecificationRow(rowCount);
+            tableBody.append(newRow);
+        });
+
+        // Remove row in Specification Validation table
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+
+            // Check if table is empty after deletion, add "No data found" row if so
+            if ($('#specification_validation_details tbody tr').length === 0) {
+                $('#specification_validation_details tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
 
                 <div id="annexures" class="tabcontent">
                     <div class="d-flex justify-content-end">
@@ -3379,7 +3649,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
 
                     {{-- <script>
                         function addDistributionRetrieval1(tableId) {
@@ -3389,7 +3659,7 @@
 
                             // Mock data for departments and users if not available
                             let departmentsData = @json(Helpers::getDmsDepartments()); // Use PHP helper
-                            
+
                             newRow.setAttribute("id", "row" + currentRowCount);
 
                             // Document details
@@ -3403,24 +3673,24 @@
                             cell1.innerHTML = currentRowCount;
 
                             let cell2 = newRow.insertCell(1);
-                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;" 
+                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;"
                             name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
 
                             let cell3 = newRow.insertCell(2);
-                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_number]" readonly>
                             ${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea>`;
 
                             let cell4 = newRow.insertCell(3);
-                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
 
                             let cell5 = newRow.insertCell(4);
-                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_on]"></textarea>`;
 
                             let cell6 = newRow.insertCell(5);
-                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_copies]"></textarea>`;
 
                             let cell7 = newRow.insertCell(6);
@@ -3478,7 +3748,7 @@
                             border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
 
                             let cell17 = newRow.insertCell(16);
-                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][remark]"></textarea>`;
 
                             let cell18 = newRow.insertCell(17);
@@ -3513,22 +3783,22 @@
                             // Create and populate cells
                             newRow.innerHTML = `
                                 <td>${currentRowCount}</td>
-                                <td><textarea style="overflow: hidden; border: none; width: 10rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 10rem;"
                                     name="distribution[${currentRowCount}][document_title]" readonly>${documentName}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_number]" readonly>${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_by]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_on]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_copies]"></textarea></td>
                                 <td>
                                     <div class="group-input new-date-data-field mb-0">
                                         <div class="input-date">
                                             <div class="calenderauditee">
                                                 <input style="width: 6rem;" type="text" id="issuance_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]" 
+                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]"
                                                     class="hide-input" oninput="handleDateInput(this, 'issuance_date${currentRowCount}')">
                                             </div>
                                         </div>
@@ -3547,16 +3817,16 @@
                                             `<option value="${code}">${name}</option>`).join('')}
                                     </select>
                                 </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][issued_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][issued_reason]"></textarea></td>
                                 <td>
                                     <div class="group-input new-date-data-field mb-0">
                                         <div class="input-date">
                                             <div class="calenderauditee">
                                                 <input style="width: 6rem;" type="text" id="retrieval_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]" 
+                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]"
                                                     class="hide-input" oninput="handleDateInput(this, 'retrieval_date${currentRowCount}')">
                                             </div>
                                         </div>
@@ -3575,11 +3845,11 @@
                                             `<option value="${code}">${name}</option>`).join('')}
                                     </select>
                                 </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][retrieved_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][retrieved_reason]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][remark]"></textarea></td>
                                 <td><button class="removeTrainRow" onclick="removeRow(this)">Remove</button></td>
                             `;

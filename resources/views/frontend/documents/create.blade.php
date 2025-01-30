@@ -1728,7 +1728,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
-                                        Specification Details
+                                        Specification Validation Details
                                         <button type="button" id="specification_validation_add">+</button>
                                     </label>
                                     <div class="table-responsive">
@@ -1746,9 +1746,9 @@
                                                 <!-- Initial Row Placeholder (Optional) -->
                                                 <tr>
                                                     <td><input disabled type="text" name="specification_validation_details[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="specification_details[0][test]"></td>
-                                                    <td><input type="text" name="specification_details[0][specification]"></td>
-                                                    <td><input type="text" name="specification_details[0][reference]"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][test]"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][specification]"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][reference]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
                                             </tbody>
@@ -1765,10 +1765,10 @@
                                         function generateSpecificationTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
-                                                '<td><input disabled type="text" name="specification_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="specification_details[' + serialNumber + '][test]"></td>' +
-                                                '<td><input type="text" name="specification_details[' + serialNumber + '][specification]"></td>' +
-                                                '<td><input type="text" name="specification_details[' + serialNumber + '][reference]"></td>' +
+                                                '<td><input disabled type="text" name="specification_validation_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
                                             return html;

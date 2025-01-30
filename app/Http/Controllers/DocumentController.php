@@ -709,6 +709,7 @@ class DocumentController extends Controller
             $Specification_Validation_Data->document_type_id = $griddata;
             $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
             $Specification_Validation_Data->data = $request->specification_validation_details;
+            // dd($Specification_Validation_Data->data);
             $Specification_Validation_Data->save();
             $content->save();
 
@@ -814,6 +815,10 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
+        $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
+        $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
+
+
         $hods = User::get();
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -844,7 +849,9 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grid'
+            'document_distribution_grid',
+            'SpecificationData',
+            'Specification_Validation_Data'
         ));
     }
 
