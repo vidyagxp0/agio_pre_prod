@@ -468,6 +468,7 @@ class DocumentController extends Controller
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
 
+            //tds
             $document->product_material_name = $request->product_material_name;
             $document->tds_no = $request->tds_no;
             $document->Reference_Standard = $request->Reference_Standard;
