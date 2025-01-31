@@ -12,6 +12,7 @@ use App\Models\QMSDivision;
 use Helpers;
 use App\Models\DocumentContent;
 use App\Models\DocumentGridData;
+use App\Models\specifications;
 //use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
 use App\Models\DocumentLanguage;
@@ -465,6 +466,8 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+            $document->specification_mfps_no = $request->specification_mfps_no;
+            $document->stp_mfps_no = $request->stp_mfps_no;
             // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
 
             try {
@@ -669,6 +672,14 @@ class DocumentController extends Controller
 
             $content->save();
 
+            $specification_id = $document->id;
+
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications';
+            $specifications->data = json_encode($request->specifications);
+            $specifications->save();
+      
             toastr()->success('Document created');
 
             return redirect()->route('documents.index');
@@ -724,6 +735,8 @@ class DocumentController extends Controller
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         // $document->parent_child = json_decode($document->parent_child);
         $parentChildRecords = DB::table('action_items')->get();
+        $specifications = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications'])->first();
+        $specifications->data = json_decode($specifications->data, true);
 
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
@@ -793,7 +806,8 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grid'
+            'document_distribution_grid',
+            'specifications'
         ));
     }
 
@@ -1401,6 +1415,12 @@ class DocumentController extends Controller
 
 
             $documentcontet->save();
+
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications';
+            $specifications->data = json_encode($request->specifications);
+            $specifications->save();
 
             if ($lastContent->purpose != $documentcontet->purpose || !empty($request->purpose_comment)) {
                 $history = new DocumentHistory;
