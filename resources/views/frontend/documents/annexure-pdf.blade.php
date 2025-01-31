@@ -302,7 +302,7 @@
     <div class="content">
         <section>
             
-        <div class="procedure-block">
+            <div class="procedure-block">
                 <div class="w-100">
                     <div class="w-100" style="display:inline-block;" id=table1>
                         <div class="w-100">
@@ -313,7 +313,6 @@
                                         @if (!empty($annexure))
                                             <div style="margin-bottom: 1rem;">
                                                 <h4>Annexure {{ $index + 1 }}</h4>
-                                                <!-- Wrapping table with scrollable container -->
                                                 <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
                                                     <div style="max-width: 100%; overflow-x: auto;">
                                                         {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}

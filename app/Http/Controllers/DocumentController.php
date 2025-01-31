@@ -24,6 +24,7 @@ use App\Models\DownloadHistory;
 use App\Models\Grouppermission;
 use App\Models\Keyword;
 use App\Models\OpenStage;
+use App\Models\TDSDocumentGrid;
 use App\Models\PrintControl;
 use App\Models\PrintHistory;
 use App\Models\Process;
@@ -465,6 +466,28 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+
+            $document->product_material_name = $request->product_material_name;
+            $document->tds_no = $request->tds_no;
+            $document->Reference_Standard = $request->Reference_Standard;
+            $document->batch_no = $request->batch_no;
+            $document->ar_no = $request->ar_no;
+            $document->mfg_date = $request->mfg_date;
+            $document->exp_date = $request->exp_date;
+            $document->analysis_start_date = $request->analysis_start_date;
+            $document->analysis_completion_date = $request->analysis_completion_date;
+            $document->specification_no = $request->specification_no;
+            $document->tds_remark = $request->tds_remark;
+            $document->name_of_material_sample = $request->name_of_material_sample;
+            $document->sample_reconcilation_batchNo = $request->sample_reconcilation_batchNo;
+            $document->sample_reconcilation_arNo = $request->sample_reconcilation_arNo;
+            $document->sample_quatity_received = $request->sample_quatity_received;
+            $document->total_quantity_consumed = $request->total_quantity_consumed;
+            $document->balance_quantity = $request->balance_quantity;
+            $document->balance_quantity_destructed = $request->balance_quantity_destructed;
+
+
+
             // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
 
             try {
@@ -552,6 +575,15 @@ class DocumentController extends Controller
                 $document->approver_group = implode(',', $request->approver_group);
             }
             $document->save();
+
+            // Grid here
+            $tds_id = $document->id;
+            $employeeJobGrid = TDSDocumentGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
+            $employeeJobGrid->tds_id = $tds_id;
+            $employeeJobGrid->identifier = 'summaryResult';
+            $employeeJobGrid->data = json_encode($request->summaryResult);
+            $employeeJobGrid->save();
+
 
             DocumentService::update_document_numbers();
 
@@ -850,6 +882,28 @@ class DocumentController extends Controller
                 $document->controlled_user_department = $request->controlled_user_department;
                 $document->display_user_department = $request->display_user_department;
 
+                $document->product_material_name = $request->product_material_name;
+                $document->tds_no = $request->tds_no;
+                $document->Reference_Standard = $request->Reference_Standard;
+                $document->batch_no = $request->batch_no;
+                $document->ar_no = $request->ar_no;
+                $document->mfg_date = $request->mfg_date;
+                $document->exp_date = $request->exp_date;
+                $document->analysis_start_date = $request->analysis_start_date;
+                $document->analysis_completion_date = $request->analysis_completion_date;
+                $document->specification_no = $request->specification_no;
+                $document->tds_remark = $request->tds_remark;
+                $document->name_of_material_sample = $request->name_of_material_sample;
+                $document->sample_reconcilation_batchNo = $request->sample_reconcilation_batchNo;
+                $document->sample_reconcilation_arNo = $request->sample_reconcilation_arNo;
+                $document->sample_quatity_received = $request->sample_quatity_received;
+                $document->total_quantity_consumed = $request->total_quantity_consumed;
+                $document->balance_quantity = $request->balance_quantity;
+                $document->balance_quantity_destructed = $request->balance_quantity_destructed;
+
+
+    
+
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
                 }
@@ -891,7 +945,7 @@ class DocumentController extends Controller
                 $document->revision_summary = $request->revision_summary;
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
-                $document->minor = $request->minor;
+                // $document->minor = $request->minor;
 
 
                 if (!empty($request->reviewers)) {
@@ -911,8 +965,15 @@ class DocumentController extends Controller
                 }
             }
 
-
             $document->update();
+
+
+            // $tds_id = $document->id;
+            // $employeeJobGrid = EmployeeGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
+            // $employeeJobGrid->tds_id = $tds_id;
+            // $employeeJobGrid->identifier = 'summaryResult';
+            // $employeeJobGrid->data = json_encode($request->summaryResult);
+            // $employeeJobGrid->save();
 
             DocumentService::handleDistributionGrid($document, $request->distribution);
 
@@ -2172,7 +2233,7 @@ class DocumentController extends Controller
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
         $canvas->page_text(
-            $width / 4,
+            $width / 2.4,
             $height / 2,
             Helpers::getDocStatusByStage($data->stage),
             null,
@@ -2761,90 +2822,90 @@ class DocumentController extends Controller
 
     public function revision(Request $request, $id)
     {
-    $document = Document::find($id);
+        $document = Document::find($id);
 
-    if (!$document) {
-        toastr()->error('Document not found!');
-        return redirect()->back();
-    }
-
-    $requestedMajor = (int)$document->major;
-    $requestedMinor = (int)$document->minor;
-
-    if ($requestedMinor < 9) {
-        $requestedMinor += 1;
-    } else {
-        $requestedMinor = 1;
-        $requestedMajor += 1;
-    }
-
-    \Log::info("Incremented Major: $requestedMajor, Minor: $requestedMinor");
-
-    $revisionExists = Document::where([
-        'document_type_id' => $document->document_type_id,
-        'document_number' => $document->document_number,
-        'major' => $requestedMajor,
-        'minor' => $requestedMinor
-    ])->first();
-
-    if ($revisionExists) {
-        toastr()->error('A document with this version already exists!');
-        return redirect()->back();
-    }
-
-    $document->revision = 'Yes';
-    $document->revision_policy = $request->revision;
-    $document->update();
-
-    $newdoc = $document->replicate();
-    $newdoc->revised = 'Yes';
-    $newdoc->revised_doc = $document->id;
-    $newdoc->major = $requestedMajor;
-    $newdoc->minor = $requestedMinor;
-    $newdoc->trainer = $request->trainer;
-    $newdoc->comments = $request->comment;
-    $newdoc->stage = 1;
-    $newdoc->status = Stage::where('id', 1)->value('name');
-    $newdoc->save();
-
-    \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
-
-    $docContent = DocumentContent::where('document_id', $document->id)->first();
-    if ($docContent) {
-        $newDocContent = $docContent->replicate();
-        $newDocContent->document_id = $newdoc->id;
-        $newDocContent->save();
-    }
-
-    $annexure = Annexure::where('document_id', $document->id)->first();
-    if ($annexure) {
-        $newAnnexure = $annexure->replicate();
-        $newAnnexure->document_id = $newdoc->id;
-        $newAnnexure->save();
-    }
-
-    if ($document->training_required == 'yes') {
-        $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-        if ($docTrain) {
-            $newTraining = $docTrain->replicate();
-            $newTraining->document_id = $newdoc->id;
-            $newTraining->save();
+        if (!$document) {
+            toastr()->error('Document not found!');
+            return redirect()->back();
         }
+
+        $requestedMajor = (int)$document->major;
+        $requestedMinor = (int)$document->minor;
+
+        if ($requestedMinor < 9) {
+            $requestedMinor += 1;
+        } else {
+            $requestedMinor = 1;
+            $requestedMajor += 1;
+        }
+
+        \Log::info("Incremented Major: $requestedMajor, Minor: $requestedMinor");
+
+        $revisionExists = Document::where([
+            'document_type_id' => $document->document_type_id,
+            'document_number' => $document->document_number,
+            'major' => $requestedMajor,
+            'minor' => $requestedMinor
+        ])->first();
+
+        if ($revisionExists) {
+            toastr()->error('A document with this version already exists!');
+            return redirect()->back();
+        }
+
+        $document->revision = 'Yes';
+        $document->revision_policy = $request->revision;
+        $document->update();
+
+        $newdoc = $document->replicate();
+        $newdoc->revised = 'Yes';
+        $newdoc->revised_doc = $document->id;
+        $newdoc->major = $requestedMajor;
+        $newdoc->minor = $requestedMinor;
+        $newdoc->trainer = $request->trainer;
+        $newdoc->comments = $request->comment;
+        $newdoc->stage = 1;
+        $newdoc->status = Stage::where('id', 1)->value('name');
+        $newdoc->save();
+
+        \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+
+        $docContent = DocumentContent::where('document_id', $document->id)->first();
+        if ($docContent) {
+            $newDocContent = $docContent->replicate();
+            $newDocContent->document_id = $newdoc->id;
+            $newDocContent->save();
+        }
+
+        $annexure = Annexure::where('document_id', $document->id)->first();
+        if ($annexure) {
+            $newAnnexure = $annexure->replicate();
+            $newAnnexure->document_id = $newdoc->id;
+            $newAnnexure->save();
+        }
+
+        if ($document->training_required == 'yes') {
+            $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+            if ($docTrain) {
+                $newTraining = $docTrain->replicate();
+                $newTraining->document_id = $newdoc->id;
+                $newTraining->save();
+            }
+        }
+
+        $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
+        if ($distribution_grid) {
+            $distribution = $distribution_grid->replicate();
+            $distribution->document_id = $newdoc->id;
+            $distribution->save();
+        }
+
+        
+        DocumentService::update_document_numbers();
+
+        toastr()->success('Document has been revised successfully! You can now edit the content.');
+        return redirect()->route('documents.edit', $newdoc->id);
     }
-
-    $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
-    if ($distribution_grid) {
-        $distribution = $distribution_grid->replicate();
-        $distribution->document_id = $newdoc->id;
-        $distribution->save();
-    }
-
-    
-    DocumentService::update_document_numbers();
-
-    toastr()->success('Document has been revised successfully! You can now edit the content.');
-    return redirect()->route('documents.edit', $newdoc->id);
-}
 
 
     public function printPDFAnx($id)

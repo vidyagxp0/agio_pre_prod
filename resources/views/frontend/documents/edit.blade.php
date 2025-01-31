@@ -2846,33 +2846,33 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="comments">Product/Material Name</label>
-                                        <input type="text" name="product_material_name">
+                                        <input type="text" name="product_material_name" value="{{$document->product_material_name}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">TDS No.</label>
-                                        <input type="text" name="tds_no">
+                                        <input type="number" name="tds_no" value="{{$document->tds_no}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
-                                        <input type="text" name="Reference_Standard">
+                                        <input type="text" name="Reference_Standard" value="{{$document->Reference_Standard}}">
                                     </div>
                                 </div>
                                
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="batch_no">Batch No</label>
-                                        <input type="text" name="batch_no">
+                                        <input type="text" name="batch_no" value="{{$document->batch_no}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">A.R. No.</label>
-                                        <input type="text" name="ar_no">
+                                        <input type="text" name="ar_no" value="{{$document->ar_no}}">
                                     </div>
                                 </div>
 
@@ -2880,35 +2880,35 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
-                                        <input type="date" name="mfg_date">
+                                        <input type="date" name="mfg_date" value="{{$document->mfg_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Exp. Date</label>
-                                        <input type="date" name="exp_date">
+                                        <input type="date" name="exp_date" value="{{$document->exp_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis start date</label>
-                                        <input type="date" name="analysis_start_date">
+                                        <input type="date" name="analysis_start_date" value="{{$document->analysis_start_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis completion date </label>
-                                        <input type="date" name="analysis_completion_date ">
+                                        <input type="date" name="analysis_completion_date" value="{{$document->analysis_completion_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Specification No</label>
-                                        <input type="date" name="specification_no">
+                                        <input type="date" name="specification_no" value="{{$document->specification_no}}">
                                     </div>
                                 </div>
 
@@ -2942,7 +2942,6 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
                             <script>
                                 $(document).ready(function() {
                                     $('#ObservationAdd').click(function(e) {
@@ -2973,37 +2972,37 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="tds_remark">Remark</label>
-                                    <textarea name="tds_remark"></textarea>
+                                    <textarea name="tds_remark">{{$document->tds_remark}}</textarea>
                                 </div>
                             </div>
 
                             <div class="orig-head">
                                SAMPLE RECONCILATION
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Name of Material/Sample</label>
-                                    <input type="text" name="name_of_material_sample">
+                                    <input type="text" name="name_of_material_sample" value="{{$document->name_of_material_sample}}">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Batch No.</label>
-                                    <input type="text" name="sample_reconcilation_batchNo">
+                                    <input type="text" name="sample_reconcilation_batchNo" value="{{$document->sample_reconcilation_batchNo}}">
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">A.R.No.</label>
-                                    <input type="text" name="sample_reconcilation_arNo">
+                                    <input type="text" name="sample_reconcilation_arNo" value="{{$document->sample_reconcilation_arNo}}">
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Total Quantity Received</label>
-                                    <input type="text" name="sample_quatity_received">
+                                    <input type="text" name="sample_quatity_received" value="{{$document->sample_quatity_received}}">
                                 </div>
                             </div>
 
@@ -3076,14 +3075,14 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Total Quantity Consumed</label>
-                                        <input type="text" name="total_quantity_consumed">
+                                        <input type="text" name="total_quantity_consumed" value="{{$document->total_quantity_consumed}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Balance Quantity</label>
-                                        <input type="text" name="balance_quantity">
+                                        <input type="text" name="balance_quantity" value="{{$document->balance_quantity}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -3091,8 +3090,12 @@
                                         <label for="train-require">Balance Quantity Destructed</label>
                                         <select name="balance_quantity_destructed" required>
                                             <option value="">Enter your Selection</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No" selected>No</option>
+                                            <option {{ $document->balance_quantity_destructed == 'Yes' ? 'selected' : '' }}
+                                                        value="Yes">Yes</option>
+                                            <option {{ $document->balance_quantity_destructed == 'No' ? 'selected' : '' }}
+                                                        value="No">No</option>
+                                            {{-- <option value="Yes">Yes</option>
+                                            <option value="No" selected>No</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -3109,7 +3112,7 @@
                             </button>
                         </div>
                     </div>
-
+                </div>
 
                 <div id="annexures" class="tabcontent">
                     <div class="d-flex justify-content-end">

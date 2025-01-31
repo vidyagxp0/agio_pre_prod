@@ -518,10 +518,10 @@
             <tbody>
               <tr>
                 <td style="width: 42%; padding: 5px; text-align: left" class="doc-num">
-                    PRODUCT/MATERIAL NAME: <br>
-                    Reference Standard/General Testing Procedure No.:
+                    PRODUCT/MATERIAL NAME  :   <span>{{$data->product_material_name}}</span><br><br>
+                    Reference Standard/General Testing Procedure No. :  <span>{{$data->Reference_Standard}}</span>
                 </td>
-                <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.:</td>
+                <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.: <span>{{$data->tds_no}}</span></td>
              </tr>
 
             </tbody>
@@ -529,64 +529,6 @@
        
     </header>
 
-
-    {{-- <table class="border border-top-none p-8">
-            <tbody>
-                <tr>
-                    <td class="doc-num w-60">
-                        Address : 82, M.I.D.C, Bhosari, Maharashtra 411026
-                    </td>
-
-                </tr>
-            </tbody>
-        </table> --}}
-
-    {{-- <table class="border border-top-none p-6">
-            <tbody>
-                <tr>
-                    <td class="doc-num w-50">
-                        Effective Date:
-                        {{ $data->effective_date == null ? '-' : \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') }}
-                    </td>
-                    <td class="doc-num w-50">
-                        Next Review Date:
-                        {{ $data->next_review_date == null ? '-' : \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') }}
-                    </td>
-
-                </tr>
-            </tbody>
-        </table> --}}
-
-    {{-- <footer class="footer">
-        <table class="border p-10">
-            <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                </tr>
-                <tr>
-                    <td class=" w-50">
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $data->document_type_name)
-                                ->value('typecode');
-                        @endphp
-                        @if ($data->revised === 'Yes')
-                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
-                            {{-- {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if ($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} 
-                        @else
-                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
-                        @endif
-
-                    <td class="w-50">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
-                    {{-- <td class="text-right w-20"></td> 
-                </tr>
-            </tbody>
-        </table>
-    </footer> --}}
         <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
                 <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
                     <thead>
@@ -689,25 +631,25 @@
             <tbody>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Batch No</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->batch_no}}</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">A.R. No.</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->ar_no}}</td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Mfg. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->mfg_date}}</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Exp. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->exp_date}}</td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Analysis start date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_start_date}}</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Analysis completion date </td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_completion_date}}</td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">Specification No :</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2"></td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">{{$data->specification_no}}</td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">Total no. of pages in the report (Including COA):</td>
@@ -763,7 +705,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <p>Remark:The above product complies/does not comply as per specification: ________</p>
+                    <p>Remark:The above product complies/does not comply as per specification:  {{$data->tds_remark}}</p>
 
                     <div style="margin-top: 20px;">
                       <table style="width: 100%; border: none;">
@@ -976,21 +918,21 @@
                         <tbody>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Name of Material/Sample:</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->name_of_material_sample}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No.</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_reconcilation_batchNo}}</td>
 
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">A.R.No.</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_reconcilation_arNo}}</td>
 
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Total Quantity Received :</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_quatity_received}}</td>
                             </tr>
 
                         </tbody>
@@ -1047,16 +989,16 @@
                         <tbody>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Total Quantity Consumed</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->total_quantity_consumed}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Balance Quantity</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->balance_quantity}}</td>
 
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Balance Quantity Destructed</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Yes/No</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->balance_quantity_destructed}}</td>
                             </tr>
                         </tbody>
                     </table>
