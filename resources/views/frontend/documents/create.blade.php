@@ -197,9 +197,9 @@
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'add-fpicvs')">FPICVS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-fpicvstp')">FPICVSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
@@ -684,8 +684,8 @@
                             </div>
                             <div class="row">
 
-                               
-                               
+
+
                                 {{-- <div class="col-12">
     <div class="group-input">
         <label for="revision-type">Revision Type</label>
@@ -1210,7 +1210,7 @@
                                                     <tr>
                                                         <td>2</td>
                                                         <td style="font-weight: bold;">Controlled Copy</td>
-                                                        <td><input type="text" id="copies-controlled" 
+                                                        <td><input type="text" id="copies-controlled"
                                                                 name="controlled_copy_number" value=""
                                                                 class="form-control"></td>
 
@@ -1232,7 +1232,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                              
+
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
@@ -1257,7 +1257,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                     
+
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1331,7 +1331,7 @@
                                         <input type="text" name="Reference_Standard">
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="batch_no">Batch No</label>
@@ -1346,7 +1346,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
@@ -1527,7 +1527,7 @@
                                                     '][quantity_test_stp]"></td>' +
                                                     '<td><input type="text" name="sampleReconcilation[' + serialNumber +
                                                     '][quantity_userd_test]"></td>' +
-                                                    
+
                                                     '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
                                                     serialNumber + '][used_by]"></td>' +
                                                     '</tr>';
@@ -1580,7 +1580,477 @@
                         </div>
                     </div>
 
+                    {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
+                    <div id="add-fpicvs" class="tabcontent">
+                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+(COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Generic Name</label>
+                                        <input type="text" name="generic_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Brand Name</label>
+                                        <input type="text" name="brand_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Label Claim</label>
+                                        <input type="text" name="label_claim">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Product Code</label>
+                                        <input type="text" name="product_code">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="storage-condition">Storage Condition</label>
+                                        <input type="text" name="storage_condition">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <input type="text" name="sample_quantity">
+                                        <select name="sample_quantity">
+                                            <option value="" selected>Enter your Selection</option>
+                                            <option value="Chemical Analysis">Chemical Analysis</option>
+                                            <option value="Microbial Analysis">Microbial Analysis</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="custom-sample">Custom Sample</label>
+                                        <input type="text" name="custom_sample">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Reference</label>
+                                        <input type="text" name="reference">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">
+                                    SPECIFICATION
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Specification Details">
+                                            Specification Details
+                                            <button type="button" id="specification_add">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="specification_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Sr. No.</th>
+                                                        <th>Test</th>
+                                                        <th>Release</th>
+                                                        <th>Shelf life</th>
+                                                        <th>Reference</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Initial Row Placeholder (Optional) -->
+                                                    <tr>
+                                                        <td><input disabled type="text" name="specification_details[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="specification_details[0][test]"></td>
+                                                        <td><input type="text" name="specification_details[0][release]"></td>
+                                                        <td><input type="text" name="specification_details[0][shelf_life]"></td>
+                                                        <td><input type="text" name="specification_details[0][reference]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        // Add new row in Specification Details table
+                                        $('#specification_add').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateSpecificationTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="specification_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][test]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][release]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][shelf_life]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][reference]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#specification_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateSpecificationTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+
+                                        // Remove row in Specification Details table
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+                                        });
+                                    });
+                                </script>
+                            <div class="col-12 sub-head">
+                                Validation  Specification
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        Specification Validation Details
+                                        <button type="button" id="specification_validation_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="specification_validation_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Specification</th>
+                                                    <th>Reference</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="specification_validation_details[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][test]"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][specification]"></td>
+                                                    <td><input type="text" name="specification_validation_details[0][reference]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#specification_validation_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="specification_validation_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
+                                                '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#specification_validation_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
+
+                    <div id="doc-fpicvstp" class="tabcontent">
+                        <div class="orig-head">
+                            FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="Standard_Testing_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Standard_Testing_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Standard_details[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Standard_details[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#Standard_Testing_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Standard_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Standard_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Standard_Testing_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    {{-- Raw Material Specifications Tabs --}}
+                    <div id="doc-rawms" class="tabcontent">
+                        <div class="orig-head">
+                            RAW MATERIAL SPECIFICATION                         </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">CAS No.</label>
+                                        <input type="text" name="cas_no_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Molecular Formula</label>
+                                        <input type="text" name="molecular_formula_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Molecular Weight</label>
+                                        <input type="text" name="molecular_weight_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Storage Condition</label>
+                                        <input type="text" name="storage_condition_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-period">Retest Period</label>
+                                        <input type="text" name="retest_period_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-procedure">Sampling Procedure</label>
+                                        <input type="text" name="sampling_procedure_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="item-code">Item Code</label>
+                                        <input type="text" name="item_code_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity_row_material">
+                                            <option value="" selected>--Select--</option>
+                                            <option value="Chemical Analysis">Chemical Analysis</option>
+                                            <option value="Microbial Analysis">Microbial Analysis</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-sample">Sample Quantity for Retest</label>
+                                        <input type="text" name="retest_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions_row_material">
+                                    </div>
+                                </div>
+
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="row_material_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="row_material_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Specification</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Row_Materail[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Row_Materail[0][specification_row_material]"></td>
+                                                    <td><input type="text" name="Row_Materail[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#row_material_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Row_Materail[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][specification_row_material]"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#row_material_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
                             @for ($i = 1; $i <= 30; $i++)

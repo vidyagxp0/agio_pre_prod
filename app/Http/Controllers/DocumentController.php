@@ -7,18 +7,17 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
-use App\Models\QMSDivision;
-
-use Helpers;
 use App\Models\DocumentContent;
+
+use App\Models\DocumentGrid;
 use App\Models\DocumentGridData;
-//use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
+//use App\Models\ContentsDocument;
 use App\Models\DocumentLanguage;
 use App\Models\DocumentSubtype;
 use App\Models\DocumentTraining;
-//use App\Models\DocumentTraningInformation;
 use App\Models\DocumentType;
+//use App\Models\DocumentTraningInformation;
 use App\Models\DownloadControl;
 use App\Models\DownloadHistory;
 use App\Models\Grouppermission;
@@ -28,6 +27,7 @@ use App\Models\TDSDocumentGrid;
 use App\Models\PrintControl;
 use App\Models\PrintHistory;
 use App\Models\Process;
+use App\Models\QMSDivision;
 use App\Models\QMSProcess;
 use App\Models\RoleGroup;
 use App\Models\SetDivision;
@@ -36,15 +36,16 @@ use App\Models\StageManage;
 use App\Models\User;
 use App\Services\DocumentService;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
-use Mpdf\Mpdf;
 use Clegginabox\PDFMerger\PDFMerger;
+use Dompdf\Dompdf;
 use Dompdf\Options;
+use Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Mpdf\Mpdf;
 use PDF;
 
 class DocumentController extends Controller
@@ -519,6 +520,34 @@ class DocumentController extends Controller
             $document->controlled_user_department = $request->controlled_user_department;
             $document->display_user_department = $request->display_user_department;
 
+
+            // FPICVS SOP store
+            $document->generic_name = $request->generic_name;
+            $document->brand_name = $request->brand_name;
+            $document->label_claim = $request->label_claim;
+            $document->product_code = $request->product_code;
+            $document->storage_condition = $request->storage_condition;
+            $document->sample_quantity = $request->sample_quantity;
+            $document->reserve_sample = $request->reserve_sample;
+            $document->custom_sample = $request->custom_sample;
+            $document->reference = $request->reference;
+            $document->sampling_instructions = $request->sampling_instructions;
+
+
+
+            // row  material store
+            $document->cas_no_row_material = $request->cas_no_row_material;
+            $document->molecular_formula_row_material = $request->molecular_formula_row_material;
+            $document->molecular_weight_row_material = $request->molecular_weight_row_material;
+            $document->storage_condition_row_material = $request->storage_condition_row_material;
+            $document->retest_period_row_material = $request->retest_period_row_material;
+            $document->sampling_procedure_row_material = $request->sampling_procedure_row_material;
+            $document->item_code_row_material = $request->item_code_row_material;
+            $document->sample_quantity_row_material = $request->sample_quantity_row_material;
+            $document->reserve_sample_quantity_row_material = $request->reserve_sample_quantity_row_material;
+            $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
+            $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
+
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -699,6 +728,29 @@ class DocumentController extends Controller
                 $content->distribution = serialize($request->distribution);
             }
 
+            $griddata = $document->id;
+
+            // Store data for Specification grid
+            $SpecificationData = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION'])->firstOrNew();
+            $SpecificationData->document_type_id = $griddata;
+            $SpecificationData->identifier = 'SPECIFICATION';
+            $SpecificationData->data = $request->specification_details;
+            $SpecificationData->save();
+         // specification   validation  grid
+            $Specification_Validation_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION_VALIDATION'])->firstOrNew();
+            $Specification_Validation_Data->document_type_id = $griddata;
+            $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+            $Specification_Validation_Data->data = $request->specification_validation_details;
+            // dd($Specification_Validation_Data->data);
+            $Specification_Validation_Data->save();
+            $content->save();
+
+            // row matrial specification   validation  grid
+            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'ROW_SPECIFICATION'])->firstOrNew();
+            $RowSpecification_Data->document_type_id = $griddata;
+            $RowSpecification_Data->identifier = 'ROW_SPECIFICATION';
+            $RowSpecification_Data->data = $request->Row_Materail;
+            $RowSpecification_Data->save();
             $content->save();
 
             toastr()->success('Document created');
@@ -795,6 +847,10 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
+        $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
+        $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
+
+
         $hods = User::get();
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -825,7 +881,9 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grid'
+            'document_distribution_grid',
+            'SpecificationData',
+            'Specification_Validation_Data'
         ));
     }
 
@@ -881,28 +939,6 @@ class DocumentController extends Controller
                 $document->master_user_department = $request->master_user_department;
                 $document->controlled_user_department = $request->controlled_user_department;
                 $document->display_user_department = $request->display_user_department;
-
-                $document->product_material_name = $request->product_material_name;
-                $document->tds_no = $request->tds_no;
-                $document->Reference_Standard = $request->Reference_Standard;
-                $document->batch_no = $request->batch_no;
-                $document->ar_no = $request->ar_no;
-                $document->mfg_date = $request->mfg_date;
-                $document->exp_date = $request->exp_date;
-                $document->analysis_start_date = $request->analysis_start_date;
-                $document->analysis_completion_date = $request->analysis_completion_date;
-                $document->specification_no = $request->specification_no;
-                $document->tds_remark = $request->tds_remark;
-                $document->name_of_material_sample = $request->name_of_material_sample;
-                $document->sample_reconcilation_batchNo = $request->sample_reconcilation_batchNo;
-                $document->sample_reconcilation_arNo = $request->sample_reconcilation_arNo;
-                $document->sample_quatity_received = $request->sample_quatity_received;
-                $document->total_quantity_consumed = $request->total_quantity_consumed;
-                $document->balance_quantity = $request->balance_quantity;
-                $document->balance_quantity_destructed = $request->balance_quantity_destructed;
-
-
-    
 
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
@@ -1666,14 +1702,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -1836,7 +1872,7 @@ class DocumentController extends Controller
         }
     }
 
-    // working code here 
+    // working code here
     // public function viewPdf($id)
     // {
 
@@ -1862,14 +1898,14 @@ class DocumentController extends Controller
     //     if (!$departmentId) {
     //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
     //     }
-        
+
     //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
     //     $counter = 0;
     //     foreach ($documents as $doc) {
     //         $counter++;
     //         $doc->currentId = $counter;
-        
+
 
     //         if ($doc->id == $id) {
     //             $currentId = $doc->currentId;
@@ -1898,7 +1934,7 @@ class DocumentController extends Controller
     //     if (!empty($documentContent->annexuredata)) {
     //         $annexures = unserialize($documentContent->annexuredata);
     //     }
-        
+
 
     //     // pdf related work
     //     $pdf = App::make('dompdf.wrapper');
@@ -2036,7 +2072,7 @@ class DocumentController extends Controller
         if (empty($data->document_type_id)) {
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
-        
+
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
@@ -2106,7 +2142,7 @@ class DocumentController extends Controller
             6,
             -20
         );
-        
+
 
         if ($data->documents) {
 
@@ -2172,14 +2208,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2208,7 +2244,7 @@ class DocumentController extends Controller
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
         }
-        
+
 
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
@@ -2302,14 +2338,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2502,14 +2538,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2677,7 +2713,7 @@ class DocumentController extends Controller
             return back();
         }
     }
-    
+
 
 
     public function import(Request $request)
@@ -2900,8 +2936,8 @@ class DocumentController extends Controller
             $distribution->save();
         }
 
-        
-        DocumentService::update_document_numbers();
+    
+    DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');
         return redirect()->route('documents.edit', $newdoc->id);
