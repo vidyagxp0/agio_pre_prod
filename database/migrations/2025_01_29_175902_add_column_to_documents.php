@@ -18,7 +18,7 @@ return new class extends Migration
             $table->longText('brand_name')->nullable(); // Brand Name
             $table->longText('label_claim')->nullable(); // Label Claim
             $table->longText('product_code')->nullable(); // Product Code
-            $table->longText('storage_condition')->nullable(); // Storage Condition
+            // $table->longText('storage_condition')->nullable(); // Storage Condition
             $table->longText('sample_quantity')->nullable(); // Sample Quantity for Analysis
             $table->longText('reserve_sample')->nullable(); // Reserve Sample Quantity
             $table->longText('custom_sample')->nullable(); // Custom Sample

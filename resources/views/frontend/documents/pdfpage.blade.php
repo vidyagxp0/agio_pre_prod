@@ -472,6 +472,67 @@
         
     </style>
 
+    <style>
+
+            /*Main Table Styling */
+            #isPasted {
+                width: 650px !important;
+                border-collapse: collapse;
+                table-layout: auto; /* Adjusts column width dynamically */
+            }
+
+            /* First column adjusts to its content */
+            #isPasted td:first-child,
+            #isPasted th:first-child {
+                white-space: nowrap; /* Prevent wrapping */
+                width: 1%; /* Shrink to fit content */
+                vertical-align: top;
+            }
+
+            /* Second column takes remaining space */
+            #isPasted td:last-child,
+            #isPasted th:last-child {
+                width: auto; /* Take remaining space */
+                vertical-align: top;
+                
+            }
+
+            /* Common Table Cell Styling */
+            #isPasted th,
+            #isPasted td {
+                border: 1px solid #000;
+                padding: 8px;
+                text-align: left;
+                max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            }
+
+            /* Paragraph Styling Inside Table Cells */
+            #isPasted td > p {
+                text-align: justify;
+                text-justify: inter-word;
+                margin: 0;
+                max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            }
+
+            #isPasted img {
+                max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+                height: 100%; /* Maintain image aspect ratio */
+                display: block; /* Remove extra space below the image */
+                margin: 5px auto; /* Add spacing and center align */
+            }
+
+            /* If you want larger images */
+            #isPasted td img {
+                max-width: 400px !important; /* Adjust this to your preferred maximum width */
+                height: 300px;
+                margin: 5px auto;
+            }
+    </style>
+
 </head>
 
 <body>
