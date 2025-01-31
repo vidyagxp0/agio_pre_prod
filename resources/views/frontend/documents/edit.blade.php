@@ -139,8 +139,9 @@
                 <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'add-fpicvs')">FPICVS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
 
@@ -3383,6 +3384,557 @@
                             </button>
                         </div>
                     </div>
+
+
+
+
+
+                <!------------------------ RMSTP tab ------------------------------------>
+
+                <div id="doc_rmstp" class="tabcontent">
+                                        <div class="orig-head">
+                                            RAW MATERIAL STANDARD TESTING PROCEDURE
+                                        </div>
+                                    <div class="input-fields">
+                                        <div class="row">
+                                            
+
+                                        <div class="group-input">
+    <label for="action-plan-grid">
+        Details
+        <button type="button" id="Details_add">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            Row Increment
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="Details-table">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Test</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @php
+                    $serialNumber = 1;
+                    $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+                        ? json_decode($testDataDecoded->data, true) 
+                        : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
+                @endphp
+                @if(!empty($decodedData))
+                    @foreach($decodedData as $key => $test)
+                        <tr>
+                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                            <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
+                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                        <td><input type="text" name="test[0][testdata]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
+
+        $('#Details_add').click(function() {
+            let rowCount = $('#Details-table tbody tr').length + 1;
+            let newRow = `
+                <tr>
+                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                    <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            `;
+            $('#Details-table tbody').append(newRow);
+            investdetails++;
+        });
+
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#Details-table tbody tr').each(function(index) {
+                $(this).find('td:first-child input').val(index + 1);
+            });
+        }
+    });
+</script>
+
+
+                                                <div class="button-block">
+                                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                           
+
+
+
+
+
+
+
+
+
+  <!------------------------ Packing Material Specification - tab ------------------------------------>
+  <div id="doc_pams" class="tabcontent">
+                    <div class="orig-head">
+                        PACKING MATERIAL SPECIFICATION 
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Name of packing material</label>
+                                        <textarea name="name_pack_material">{{ $document->name_pack_material }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Standard pack</label>
+                                        <textarea name="standard_pack">{{ $document->standard_pack }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sampling plan</label>
+                                        <textarea name="sampling_plan">{{ $document->sampling_plan }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Sampling Instructions</label>
+                                        <textarea name="sampling_instruction">{{ $document->sampling_instruction }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sample for analysis </label>
+                                        <textarea name="sample_analysis">{{ $document->sample_analysis }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Control Sample</label>
+                                        <textarea name="control_sample">{{ $document->control_sample }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Safety Precautions</label>
+                                        <textarea name="safety_precaution">{{ $document->safety_precaution }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Storage condition</label>
+                                        <textarea name="storage_condition">{{ $document->storage_condition }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Approved Vendors</label>
+                                        <textarea name="approved_vendor">{{ $document->approved_vendor }}</textarea>
+                                    </div>
+                            </div>
+
+                            @php
+                                $serialNumber = 1;
+                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data) 
+                                    ? json_decode($PackingGridData->data, true) 
+                                    : (is_array($PackingGridData->data) ? $PackingGridData->data : []);
+                            @endphp
+
+                            <div class="group-input">
+                                <label for="action-plan-grid">
+                                    Details
+                                    <button type="button" id="Details_add_data">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        Row Increment
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="Details-table-data">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 2%">Sr.No</th>
+                                                <th style="width: 12%">Tests</th>
+                                                <th style="width: 12%">Specifications</th>
+                                                <th style="width: 12%">GTP No.</th>
+                                                <th style="width: 3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(!empty($decodedPackingData))
+                                                @foreach($decodedPackingData as $key => $test)
+                                                    <tr>
+                                                        <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][tests]" value="{{ $test['tests'] ?? '' }}"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][specification]" value="{{ $test['specification'] ?? '' }}"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][gtp_no]" value="{{ $test['gtp_no'] ?? '' }}"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                    <td><input type="text" name="packingtest[0][tests]"></td>
+                                                    <td><input type="text" name="packingtest[0][specification]"></td>
+                                                    <td><input type="text" name="packingtest[0][gtp_no]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function() {
+                                    let investdetails = {{ isset($decodedPackingData) ? count($decodedPackingData) : 1 }};
+
+                                    $('#Details_add_data').click(function() {
+                                        let rowCount = $('#Details-table-data tbody tr').length + 1;
+                                        let newRow = `
+                                            <tr>
+                                                <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][tests]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][specification]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][gtp_no]" value=""></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        `;
+                                        $('#Details-table-data tbody').append(newRow);
+                                        investdetails++;
+                                    });
+
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+
+                                    function updateRowNumbers() {
+                                        $('#Details-table-data tbody tr').each(function(index) {
+                                            $(this).find('td:first-child input').val(index + 1);
+                                        });
+                                    }
+                                });
+                            </script>
+
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+  <!------------------------ PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION ------------------------------------>
+  <div id="doc_pias" class="tabcontent">
+                                    <div class="orig-head">
+                                    PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION
+                                    </div>
+                                <div class="input-fields">
+                                    <div class="row">
+                                                    
+
+                                    @php
+                            $serialNumber = 1;
+                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) 
+                                ? json_decode($ProductSpecification->data, true) 
+                                : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
+                        @endphp
+
+                        <div class="group-input">
+                            <label for="action-plan-grid">
+                                For Finished Product Specification use below table
+                                <button type="button" id="addRowBtndata">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    Row Increment
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="productDetailsTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 2%">Sr.No</th>
+                                            <th style="width: 2%">Product Code</th>
+                                            <th style="width: 2%">FG Code</th>
+                                            <th style="width: 2%">Country</th>
+                                            <th style="width: 2%">Brand Name / Grade</th>
+                                            <th style="width: 2%">Pack Size</th>
+                                            <th style="width: 2%">Shelf Life</th>
+                                            <th style="width: 2%">Sample Quantity</th>
+                                            <th style="width: 2%">Storage Condition</th>
+                                            <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                            <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 3%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(!empty($decodedProductData))
+                                            @foreach($decodedProductData as $key => $product)
+                                                <tr>
+                                                    <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][product_code]" value="{{ $product['product_code'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][fg_code]" value="{{ $product['fg_code'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][country]" value="{{ $product['country'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][brand_name_grade]" value="{{ $product['brand_name_grade'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][pack_size]" value="{{ $product['pack_size'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][shelf_life]" value="{{ $product['shelf_life'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][sample_quantity]" value="{{ $product['sample_quantity'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][storage_condition]" value="{{ $product['storage_condition'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ $product['prepared_by_quality_person'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][checked_by_qc_hod_designee]" value="{{ $product['checked_by_qc_hod_designee'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][approved_by_qa_hod_designee]" value="{{ $product['approved_by_qa_hod_designee'] ?? '' }}"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                <td><input type="text" name="product[0][product_code]"></td>
+                                                <td><input type="text" name="product[0][fg_code]"></td>
+                                                <td><input type="text" name="product[0][country]"></td>
+                                                <td><input type="text" name="product[0][brand_name_grade]"></td>
+                                                <td><input type="text" name="product[0][pack_size]"></td>
+                                                <td><input type="text" name="product[0][shelf_life]"></td>
+                                                <td><input type="text" name="product[0][sample_quantity]"></td>
+                                                <td><input type="text" name="product[0][storage_condition]"></td>
+                                                <td><input type="text" name="product[0][prepared_by_quality_person]"></td>
+                                                <td><input type="text" name="product[0][checked_by_qc_hod_designee]"></td>
+                                                <td><input type="text" name="product[0][approved_by_qa_hod_designee]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function () {
+                                let investDetails = {{ isset($decodedProductData) ? count($decodedProductData) : 1 }};
+
+                                $('#addRowBtndata').click(function () {
+                                    let rowCount = $('#productDetailsTable tbody tr').length + 1;
+                                    let newRow = `
+                                        <tr>
+                                            <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                            <td><input type="text" name="product[${investDetails}][product_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][fg_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][country]"></td>
+                                            <td><input type="text" name="product[${investDetails}][brand_name_grade]"></td>
+                                            <td><input type="text" name="product[${investDetails}][pack_size]"></td>
+                                            <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
+                                            <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
+                                            <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
+                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
+                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
+                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    `;
+                                    $('#productDetailsTable tbody').append(newRow);
+                                    investDetails++;
+                                });
+
+                                $(document).on('click', '.removeRowBtn', function () {
+                                    $(this).closest('tr').remove();
+                                    updateRowNumbers();
+                                });
+
+                                function updateRowNumbers() {
+                                    $('#productDetailsTable tbody tr').each(function(index) {
+                                        $(this).find('td:first-child input').val(index + 1);
+                                    });
+                                }
+                            });
+                        </script>
+
+
+@php
+    $serialNumber = 1;
+    $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) 
+        ? json_decode($MaterialSpecification->data, true) 
+        : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+@endphp
+
+<div class="group-input">
+    <label for="action-plan-grid">
+        Raw Material Specification - Use the table below
+        <button type="button" id="RowMaterialData">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            Row Increment
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="RowMaterialTable">
+            <thead>
+                <tr>
+                    <th style="width: 2%">Sr.No</th>
+                    <th style="width: 2%">Item Code</th>
+                    <th style="width: 2%">Vendor Name</th>
+                    <th style="width: 2%">Grade</th>
+                    <th style="width: 2%">Sample Quantity</th>
+                    <th style="width: 2%">Storage Condition</th>
+                    <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                    <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                    <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                    <th style="width: 3%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!empty($decodedMaterialData))
+                    @foreach($decodedMaterialData as $key => $material)
+                        <tr>
+                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][item_code]" value="{{ $material['item_code'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][vendor_name]" value="{{ $material['vendor_name'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][grade]" value="{{ $material['grade'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][sample_quantity]" value="{{ $material['sample_quantity'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][storage_condition]" value="{{ $material['storage_condition'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ $material['prepared_quality_person_sign_date'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][check_by_qc_hod_designee_sign]" value="{{ $material['check_by_qc_hod_designee_sign'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][approved_by_qa_hod_desinee_sign]" value="{{ $material['approved_by_qa_hod_desinee_sign'] ?? '' }}"></td>
+                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                        <td><input type="text" name="row_material[0][item_code]"></td>
+                        <td><input type="text" name="row_material[0][vendor_name]"></td>
+                        <td><input type="text" name="row_material[0][grade]"></td>
+                        <td><input type="text" name="row_material[0][sample_quantity]"></td>
+                        <td><input type="text" name="row_material[0][storage_condition]"></td>
+                        <td><input type="text" name="row_material[0][prepared_quality_person_sign_date]"></td>
+                        <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
+                        <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        let investDetails = {{ isset($decodedMaterialData) ? count($decodedMaterialData) : 1 }};
+
+        $('#RowMaterialData').click(function () {
+            let rowCount = $('#RowMaterialTable tbody tr').length + 1;
+            let newRow = `
+                <tr>
+                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                    <td><input type="text" name="row_material[${investDetails}][item_code]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][vendor_name]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][grade]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            `;
+            $('#RowMaterialTable tbody').append(newRow);
+            investDetails++;
+        });
+
+        $(document).on('click', '.removeRowBtn', function () {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#RowMaterialTable tbody tr').each(function(index) {
+                $(this).find('td:first-child input').val(index + 1);
+            });
+        }
+    });
+</script>
+
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div id="annexures" class="tabcontent">
                     <div class="d-flex justify-content-end">

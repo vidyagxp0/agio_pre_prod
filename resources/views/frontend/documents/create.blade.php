@@ -202,6 +202,13 @@
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
+                
+                <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
@@ -1303,6 +1310,493 @@
                             </button>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!------------------------ RMSTP tab ------------------------------------>
+  <div id="doc_rmstp" class="tabcontent">
+                        <div class="orig-head">
+                            RAW MATERIAL STANDARD TESTING PROCEDURE
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+                            <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 12%">Test</th>
+                                                    <th style="width: 3%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @php
+                                                    $serialNumber = 1;
+                                                @endphp
+                                                <td disabled>{{ $serialNumber++ }}</td>
+                                                
+                                                <td><input type="text" name="test[0][testdata]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                </div>
+                            </div>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+            <script>
+                    $(document).ready(function() {
+                        let investdetails = 1;
+                        $('#Details_add').click(function(e) {
+                            function generateTableRow(serialNumber) {
+                                var users = @json($users);
+                                console.log(users);
+                                var html =
+                                        '<tr>' +
+                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                        '"></td>' +
+                                        '<td><input type="text" name="test[' + investdetails +
+                                        '][testdata]" value=""></td>' +
+                                       
+
+                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+
+
+                                    return html;
+                                }
+
+                                var tableBody = $('#Details-table tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount + 1);
+                                tableBody.append(newRow);
+                            });
+                        });
+            </script>
+
+            <script>
+                $(document).on('click', '.removeRowBtn', function() {
+                    $(this).closest('tr').remove();
+                })
+            </script>
+
+
+
+
+
+
+
+  <!------------------------ Packing Material Specification - tab ------------------------------------>
+  <div id="doc_pams" class="tabcontent">
+                    <div class="orig-head">
+                        PACKING MATERIAL SPECIFICATION 
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Name of packing material</label>
+                                        <textarea name="name_pack_material"></textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Standard pack</label>
+                                        <textarea name="standard_pack"></textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sampling plan</label>
+                                        <textarea name="sampling_plan"></textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Sampling Instructions</label>
+                                        <textarea name="sampling_instruction"></textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sample for analysis </label>
+                                        <textarea name="sample_analysis"></textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Control Sample</label>
+                                        <textarea name="control_sample"></textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Safety Precautions</label>
+                                        <textarea name="safety_precaution"></textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Storage condition</label>
+                                        <textarea name="storage_condition"></textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Approved Vendors</label>
+                                        <textarea name="approved_vendor"></textarea>
+                                    </div>
+                            </div>
+
+                            <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add_data">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table-data">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 12%">Tests</th>
+                                                    <th style="width: 12%">Specifications</th>
+                                                    <th style="width: 12%">GTP No.</th>
+                                                    <th style="width: 3%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @php
+                                                    $serialNumber = 1;
+                                                @endphp
+                                                <td disabled>{{ $serialNumber++ }}</td>
+                                                
+                                                <td><input type="text" name="packingtest[0][tests]"></td>
+                                                <td><input type="text" name="packingtest[0][specification]"></td>
+                                                <td><input type="text" name="packingtest[0][gtp_no]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                </div>
+                            </div>
+
+                            <script>
+                            $(document).ready(function() {
+                                let investdetails = 1;
+                                $('#Details_add_data').click(function(e) {
+                                    function generateTableRow(serialNumber) {
+                                        var users = @json($users);
+                                        console.log(users);
+                                        var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][tests]" value=""></td>' +
+                                            
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][specification]" value=""></td>' +
+                                                '<td><input type="text" name="packingtest[' + investdetails +
+                                                '][gtp_no]" value=""></td>' +
+                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+
+
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Details-table-data tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                    </script>
+
+                    <script>
+                        $(document).on('click', '.removeRowBtn', function() {
+                            $(this).closest('tr').remove();
+                        })
+                    </script>
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+         
+
+
+
+
+
+
+
+  <!------------------------ PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION ------------------------------------>
+                        <div id="doc_pias" class="tabcontent">
+                                    <div class="orig-head">
+                                    PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION
+                                    </div>
+                                <div class="input-fields">
+                                    <div class="row">
+                                                    
+
+                            <div class="group-input">
+                                    <label for="action-plan-grid">
+                                    For Finished product specification use below table<button type="button" name="action-plan-grid"
+                                                id="addRowBtndata">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                <table class="table table-bordered" id="productDetailsTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 2%">Sr.No</th>
+                                                <th style="width: 2%">Product Code</th>
+                                                <th style="width: 2%">FG Code</th>
+                                                <th style="width: 2%">Country</th>
+                                                <th style="width: 2%">Brand Name / Grade</th>
+                                                <th style="width: 2%">Pack Size</th>
+                                                <th style="width: 2%">Shelf Life</th>
+                                                <th style="width: 2%">Sample Quantity</th>
+                                                <th style="width: 2%">Storage Condition</th>
+                                                <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                                <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                                <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                                <th style="width: 3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input disabled type="text" style="width:15px" value="1"></td>
+                                                <td><input type="text" name="product[0][product_code]"></td>
+                                                <td><input type="text" name="product[0][fg_code]"></td>
+                                                <td><input type="text" name="product[0][country]"></td>
+                                                <td><input type="text" name="product[0][brand_name_grade]"></td>
+                                                <td><input type="text" name="product[0][pack_size]"></td>
+                                                <td><input type="text" name="product[0][shelf_life]"></td>
+                                                <td><input type="text" name="product[0][sample_quantity]"></td>
+                                                <td><input type="text" name="product[0][storage_condition]"></td>
+                                                <td><input type="text" name="product[0][prepared_by_quality_person]"></td>
+                                                <td><input type="text" name="product[0][checked_by_qc_hod_designee]"></td>
+                                                <td><input type="text" name="product[0][approved_by_qa_hod_designee]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <script>
+                            $(document).ready(function () {
+                                let investDetails = 1; // Row counter
+
+                                $('#addRowBtndata').click(function () {
+                                    function generateTableRow(serialNumber) {
+                                        return `<tr>
+                                            <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
+                                            <td><input type="text" name="product[${investDetails}][product_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][fg_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][country]"></td>
+                                            <td><input type="text" name="product[${investDetails}][brand_name_grade]"></td>
+                                            <td><input type="text" name="product[${investDetails}][pack_size]"></td>
+                                            <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
+                                            <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
+                                            <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
+                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
+                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
+                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>`;
+                                    }
+
+                                    let tableBody = $('#productDetailsTable tbody');
+                                    let rowCount = tableBody.children('tr').length;
+                                    let newRow = generateTableRow(rowCount + 1);
+                                    tableBody.append(newRow);
+                                    investDetails++; // Increment row index
+                                });
+
+                                // Remove row event
+                                $(document).on('click', '.removeRowBtn', function () {
+                                    $(this).closest('tr').remove();
+                                });
+                            });
+                        </script>
+
+                        <div class="group-input">
+                                    <label for="action-plan-grid">
+                                    Raw Material specification use below table<button type="button" name="action-plan-grid"
+                                                id="RowMaterialData">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                <table class="table table-bordered" id="RowMaterialTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 2%">Sr.No</th>
+                                                <th style="width: 2%">Item Code</th>
+                                                <th style="width: 2%">Vendor Name</th>
+                                                <th style="width: 2%">Grade</th>
+                                                <th style="width: 2%">Sample quantity</th>
+                                                <th style="width: 2%">Storage condition</th>
+                                                <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                                <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                                <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                               
+                                                <th style="width: 3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input disabled type="text" style="width:15px" value="1"></td>
+                                                <td><input type="text" name="row_material[0][item_code]"></td>
+                                                <td><input type="text" name="row_material[0][vendor_name]"></td>
+                                                <td><input type="text" name="row_material[0][grade]"></td>
+                                                <td><input type="text" name="row_material[0][sample_quantity]"></td>
+                                                <td><input type="text" name="row_material[0][storage_condition]"></td>
+                                                <td><input type="text" name="row_material[0][prepared_quality_person_sign_date)]"></td>
+                                                <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
+                                                <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
+
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <script>
+                            $(document).ready(function () {
+                                let investDetails = 1; // Row counter
+
+                                $('#RowMaterialData').click(function () {
+                                    function generateTableRow(serialNumber) {
+                                        return `<tr>
+                                            <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][item_code]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][vendor_name]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][grade]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
+                                       
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>`;
+                                    }
+
+                                    let tableBody = $('#RowMaterialTable tbody');
+                                    let rowCount = tableBody.children('tr').length;
+                                    let newRow = generateTableRow(rowCount + 1);
+                                    tableBody.append(newRow);
+                                    investDetails++; // Increment row index
+                                });
+
+                                // Remove row event
+                                $(document).on('click', '.removeRowBtn', function () {
+                                    $(this).closest('tr').remove();
+                                });
+                            });
+                        </script>
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+                      
+
+
+
+
+
+
+ 
+                       
+
 
 
                     <!-- TDS Tabs -->
