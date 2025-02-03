@@ -201,15 +201,15 @@
                 <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'add-fpicvs')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'add-fpicvs')">Cleaning Validation Specification</button>
 
-                <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpicvstp')">Finished Product Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-fpicvstp')">Inprocess Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-istp')">Inprocess Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
                 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <!-- <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button> -->
+                <!-- <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button> -->
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
@@ -1373,6 +1373,16 @@
                                 </div>
                             </div>
 
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="short-desc">STP No.</label>
+                                    
+                                    <input type="text" id="" name="stp_no">
+                                </div>
+                                   
+                            </div>
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2309,24 +2319,24 @@
 
                     {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
 
-                    <div id="doc-fpicvstp" class="tabcontent">
+                    <div id="doc-fpstp" class="tabcontent">
                         <div class="orig-head">
-                            FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                            FINISHED PRODUCT ON STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
 
-                            <div class="col-12 sub-head">
+                            <!-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
-                            </div>
+                            </div> -->
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         STANDARD TESTING PROCEDURE
-                                        <button type="button" id="Standard_Testing_add">+</button>
+                                        <button type="button" id="Standard_Testing_add_1">+</button>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="Standard_Testing_details" style="width: 100%;">
+                                        <table class="table table-bordered" id="Standard_Testing_detail_1" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Sr. No.</th>
@@ -2337,8 +2347,8 @@
                                             <tbody>
                                                 <!-- Initial Row Placeholder (Optional) -->
                                                 <tr>
-                                                    <td><input disabled type="text" name="Standard_details[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="Standard_details[0][test]"></td>
+                                                    <td><input disabled type="text" name="finished_product[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="finished_product[0][testing]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
                                             </tbody>
@@ -2349,20 +2359,190 @@
                             <script>
                                 $(document).ready(function() {
                                     // Add new row in Specification Details table
-                                    $('#Standard_Testing_add').click(function(e) {
+                                    $('#Standard_Testing_add_1').click(function(e) {
                                         e.preventDefault();
 
                                         function generateSpecificationTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
-                                                '<td><input disabled type="text" name="Standard_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Standard_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><input disabled type="text" name="finished_product[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="finished_product[' + serialNumber + '][testing]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
                                             return html;
                                         }
 
-                                        var tableBody = $('#Standard_Testing_details tbody');
+                                        var tableBody = $('#Standard_Testing_detail_1 tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-istp" class="tabcontent">
+                        <div class="orig-head">
+                            INPROCESS STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="Standard_Testing_add_2">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Standard_Testing_details_2" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="inprocess_standard[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="inprocess_standard[0][testingdata]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#Standard_Testing_add_2').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="inprocess_standard[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="inprocess_standard[' + serialNumber + '][testingdata]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Standard_Testing_details_2 tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div> 
+
+                    <div id="doc-cvstp" class="tabcontent">
+                        <div class="orig-head">
+                            CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="Standard_Testing_add_3">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Standard_Testing_details_3" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="cleaning_validation[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="cleaning_validation[0][data_test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#Standard_Testing_add_3').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="cleaning_validation[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="cleaning_validation[' + serialNumber + '][data_test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Standard_Testing_details_3 tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateSpecificationTableRow(rowCount);
                                         tableBody.append(newRow);

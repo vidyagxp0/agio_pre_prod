@@ -348,38 +348,23 @@
             </tr>
         </thead>
         <tbody>
+        @if (!empty($ProductSpecificationData))
+            @foreach ($ProductSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['product_code'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['fg_code'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['country'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['brand_name_grade'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['pack_size'] ?? 'N/A' }}</td>
+ 
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td colspan="6" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+        @endif
         </tbody>
     </table>
 
@@ -396,42 +381,25 @@
             </tr>
         </thead>
         <tbody>
+        @if (!empty($ProductSpecificationData))
+            @foreach ($ProductSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['shelf_life'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['sample_quantity'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['storage_condition'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['prepared_by_quality_person'] ?? 'N/A' }}</td>
+                 
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['checked_by_qc_hod_designee'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['approved_by_qa_hod_designee'] ?? 'N/A' }}</td>
+ 
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td colspan="7" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+        @endif
         </tbody>
     </table>
 
@@ -456,34 +424,22 @@
             </tr>
         </thead>
         <tbody>
+        @if (!empty($MaterialSpecificationData))
+            @foreach ($MaterialSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['item_code'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['vendor_name'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['grade'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['sample_quantity'] ?? '' }}</td>
+                 
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+        @endif
         </tbody>
     </table>
 
@@ -498,34 +454,22 @@
             </tr>
         </thead>
         <tbody>
+        @if (!empty($MaterialSpecificationData))
+            @foreach ($MaterialSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['storage_condition'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['prepared_quality_person_sign_date'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['check_by_qc_hod_designee_sign'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['approved_by_qa_hod_desinee_sign'] ?? '' }}</td>
+                 
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+        @endif
         </tbody>
     </table>
 

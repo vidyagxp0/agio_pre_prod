@@ -451,47 +451,47 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Name of packing material
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->name_pack_material}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Standard pack
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->standard_pack}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling plan
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sampling_plan}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sampling_instruction}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample for analysis 
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_analysis}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Control Sample
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->control_sample}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Safety Precautions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->safety_precaution}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->storage_condition}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Approved Vendors
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->approved_vendor}}</td>
                             </tr>
                         </tbody>
                     </table>
