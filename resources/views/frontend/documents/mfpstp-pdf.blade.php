@@ -298,10 +298,40 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:  
+                    <span>
+                    @if($document->revised == 'Yes')
+                        @php
+                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                        @endphp
+
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{MFP}}/{{STP}}/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                            {{MFP}}/{{STP}}/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                    @else                        
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                MFP/STP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                MFP/STP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                    @endif
+                    </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
+                        <span>
+                        @if ($data->training_required == 'yes')
+                            @if ($data->stage >= 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @else
+                            @if ($data->stage > 7)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -310,6 +340,17 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                        <span>@php
+                            $temp = DB::table('document_types')
+                                ->where('name', $document->document_type_name)
+                                ->value('typecode');
+                            @endphp
+                            @if ($document->revised === 'Yes')
+                            {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
+                            @else
+                            -
+                            @endif
+                        </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -321,7 +362,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.: <span>{{ $document->specification_mfpstp_no }}</span>
                     </td>
                 </tr>
             </tbody>
@@ -389,36 +430,29 @@
     
 
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 90%; font-weight: bold;">Tests</th>
+<table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
+            <th style="border: 1px solid black; width: 90%; font-weight: bold;">Tests</th>
+        </tr>
+    </thead>
+    <tbody>
 
+        @if (!empty($SpecificationDataGrid))
+            @foreach ($SpecificationDataGrid as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="2" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-
-        </tbody>
-    </table>
+        @endif
+    </tbody>
+</table>
     
 
     <table style="margin-top : 30px" class="border">
