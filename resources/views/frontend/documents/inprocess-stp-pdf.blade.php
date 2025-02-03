@@ -429,26 +429,18 @@
                         </tr>
                     </thead>
                     <tbody style="">
+                    @if (!empty($Inprocess_standardData))
+                        @foreach ($Inprocess_standardData as $key => $item)
+                            <tr>
+                                <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
+                                <td style="font-weight: bold;">{{ $item['testingdata'] ?? '' }}</td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td style="font-size: 16px; font-weight: bold;">1</td>
-                            <td style="font-weight: bold;"></td>
+                            <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
                         </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">2</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">3</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">4</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">5</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
+                    @endif
                     </tbody>
                 </table>
             </div>

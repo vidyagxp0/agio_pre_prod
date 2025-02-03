@@ -2244,6 +2244,20 @@ class DocumentController extends Controller
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
 
+        $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
+        $FinishedData = isset($Finished_Product->data) && is_string($Finished_Product->data) 
+        ? json_decode($Finished_Product->data, true) :(is_array($Finished_Product->data) ? $Finished_Product->data:[]);
+
+        $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
+        $Inprocess_standardData = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data) 
+        ? json_decode($Inprocess_standard->data, true) :(is_array($Inprocess_standard->data) ? $Inprocess_standard->data:[]);
+
+        $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id)->where('identifier', "CLEANING_VALIDATION")->first();
+        $CLEANING_VALIDATIONData = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data) 
+        ? json_decode($CLEANING_VALIDATION->data, true) :(is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data:[]);
+
+        
+//-----------
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
             $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
             ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
@@ -2281,9 +2295,13 @@ class DocumentController extends Controller
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+
             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+
             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+
             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
@@ -2306,7 +2324,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','ProductSpecificationData','MaterialSpecificationData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
