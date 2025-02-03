@@ -2943,11 +2943,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="summaryResult[0][test]"></td>
-                                                    <td><input type="text" name="summaryResult[0][result]"></td>
-                                                </tr>
+                                            @php
+                                                $ProductDetails = 1;
+                                                @endphp
+
+                                                @if(!empty($summaryResult) && is_array($summaryResult->data))
+                                                    @foreach($summaryResult->data as $index => $detail)
+                                                        <tr>
+                                                            <td>{{ $ProductDetails++ }}</td>
+                                                            <td><input type="text" name="summaryResult[{{$index}}][test]" value="{{ $detail['test'] ?? '' }}"></td>
+                                                            <td><input type="text" name="summaryResult[{{$index}}][result]" value="{{ $detail['result'] ?? '' }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="summaryResult[0][test]"></td>
+                                                        <td><input type="text" name="summaryResult[0][result]"></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -2959,13 +2973,13 @@
 
                                             var html =
                                                 '<tr>' +
-                                                '<td><input disabled type="text" name="summaryResult[' + serialNumber +
-                                                '][serial]" value="' + serialNumber +
-                                                '"></td>' +
-                                                '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                '][job]"></td>' +
-                                                '<td><input type="text" class="Document_Remarks" name="summaryResult[' +
-                                                serialNumber + '][remarks]"></td>' +
+                                                    '<td><input disabled type="text" name="summaryResult[' + serialNumber +
+                                                    '][serial]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                    '][job]"></td>' +
+                                                    '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                    '][remarks]"></td>' +
                                                 '</tr>';
 
                                             return html;
@@ -3038,13 +3052,30 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><input disabled type="text" name="sampleReconcilation[0][serial]" value="1"></td>
-                                                        <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
-                                                        <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
-                                                        <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
-                                                        <td><input type="date" name="sampleReconcilation[0][used_by]"></td>
-                                                    </tr>
+
+                                                    @php
+                                                    $ProductDetails = 1;
+                                                    @endphp
+
+                                                    @if(!empty($sampleReconcilation) && is_array($sampleReconcilation->data))
+                                                        @foreach($sampleReconcilation->data as $index => $detail)
+                                                            <tr>
+                                                                <td>{{ $ProductDetails++ }}</td>
+                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][test_name]" value="{{ $detail['test_name'] ?? '' }}"></td>
+                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_test_stp]" value="{{ $detail['quantity_test_stp'] ?? '' }}"></td>
+                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_userd_test]" value="{{ $detail['quantity_userd_test'] ?? '' }}"></td>
+                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][used_by]" value="{{ $detail['used_by'] ?? '' }}"></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td><input disabled type="text" name="sampleReconcilation[0][serial]" value="1"></td>
+                                                            <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
+                                                            <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
+                                                            <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
+                                                            <td><input type="date" name="sampleReconcilation[0][used_by]"></td>
+                                                        </tr>
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
@@ -3471,9 +3502,100 @@
                     </div>
 
 
-                <!------------------------ RMSTP tab ------------------------------------>
+                                    <!-- GTP -->
+                <div id="doc-gtp" class="tabcontent">
+                        <div class="orig-head">
+                         GENERAL TESTING PROCEDURE
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
 
-                <div id="doc_rmstp" class="tabcontent">
+                            <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        Details<button type="button" name="action-plan-grid"
+                                                id="Details_add_gtp">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Row Increment
+                                        </span>
+                                    </label>
+                                <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table-gtp">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 12%">Test</th>
+                                                    <th style="width: 3%">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
+                                                <td disabled>{{ $serialNumber++ }}</td>
+                                                
+                                                <td><input type="text" name="gtp[0][test_gtp]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            </tbody>
+
+                                        </table>
+                                </div>
+                            </div>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(document).ready(function() {
+                        let investdetails = 1;
+                        $('#Details_add_gtp').click(function(e) {
+                            function generateTableRow(serialNumber) {
+                                var users = @json($users);
+                                console.log(users);
+                                var html =
+                                        '<tr>' +
+                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                        '"></td>' +
+                                        '<td><input type="text" name="gtp[' + investdetails +
+                                        '][test_gtp]" value=""></td>' +
+                                       
+
+                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+
+
+                                    return html;
+                                }
+
+                                var tableBody = $('#Details-table-gtp tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount + 1);
+                                tableBody.append(newRow);
+                            });
+                        });
+                </script>
+
+                <script>
+                    $(document).on('click', '.removeRowBtn', function() {
+                        $(this).closest('tr').remove();
+                    })
+                </script>
+
+
+                            <!------------------------ RMSTP tab ------------------------------------>
+
+                            <div id="doc_rmstp" class="tabcontent">
                                         <div class="orig-head">
                                             RAW MATERIAL STANDARD TESTING PROCEDURE
                                         </div>
@@ -3482,80 +3604,80 @@
                                             
 
                                         <div class="group-input">
-    <label for="action-plan-grid">
-        Details
-        <button type="button" id="Details_add">+</button>
-        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
-            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-            Row Increment
-        </span>
-    </label>
-    <div class="table-responsive">
-        <table class="table table-bordered" id="Details-table">
-            <thead>
-                <tr>
-                    <th>Sr.No</th>
-                    <th>Test</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+                                                <label for="action-plan-grid">
+                                                    Details
+                                                    <button type="button" id="Details_add">+</button>
+                                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                        Row Increment
+                                                    </span>
+                                                </label>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="Details-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sr.No</th>
+                                                                <th>Test</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
 
-                @php
-                    $serialNumber = 1;
-                    $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
-                        ? json_decode($testDataDecoded->data, true) 
-                        : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
-                @endphp
-                @if(!empty($decodedData))
-                    @foreach($decodedData as $key => $test)
-                        <tr>
-                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
-                            <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
-                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
-                        <td><input type="text" name="test[0][testdata]"></td>
-                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
-</div>
+                                                            @php
+                                                                $serialNumber = 1;
+                                                                $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+                                                                    ? json_decode($testDataDecoded->data, true) 
+                                                                    : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
+                                                            @endphp
+                                                            @if(!empty($decodedData))
+                                                                @foreach($decodedData as $key => $test)
+                                                                    <tr>
+                                                                        <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                                        <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
+                                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @else
+                                                                <tr>
+                                                                    <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                                    <td><input type="text" name="test[0][testdata]"></td>
+                                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
 
-<script>
-    $(document).ready(function() {
-        let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
+                                            <script>
+                                                $(document).ready(function() {
+                                                    let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
 
-        $('#Details_add').click(function() {
-            let rowCount = $('#Details-table tbody tr').length + 1;
-            let newRow = `
-                <tr>
-                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
-                    <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
-                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                </tr>
-            `;
-            $('#Details-table tbody').append(newRow);
-            investdetails++;
-        });
+                                                    $('#Details_add').click(function() {
+                                                        let rowCount = $('#Details-table tbody tr').length + 1;
+                                                        let newRow = `
+                                                            <tr>
+                                                                <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                                                <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        `;
+                                                        $('#Details-table tbody').append(newRow);
+                                                        investdetails++;
+                                                    });
 
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-            updateRowNumbers();
-        });
+                                                    $(document).on('click', '.removeRowBtn', function() {
+                                                        $(this).closest('tr').remove();
+                                                        updateRowNumbers();
+                                                    });
 
-        function updateRowNumbers() {
-            $('#Details-table tbody tr').each(function(index) {
-                $(this).find('td:first-child input').val(index + 1);
-            });
-        }
-    });
-</script>
+                                                    function updateRowNumbers() {
+                                                        $('#Details-table tbody tr').each(function(index) {
+                                                            $(this).find('td:first-child input').val(index + 1);
+                                                        });
+                                                    }
+                                                });
+                                            </script>
 
 
                                                 <div class="button-block">

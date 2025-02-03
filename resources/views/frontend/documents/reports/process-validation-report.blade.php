@@ -129,7 +129,7 @@
 
         body {
             margin-top: 260px;
-            margin-bottom: 100px;
+            margin-bottom: 170px;
         }
 
         footer {
@@ -138,7 +138,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .table-responsive {
@@ -275,7 +275,7 @@
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
-                    PACKING MATERIAL GENERAL TESTING PROCEDURE
+                    FINISHED PRODUCT STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                     </td>
                 </tr>
             </tbody>
@@ -294,40 +294,10 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
-                        <span>
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else                            
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif
-                        </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
-                        <span>
-                        @if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @else
-                            @if ($data->stage > 7)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @endif
-                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -336,18 +306,6 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
-                        <span>
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $document->document_type_name)
-                                ->value('typecode');
-                        @endphp
-                        @if ($document->revised === 'Yes')
-                        {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
-                        @else
-                        -
-                        @endif
-                        </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -360,13 +318,13 @@
 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <table class="border; padding: 5px;" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
+                        <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
+                        <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
+                        <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
+                        <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -380,9 +338,9 @@
                                 ->where('deleted_at', null)
                                 ->get();
                         @endphp
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
-                        <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">  
+                        <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">  
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
@@ -410,11 +368,11 @@
                         @endif                    
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">
                         {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
                         </td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
@@ -424,7 +382,7 @@
                         @endif 
                         </td>
 
-                        <td style="padding: 10px; border: 1px solid #ddd;">
+                        <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">
                         @if ($inreview->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
@@ -449,40 +407,93 @@
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 20px; border: 1px solid #ddd;">  </td>        
+                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">Approved By: Head QA</td>
+                    <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">  </td>        
                 </tr>
             </tbody>
         </table>
+        <span style="text-align:center">Format No.: QA/097/F4-00</span>                            
     </footer>
     
     <div class="content">
         <section>
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
             <div class="table-responsive retrieve-table">
-            <table class="table table-bordered" id="distribution-list">
-                <thead>
-                    <tr>
-                        <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
-                        <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($testData))
-                        @foreach ($testData as $key => $item)
-                            <tr>
-                                <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
-                                <td style="font-weight: bold;">{{ $item['testdata'] ?? '' }}</td>
-                            </tr>
-                        @endforeach
-                    @else
+                <table class="table table-bordered" id="distribution-list">
+                    <thead style="width:20%">
                         <tr>
-                            <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
+                            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
+
+                            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
                         </tr>
-                    @endif
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody style="">
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">1</td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">2</td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">3</td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">4</td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">5</td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+          <h4 style="font-size: 16px; font-weight: bold; text-align:center">REVISION HISTORY</h4>
+            <div class="table-responsive retrieve-table">
+                <table class="table table-bordered" id="distribution-list">
+                    <thead style="width:20%">
+                        <tr>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                            <th style="font-size: 16px; font-weight: bold; width:60%">Reason of revision</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="">
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">1</td>
+                            <td style="font-weight: bold;"></td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">2</td>
+                            <td style="font-weight: bold;"></td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">3</td>
+                            <td style="font-weight: bold;"></td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">4</td>
+                            <td style="font-weight: bold;"></td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 16px; font-weight: bold;">5</td>
+                            <td style="font-weight: bold;"></td>
+                            <td style="font-weight: bold;"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
     </div>
@@ -493,7 +504,7 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
+                $y = 760;
                 $x = 485;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

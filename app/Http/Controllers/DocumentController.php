@@ -633,6 +633,12 @@ class DocumentController extends Controller
             $employeeJobGrid->data = json_encode($request->summaryResult);
             $employeeJobGrid->save();
 
+            $employeeJobGrid = TDSDocumentGrid::where(['tds_id' => $tds_id, 'identifier' => 'sampleReconcilation'])->firstOrNew();
+            $employeeJobGrid->tds_id = $tds_id;
+            $employeeJobGrid->identifier = 'sampleReconcilation';
+            $employeeJobGrid->data = json_encode($request->sampleReconcilation);
+            $employeeJobGrid->save();
+
 
             DocumentService::update_document_numbers();
 
@@ -917,9 +923,21 @@ class DocumentController extends Controller
       
         
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
-          $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-      //  dd($testDataDecoded);
+        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
+        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+
+        $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
+
+        if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
+            $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
+        }
+
+        $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
+
+        if ($summaryResult && !empty($summaryResult->data)) {
+        $summaryResult->data = json_decode($summaryResult->data, true);
+        }
 
       
         // $hods = DB::table('user_roles')
@@ -957,7 +975,9 @@ class DocumentController extends Controller
             'testDataDecoded',
             'PackingGridData',
             'MaterialSpecification',
-            'ProductSpecification'
+            'ProductSpecification',
+            'sampleReconcilation',
+            'summaryResult'
         ));
     }
 
@@ -996,10 +1016,27 @@ class DocumentController extends Controller
                 $document->document_subtype_id = $request->document_subtype_id;
                 $document->document_language_id = $request->document_language_id;
 
+                //tds
+                $document->product_material_name = $request->product_material_name;
+                $document->tds_no = $request->tds_no;
+                $document->Reference_Standard = $request->Reference_Standard;
+                $document->batch_no = $request->batch_no;
+                $document->ar_no = $request->ar_no;
+                $document->mfg_date = $request->mfg_date;
+                $document->exp_date = $request->exp_date;
+                $document->analysis_start_date = $request->analysis_start_date;
+                $document->analysis_completion_date = $request->analysis_completion_date;
+                $document->specification_no = $request->specification_no;
+                $document->tds_remark = $request->tds_remark;
+                $document->name_of_material_sample = $request->name_of_material_sample;
+                $document->sample_reconcilation_batchNo = $request->sample_reconcilation_batchNo;
+                $document->sample_reconcilation_arNo = $request->sample_reconcilation_arNo;
+                $document->sample_quatity_received = $request->sample_quatity_received;
+                $document->total_quantity_consumed = $request->total_quantity_consumed;
+                $document->balance_quantity = $request->balance_quantity;
+                $document->balance_quantity_destructed = $request->balance_quantity_destructed;
 
 
-
-                
                 $document->name_pack_material = $request->name_pack_material;
                 $document->standard_pack = $request->standard_pack;
                 $document->sampling_plan = $request->sampling_plan;
@@ -1093,12 +1130,19 @@ class DocumentController extends Controller
             $document->update();
 
 
-            // $tds_id = $document->id;
-            // $employeeJobGrid = EmployeeGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
-            // $employeeJobGrid->tds_id = $tds_id;
-            // $employeeJobGrid->identifier = 'summaryResult';
-            // $employeeJobGrid->data = json_encode($request->summaryResult);
-            // $employeeJobGrid->save();
+            // Grid here
+            $tds_id = $document->id;
+            $employeeJobGrid = TDSDocumentGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
+            $employeeJobGrid->tds_id = $tds_id;
+            $employeeJobGrid->identifier = 'summaryResult';
+            $employeeJobGrid->data = json_encode($request->summaryResult);
+            $employeeJobGrid->save();
+
+            $employeeJobGrid = TDSDocumentGrid::where(['tds_id' => $tds_id, 'identifier' => 'sampleReconcilation'])->firstOrNew();
+            $employeeJobGrid->tds_id = $tds_id;
+            $employeeJobGrid->identifier = 'sampleReconcilation';
+            $employeeJobGrid->data = json_encode($request->sampleReconcilation);
+            $employeeJobGrid->save();
 
             DocumentService::handleDistributionGrid($document, $request->distribution);
 
@@ -2197,6 +2241,14 @@ class DocumentController extends Controller
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
         $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data) 
             ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
+
+        $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
+        $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data) 
+            ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
+
+        $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
+        $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data) 
+            ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);    
         
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
@@ -2248,7 +2300,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','SummaryDataGrid'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

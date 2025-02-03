@@ -329,7 +329,7 @@
 
         body {
             margin-top: 220px;
-            margin-bottom: 135px;
+            margin-bottom: 145px;
         }
 
         footer {
@@ -340,7 +340,6 @@
             z-index: 1000;
             margin-top: 20px;
         }
-
 
 
         .other-container {
@@ -516,7 +515,28 @@
                     PRODUCT/MATERIAL NAME  :   <span>{{$data->product_material_name}}</span><br><br>
                     Reference Standard/General Testing Procedure No. :  <span>{{$data->Reference_Standard}}</span>
                 </td>
-                <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.: <span>{{$data->tds_no}}</span></td>
+                <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
+                    <span>
+                    @if($document->revised == 'Yes')
+                        @php
+                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                        @endphp
+
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                    @else
+                        
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                            @endif
+                    @endif
+                    </span>
+                </td>
              </tr>
 
             </tbody>
@@ -625,29 +645,29 @@
         <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
             <tbody>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Batch No</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->batch_no}}</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">A.R. No.</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">A.R. No.</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->ar_no}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Mfg. Date</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Mfg. Date</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->mfg_date}}</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Exp. Date</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Exp. Date</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->exp_date}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Analysis start date</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis start date</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_start_date}}</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">Analysis completion date </td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis completion date </td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_completion_date}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">Specification No :</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num" colspan="2">Specification No :</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">{{$data->specification_no}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">Total no. of pages in the report (Including COA):</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num" colspan="2">Total no. of pages in the report (Including COA):</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2"></td>
                 </tr>
             </tbody>
@@ -677,26 +697,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if (!empty($SummaryDataGrid))
+                                @foreach ($SummaryDataGrid as $key => $item)
+                                    <tr>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                                        <td style="border: 1px solid black; text-align: left;">{{ $item['test'] ?? '' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['result'] ?? 'N/A' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td style="border: 1px solid black;">1</td>
-                                    <td style="border: 1px solid black;">Test 1</td>
-                                    <td style="border: 1px solid black;">Pass</td>
+                                    <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
                                 </tr>
-                                <tr>
-                                    <td style="border: 1px solid black;">2</td>
-                                    <td style="border: 1px solid black;">Test 2</td>
-                                    <td style="border: 1px solid black;">Fail</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid black;">3</td>
-                                    <td style="border: 1px solid black;">Test 3</td>
-                                    <td style="border: 1px solid black;">Pass</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid black;">4</td>
-                                    <td style="border: 1px solid black;">Test 4</td>
-                                    <td style="border: 1px solid black;">Pass</td>
-                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -947,34 +960,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                                <td style="border: 1px solid black;"></td>
-                            </tr>
+                            @if (!empty($PackingDataGrid))
+                                @foreach ($PackingDataGrid as $key => $item)
+                                    <tr>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                                        <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['specification'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
