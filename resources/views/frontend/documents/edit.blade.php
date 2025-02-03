@@ -3423,7 +3423,7 @@
                                                         : (is_array($Finished_Product->data) ? $Finished_Product->data : []);
                                                 @endphp
                                                 @if(!empty($Finished_Product_data))
-                                                    @foreach($Finished_Product_data as $key => $item)
+                                                    @foreach($Finished_Product_data  as $key => $item)
                                                         <tr>
                                                             <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
                                                             <td><input type="text" name="item[{{ $key }}][testing]" value="{{ $item['testing'] ?? '' }}"></td>

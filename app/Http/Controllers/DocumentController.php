@@ -3157,6 +3157,73 @@ class DocumentController extends Controller
             $distribution->save();
         }
 
+//-----------------==================================================================
+
+                
+            
+        $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
+
+        $DocumentGridData = $DocumentGridData->replicate();
+        $DocumentGridData->document_type_id = $newdoc->id;
+        $DocumentGridData->identifier = 'Rowmaterialtest';
+       
+        $DocumentGridData->save();
+
+
+
+
+        $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
+        $PackingGridData = $PackingGridData->replicate();
+        $PackingGridData->document_type_id = $newdoc->id;
+        $PackingGridData->identifier = 'Packingmaterialdata';
+       
+        $PackingGridData->save();
+
+
+
+        $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
+        $ProductSpecification = $ProductSpecification->replicate();
+        $ProductSpecification->document_type_id = $newdoc->id;
+        $ProductSpecification->identifier = 'ProductSpecification';
+        
+        $ProductSpecification->save();
+
+
+
+        $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
+        $MaterialSpecification = $MaterialSpecification->replicate();
+        $MaterialSpecification->document_type_id = $newdoc->id;
+        $MaterialSpecification->identifier = 'MaterialSpecification';
+       
+        // dd($MaterialSpecification);
+        $MaterialSpecification->save();
+
+
+
+
+
+        $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
+        $Finished_Product = $Finished_Product->replicate();
+        $Finished_Product->document_type_id = $newdoc->id;
+        $Finished_Product->identifier = 'Finished_Product';
+        
+        // dd($Finished_Product);
+        $Finished_Product->save();
+
+        $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
+        $Inprocess_standard = $Inprocess_standard->replicate();
+        $Inprocess_standard->document_type_id = $newdoc->id;
+        $Inprocess_standard->identifier = 'Inprocess_standard';
+       
+        $Inprocess_standard->save();
+
+        $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
+        $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
+        $CLEANING_VALIDATION->document_type_id = $newdoc->id;
+        $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
+      
+        // dd($CLEANING_VALIDATION);
+        $CLEANING_VALIDATION->save();
     
     DocumentService::update_document_numbers();
 
