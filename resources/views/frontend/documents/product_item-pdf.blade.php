@@ -275,7 +275,6 @@
                 </tr>
             </tbody>
         </table>
-        <div style="margin: 0; text-align: center; font-weight: bold;">Annexure – III</div>
         <table class="border" style="width: 100%;">
             <tbody>
                 <tr>

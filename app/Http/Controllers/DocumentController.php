@@ -2189,7 +2189,6 @@ class DocumentController extends Controller
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
 
-
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
             $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
             ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
@@ -2203,7 +2202,6 @@ class DocumentController extends Controller
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
  
-      //  dd($testDataDecoded);
       //  $testDataDecoded = json_decode($testData->data, true);
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
@@ -2217,13 +2215,17 @@ class DocumentController extends Controller
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
-            'FPICVS' => 'frontend.documents.fpicvs-pdf',
+            'FPS' => 'frontend.documents.finished-product-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
             'RAWMS' => 'frontend.documents.raw_ms-pdf',
             'PAMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-            'FPICVSTP' => 'frontend.documents.fpicvstp-pdf',
+            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
@@ -2232,6 +2234,8 @@ class DocumentController extends Controller
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
             'PROTO' => 'frontend.documents.proto-pdf',
+            'STUDY' => 'frontend.documents.reports.study_report',
+            'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
             'REPORT' => 'frontend.documents.report-pdf',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',

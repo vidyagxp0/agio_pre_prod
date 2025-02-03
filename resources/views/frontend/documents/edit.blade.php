@@ -136,10 +136,19 @@
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'add-fpicvs')">FPICVS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'add-fpicvs')">Finished Product Specification</button>
+                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'add-fpicvs')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'add-fpicvs')">Cleaning Validation Specification</button>
+
+                <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpicvstp')">Finished Product Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-fpicvstp')">Inprocess Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
+
+                <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+
+                <!-- <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button> -->
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
@@ -794,64 +803,64 @@
 
                             <!-- testing code -->
                             <div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-type">Document Type</label>
-        <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
-            <option value="">Enter your Selection</option>
-            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                <option data-id="{{ $code }}" value="{{ $code }}"
-                    {{ $code == $document->document_type_id ? 'selected' : '' }}>
-                    {{ $type }}
-                </option>
-            @endforeach
-        </select>
+                                <div class="group-input">
+                                    <label for="doc-type">Document Type</label>
+                                    <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
+                                        <option value="">Enter your Selection</option>
+                                        @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                            <option data-id="{{ $code }}" value="{{ $code }}"
+                                                {{ $code == $document->document_type_id ? 'selected' : '' }}>
+                                                {{ $type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
-        @foreach ($history as $tempHistory)
-            @if (
-                $tempHistory->activity_type == 'Document' &&
-                !empty($tempHistory->comment) &&
-                $tempHistory->user_id == Auth::user()->id
-            )
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
-                <p style="color: blue">Modified by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
-                <input class="input-field" style="background: #ffff0061; color: black;"
-                    type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-        @endforeach
-    </div>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Document' &&
+                                            !empty($tempHistory->comment) &&
+                                            $tempHistory->user_id == Auth::user()->id
+                                        )
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modified by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                                            <input class="input-field" style="background: #ffff0061; color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
 
-    @if (Auth::user()->role != 3 && $document->stage < 8)
-        {{-- Add Comment --}}
-        <div class="comment">
-            <div>
-                <p class="timestamp" style="color: blue">Modified by
-                    {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
-                <input class="input-field" type="text" name="document_type_id_comment">
-            </div>
-            <div class="button">Add Comment</div>
-        </div>
-    @endif
-</div>
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    {{-- Add Comment --}}
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modified by
+                                                {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+                                            <input class="input-field" type="text" name="document_type_id_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+                            </div>
 
-<div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-code">Document Type Code</label>
-        <div class="default-name">
-            <span id="document_type_code">
-                @foreach (Helpers::getDocumentTypes() as $code => $type)
-                    @if ($code == $document->document_type_id)
-                        {{ $code }}
-                    @endif
-                @endforeach
-            </span>
-        </div>
-    </div>
-</div>
-<p id="doc-typeError" style="color:red">**Document Type is required</p>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="doc-code">Document Type Code</label>
+                                    <div class="default-name">
+                                        <span id="document_type_code">
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                @if ($code == $document->document_type_id)
+                                                    {{ $code }}
+                                                @endif
+                                            @endforeach
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="doc-typeError" style="color:red">**Document Type is required</p>
 
 
                             <div class="col-md-6">
@@ -3115,11 +3124,11 @@
                     </div>
                 </div>
 
-{{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
+                      {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
                     <div id="add-fpicvs" class="tabcontent">
                         <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
-(COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -3278,100 +3287,93 @@
                                 </script>
 
 
-<div class="col-12 sub-head">
-    Validation Specification
-</div>
-<div class="col-12">
-    <div class="group-input">
-        <label for="Specification Details">
-            Specification Details
-            <button type="button" id="specification_validation_add">+</button>
-        </label>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="specification_validation_details" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th style="width: 100px;">Sr. No.</th>
-                        <th>Test</th>
-                        <th>Specification</th>
-                        <th>Reference</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($Specification_Validation_Data) && is_array($Specification_Validation_Data->data))
-                        @foreach ($Specification_Validation_Data->data as $index => $spec)
-                            <tr>
-                                <td><input disabled type="text" name="specification_validation_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
-                                <td><input type="text" name="specification_validation_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
-                                <td><input type="text" name="specification_validation_details[{{ $index }}][specification]" value="{{ $spec['specification'] }}"></td>
-                                <td><input type="text" name="specification_validation_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
-                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr class="no-data">
-                            <td colspan="5">No data found</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function() {
-        // Add new row in Specification Validation table
-        $('#specification_validation_add').click(function(e) {
-            e.preventDefault();
-
-            function generateSpecificationRow(serialNumber) {
-                return (
-                    '<tr>' +
-                    '<td><input disabled type="text" name="specification_validation_details[' + serialNumber +
-                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
-                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
-                    '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
-                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                    '</tr>'
-                );
-            }
-
-            var tableBody = $('#specification_validation_details tbody');
-            var rowCount = tableBody.children('tr').not('.no-data').length;
-
-            // Remove "No data found" row if it exists
-            if (rowCount === 0) {
-                tableBody.find('.no-data').remove();
-                rowCount = 0; // Start count from 0 if no rows exist
-            }
-
-            var newRow = generateSpecificationRow(rowCount);
-            tableBody.append(newRow);
-        });
-
-        // Remove row in Specification Validation table
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-
-            // Check if table is empty after deletion, add "No data found" row if so
-            if ($('#specification_validation_details tbody tr').length === 0) {
-                $('#specification_validation_details tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
-            }
-        });
-    });
-</script>
-
-
-
-
-
-
-
-
+                        <div class="col-12 sub-head">
+                            Validation Specification
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Specification Details">
+                                    Specification Details
+                                    <button type="button" id="specification_validation_add">+</button>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="specification_validation_details" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 100px;">Sr. No.</th>
+                                                <th>Test</th>
+                                                <th>Specification</th>
+                                                <th>Reference</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (!empty($Specification_Validation_Data) && is_array($Specification_Validation_Data->data))
+                                                @foreach ($Specification_Validation_Data->data as $index => $spec)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="specification_validation_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][specification]" value="{{ $spec['specification'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="no-data">
+                                                    <td colspan="5">No data found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                // Add new row in Specification Validation table
+                                $('#specification_validation_add').click(function(e) {
+                                    e.preventDefault();
+
+                                    function generateSpecificationRow(serialNumber) {
+                                        return (
+                                            '<tr>' +
+                                            '<td><input disabled type="text" name="specification_validation_details[' + serialNumber +
+                                            '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
+                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                            '</tr>'
+                                        );
+                                    }
+
+                                    var tableBody = $('#specification_validation_details tbody');
+                                    var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                    // Remove "No data found" row if it exists
+                                    if (rowCount === 0) {
+                                        tableBody.find('.no-data').remove();
+                                        rowCount = 0; // Start count from 0 if no rows exist
+                                    }
+
+                                    var newRow = generateSpecificationRow(rowCount);
+                                    tableBody.append(newRow);
+                                });
+
+                                // Remove row in Specification Validation table
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+
+                                    // Check if table is empty after deletion, add "No data found" row if so
+                                    if ($('#specification_validation_details tbody tr').length === 0) {
+                                        $('#specification_validation_details tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
@@ -3386,7 +3388,87 @@
                     </div>
 
 
+                    {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
 
+                    <div id="doc-fpicvstp" class="tabcontent">
+                        <div class="orig-head">
+                            FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="Standard_Testing_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Standard_Testing_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Standard_details[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Standard_details[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#Standard_Testing_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Standard_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Standard_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Standard_Testing_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
 
 
                 <!------------------------ RMSTP tab ------------------------------------>
@@ -3666,7 +3748,160 @@
                     </div>
                 </div>
 
+                {{-- Raw Material Specifications Tabs --}}
+                    <div id="doc-rawms" class="tabcontent">
+                        <div class="orig-head">
+                            RAW MATERIAL SPECIFICATION</div>
+                        <div class="input-fields">
+                            <div class="row">
 
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">CAS No.</label>
+                                        <input type="text" name="cas_no_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Molecular Formula</label>
+                                        <input type="text" name="molecular_formula_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Molecular Weight</label>
+                                        <input type="text" name="molecular_weight_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Storage Condition</label>
+                                        <input type="text" name="storage_condition_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-period">Retest Period</label>
+                                        <input type="text" name="retest_period_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-procedure">Sampling Procedure</label>
+                                        <input type="text" name="sampling_procedure_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="item-code">Item Code</label>
+                                        <input type="text" name="item_code_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity_row_material">
+                                            <option value="" selected>--Select--</option>
+                                            <option value="Chemical Analysis">Chemical Analysis</option>
+                                            <option value="Microbial Analysis">Microbial Analysis</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-sample">Sample Quantity for Retest</label>
+                                        <input type="text" name="retest_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions_row_material">
+                                    </div>
+                                </div>
+
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="row_material_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="row_material_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Specification</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Row_Materail[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Row_Materail[0][specification_row_material]"></td>
+                                                    <td><input type="text" name="Row_Materail[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#row_material_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Row_Materail[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][specification_row_material]"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#row_material_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
 
 
 
@@ -3675,7 +3910,7 @@
 
 
   <!------------------------ PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION ------------------------------------>
-  <div id="doc_pias" class="tabcontent">
+                                <div id="doc_pias" class="tabcontent">
                                     <div class="orig-head">
                                     PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION
                                     </div>
@@ -3683,7 +3918,7 @@
                                     <div class="row">
                                                     
 
-                                    @php
+                        @php
                             $serialNumber = 1;
                             $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) 
                                 ? json_decode($ProductSpecification->data, true) 

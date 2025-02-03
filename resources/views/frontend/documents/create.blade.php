@@ -197,13 +197,20 @@
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'add-fpicvs')">FPICVS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-fpicvstp')">FPICVSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'add-fpicvs')">Finished Product Specification</button>
+                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'add-fpicvs')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'add-fpicvs')">Cleaning Validation Specification</button>
+
+                <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpicvstp')">Finished Product Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-fpicvstp')">Inprocess Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
+                
+                <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
+
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
@@ -2078,7 +2085,7 @@
 
                     <div id="add-fpicvs" class="tabcontent">
                         <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
-(COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                            (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -2386,10 +2393,11 @@
                             </button>
                         </div>
                     </div>
+                    
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
                         <div class="orig-head">
-                            RAW MATERIAL SPECIFICATION                         </div>
+                            RAW MATERIAL SPECIFICATION</div>
                         <div class="input-fields">
                             <div class="row">
 
@@ -2545,6 +2553,7 @@
                             </button>
                         </div>
                     </div>
+
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
                             @for ($i = 1; $i <= 30; $i++)

@@ -502,11 +502,6 @@
             <tbody>
                 <tr>
                     <td style="padding: 5px; line-height: 1;">
-                        Annexure - IX
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 5px; line-height: 1;">
                         TEST DATA SHEET
                     </td>
                 </tr>
