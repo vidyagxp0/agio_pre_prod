@@ -7,27 +7,30 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
-use App\Models\QMSDivision;
-
-use Helpers;
 use App\Models\DocumentContent;
+
+use App\Models\DocumentGrid;
 use App\Models\DocumentGridData;
 use App\Models\specifications;
+
 //use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
+//use App\Models\ContentsDocument;
 use App\Models\DocumentLanguage;
 use App\Models\DocumentSubtype;
 use App\Models\DocumentTraining;
-//use App\Models\DocumentTraningInformation;
 use App\Models\DocumentType;
+//use App\Models\DocumentTraningInformation;
 use App\Models\DownloadControl;
 use App\Models\DownloadHistory;
 use App\Models\Grouppermission;
 use App\Models\Keyword;
 use App\Models\OpenStage;
+use App\Models\TDSDocumentGrid;
 use App\Models\PrintControl;
 use App\Models\PrintHistory;
 use App\Models\Process;
+use App\Models\QMSDivision;
 use App\Models\QMSProcess;
 use App\Models\RoleGroup;
 use App\Models\SetDivision;
@@ -36,15 +39,16 @@ use App\Models\StageManage;
 use App\Models\User;
 use App\Services\DocumentService;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
-use Mpdf\Mpdf;
 use Clegginabox\PDFMerger\PDFMerger;
+use Dompdf\Dompdf;
 use Dompdf\Options;
+use Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Mpdf\Mpdf;
 use PDF;
 
 class DocumentController extends Controller
@@ -468,6 +472,29 @@ class DocumentController extends Controller
             $document->effective_date = $request->effective_date;
             $document->specification_mfps_no = $request->specification_mfps_no;
             $document->stp_mfps_no = $request->stp_mfps_no;
+
+            //tds
+            $document->product_material_name = $request->product_material_name;
+            $document->tds_no = $request->tds_no;
+            $document->Reference_Standard = $request->Reference_Standard;
+            $document->batch_no = $request->batch_no;
+            $document->ar_no = $request->ar_no;
+            $document->mfg_date = $request->mfg_date;
+            $document->exp_date = $request->exp_date;
+            $document->analysis_start_date = $request->analysis_start_date;
+            $document->analysis_completion_date = $request->analysis_completion_date;
+            $document->specification_no = $request->specification_no;
+            $document->tds_remark = $request->tds_remark;
+            $document->name_of_material_sample = $request->name_of_material_sample;
+            $document->sample_reconcilation_batchNo = $request->sample_reconcilation_batchNo;
+            $document->sample_reconcilation_arNo = $request->sample_reconcilation_arNo;
+            $document->sample_quatity_received = $request->sample_quatity_received;
+            $document->total_quantity_consumed = $request->total_quantity_consumed;
+            $document->balance_quantity = $request->balance_quantity;
+            $document->balance_quantity_destructed = $request->balance_quantity_destructed;
+
+
+
             // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
 
             try {
@@ -499,6 +526,51 @@ class DocumentController extends Controller
             $document->controlled_user_department = $request->controlled_user_department;
             $document->display_user_department = $request->display_user_department;
 
+
+            // FPICVS SOP store
+            $document->generic_name = $request->generic_name;
+            $document->brand_name = $request->brand_name;
+            $document->label_claim = $request->label_claim;
+            $document->product_code = $request->product_code;
+            $document->storage_condition = $request->storage_condition;
+            $document->sample_quantity = $request->sample_quantity;
+            $document->reserve_sample = $request->reserve_sample;
+            $document->custom_sample = $request->custom_sample;
+            $document->reference = $request->reference;
+            $document->sampling_instructions = $request->sampling_instructions;
+
+
+
+            // row  material store
+            $document->cas_no_row_material = $request->cas_no_row_material;
+            $document->molecular_formula_row_material = $request->molecular_formula_row_material;
+            $document->molecular_weight_row_material = $request->molecular_weight_row_material;
+            $document->storage_condition_row_material = $request->storage_condition_row_material;
+            $document->retest_period_row_material = $request->retest_period_row_material;
+            $document->sampling_procedure_row_material = $request->sampling_procedure_row_material;
+            $document->item_code_row_material = $request->item_code_row_material;
+            $document->sample_quantity_row_material = $request->sample_quantity_row_material;
+            $document->reserve_sample_quantity_row_material = $request->reserve_sample_quantity_row_material;
+            $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
+            $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
+
+            
+            $document->name_pack_material = $request->name_pack_material;
+            $document->standard_pack = $request->standard_pack;
+            $document->sampling_plan = $request->sampling_plan;
+            $document->sampling_instruction = $request->sampling_instruction;
+            $document->sample_analysis = $request->sample_analysis;
+            $document->control_sample = $request->control_sample;
+            $document->safety_precaution = $request->safety_precaution;
+            $document->storage_condition = $request->storage_condition;
+            $document->approved_vendor = $request->approved_vendor;
+
+
+            
+            
+            
+            
+            
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -556,6 +628,15 @@ class DocumentController extends Controller
             }
             $document->save();
 
+            // Grid here
+            $tds_id = $document->id;
+            $employeeJobGrid = TDSDocumentGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
+            $employeeJobGrid->tds_id = $tds_id;
+            $employeeJobGrid->identifier = 'summaryResult';
+            $employeeJobGrid->data = json_encode($request->summaryResult);
+            $employeeJobGrid->save();
+
+
             DocumentService::update_document_numbers();
 
             if ($document) {
@@ -610,7 +691,7 @@ class DocumentController extends Controller
             $content->procedure = $request->procedure;
             $content->safety_precautions = $request->safety_precautions;
             $content->hod_comments = $request->hod_comments;
-
+            
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
 
@@ -670,6 +751,21 @@ class DocumentController extends Controller
                 $content->distribution = serialize($request->distribution);
             }
 
+            $griddata = $document->id;
+
+            // Store data for Specification grid
+            $SpecificationData = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION'])->firstOrNew();
+            $SpecificationData->document_type_id = $griddata;
+            $SpecificationData->identifier = 'SPECIFICATION';
+            $SpecificationData->data = $request->specification_details;
+            $SpecificationData->save();
+         // specification   validation  grid
+            $Specification_Validation_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION_VALIDATION'])->firstOrNew();
+            $Specification_Validation_Data->document_type_id = $griddata;
+            $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+            $Specification_Validation_Data->data = $request->specification_validation_details;
+            // dd($Specification_Validation_Data->data);
+            $Specification_Validation_Data->save();
             $content->save();
 
             $specification_id = $document->id;
@@ -680,6 +776,52 @@ class DocumentController extends Controller
             $specifications->data = json_encode($request->specifications);
             $specifications->save();
       
+            // row matrial specification   validation  grid
+            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'ROW_SPECIFICATION'])->firstOrNew();
+            $RowSpecification_Data->document_type_id = $griddata;
+            $RowSpecification_Data->identifier = 'ROW_SPECIFICATION';
+            $RowSpecification_Data->data = $request->Row_Materail;
+            $RowSpecification_Data->save();
+            $content->save();
+
+
+            $DocumentGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'Rowmaterialtest'])->firstOrNew();
+            $DocumentGridData->document_type_id = $document->id;
+            $DocumentGridData->identifier = 'Rowmaterialtest';
+            $DocumentGridData->data = $request->test;
+            $DocumentGridData->save();
+        
+
+
+
+            $PackingGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'Packingmaterialdata'])->firstOrNew();
+            $PackingGridData->document_type_id = $document->id;
+            $PackingGridData->identifier = 'Packingmaterialdata';
+            $PackingGridData->data = $request->packingtest;
+          //  dd($PackingGridData);
+            $PackingGridData->save();
+
+
+
+            $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
+            $ProductSpecification->document_type_id = $document->id;
+            $ProductSpecification->identifier = 'ProductSpecification';
+            $ProductSpecification->data = $request->product;
+          //  dd($ProductSpecification);
+            $ProductSpecification->save();
+
+
+
+
+            $MaterialSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'MaterialSpecification'])->firstOrNew();
+            $MaterialSpecification->document_type_id = $document->id;
+            $MaterialSpecification->identifier = 'MaterialSpecification';
+            $MaterialSpecification->data = $request->row_material;
+            // dd($MaterialSpecification);
+            $MaterialSpecification->save();
+
+
+
             toastr()->success('Document created');
 
             return redirect()->route('documents.index');
@@ -775,8 +917,24 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
+  
+
+        $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
+        $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
+
 
         $hods = User::get();
+
+        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
+        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+      
+        
+        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
+          $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+      //  dd($testDataDecoded);
+
+
+      
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
         //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
@@ -808,6 +966,12 @@ class DocumentController extends Controller
             'documentsubTypes',
             'document_distribution_grid',
             'specifications'
+            'SpecificationData',
+            'Specification_Validation_Data',
+            'testDataDecoded',
+            'PackingGridData',
+            'MaterialSpecification',
+            'ProductSpecification'
         ));
     }
 
@@ -845,6 +1009,21 @@ class DocumentController extends Controller
                 $document->document_type_id = $request->document_type_id;
                 $document->document_subtype_id = $request->document_subtype_id;
                 $document->document_language_id = $request->document_language_id;
+
+
+
+
+                
+                $document->name_pack_material = $request->name_pack_material;
+                $document->standard_pack = $request->standard_pack;
+                $document->sampling_plan = $request->sampling_plan;
+                $document->sampling_instruction = $request->sampling_instruction;
+                $document->sample_analysis = $request->sample_analysis;
+                $document->control_sample = $request->control_sample;
+                $document->safety_precaution = $request->safety_precaution;
+                $document->storage_condition = $request->storage_condition;
+                $document->approved_vendor = $request->approved_vendor;
+
                 // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
                 // try {
                 //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
@@ -905,7 +1084,7 @@ class DocumentController extends Controller
                 $document->revision_summary = $request->revision_summary;
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
-                $document->minor = $request->minor;
+                // $document->minor = $request->minor;
 
 
                 if (!empty($request->reviewers)) {
@@ -925,8 +1104,15 @@ class DocumentController extends Controller
                 }
             }
 
-
             $document->update();
+
+
+            // $tds_id = $document->id;
+            // $employeeJobGrid = EmployeeGrid::where(['tds_id' => $tds_id, 'identifier' => 'summaryResult'])->firstOrNew();
+            // $employeeJobGrid->tds_id = $tds_id;
+            // $employeeJobGrid->identifier = 'summaryResult';
+            // $employeeJobGrid->data = json_encode($request->summaryResult);
+            // $employeeJobGrid->save();
 
             DocumentService::handleDistributionGrid($document, $request->distribution);
 
@@ -1569,6 +1755,41 @@ class DocumentController extends Controller
                 $history->save();
             }
 
+
+
+            $DocumentGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest']);
+            $DocumentGridData->document_type_id = $document->id;
+            $DocumentGridData->identifier = 'Rowmaterialtest';
+            $DocumentGridData->data = $request->test;
+            $DocumentGridData->save();
+
+
+            
+
+            $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
+            $PackingGridData->document_type_id = $document->id;
+            $PackingGridData->identifier = 'Packingmaterialdata';
+            $PackingGridData->data = $request->packingtest;
+            $PackingGridData->save();
+
+
+
+            $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
+            $ProductSpecification->document_type_id = $document->id;
+            $ProductSpecification->identifier = 'ProductSpecification';
+            $ProductSpecification->data = $request->product;
+            $ProductSpecification->save();
+
+
+
+            $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
+            $MaterialSpecification->document_type_id = $document->id;
+            $MaterialSpecification->identifier = 'MaterialSpecification';
+            $MaterialSpecification->data = $request->row_material;
+            // dd($MaterialSpecification);
+            $MaterialSpecification->save();
+
+
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/' . $id);
@@ -1625,14 +1846,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -1795,7 +2016,7 @@ class DocumentController extends Controller
         }
     }
 
-    // working code here 
+    // working code here
     // public function viewPdf($id)
     // {
 
@@ -1821,14 +2042,14 @@ class DocumentController extends Controller
     //     if (!$departmentId) {
     //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
     //     }
-        
+
     //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
     //     $counter = 0;
     //     foreach ($documents as $doc) {
     //         $counter++;
     //         $doc->currentId = $counter;
-        
+
 
     //         if ($doc->id == $id) {
     //             $currentId = $doc->currentId;
@@ -1857,7 +2078,7 @@ class DocumentController extends Controller
     //     if (!empty($documentContent->annexuredata)) {
     //         $annexures = unserialize($documentContent->annexuredata);
     //     }
-        
+
 
     //     // pdf related work
     //     $pdf = App::make('dompdf.wrapper');
@@ -1987,6 +2208,21 @@ class DocumentController extends Controller
         $data['year'] = Carbon::parse($data->created_at)->format('Y');
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
+
+        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
+            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+            ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
+        
+        
+        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data) 
+            ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
+        
+
+        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
+        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+ 
+      //  $testDataDecoded = json_decode($testData->data, true);
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
@@ -1995,17 +2231,21 @@ class DocumentController extends Controller
         if (empty($data->document_type_id)) {
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
-        
+
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
-            'FPICVS' => 'frontend.documents.fpicvs-pdf',
+            'FPS' => 'frontend.documents.finished-product-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
             'RAWMS' => 'frontend.documents.raw_ms-pdf',
             'PAMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-            'FPICVSTP' => 'frontend.documents.fpicvstp-pdf',
+            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
@@ -2014,6 +2254,8 @@ class DocumentController extends Controller
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
             'PROTO' => 'frontend.documents.proto-pdf',
+            'STUDY' => 'frontend.documents.reports.study_report',
+            'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
             'REPORT' => 'frontend.documents.report-pdf',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
@@ -2026,7 +2268,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -2065,7 +2307,7 @@ class DocumentController extends Controller
             6,
             -20
         );
-        
+
 
         if ($data->documents) {
 
@@ -2131,14 +2373,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2167,7 +2409,7 @@ class DocumentController extends Controller
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
         }
-        
+
 
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
@@ -2192,7 +2434,7 @@ class DocumentController extends Controller
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
         $canvas->page_text(
-            $width / 4,
+            $width / 2.4,
             $height / 2,
             Helpers::getDocStatusByStage($data->stage),
             null,
@@ -2261,14 +2503,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2461,14 +2703,14 @@ class DocumentController extends Controller
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
-        
+
         $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-        
+
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-        
+
 
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
@@ -2636,7 +2878,7 @@ class DocumentController extends Controller
             return back();
         }
     }
-    
+
 
 
     public function import(Request $request)
@@ -2781,90 +3023,90 @@ class DocumentController extends Controller
 
     public function revision(Request $request, $id)
     {
-    $document = Document::find($id);
+        $document = Document::find($id);
 
-    if (!$document) {
-        toastr()->error('Document not found!');
-        return redirect()->back();
-    }
-
-    $requestedMajor = (int)$document->major;
-    $requestedMinor = (int)$document->minor;
-
-    if ($requestedMinor < 9) {
-        $requestedMinor += 1;
-    } else {
-        $requestedMinor = 1;
-        $requestedMajor += 1;
-    }
-
-    \Log::info("Incremented Major: $requestedMajor, Minor: $requestedMinor");
-
-    $revisionExists = Document::where([
-        'document_type_id' => $document->document_type_id,
-        'document_number' => $document->document_number,
-        'major' => $requestedMajor,
-        'minor' => $requestedMinor
-    ])->first();
-
-    if ($revisionExists) {
-        toastr()->error('A document with this version already exists!');
-        return redirect()->back();
-    }
-
-    $document->revision = 'Yes';
-    $document->revision_policy = $request->revision;
-    $document->update();
-
-    $newdoc = $document->replicate();
-    $newdoc->revised = 'Yes';
-    $newdoc->revised_doc = $document->id;
-    $newdoc->major = $requestedMajor;
-    $newdoc->minor = $requestedMinor;
-    $newdoc->trainer = $request->trainer;
-    $newdoc->comments = $request->comment;
-    $newdoc->stage = 1;
-    $newdoc->status = Stage::where('id', 1)->value('name');
-    $newdoc->save();
-
-    \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
-
-    $docContent = DocumentContent::where('document_id', $document->id)->first();
-    if ($docContent) {
-        $newDocContent = $docContent->replicate();
-        $newDocContent->document_id = $newdoc->id;
-        $newDocContent->save();
-    }
-
-    $annexure = Annexure::where('document_id', $document->id)->first();
-    if ($annexure) {
-        $newAnnexure = $annexure->replicate();
-        $newAnnexure->document_id = $newdoc->id;
-        $newAnnexure->save();
-    }
-
-    if ($document->training_required == 'yes') {
-        $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-        if ($docTrain) {
-            $newTraining = $docTrain->replicate();
-            $newTraining->document_id = $newdoc->id;
-            $newTraining->save();
+        if (!$document) {
+            toastr()->error('Document not found!');
+            return redirect()->back();
         }
-    }
 
-    $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
-    if ($distribution_grid) {
-        $distribution = $distribution_grid->replicate();
-        $distribution->document_id = $newdoc->id;
-        $distribution->save();
-    }
+        $requestedMajor = (int)$document->major;
+        $requestedMinor = (int)$document->minor;
+
+        if ($requestedMinor < 9) {
+            $requestedMinor += 1;
+        } else {
+            $requestedMinor = 1;
+            $requestedMajor += 1;
+        }
+
+        \Log::info("Incremented Major: $requestedMajor, Minor: $requestedMinor");
+
+        $revisionExists = Document::where([
+            'document_type_id' => $document->document_type_id,
+            'document_number' => $document->document_number,
+            'major' => $requestedMajor,
+            'minor' => $requestedMinor
+        ])->first();
+
+        if ($revisionExists) {
+            toastr()->error('A document with this version already exists!');
+            return redirect()->back();
+        }
+
+        $document->revision = 'Yes';
+        $document->revision_policy = $request->revision;
+        $document->update();
+
+        $newdoc = $document->replicate();
+        $newdoc->revised = 'Yes';
+        $newdoc->revised_doc = $document->id;
+        $newdoc->major = $requestedMajor;
+        $newdoc->minor = $requestedMinor;
+        $newdoc->trainer = $request->trainer;
+        $newdoc->comments = $request->comment;
+        $newdoc->stage = 1;
+        $newdoc->status = Stage::where('id', 1)->value('name');
+        $newdoc->save();
+
+        \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+
+        $docContent = DocumentContent::where('document_id', $document->id)->first();
+        if ($docContent) {
+            $newDocContent = $docContent->replicate();
+            $newDocContent->document_id = $newdoc->id;
+            $newDocContent->save();
+        }
+
+        $annexure = Annexure::where('document_id', $document->id)->first();
+        if ($annexure) {
+            $newAnnexure = $annexure->replicate();
+            $newAnnexure->document_id = $newdoc->id;
+            $newAnnexure->save();
+        }
+
+        if ($document->training_required == 'yes') {
+            $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+            if ($docTrain) {
+                $newTraining = $docTrain->replicate();
+                $newTraining->document_id = $newdoc->id;
+                $newTraining->save();
+            }
+        }
+
+        $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
+        if ($distribution_grid) {
+            $distribution = $distribution_grid->replicate();
+            $distribution->document_id = $newdoc->id;
+            $distribution->save();
+        }
 
     
     DocumentService::update_document_numbers();
 
-    toastr()->success('Document has been revised successfully! You can now edit the content.');
-    return redirect()->route('documents.edit', $newdoc->id);
-}
+        toastr()->success('Document has been revised successfully! You can now edit the content.');
+        return redirect()->route('documents.edit', $newdoc->id);
+    }
 
 
     public function printPDFAnx($id)

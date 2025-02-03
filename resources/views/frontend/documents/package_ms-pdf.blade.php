@@ -275,7 +275,6 @@
                 </tr>
             </tbody>
         </table>
-        <div style="margin: 0; text-align: center; font-weight: bold;">Annexure - VII</div>
         <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
@@ -452,7 +451,7 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Name of packing material
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Standard pack
@@ -511,42 +510,33 @@
         </thead>
     </table>
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
+   
+<table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
+            <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
+            <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
+            <th style="border: 1px solid black; width: 20%; font-weight: bold;">GTP No.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!empty($PackingDataGrid))
+            @foreach ($PackingDataGrid as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['specification'] ?? 'N/A' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">GTP No.</th>
+                <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-        </tbody>
-    </table>
+        @endif
+    </tbody>
+</table>
 
     <table>
         <thead>

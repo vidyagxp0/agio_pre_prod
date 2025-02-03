@@ -136,11 +136,21 @@
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
-                <button class="tablinks hidden-tabs" data-id="FPICVS" onclick="openData(event, 'doc-chem')">FPICVS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="FPICVSTP" onclick="openData(event, 'doc-instru')">FPICVSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc-lab')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'add-fpicvs')">Finished Product Specification</button>
+                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'add-fpicvs')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'add-fpicvs')">Cleaning Validation Specification</button>
+
+                <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpicvstp')">Finished Product Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-fpicvstp')">Inprocess Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
+
+                <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+
+                <!-- <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button> -->
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
+                <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
                 <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
@@ -789,68 +799,68 @@
                             </div>
 
 
-                            
+
 
                             <!-- testing code -->
                             <div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-type">Document Type</label>
-        <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
-            <option value="">Enter your Selection</option>
-            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                <option data-id="{{ $code }}" value="{{ $code }}" 
-                    {{ $code == $document->document_type_id ? 'selected' : '' }}>
-                    {{ $type }}
-                </option>
-            @endforeach
-        </select>
+                                <div class="group-input">
+                                    <label for="doc-type">Document Type</label>
+                                    <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
+                                        <option value="">Enter your Selection</option>
+                                        @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                            <option data-id="{{ $code }}" value="{{ $code }}"
+                                                {{ $code == $document->document_type_id ? 'selected' : '' }}>
+                                                {{ $type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
-        @foreach ($history as $tempHistory)
-            @if (
-                $tempHistory->activity_type == 'Document' &&
-                !empty($tempHistory->comment) &&
-                $tempHistory->user_id == Auth::user()->id
-            )
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
-                <p style="color: blue">Modified by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
-                <input class="input-field" style="background: #ffff0061; color: black;"
-                    type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-        @endforeach
-    </div>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Document' &&
+                                            !empty($tempHistory->comment) &&
+                                            $tempHistory->user_id == Auth::user()->id
+                                        )
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modified by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                                            <input class="input-field" style="background: #ffff0061; color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
 
-    @if (Auth::user()->role != 3 && $document->stage < 8)
-        {{-- Add Comment --}}
-        <div class="comment">
-            <div>
-                <p class="timestamp" style="color: blue">Modified by
-                    {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
-                <input class="input-field" type="text" name="document_type_id_comment">
-            </div>
-            <div class="button">Add Comment</div>
-        </div>
-    @endif
-</div>
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    {{-- Add Comment --}}
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modified by
+                                                {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+                                            <input class="input-field" type="text" name="document_type_id_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+                            </div>
 
-<div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-code">Document Type Code</label>
-        <div class="default-name">
-            <span id="document_type_code">
-                @foreach (Helpers::getDocumentTypes() as $code => $type)
-                    @if ($code == $document->document_type_id)
-                        {{ $code }}
-                    @endif
-                @endforeach
-            </span>
-        </div>
-    </div>
-</div>
-<p id="doc-typeError" style="color:red">**Document Type is required</p>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="doc-code">Document Type Code</label>
+                                    <div class="default-name">
+                                        <span id="document_type_code">
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                @if ($code == $document->document_type_id)
+                                                    {{ $code }}
+                                                @endif
+                                            @endforeach
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="doc-typeError" style="color:red">**Document Type is required</p>
 
 
                             <div class="col-md-6">
@@ -2946,69 +2956,69 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="comments">Product/Material Name</label>
-                                        <input type="text" name="product_material_name">
+                                        <input type="text" name="product_material_name" value="{{$document->product_material_name}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">TDS No.</label>
-                                        <input type="text" name="tds_no">
+                                        <input type="number" name="tds_no" value="{{$document->tds_no}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
-                                        <input type="text" name="Reference_Standard">
+                                        <input type="text" name="Reference_Standard" value="{{$document->Reference_Standard}}">
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="batch_no">Batch No</label>
-                                        <input type="text" name="batch_no">
+                                        <input type="text" name="batch_no" value="{{$document->batch_no}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">A.R. No.</label>
-                                        <input type="text" name="ar_no">
+                                        <input type="text" name="ar_no" value="{{$document->ar_no}}">
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
-                                        <input type="date" name="mfg_date">
+                                        <input type="date" name="mfg_date" value="{{$document->mfg_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Exp. Date</label>
-                                        <input type="date" name="exp_date">
+                                        <input type="date" name="exp_date" value="{{$document->exp_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis start date</label>
-                                        <input type="date" name="analysis_start_date">
+                                        <input type="date" name="analysis_start_date" value="{{$document->analysis_start_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis completion date </label>
-                                        <input type="date" name="analysis_completion_date ">
+                                        <input type="date" name="analysis_completion_date" value="{{$document->analysis_completion_date}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Specification No</label>
-                                        <input type="date" name="specification_no">
+                                        <input type="date" name="specification_no" value="{{$document->specification_no}}">
                                     </div>
                                 </div>
 
@@ -3042,7 +3052,6 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
                             <script>
                                 $(document).ready(function() {
                                     $('#ObservationAdd').click(function(e) {
@@ -3073,37 +3082,37 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="tds_remark">Remark</label>
-                                    <textarea name="tds_remark"></textarea>
+                                    <textarea name="tds_remark">{{$document->tds_remark}}</textarea>
                                 </div>
                             </div>
 
                             <div class="orig-head">
                                SAMPLE RECONCILATION
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Name of Material/Sample</label>
-                                    <input type="text" name="name_of_material_sample">
+                                    <input type="text" name="name_of_material_sample" value="{{$document->name_of_material_sample}}">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Batch No.</label>
-                                    <input type="text" name="sample_reconcilation_batchNo">
+                                    <input type="text" name="sample_reconcilation_batchNo" value="{{$document->sample_reconcilation_batchNo}}">
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">A.R.No.</label>
-                                    <input type="text" name="sample_reconcilation_arNo">
+                                    <input type="text" name="sample_reconcilation_arNo" value="{{$document->sample_reconcilation_arNo}}">
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Total Quantity Received</label>
-                                    <input type="text" name="sample_quatity_received">
+                                    <input type="text" name="sample_quatity_received" value="{{$document->sample_quatity_received}}">
                                 </div>
                             </div>
 
@@ -3157,7 +3166,7 @@
                                                     '][quantity_test_stp]"></td>' +
                                                     '<td><input type="text" name="sampleReconcilation[' + serialNumber +
                                                     '][quantity_userd_test]"></td>' +
-                                                    
+
                                                     '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
                                                     serialNumber + '][used_by]"></td>' +
                                                     '</tr>';
@@ -3176,14 +3185,14 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Total Quantity Consumed</label>
-                                        <input type="text" name="total_quantity_consumed">
+                                        <input type="text" name="total_quantity_consumed" value="{{$document->total_quantity_consumed}}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Balance Quantity</label>
-                                        <input type="text" name="balance_quantity">
+                                        <input type="text" name="balance_quantity" value="{{$document->balance_quantity}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -3191,8 +3200,12 @@
                                         <label for="train-require">Balance Quantity Destructed</label>
                                         <select name="balance_quantity_destructed" required>
                                             <option value="">Enter your Selection</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No" selected>No</option>
+                                            <option {{ $document->balance_quantity_destructed == 'Yes' ? 'selected' : '' }}
+                                                        value="Yes">Yes</option>
+                                            <option {{ $document->balance_quantity_destructed == 'No' ? 'selected' : '' }}
+                                                        value="No">No</option>
+                                            {{-- <option value="Yes">Yes</option>
+                                            <option value="No" selected>No</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -3209,6 +3222,1053 @@
                             </button>
                         </div>
                     </div>
+                </div>
+
+                      {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
+
+                    <div id="add-fpicvs" class="tabcontent">
+                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Generic Name</label>
+                                        <input type="text" name="generic_name" value="{{ $document->generic_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Brand Name</label>
+                                        <input type="text" name="brand_name" value="{{ $document->brand_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Label Claim</label>
+                                        <input type="text" name="label_claim" value="{{ $document->label_claim }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Product Code</label>
+                                        <input type="text" name="product_code" value="{{ $document->product_code }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="storage-condition">Storage Condition</label>
+                                        <input type="text" name="storage_condition" value="{{ $document->storage_condition }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity">
+                                            <option value="" selected>Enter your Selection</option>
+                                            <option value="Chemical Analysis" {{ $document->sample_quantity == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
+                                            <option value="Microbial Analysis" {{ $document->sample_quantity == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample" value="{{ $document->reserve_sample }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="custom-sample">Custom Sample</label>
+                                        <input type="text" name="custom_sample" value="{{ $document->custom_sample }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Reference</label>
+                                        <input type="text" name="reference" value="{{ $document->reference }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions" value="{{ $document->sampling_instructions }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">
+                                    SPECIFICATION
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Specification Details">
+                                            Specification Details
+                                            <button type="button" id="specification_add">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="specification_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Sr. No.</th>
+                                                        <th>Test</th>
+                                                        <th>Release</th>
+                                                        <th>Shelf life</th>
+                                                        <th>Reference</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($SpecificationData) && is_array($SpecificationData->data))
+                                                        @foreach ($SpecificationData->data as $index => $spec)
+                                                            <tr>
+                                                                <td><input disabled type="text" name="specification_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][release]" value="{{ $spec['release'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][shelf_life]" value="{{ $spec['shelf_life'] }}"></td>
+                                                                <td><input type="text" name="specification_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr class="no-data">
+                                                            <td colspan="6">No data found</td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Add new row in Specification table
+                                        $('#specification_add').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateSpecificationRow(serialNumber) {
+                                                return (
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="specification_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][test]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][release]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][shelf_life]"></td>' +
+                                                    '<td><input type="text" name="specification_details[' + serialNumber + '][reference]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>'
+                                                );
+                                            }
+
+                                            var tableBody = $('#specification_details tbody');
+                                            var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                            // Remove "No data found" row if it exists
+                                            if (rowCount === 0) {
+                                                tableBody.find('.no-data').remove();
+                                                rowCount = 0; // Start count from 0 if no rows exist
+                                            }
+
+                                            var newRow = generateSpecificationRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+
+                                        // Remove row in Specification table
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+
+                                            // Check if table is empty after deletion, add "No data found" row if so
+                                            if ($('#specification_details tbody tr').length === 0) {
+                                                $('#specification_details tbody').append('<tr class="no-data"><td colspan="6">No data found</td></tr>');
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+                        <div class="col-12 sub-head">
+                            Validation Specification
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Specification Details">
+                                    Specification Details
+                                    <button type="button" id="specification_validation_add">+</button>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="specification_validation_details" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 100px;">Sr. No.</th>
+                                                <th>Test</th>
+                                                <th>Specification</th>
+                                                <th>Reference</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (!empty($Specification_Validation_Data) && is_array($Specification_Validation_Data->data))
+                                                @foreach ($Specification_Validation_Data->data as $index => $spec)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="specification_validation_details[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][specification]" value="{{ $spec['specification'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="no-data">
+                                                    <td colspan="5">No data found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                // Add new row in Specification Validation table
+                                $('#specification_validation_add').click(function(e) {
+                                    e.preventDefault();
+
+                                    function generateSpecificationRow(serialNumber) {
+                                        return (
+                                            '<tr>' +
+                                            '<td><input disabled type="text" name="specification_validation_details[' + serialNumber +
+                                            '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][test]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][specification]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details[' + serialNumber + '][reference]"></td>' +
+                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                            '</tr>'
+                                        );
+                                    }
+
+                                    var tableBody = $('#specification_validation_details tbody');
+                                    var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                    // Remove "No data found" row if it exists
+                                    if (rowCount === 0) {
+                                        tableBody.find('.no-data').remove();
+                                        rowCount = 0; // Start count from 0 if no rows exist
+                                    }
+
+                                    var newRow = generateSpecificationRow(rowCount);
+                                    tableBody.append(newRow);
+                                });
+
+                                // Remove row in Specification Validation table
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+
+                                    // Check if table is empty after deletion, add "No data found" row if so
+                                    if ($('#specification_validation_details tbody tr').length === 0) {
+                                        $('#specification_validation_details tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
+
+                    <div id="doc-fpicvstp" class="tabcontent">
+                        <div class="orig-head">
+                            FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="Standard_Testing_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Standard_Testing_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Standard_details[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Standard_details[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#Standard_Testing_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Standard_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Standard_details[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#Standard_Testing_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                <!------------------------ RMSTP tab ------------------------------------>
+
+                <div id="doc_rmstp" class="tabcontent">
+                                        <div class="orig-head">
+                                            RAW MATERIAL STANDARD TESTING PROCEDURE
+                                        </div>
+                                    <div class="input-fields">
+                                        <div class="row">
+                                            
+
+                                        <div class="group-input">
+    <label for="action-plan-grid">
+        Details
+        <button type="button" id="Details_add">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            Row Increment
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="Details-table">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Test</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @php
+                    $serialNumber = 1;
+                    $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+                        ? json_decode($testDataDecoded->data, true) 
+                        : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
+                @endphp
+                @if(!empty($decodedData))
+                    @foreach($decodedData as $key => $test)
+                        <tr>
+                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                            <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
+                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                        <td><input type="text" name="test[0][testdata]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
+
+        $('#Details_add').click(function() {
+            let rowCount = $('#Details-table tbody tr').length + 1;
+            let newRow = `
+                <tr>
+                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                    <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            `;
+            $('#Details-table tbody').append(newRow);
+            investdetails++;
+        });
+
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#Details-table tbody tr').each(function(index) {
+                $(this).find('td:first-child input').val(index + 1);
+            });
+        }
+    });
+</script>
+
+
+                                                <div class="button-block">
+                                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                           
+
+
+
+
+
+
+
+
+
+  <!------------------------ Packing Material Specification - tab ------------------------------------>
+  <div id="doc_pams" class="tabcontent">
+                    <div class="orig-head">
+                        PACKING MATERIAL SPECIFICATION 
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Name of packing material</label>
+                                        <textarea name="name_pack_material">{{ $document->name_pack_material }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Standard pack</label>
+                                        <textarea name="standard_pack">{{ $document->standard_pack }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sampling plan</label>
+                                        <textarea name="sampling_plan">{{ $document->sampling_plan }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Sampling Instructions</label>
+                                        <textarea name="sampling_instruction">{{ $document->sampling_instruction }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Sample for analysis </label>
+                                        <textarea name="sample_analysis">{{ $document->sample_analysis }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Control Sample</label>
+                                        <textarea name="control_sample">{{ $document->control_sample }}</textarea>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Safety Precautions</label>
+                                        <textarea name="safety_precaution">{{ $document->safety_precaution }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Storage condition</label>
+                                        <textarea name="storage_condition">{{ $document->storage_condition }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Approved Vendors</label>
+                                        <textarea name="approved_vendor">{{ $document->approved_vendor }}</textarea>
+                                    </div>
+                            </div>
+
+                            @php
+                                $serialNumber = 1;
+                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data) 
+                                    ? json_decode($PackingGridData->data, true) 
+                                    : (is_array($PackingGridData->data) ? $PackingGridData->data : []);
+                            @endphp
+
+                            <div class="group-input">
+                                <label for="action-plan-grid">
+                                    Details
+                                    <button type="button" id="Details_add_data">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        Row Increment
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="Details-table-data">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 2%">Sr.No</th>
+                                                <th style="width: 12%">Tests</th>
+                                                <th style="width: 12%">Specifications</th>
+                                                <th style="width: 12%">GTP No.</th>
+                                                <th style="width: 3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(!empty($decodedPackingData))
+                                                @foreach($decodedPackingData as $key => $test)
+                                                    <tr>
+                                                        <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][tests]" value="{{ $test['tests'] ?? '' }}"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][specification]" value="{{ $test['specification'] ?? '' }}"></td>
+                                                        <td><input type="text" name="packingtest[{{ $key }}][gtp_no]" value="{{ $test['gtp_no'] ?? '' }}"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                    <td><input type="text" name="packingtest[0][tests]"></td>
+                                                    <td><input type="text" name="packingtest[0][specification]"></td>
+                                                    <td><input type="text" name="packingtest[0][gtp_no]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function() {
+                                    let investdetails = {{ isset($decodedPackingData) ? count($decodedPackingData) : 1 }};
+
+                                    $('#Details_add_data').click(function() {
+                                        let rowCount = $('#Details-table-data tbody tr').length + 1;
+                                        let newRow = `
+                                            <tr>
+                                                <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][tests]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][specification]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][gtp_no]" value=""></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        `;
+                                        $('#Details-table-data tbody').append(newRow);
+                                        investdetails++;
+                                    });
+
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+
+                                    function updateRowNumbers() {
+                                        $('#Details-table-data tbody tr').each(function(index) {
+                                            $(this).find('td:first-child input').val(index + 1);
+                                        });
+                                    }
+                                });
+                            </script>
+
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+                {{-- Raw Material Specifications Tabs --}}
+                    <div id="doc-rawms" class="tabcontent">
+                        <div class="orig-head">
+                            RAW MATERIAL SPECIFICATION</div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">CAS No.</label>
+                                        <input type="text" name="cas_no_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Molecular Formula</label>
+                                        <input type="text" name="molecular_formula_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Molecular Weight</label>
+                                        <input type="text" name="molecular_weight_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Storage Condition</label>
+                                        <input type="text" name="storage_condition_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-period">Retest Period</label>
+                                        <input type="text" name="retest_period_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-procedure">Sampling Procedure</label>
+                                        <input type="text" name="sampling_procedure_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="item-code">Item Code</label>
+                                        <input type="text" name="item_code_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity_row_material">
+                                            <option value="" selected>--Select--</option>
+                                            <option value="Chemical Analysis">Chemical Analysis</option>
+                                            <option value="Microbial Analysis">Microbial Analysis</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="retest-sample">Sample Quantity for Retest</label>
+                                        <input type="text" name="retest_sample_quantity_row_material">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions_row_material">
+                                    </div>
+                                </div>
+
+
+                            <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Specification Details">
+                                        STANDARD TESTING PROCEDURE
+                                        <button type="button" id="row_material_add">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="row_material_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No.</th>
+                                                    <th>Test</th>
+                                                    <th>Specification</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Initial Row Placeholder (Optional) -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="Row_Materail[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Row_Materail[0][specification_row_material]"></td>
+                                                    <td><input type="text" name="Row_Materail[0][test]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    // Add new row in Specification Details table
+                                    $('#row_material_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateSpecificationTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Row_Materail[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][specification_row_material]"></td>' +
+                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][test]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#row_material_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateSpecificationTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    // Remove row in Specification Details table
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+  <!------------------------ PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION ------------------------------------>
+                                <div id="doc_pias" class="tabcontent">
+                                    <div class="orig-head">
+                                    PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION
+                                    </div>
+                                <div class="input-fields">
+                                    <div class="row">
+                                                    
+
+                        @php
+                            $serialNumber = 1;
+                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) 
+                                ? json_decode($ProductSpecification->data, true) 
+                                : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
+                        @endphp
+
+                        <div class="group-input">
+                            <label for="action-plan-grid">
+                                For Finished Product Specification use below table
+                                <button type="button" id="addRowBtndata">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    Row Increment
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="productDetailsTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 2%">Sr.No</th>
+                                            <th style="width: 2%">Product Code</th>
+                                            <th style="width: 2%">FG Code</th>
+                                            <th style="width: 2%">Country</th>
+                                            <th style="width: 2%">Brand Name / Grade</th>
+                                            <th style="width: 2%">Pack Size</th>
+                                            <th style="width: 2%">Shelf Life</th>
+                                            <th style="width: 2%">Sample Quantity</th>
+                                            <th style="width: 2%">Storage Condition</th>
+                                            <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                            <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 3%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(!empty($decodedProductData))
+                                            @foreach($decodedProductData as $key => $product)
+                                                <tr>
+                                                    <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][product_code]" value="{{ $product['product_code'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][fg_code]" value="{{ $product['fg_code'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][country]" value="{{ $product['country'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][brand_name_grade]" value="{{ $product['brand_name_grade'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][pack_size]" value="{{ $product['pack_size'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][shelf_life]" value="{{ $product['shelf_life'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][sample_quantity]" value="{{ $product['sample_quantity'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][storage_condition]" value="{{ $product['storage_condition'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ $product['prepared_by_quality_person'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][checked_by_qc_hod_designee]" value="{{ $product['checked_by_qc_hod_designee'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][approved_by_qa_hod_designee]" value="{{ $product['approved_by_qa_hod_designee'] ?? '' }}"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                <td><input type="text" name="product[0][product_code]"></td>
+                                                <td><input type="text" name="product[0][fg_code]"></td>
+                                                <td><input type="text" name="product[0][country]"></td>
+                                                <td><input type="text" name="product[0][brand_name_grade]"></td>
+                                                <td><input type="text" name="product[0][pack_size]"></td>
+                                                <td><input type="text" name="product[0][shelf_life]"></td>
+                                                <td><input type="text" name="product[0][sample_quantity]"></td>
+                                                <td><input type="text" name="product[0][storage_condition]"></td>
+                                                <td><input type="text" name="product[0][prepared_by_quality_person]"></td>
+                                                <td><input type="text" name="product[0][checked_by_qc_hod_designee]"></td>
+                                                <td><input type="text" name="product[0][approved_by_qa_hod_designee]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function () {
+                                let investDetails = {{ isset($decodedProductData) ? count($decodedProductData) : 1 }};
+
+                                $('#addRowBtndata').click(function () {
+                                    let rowCount = $('#productDetailsTable tbody tr').length + 1;
+                                    let newRow = `
+                                        <tr>
+                                            <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                            <td><input type="text" name="product[${investDetails}][product_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][fg_code]"></td>
+                                            <td><input type="text" name="product[${investDetails}][country]"></td>
+                                            <td><input type="text" name="product[${investDetails}][brand_name_grade]"></td>
+                                            <td><input type="text" name="product[${investDetails}][pack_size]"></td>
+                                            <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
+                                            <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
+                                            <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
+                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
+                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
+                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    `;
+                                    $('#productDetailsTable tbody').append(newRow);
+                                    investDetails++;
+                                });
+
+                                $(document).on('click', '.removeRowBtn', function () {
+                                    $(this).closest('tr').remove();
+                                    updateRowNumbers();
+                                });
+
+                                function updateRowNumbers() {
+                                    $('#productDetailsTable tbody tr').each(function(index) {
+                                        $(this).find('td:first-child input').val(index + 1);
+                                    });
+                                }
+                            });
+                        </script>
+
+
+@php
+    $serialNumber = 1;
+    $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) 
+        ? json_decode($MaterialSpecification->data, true) 
+        : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+@endphp
+
+<div class="group-input">
+    <label for="action-plan-grid">
+        Raw Material Specification - Use the table below
+        <button type="button" id="RowMaterialData">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            Row Increment
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="RowMaterialTable">
+            <thead>
+                <tr>
+                    <th style="width: 2%">Sr.No</th>
+                    <th style="width: 2%">Item Code</th>
+                    <th style="width: 2%">Vendor Name</th>
+                    <th style="width: 2%">Grade</th>
+                    <th style="width: 2%">Sample Quantity</th>
+                    <th style="width: 2%">Storage Condition</th>
+                    <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                    <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                    <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                    <th style="width: 3%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!empty($decodedMaterialData))
+                    @foreach($decodedMaterialData as $key => $material)
+                        <tr>
+                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][item_code]" value="{{ $material['item_code'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][vendor_name]" value="{{ $material['vendor_name'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][grade]" value="{{ $material['grade'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][sample_quantity]" value="{{ $material['sample_quantity'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][storage_condition]" value="{{ $material['storage_condition'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ $material['prepared_quality_person_sign_date'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][check_by_qc_hod_designee_sign]" value="{{ $material['check_by_qc_hod_designee_sign'] ?? '' }}"></td>
+                            <td><input type="text" name="row_material[{{ $key }}][approved_by_qa_hod_desinee_sign]" value="{{ $material['approved_by_qa_hod_desinee_sign'] ?? '' }}"></td>
+                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                        <td><input type="text" name="row_material[0][item_code]"></td>
+                        <td><input type="text" name="row_material[0][vendor_name]"></td>
+                        <td><input type="text" name="row_material[0][grade]"></td>
+                        <td><input type="text" name="row_material[0][sample_quantity]"></td>
+                        <td><input type="text" name="row_material[0][storage_condition]"></td>
+                        <td><input type="text" name="row_material[0][prepared_quality_person_sign_date]"></td>
+                        <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
+                        <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        let investDetails = {{ isset($decodedMaterialData) ? count($decodedMaterialData) : 1 }};
+
+        $('#RowMaterialData').click(function () {
+            let rowCount = $('#RowMaterialTable tbody tr').length + 1;
+            let newRow = `
+                <tr>
+                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                    <td><input type="text" name="row_material[${investDetails}][item_code]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][vendor_name]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][grade]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
+                    <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            `;
+            $('#RowMaterialTable tbody').append(newRow);
+            investDetails++;
+        });
+
+        $(document).on('click', '.removeRowBtn', function () {
+            $(this).closest('tr').remove();
+            updateRowNumbers();
+        });
+
+        function updateRowNumbers() {
+            $('#RowMaterialTable tbody tr').each(function(index) {
+                $(this).find('td:first-child input').val(index + 1);
+            });
+        }
+    });
+</script>
+
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <div id="annexures" class="tabcontent">
@@ -3479,7 +4539,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
 
                     {{-- <script>
                         function addDistributionRetrieval1(tableId) {
@@ -3489,7 +4549,7 @@
 
                             // Mock data for departments and users if not available
                             let departmentsData = @json(Helpers::getDmsDepartments()); // Use PHP helper
-                            
+
                             newRow.setAttribute("id", "row" + currentRowCount);
 
                             // Document details
@@ -3503,24 +4563,24 @@
                             cell1.innerHTML = currentRowCount;
 
                             let cell2 = newRow.insertCell(1);
-                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;" 
+                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;"
                             name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
 
                             let cell3 = newRow.insertCell(2);
-                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_number]" readonly>
                             ${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea>`;
 
                             let cell4 = newRow.insertCell(3);
-                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
 
                             let cell5 = newRow.insertCell(4);
-                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_on]"></textarea>`;
 
                             let cell6 = newRow.insertCell(5);
-                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][document_printed_copies]"></textarea>`;
 
                             let cell7 = newRow.insertCell(6);
@@ -3578,7 +4638,7 @@
                             border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
 
                             let cell17 = newRow.insertCell(16);
-                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;" 
+                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
                             name="distribution[${currentRowCount}][remark]"></textarea>`;
 
                             let cell18 = newRow.insertCell(17);
@@ -3613,22 +4673,22 @@
                             // Create and populate cells
                             newRow.innerHTML = `
                                 <td>${currentRowCount}</td>
-                                <td><textarea style="overflow: hidden; border: none; width: 10rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 10rem;"
                                     name="distribution[${currentRowCount}][document_title]" readonly>${documentName}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_number]" readonly>${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_by]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_on]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][document_printed_copies]"></textarea></td>
                                 <td>
                                     <div class="group-input new-date-data-field mb-0">
                                         <div class="input-date">
                                             <div class="calenderauditee">
                                                 <input style="width: 6rem;" type="text" id="issuance_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]" 
+                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]"
                                                     class="hide-input" oninput="handleDateInput(this, 'issuance_date${currentRowCount}')">
                                             </div>
                                         </div>
@@ -3647,16 +4707,16 @@
                                             `<option value="${code}">${name}</option>`).join('')}
                                     </select>
                                 </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][issued_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][issued_reason]"></textarea></td>
                                 <td>
                                     <div class="group-input new-date-data-field mb-0">
                                         <div class="input-date">
                                             <div class="calenderauditee">
                                                 <input style="width: 6rem;" type="text" id="retrieval_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]" 
+                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]"
                                                     class="hide-input" oninput="handleDateInput(this, 'retrieval_date${currentRowCount}')">
                                             </div>
                                         </div>
@@ -3675,11 +4735,11 @@
                                             `<option value="${code}">${name}</option>`).join('')}
                                     </select>
                                 </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][retrieved_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][retrieved_reason]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;" 
+                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
                                     name="distribution[${currentRowCount}][remark]"></textarea></td>
                                 <td><button class="removeTrainRow" onclick="removeRow(this)">Remove</button></td>
                             `;

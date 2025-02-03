@@ -271,7 +271,6 @@
                 </tr>
             </tbody>
         </table>
-        <div style="margin: 0; text-align: center; font-weight: bold;">Annexure – VI</div>
         <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
@@ -417,41 +416,34 @@
             <span style="text-align:center">Format No.: QA/097/F6-00</span>                            
         </footer>
     
+
+       
     <div class="content">
         <section>
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
             <div class="table-responsive retrieve-table">
-                <table class="table table-bordered" id="distribution-list">
-                    <thead style="width:20%">
-                        <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
-
-                            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
-                        </tr>
-                    </thead>
-                    <tbody style="">
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">1</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">2</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">3</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">4</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">5</td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <table class="table table-bordered" id="distribution-list">
+    <thead>
+        <tr>
+            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
+            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!empty($testData))
+            @foreach ($testData as $key => $item)
+                <tr>
+                    <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
+                    <td style="font-weight: bold;">{{ $item['testdata'] ?? '' }}</td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
             </div>
         </section>
 

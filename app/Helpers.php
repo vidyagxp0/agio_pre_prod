@@ -751,8 +751,12 @@ class Helpers
     {
         $document_types = [
             'SOP' => 'SOP’s (All types)',
-            'FPICVS' => 'Finished product / inprocess / cleaning validation specification',
-            'FPICVSTP' => 'Finished product / inprocess / cleaning validation Standard Testing Procedure (Commercial / Registration / Re-Registration)',
+            'FPS' => 'Finished product specification',
+            'INPS' => 'Inprocess specification',
+            'CVS' => 'Cleaning validation specification',
+            'FPSTP' => 'Finished product Standard Testing Procedure (Commercial / Registration / Re-Registration)',
+            'INPSTP' => 'Inprocess Standard Testing Procedure (Commercial / Registration / Re-Registration)',
+            'CVSTP' => 'Cleaning validation Standard Testing Procedure (Commercial / Registration / Re-Registration)',
             'RAWMS' => 'Raw Material Specification',
             'RMSTP' => 'Raw Material Standard Testing Procedure',
             'PAMS' =>'Packing Material Specification',
@@ -768,6 +772,8 @@ class Helpers
             'GTP' => 'General Testing Procedure',
             'PROTO' => 'Protocols (All types)',
             'REPORT' => 'Reports (All types)',
+            'TEMPMAPPING' => 'Temperature mapping protocol cum report',
+            'STUDY' => 'Study Report',
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
