@@ -614,10 +614,10 @@ class DocumentController extends Controller
                 $document->attach_effective_docuement = $image_name;
             }
 
-            $document->revision_summary = $request->revision_summary;
-            if (!empty($request->reviewers)) {
-                $document->reviewers = implode(',', $request->reviewers);
-            }
+            // $document->revision_summary = $request->revision_summary;
+            // if (!empty($request->reviewers)) {
+            //     $document->reviewers = implode(',', $request->reviewers);
+            // }
             if (!empty($request->approvers)) {
                 $document->approvers = implode(',', $request->approvers);
             }
@@ -699,6 +699,7 @@ class DocumentController extends Controller
             $content->purpose = $request->purpose;
             $content->scope = $request->scope;
             $content->procedure = $request->procedure;
+            $content->revision_summary = $request->revision_summary;
             $content->safety_precautions = $request->safety_precautions;
             $content->hod_comments = $request->hod_comments;
             
@@ -1642,6 +1643,7 @@ class DocumentController extends Controller
             $documentcontet->purpose = $request->purpose;
             $documentcontet->scope = $request->scope;
             $documentcontet->procedure = $request->procedure;
+            $documentcontet->revision_summary = $request->revision_summary;
             $documentcontet->safety_precautions = $request->safety_precautions;
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
@@ -2363,8 +2365,7 @@ class DocumentController extends Controller
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
         $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data) 
             ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);    
-        
-        // dd($PackingDataGrid);
+
         $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
         $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data) 
             ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
@@ -2425,7 +2426,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

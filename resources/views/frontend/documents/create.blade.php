@@ -1174,12 +1174,24 @@
                                 </div> --}}
 
                                 <!-- add revision history -->
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="summary">Revision History</label>
                                         <textarea name="revision_summary"></textarea>
                                     </div>
+                                </div> --}}
+
+                                <!--  Tabuler format Revision Histpry -->
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="revision_summary">Revision History</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="revision_summary" class="summernote">
+                                    </textarea>
+                                    </div>
                                 </div>
+
 
                                 <div class="input-fields">
                                     <div class="group-input">

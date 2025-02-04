@@ -1544,31 +1544,31 @@
 
                             <div class="col-12">
                                 <!-- <div class="group-input">
-                                                                                    <label for="revision-type">Revision Type</label>
-                                                                                    <select name="revision_type" {{ Helpers::isRevised($document->stage) }}>
-                                                                                        <option value="0">-- Select --</option>
-                                                                                        <option @if ($document->revision_type == 'minor') selected @endif
-                                                                                            value="minor">Minor</option>
-                                                                                        <option @if ($document->revision_type == 'major') selected @endif
-                                                                                            value="major">Major</option>
-                                                                                        <option @if ($document->revision_type == 'NA') selected @endif
-                                                                                            value="NA">NA</option>
-                                                                                    </select>
-                                                                                    @foreach ($history as $tempHistory)
-    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment))
-    @php
-        $users_name = DB::table('users')
-            ->where('id', $tempHistory->user_id)
-            ->value('name');
-    @endphp
-                                                                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                                                                        {{ $tempHistory->created_at }}
-                                                                                    </p>
-                                                                                    <input class="input-field" style="background: #ffff0061;
-                                color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-    @endif
-    @endforeach
-                                                                                </div> -->
+                                    <label for="revision-type">Revision Type</label>
+                                    <select name="revision_type" {{ Helpers::isRevised($document->stage) }}>
+                                        <option value="0">-- Select --</option>
+                                        <option @if ($document->revision_type == 'minor') selected @endif
+                                            value="minor">Minor</option>
+                                        <option @if ($document->revision_type == 'major') selected @endif
+                                            value="major">Major</option>
+                                        <option @if ($document->revision_type == 'NA') selected @endif
+                                            value="NA">NA</option>
+                                    </select>
+                                    @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment))
+                                    @php
+                                        $users_name = DB::table('users')
+                                            ->where('id', $tempHistory->user_id)
+                                            ->value('name');
+                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field" style="background: #ffff0061;
+                                           color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                    @endforeach
+                                </div> -->
                                 @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -2618,6 +2618,7 @@
                                     </table>
                                 </div>
                             </div> --}}
+
                             @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
                                     class="comment">
                                     <div>
@@ -2631,10 +2632,35 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <div class="group-input">
                                 <label for="summary">Revision History</label>
                                 <textarea name="revision_summary">{{ $document->revision_summary }}</textarea>
+                            </div>
+                        </div> --}}
+
+                        <div class="col-md-12">
+                            <div class="group-input">
+                                <label for="revision_summary">Revision History</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                        require completion</small></div>
+                                <textarea name="revision_summary" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->revision_summary : '' }}</textarea>
+                                @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'revision_summary' && !empty($tempHistory->comment))
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -329,7 +329,7 @@
 
         body {
             margin-top: 220px;
-            margin-bottom: 145px;
+            margin-bottom: 160px;
         }
 
         footer {
@@ -960,19 +960,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!empty($PackingDataGrid))
-                                @foreach ($PackingDataGrid as $key => $item)
+                            @if (!empty($sampleReconcilationDataGrid))
+                                @foreach ($sampleReconcilationDataGrid as $key => $item)
                                     <tr>
                                         <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
-                                        <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['specification'] ?? 'N/A' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: left;">{{ $item['test_name'] ?? '' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_test_stp'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_userd_test'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['used_by'] ?? 'N/A' }}</td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                                    <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
                                 </tr>
                             @endif
                         </tbody>
