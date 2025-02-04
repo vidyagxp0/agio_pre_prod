@@ -4020,101 +4020,101 @@
                 </script>
 
 
-                            <!------------------------ RMSTP tab ------------------------------------>
+    <!---------------------------------------------- RMSTP tab ----------------------------------------->
 
-                            <div id="doc_rmstp" class="tabcontent">
-                                        <div class="orig-head">
-                                            RAW MATERIAL STANDARD TESTING PROCEDURE
-                                        </div>
-                                    <div class="input-fields">
-                                        <div class="row">
-                                            
-
-                                        <div class="group-input">
-                                                <label for="action-plan-grid">
-                                                    Details
-                                                    <button type="button" id="Details_add">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        Row Increment
-                                                    </span>
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="Details-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Sr.No</th>
-                                                                <th>Test</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                            @php
-                                                                $serialNumber = 1;
-                                                                $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
-                                                                    ? json_decode($testDataDecoded->data, true) 
-                                                                    : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
-                                                            @endphp
-                                                            @if(!empty($decodedData))
-                                                                @foreach($decodedData as $key => $test)
-                                                                    <tr>
-                                                                        <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
-                                                                        <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
-                                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @else
-                                                                <tr>
-                                                                    <td><input type="text" disabled value="1" style="width: 30px;"></td>
-                                                                    <td><input type="text" name="test[0][testdata]"></td>
-                                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                                </tr>
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                <script>
-                    $(document).ready(function() {
-                        let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
-
-                        $('#Details_add').click(function() {
-                            let rowCount = $('#Details-table tbody tr').length + 1;
-                            let newRow = `
-                                <tr>
-                                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
-                                    <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
-                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                </tr>
-                            `;
-                            $('#Details-table tbody').append(newRow);
-                            investdetails++;
-                        });
-
-                        $(document).on('click', '.removeRowBtn', function() {
-                            $(this).closest('tr').remove();
-                            updateRowNumbers();
-                        });
-
-                        function updateRowNumbers() {
-                            $('#Details-table tbody tr').each(function(index) {
-                                $(this).find('td:first-child input').val(index + 1);
-                            });
-                        }
-                    });
-                </script>
-
-
-                    <div class="col-md-12">
-                        <div class="group-input">
-                            <label for="short-desc">STP No.</label>
-                            
-                            <input type="text" id="" name="stp_no" value="{{$document->stp_no}}">
-                        </div>
-                                   
+        <div id="doc_rmstp" class="tabcontent">
+                    <div class="orig-head">
+                        RAW MATERIAL STANDARD TESTING PROCEDURE
                     </div>
+                <div class="input-fields">
+                    <div class="row">
+                        
+
+                        <div class="group-input">
+                            <label for="action-plan-grid">
+                                Details
+                                <button type="button" id="Details_add">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    Row Increment
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="Details-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.No</th>
+                                            <th>Test</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @php
+                                            $serialNumber = 1;
+                                            $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+                                                ? json_decode($testDataDecoded->data, true) 
+                                                : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
+                                        @endphp
+                                        @if(!empty($decodedData))
+                                            @foreach($decodedData as $key => $test)
+                                                <tr>
+                                                    <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                    <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                <td><input type="text" name="test[0][testdata]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
+
+                                $('#Details_add').click(function() {
+                                    let rowCount = $('#Details-table tbody tr').length + 1;
+                                    let newRow = `
+                                        <tr>
+                                            <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                            <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    `;
+                                    $('#Details-table tbody').append(newRow);
+                                    investdetails++;
+                                });
+
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                    updateRowNumbers();
+                                });
+
+                                function updateRowNumbers() {
+                                    $('#Details-table tbody tr').each(function(index) {
+                                        $(this).find('td:first-child input').val(index + 1);
+                                    });
+                                }
+                            });
+                        </script>
+
+
+                        <div class="col-md-12">
+                            <div class="group-input">
+                                <label for="short-desc">STP No.</label>
+                                
+                                <input type="text" id="" name="stp_no" value="{{$document->stp_no}}">
+                            </div>
+                                    
+                        </div>
 
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -4124,9 +4124,9 @@
                             </a>
                         </button>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
 
 
 

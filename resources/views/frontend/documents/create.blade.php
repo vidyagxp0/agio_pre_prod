@@ -1870,7 +1870,7 @@
                                     <div class="row">
                                                     
 
-                            <div class="group-input">
+                                <div class="group-input">
                                     <label for="action-plan-grid">
                                     For Finished product specification use below table<button type="button" name="action-plan-grid"
                                                 id="addRowBtndata">+</button>
@@ -1880,27 +1880,27 @@
                                             Row Increment
                                         </span>
                                     </label>
-                                <div class="table-responsive">
-                                <table class="table table-bordered" id="productDetailsTable">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 2%">Sr.No</th>
-                                                <th style="width: 2%">Product Code</th>
-                                                <th style="width: 2%">FG Code</th>
-                                                <th style="width: 2%">Country</th>
-                                                <th style="width: 2%">Brand Name / Grade</th>
-                                                <th style="width: 2%">Pack Size</th>
-                                                <th style="width: 2%">Shelf Life</th>
-                                                <th style="width: 2%">Sample Quantity</th>
-                                                <th style="width: 2%">Storage Condition</th>
-                                                <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
-                                                <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
-                                                <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
-                                                <th style="width: 3%">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="productDetailsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 2%">Product Code</th>
+                                                    <th style="width: 2%">FG Code</th>
+                                                    <th style="width: 2%">Country</th>
+                                                    <th style="width: 2%">Brand Name / Grade</th>
+                                                    <th style="width: 2%">Pack Size</th>
+                                                    <th style="width: 2%">Shelf Life</th>
+                                                    <th style="width: 2%">Sample Quantity</th>
+                                                    <th style="width: 2%">Storage Condition</th>
+                                                    <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                                    <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                                    <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                                    <th style="width: 3%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
                                                 <td><input disabled type="text" style="width:15px" value="1"></td>
                                                 <td><input type="text" name="product[0][product_code]"></td>
                                                 <td><input type="text" name="product[0][fg_code]"></td>
@@ -1914,102 +1914,96 @@
                                                 <td><input type="text" name="product[0][checked_by_qc_hod_designee]"></td>
                                                 <td><input type="text" name="product[0][approved_by_qa_hod_designee]"></td>
                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
 
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                function addSpecifications() {
-                                    let table = document.getElementById("specifications-grid").getElementsByTagName('tbody')[0];
-                                    let rowCount = table.rows.length;
-                                    let newRow = table.insertRow();
-                                    newRow.innerHTML = `
-                                        <td>${rowCount + 1}</td>
-                                        <td><input type="text" name="specifications[${rowCount}][tests]"></td>
-                                        <td><input type="text" name="specifications[${rowCount}][release]"></td>
-                                        <td><input type="text" name="specifications[${rowCount}][shelf_life]"></td>
-                                        <td><input type="text" name="specifications[${rowCount}][reference]"></td>
-                                        <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                    `;
-                                }
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        function addSpecifications() {
+                                            let table = document.getElementById("specifications-grid").getElementsByTagName('tbody')[0];
+                                            let rowCount = table.rows.length;
+                                            let newRow = table.insertRow();
+                                            newRow.innerHTML = `
+                                                <td>${rowCount + 1}</td>
+                                                <td><input type="text" name="specifications[${rowCount}][tests]"></td>
+                                                <td><input type="text" name="specifications[${rowCount}][release]"></td>
+                                                <td><input type="text" name="specifications[${rowCount}][shelf_life]"></td>
+                                                <td><input type="text" name="specifications[${rowCount}][reference]"></td>
+                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
+                                            `;
+                                        }
 
-                                document.addEventListener("click", function (event) {
-                                    if (event.target.classList.contains("removeSpecRow")) {
-                                        let row = event.target.closest("tr");
-                                        row.remove();
-                                        updateSerialNumbers();
-                                    }
-                                });
-
-                                function updateSerialNumbers() {
-                                    let rows = document.querySelectorAll("#specifications-grid tbody tr");
-                                    rows.forEach((row, index) => {
-                                        row.cells[0].textContent = index + 1;
-                                        row.querySelectorAll("input").forEach(input => {
-                                            let nameParts = input.name.match(/specifications\[\d+]\[(.+)]/);
-                                            if (nameParts) {
-                                                input.name = `specifications[${index}][${nameParts[1]}]`;
+                                        document.addEventListener("click", function (event) {
+                                            if (event.target.classList.contains("removeSpecRow")) {
+                                                let row = event.target.closest("tr");
+                                                row.remove();
+                                                updateSerialNumbers();
                                             }
                                         });
+
+                                        function updateSerialNumbers() {
+                                            let rows = document.querySelectorAll("#specifications-grid tbody tr");
+                                            rows.forEach((row, index) => {
+                                                row.cells[0].textContent = index + 1;
+                                                row.querySelectorAll("input").forEach(input => {
+                                                    let nameParts = input.name.match(/specifications\[\d+]\[(.+)]/);
+                                                    if (nameParts) {
+                                                        input.name = `specifications[${index}][${nameParts[1]}]`;
+                                                    }
+                                                });
+                                            });
+                                        }
+
+                                        window.addSpecifications = addSpecifications;
                                     });
-                                }
 
-                                window.addSpecifications = addSpecifications;
-                            });
-
-                        </script>
+                                </script>
                         
-                        <div class="button-block">
-                            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a>
-                            </button>
-                        </div>  
-                    </div>
-                            $(document).ready(function () {
-                                let investDetails = 1; // Row counter
+                         
+                    
 
-                                $('#addRowBtndata').click(function () {
-                                    function generateTableRow(serialNumber) {
-                                        return `<tr>
-                                            <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
-                                            <td><input type="text" name="product[${investDetails}][product_code]"></td>
-                                            <td><input type="text" name="product[${investDetails}][fg_code]"></td>
-                                            <td><input type="text" name="product[${investDetails}][country]"></td>
-                                            <td><input type="text" name="product[${investDetails}][brand_name_grade]"></td>
-                                            <td><input type="text" name="product[${investDetails}][pack_size]"></td>
-                                            <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
-                                            <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
-                                            <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
-                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
-                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
-                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                        </tr>`;
-                                    }
+                                <script>
+                                    $(document).ready(function () {
+                                        let investDetails = 1; // Row counter
 
-                                    let tableBody = $('#productDetailsTable tbody');
-                                    let rowCount = tableBody.children('tr').length;
-                                    let newRow = generateTableRow(rowCount + 1);
-                                    tableBody.append(newRow);
-                                    investDetails++; // Increment row index
-                                });
+                                        $('#addRowBtndata').click(function () {
+                                            function generateTableRow(serialNumber) {
+                                                return `<tr>
+                                                    <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
+                                                    <td><input type="text" name="product[${investDetails}][product_code]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][fg_code]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][country]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][brand_name_grade]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][pack_size]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
+                                                    <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>`;
+                                            }
 
-                                // Remove row event
-                                $(document).on('click', '.removeRowBtn', function () {
-                                    $(this).closest('tr').remove();
-                                });
-                            });
-                        </script>
+                                            let tableBody = $('#productDetailsTable tbody');
+                                            let rowCount = tableBody.children('tr').length;
+                                            let newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                            investDetails++; // Increment row index
+                                        });
 
-                        <div class="group-input">
+                                        // Remove row event
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+                                        });
+                                    });
+                                </script>
+
+                            <div class="group-input">
                                     <label for="action-plan-grid">
                                     Raw Material specification use below table<button type="button" name="action-plan-grid"
                                                 id="RowMaterialData">+</button>
@@ -2019,78 +2013,78 @@
                                             Row Increment
                                         </span>
                                     </label>
-                                <div class="table-responsive">
-                                <table class="table table-bordered" id="RowMaterialTable">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 2%">Sr.No</th>
-                                                <th style="width: 2%">Item Code</th>
-                                                <th style="width: 2%">Vendor Name</th>
-                                                <th style="width: 2%">Grade</th>
-                                                <th style="width: 2%">Sample quantity</th>
-                                                <th style="width: 2%">Storage condition</th>
-                                                <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
-                                                <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
-                                                <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
-                                               
-                                                <th style="width: 3%">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input disabled type="text" style="width:15px" value="1"></td>
-                                                <td><input type="text" name="row_material[0][item_code]"></td>
-                                                <td><input type="text" name="row_material[0][vendor_name]"></td>
-                                                <td><input type="text" name="row_material[0][grade]"></td>
-                                                <td><input type="text" name="row_material[0][sample_quantity]"></td>
-                                                <td><input type="text" name="row_material[0][storage_condition]"></td>
-                                                <td><input type="text" name="row_material[0][prepared_quality_person_sign_date)]"></td>
-                                                <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
-                                                <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="RowMaterialTable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">Sr.No</th>
+                                                    <th style="width: 2%">Item Code</th>
+                                                    <th style="width: 2%">Vendor Name</th>
+                                                    <th style="width: 2%">Grade</th>
+                                                    <th style="width: 2%">Sample quantity</th>
+                                                    <th style="width: 2%">Storage condition</th>
+                                                    <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
+                                                    <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
+                                                    <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                                
+                                                    <th style="width: 3%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" style="width:15px" value="1"></td>
+                                                    <td><input type="text" name="row_material[0][item_code]"></td>
+                                                    <td><input type="text" name="row_material[0][vendor_name]"></td>
+                                                    <td><input type="text" name="row_material[0][grade]"></td>
+                                                    <td><input type="text" name="row_material[0][sample_quantity]"></td>
+                                                    <td><input type="text" name="row_material[0][storage_condition]"></td>
+                                                    <td><input type="text" name="row_material[0][prepared_quality_person_sign_date)]"></td>
+                                                    <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
+                                                    <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
 
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        </tbody>
-                                </table>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                     </div>
                             </div>
-                        </div>
 
 
 
-                        <script>
-                            $(document).ready(function () {
-                                let investDetails = 1; // Row counter
+                                <script>
+                                    $(document).ready(function () {
+                                        let investDetails = 1; // Row counter
 
-                                $('#RowMaterialData').click(function () {
-                                    function generateTableRow(serialNumber) {
-                                        return `<tr>
-                                            <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][item_code]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][vendor_name]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][grade]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
-                                       
-                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                        </tr>`;
-                                    }
+                                        $('#RowMaterialData').click(function () {
+                                            function generateTableRow(serialNumber) {
+                                                return `<tr>
+                                                    <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][item_code]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][vendor_name]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][grade]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
+                                                    <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
+                                            
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>`;
+                                            }
 
-                                    let tableBody = $('#RowMaterialTable tbody');
-                                    let rowCount = tableBody.children('tr').length;
-                                    let newRow = generateTableRow(rowCount + 1);
-                                    tableBody.append(newRow);
-                                    investDetails++; // Increment row index
-                                });
+                                            let tableBody = $('#RowMaterialTable tbody');
+                                            let rowCount = tableBody.children('tr').length;
+                                            let newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                            investDetails++; // Increment row index
+                                        });
 
-                                // Remove row event
-                                $(document).on('click', '.removeRowBtn', function () {
-                                    $(this).closest('tr').remove();
-                                });
-                            });
-                        </script>
+                                        // Remove row event
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+                                        });
+                                    });
+                                </script>
 
 
                                 <div class="button-block">
