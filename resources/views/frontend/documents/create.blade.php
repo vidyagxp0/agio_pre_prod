@@ -2199,7 +2199,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Specification No</label>
-                                        <input type="date" name="specification_no">
+                                        <input type="text" name="specification_no">
                                     </div>
                                 </div>
 

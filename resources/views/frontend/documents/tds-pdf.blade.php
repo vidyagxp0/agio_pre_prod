@@ -652,18 +652,18 @@
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Mfg. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->mfg_date}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->mfg_date)}}</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Exp. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->exp_date}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->exp_date)}}</td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis start date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_start_date}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->analysis_start_date)}}</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis completion date </td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->analysis_completion_date}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->analysis_completion_date)}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num" colspan="2">Specification No :</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num" colspan="2">Specification No :-</td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" colspan="2">{{$data->specification_no}}</td>
                 </tr>
                 <tr>
@@ -697,19 +697,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @if (!empty($SummaryDataGrid))
-                                @foreach ($SummaryDataGrid as $key => $item)
+                                @if (!empty($SummaryDataGrid))
+                                    @php $count = 1; @endphp
+                                    @foreach ($SummaryDataGrid as $item)
+                                        <tr>
+                                            <td style="border: 1px solid black; text-align: center;">{{ $count }}</td>
+                                            <td style="border: 1px solid black; text-align: left;">{{ $item['test'] ?? '' }}</td>
+                                            <td style="border: 1px solid black; text-align: center;">{{ $item['result'] ?? 'N/A' }}</td>
+                                        </tr>
+                                        @php $count++; @endphp
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
-                                        <td style="border: 1px solid black; text-align: left;">{{ $item['test'] ?? '' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['result'] ?? 'N/A' }}</td>
+                                        <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
-                                </tr>
-                            @endif
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -959,16 +961,18 @@
                                 <th style="border: 1px solid black; width: 30%; font-weight: bold;">Used by (Sign/Date)</th>
                             </tr>
                         </thead>
-                        <tbody>
+                            <tbody>
                             @if (!empty($sampleReconcilationDataGrid))
-                                @foreach ($sampleReconcilationDataGrid as $key => $item)
+                                @php $count = 1; @endphp
+                                @foreach ($sampleReconcilationDataGrid as $item)
                                     <tr>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $count }}</td>
                                         <td style="border: 1px solid black; text-align: left;">{{ $item['test_name'] ?? '' }}</td>
                                         <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_test_stp'] ?? 'N/A' }}</td>
                                         <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_userd_test'] ?? 'N/A' }}</td>
                                         <td style="border: 1px solid black; text-align: center;">{{ $item['used_by'] ?? 'N/A' }}</td>
                                     </tr>
+                                    @php $count++; @endphp
                                 @endforeach
                             @else
                                 <tr>
@@ -1012,7 +1016,7 @@
                     </table>
                 </div>
 
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                {{-- <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
                     <tbody>
                         <tr>
                             <td style="width: 10%; border: 1px solid black;"></td>
@@ -1120,14 +1124,14 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
-                <table style="width: 100%; border: none;">
+                </table> --}}
+                {{-- <table style="width: 100%; border: none;">
                     <tr>
                         <td style="text-align: left;" class="bold">
                            Note: Above table is applicable only for the raw material specification having IR test.
                         </td>
                     </tr>
-                </table>
+                </table> --}}
 
                 <div class="other-container">
                     <table>

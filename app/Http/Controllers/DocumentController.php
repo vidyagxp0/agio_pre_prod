@@ -2362,8 +2362,7 @@ class DocumentController extends Controller
         $CLEANING_VALIDATIONData = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data) 
         ? json_decode($CLEANING_VALIDATION->data, true) :(is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data:[]);
 
-        
-//-----------
+
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
             $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
             ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
