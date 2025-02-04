@@ -615,9 +615,9 @@ class DocumentController extends Controller
             }
 
             // $document->revision_summary = $request->revision_summary;
-            // if (!empty($request->reviewers)) {
-            //     $document->reviewers = implode(',', $request->reviewers);
-            // }
+            if (!empty($request->reviewers)) {
+                $document->reviewers = implode(',', $request->reviewers);
+            }
             if (!empty($request->approvers)) {
                 $document->approvers = implode(',', $request->approvers);
             }

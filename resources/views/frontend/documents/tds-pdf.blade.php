@@ -743,7 +743,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    {{-- <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
                             <thead>
                                 <tr>
                                     <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
@@ -891,9 +891,9 @@
                                 </tr>
                                
                             </tbody>
-                    </table>
+                    </table> --}}
                     
-                    <p> Remark:The above product complies/does not comply as per specification: _____________________</p>
+                    {{-- <p> Remark:The above product complies/does not comply as per specification: {{}}</p> --}}
 
                     <div style="margin-top: 20px;">
                         <table style="width: 100%; border: none;">
