@@ -11,6 +11,7 @@ use App\Models\DocumentContent;
 
 use App\Models\DocumentGrid;
 use App\Models\DocumentGridData;
+use App\Models\specifications;
 
 //use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
@@ -469,6 +470,11 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+            $document->specification_mfps_no = $request->specification_mfps_no;
+            $document->stp_mfps_no = $request->stp_mfps_no;
+            //mfstp
+            $document->specification_mfpstp_no = $request->specification_mfpstp_no;
+            $document->stp_mfpstp_no = $request->stp_mfpstp_no;
 
             //tds
             $document->product_material_name = $request->product_material_name;
@@ -772,7 +778,23 @@ class DocumentController extends Controller
             $Specification_Validation_Data->save();
             $content->save();
 
-            // row matrial specification   validation  grid
+            $specification_id = $document->id;
+            //master finished product specification grid
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications';
+            $specifications->data = json_encode($request->specifications);
+            $specifications->save();
+
+            //master finished product standard testing procedure grid
+
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications_testing';
+            $specifications->data = json_encode($request->specifications_testing);
+            $specifications->save();
+      
+            // row matrial specification validation  grid
             $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'ROW_SPECIFICATION'])->firstOrNew();
             $RowSpecification_Data->document_type_id = $griddata;
             $RowSpecification_Data->identifier = 'ROW_SPECIFICATION';
@@ -890,6 +912,10 @@ class DocumentController extends Controller
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         // $document->parent_child = json_decode($document->parent_child);
         $parentChildRecords = DB::table('action_items')->get();
+        $specifications = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications'])->first();
+        $specifications_testing = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications_testing'])->first();
+        $specifications->data = json_decode($specifications->data, true);
+        $specifications_testing->data = json_decode($specifications_testing->data, true);
 
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
@@ -997,6 +1023,8 @@ class DocumentController extends Controller
             'annexure',
             'documentsubTypes',
             'document_distribution_grid',
+            'specifications',
+            'specifications_testing',
             'SpecificationData',
             'Specification_Validation_Data',
             'testDataDecoded',
@@ -1066,6 +1094,8 @@ class DocumentController extends Controller
                 $document->balance_quantity = $request->balance_quantity;
                 $document->balance_quantity_destructed = $request->balance_quantity_destructed;
 
+                $document->stp_mfpstp_no = $request->stp_mfpstp_no;
+                $document->specification_mfpstp_no = $request->specification_mfpstp_no;
 
                 $document->name_pack_material = $request->name_pack_material;
                 $document->standard_pack = $request->standard_pack;
@@ -1662,6 +1692,20 @@ class DocumentController extends Controller
 
 
             $documentcontet->save();
+
+            $specification_id = $document->id;
+
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications';
+            $specifications->data = json_encode($request->specifications);
+            $specifications->save();
+
+            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
+            $specifications->specification_id = $specification_id;
+            $specifications->identifier = 'specifications_testing';
+            $specifications->data = json_encode($request->specifications_testing);
+            $specifications->save();
 
             if ($lastContent->purpose != $documentcontet->purpose || !empty($request->purpose_comment)) {
                 $history = new DocumentHistory;
@@ -2321,6 +2365,9 @@ class DocumentController extends Controller
             ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);    
         
         // dd($PackingDataGrid);
+        $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
+        $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data) 
+            ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
        
@@ -2378,8 +2425,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            // $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','SummaryDataGrid'))
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','SummaryDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3211,6 +3257,28 @@ class DocumentController extends Controller
             $distribution->document_id = $newdoc->id;
             $distribution->save();
         }
+        $specification_id = $document->id;
+        $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->first();
+        if ($specifications) {
+            $distribution = $specifications->replicate();
+            $distribution->identifier = 'specifications';
+            $distribution->specification_id = $newdoc->id;
+            $distribution->save();
+        }
+
+        $specifications_testing = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->first();
+        if ($specifications_testing) {
+            $distribution = $specifications_testing->replicate();
+            $distribution->identifier = 'specifications_testing';
+            $distribution->specification_id = $newdoc->id;
+            $distribution->save();
+        }
+
+        // $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
+        // $specifications->specification_id = $specification_id;
+        // $specifications->identifier = 'specifications_testing';
+        // $specifications->data = json_encode($request->specifications_testing);
+        // $specifications->save();
 
 //-----------------==================================================================
 

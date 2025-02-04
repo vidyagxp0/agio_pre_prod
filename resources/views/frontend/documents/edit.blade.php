@@ -153,6 +153,8 @@
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
+                <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
+                <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
 
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
@@ -2844,6 +2846,216 @@
 
                 </div> --}}
                 {{-- HOD REMARKS TAB END --}}
+
+
+                                    <!-- MFPS Tabs -->
+                    <div id="doc-mfps" class="tabcontent">
+                        <div class="orig-head">
+                            Master Finished Product Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Specification No<span class="text-danger">*</span></label>
+                                        <input type="text" id="specification" name="specification_mfps_no" value="{{ $document->specification_mfps_no }}" maxlength="255">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">STP No<span class="text-danger">*</span></label>
+                                        <input type="text" id="stp" name="stp_mfps_no" value="{{ $document->stp_mfps_no }}" maxlength="255">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="specifications">
+                                    Specifications
+                                    <button type="button" onclick="addSpecifications()">+</button>
+                                </label>
+                                <div class="table-responsive retrieve-table">
+                                    <table class="table table-bordered" id="specifications-grid">
+                                        <thead>
+                                            <tr>
+                                                <th style="background:none;" rowspan="2">Sr. No.</th>
+                                                <th style="background:none;" rowspan="2" class="copy-name">Tests</th>
+                                                <th style="background:none;" colspan="2" class="copy-name">Specifications</th>
+                                                <th style="background:none;" rowspan="2" class="copy-name">Reference</th>
+                                                <th style="background:none;" rowspan="2" class="copy-name">Action</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="background:none;" class="copy-name">Release</th>
+                                                <th style="background:none;" class="copy-name">Shelf life</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(!empty($specifications->data))
+                                                @foreach($specifications->data as $index => $spec)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td><input type="text" name="specifications[{{ $index }}][tests]" value="{{ $spec['tests'] ?? '' }}"></td>
+                                                        <td><input type="text" name="specifications[{{ $index }}][release]" value="{{ $spec['release'] ?? '' }}"></td>
+                                                        <td><input type="text" name="specifications[{{ $index }}][shelf_life]" value="{{ $spec['shelf_life'] ?? '' }}"></td>
+                                                        <td><input type="text" name="specifications[{{ $index }}][reference]" value="{{ $spec['reference'] ?? '' }}"></td>
+                                                        <td><button type="button" class="removeSpecRow">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No Specifications Found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                            function addSpecifications() {
+                            let table = document.getElementById("specifications-grid").getElementsByTagName('tbody')[0];
+                            let rowCount = table.rows.length;
+                            let row = table.insertRow(rowCount);
+                            row.innerHTML = `
+                            <td>${rowCount + 1}</td>
+                            <td><input type="text" name="specifications[${rowCount}][tests]"></td>
+                            <td><input type="text" name="specifications[${rowCount}][release]"></td>
+                            <td><input type="text" name="specifications[${rowCount}][shelf_life]"></td>
+                            <td><input type="text" name="specifications[${rowCount}][reference]"></td>
+                            <td><button type="button" class="removeSpecRow">Remove</button></td>`;
+                            }
+
+                            document.addEventListener("click", function(event) {
+                            if (event.target.classList.contains("removeSpecRow")) {
+                            event.target.closest("tr").remove();
+                            }
+                            });
+                        </script>
+                                                
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>  
+                    </div>
+
+                    <!-- mfpstp -->
+                    <div id="doc-mfpstp" class="tabcontent">
+                        <div class="orig-head">
+                             Master Finished Product Standard Testing Procedure
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                               <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">STP No<span class="text-danger">*</span></label>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" maxlength="255" value="{{$document->stp_mfpstp_no}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Specification No<span class="text-danger">*</span></label>
+                                        <input type="text" id="specification" name="specification_mfpstp_no" maxlength="255" value="{{$document->specification_mfpstp_no}}" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="specifications">
+                                     Specifications Testing
+                                    <button type="button" onclick="addSpecificationsTesting()">+</button>
+                                </label>
+                                <div class="table-responsive retrieve-table">
+                                    <table class="table table-bordered" id="specifications-testing">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th class="copy-name">Tests</th>
+                                                <th class="copy-name">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if(!empty($specifications_testing->data))
+                                            @foreach($specifications_testing->data as $index => $spec)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td><input type="text" name="specifications_testing[{{ $index }}][tests]" value="{{ $spec['tests'] }}"></td>
+                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">No Specifications Found</td>
+                                                    </tr>
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            function addSpecificationsTesting() {
+                                let tableBody = document.querySelector("#specifications-testing tbody");
+                                let rowCount = tableBody.querySelectorAll("tr").length;
+                                let newRow = document.createElement("tr");
+
+                                newRow.innerHTML = `
+                                    <td>${rowCount + 1}</td>
+                                    <td><input type="text" name="specifications_testing[${rowCount}][tests]" required></td>
+                                    <td><button type="button" class="removeSpecRow">Remove</button></td>
+                                `;
+
+                                tableBody.appendChild(newRow);
+                                updateSerialNumbers();
+                            }
+
+                            document.addEventListener("click", function (event) {
+                                if (event.target.classList.contains("removeSpecRow")) {
+                                    let row = event.target.closest("tr");
+                                    row.remove();
+                                    updateSerialNumbers();
+                                }
+                            });
+
+                            function updateSerialNumbers() {
+                                let rows = document.querySelectorAll("#specifications-testing tbody tr");
+                                rows.forEach((row, index) => {
+                                    row.cells[0].textContent = index + 1;
+                                    row.querySelectorAll("input").forEach(input => {
+                                        let nameMatch = input.name.match(/specifications_testing\[\d+]\[(.+)]/);
+                                        if (nameMatch) {
+                                            input.name = `specifications_testing[${index}][${nameMatch[1]}]`;
+                                        }
+                                    });
+                                });
+                            }
+
+                            window.addSpecificationsTesting = addSpecificationsTesting;
+                        });
+                    </script>
 
                     <!-- TDS Tabs -->
                     <div id="doc-tds" class="tabcontent">
