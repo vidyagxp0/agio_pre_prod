@@ -2050,7 +2050,7 @@
                                                     <td><input type="text" name="row_material[0][grade]"></td>
                                                     <td><input type="text" name="row_material[0][sample_quantity]"></td>
                                                     <td><input type="text" name="row_material[0][storage_condition]"></td>
-                                                    <td><input type="text" name="row_material[0][prepared_quality_person_sign_date)]"></td>
+                                                    <td><input type="text" name="row_material[0][prepared_quality_person_sign_date]"></td>
                                                     <td><input type="text" name="row_material[0][check_by_qc_hod_designee_sign]"></td>
                                                     <td><input type="text" name="row_material[0][approved_by_qa_hod_desinee_sign]"></td>
 
