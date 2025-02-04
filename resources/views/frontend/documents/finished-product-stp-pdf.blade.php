@@ -336,6 +336,7 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
                         <span>
+                   
                         @php
                             $temp = DB::table('document_types')
                                 ->where('name', $document->document_type_name)

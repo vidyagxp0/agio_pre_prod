@@ -294,10 +294,42 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
+                    
+                    <span>
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    CV/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                    CV/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                        @else
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                   CV/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                   CV/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                        @endif
+                        </span>
+                
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
+
+                        <span>@if ($data->training_required == 'yes')
+                            @if ($data->stage >= 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @else
+                            @if ($data->stage > 7)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @endif
+                </span>
                     </td>
                 </tr>
             </tbody>
@@ -306,7 +338,20 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
-                    </td>
+                   <span>
+                   @php
+                            $temp = DB::table('document_types')
+                                ->where('name', $document->document_type_name)
+                                ->value('typecode');
+                        @endphp
+                        @if ($document->revised === 'Yes')
+                        CV/STP/00{{ $document->revised_doc }}-0{{ $document->major }}
+                        @else
+                        -
+                        @endif
+                   </span>
+                
+                   </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Page No.:
