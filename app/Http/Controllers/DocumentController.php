@@ -551,7 +551,7 @@ class DocumentController extends Controller
             $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
             $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
 
-            
+
             $document->name_pack_material = $request->name_pack_material;
             $document->standard_pack = $request->standard_pack;
             $document->sampling_plan = $request->sampling_plan;
@@ -563,11 +563,11 @@ class DocumentController extends Controller
             $document->approved_vendor = $request->approved_vendor;
 
 
-            
-            
-            
-            
-            
+
+
+
+
+
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -688,7 +688,26 @@ class DocumentController extends Controller
             $content->procedure = $request->procedure;
             $content->safety_precautions = $request->safety_precautions;
             $content->hod_comments = $request->hod_comments;
-            
+
+            // Gxp Assessment
+            $content->General_information_gxp = $request->General_information_gxp;
+            $content->Regulatory_compliance_gxp = $request->Regulatory_compliance_gxp;
+            $content->GxP_Assessment_For_Processes = $request->GxP_Assessment_For_Processes;
+            $content->Summary_Of_GxP_Assessment = $request->Summary_Of_GxP_Assessment;
+            $content->Regulatory_Compliance_Scope_gxp = $request->Regulatory_Compliance_Scope_gxp;
+            $content->Stakeholder_List_gxp = $request->Stakeholder_List_gxp;
+            $content->References_and_related_documents_gxp = $request->References_and_related_documents_gxp;
+            $content->Glossary_Of_Terms_gxp = $request->Glossary_Of_Terms_gxp;
+
+            //Initial Risk Assessment
+            $content->Introduction_Initial_Risk = $request->Introduction_Initial_Risk;
+            $content->Scope_Initial_Risk = $request->Scope_Initial_Risk;
+            $content->Responsibility_Initial_Risk = $request->Responsibility_Initial_Risk;
+            $content->Stakeholder_List_Initial_Risk = $request->Stakeholder_List_Initial_Risk;
+            $content->References_and_related_documents_Initial_Risk = $request->References_and_related_documents_Initial_Risk;
+            $content->Glossary_Of_Terms_Initial_Risk = $request->Glossary_Of_Terms_Initial_Risk;
+
+
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
 
@@ -779,7 +798,7 @@ class DocumentController extends Controller
             $DocumentGridData->identifier = 'Rowmaterialtest';
             $DocumentGridData->data = $request->test;
             $DocumentGridData->save();
-        
+
 
 
 
@@ -808,6 +827,13 @@ class DocumentController extends Controller
             $MaterialSpecification->data = $request->row_material;
             // dd($MaterialSpecification);
             $MaterialSpecification->save();
+
+
+            $RiskAssessment = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'RiskAssessment'])->firstOrNew();
+            $RiskAssessment->document_type_id = $document->id;
+            $RiskAssessment->identifier = 'RiskAssessment';
+            $RiskAssessment->data = $request->Risk_Assessment;
+            $RiskAssessment->save();
 
 
 
@@ -904,7 +930,7 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
-  
+
 
         $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
         $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
@@ -914,14 +940,15 @@ class DocumentController extends Controller
 
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-      
-        
+
+
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
           $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+        $RiskAssessment = DocumentGrid::where('document_type_id', $id)->where('identifier', "RiskAssessment")->first();
       //  dd($testDataDecoded);
 
 
-      
+
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
         //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
@@ -957,7 +984,8 @@ class DocumentController extends Controller
             'testDataDecoded',
             'PackingGridData',
             'MaterialSpecification',
-            'ProductSpecification'
+            'ProductSpecification',
+            'RiskAssessment',
         ));
     }
 
@@ -999,7 +1027,7 @@ class DocumentController extends Controller
 
 
 
-                
+
                 $document->name_pack_material = $request->name_pack_material;
                 $document->standard_pack = $request->standard_pack;
                 $document->sampling_plan = $request->sampling_plan;
@@ -1585,6 +1613,24 @@ class DocumentController extends Controller
                 $documentcontet->distribution = serialize($request->distribution);
             }
 
+            // Gxp Assessment
+            $documentcontet->General_information_gxp = $request->General_information_gxp;
+            $documentcontet->Regulatory_compliance_gxp = $request->Regulatory_compliance_gxp;
+            $documentcontet->GxP_Assessment_For_Processes = $request->GxP_Assessment_For_Processes;
+            $documentcontet->Summary_Of_GxP_Assessment = $request->Summary_Of_GxP_Assessment;
+            $documentcontet->Regulatory_Compliance_Scope_gxp = $request->Regulatory_Compliance_Scope_gxp;
+            $documentcontet->Stakeholder_List_gxp = $request->Stakeholder_List_gxp;
+            $documentcontet->References_and_related_documents_gxp = $request->References_and_related_documents_gxp;
+            $documentcontet->Glossary_Of_Terms_gxp = $request->Glossary_Of_Terms_gxp;
+
+            //Initial Risk Assessment
+            $documentcontet->Introduction_Initial_Risk = $request->Introduction_Initial_Risk;
+            $documentcontet->Scope_Initial_Risk = $request->Scope_Initial_Risk;
+            $documentcontet->Responsibility_Initial_Risk = $request->Responsibility_Initial_Risk;
+            $documentcontet->Stakeholder_List_Initial_Risk = $request->Stakeholder_List_Initial_Risk;
+            $documentcontet->References_and_related_documents_Initial_Risk = $request->References_and_related_documents_Initial_Risk;
+            $documentcontet->Glossary_Of_Terms_Initial_Risk = $request->Glossary_Of_Terms_Initial_Risk;
+
 
             $documentcontet->save();
 
@@ -1744,7 +1790,7 @@ class DocumentController extends Controller
             $DocumentGridData->save();
 
 
-            
+
 
             $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
             $PackingGridData->document_type_id = $document->id;
@@ -1768,6 +1814,12 @@ class DocumentController extends Controller
             $MaterialSpecification->data = $request->row_material;
             // dd($MaterialSpecification);
             $MaterialSpecification->save();
+
+            $RiskAssessment = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'RiskAssessment']);
+            $RiskAssessment->document_type_id = $document->id;
+            $RiskAssessment->identifier = 'RiskAssessment';
+            $RiskAssessment->data = $request->Risk_Assessment;
+            $RiskAssessment->save();
 
 
             toastr()->success('Document Updated');
@@ -2190,18 +2242,18 @@ class DocumentController extends Controller
 
 
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
-            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
+            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
             ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
-        
-        
+
+
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data) 
+        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data)
             ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
-        
+
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
- 
+        $RiskAssessment = DocumentGrid::where('document_type_id', $id)->where('identifier', "RiskAssessment")->first();
       //  $testDataDecoded = json_decode($testData->data, true);
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
@@ -2240,6 +2292,8 @@ class DocumentController extends Controller
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
             'QM' => 'frontend.documents.qm-pdf',
+            'GxP' => 'frontend.documents.CSV-SOP-CQA.Annexure_1_gxp',
+            'IRisk' => 'frontend.documents.CSV-SOP-CQA.Annexure_2_initial_risk_assessment',
             default => 'frontend.documents.pdfpage',
         };
 
@@ -2248,7 +2302,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','RiskAssessment',))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3081,7 +3135,7 @@ class DocumentController extends Controller
             $distribution->save();
         }
 
-    
+
     DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');

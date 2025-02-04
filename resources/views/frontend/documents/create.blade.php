@@ -204,8 +204,12 @@
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpicvstp')">Finished Product Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-fpicvstp')">Inprocess Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
-                
+
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+
+                <button class="tablinks hidden-tabs" data-id="GxP" onclick="openData(event, 'add-GxP-ASSESSMENT')">GxP Assessment</button>
+                <button class="tablinks hidden-tabs" data-id="IRisk" onclick="openData(event, 'add-Initial-Risk-Assessment')">Initial Risk Assessment</button>
+
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc-micro')">RMSTP SOP</button>
@@ -214,7 +218,7 @@
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PAMS</button>
-                
+
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">PIAS</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
@@ -1337,7 +1341,7 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
 
                             <div class="group-input">
                                     <label for="action-plan-grid">
@@ -1364,7 +1368,7 @@
                                                     $serialNumber = 1;
                                                 @endphp
                                                 <td disabled>{{ $serialNumber++ }}</td>
-                                                
+
                                                 <td><input type="text" name="test[0][testdata]"></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
@@ -1401,7 +1405,7 @@
                                         '"></td>' +
                                         '<td><input type="text" name="test[' + investdetails +
                                         '][testdata]" value=""></td>' +
-                                       
+
 
                                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                         '</tr>';
@@ -1433,11 +1437,11 @@
   <!------------------------ Packing Material Specification - tab ------------------------------------>
   <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
-                        PACKING MATERIAL SPECIFICATION 
+                        PACKING MATERIAL SPECIFICATION
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
 
                             <div class="col-md-12">
                                     <div class="group-input">
@@ -1524,7 +1528,7 @@
                                                     $serialNumber = 1;
                                                 @endphp
                                                 <td disabled>{{ $serialNumber++ }}</td>
-                                                
+
                                                 <td><input type="text" name="packingtest[0][tests]"></td>
                                                 <td><input type="text" name="packingtest[0][specification]"></td>
                                                 <td><input type="text" name="packingtest[0][gtp_no]"></td>
@@ -1548,7 +1552,7 @@
                                                 '"></td>' +
                                                 '<td><input type="text" name="packingtest[' + investdetails +
                                                 '][tests]" value=""></td>' +
-                                            
+
                                                 '<td><input type="text" name="packingtest[' + investdetails +
                                                 '][specification]" value=""></td>' +
                                                 '<td><input type="text" name="packingtest[' + investdetails +
@@ -1590,7 +1594,7 @@
 
 
 
-         
+
 
 
 
@@ -1605,7 +1609,7 @@
                                     </div>
                                 <div class="input-fields">
                                     <div class="row">
-                                                    
+
 
                             <div class="group-input">
                                     <label for="action-plan-grid">
@@ -1718,7 +1722,7 @@
                                                 <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
                                                 <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
                                                 <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
-                                               
+
                                                 <th style="width: 3%">Action</th>
                                             </tr>
                                         </thead>
@@ -1759,7 +1763,7 @@
                                             <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
-                                       
+
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         </tr>`;
                                     }
@@ -1794,15 +1798,15 @@
 
 
 
-                      
 
 
 
 
 
 
- 
-                       
+
+
+
 
 
 
@@ -2393,7 +2397,377 @@
                             </button>
                         </div>
                     </div>
-                    
+
+                    {{-- GxP Assessment TABS --}}
+
+                    <div id="add-GxP-ASSESSMENT" class="tabcontent">
+                        <div class="orig-head">GxP Assessment</div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="GENERAL INFORMATION OF THE SYSTEM">GENERAL INFORMATION OF THE SYSTEM</label>
+                                        <textarea name="General_information_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="REGULATORY COMPLIANCE — DETAIL ASSESSMENT">REGULATORY COMPLIANCE — DETAIL ASSESSMENT</label>
+                                        <textarea name="Regulatory_compliance_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="GxP ASSESSMENT FOR PROCESSES / FUNCTIONS">GxP ASSESSMENT FOR PROCESSES / FUNCTIONS</label>
+                                        <textarea name="GxP_Assessment_For_Processes" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="SUMMARY OF GxP ASSESSMENT">SUMMARY OF GxP ASSESSMENT</label>
+                                        <textarea name="Summary_Of_GxP_Assessment" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="REGULATORY COMPLIANCE SCOPE DETERMINATION CONCLUSION NOTE">REGULATORY COMPLIANCE SCOPE DETERMINATION CONCLUSION NOTE</label>
+                                        <textarea name="Regulatory_Compliance_Scope_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="STAKEHOLDER LIST">STAKEHOLDER LIST</label>
+                                        <textarea name="Stakeholder_List_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="REFERENCES AND RELATED DOCUMENTS">REFERENCES AND RELATED DOCUMENTS</label>
+                                        <textarea name="References_and_related_documents_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="GLOSSARY OF TERMS">GLOSSARY OF TERMS</label>
+                                        <textarea name="Glossary_Of_Terms_gxp" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Initial Risk Assessment TABS --}}
+
+                    <div id="add-Initial-Risk-Assessment" class="tabcontent">
+                        <div class="orig-head">Initial Risk Assessment</div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="INTRODUCTION">INTRODUCTION</label>
+                                        <textarea name="Introduction_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="SCOPE">SCOPE</label>
+                                        <textarea name="Scope_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="RESPONSIBILITY">RESPONSIBILITY</label>
+                                        <textarea name="Responsibility_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        RISK ASSESSMENT
+                                        <button type="button" name="action-plan-grid"
+                                                id="RiskAssessmentData">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="RiskAssessmentTable">
+                                            <thead>
+
+                                                <tr>
+                                                    <th rowspan="2"><div style="width:50px;">Sr.No</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Risk Type</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Risk Event</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Consequence</div></th>
+                                                    <th colspan="4"><div style="width:200px;">Risk Assessment Stage</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Mitigation Action (i.e. specify specific steps needed to mitigate the risk).</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Reference (if the mitigation control is already in place)</div></th>
+                                                    <th colspan="4"><div style="width:200px;">After Mitigation</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Where Documented</div></th>
+                                                    <th rowspan="2"><div style="width:50px;">Action</div></th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="1"><div style="width:200px;">Severity of impact (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Likelihood of Occurrence (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Probability of detection (5-1)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Risk Priority Number (RPN)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Severity of impact (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Likelihood of Occurrence (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Probability of detection (5-1)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Risk Priority Number (RPN)</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" style="width:15px" value="1"></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Risk_Type]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Risk_Event]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Consequence]"></td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageS" name="Risk_Assessment[0][Risk_Assessment_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageO" name="Risk_Assessment[0][Risk_Assessment_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageD" name="Risk_Assessment[0][Risk_Assessment_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class='RiskStage-rpn' name="Risk_Assessment[0][Risk_Assessment_RPN]" ></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Mitigation_Action]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Reference]"></td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterS" name="Risk_Assessment[0][After_Mitigation_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterO" name="Risk_Assessment[0][After_Mitigation_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterD" name="Risk_Assessment[0][After_Mitigation_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="After-rpn" name="Risk_Assessment[0][After_Mitigation_RPN]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[0][Where_Documented]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        let investDetails = 1; // Row counter
+
+                                        $('#RiskAssessmentData').click(function () {
+                                            function generateTableRow(serialNumber) {
+                                                return `<tr>
+                                                    <td><input disabled type="text" style="width:15px" value="${serialNumber}"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Risk_Type]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Risk_Event]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Consequence]"></td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageS" name="Risk_Assessment[${investDetails}][Risk_Assessment_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageO" name="Risk_Assessment[${investDetails}][Risk_Assessment_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageD" name="Risk_Assessment[${investDetails}][Risk_Assessment_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class='RiskStage-rpn' name="Risk_Assessment[${investDetails}][Risk_Assessment_RPN]" ></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Mitigation_Action]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Reference]"></td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterS" name="Risk_Assessment[${investDetails}][After_Mitigation_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterO" name="Risk_Assessment[${investDetails}][After_Mitigation_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterD" name="Risk_Assessment[${investDetails}][After_Mitigation_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="After-rpn" name="Risk_Assessment[${investDetails}][After_Mitigation_RPN]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Where_Documented]"></td>
+
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>`;
+                                            }
+
+                                            let tableBody = $('#RiskAssessmentTable tbody');
+                                            let rowCount = tableBody.children('tr').length;
+                                            let newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                            investDetails++; // Increment row index
+                                        });
+
+                                        // Remove row event
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+                                        });
+                                    });
+                                </script>
+
+                                <script>
+                                    function calculateRiskStageResult(element) {
+                                        let row = element.closest('tr');
+                                        let Risk_Assessment_Severity = row.querySelector('.RiskStageS').value || 0;
+                                        let Risk_Assessment_Occurence = row.querySelector('.RiskStageO').value || 0;
+                                        let Risk_Assessment_Detection = row.querySelector('.RiskStageD').value || 0;
+                                        let Risk_Assessment_RPN = Risk_Assessment_Severity * Risk_Assessment_Occurence * Risk_Assessment_Detection;
+                                        row.querySelector('.RiskStage-rpn').value = Risk_Assessment_RPN > 0 ? Risk_Assessment_RPN : '';
+                                    }
+                                </script>
+
+                                <script>
+                                    function calculateAfterResult(element) {
+                                        let row = element.closest('tr');
+                                        let After_Mitigation_Severity = row.querySelector('.AfterS').value || 0;
+                                        let After_Mitigation_Occurence = row.querySelector('.AfterO').value || 0;
+                                        let After_Mitigation_Detection = row.querySelector('.AfterD').value || 0;
+                                        let After_Mitigation_RPN = After_Mitigation_Severity * After_Mitigation_Occurence * After_Mitigation_Detection;
+                                        row.querySelector('.After-rpn').value = After_Mitigation_RPN > 0 ? After_Mitigation_RPN : '';
+                                    }
+                                </script>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="STAKEHOLDER LIST">STAKEHOLDER LIST</label>
+                                        <textarea name="Stakeholder_List_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="REFERENCES AND RELATED DOCUMENTS">REFERENCES AND RELATED DOCUMENTS</label>
+                                        <textarea name="References_and_related_documents_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="GLOSSARY OF TERMS">GLOSSARY OF TERMS</label>
+                                        <textarea name="Glossary_Of_Terms_Initial_Risk" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
                         <div class="orig-head">

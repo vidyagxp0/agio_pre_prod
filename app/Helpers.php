@@ -777,6 +777,9 @@ class Helpers
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
+            'GxP' => 'GxP ASSESSMENT',
+            'IRisk' => 'INITIAL RISK ASSESSMENT',
+
         ];
 
         return $document_types;
@@ -1688,7 +1691,7 @@ class Helpers
         } else {
             $documents = collect(); // Empty collection if no valid IDs
         }
-        
+
         $formattedDocuments = [];
 
         foreach ($documents as $document) {

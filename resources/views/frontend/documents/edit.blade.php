@@ -72,6 +72,66 @@
         }
     </style>
 
+    <style>
+        /* Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto; /* Adjusts column width dynamically */
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let docTypeSelect = document.getElementById("doc-type");
@@ -145,6 +205,10 @@
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-fpicvstp')">Cleaning Validation Standard Testing Procedure</button>
 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+
+                <button class="tablinks hidden-tabs" data-id="GxP" onclick="openData(event, 'add-GxP-ASSESSMENT')">GxP Assessment</button>
+                <button class="tablinks hidden-tabs" data-id="IRisk" onclick="openData(event, 'add-Initial-Risk-Assessment')">Initial Risk Assessment</button>
+
 
                 <!-- <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button> -->
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
@@ -3470,6 +3534,684 @@
                         </div>
                     </div>
 
+                    {{-- GxP Assessment TABS --}}
+
+                    <div id="add-GxP-ASSESSMENT" class="tabcontent">
+                        <div class="orig-head">GxP Assessment</div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="GENERAL INFORMATION OF THE SYSTEM">GENERAL INFORMATION OF THE SYSTEM</label>
+                                        <textarea name="General_information_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->General_information_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'GENERAL INFORMATION OF THE SYSTEM' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="REGULATORY COMPLIANCE — DETAIL ASSESSMENT">REGULATORY COMPLIANCE — DETAIL ASSESSMENT</label>
+                                        <textarea name="Regulatory_compliance_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Regulatory_compliance_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'REGULATORY COMPLIANCE — DETAIL ASSESSMENT' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="GxP ASSESSMENT FOR PROCESSES / FUNCTIONS">GxP ASSESSMENT FOR PROCESSES / FUNCTIONS</label>
+                                        <textarea name="GxP_Assessment_For_Processes" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->GxP_Assessment_For_Processes : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'GxP ASSESSMENT FOR PROCESSES / FUNCTIONS' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="SUMMARY OF GxP ASSESSMENT">SUMMARY OF GxP ASSESSMENT</label>
+                                        <textarea name="Summary_Of_GxP_Assessment" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Summary_Of_GxP_Assessment : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'SUMMARY OF GxP ASSESSMENT' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="REGULATORY COMPLIANCE SCOPE DETERMINATION CONCLUSION NOTE">REGULATORY COMPLIANCE SCOPE DETERMINATION CONCLUSION NOTE</label>
+                                        <textarea name="Regulatory_Compliance_Scope_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Regulatory_Compliance_Scope_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'REGULATORY COMPLIANCE SCOPE DETERMINATION CONCLUSION NOTE' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="STAKEHOLDER LIST">STAKEHOLDER LIST</label>
+                                        <textarea name="Stakeholder_List_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Stakeholder_List_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'STAKEHOLDER LIST' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="REFERENCES AND RELATED DOCUMENTS">REFERENCES AND RELATED DOCUMENTS</label>
+                                        <textarea name="References_and_related_documents_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->References_and_related_documents_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'REFERENCES AND RELATED DOCUMENTS' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="GLOSSARY OF TERMS">GLOSSARY OF TERMS</label>
+                                        <textarea name="Glossary_Of_Terms_gxp" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Glossary_Of_Terms_gxp : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'GLOSSARY OF TERMS' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Initial Risk Assessment TABS --}}
+
+                    <div id="add-Initial-Risk-Assessment" class="tabcontent">
+                        <div class="orig-head">Initial Risk Assessment</div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="INTRODUCTION">INTRODUCTION</label>
+                                        <textarea name="Introduction_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Introduction_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'INTRODUCTION' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="SCOPE">SCOPE</label>
+                                        <textarea name="Scope_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Scope_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'SCOPE' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="RESPONSIBILITY">RESPONSIBILITY</label>
+                                        <textarea name="Responsibility_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Responsibility_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'RESPONSIBILITY' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+
+
+                                {{-- @php
+                                    $serialNumber = 1;
+                                    $decodedRiskAssessment = isset($RiskAssessment->data) && is_string($RiskAssessment->data)
+                                        ? json_decode($RiskAssessment->data, true)
+                                        : (is_array($RiskAssessment->data) ? $RiskAssessment->data : []);
+                                @endphp --}}
+
+                                @php
+                                    $serialNumber = 1;
+                                    $decodedRiskAssessment = [];
+                                    if (isset($RiskAssessment) && isset($RiskAssessment->data)) {
+                                        $decodedRiskAssessment = is_string($RiskAssessment->data)
+                                            ? json_decode($RiskAssessment->data, true)
+                                            : (is_array($RiskAssessment->data) ? $RiskAssessment->data : []);
+                                    }
+                                @endphp
+
+
+                                <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        RISK ASSESSMENT
+                                        <button type="button" id="RiskAssessmentData">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="RiskAssessmentTable">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2"><div style="width:50px;">Sr.No</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Risk Type</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Risk Event</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Consequence</div></th>
+                                                    <th colspan="4"><div style="width:200px;">Risk Assessment Stage</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Mitigation Action (i.e. specify specific steps needed to mitigate the risk).</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Reference (if the mitigation control is already in place)</div></th>
+                                                    <th colspan="4"><div style="width:200px;">After Mitigation</div></th>
+                                                    <th rowspan="2"><div style="width:200px;">Where Documented</div></th>
+                                                    <th rowspan="2"><div style="width:50px;">Action</div></th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="1"><div style="width:200px;">Severity of impact (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Likelihood of Occurrence (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Probability of detection (5-1)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Risk Priority Number (RPN)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Severity of impact (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Likelihood of Occurrence (1-5)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Probability of detection (5-1)</div></th>
+                                                    <th colspan="1"><div style="width:200px;">Risk Priority Number (RPN)</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if(!empty($decodedRiskAssessment))
+                                                    @foreach($decodedRiskAssessment as $key => $Risk)
+                                                        <tr>
+                                                            <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Risk_Type]" value="{{ $Risk['Risk_Type'] ?? '' }}"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Risk_Event]" value="{{ $Risk['Risk_Event'] ?? '' }}"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Consequence]" value="{{ $Risk['Consequence'] ?? '' }}"></td>
+                                                            <td>
+                                                                <select onchange="calculateRiskStageResult(this)" class="RiskStageS" name="Risk_Assessment[{{ $key }}][Risk_Assessment_Severity]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="1" {{ $Risk['Risk_Assessment_Severity'] == '1' ? 'selected' : '' }}>1</option>
+                                                                    <option value="2" {{ $Risk['Risk_Assessment_Severity'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="3" {{ $Risk['Risk_Assessment_Severity'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="4" {{ $Risk['Risk_Assessment_Severity'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="5" {{ $Risk['Risk_Assessment_Severity'] == '5' ? 'selected' : '' }}>5</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select onchange="calculateRiskStageResult(this)" class="RiskStageO" name="Risk_Assessment[{{ $key }}][Risk_Assessment_Occurence]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="1" {{ $Risk['Risk_Assessment_Occurence'] == '1' ? 'selected' : '' }}>1</option>
+                                                                    <option value="2" {{ $Risk['Risk_Assessment_Occurence'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="3" {{ $Risk['Risk_Assessment_Occurence'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="4" {{ $Risk['Risk_Assessment_Occurence'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="5" {{ $Risk['Risk_Assessment_Occurence'] == '5' ? 'selected' : '' }}>5</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select onchange="calculateRiskStageResult(this)" class="RiskStageD" name="Risk_Assessment[{{ $key }}][Risk_Assessment_Detection]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="5" {{ $Risk['Risk_Assessment_Detection'] == '5' ? 'selected' : '' }}>5</option>
+                                                                    <option value="4" {{ $Risk['Risk_Assessment_Detection'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="3" {{ $Risk['Risk_Assessment_Detection'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="2" {{ $Risk['Risk_Assessment_Detection'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="1" {{ $Risk['Risk_Assessment_Detection'] == '1' ? 'selected' : '' }}>1</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><input type="text" class="RiskStage-rpn" name="Risk_Assessment[{{ $key }}][Risk_Assessment_RPN]" value="{{ $Risk['Risk_Assessment_RPN'] ?? ''}}"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Mitigation_Action]" value="{{ $Risk['Mitigation_Action'] ?? '' }}"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Reference]" value="{{ $Risk['Reference'] ?? '' }}"></td>
+                                                            <td>
+                                                                <select onchange="calculateAfterResult(this)" class="AfterS" name="Risk_Assessment[{{ $key }}][After_Mitigation_Severity]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="1" {{ $Risk['After_Mitigation_Severity'] == '1' ? 'selected' : '' }}>1</option>
+                                                                    <option value="2" {{ $Risk['After_Mitigation_Severity'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="3" {{ $Risk['After_Mitigation_Severity'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="4" {{ $Risk['After_Mitigation_Severity'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="5" {{ $Risk['After_Mitigation_Severity'] == '5' ? 'selected' : '' }}>5</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select onchange="calculateAfterResult(this)" class="AfterO" name="Risk_Assessment[{{ $key }}][After_Mitigation_Occurence]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="1" {{ $Risk['After_Mitigation_Occurence'] == '1' ? 'selected' : '' }}>1</option>
+                                                                    <option value="2" {{ $Risk['After_Mitigation_Occurence'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="3" {{ $Risk['After_Mitigation_Occurence'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="4" {{ $Risk['After_Mitigation_Occurence'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="5" {{ $Risk['After_Mitigation_Occurence'] == '5' ? 'selected' : '' }}>5</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select onchange="calculateAfterResult(this)" class="AfterD" name="Risk_Assessment[{{ $key }}][After_Mitigation_Detection]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="5" {{ $Risk['After_Mitigation_Detection'] == '5' ? 'selected' : '' }}>5</option>
+                                                                    <option value="4" {{ $Risk['After_Mitigation_Detection'] == '4' ? 'selected' : '' }}>4</option>
+                                                                    <option value="3" {{ $Risk['After_Mitigation_Detection'] == '3' ? 'selected' : '' }}>3</option>
+                                                                    <option value="2" {{ $Risk['After_Mitigation_Detection'] == '2' ? 'selected' : '' }}>2</option>
+                                                                    <option value="1" {{ $Risk['After_Mitigation_Detection'] == '1' ? 'selected' : '' }}>1</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><input type="text" class="After-rpn" name="Risk_Assessment[{{ $key }}][After_Mitigation_RPN]" value="{{ $Risk['After_Mitigation_RPN'] ?? '' }}"></td>
+                                                            <td><input type="text" name="Risk_Assessment[{{ $key }}][Where_Documented]" value="{{ $Risk['Where_Documented'] ?? '' }}"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input type="text" disabled value="1" style="width: 30px;"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Risk_Type]"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Risk_Event]"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Consequence]"></td>
+                                                        <td>
+                                                            <select onchange="calculateRiskStageResult(this)" class="RiskStageS" name="Risk_Assessment[0][Risk_Assessment_Severity]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="calculateRiskStageResult(this)" class="RiskStageO" name="Risk_Assessment[0][Risk_Assessment_Occurence]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="calculateRiskStageResult(this)" class="RiskStageD" name="Risk_Assessment[0][Risk_Assessment_Detection]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="5">5</option>
+                                                                <option value="4">4</option>
+                                                                <option value="3">3</option>
+                                                                <option value="2">2</option>
+                                                                <option value="1">1</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" class='RiskStage-rpn' name="Risk_Assessment[0][Risk_Assessment_RPN]"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Mitigation_Action]"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Reference]"></td>
+
+                                                        <td>
+                                                            <select onchange="calculateAfterResult(this)" class="AfterS" name="Risk_Assessment[0][After_Mitigation_Severity]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="calculateAfterResult(this)" class="AfterO" name="Risk_Assessment[0][After_Mitigation_Occurence]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select onchange="calculateAfterResult(this)" class="AfterD" name="Risk_Assessment[0][After_Mitigation_Detection]">
+                                                                <option value="">-- Select --</option>
+                                                                <option value="5">5</option>
+                                                                <option value="4">4</option>
+                                                                <option value="3">3</option>
+                                                                <option value="2">2</option>
+                                                                <option value="1">1</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" class="After-rpn" name="Risk_Assessment[0][After_Mitigation_RPN]"></td>
+                                                        <td><input type="text" name="Risk_Assessment[0][Where_Documented]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        let investDetails = {{ isset($decodedRiskAssessment) ? count($decodedRiskAssessment) : 1 }};
+
+                                        $('#RiskAssessmentData').click(function () {
+                                            let rowCount = $('#RiskAssessmentTable tbody tr').length + 1;
+                                            let newRow = `
+                                                <tr>
+                                                    <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Risk_Type]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Risk_Event]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Consequence]"></td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageS" name="Risk_Assessment[${investDetails}][Risk_Assessment_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageO" name="Risk_Assessment[${investDetails}][Risk_Assessment_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateRiskStageResult(this)" class="RiskStageD" name="Risk_Assessment[${investDetails}][Risk_Assessment_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class='RiskStage-rpn' name="Risk_Assessment[${investDetails}][Risk_Assessment_RPN]" ></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Mitigation_Action]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Reference]"></td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterS" name="Risk_Assessment[${investDetails}][After_Mitigation_Severity]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterO" name="Risk_Assessment[${investDetails}][After_Mitigation_Occurence]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select onchange="calculateAfterResult(this)" class="AfterD" name="Risk_Assessment[${investDetails}][After_Mitigation_Detection]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="After-rpn" name="Risk_Assessment[${investDetails}][After_Mitigation_RPN]"></td>
+                                                    <td><input type="text" name="Risk_Assessment[${investDetails}][Where_Documented]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            `;
+                                            $('#RiskAssessmentTable tbody').append(newRow);
+                                            investDetails++;
+                                        });
+
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+                                            updateRowNumbers();
+                                        });
+
+                                        function updateRowNumbers() {
+                                            $('#RiskAssessmentTable tbody tr').each(function(index) {
+                                                $(this).find('td:first-child input').val(index + 1);
+                                            });
+                                        }
+                                    });
+                                </script>
+
+                                <script>
+                                    function calculateRiskStageResult(element) {
+                                        let row = element.closest('tr');
+                                        let Risk_Assessment_Severity = row.querySelector('.RiskStageS').value || 0;
+                                        let Risk_Assessment_Occurence = row.querySelector('.RiskStageO').value || 0;
+                                        let Risk_Assessment_Detection = row.querySelector('.RiskStageD').value || 0;
+                                        let Risk_Assessment_RPN = Risk_Assessment_Severity * Risk_Assessment_Occurence * Risk_Assessment_Detection;
+                                        row.querySelector('.RiskStage-rpn').value = Risk_Assessment_RPN > 0 ? Risk_Assessment_RPN : '';
+                                    }
+                                </script>
+
+                                <script>
+                                    function calculateAfterResult(element) {
+                                        let row = element.closest('tr');
+                                        let After_Mitigation_Severity = row.querySelector('.AfterS').value || 0;
+                                        let After_Mitigation_Occurence = row.querySelector('.AfterO').value || 0;
+                                        let After_Mitigation_Detection = row.querySelector('.AfterD').value || 0;
+                                        let After_Mitigation_RPN = After_Mitigation_Severity * After_Mitigation_Occurence * After_Mitigation_Detection;
+                                        row.querySelector('.After-rpn').value = After_Mitigation_RPN > 0 ? After_Mitigation_RPN : '';
+                                    }
+                                </script>
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="STAKEHOLDER LIST">STAKEHOLDER LIST</label>
+                                        <textarea name="Stakeholder_List_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Stakeholder_List_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'STAKEHOLDER LIST' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="REFERENCES AND RELATED DOCUMENTS">REFERENCES AND RELATED DOCUMENTS</label>
+                                        <textarea name="References_and_related_documents_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->References_and_related_documents_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'REFERENCES AND RELATED DOCUMENTS' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="GLOSSARY OF TERMS">GLOSSARY OF TERMS</label>
+                                        <textarea name="Glossary_Of_Terms_Initial_Risk" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->Glossary_Of_Terms_Initial_Risk : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'GLOSSARY OF TERMS' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
 
                 <!------------------------ RMSTP tab ------------------------------------>
 
@@ -3479,7 +4221,7 @@
                                         </div>
                                     <div class="input-fields">
                                         <div class="row">
-                                            
+
 
                                         <div class="group-input">
     <label for="action-plan-grid">
@@ -3503,8 +4245,8 @@
 
                 @php
                     $serialNumber = 1;
-                    $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
-                        ? json_decode($testDataDecoded->data, true) 
+                    $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
+                        ? json_decode($testDataDecoded->data, true)
                         : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
                 @endphp
                 @if(!empty($decodedData))
@@ -3573,7 +4315,7 @@
 
 
 
-                           
+
 
 
 
@@ -3586,11 +4328,11 @@
   <!------------------------ Packing Material Specification - tab ------------------------------------>
   <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
-                        PACKING MATERIAL SPECIFICATION 
+                        PACKING MATERIAL SPECIFICATION
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
 
                             <div class="col-md-12">
                                     <div class="group-input">
@@ -3652,8 +4394,8 @@
 
                             @php
                                 $serialNumber = 1;
-                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data) 
-                                    ? json_decode($PackingGridData->data, true) 
+                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data)
+                                    ? json_decode($PackingGridData->data, true)
                                     : (is_array($PackingGridData->data) ? $PackingGridData->data : []);
                             @endphp
 
@@ -3916,12 +4658,12 @@
                                     </div>
                                 <div class="input-fields">
                                     <div class="row">
-                                                    
+
 
                         @php
                             $serialNumber = 1;
-                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) 
-                                ? json_decode($ProductSpecification->data, true) 
+                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data)
+                                ? json_decode($ProductSpecification->data, true)
                                 : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
                         @endphp
 
@@ -4037,8 +4779,8 @@
 
 @php
     $serialNumber = 1;
-    $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) 
-        ? json_decode($MaterialSpecification->data, true) 
+    $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data)
+        ? json_decode($MaterialSpecification->data, true)
         : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
 @endphp
 
