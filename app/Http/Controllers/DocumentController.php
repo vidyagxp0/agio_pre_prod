@@ -820,6 +820,13 @@ class DocumentController extends Controller
           //  dd($PackingGridData);
             $PackingGridData->save();
 
+            $GtpGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'gtp'])->firstOrNew();
+            $GtpGridData->document_type_id = $document->id;
+            $GtpGridData->identifier = 'gtp';
+            $GtpGridData->data = $request->gtp;
+            // dd($GtpGridData);
+            $GtpGridData->save();
+
 
 
             $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
@@ -965,7 +972,8 @@ class DocumentController extends Controller
 
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-      
+        $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
+        // dd($GtpGridData);
         
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
@@ -1036,7 +1044,8 @@ class DocumentController extends Controller
             'summaryResult',
             'Finished_Product',
             'Inprocess_standard',
-            'CLEANING_VALIDATION'
+            'CLEANING_VALIDATION',
+            'GtpGridData'
         ));
     }
 
@@ -1873,6 +1882,12 @@ class DocumentController extends Controller
             $PackingGridData->data = $request->packingtest;
             $PackingGridData->save();
 
+            $GtpGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'gtp']);
+            $GtpGridData->document_type_id = $document->id;
+            $GtpGridData->identifier = 'gtp';
+            $GtpGridData->data = $request->gtp;
+            $GtpGridData->save();
+
 
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
@@ -2358,6 +2373,10 @@ class DocumentController extends Controller
         $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data) 
             ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
 
+        $GtpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
+        $GtpGridData = isset($GtpData->data) && is_string($GtpData->data) 
+            ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
+
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data) 
             ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
@@ -2426,7 +2445,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3275,11 +3294,7 @@ class DocumentController extends Controller
             $distribution->save();
         }
 
-        // $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
-        // $specifications->specification_id = $specification_id;
-        // $specifications->identifier = 'specifications_testing';
-        // $specifications->data = json_encode($request->specifications_testing);
-        // $specifications->save();
+
 
 //-----------------==================================================================
 
@@ -3302,6 +3317,13 @@ class DocumentController extends Controller
         $PackingGridData->identifier = 'Packingmaterialdata';
        
         $PackingGridData->save();
+
+        $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
+        $GtpGridData = $GtpGridData->replicate();
+        $GtpGridData->document_type_id = $newdoc->id;
+        $GtpGridData->identifier = 'gtp';
+       
+        $GtpGridData->save();
 
 
 

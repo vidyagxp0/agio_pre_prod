@@ -3797,7 +3797,6 @@
                                                         <tr>
                                                             <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
                                                             <td><input type="text" name="item[{{ $key }}][testingdata]" value="{{ $item['testingdata'] ?? '' }}"></td>
-                                                           
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
@@ -3973,28 +3972,42 @@
                                             Row Increment
                                         </span>
                                     </label>
-                                <div class="table-responsive">
+                                    <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table-gtp">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 2%">Sr.No</th>
                                                     <th style="width: 12%">Test</th>
                                                     <th style="width: 3%">Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php
-                                                    $serialNumber = 1;
+                                                @php 
+                                                    $serialNumber = 1; 
+                                                    $GtpData = isset($GtpGridData->data) && is_string($GtpGridData->data) 
+                                                        ? json_decode($GtpGridData->data, true) 
+                                                        : (is_array($GtpGridData->data) ? $GtpGridData->data : []);
                                                 @endphp
-                                                <td disabled>{{ $serialNumber++ }}</td>
-                                                
-                                                <td><input type="text" name="gtp[0][test_gtp]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tbody>
 
+                                                @if(!empty($GtpData))
+                                                    @foreach($GtpData as $key => $gtp_data)
+                                                        <tr>
+                                                            <td>{{ $serialNumber++ }}</td>
+                                                            <td><input type="text" name="gtp[{{ $key }}][test_gtp]" value="{{ $gtp_data['test_gtp'] ?? '' }}"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td>{{ $serialNumber++ }}</td>
+                                                        <td><input type="text" name="gtp[0][test_gtp]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
                                         </table>
-                                </div>
+                                    </div>
+
                             </div>
 
                                 <div class="button-block">
@@ -4011,32 +4024,31 @@
 
                 <script>
                     $(document).ready(function() {
-                        let investdetails = 1;
-                        $('#Details_add_gtp').click(function(e) {
-                            function generateTableRow(serialNumber) {
-                                var users = @json($users);
-                                console.log(users);
-                                var html =
-                                        '<tr>' +
-                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
-                                        '"></td>' +
-                                        '<td><input type="text" name="gtp[' + investdetails +
-                                        '][test_gtp]" value=""></td>' +
-                                       
-
-                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                                        '</tr>';
-
-
-                                    return html;
-                                }
-
-                                var tableBody = $('#Details-table-gtp tbody');
-                                var rowCount = tableBody.children('tr').length;
-                                var newRow = generateTableRow(rowCount + 1);
-                                tableBody.append(newRow);
+                        function updateSerialNumbers() {
+                            $('#Details-table-gtp tbody tr').each(function(index) {
+                                $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
                             });
+                        }
+
+                        $('#Details_add_gtp').click(function() {
+                            var serialNumber = $('#Details-table-gtp tbody tr').length + 1; // Get the next serial number
+                            var newRow = `
+                                <tr>
+                                    <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                    <td><input type="text" name="gtp[${serialNumber - 1}][test_gtp]" value=""></td>
+                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                </tr>`;
+                            
+                            $('#Details-table-gtp tbody').append(newRow);
                         });
+
+                        // Remove row functionality
+                        $(document).on('click', '.removeRowBtn', function() {
+                            $(this).closest('tr').remove();
+                            updateSerialNumbers(); // Update serial numbers after removal
+                        });
+                    });
                 </script>
 
                 <script>
