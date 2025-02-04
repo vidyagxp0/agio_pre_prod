@@ -131,7 +131,7 @@
 
         body {
             margin-top: 250px;
-            margin-bottom: 160px;
+            margin-bottom: 180px;
             padding-top: 60px;
             padding-bottom: 50px; 
         }
@@ -142,7 +142,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 170px; /* Set a specific height for the footer */
+            /* height: 170px; Set a specific height for the footer */
         }
 
         .table-responsive {
@@ -426,6 +426,7 @@
                 </tr>
             </tbody>
         </table>
+        <span>Format No.: QA/095/F2-00</span>
     </footer>
     
 
@@ -478,7 +479,17 @@
         <tbody>
             <tr>
                 <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black; text-align: center;">
+                       @if ($data->training_required == 'yes')
+                            @if ($data->stage >= 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @else
+                            @if ($data->stage > 7)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @endif
+                </td>
                 <td style="border: 1px solid black; text-align: center;"></td>
                 <td style="border: 1px solid black; text-align: center;"></td>
                 <td style="border: 1px solid black; text-align: center;"></td>
@@ -515,7 +526,7 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 805;
+                $y = 760;
                 $x = 450;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
