@@ -502,17 +502,27 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>1</td>
+                        <td>
+                            @if ($data->training_required == 'yes')
+                                @if ($data->stage >= 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 7)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                        </td>
                         <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
+                        <td>3</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -538,8 +548,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $y = 760;
+                $x = 450;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }
