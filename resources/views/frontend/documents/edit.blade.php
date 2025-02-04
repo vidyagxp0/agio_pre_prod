@@ -3729,13 +3729,8 @@
                     </div>
 
 
-                                    <!-- GTP -->
-                <div id="doc-gtp" class="tabcontent">
-                        <div class="orig-head">
-                         GENERAL TESTING PROCEDURE
-                        </div>
-                    <div class="input-fields">
-                        <div class="row">
+
+
                     <div id="doc-istp" class="tabcontent">
                         <div class="orig-head">
                         INPROCESS STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
@@ -3935,8 +3930,13 @@
                         </div>
                     </div>
 
-                <!------------------------ RMSTP tab ------------------------------------>
-
+                <!-- GTP -->
+                <div id="doc-gtp" class="tabcontent">
+                    <div class="orig-head">
+                         GENERAL TESTING PROCEDURE
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
                             <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
@@ -4141,8 +4141,8 @@
 
 
 
-  <!------------------------ Packing Material Specification - tab ------------------------------------>
-  <div id="doc_pams" class="tabcontent">
+                <!------------------------ Packing Material Specification - tab ------------------------------------>
+                <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
                         PACKING MATERIAL SPECIFICATION 
                         </div>

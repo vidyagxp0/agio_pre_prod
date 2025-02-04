@@ -1032,7 +1032,7 @@ class DocumentController extends Controller
             'MaterialSpecification',
             'ProductSpecification',
             'sampleReconcilation',
-            'summaryResult'
+            'summaryResult',
             'Finished_Product',
             'Inprocess_standard',
             'CLEANING_VALIDATION'
