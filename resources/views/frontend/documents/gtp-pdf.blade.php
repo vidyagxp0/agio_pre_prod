@@ -129,7 +129,7 @@
 
         body {
             margin-top: 260px;
-            margin-bottom: 100px;
+            margin-bottom: 180px;
         }
 
         footer {
@@ -455,6 +455,7 @@
                 </tr>
             </tbody>
         </table>
+        <span>Format No.: QA/097/F8-00</span>
     </footer>
     
     <div class="content">
@@ -469,11 +470,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (!empty($testData))
-                        @foreach ($testData as $key => $item)
+                    @if (!empty($GtpGridData))
+                        @foreach ($GtpGridData as $key => $item)
                             <tr>
-                                <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
-                                <td style="font-weight: bold;">{{ $item['testdata'] ?? '' }}</td>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $item['test_gtp'] ?? '' }}</td>
                             </tr>
                         @endforeach
                     @else
@@ -487,6 +488,50 @@
         </section>
     </div>
 
+<div class="content">
+    <section>
+        <h4 class="revision-title">REVISION HISTORY:</h4>
+        <div class="table-responsive retrieve-table">
+            <table class="table table-bordered" id="distribution-list">
+                <thead>
+                    <tr>
+                        <th class="revision-header" style="width: 10%;">Revision No.</th>
+                        <th class="revision-header" style="width: 45%;">Effective Date</th>
+                        <th class="revision-header" style="width: 45%;">Reason of Revision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<style>
+    .revision-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .revision-header {
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
     <script type="text/php">
         if (isset($pdf)) {
             $pdf->page_script('
