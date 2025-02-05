@@ -2415,13 +2415,9 @@ class DocumentController extends Controller
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-
             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-
             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-
             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
@@ -2433,6 +2429,9 @@ class DocumentController extends Controller
             'STUDY' => 'frontend.documents.reports.study_report',
             'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
             'REPORT' => 'frontend.documents.report-pdf',
+            'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
+            'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
+            'REQULIFICATION'=>'frontend.documents.reports.requlification',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
             'QM' => 'frontend.documents.qm-pdf',
