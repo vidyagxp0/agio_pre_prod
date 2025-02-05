@@ -468,27 +468,27 @@
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
             <div class="table-responsive retrieve-table">
             <table class="table table-bordered" id="distribution-list">
-    <thead>
-        <tr>
-            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
-            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!empty($testData))
-            @foreach ($testData as $key => $item)
-                <tr>
-                    <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
-                    <td style="font-weight: bold;">{{ $item['testdata'] ?? '' }}</td>
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
+                <thead>
+                    <tr>
+                        <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
+                        <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($testData))
+                        @foreach ($testData as $key => $item)
+                            <tr>
+                                <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
+                                <td style="font-weight: bold;">{{ $item['testdata'] ?? '' }}</td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
             </div>
         </section>
 

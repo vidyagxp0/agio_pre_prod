@@ -542,6 +542,18 @@ class DocumentController extends Controller
             $document->reference = $request->reference;
             $document->sampling_instructions = $request->sampling_instructions;
 
+           //Cleaning Validation Specification
+
+           $document->generic_name_cvs = $request->generic_name_cvs;
+           $document->brand_name_cvs = $request->brand_name_cvs;
+           $document->label_claim_cvs = $request->label_claim_cvs;
+           $document->product_code_cvs = $request->product_code_cvs;
+           $document->storage_condition_cvs = $request->storage_condition_cvs;
+           $document->sample_quantity_cvs = $request->sample_quantity_cvs;
+           $document->reserve_sample_cvs = $request->reserve_sample_cvs;
+           $document->custom_sample_cvs = $request->custom_sample_cvs;
+           $document->reference_cvs = $request->reference_cvs;
+           $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
 
             // row  material store
@@ -770,6 +782,7 @@ class DocumentController extends Controller
             $SpecificationData->identifier = 'SPECIFICATION';
             $SpecificationData->data = $request->specification_details;
             $SpecificationData->save();
+
          // specification   validation  grid
             $Specification_Validation_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION_VALIDATION'])->firstOrNew();
             $Specification_Validation_Data->document_type_id = $griddata;
@@ -864,6 +877,23 @@ class DocumentController extends Controller
             $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
             $CLEANING_VALIDATION->data = $request->cleaning_validation;
             $CLEANING_VALIDATION->save();
+
+
+            $SpecificationData_CVS = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->firstOrNew();;
+            $SpecificationData_CVS->document_type_id = $document->id;
+            $SpecificationData_CVS->identifier = 'SpecificationCleaningValidationSpecification';
+            $SpecificationData_CVS->data = $request->specification_details_cvs;
+            $SpecificationData_CVS->save();
+            
+            $Specification_Validation_Data_CVS = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->firstOrNew();;
+            $Specification_Validation_Data_CVS->document_type_id = $document->id;
+            $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+            $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
+            //dd($Specification_Validation_Data_CVS);
+            $Specification_Validation_Data_CVS->save();
+           
+
+
 
             toastr()->success('Document created');
 
@@ -990,10 +1020,25 @@ class DocumentController extends Controller
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
+        
 
         if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
             $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
         }
+
+        
+
+        //----------
+
+
+        $SpecificationData_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SpecificationCleaningValidationSpecification')->first();
+        $Specification_Validation_Data_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
+
+
+
+
+
+
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
 
@@ -1045,7 +1090,9 @@ class DocumentController extends Controller
             'Finished_Product',
             'Inprocess_standard',
             'CLEANING_VALIDATION',
-            'GtpGridData'
+            'GtpGridData',
+            'Specification_Validation_Data_CVS',
+            'SpecificationData_CVS'
         ));
     }
 
@@ -1117,6 +1164,37 @@ class DocumentController extends Controller
                 $document->storage_condition = $request->storage_condition;
                 $document->approved_vendor = $request->approved_vendor;
                 $document->stp_no = $request->stp_no;
+
+
+
+                // Finished Product Specification
+                $document->generic_name = $request->generic_name;
+                $document->brand_name = $request->brand_name;
+                $document->label_claim = $request->label_claim;
+                $document->product_code = $request->product_code;
+                $document->storage_condition = $request->storage_condition;
+                $document->sample_quantity = $request->sample_quantity;
+                $document->reserve_sample = $request->reserve_sample;
+                $document->custom_sample = $request->custom_sample;
+                $document->reference = $request->reference;
+                $document->sampling_instructions = $request->sampling_instructions;
+
+
+            //Cleaning Validation Specification
+
+                $document->generic_name_cvs = $request->generic_name_cvs;
+                $document->brand_name_cvs = $request->brand_name_cvs;
+                $document->label_claim_cvs = $request->label_claim_cvs;
+                $document->product_code_cvs = $request->product_code_cvs;
+                $document->storage_condition_cvs = $request->storage_condition_cvs;
+                $document->sample_quantity_cvs = $request->sample_quantity_cvs;
+                $document->reserve_sample_cvs = $request->reserve_sample_cvs;
+                $document->custom_sample_cvs = $request->custom_sample_cvs;
+                $document->reference_cvs = $request->reference_cvs;
+                $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
+
+
+
  
                 // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
                 // try {
@@ -1931,6 +2009,37 @@ class DocumentController extends Controller
 
 
 
+
+            $SpecificationData = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION']);
+            $SpecificationData->document_type_id = $document->id;
+            $SpecificationData->identifier = 'SPECIFICATION';
+            $SpecificationData->data = $request->specification_details;
+            $SpecificationData->save();
+            
+            $Specification_Validation_Data = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION']);
+            $Specification_Validation_Data->document_type_id = $document->id;
+            $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+            $Specification_Validation_Data->data = $request->specification_validation_details;
+            //dd($Specification_Validation_Data);
+            $Specification_Validation_Data->save();
+
+
+
+            $SpecificationData_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SpecificationCleaningValidationSpecification']);
+            $SpecificationData_CVS->document_type_id = $document->id;
+            $SpecificationData_CVS->identifier = 'SpecificationCleaningValidationSpecification';
+            $SpecificationData_CVS->data = $request->specification_details_cvs;
+            $SpecificationData_CVS->save();
+            
+            $Specification_Validation_Data_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification']);
+            $Specification_Validation_Data_CVS->document_type_id = $document->id;
+            $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+            $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
+            //dd($Specification_Validation_Data_CVS);
+            $Specification_Validation_Data_CVS->save();
+           
+
+
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/' . $id);
@@ -2394,7 +2503,29 @@ class DocumentController extends Controller
         $ProductSpecificationData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) ? json_decode($ProductSpecification->data,true) : (is_array($ProductSpecification->data) ? $ProductSpecification->data :[]); 
         
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-        $MaterialSpecificationData = isset($MaterialSpecification->data) && is_string      ($MaterialSpecification->data) ? json_decode($MaterialSpecification->data,true) : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+        $MaterialSpecificationData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) ? json_decode($MaterialSpecification->data,true) : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+      
+        
+
+        $Finished_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION')->first();
+        $finishedProductSpecificationData = isset($Finished_product_specification->data) && is_string($Finished_product_specification->data) ? json_decode($Finished_product_specification->data) : (is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
+      
+       
+        $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
+        $specificationValidationData = isset($specificationValidation->data)&& is_string($specificationValidation->data) ? json_decode($specificationValidation->data,true) :(is_array($specificationValidation->data) ? $specificationValidation->data:[]);
+
+
+
+
+        $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
+        $finishedProductSpecificationData_CVS = isset($Finished_product_specification_cvs->data) && is_string($Finished_product_specification_cvs->data) ? json_decode($Finished_product_specification_cvs->data) : (is_array($Finished_product_specification_cvs->data) ? $Finished_product_specification_cvs->data : []);
+    
+       
+        $specificationValidation_cvs = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
+        $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
+       
+      //  dd($specificationValidation);
+       
        
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
@@ -2445,7 +2576,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3367,9 +3498,42 @@ class DocumentController extends Controller
         $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
         $CLEANING_VALIDATION->document_type_id = $newdoc->id;
         $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-      
-        // dd($CLEANING_VALIDATION);
+       // dd($CLEANING_VALIDATION);
         $CLEANING_VALIDATION->save();
+
+
+        $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
+        $SpecificationData = $SpecificationData->replicate();
+        
+        $SpecificationData->document_type_id = $newdoc->id;
+        $SpecificationData->identifier = 'SPECIFICATION';
+        $SpecificationData->save();
+        
+        $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
+       
+        $Specification_Validation_Data = $Specification_Validation_Data->replicate();
+        $Specification_Validation_Data->document_type_id = $newdoc->id;
+        $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+        //dd($Specification_Validation_Data);
+        $Specification_Validation_Data->save();
+       
+    // Cleaning Specification Validation
+        $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
+        $SpecificationData_cvs = $SpecificationData_cvs->replicate();
+        
+        $SpecificationData_cvs->document_type_id = $newdoc->id;
+        $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
+        $SpecificationData_cvs->save();
+        
+        $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
+       
+        $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
+        $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
+        $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+        //dd($Specification_Validation_Data_cvs);
+        $Specification_Validation_Data_cvs->save();
+      
+
     
     DocumentService::update_document_numbers();
 

@@ -303,10 +303,40 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                    
+                        <span>
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    FP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                    FP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                        @else
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                   FP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                   FP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                        @endif
+                        </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
+                        <span>@if ($data->training_required == 'yes')
+                            @if ($data->stage >= 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @else
+                            @if ($data->stage > 7)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -315,6 +345,20 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                    <span>
+                   
+                   @php
+                       $temp = DB::table('document_types')
+                           ->where('name', $document->document_type_name)
+                           ->value('typecode');
+                   @endphp
+                   @if ($document->revised === 'Yes')
+                   FP/S/00{{ $document->revised_doc }}-0{{ $document->major }}
+                   @else
+                   -
+                   @endif
+                   </span>
+                
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -451,52 +495,52 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->generic_name}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->label_claim}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->storage_condition}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sample_quantity}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->custom_sample}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reference
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reference}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -516,117 +560,119 @@
         </thead>
     </table>
     
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold">SPECIFICATION</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        <div class="bold">SPECIFICATION</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+        <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
+                    <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
+                    <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
+                    <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
+                    <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!empty($finishedProductSpecificationData))
+                    @foreach($finishedProductSpecificationData as $key => $item)
+                        <tr>
+                            <td style="border: 1px solid black; font-size: 16px; font-weight: bold; text-align: center;">
+                                {{ $key+1 }}
+                            </td>
+                            <td style="border: 1px solid black; text-align: left;">
+                                {{ $item['test'] ?? '' }}
+                            </td>
+                            <td style="border: 1px solid black; text-align: center;">
+                                {{ $item['release'] ?? '' }}
+                            </td>
+                            <td style="border: 1px solid black; text-align: center;">
+                                {{ $item['shelf_life'] ?? '' }}
+                            </td>
+                            <td style="border: 1px solid black; text-align: left;">
+                                {{ $item['reference'] ?? '' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">
+                            No Data Available
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        <div class="bold">For Inprocess / Cleaning validation specification use below table:</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        <div class="bold">SPECIFICATION</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Sr. No</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Tests</th>
+                <th style="border: 1px solid black; width: 40%; font-weight: bold; text-align: center;">Specifications</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Reference</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-            </tr>
+            @if(!empty($specificationValidationData))
+                @foreach($specificationValidationData as $key => $itemData)
+                    <tr>
+                        <td style="border: 1px solid black; text-align: center; font-size: 16px; font-weight: bold;">
+                            {{ $key+1 }}
+                        </td>
+                        <td style="border: 1px solid black; text-align: center;">
+                            {{ $itemData['test'] ?? '' }}
+                        </td>
+                        <td style="border: 1px solid black; text-align: center;">
+                            {{ $itemData['specification'] ?? '' }}
+                        </td>
+                        <td style="border: 1px solid black; text-align: center;">
+                            {{ $itemData['reference'] ?? '' }}
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">
+                        No Data Available
+                    </td>
+                </tr>
+            @endif
         </tbody>
     </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">For Inprocess / Cleaning validation specification use below table:</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold">SPECIFICATION</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Reference</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-        </tbody>
-    </table>
 
     <table>
         <thead>
