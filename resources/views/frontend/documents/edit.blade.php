@@ -381,7 +381,8 @@
                                     <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                     </div>
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_dateDoc" value="{{ $document->due_dateDoc }}"
+                                        <input type="text" id="due_dateDoc" 
+                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc"
                                             value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"
@@ -526,18 +527,23 @@
                                 <div class="group-input">
                                     <label for="doc-num">Document Number</label>
                                     <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                        value="@php
-                                            $temp = DB::table('document_types')
-                                                ->where('name', $document->document_type_name)
-                                                ->value('typecode');
-                                        @endphp
+                                        value="
                                         @if ($document->revised === 'Yes')
-                                            {{ $document->sop_type_short }}
-                                            /@if ($document->document_type_name)
-                                                {{ $temp }} /@endif{{ $year }}
-                                            /000{{ $document->id }}/R{{ $document->major }}
+                                            @php
+                                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                            @endphp
+
+                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                            @else
+                                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                            @endif
                                         @else
-                                            {{ $document->sop_type_short }}/{{ $document->department_id }}/000{{ $document->id }}/R{{ $document->major }}
+                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                            @else
+                                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                            @endif
                                         @endif">
                                 </div>
                             </div>
@@ -636,7 +642,7 @@
             </div>
         </div> --}}
 
-                            <div class="col-md-12">
+                            <div class="col-6">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name"
@@ -754,7 +760,7 @@
                                 @endif
                             </div>
 
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="minor">Document Version <small>(Minor)</small><span
                                             class="text-danger">*</span>
@@ -787,7 +793,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -798,8 +804,7 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                            </div>
-
+                            </div> --}}
 
 
 
@@ -2874,7 +2879,7 @@
                 {{-- HOD REMARKS TAB END --}}
 
 
-                                    <!-- MFPS Tabs -->
+                <!-- MFPS Tabs -->
                     <div id="doc-mfps" class="tabcontent">
                         <div class="orig-head">
                             Master Finished Product Specification
@@ -2907,15 +2912,15 @@
                                     <table class="table table-bordered" id="specifications-grid">
                                         <thead>
                                             <tr>
-                                                <th style="background:none;" rowspan="2">Sr. No.</th>
-                                                <th style="background:none;" rowspan="2" class="copy-name">Tests</th>
-                                                <th style="background:none;" colspan="2" class="copy-name">Specifications</th>
-                                                <th style="background:none;" rowspan="2" class="copy-name">Reference</th>
-                                                <th style="background:none;" rowspan="2" class="copy-name">Action</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Sr. No.</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Tests</th>
+                                                <th  colspan="2" style="font-size: 16px; font-weight: bold;">Specifications</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Reference</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Action</th>
                                             </tr>
                                             <tr>
-                                                <th style="background:none;" class="copy-name">Release</th>
-                                                <th style="background:none;" class="copy-name">Shelf life</th>
+                                                <th style="font-size: 16px; font-weight: bold;">Release</th>
+                                                <th style="font-size: 16px; font-weight: bold;">Shelf life</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -2932,7 +2937,12 @@
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td colspan="6" class="text-center">No Specifications Found</td>
+                                                    <td>1</td>
+                                                    <td><input type="text" name="specifications[0][tests]"></td>
+                                                    <td><input type="text" name="specifications[0][release]"></td>
+                                                    <td><input type="text" name="specifications[0][shelf_life]"></td>
+                                                    <td><input type="text" name="specifications[0][reference]"></td>
+                                                    <td><button type="button" class="removeSpecRow">Remove</button></td>
                                                 </tr>
                                             @endif
                                         </tbody>
@@ -3021,9 +3031,11 @@
                                             </tr>
                                             @endforeach
                                         @else
-                                                    <tr>
-                                                        <td colspan="6" class="text-center">No Specifications Found</td>
-                                                    </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td><input type="text" name="specifications_testing[0][tests]"></td>
+                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
+                                            </tr>
                                         @endif
                                         </tbody>
                                     </table>
@@ -3050,7 +3062,7 @@
 
                                 newRow.innerHTML = `
                                     <td>${rowCount + 1}</td>
-                                    <td><input type="text" name="specifications_testing[${rowCount}][tests]" required></td>
+                                    <td><input type="text" name="specifications_testing[${rowCount}][tests]"></td>
                                     <td><button type="button" class="removeSpecRow">Remove</button></td>
                                 `;
 

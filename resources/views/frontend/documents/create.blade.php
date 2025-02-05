@@ -1364,15 +1364,15 @@
                                     <table class="table table-bordered" id="specifications-grid">
                                         <thead>
                                             <tr>
-                                                <th style="background:none;" rowspan="2">Sr. No.</th>
-                                                <th style="background:none;" rowspan="2" class="copy-name">Tests</th>
-                                                <th style="background:none;" colspan="2" class="copy-name">Specifications</th>
-                                                <th style="background:none;" rowspan="2" class="copy-name">Reference</th>
-                                                <th style="background:none;" rowspan="2" class="copy-long">Action</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Sr. No.</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Tests</th>
+                                                <th  colspan="2" style="font-size: 16px; font-weight: bold;">Specifications</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Reference</th>
+                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Action</th>
                                             </tr>
                                             <tr>
-                                                <th style="background:none;" class="copy-name">Release</th>
-                                                <th style="background:none;" class="copy-name">Shelf life</th>
+                                                <th style="font-size: 16px; font-weight: bold;">Release</th>
+                                                <th style="font-size: 16px; font-weight: bold;">Shelf life</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1470,12 +1470,10 @@
                                 let table = document.getElementById("specifications-testing").getElementsByTagName('tbody')[0];
                                 let rowCount = table.rows.length;
                                 let newRow = table.insertRow();
-
-
-
+                                
                                 newRow.innerHTML = `
                                     <td>${rowCount + 1}</td>
-                                    <td><input type="text" name="specifications_testing[${rowCount}][tests]" required></td>
+                                    <td><input type="text" name="specifications_testing[${rowCount}][tests]"></td>
                                     <td><button type="button" class="removeSpecRow">Remove</button></td>
                                 `;
                             }
