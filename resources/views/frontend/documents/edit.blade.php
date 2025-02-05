@@ -2632,35 +2632,47 @@
                                 </div>
                             @endif
                         </div>
-                        {{-- <div class="col-md-12">
-                            <div class="group-input">
-                                <label for="summary">Revision History</label>
-                                <textarea name="revision_summary">{{ $document->revision_summary }}</textarea>
-                            </div>
-                        </div> --}}
 
                         <div class="col-md-12">
                             <div class="group-input">
-                                <label for="revision_summary">Revision History</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                        require completion</small></div>
-                                <textarea name="revision_summary" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->revision_summary : '' }}</textarea>
-                                @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'revision_summary' && !empty($tempHistory->comment))
-                                        @php
-                                            $users_name = DB::table('users')
-                                                ->where('id', $tempHistory->user_id)
-                                                ->value('name');
-                                        @endphp
-                                        <p style="color: blue">Modify by {{ $users_name }} at
-                                            {{ $tempHistory->created_at }}
-                                        </p>
-                                        <input class="input-field"
-                                            style="background: #ffff0061;
-                                color: black;"
-                                            type="text" value="{{ $tempHistory->comment }}" disabled>
-                                    @endif
-                                @endforeach
+                                <label for="test">
+                                    Revision History
+                                </label>
+                                <div><small class="text-primary"></small></div>
+                                <div class="table-responsive retrieve-table">
+                                <table class="table-bordered table" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th class="copy-name">Revision No.</th>
+                                            <th class="copy-name">Change Control No./ DCRF No</th>
+                                            <th class="copy-name">Effective Date</th>
+                                            <th class="copy-name">Reason of revision</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <tr>
+                                            <td>1</td>
+                                            <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
+                                            <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
+                                            <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
+                                            <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                        </tr> --}}
+                                        @if($document->revised == 'Yes' && isset($document->revisions))
+    @foreach($document->revisions as $key => $revision)
+        <tr>
+            <td>{{ $key + 1 }}</td>
+            <td><input type="text" name="revision_number[]" value="{{ $revision->revision_number }}" class="form-control"></td>                                                    
+            <td><input type="text" name="cc_no[]" value="{{ $revision->cc_no }}" class="form-control"></td>                                                    
+            <td><input type="text" name="effective_date[]" value="{{ $revision->effective_date }}" class="form-control"></td>                 
+            <td><input type="text" name="reason[]" value="{{ $revision->reason }}" class="form-control"></td>                                                                                        
+        </tr>
+    @endforeach
+@endif
+
+                                    </tbody>
+                                </table>
+                                </div>
                             </div>
                         </div>
                     </div>

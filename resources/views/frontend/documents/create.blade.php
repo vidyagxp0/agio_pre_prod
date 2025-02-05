@@ -702,24 +702,24 @@
 
 
                                 {{-- <div class="col-12">
-    <div class="group-input">
-        <label for="revision-type">Revision Type</label>
-        <select name="revision_type">
-            <option value="0">-- Select --</option>
-            <option value="minor">Minor</option>
-            <option value="major">Major</option>
-            <option value="NA">NA</option>
-        </select>
-    </div>
-</div>
-<div class="col-md-12">
-    <div class="group-input">
-        <label for="summary">Revision Summary</label>
-        <textarea name="revision_summary"></textarea>
-    </div>
-</div> --}}
-
+                                <div class="group-input">
+                                    <label for="revision-type">Revision Type</label>
+                                    <select name="revision_type">
+                                        <option value="0">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="NA">NA</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="summary">Revision Summary</label>
+                                    <textarea name="revision_summary"></textarea>
+                                </div>
+                            </div> --}}
+
+                        </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
@@ -1181,14 +1181,34 @@
                                     </div>
                                 </div> --}}
 
-                                <!--  Tabuler format Revision Histpry -->
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="revision_summary">Revision History</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea name="revision_summary" class="summernote">
-                                    </textarea>
+                                        <label for="test">
+                                            Revision History
+                                        </label>
+                                        <div><small class="text-primary"></small></div>
+                                        <div class="table-responsive retrieve-table">
+                                        <table class="table-bordered table" id="">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th class="copy-name">Revision No.</th>
+                                                    <th class="copy-name">Change Control No./ DCRF No</th>
+                                                    <th class="copy-name">Effective Date</th>
+                                                    <th class="copy-name">Reason of revision</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
+                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1293,7 +1313,7 @@
                                 </div>
 
 
-                                {{-- <div class="col-md-12">
+                {{-- <div class="col-md-12">
                 <div class="group-input">
                     <label for="test">
                         Revision History<button type="button" name="reporting2" onclick="addRevRow('revision')">+</button>
