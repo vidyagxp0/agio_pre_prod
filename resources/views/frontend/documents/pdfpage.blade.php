@@ -1381,45 +1381,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if($data->revised == 'Yes')
                                     <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">1</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        
-                                        </td>
+                                        <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>
+                                        <td style="border: 1px solid black;">-</td>                                                                                                        
+                                        <td style="border: 1px solid black;">{{ Helpers::getdateFormat($data->effective_date) }}</td>                 
+                                        <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
                                     </tr>
-                                    {{-- <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">2</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                         <td>
-                                         {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                       
-                                        </tr>
-                                        <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">3</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                    </tr> --}}
+                                @else
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                                </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
-                    {{-- <div class="scope-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                <div class="w-100">
-                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+
                 </div>
             </section>
             {{-- <br><br>
