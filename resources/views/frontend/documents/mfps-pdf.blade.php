@@ -131,7 +131,7 @@
 
         body {
             margin-top: 250px;
-            margin-bottom: 160px;
+            margin-bottom: 180px;
             padding-top: 60px;
             padding-bottom: 50px; 
         }
@@ -142,7 +142,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 170px; /* Set a specific height for the footer */
+            /* height: 170px; Set a specific height for the footer */
         }
 
         .table-responsive {
@@ -297,11 +297,22 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.: 
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.: <span>{{ $document->specification_mfps_no }}</span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
+                        <span>
+                            @if ($data->training_required == 'yes')
+                                @if ($data->stage >= 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 7)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -310,6 +321,18 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                        <span>
+                            @php
+                                $temp = DB::table('document_types')
+                                    ->where('name', $document->document_type_name)
+                                    ->value('typecode');
+                            @endphp
+                            @if ($document->revised === 'Yes')
+                             {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
+                            @else
+                            -
+                            @endif
+                        </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -322,6 +345,25 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
+                        <span>
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS /A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                  MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                            @else                        
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                            @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -385,6 +427,7 @@
                 </tr>
             </tbody>
         </table>
+        <span>Format No.: QA/095/F1-00</span>
     </footer>
     
     <table>
@@ -398,49 +441,37 @@
     </table>
 
     <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
+    <thead>
+        <tr>
+            <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
+            <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
+            <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
+            <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
+            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(!empty($SpecificationGrid))
+            @foreach($SpecificationGrid as $index => $row)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $index + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $row['tests'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $row['release'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $row['shelf_life'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $row['reference'] ?? '' }}</td>
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
+                <td colspan="5" style="border: 1px solid black; text-align: center;">No data available</td>
             </tr>
-            <tr>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-        </tbody>
-    </table>
+        @endif
+    </tbody>
+</table>
+
     
 
     <table>
@@ -503,8 +534,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 805;
-                $x = 455;
+                $y = 760;
+                $x = 450;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

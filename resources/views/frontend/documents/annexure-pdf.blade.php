@@ -349,7 +349,7 @@
                             ->get();
                     @endphp
                     <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 20px; border: 1px solid #ddd;">  </td>
                              
                 </tr>

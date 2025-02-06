@@ -305,9 +305,9 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{MFP}}/{{STP}}/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                MFP/STP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                            {{MFP}}/{{STP}}/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                MFP/STP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else                        
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -340,13 +340,14 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
-                        <span>@php
-                            $temp = DB::table('document_types')
-                                ->where('name', $document->document_type_name)
-                                ->value('typecode');
+                        <span>
+                            @php
+                                $temp = DB::table('document_types')
+                                    ->where('name', $document->document_type_name)
+                                    ->value('typecode');
                             @endphp
                             @if ($document->revised === 'Yes')
-                            {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
+                             {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
                             -
                             @endif
