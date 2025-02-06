@@ -470,6 +470,7 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+            //mfps
             $document->specification_mfps_no = $request->specification_mfps_no;
             $document->stp_mfps_no = $request->stp_mfps_no;
             //mfstp
@@ -962,7 +963,42 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
-  
+
+
+        /////////
+        if ($document->revised == 'Yes') {
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                    ->max('minor');
+            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        // Filter documents by department_id and sop_type_short
+        $departmentId = $document->department_id;
+        $sopTypeShort = $document->sop_type_short;
+
+        if (!$departmentId) {
+            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        }
+
+        $documents = Document::where('department_id', $departmentId)
+            ->where('sop_type_short', $sopTypeShort)
+            ->orderBy('id')
+            ->get();
+
+        $counter = 0;
+        foreach ($documents as $doc) {
+            $counter++;
+            $doc->currentId = $counter;
+
+            if ($doc->id == $id) {
+                $currentId = $doc->currentId;
+            }
+        }
+
+       
 
         $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
         $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
@@ -1045,7 +1081,8 @@ class DocumentController extends Controller
             'Finished_Product',
             'Inprocess_standard',
             'CLEANING_VALIDATION',
-            'GtpGridData'
+            'GtpGridData',
+            'currentId'
         ));
     }
 
@@ -1104,6 +1141,11 @@ class DocumentController extends Controller
                 $document->balance_quantity = $request->balance_quantity;
                 $document->balance_quantity_destructed = $request->balance_quantity_destructed;
 
+                //mfps
+                $document->specification_mfps_no = $request->specification_mfps_no;
+                $document->stp_mfps_no = $request->stp_mfps_no;
+                
+                //mfpstp
                 $document->stp_mfpstp_no = $request->stp_mfpstp_no;
                 $document->specification_mfpstp_no = $request->specification_mfpstp_no;
 
@@ -1706,12 +1748,14 @@ class DocumentController extends Controller
 
             $specification_id = $document->id;
 
+            //Master Finished Product Specification grid
             $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
             $specifications->specification_id = $specification_id;
             $specifications->identifier = 'specifications';
             $specifications->data = json_encode($request->specifications);
             $specifications->save();
-
+            
+            //Master Finished Product Standard Testing Procedure grid
             $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
             $specifications->specification_id = $specification_id;
             $specifications->identifier = 'specifications_testing';
@@ -2388,6 +2432,10 @@ class DocumentController extends Controller
         $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data) 
             ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
 
+        $specifications = specifications::where('specification_id', $id)->where('identifier', "specifications")->first();
+        $SpecificationGrid = isset($specifications->data) && is_string($specifications->data) 
+            ? json_decode($specifications->data, true) :(is_array($specifications->data) ? $specifications->data:[]);
+
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
        
         $ProductSpecificationData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) ? json_decode($ProductSpecification->data,true) : (is_array($ProductSpecification->data) ? $ProductSpecification->data :[]); 
@@ -2444,7 +2492,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

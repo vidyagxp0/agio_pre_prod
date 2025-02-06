@@ -1505,23 +1505,26 @@
                                     <tr>
                                         <th class="w-30 text-left vertical-baseline">Document Number</th>
                                         <td class="w-70 text-left">
-                                            @php
-                                                $temp = DB::table('document_types')
-                                                    ->where('name', $data->document_type_name)
-                                                    ->value('typecode');
-                                            @endphp
-                                            @if ($data->revised === 'Yes')
 
-                                                {{ Helpers::getDivisionName($data->division_id) }}
-                                                /@if ($data->document_type_name)
-                                                    {{ $temp }} /
-                                                @endif{{ $data->year }}
-                                                /{{ $data->document_number }}-0{{ $data->major }}.{{ $data->minor }}
+                                            @if($document->revised == 'Yes')
+                                                {{-- @php
+                                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                                @endphp --}}
+
+                                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                    @else
+                                                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                    @endif
                                             @else
-                                                {{-- {{ $data->sop_type_short }}/{{ $data->department_id }}/0{{ $data->id }}-0{{ $data->major }}.{{ $data->minor }} --}}
-                                                {{ $data->sop_type_short }}/{{ $data->department_id }}/{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}-00
-
+                                                
+                                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                    @else
+                                                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                    @endif
                                             @endif
+
                                         </td>
                                     </tr>
                                     <tr>
