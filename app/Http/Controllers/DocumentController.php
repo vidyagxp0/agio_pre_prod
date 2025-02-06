@@ -1020,10 +1020,7 @@ class DocumentController extends Controller
 
         /////////
         if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                    ->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
             $revisionNumber = '00';
         }
@@ -2679,6 +2676,11 @@ class DocumentController extends Controller
             'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
             'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
             'REQULIFICATION'=>'frontend.documents.reports.requlification',
+            'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
+            'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
+            'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
+            'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
+            'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
             'QM' => 'frontend.documents.qm-pdf',

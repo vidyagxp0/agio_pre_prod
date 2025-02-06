@@ -1181,38 +1181,6 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="test">
-                                            Revision History
-                                        </label>
-                                        <div><small class="text-primary"></small></div>
-                                        <div class="table-responsive retrieve-table">
-                                        <table class="table-bordered table" id="">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr. No.</th>
-                                                    <th class="copy-name">Revision No.</th>
-                                                    <th class="copy-name">Change Control No./ DCRF No</th>
-                                                    <th class="copy-name">Effective Date</th>
-                                                    <th class="copy-name">Reason of revision</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <div class="input-fields">
                                     <div class="group-input">
                                         <label for="distribution-list" style="font-weight: bold;">
@@ -1312,6 +1280,36 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="test">
+                                            Revision History
+                                        </label>
+                                        <div><small class="text-primary"></small></div>
+                                        <div class="table-responsive retrieve-table">
+                                        <table class="table-bordered table" id="">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th class="copy-name">Revision No.</th>
+                                                    <th class="copy-name">Change Control No./ DCRF No</th>
+                                                    <th class="copy-name">Effective Date</th>
+                                                    <th class="copy-name">Reason of revision</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
+                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
 
                 {{-- <div class="col-md-12">
                 <div class="group-input">
@@ -1532,6 +1530,17 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
+
+                               <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">GTP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "GTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
 
                             <div class="group-input">
                                     <label for="action-plan-grid">
@@ -2158,12 +2167,12 @@
                                         <input type="text" name="product_material_name">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">TDS No.</label>
                                         <input type="text" name="tds_no">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
@@ -2399,37 +2408,6 @@
                                             });
                                         });
                                     </script>
-                                {{-- <script>
-                                    $(document).ready(function() {
-                                        $('#ObservationSample').click(function(e) {
-                                            function generateTableRow(serialNumber) {
-
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="sampleReconcilation[' + serialNumber +
-                                                    '][serial]" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
-                                                    '][test_name]"></td>' +
-                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
-                                                    '][quantity_test_stp]"></td>' +
-                                                    '<td><input type="text" name="sampleReconcilation[' + serialNumber +
-                                                    '][quantity_userd_test]"></td>' +
-
-                                                    '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
-                                                    serialNumber + '][used_by]"></td>' +
-                                                    '</tr>';
-
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#job-ObservationSample-table tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -2447,10 +2425,10 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Balance Quantity Destructed</label>
-                                        <select name="balance_quantity_destructed" required>
+                                        <select name="balance_quantity_destructed" >
                                             <option value="">Enter your Selection</option>
                                             <option value="Yes">Yes</option>
-                                            <option value="No" selected>No</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                 </div>

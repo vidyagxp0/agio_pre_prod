@@ -530,7 +530,7 @@
                                         value="
                                         @if ($document->revised === 'Yes')
                                             @php
-                                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                                             @endphp
 
                                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -562,15 +562,15 @@
                                 <div class="group-input">
                                     <label for="link-doc">Reference Record</label>
                                     {{-- <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
-                        @if (!empty($document_data))
-                        @foreach ($document_data as $temp)
-                        <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                            <!-- {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}} -->
-                            {{$temp->sop_type_short}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
-                        </option>
-                        @endforeach
-                        @endif
-                    </select> --}}
+                                    @if (!empty($document_data))
+                                    @foreach ($document_data as $temp)
+                                    <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
+                                        <!-- {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}} -->
+                                        {{$temp->sop_type_short}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
+                                    </option>
+                                    @endforeach
+                                    @endif
+                                </select> --}}
 
                                     <select multiple name="reference_record[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="reference_record"
@@ -2472,40 +2472,7 @@
                             @endif
 
 
-                            {{-- <div class="col-md-12">   --Aditya
-                                <div class="group-input">
-                                    <label for="annexure">
-                                        Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                    <table class="table-bordered table" id="annexure">
-                                        <thead>
-
-                                            <tr>
-                                                <th class="sr-num">Sr. No.</th>
-                                                <th class="annx-num">Annexure No.</th>
-                                                <th class="annx-title">Title of Annexure</th>
-                                            </tr>
-
-                                        </thead>
-                                        <tbody>
-                                            @if (!empty($annexure))
-                                                @foreach (unserialize($annexure->sno) as $key => $data)
-                                                    <tr>
-                                                        <td><input type="text" name="serial_number[]"
-                                                                value="{{ $data }}"></td>
-                                    <td><input type="text" name="annexure_number[]" value="{{ unserialize($annexure->annexure_no)[$key] }}">
-                                    </td>
-                                    <td><input type="text" name="annexure_data[]" value="{{ unserialize($annexure->annexure_title)[$key] }}">
-                                    </td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-                                    <div id="annexurediv"></div>
-                                    </tbody>
-                                    </table>
-                                    </div>
-                                    </div> --}}
+                            
                             <div class="col-md-12">
                                 <div class="group-input">
 
@@ -2583,47 +2550,10 @@
                                                 type="text" value="{{ $tempHistory->comment }}" disabled>
                                         @endif
                                     @endforeach
-
-
-
-
                                 </div>
                             </div>
 
-                            {{-- @if (Auth::user()->role != 3 && $document->stage < 8)
-                                <div class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                    {{ date('d-M-Y h:i:s') }}</p>
-
-                                    <input class="input-field" type="text" name="ann_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                    </div>
-                                    @endif --}}
-                            {{-- <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="test">
-                                        Revision History<button type="button" name="reporting2"
-                                            onclick="addDocRow('revision')">+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                    <table class="table-bordered table" id="revision">
-                                        <thead>
-                                            <tr>
-                                                <th class="sop-num">SOP Revision No.</th>
-                                                <th class="dcrf-num">Change Control No./ DCRF No.</th>
-                                                <th class="changes">Changes</th>
-                                                //<th class="deleteRow">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div> --}}
-
+                            
                             @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
                                     class="comment">
                                     <div>
@@ -2638,48 +2568,6 @@
                             @endif
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="group-input">
-                                <label for="test">
-                                    Revision History
-                                </label>
-                                <div><small class="text-primary"></small></div>
-                                <div class="table-responsive retrieve-table">
-                                <table class="table-bordered table" id="">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr. No.</th>
-                                            <th class="copy-name">Revision No.</th>
-                                            <th class="copy-name">Change Control No./ DCRF No</th>
-                                            <th class="copy-name">Effective Date</th>
-                                            <th class="copy-name">Reason of revision</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- <tr>
-                                            <td>1</td>
-                                            <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                            <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                            <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                            <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
-                                        </tr> --}}
-                                        @if($document->revised == 'Yes' && isset($document->revisions))
-    @foreach($document->revisions as $key => $revision)
-        <tr>
-            <td>{{ $key + 1 }}</td>
-            <td><input type="text" name="revision_number[]" value="{{ $revision->revision_number }}" class="form-control"></td>                                                    
-            <td><input type="text" name="cc_no[]" value="{{ $revision->cc_no }}" class="form-control"></td>                                                    
-            <td><input type="text" name="effective_date[]" value="{{ $revision->effective_date }}" class="form-control"></td>                 
-            <td><input type="text" name="reason[]" value="{{ $revision->reason }}" class="form-control"></td>                                                                                        
-        </tr>
-    @endforeach
-@endif
-
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="input-fields">
@@ -2824,6 +2712,48 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="col-md-12">
+                            <div class="group-input">
+                                <label for="test">
+                                    Revision History
+                                </label>
+                                <div><small class="text-primary"></small></div>
+                                <div class="table-responsive retrieve-table">
+                                <table class="table-bordered table" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th class="copy-name">Revision No.</th>
+                                            <th class="copy-name">Change Control No./ DCRF No</th>
+                                            <th class="copy-name">Effective Date</th>
+                                            <th class="copy-name">Reason of revision</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if($document->revised == 'Yes')
+                                            <tr>
+                                                <td>1</td>
+                                                <td><input type="text" name="revision_number[]" value="{{ $document->revised_doc }}" class="form-control"></td>                                                    
+                                                <td><input type="text" name="cc_no[]" value="{{ $document->cc_no }}" class="form-control"></td>                                                    
+                                                <td><input type="text" name="effective_date[]" value="{{ Helpers::getDateFormat($document->effective_date) }}" class="form-control"></td>                 
+                                                <td><input type="text" name="reason[]" value="{{ $document->reason }}" class="form-control"></td>                                                                                        
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>1</td>
+                                                <td><input type="text" name="revision_number[]" value="" class="form-control">NA</td>                                                    
+                                                <td><input type="text" name="cc_no[]" value="" class="form-control">NA</td>                                                    
+                                                <td><input type="text" name="effective_date[]" value="" class="form-control">NA</td>                 
+                                                <td><input type="text" name="reason[]" value="" class="form-control">NA</td>    
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -3121,12 +3051,24 @@
                                         <input type="text" name="product_material_name" value="{{$document->product_material_name}}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">TDS No.</label>
                                         <input type="number" name="tds_no" value="{{$document->tds_no}}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                    <label for="train-require">TDS No.</label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "TDS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="tds_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
@@ -3397,8 +3339,7 @@
                                                         value="Yes">Yes</option>
                                             <option {{ $document->balance_quantity_destructed == 'No' ? 'selected' : '' }}
                                                         value="No">No</option>
-                                            {{-- <option value="Yes">Yes</option>
-                                            <option value="No" selected>No</option> --}}
+                                   
                                         </select>
                                     </div>
                                 </div>
@@ -4593,7 +4534,19 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            <div class="group-input">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">GTP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "GTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add_gtp">+</button>
@@ -4609,7 +4562,7 @@
                                                 <tr>
                                                     <th style="width: 2%">Sr.No</th>
                                                     <th style="width: 12%">Test</th>
-                                                    <th style="width: 3%">Action</th>
+                                                    <th style="width: 2%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
