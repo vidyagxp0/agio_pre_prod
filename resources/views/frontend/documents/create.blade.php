@@ -1,5 +1,10 @@
 @extends('frontend.layout.main')
 @section('container')
+  <!-- Include Choices.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <!-- Include Choices.js -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 
     <style>
         #fr-logo {
@@ -110,6 +115,24 @@
             margin-left: auto; /* Push the print button to the right */
         }
     </style>
+    <style>
+        .choices__list--multiple .choices__item{
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 3.75px;
+            margin-bottom: 3.75px;
+            background-color: #00bcd4;
+            border: 1px solid #00a5bb;
+            color: #fff;
+            word-break: break-all;
+
+        }
+
+    </style>
 
 
     {{-- <script>
@@ -134,6 +157,20 @@
             });
         }
     </script> --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdowns = ["#reviewers-dropdown", "#approvers-dropdown", "#hods-dropdown"];
+
+            dropdowns.forEach(selector => {
+                new Choices(selector, {
+                    removeItemButton: true,
+                    searchEnabled: true,
+                    placeholderValue: "Select options",
+                    allowHTML: true,
+                });
+            });
+        });
+    </script>
 
     <script>
         function handleDocumentTypeChange(selectElement) {
@@ -204,7 +241,7 @@
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-istp')">Inprocess Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
-                
+
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
@@ -213,7 +250,7 @@
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
-                
+
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
@@ -640,61 +677,52 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="reviewers">Reviewers<span class="text-danger">*</span></label>
-                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
-                                            name="reviewers[]" placeholder="Select Reviewers" multiple required>
-                                            @if (!empty($reviewer))
-                                                @foreach ($reviewer as $lan)
-                                                    @if (Helpers::checkUserRolesreviewer($lan))
-                                                        <option value="{{ $lan->id }}">
-                                                            {{ $lan->name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </select>
 
-                                    </div>
-                                    <p id="reviewerError" style="color:red">** Reviewers are required</p>
+                               <div class="col-md-6">
+                                   <div class="group-input">
+                                       <label for="reviewers">Reviewers<span class="text-danger">*</span></label>
+                                       <select id="reviewers-dropdown" class="form-control" name="reviewers[]" multiple required style="display: none">
+                                           @if (!empty($reviewer))
+                                               @foreach ($reviewer as $lan)
+                                                   @if (Helpers::checkUserRolesreviewer($lan))
+                                                       <option value="{{ $lan->id }}">{{ $lan->name }}</option>
+                                                   @endif
+                                               @endforeach
+                                           @endif
+                                       </select>
+                                   </div>
+                                   <p id="reviewerError" style="color:red; display: none;">** Reviewers are required</p>
+                               </div>
 
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="approvers">Approvers<span class="text-danger">*</span></label>
-                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
-                                            name="approvers[]" placeholder="Select Approvers" multiple required>
-                                            @if (!empty($approvers))
-                                                @foreach ($approvers as $lan)
-                                                    @if (Helpers::checkUserRolesApprovers($lan))
-                                                        <option value="{{ $lan->id }}">
-                                                            {{ $lan->name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <p id="approverError" style="color:red">** Approvers are required</p>
+                               <div class="col-md-6">
+                                   <div class="group-input">
+                                       <label for="approvers">Approvers<span class="text-danger">*</span></label>
+                                       <select id="approvers-dropdown" class="form-control" name="approvers[]" multiple required style="display: none">
+                                           @if (!empty($approvers))
+                                               @foreach ($approvers as $lan)
+                                                   @if (Helpers::checkUserRolesApprovers($lan))
+                                                       <option value="{{ $lan->id }}">{{ $lan->name }}</option>
+                                                   @endif
+                                               @endforeach
+                                           @endif
+                                       </select>
+                                   </div>
+                                   <p id="approverError" style="color:red; display: none;">** Approvers are required</p>
+                               </div>
 
-                                </div>
+                               <div class="col-md-6">
+                                   <div class="group-input">
+                                       <label for="hods">HOD's<span class="text-danger">*</span></label>
+                                       <select id="hods-dropdown" class="form-control" name="hods[]" multiple required style="display: none">
+                                           @foreach ($hods as $hod)
+                                               <option value="{{ $hod->id }}">{{ $hod->name }}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                                   <p id="hodError" style="color:red; display: none;">** HODs are required</p>
+                               </div>
 
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="hods">HOD's<span class="text-danger">*</span></label>
-                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
-                                            name="hods[]" placeholder="Select HOD's" multiple required>
-                                            @foreach ($hods as $hod)
-                                                <option value="{{ $hod->id }}">
-                                                    {{ $hod->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    {{-- <p id="hodError" style="color:red">** HOD's are required</p> --}}
 
-                                </div>
 
                             </div>
                             <div class="row">
@@ -1201,10 +1229,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1373,7 +1401,7 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -1444,7 +1472,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -1490,7 +1518,7 @@
                                 let table = document.getElementById("specifications-testing").getElementsByTagName('tbody')[0];
                                 let rowCount = table.rows.length;
                                 let newRow = table.insertRow();
-                                
+
                                 newRow.innerHTML = `
                                     <td>${rowCount + 1}</td>
                                     <td><input type="text" name="specifications_testing[${rowCount}][tests]"></td>
@@ -1523,7 +1551,7 @@
                             window.addSpecificationsTesting = addSpecificationsTesting;
                         });
                     </script>
-                    
+
 
                 <!-- GTP -->
                 <div id="doc-gtp" class="tabcontent">
@@ -1558,7 +1586,7 @@
                                                     $serialNumber = 1;
                                                 @endphp
                                                 <td disabled>{{ $serialNumber++ }}</td>
-                                                
+
                                                 <td><input type="text" name="gtp[0][test_gtp]"></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
@@ -1592,7 +1620,7 @@
                                         '"></td>' +
                                         '<td><input type="text" name="gtp[' + investdetails +
                                         '][test_gtp]" value=""></td>' +
-                                       
+
 
                                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                         '</tr>';
@@ -1614,7 +1642,7 @@
                         $(this).closest('tr').remove();
                     })
                 </script>
-                               
+
 
                 <!------------------------ RMSTP tab ------------------------------------>
                 <div id="doc_rmstp" class="tabcontent">
@@ -1623,7 +1651,7 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
 
                             <div class="group-input">
                                     <label for="action-plan-grid">
@@ -1650,7 +1678,7 @@
                                                     $serialNumber = 1;
                                                 @endphp
                                                 <td disabled>{{ $serialNumber++ }}</td>
-                                                
+
                                                 <td><input type="text" name="test[0][testdata]"></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
@@ -1663,10 +1691,10 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">STP No.</label>
-                                    
+
                                     <input type="text" id="" name="stp_no">
                                 </div>
-                                   
+
                             </div>
 
                                 <div class="button-block">
@@ -1694,7 +1722,7 @@
                                         '"></td>' +
                                         '<td><input type="text" name="test[' + investdetails +
                                         '][testdata]" value=""></td>' +
-                                       
+
 
                                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                         '</tr>';
@@ -1726,11 +1754,11 @@
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
                 <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
-                        PACKING MATERIAL SPECIFICATION 
+                        PACKING MATERIAL SPECIFICATION
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
 
                             <div class="col-md-12">
                                     <div class="group-input">
@@ -1817,7 +1845,7 @@
                                                     $serialNumber = 1;
                                                 @endphp
                                                 <td disabled>{{ $serialNumber++ }}</td>
-                                                
+
                                                 <td><input type="text" name="packingtest[0][tests]"></td>
                                                 <td><input type="text" name="packingtest[0][specification]"></td>
                                                 <td><input type="text" name="packingtest[0][gtp_no]"></td>
@@ -1841,7 +1869,7 @@
                                                 '"></td>' +
                                                 '<td><input type="text" name="packingtest[' + investdetails +
                                                 '][tests]" value=""></td>' +
-                                            
+
                                                 '<td><input type="text" name="packingtest[' + investdetails +
                                                 '][specification]" value=""></td>' +
                                                 '<td><input type="text" name="packingtest[' + investdetails +
@@ -1883,7 +1911,7 @@
 
 
 
-         
+
 
 
 
@@ -1898,7 +1926,7 @@
                                     </div>
                                 <div class="input-fields">
                                     <div class="row">
-                                                    
+
 
                                 <div class="group-input">
                                     <label for="action-plan-grid">
@@ -1992,9 +2020,9 @@
                                     });
 
                                 </script>
-                        
-                         
-                    
+
+
+
 
                                 <script>
                                     $(document).ready(function () {
@@ -2056,7 +2084,7 @@
                                                     <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
                                                     <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
                                                     <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
-                                                
+
                                                     <th style="width: 3%">Action</th>
                                                 </tr>
                                             </thead>
@@ -2097,7 +2125,7 @@
                                                     <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
                                                     <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
                                                     <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
-                                            
+
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>`;
                                             }
@@ -2132,15 +2160,15 @@
 
 
 
-                      
 
 
 
 
 
 
- 
-                       
+
+
+
 
 
 
@@ -3096,7 +3124,7 @@
                                 </a>
                             </button>
                         </div>
-                    </div> 
+                    </div>
 
                     <div id="doc-cvstp" class="tabcontent">
                         <div class="orig-head">
@@ -3182,7 +3210,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
                         <div class="orig-head">
