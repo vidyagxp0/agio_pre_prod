@@ -519,7 +519,7 @@
                     <span>
                     @if($document->revised == 'Yes')
                         @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -635,7 +635,7 @@
                                     ->get();
                             @endphp
                             <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                             <td style="padding: 5px; border: 1px solid #ddd;">  </td>        
                         </tr>
                     </tbody>
@@ -1154,13 +1154,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="border: 1px solid black;"></td>
-                                    <td style="border: 1px solid black;"></td>
-                                    <td style="border: 1px solid black;"></td>
 
+                                @if($data->revised == 'Yes')
+                                    <tr>
+                                        <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                    
+                                        <td style="border: 1px solid black;">{{ Helpers::getdateFormat($data->effective_date) }}</td>                 
+                                        <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
+                                    </tr>
+                                @else
+                                <tr>
+                                    <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
                                 </tr>
-                               
+                                @endif
                             </tbody>
                         </table>
                     </div>

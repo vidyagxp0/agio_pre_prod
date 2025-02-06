@@ -997,10 +997,7 @@ class DocumentController extends Controller
 
         /////////
         if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                    ->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
             $revisionNumber = '00';
         }
@@ -1129,7 +1126,8 @@ class DocumentController extends Controller
             'GtpGridData',
             'currentId',
             'Specification_Validation_Data_CVS',
-            'SpecificationData_CVS'
+            'SpecificationData_CVS',
+            'revisionNumber'
         ));
     }
 

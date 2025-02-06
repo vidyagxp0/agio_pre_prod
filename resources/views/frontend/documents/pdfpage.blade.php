@@ -588,30 +588,10 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
 
                     <td style="width: 23%; padding: 5px; text-align: left">
-                    {{-- @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = $document->minor + 1;
-                                if ($revisionNumber > 9) {
-                                    $revisionNumber = 9;
-                                }
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                            @endphp
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        @else
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                            @endif
-                    @endif --}}
                     
                     @if($document->revised == 'Yes')
                         @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -619,10 +599,7 @@
                             @else
                                 {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
-                    @else
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00 --}}
-                        
+                    @else                        
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
                                 {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                             @else
@@ -1181,10 +1158,8 @@
                         .custom-content-wrapper {
                             height: auto;
                             overflow-x: auto;
-                            width: 500px;
-                            margin-left: 0.8rem;
-                            margin-right: 0.8rem;
-
+                            width: 700px;
+                            margin-left: 1rem;
                         }
 
                         .custom-table-wrapper table {
