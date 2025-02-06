@@ -775,6 +775,8 @@ class Helpers
             'TEMPMAPPING' => 'Temperature Mapping Protocol Cum Report',
             'PROVALIDRE' => 'Process Validation Report',
             'STUDY' => 'Study Report',
+            'PROCUMREPORT' => 'Protocol cum Report',
+            'REQULIFICATION' => 'ReQualification Report',
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
