@@ -774,8 +774,16 @@ class Helpers
             'REPORT' => 'Reports (All types)',
             'TEMPMAPPING' => 'Temperature Mapping Protocol Cum Report',
             'PROVALIDRE' => 'Process Validation Report',
+            'EQUIPMENTHOLDREPORT' => 'Equipment Hold Time Study Report',
+            'EQUIPMENTHOLDPROTOCOL' => 'Equipment Hold Time Study Protocol',
+            'STUDYPROTOCOL' => 'Study Protocol',
+            'ANNEQUALPROTO' => 'Annexure For Qualification Protocol',
+            'ANNEQUALREPORT' => 'Annexure For Qualification REPORT',
             'STUDY' => 'Study Report',
+            'AAEUSERREQUESPECI' => 'Annexure For User Requirement Specification',
             'PROCUMREPORT' => 'Protocol cum Report',
+            
+
             'REQULIFICATION' => 'ReQualification Report',
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
