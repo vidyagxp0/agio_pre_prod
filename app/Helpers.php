@@ -774,6 +774,7 @@ class Helpers
             'REPORT' => 'Reports (All types)',
             'TEMPMAPPING' => 'Temperature Mapping Protocol Cum Report',
             'PROVALIDRE' => 'Process Validation Report',
+            'PROVALIINTERRE'=>'Process Validation Interim Report',
             'STUDY' => 'Study Report',
             'PROCUMREPORT' => 'Protocol cum Report',
             'REQULIFICATION' => 'ReQualification Report',
@@ -782,6 +783,9 @@ class Helpers
             'REPORTFORMEDIAFILL'=>'Report For Media Fill',
             'PROTOCOLFORMEDIAFILL'=>'Protocol For Media Fill',
             'ANNACINQULIPROTOCOL'=>'Annexure For Acceptance Of Installation Qualification Protocol',
+            'ANNACOPERQULIPROTOCOL'=>'Annexure For Acceptance Of Operational Qualification Protocol',
+            'ANNACPERMQULIPROTOCOL'=>'Annexure For Acceptance Of Performance Qualification Protocol',
+            
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
