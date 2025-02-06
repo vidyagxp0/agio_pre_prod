@@ -2471,7 +2471,7 @@
                     {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
                     <div id="doc_FPS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                        <div class="orig-head">FINISHED PRODUCT  VALIDATION SPECIFICATION
                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
@@ -2699,7 +2699,7 @@
             <!-- Cleaning Validation Specification -->
 
                 <div id="doc_CVS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                        <div class="orig-head">CLEANING VALIDATION SPECIFICATION
                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
@@ -2929,7 +2929,7 @@
             <!-- Inprocess Validation Specification -->
 
                 <div id="doc_INPS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                        <div class="orig-head">INPROCESS VALIDATION SPECIFICATION
                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
