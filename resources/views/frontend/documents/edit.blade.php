@@ -137,7 +137,7 @@
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
-                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'add-fpicvs')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'doc_CVS')">Cleaning Validation Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
@@ -147,7 +147,7 @@
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
 
                 <!-- <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-instrumental')">RAWMS SOP</button> -->
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PACKING MATERIAL SPECIFICATION</button>
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
@@ -3369,11 +3369,22 @@
                       {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
                 <div id="doc_FPS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                        <div class="orig-head">FINISHED PRODUCT  VALIDATION SPECIFICATION
                              (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
+
+                            <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "FP/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
@@ -3636,11 +3647,22 @@
                 <!-- Cleaning Validation Specificatiom -->
 
                 <div id="doc_CVS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT / INPROCESS / CLEANING VALIDATION SPECIFICATION
+                        <div class="orig-head">CLEANING VALIDATION SPECIFICATION
                              (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "CV/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
@@ -3901,7 +3923,285 @@
                 </div>
 
 
+                <!-- Inprocess Validation Specification -->
 
+
+
+                
+                <div id="doc_INPS" class="tabcontent">
+                        <div class="orig-head"> INPROCESS VALIDATION SPECIFICATION
+                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "IP/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Generic Name</label>
+                                        <input type="text" name="generic_name_inps" value="{{ $document->generic_name_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="brand-name">Brand Name</label>
+                                        <input type="text" name="brand_name_inps" value="{{ $document->brand_name_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="label-claim">Label Claim</label>
+                                        <input type="text" name="label_claim_inps" value="{{ $document->label_claim_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="product-code">Product Code</label>
+                                        <input type="text" name="product_code_inps" value="{{ $document->product_code_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="storage-condition">Storage Condition</label>
+                                        <input type="text" name="storage_condition_inps" value="{{ $document->storage_condition_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
+                                        <select name="sample_quantity_inps">
+                                            <option value="" selected>Enter your Selection</option>
+                                            <option value="Chemical Analysis" {{ $document->sample_quantity_inps == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
+                                            <option value="Microbial Analysis" {{ $document->sample_quantity_inps == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reserve-sample">Reserve Sample Quantity</label>
+                                        <input type="text" name="reserve_sample_inps" value="{{ $document->reserve_sample_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="custom-sample">Custom Sample</label>
+                                        <input type="text" name="custom_sample_inps" value="{{ $document->custom_sample_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Reference</label>
+                                        <input type="text" name="reference_inps" value="{{ $document->reference_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
+                                        <input type="text" name="sampling_instructions_inps" value="{{ $document->sampling_instructions_inps }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">
+                                    SPECIFICATION
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Specification Details">
+                                            Specification Details
+                                            <button type="button" id="specification_add_inps">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                        <table class="table" id="specification_details_inps" style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 10%; text-align: center; border: 1px solid black;" rowspan="2">Sr. No</th>
+                                                    <th style="width: 20%; text-align: center; border: 1px solid black;" rowspan="2">Tests</th>
+                                                    <th style="width: 50%; text-align: center; border: 1px solid black;" colspan="2">Specifications</th>
+                                                    <th style="width: 20%; text-align: center; border: 1px solid black;" rowspan="2">Reference</th>
+                                                    <th style="width: 10%; text-align: center; border: 1px solid black;" rowspan="2">Action</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 25%; text-align: center; border: 1px solid black;">Release</th>
+                                                    <th style="width: 25%; text-align: center; border: 1px solid black;">Shelf Life</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (!empty($SpecificationData_invs) && is_array($SpecificationData_invs->data))
+                                                    @foreach ($SpecificationData_invs->data as $index => $spec)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="specification_details_inps[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                            <td><input type="text" name="specification_details_inps[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                            <td><input type="text" name="specification_details_inps[{{ $index }}][release]" value="{{ $spec['release'] }}"></td>
+                                                            <td><input type="text" name="specification_details_inps[{{ $index }}][shelf_life]" value="{{ $spec['shelf_life'] }}"></td>
+                                                            <td><input type="text" name="specification_details_inps[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="no-data">
+                                                        <td colspan="6" style="text-align: center;">No data found</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Add new row in Specification table
+                                        $('#specification_add_inps').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateSpecificationRow(serialNumber) {
+                                                return (
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="specification_details_inps[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="specification_details_inps[' + serialNumber + '][test]"></td>' +
+                                                    '<td><input type="text" name="specification_details_inps[' + serialNumber + '][release]"></td>' +
+                                                    '<td><input type="text" name="specification_details_inps[' + serialNumber + '][shelf_life]"></td>' +
+                                                    '<td><input type="text" name="specification_details_inps[' + serialNumber + '][reference]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>'
+                                                );
+                                            }
+
+                                            var tableBody = $('#specification_details_inps tbody');
+                                            var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                            // Remove "No data found" row if it exists
+                                            if (rowCount === 0) {
+                                                tableBody.find('.no-data').remove();
+                                                rowCount = 0; // Start count from 0 if no rows exist
+                                            }
+
+                                            var newRow = generateSpecificationRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+
+                                        // Remove row in Specification table
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+
+                                            // Check if table is empty after deletion, add "No data found" row if so
+                                            if ($('#specification_add_inps tbody tr').length === 0) {
+                                                $('#specification_add_inps tbody').append('<tr class="no-data"><td colspan="6">No data found</td></tr>');
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+                        <div class="col-12 sub-head">
+                            Validation Specification
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Specification Details">
+                                    Specification Details
+                                    <button type="button" id="specification_validation_add_inps">+</button>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="specification_validation_details_inps" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 100px;">Sr. No.</th>
+                                                <th>Test</th>
+                                                <th>Specification</th>
+                                                <th>Reference</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (!empty($Specification_Validation_Data_invs) && is_array($Specification_Validation_Data_invs->data))
+                                                @foreach ($Specification_Validation_Data_invs->data as $index => $spec)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="specification_validation_details_inps[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                        <td><input type="text" name="specification_validation_details_inps[{{ $index }}][test]" value="{{ $spec['test'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details_inps[{{ $index }}][specification]" value="{{ $spec['specification'] }}"></td>
+                                                        <td><input type="text" name="specification_validation_details_inps[{{ $index }}][reference]" value="{{ $spec['reference'] }}"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="no-data">
+                                                    <td colspan="5" style="text-align: center;">No data found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                // Add new row in Specification Validation table
+                                $('#specification_validation_add_inps').click(function(e) {
+                                    e.preventDefault();
+
+                                    function generateSpecificationRow(serialNumber) {
+                                        return (
+                                            '<tr>' +
+                                            '<td><input disabled type="text" name="specification_validation_details_inps[' + serialNumber +
+                                            '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                            '<td><input type="text" name="specification_validation_details_inps[' + serialNumber + '][test]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details_inps[' + serialNumber + '][specification]"></td>' +
+                                            '<td><input type="text" name="specification_validation_details_inps[' + serialNumber + '][reference]"></td>' +
+                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                            '</tr>'
+                                        );
+                                    }
+
+                                    var tableBody = $('#specification_validation_details_inps tbody');
+                                    var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                    // Remove "No data found" row if it exists
+                                    if (rowCount === 0) {
+                                        tableBody.find('.no-data').remove();
+                                        rowCount = 0; // Start count from 0 if no rows exist
+                                    }
+
+                                    var newRow = generateSpecificationRow(rowCount);
+                                    tableBody.append(newRow);
+                                });
+
+                                // Remove row in Specification Validation table
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+
+                                    // Check if table is empty after deletion, add "No data found" row if so
+                                    if ($('#specification_validation_details_inps tbody tr').length === 0) {
+                                        $('#specification_validation_details_inps tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
 
 
                     {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
@@ -3916,6 +4216,17 @@
                             <!-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
                             </div> -->
+
+                                 <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "FP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
@@ -4014,6 +4325,17 @@
                             <!-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
                             </div> -->
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "IP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
@@ -4114,6 +4436,17 @@
                             <!-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
                             </div> -->
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "CV/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
@@ -4326,7 +4659,16 @@
                 <div class="input-fields">
                     <div class="row">
                         
-
+                               <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "RM/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                         <div class="group-input">
                             <label for="action-plan-grid">
                                 Details
@@ -4404,14 +4746,14 @@
                         </script>
 
 
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <div class="group-input">
                                 <label for="short-desc">STP No.</label>
                                 
                                 <input type="text" id="" name="stp_no" value="{{$document->stp_no}}">
                             </div>
                                     
-                        </div>
+                        </div> -->
 
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -4446,7 +4788,16 @@
                     <div class="input-fields">
                         <div class="row">
                             
-
+                        <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "PM/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                             <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Name of packing material</label>

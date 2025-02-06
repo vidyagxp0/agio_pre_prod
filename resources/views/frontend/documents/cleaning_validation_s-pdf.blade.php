@@ -306,7 +306,7 @@
                         <span>
                         @if($document->revised == 'Yes')
                             @php
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -689,26 +689,19 @@
             </tr>
         </thead>
         <tbody>
+        @if($data->revised == 'Yes')
             <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
+                <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                                                                 
+                <td style="border: 1px solid black;">{{ $data->effective_date }}</td>                 
+                <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
             </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+        @else
+        <tr>
+            <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">
+                No Data Available
+            </td>
+        </tr>
+        @endif
         </tbody>
     </table>
 
