@@ -314,6 +314,71 @@
 
         });
 
+//=================Ashish
+
+        $('#genericNamebtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlegenericNameBlock"><div class="resrow row"><div class="col-10"><textarea name="genericName[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subgenericNameAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#genericNamediv').append(html);
+
+            });
+
+
+            $('#scope_pvrbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlescope_pvrBlock"><div class="resrow row"><div class="col-10"><textarea name="scope_pvr[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subscope_pvrAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#scope_pvrdiv').append(html);
+
+            });
+
+
+            $('#batchdetailpvrbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlebatchdetailpvrBlock"><div class="resrow row"><div class="col-10"><textarea name="batchdetailpvr[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subbatchdetailpvrAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#batchdetailpvrdiv').append(html);
+
+            });
+
+
+
+            $('#refrence_documentbtnadd').click(function(e) {
+
+                var html =
+                    '<div class="singlerefrence_documentBlock"><div class="resrow row"><div class="col-10"><textarea name="refrence_document[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subrefrence_documentAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+                $('#refrence_documentdiv').append(html);
+
+                });
+
+
+                
+            $('#active_raw_material_pvrbtnadd').click(function(e) {
+
+            var html =
+            '<div class="singleactive_raw_material_pvrBlock"><div class="resrow row"><div class="col-10"><textarea name="active_raw_material_pvr[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subactive_raw_material_pvrAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#active_raw_material_pvrdiv').append(html);
+
+            });
+
+
+                            
+            $('#primary_packingmaterial_pvrbtnadd').click(function(e) {
+
+            var html =
+            '<div class="singleprimary_packingmaterial_pvrBlock"><div class="resrow row"><div class="col-10"><textarea name="primary_packingmaterial_pvr[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#primary_packingmaterial_pvrdiv').append(html);
+
+            });
+
+
         $(document).on('click', '.abbreviationbtnRemove', function(e) {
             e.preventDefault();
             $(this).closest('div.row').remove();
@@ -338,6 +403,12 @@
         let subReferencesAdd = 0;
         let subAnnexureAdd = 0;
         let subReportingAdd = 0;
+        let subscope_pvrAdd=0;
+        let subgenericNameAdd=0;
+        let subbatchdetailpvrAdd=0;
+        let subrefrence_documentAdd=0;
+        let subactive_raw_material_pvrAdd=0;
+        let subprimary_packingmaterial_pvrAdd=0;
 
         $(document).on('click', '.removeAllBlocks', function(e) {
             e.preventDefault();
@@ -415,6 +486,125 @@
                 closestSingleBlock.after('<div class="subSingleResponsibilityBlock">' + html + '</div>');
             }
         });
+//--------------------------------
+      
+        $(document).on('click', '.subgenericNameAdd', function(e) {
+            e.preventDefault();
+            subgenericNameAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="accountability[sub_'+ subgenericNameAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlegenericNameBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlegenericNameBlock', '.subsinglegenericNameBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglegenericNameBlock">' + html + '</div>');
+            }
+
+        });
+
+
+        $(document).on('click', '.subscope_pvrAdd', function(e) {
+            e.preventDefault();
+            subscope_pvrAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="scope_pvr[sub_'+ subscope_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger scope_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlescope_pvrBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlescope_pvrBlock', '.subSinglescope_pvrBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSinglescope_pvrBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
+        $(document).on('click', '.subbatchdetailpvrAdd', function(e) {
+            e.preventDefault();
+            subbatchdetailpvrAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="scope_pvr[sub_'+ subbatchdetailpvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger scope_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlbatchdetailpvrBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlbatchdetailpvrBlock', '.subSinglbatchdetailpvrBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSinglbatchdetailpvrBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
+
+        $(document).on('click', '.subrefrence_documentAdd', function(e) {
+            e.preventDefault();
+            subrefrence_documentAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="refrence_document[sub_'+ subrefrence_documentAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger refrence_documentbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlerefrence_documentBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlerefrence_documentBlock', '.subSinglerefrence_documentBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSinglerefrence_documentBlock">' + html + '</div>');
+            }
+        });
+
+
+        
+        $(document).on('click', '.subactive_raw_material_pvrAdd', function(e) {
+            e.preventDefault();
+            subactive_raw_material_pvrAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="active_raw_material_pvr[sub_'+ subactive_raw_material_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger active_raw_material_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleactive_raw_material_pvrBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleactive_raw_material_pvrBlock', '.subSingleactive_raw_material_pvrBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleactive_raw_material_pvrBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
+        $(document).on('click', '.subprimary_packingmaterial_pvrAdd', function(e) {
+            e.preventDefault();
+            subprimary_packingmaterial_pvrAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="primary_packingmaterial_pvr[sub_'+ subprimary_packingmaterial_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger primary_packingmaterial_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleprimary_packingmaterial_pvrBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleprimary_packingmaterial_pvrBlock', '.subSingleprimary_packingmaterial_pvrBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleprimary_packingmaterial_pvrBlock">' + html + '</div>');
+            }
+        });
+        //----------------------
+
 
         $(document).on('click', '.subAbbreviationAdd', function(e) {
             e.preventDefault();

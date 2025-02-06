@@ -219,6 +219,10 @@
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
                 <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
                 <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
+                
+                <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
+             
+
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -1521,26 +1525,229 @@
                             window.addSpecificationsTesting = addSpecificationsTesting;
                         });
                     </script>
-                    
+                
+                
+
+      <!------------------------ Process validation Report - tab ------------------------------------>
+          
+
+
+                <div id="doc_pvr" class="tabcontent">
+                    <div class="orig-head">
+                    Process Validation Report
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+                            
+
+
+
+                         <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="genericName" id="genericName">
+                                        Generic Name <button type="button" id="genericNamebtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="genericNamediv">
+                                            <div class="singlegenericNameBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="genericName[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subgenericNameAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="scope_pvr" id="scope_pvr">
+                                        Scope<button type="button" id="scope_pvrbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="scope_pvrdiv">
+                                            <div class="singlescope_pvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="scope_pvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subscope_pvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                           
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="batchdetailpvr" id="batchdetailpvr">
+                                        Batch details<button type="button" id="batchdetailpvrbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="batchdetailpvrdiv">
+                                            <div class="singlebatchdetailpvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="batchdetailpvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subbatchdetailpvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                           
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="refrence_document" id="refrence_document">
+                                        Refrence Document<button type="button" id="refrence_documentbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="refrence_documentdiv">
+                                            <div class="singlerefrence_documentBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="refrence_document[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subrefrence_documentAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="active_raw_material_pvr" id="active_raw_material_pvr">
+                                        Active raw material approved vendor details<button type="button" id="active_raw_material_pvrbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="active_raw_material_pvrdiv">
+                                            <div class="singleactive_raw_material_pvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="active_raw_material_pvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subactive_raw_material_pvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="primary_packingmaterial_pvr" id="primary_packingmaterial_pvr">
+                                         packing material approved vendor details<button type="button" id="primary_packingmaterial_pvrbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="primary_packingmaterial_pvrdiv">
+                                            <div class="singleprimary_packingmaterial_pvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="primary_packingmaterial_pvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+         
+
+
+
 
                 <!-- GTP -->
+
+
+
                 <div id="doc-gtp" class="tabcontent">
                         <div class="orig-head">
                          GENERAL TESTING PROCEDURE
                         </div>
                     <div class="input-fields">
                         <div class="row">
-
-                               <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="stp">GTP No<span class="text-danger">*</span></label>
-                                        @php
-                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "GTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
-                                        @endphp
-                                        <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
-                                    </div>
-                                </div>
 
                             <div class="group-input">
                                     <label for="action-plan-grid">
@@ -1890,9 +2097,6 @@
                 </div>
 
 
-
-
-         
 
 
 
