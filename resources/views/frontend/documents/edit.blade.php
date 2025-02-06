@@ -3341,7 +3341,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Balance Quantity Destructed</label>
-                                        <select name="balance_quantity_destructed" required>
+                                        <select name="balance_quantity_destructed">
                                             <option value="">Enter your Selection</option>
                                             <option {{ $document->balance_quantity_destructed == 'Yes' ? 'selected' : '' }}
                                                         value="Yes">Yes</option>
