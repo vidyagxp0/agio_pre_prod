@@ -785,9 +785,15 @@ class Helpers
             
 
             'REQULIFICATION' => 'ReQualification Report',
+            'PROVALIPROTOCOL'=>'Process Validation protocol',
+            'REQULIFICATIONPROTOCOL'=>'Area Qualification Protocol',
+            'REPORTFORMEDIAFILL'=>'Report For Media Fill',
+            'PROTOCOLFORMEDIAFILL'=>'Protocol For Media Fill',
+            'ANNACINQULIPROTOCOL'=>'Annexure For Acceptance Of Installation Qualification Protocol',
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
+            
         ];
 
         return $document_types;

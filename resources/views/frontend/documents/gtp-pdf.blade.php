@@ -450,7 +450,7 @@
                             ->get();
                     @endphp
                     <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 20px; border: 1px solid #ddd;">  </td>        
                 </tr>
             </tbody>
@@ -501,31 +501,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if($document->revised == 'Yes')
+                        <tr>
+                            <td style="border: 1px solid black;">{{ $document->revised_doc }}</td>                                                    
+                            <td style="border: 1px solid black;">{{ Helpers::getdateFormat($document->effective_date) }}</td>                 
+                            <td style="border: 1px solid black;">{{ $document->reason }}</td>                                                                                        
+                        </tr>
+                    @else
                     <tr>
-                        <td>1</td>
-                        <td>
-                            @if ($data->training_required == 'yes')
-                                @if ($data->stage >= 10)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @endif
-                            @else
-                                @if ($data->stage > 7)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @endif
-                            @endif
-                        </td>
-                        <td></td>
+                        <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

@@ -297,7 +297,7 @@
                         <span>
                         @if($document->revised == 'Yes')
                             @php
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -501,31 +501,19 @@
                         </tr>
                     </thead>
                     <tbody style="">
+                    @if($data->revised == 'Yes')
+                            <tr>
+                                <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                                                                 
+                                <td style="border: 1px solid black;">{{ $data->effective_date }}</td>                 
+                                <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
+                            </tr>
+                        @else
                         <tr>
-                            <td style="font-size: 16px; font-weight: bold;">1</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
+                            <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">
+                                No Data Available
+                            </td>
                         </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">2</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">3</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">4</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">5</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

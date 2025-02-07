@@ -588,30 +588,10 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
 
                     <td style="width: 23%; padding: 5px; text-align: left">
-                    {{-- @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = $document->minor + 1;
-                                if ($revisionNumber > 9) {
-                                    $revisionNumber = 9;
-                                }
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                            @endphp
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        @else
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                            @endif
-                    @endif --}}
                     
                     @if($document->revised == 'Yes')
                         @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
@@ -619,10 +599,7 @@
                             @else
                                 {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
-                    @else
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00 --}}
-                        
+                    @else                        
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
                                 {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                             @else
@@ -1181,10 +1158,8 @@
                         .custom-content-wrapper {
                             height: auto;
                             overflow-x: auto;
-                            width: 500px;
-                            margin-left: 0.8rem;
-                            margin-right: 0.8rem;
-
+                            width: 700px;
+                            margin-left: 1rem;
                         }
 
                         .custom-table-wrapper table {
@@ -1406,45 +1381,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if($data->revised == 'Yes')
                                     <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">1</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        
-                                        </td>
+                                        <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>
+                                        <td style="border: 1px solid black;">-</td>                                                                                                        
+                                        <td style="border: 1px solid black;">{{ Helpers::getdateFormat($data->effective_date) }}</td>                 
+                                        <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
                                     </tr>
-                                    {{-- <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">2</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                         <td>
-                                         {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                       
-                                        </tr>
-                                        <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">3</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                    </tr> --}}
+                                @else
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                                </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
-                    {{-- <div class="scope-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                <div class="w-100">
-                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+
                 </div>
             </section>
             {{-- <br><br>
