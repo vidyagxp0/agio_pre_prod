@@ -5,7 +5,6 @@
     <!-- Include Choices.js -->
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
-
     <style>
         #fr-logo {
             display: none;
@@ -250,6 +249,8 @@
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">RMSTP SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="PROCUMREPORT" onclick="openData(event, 'doc_PCR')">Protocol Cum Report</button>
+
 
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
@@ -2723,6 +2724,665 @@
                             </button>
                         </div>
                     </div>
+
+
+                    {{-- protocal and crump tabs  --}}
+                    <div id="doc_PCR" class="tabcontent">
+                        <div class="orig-head">PROTOCOL CUM REPORT
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+ {{-- temperature mapping protcal tabs  --}}
+
+ <div id="doc-tempmapping" class="tabcontent">
+    <div class="orig-head">
+        Temperature Mapping Protocal
+    </div>
+    <div class="input-fields">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ProtocolApproval_TemperMap" id="ProtocolApproval_TemperMap">
+                        ProtocolApproval_TemperMap<button type="button" id="ProtocolApproval_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ProtocolApproval_TemperMapdiv">
+                        <div class="singleProtocolApproval_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ProtocolApproval_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subProtocolApproval_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Objective_TemperMap" id="Objective_TemperMap">
+                        Objective<button type="button" id="Objective_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Objective_TemperMapdiv">
+                        <div class="singleObjective_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Objective_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subObjective_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Scope_TemperMap" id="Scope_TemperMap">
+                        Scope<button type="button" id="Scope_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Scope_TemperMapdiv">
+                        <div class="singleScope_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Scope_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subScope_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="AreaValidated_TemperMap" id="AreaValidated_TemperMap">
+                        Area to be Validated<button type="button" id="AreaValidated_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="AreaValidated_TemperMapdiv">
+                        <div class="singleAreaValidated_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="AreaValidated_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subAreaValidated_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ValidationTeamResponsibilities_TemperMap" id="ValidationTeamResponsibilities_TemperMap">
+                        Validation team & its Responsibilities<button type="button" id="ValidationTeamResponsibilities_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ValidationTeamResponsibilities_TemperMapdiv">
+                        <div class="singleValidationTeamResponsibilities_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ValidationTeamResponsibilities_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subValidationTeamResponsibilities_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Reference_TemperMap" id="Reference_TemperMap">
+                        Reference<button type="button" id="Reference_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Reference_TemperMapdiv">
+                        <div class="singleReference_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Reference_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subReference_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="DocumentFollowed_TemperMap" id="DocumentFollowed_TemperMap">
+                        Document to be Followed<button type="button" id="DocumentFollowed_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="DocumentFollowed_TemperMapdiv">
+                        <div class="singleDocumentFollowed_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="DocumentFollowed_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subDocumentFollowed_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="StudyRationale_TemperMap" id="StudyRationale_TemperMap">
+                        Study Rationale<button type="button" id="StudyRationale_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="StudyRationale_TemperMapdiv">
+                        <div class="singleStudyRationale_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="StudyRationale_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subStudyRationale_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Procedure_TemperMap" id="Procedure_TemperMap">
+                        Procedure<button type="button" id="Procedure_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Procedure_TemperMapdiv">
+                        <div class="singleProcedure_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Procedure_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subProcedure_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="CriteriaRevalidation_TemperMap" id="CriteriaRevalidation_TemperMap">
+                        Criteria for Revalidation<button type="button" id="CriteriaRevalidation_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="CriteriaRevalidation_TemperMapdiv">
+                        <div class="singleCriteriaRevalidation_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="CriteriaRevalidation_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subCriteriaRevalidation_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="MaterialDocumentRequired_TemperMap" id="MaterialDocumentRequired_TemperMap">
+                        Material and Document Required<button type="button" id="MaterialDocumentRequired_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="MaterialDocumentRequired_TemperMapdiv">
+                        <div class="singleMaterialDocumentRequired_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="MaterialDocumentRequired_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subMaterialDocumentRequired_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="AcceptanceCriteria_TemperMap" id="AcceptanceCriteria_TemperMap">
+                        Acceptance Criteria<button type="button" id="AcceptanceCriteria_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="AcceptanceCriteria_TemperMapdiv">
+                        <div class="singleAcceptanceCriteria_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="AcceptanceCriteria_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subAcceptanceCriteria_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="TypeofValidation_TemperMap" id="TypeofValidation_TemperMap">
+                        Type of Validation<button type="button" id="TypeofValidation_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="TypeofValidation_TemperMapdiv">
+                        <div class="singleTypeofValidation_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="TypeofValidation_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subTypeofValidation_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ObservationResult_TemperMap" id="ObservationResult_TemperMap">
+                        Observation and Result<button type="button" id="ObservationResult_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ObservationResult_TemperMapdiv">
+                        <div class="singleObservationResult_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ObservationResult_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subObservationResult_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Abbreviations_TemperMap" id="Abbreviations_TemperMap">
+                        Abbreviations<button type="button" id="Abbreviations_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Abbreviations_TemperMapdiv">
+                        <div class="singleAbbreviations_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Abbreviations_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subAbbreviations_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="DeviationAny_TemperMap" id="DeviationAny_TemperMap">
+                        Deviation if Any<button type="button" id="DeviationAny_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="DeviationAny_TemperMapdiv">
+                        <div class="singleDeviationAny_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="DeviationAny_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subDeviationAny_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ChangeControl_TemperMap" id="ChangeControl_TemperMap">
+                        Change Control <button type="button" id="ChangeControl_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ChangeControl_TemperMapdiv">
+                        <div class="singleChangeControl_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ChangeControl_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subChangeControl_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Summary_TemperMap" id="Summary_TemperMap">
+                        Summary <button type="button" id="Summary_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Summary_TemperMapdiv">
+                        <div class="singleSummary_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Summary_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subSummary_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Conclusion_TemperMap" id="Conclusion_TemperMap">
+                        Conclusion <button type="button" id="Conclusion_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Conclusion_TemperMapdiv">
+                        <div class="singleConclusion_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Conclusion_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subConclusion_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="AttachmentList_TemperMap" id="AttachmentList_TemperMap">
+                        Attachment List <button type="button" id="AttachmentList_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="AttachmentList_TemperMapdiv">
+                        <div class="singleAttachmentList_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="AttachmentList_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subAttachmentList_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="PostApproval_TemperMap" id="PostApproval_TemperMap">
+                        Post Approval <button type="button" id="PostApproval_TemperMapbtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="PostApproval_TemperMapdiv">
+                        <div class="singlePostApproval_TemperMapBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="PostApproval_TemperMap[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subPostApproval_TemperMapAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="button-block">
+        <button type="submit" value="save" name="submit" id="DocsaveButton"
+            class="saveButton">Save</button>
+        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+            </a>
+        </button>
+    </div>
+</div>
 
     <!-- Cleaning Validation Specification -->
 

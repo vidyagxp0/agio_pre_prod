@@ -285,6 +285,7 @@
     $(document).ready(function() {
 
 
+
         $('#responsibilitybtnadd').click(function(e) {
 
             var html =
@@ -293,7 +294,205 @@
             $('#responsibilitydiv').append(html);
 
         });
-        
+
+        // temperautr maping code script
+        $('#ProtocolApproval_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleProtocolApproval_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="ProtocolApproval_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subProtocolApproval_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ProtocolApproval_TemperMapdiv').append(html);
+
+        });
+
+        $('#Objective_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleObjective_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Objective_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subObjective_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Objective_TemperMapdiv').append(html);
+
+        });
+
+        $('#Scope_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleScope_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Scope_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subScope_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Scope_TemperMapdiv').append(html);
+
+        });
+
+        $('#AreaValidated_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleAreaValidated_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="AreaValidated_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAreaValidated_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#AreaValidated_TemperMapdiv').append(html);
+
+        });
+
+        $('#ValidationTeamResponsibilities_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleValidationTeamResponsibilities_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="ValidationTeamResponsibilities_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subValidationTeamResponsibilities_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ValidationTeamResponsibilities_TemperMapdiv').append(html);
+
+        });
+
+
+        $('#Reference_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleReference_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Reference_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReference_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Reference_TemperMapdiv').append(html);
+
+        });
+
+        $('#DocumentFollowed_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleDocumentFollowed_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="DocumentFollowed_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDocumentFollowed_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#DocumentFollowed_TemperMapdiv').append(html);
+
+        });
+
+        $('#StudyRationale_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleStudyRationale_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="StudyRationale_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subStudyRationale_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#StudyRationale_TemperMapdiv').append(html);
+
+        });
+
+
+        $('#Procedure_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleProcedure_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Procedure_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subProcedure_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Procedure_TemperMapdiv').append(html);
+
+        });
+
+        $('#CriteriaRevalidation_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleCriteriaRevalidation_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="CriteriaRevalidation_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subCriteriaRevalidation_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#CriteriaRevalidation_TemperMapdiv').append(html);
+
+        });
+
+        $('#MaterialDocumentRequired_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleMaterialDocumentRequired_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="MaterialDocumentRequired_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subMaterialDocumentRequired_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#MaterialDocumentRequired_TemperMapdiv').append(html);
+
+        });
+
+        $('#AcceptanceCriteria_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleAcceptanceCriteria_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="AcceptanceCriteria_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAcceptanceCriteria_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#AcceptanceCriteria_TemperMapdiv').append(html);
+
+        });
+
+        $('#TypeofValidation_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleTypeofValidation_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="TypeofValidation_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subTypeofValidation_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#TypeofValidation_TemperMapdiv').append(html);
+
+        });
+
+        $('#ObservationResult_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleObservationResult_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="ObservationResult_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subObservationResult_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ObservationResult_TemperMapdiv').append(html);
+
+        });
+
+        $('#Abbreviations_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleAbbreviations_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Abbreviations_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAbbreviations_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Abbreviations_TemperMapdiv').append(html);
+
+        });
+
+
+        $('#DeviationAny_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleDeviationAny_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="DeviationAny_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDeviationAny_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#DeviationAny_TemperMapdiv').append(html);
+
+        });
+
+        $('#ChangeControl_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleChangeControl_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="ChangeControl_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subChangeControl_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ChangeControl_TemperMapdiv').append(html);
+
+        });
+
+        $('#Summary_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleSummary_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Summary_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subSummary_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Summary_TemperMapdiv').append(html);
+
+        });
+
+        $('#Conclusion_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleConclusion_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="Conclusion_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subConclusion_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Conclusion_TemperMapdiv').append(html);
+
+        });
+
+        $('#AttachmentList_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleAttachmentList_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="AttachmentList_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAttachmentList_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#AttachmentList_TemperMapdiv').append(html);
+
+        });
+
+        $('#PostApproval_TemperMapbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlePostApproval_TemperMapBlock"><div class="resrow row"><div class="col-10"><textarea name="PostApproval_TemperMap[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPostApproval_TemperMapAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#PostApproval_TemperMapdiv').append(html);
+
+        });
+
+
+
+
+
+
         $('#accountabilitybtnadd').click(function(e) {
 
             var html =
@@ -333,6 +532,27 @@
 
         let subMaterialsAdd = 0;
         let subResponsibilityAdd = 0;
+        let subProtocolApproval_TemperMapAdd = 0;
+        let subObjective_TemperMapAdd = 0;
+        let subScope_TemperMapAdd = 0;
+        let subAreaValidated_TemperMapAdd = 0;
+        let subValidationTeamResponsibilities_TemperMapAdd = 0;
+        let subDocumentFollowed_TemperMapAdd = 0;
+        let subStudyRationale_TemperMapAdd = 0;
+        let subProcedure_TemperMapAdd = 0;
+        let subCriteriaRevalidation_TemperMapAdd = 0;
+        let subMaterialDocumentRequired_TemperMapAdd = 0;
+        let subAcceptanceCriteria_TemperMapAdd = 0;
+        let subTypeofValidation_TemperMapAdd = 0;
+        let subReference_TemperMapAdd = 0;
+        let subObservationResult_TemperMapAdd = 0;
+        let subAbbreviations_TemperMapAdd = 0;
+        let subDeviationAny_TemperMapAdd = 0;
+        let subChangeControl_TemperMapAdd = 0;
+        let subSummary_TemperMapAdd = 0;
+        let subConclusion_TemperMapAdd = 0;
+        let subAttachmentList_TemperMapAdd = 0;
+        let subPostApproval_TemperMapAdd = 0;
         let subAbbreviationAdd = 0;
         let subDefinitionAdd = 0;
         let subReferencesAdd = 0;
@@ -415,6 +635,370 @@
                 closestSingleBlock.after('<div class="subSingleResponsibilityBlock">' + html + '</div>');
             }
         });
+
+        $(document).on('click', '.subProtocolApproval_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subProtocolApproval_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ProtocolApproval_TemperMap[sub_'+ subProtocolApproval_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleProtocolApproval_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleProtocolApproval_TemperMapBlock', '.subsingleProtocolApproval_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleProtocolApproval_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subObjective_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subObjective_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Objective_TemperMap[sub_'+ subObjective_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleObjective_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleObjective_TemperMapBlock', '.subsingleObjective_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleObjective_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subScope_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subScope_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Scope_TemperMap[sub_'+ subScope_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleScope_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_TemperMapBlock', '.subsingleScope_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleScope_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAreaValidated_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subAreaValidated_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="AreaValidated_TemperMap[sub_'+ subAreaValidated_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAreaValidated_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAreaValidated_TemperMapBlock', '.subsingleAreaValidated_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAreaValidated_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subValidationTeamResponsibilities_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subValidationTeamResponsibilities_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ValidationTeamResponsibilities_TemperMap[sub_'+ subValidationTeamResponsibilities_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleValidationTeamResponsibilities_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleValidationTeamResponsibilities_TemperMapBlock', '.subsingleValidationTeamResponsibilities_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleValidationTeamResponsibilities_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subReference_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subReference_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Reference_TemperMap[sub_'+ subReference_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReference_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReference_TemperMapBlock', '.subsingleReference_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReference_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subDocumentFollowed_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subDocumentFollowed_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DocumentFollowed_TemperMap[sub_'+ subDocumentFollowed_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDocumentFollowed_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDocumentFollowed_TemperMapBlock', '.subsingleDocumentFollowed_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDocumentFollowed_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subStudyRationale_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subStudyRationale_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="StudyRationale_TemperMap[sub_'+ subStudyRationale_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleStudyRationale_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleStudyRationale_TemperMapBlock', '.subsingleStudyRationale_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleStudyRationale_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subProcedure_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subProcedure_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Procedure_TemperMap[sub_'+ subProcedure_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleProcedure_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleProcedure_TemperMapBlock', '.subsingleProcedure_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleProcedure_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subCriteriaRevalidation_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subCriteriaRevalidation_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="CriteriaRevalidation_TemperMap[sub_'+ subCriteriaRevalidation_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCriteriaRevalidation_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCriteriaRevalidation_TemperMapBlock', '.subsingleCriteriaRevalidation_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCriteriaRevalidation_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subMaterialDocumentRequired_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subMaterialDocumentRequired_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="MaterialDocumentRequired_TemperMap[sub_'+ subMaterialDocumentRequired_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleMaterialDocumentRequired_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleMaterialDocumentRequired_TemperMapBlock', '.subsingleMaterialDocumentRequired_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleMaterialDocumentRequired_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAcceptanceCriteria_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subAcceptanceCriteria_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="AcceptanceCriteria_TemperMap[sub_'+ subAcceptanceCriteria_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAcceptanceCriteria_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAcceptanceCriteria_TemperMapBlock', '.subsingleAcceptanceCriteria_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAcceptanceCriteria_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subTypeofValidation_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subTypeofValidation_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="TypeofValidation_TemperMap[sub_'+ subTypeofValidation_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleTypeofValidation_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleTypeofValidation_TemperMapBlock', '.subsingleTypeofValidation_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleTypeofValidation_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subObservationResult_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subObservationResult_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ObservationResult_TemperMap[sub_'+ subObservationResult_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleObservationResult_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleObservationResult_TemperMapBlock', '.subsingleObservationResult_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleObservationResult_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAbbreviations_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subAbbreviations_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Abbreviations_TemperMap[sub_'+ subAbbreviations_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAbbreviations_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAbbreviations_TemperMapBlock', '.subsingleAbbreviations_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAbbreviations_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subDeviationAny_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subDeviationAny_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DeviationAny_TemperMap[sub_'+ subDeviationAny_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDeviationAny_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDeviationAny_TemperMapBlock', '.subsingleDeviationAny_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDeviationAny_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subChangeControl_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subChangeControl_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ChangeControl_TemperMap[sub_'+ subChangeControl_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleChangeControl_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleChangeControl_TemperMapBlock', '.subsingleChangeControl_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleChangeControl_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subSummary_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subSummary_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Summary_TemperMap[sub_'+ subSummary_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummary_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummary_TemperMapBlock', '.subsingleSummary_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleSummary_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subConclusion_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subConclusion_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Conclusion_TemperMap[sub_'+ subConclusion_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleConclusion_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleConclusion_TemperMapBlock', '.subsingleConclusion_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleConclusion_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAttachmentList_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subAttachmentList_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="AttachmentList_TemperMap[sub_'+ subAttachmentList_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAttachmentList_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAttachmentList_TemperMapBlock', '.subsingleAttachmentList_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAttachmentList_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subPostApproval_TemperMapAdd', function(e) {
+            e.preventDefault();
+            subPostApproval_TemperMapAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="PostApproval_TemperMap[sub_'+ subPostApproval_TemperMapAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePostApproval_TemperMapBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePostApproval_TemperMapBlock', '.subsinglePostApproval_TemperMapBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePostApproval_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+
+
 
         $(document).on('click', '.subAbbreviationAdd', function(e) {
             e.preventDefault();
