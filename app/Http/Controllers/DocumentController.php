@@ -2687,6 +2687,8 @@ class DocumentController extends Controller
             'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
             'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
             'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
+            'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+            'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
             'QM' => 'frontend.documents.qm-pdf',

@@ -782,6 +782,8 @@ class Helpers
             'STUDY' => 'Study Report',
             'AAEUSERREQUESPECI' => 'Annexure For User Requirement Specification',
             'PROCUMREPORT' => 'Protocol cum Report',
+            'CLEAVALIPROTODOC' => 'Cleaning  Validation Protocol.doc',
+            'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report.doc',
             
 
             'REQULIFICATION' => 'ReQualification Report',

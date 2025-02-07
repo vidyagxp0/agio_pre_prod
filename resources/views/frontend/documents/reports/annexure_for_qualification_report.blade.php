@@ -551,7 +551,9 @@
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., BHOSARI, PUNE - 411026</p>
                     </td>
+                    
                 </tr>
+           
             </tbody>
         </table>
 

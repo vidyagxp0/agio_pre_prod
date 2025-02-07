@@ -9,8 +9,12 @@
     <title>DMS Document</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    {{-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> --}}
+    {{--
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
+    {{--
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet"> --}}
 
     <style>
         * {
@@ -31,6 +35,29 @@
             text-justify: inter-word;
         }
 
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid black;
+            text-align: left;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+
         table {
             width: 100%;
             table-layout: fixed;
@@ -42,6 +69,13 @@
             text-align: center;
             padding: 8px;
         }
+
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+        }
+
 
         .w-5 {
             width: 5%;
@@ -329,7 +363,7 @@
 
         body {
             margin-top: 280px;
-            margin-bottom: 100px;
+            margin-bottom: 80px;
         }
 
         footer {
@@ -389,7 +423,9 @@
         .MsoNormalTable td {
             text-align: left !important;
         }
-        .MsoNormalTable td, .table td {
+
+        .MsoNormalTable td,
+        .table td {
             word-wrap: break-word;
             padding: 10px;
         }
@@ -469,218 +505,135 @@
         .main-section {
             text-align: left;
         }
-        
+
+        h4 {
+            font-weight: bold;
+            /* Make the text bold */
+        }
     </style>
 
     <style>
+        /*Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto;
+            /* Adjusts column width dynamically */
+        }
 
-            /*Main Table Styling */
-            #isPasted {
-                width: 650px !important;
-                border-collapse: collapse;
-                table-layout: auto; /* Adjusts column width dynamically */
-            }
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap;
+            /* Prevent wrapping */
+            width: 1%;
+            /* Shrink to fit content */
+            vertical-align: top;
+        }
 
-            /* First column adjusts to its content */
-            #isPasted td:first-child,
-            #isPasted th:first-child {
-                white-space: nowrap; /* Prevent wrapping */
-                width: 1%; /* Shrink to fit content */
-                vertical-align: top;
-            }
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            /* Take remaining space */
+            vertical-align: top;
 
-            /* Second column takes remaining space */
-            #isPasted td:last-child,
-            #isPasted th:last-child {
-                width: auto; /* Take remaining space */
-                vertical-align: top;
-                
-            }
+        }
 
-            /* Common Table Cell Styling */
-            #isPasted th,
-            #isPasted td {
-                border: 1px solid #000;
-                padding: 8px;
-                text-align: left;
-                max-width: 500px;
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            }
+        }
 
-            /* Paragraph Styling Inside Table Cells */
-            #isPasted td > p {
-                text-align: justify;
-                text-justify: inter-word;
-                margin: 0;
-                max-width: 500px;
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td>p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            }
+        }
 
-            #isPasted img {
-                max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-                height: 100%; /* Maintain image aspect ratio */
-                display: block; /* Remove extra space below the image */
-                margin: 5px auto; /* Add spacing and center align */
-            }
+        #isPasted img {
+            max-width: 500px !important;
+            /* Ensure image doesn't overflow the cell */
+            height: 100%;
+            /* Maintain image aspect ratio */
+            display: block;
+            /* Remove extra space below the image */
+            margin: 5px auto;
+            /* Add spacing and center align */
+        }
 
-            /* If you want larger images */
-            #isPasted td img {
-                max-width: 400px !important; /* Adjust this to your preferred maximum width */
-                height: 300px;
-                margin: 5px auto;
-            }
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important;
+            /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
     </style>
 
 </head>
 
 <body>
 
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-15" >
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
-                    </td>
-                    <td class="title w-60"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
-                        {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., BHOSARI, PUNE - 411026</p>
-                    </td>
 
-                   
-                </tr>
-              
-            </tbody>
+ <header class="">
+ <table class="table table-bordered" style="font-weight: bold;">
+    <tbody>
+
+        <tr style="">
+            <td rowspan="3" class="logo w-20">
+                <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                    style="max-height: 55px; max-width: 40px;">
+            </td>
+            <td style="font-weight: bold; text-align: center; border: none;" >AGIO PHARMACEUTICAL LTD. BHOSARI</td>
+        </tr>
+        <tr >
+            <td style="font-weight: bold; text-align: center; border: none;" >T-81,82, MIDC, BHOSARI, PUNE- 411026 </td>
+        </tr>
+        <tr >
+            <td style="font-weight: bold; text-align: center; border: none;" >USER REQUIREMENTS SPECIFICATION (URS) </td>
+        </tr>
+
+    </tbody>
+ </table>
+
+
+        <table class="border border-top-none border=1" style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tr style="border: 1px solid black;">
+           
+    <td rowspan="2" style="font-weight: bold;  width: 50%; text-align: left;">Name of Equipment:- </td>
+    <td  style="width: 20%;">URS Number</td>
+    <td  style="width: 5%;">:</td>
+    <td></td>
+    </tr>
+      <tr>
+        <td style="font-weight: bold;">Effective Date</td>
+        <td  style="width: 5%;">:</td>
+        <td></td>
+    </tr>
+    <tr>
+    <td  style="font-weight: bold;  width: 50%; text-align: left;">Name of Equipment:- </td>
+    <td  style="width: 20%;">URS Number</td>
+    <td  style="width: 5%;">:</td>
+    <td></td>  
+            </tr>
         </table>
-
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num">
-                    PROTOCOL
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        {{-- <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
-                <tr>
-                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Name of Area</td>
-                    <td style="width: 65%; padding: 5px; text-align: left">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-                </tr>
-            </tbody>
-        </table> --}}
-        <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
-                <tr>
-                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Name</td>
-                    <td style="width: 65%; padding: 5px; text-align: left">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-               
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
-
-                <tr style="height:10px">
-                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Number:</td>
-                    <td style="width: 30%; padding: 5px; text-align: left" class="doc-num">Supersedes No.:</td>
-                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
-
-                    <!-- <td style="width: 30%; padding: 5px; text-align: left">
-                     @if($document->revised == 'Yes')
-                        @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                        @endphp
-
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
-                        @else
-                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @endif
-                     @endif
-                    </td> -->
-                </tr>
-                <tr>
-                    <td style="width: 35%; padding: 5px; text-align: left">
-                     @if($document->revised == 'Yes')
-                        @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                        @endphp
-
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
-                        @else
-                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @endif
-                     @endif
-                    </td>
-
-                    <td style="width: 30%; padding: 5px; text-align: left">
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $document->document_type_name)
-                                ->value('typecode');
-                        @endphp
-                        @if ($document->revised === 'Yes')
-                        {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
-                        @else
-                        -
-                        @endif
-                    </td>
-
-                    <td style="width: 35%; padding: 5px; text-align: left">
-                        @if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @else
-                            @if ($data->stage > 7)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @endif
-                    </td>
-                    
-                </tr>
-            </tbody>
-        </table>
-    </header>
-
-    
-
-    <div class="text-center">
-  <h1>NAME OF EQUIPMENT AND DEPARTMENT</h1>
-  <h1>EQUIPMENT ID:</h1>
-</div>
-                 
+        
       
+</header>
+
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <!-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
@@ -755,20 +708,442 @@
                     </td>
                 </tr> 
             </tbody>
-
-
-
-           
-        </table> --}}
-
-       
-        <span>   Format No. QA/067/F7-00  </span>                                                                                            </span>
+        </table> -->
+        <span>Format No. QA/067/F3-00</span>
     </footer>
-    
-  
+
+    <div>
+        <style>
+            h1 {
+                font-size: 50px;
+                text-align: center;
+                /* Center align the text */
+                font-weight: bold;
+                /* Make the text bold */
+            }
+        </style>
+
+        <h2 style="font-size: 30px;">USER REQUIREMENTS SPECIFICATION FOR</h2>
+       
 
 
-    {{-- <script type="text/php">
+
+
+     
+
+
+
+
+        <section class="main-section" id="pdf-page">
+            <section style="page-break-after: never;">
+              
+
+
+              
+
+               
+              
+
+               
+
+               
+
+              
+                </div>
+
+                {{-- REFERENCES START --}}
+              
+               
+                {{-- REFERENCES END --}}
+
+
+             
+
+            
+               
+
+             
+               
+
+                {{-- MATERIALS AND EQUIPMENTS START --}}
+               
+               
+                {{-- MATERIALS AND EQUIPMENTS END --}}
+
+                {{-- PROCEDURE START --}}
+               
+                {{-- PROCEDURE END --}}
+
+                <style>
+                    .body {
+                        text-align: center;
+                        /* Center align the content inside the body */
+                    }
+
+                    .block-head {
+                        text-align: center;
+                        /* Center align the "REPORT APPROVAL" */
+                        font-weight: bold;
+                        /* Optional: To make the text bold */
+                        border: none;
+                        /* Remove the underline or black border */
+                    }
+
+                    .block {
+                        margin-bottom: 40px;
+                        border: none;
+                        /* Remove black border from the block */
+                    }
+
+                    .block-content {
+                        /* Optional: Add styling to block-content if needed */
+                    }
+
+
+
+
+
+
+                    .custom-procedure-block {
+                        width: 100%;
+                    }
+
+                    .custom-container {
+                        width: 100%;
+                        display: inline-block;
+                    }
+
+                    .custom-table-wrapper {
+                        margin-right: 40px;
+                    }
+
+                    .custom-procedure-content {
+                        width: 100%;
+                        overflow-x: auto;
+                    }
+
+                    .custom-content-wrapper {
+                        height: auto;
+                        overflow-x: auto;
+                        width: 500px;
+                        margin-left: 0.8rem;
+                        margin-right: 0.8rem;
+
+                    }
+
+                    .custom-table-wrapper table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        overflow: auto;
+                    }
+
+                    .custom-table-wrapper table td,
+                    .custom-table-wrapper table th {
+                        word-wrap: break-word;
+                        text-align: center;
+                        padding: 5px;
+                    }
+
+                    .custom-table-wrapper table img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                </style>
+                <br>
+               
+
+              
+
+
+
+
+              
+
+              
+
+
+
+
+
+                
+
+
+
+
+
+
+               
+
+            
+                </div>
+
+
+
+
+               
+
+                </div>
+
+   
+     
+     
+                {{-- REPORTING END --}}
+
+
+
+                {{-- ANNEXSURE START --}}
+                <!-- <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">11.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">ANNEXURE</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+
+                {{-- ANNEXSURE END --}}
+
+                @php
+                    $i = 1;
+                @endphp
+                {{-- @if ($data->document_content && !empty($data->document_content->annexuredata))
+                @foreach (unserialize($data->document_content->annexuredata) as $res)
+                @if (!empty($res))
+                <div class="annexure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; ">
+                                    {!! strip_tags($res, '<br>
+                                    <table>
+                                        <th>
+                                        <td>
+                                            <tbody>
+                                                <tr>
+                                                    <p><img><a><img><span>
+                                                                <h1>
+                                                                    <h2>
+                                                                        <h3>
+                                                                            <h4>
+                                                                                <h5>
+                                                                                    <h6>
+                                                                                        <div><b>
+                                                                                                <ol>
+                                                                                                    <li>') !!}
+                                                                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @endforeach
+                @endif --}}
+
+
+
+                <!-- <div class="input-fields">
+                    <div class="group-input">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-5">12.</th>
+                                    <th class="text-left">
+                                        <div class="bold">DISTRIBUTION LIST</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="table-responsive retrieve-table">
+                            <table class="table table-bordered" id="distribution-list">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 16px; font-weight: bold;">Row</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Copy</th>
+                                        <th style="font-size: 16px; font-weight: bold;">No. of Copies</th>
+                                        <th style="font-size: 16px; font-weight: bold;">User Department</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">1</td>
+                                        <td style="font-weight: bold;">Master Copy</td>
+                                        <td>{{ $data->master_copy_number}}</td>
+                                        <td>{{ $data->master_user_department}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">2</td>
+                                        <td style="font-weight: bold;">Controlled Copy</td>
+                                        <td>{{ $data->controlled_copy_number}}</td>
+                                         <td>
+                                            {{ $data->controlled_user_department}}
+                                        </td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">3</td>
+                                        <td style="font-weight: bold;">Display Copy</td>
+                                        <td>{{ $data->display_copy_number}}</td>
+                                        <td>
+                                            {{ $data->display_user_department}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">13.</th>
+                                <th class="text-left">
+                                    <div class="bold">REVISION HISTORY</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="table-responsive retrieve-table">
+                            <table class="table table-bordered" id="distribution-list">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 16px; font-weight: bold;">Rev. No.</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Change Control No.</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Effective Date</th>
+                                        <th style="font-size: 16px; font-weight: bold;">Details of revision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">1</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                                    {{-- <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">2</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                         <td>
+                                         {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        </td>
+                                       
+                                        </tr>
+                                        <tr>
+                                        <td style="font-size: 16px; font-weight: bold;">3</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td>{{ $data->effective_date}}</td>
+                                        <td>
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                        </td>
+                                    </tr> --}}
+                                </tbody>
+                            </table>
+                        </div>
+                    {{-- <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                </div> -->
+            </section>
+
+            {{-- <br><br>
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;" id=table1>
+                        <div class="w-100">
+                            <div class="anne">
+                                @if (!empty($annexures))
+                                <h3 style="text-align: left; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
+                                @foreach ($annexures as $index => $annexure)
+                                @if (!empty($annexure))
+                                <div style="margin-bottom: 1rem;">
+                                    <h4>Annexure {{ $index + 1 }}</h4>
+                                    <!-- Wrapping table with scrollable container -->
+                                    <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                                        <div style="max-width: 100%; overflow-x: auto;">
+                                            {!! strip_tags($annexure, '<br>
+                                            <table>
+                                                <th>
+                                                <td>
+                                                    <tbody>
+                                                        <tr>
+                                                            <p><img><a><span>
+                                                                        <h1>
+                                                                            <h2>
+                                                                                <h3>
+                                                                                    <h4>
+                                                                                        <h5>
+                                                                                            <h6>
+                                                                                                <div><b>
+                                                                                                        <ol>
+                                                                                                            <li>') !!}
+                                                                                                </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .anne {
+                        width: 500px;
+                        overflow-x: hidden;
+                    }
+
+                    #table1 {
+                        margin-right: 25px;
+                        /* padding:30px */
+                    }
+                </style> --}}
+
+
+                <section class="doc-control" style="page-break-after: never;">
+
+                    <div class="body">
+                        <div class="block mb-40">
+                          
+                            <div class="block-content">
+                                <!-- Content goes here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    </thead>
+
+            </div>
+    </div>
+
+    </div>
+
+    </div>
+    </div>
+    </section>
+
+    </section>
+    </div>
+
+
+    {{--
+    <script type="text/php">
         if ( isset($pdf) ) {
             $pdf->page_script('
                 if ($PAGE_COUNT > 1) {
