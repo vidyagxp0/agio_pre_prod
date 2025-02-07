@@ -383,20 +383,121 @@
                 </thead>
                 <tbody>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        @php
+                            $inreviews = DB::table('stage_manages')
+                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                ->select('stage_manages.*', 'users.name as user_name')
+                                ->where('document_id', $document->id)
+                                ->where('stage', 'Review-Submit')
+                                ->where('deleted_at', null)
+                                ->get();
+                        @endphp
+                        <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreviews->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreviews as $temp)
+                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif          
+                            @php
+                                $inreview = DB::table('stage_manages')
+                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                    ->select('stage_manages.*', 'users.name as user_name')
+                                    ->where('document_id', $document->id)
+                                    ->where('stage', 'Approval-Submit')
+                                    ->where('deleted_at', null)
+                                    ->get();
+
+                            @endphp
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif
+                        </td>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                           {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreviews->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreviews as $temp)
+                                  <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif 
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                  <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif 
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                   <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif 
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                   <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif 
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            @if ($inreview->isEmpty())
+                                <div>Yet Not Performed</div>
+                            @else
+                                @foreach ($inreview as $temp)
+                                   <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                @endforeach
+                            @endif 
+                        </td>
                     </tr> 
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Analytical R&D</td>
@@ -495,34 +596,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
+            @if($data->revised == 'Yes')
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $data->revised_doc }}</td>
+                    <td style="border: 1px solid black; text-align: center;">
+                        {{ \Carbon\Carbon::parse($data->effective_date)->format('d-m-Y') }}
+                    </td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $data->reason }}</td>
+                    <td style="border: 1px solid black; text-align: center;"></td>
+                    <td style="border: 1px solid black; text-align: center;"></td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="5" style="border: 1px solid black; text-align: center;">No Data Available</td>
+                </tr>
+            @endif
+
         </tbody>
     </table>
 

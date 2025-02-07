@@ -555,6 +555,18 @@ class DocumentController extends Controller
            $document->custom_sample_cvs = $request->custom_sample_cvs;
            $document->reference_cvs = $request->reference_cvs;
            $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
+ 
+           //Inprocess Validation specification
+           $document->generic_name_inps = $request->generic_name_inps;
+           $document->brand_name_inps = $request->brand_name_inps;
+           $document->label_claim_inps = $request->label_claim_inps;
+           $document->product_code_inps = $request->product_code_inps;
+           $document->storage_condition_inps = $request->storage_condition_inps;
+           $document->sample_quantity_inps = $request->sample_quantity_inps;
+           $document->reserve_sample_inps = $request->reserve_sample_inps;
+           $document->custom_sample_inps = $request->custom_sample_inps;
+           $document->reference_inps = $request->reference_inps;
+           $document->sampling_instructions_inps = $request->sampling_instructions_inps;
 
 
             // row  material store
@@ -890,9 +902,20 @@ class DocumentController extends Controller
             $Specification_Validation_Data_CVS->document_type_id = $document->id;
             $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
             $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
-            //dd($Specification_Validation_Data_CVS);
             $Specification_Validation_Data_CVS->save();
            
+            
+           $SpecificationData_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->firstOrNew();;
+           $SpecificationData_invs->document_type_id = $document->id;
+           $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
+           $SpecificationData_invs->data = $request->specification_details_inps;
+           $SpecificationData_invs->save();
+           
+           $Specification_Validation_Data_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->firstOrNew();;
+           $Specification_Validation_Data_invs->document_type_id = $document->id;
+           $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+           $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
+           $Specification_Validation_Data_invs->save();
 
 
 
@@ -997,10 +1020,7 @@ class DocumentController extends Controller
 
         /////////
         if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                    ->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
             $revisionNumber = '00';
         }
@@ -1070,6 +1090,12 @@ class DocumentController extends Controller
         $SpecificationData_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SpecificationCleaningValidationSpecification')->first();
         $Specification_Validation_Data_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
 
+        $SpecificationData_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'specificationInprocessValidationSpecification')->first();
+        $Specification_Validation_Data_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
+
+
+
+
 
 
 
@@ -1129,7 +1155,7 @@ class DocumentController extends Controller
             'GtpGridData',
             'currentId',
             'Specification_Validation_Data_CVS',
-            'SpecificationData_CVS'
+            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber'
         ));
     }
 
@@ -1209,7 +1235,8 @@ class DocumentController extends Controller
 
 
 
-                // Finished Product Specification
+            // Finished Product Specification
+               
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
                 $document->label_claim = $request->label_claim;
@@ -1234,6 +1261,19 @@ class DocumentController extends Controller
                 $document->custom_sample_cvs = $request->custom_sample_cvs;
                 $document->reference_cvs = $request->reference_cvs;
                 $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
+
+            //Inprocess Validation specification
+
+                $document->generic_name_inps = $request->generic_name_inps;
+                $document->brand_name_inps = $request->brand_name_inps;
+                $document->label_claim_inps = $request->label_claim_inps;
+                $document->product_code_inps = $request->product_code_inps;
+                $document->storage_condition_inps = $request->storage_condition_inps;
+                $document->sample_quantity_inps = $request->sample_quantity_inps;
+                $document->reserve_sample_inps = $request->reserve_sample_inps;
+                $document->custom_sample_inps = $request->custom_sample_inps;
+                $document->reference_inps = $request->reference_inps;
+                $document->sampling_instructions_inps = $request->sampling_instructions_inps;
 
 
 
@@ -2083,6 +2123,22 @@ class DocumentController extends Controller
             $Specification_Validation_Data_CVS->save();
            
 
+            $SpecificationData_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification']);
+            $SpecificationData_invs->document_type_id = $document->id;
+            $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
+            $SpecificationData_invs->data = $request->specification_details_inps;
+            $SpecificationData_invs->save();
+            
+            $Specification_Validation_Data_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification']);
+            $Specification_Validation_Data_invs->document_type_id = $document->id;
+            $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+            $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
+        //    dd($Specification_Validation_Data_invs);
+            $Specification_Validation_Data_invs->save();
+ 
+ 
+ 
+
 
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
@@ -2567,13 +2623,22 @@ class DocumentController extends Controller
         $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
         $finishedProductSpecificationData_CVS = isset($Finished_product_specification_cvs->data) && is_string($Finished_product_specification_cvs->data) ? json_decode($Finished_product_specification_cvs->data) : (is_array($Finished_product_specification_cvs->data) ? $Finished_product_specification_cvs->data : []);
     
-       
         $specificationValidation_cvs = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
         $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
        
-      //  dd($specificationValidation);
+     
+        //  dd($specificationValidation);
        
+
+       $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','specificationInprocessValidationSpecification')->first();
+        $data_inproces_specification = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
        
+      
+        $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
+        $specificationValidationData_inps = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
+       
+      
+        
         $documentContent = DocumentContent::where('document_id', $id)->first();
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
@@ -2630,7 +2695,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3612,9 +3677,51 @@ class DocumentController extends Controller
         $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
         //dd($Specification_Validation_Data_cvs);
         $Specification_Validation_Data_cvs->save();
-      
+
+
+
+        // Inprocess  Validation Specification
+        $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
+        $SpecificationData_inps = $SpecificationData_inps->replicate();
+
+        $SpecificationData_inps->document_type_id = $newdoc->id;
+        $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
+        $SpecificationData_inps->save();
+
+        $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
+
+        $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
+        $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
+        $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+        //dd($Specification_Validation_Data_inps);
+        $Specification_Validation_Data_inps->save();
+
+
+
+       //---------------------------------------------------------------------------------------------
 
     
+
+       $SpecificationData_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->firstOrNew();;
+       $SpecificationData_invs->document_type_id = $document->id;
+       $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
+       $SpecificationData_invs->data = $request->specification_details_inps;
+       $SpecificationData_invs->save();
+       
+       $Specification_Validation_Data_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->firstOrNew();;
+       $Specification_Validation_Data_invs->document_type_id = $document->id;
+       $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+       $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
+       $Specification_Validation_Data_invs->save();
+
+
+
+
+
+        //--------------------------------------------------------------------------------------------
+
+
+
     DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');
