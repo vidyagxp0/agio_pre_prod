@@ -550,10 +550,16 @@
     <style>
         .custom-style {
             font-weight: bold;
+            text-align: center !important;
+            padding-left: 10px;
+        }
+
+        .custom-design {
             text-align: left !important;
             padding-left: 10px;
         }
     </style>
+
 
 
 
@@ -585,6 +591,7 @@
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
                     </td>
+
                 </tr>
             </tbody>
         </table>
@@ -615,24 +622,13 @@
         </table>
 
 
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num" style="width: 50%; padding: 5px; text-align: left">
-                        Process Validation Interim Report
-                    </td>
-                    <td>
-                        _______________________________
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
 
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td class="doc-num">
-                        APL/PVP/XX/XXXX/XX
+                        HOLD TIME STUDY PROTOCOL FOR XX
                     </td>
                 </tr>
             </tbody>
@@ -640,14 +636,23 @@
 
     </header>
 
+
+    <div>
+        <h1 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">HOLD TIME STUDY PROTOCOL FOR</h1>
+    </div>
+
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Product Name</h3>
     </div>
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Report No.:</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Protocol No.: xx</h3>
     </div>
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No.</h3>
+    </div>
+
+    <div>
+        <p class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PROTOCOL APPROVAL</p>
     </div>
 
 
@@ -657,7 +662,7 @@
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
 
-        <span>Format No.: QA/025/F8-00</span>
+        <span>Format No.: QA/043/F1-00</span>
     </footer>
 
 
@@ -667,66 +672,115 @@
 
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS</h3>
+        <h3 class="" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS:</h3>
     </div>
 
-    <table border="1">
+
+    <table class="border" style="width: 100%;">
         <tbody>
             <tr>
-                <td class="custom-style">Generic Name</td>
-                <td style="width:10%">:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Product Code</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Std.Batch size</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Category</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Label Claim</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Market</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Shelf Life</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">BMR No.</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">MFR No.</td>
-                <td>:</td>
-                <td></td>
+                <td class="doc-num">
+                    TABLE OF CONTENTS
+                </td>
             </tr>
         </tbody>
     </table>
 
 
-    <div>
+    <table class="border" style="width: 100%;" border="1">
+        <thead>
+            <tr>
+                <th class="custom-style">Sr.No</th>
+                <th style="width: 70%;" class="custom-style">Content</th>
+                <th class="custom-style">Page No</th>
+            </tr>
+        </thead>
+        <tbody>
 
+            <tr>
+                <td class="custom-design">1.</td>
+                <td class="custom-design">Purpose</td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">2.</td>
+                <td class="custom-design">Scope</td>
+                <td class="custom-design"></td>
+            </tr>
+            <tr>
+                <td class="custom-design">3.</td>
+                <td class="custom-design">Responsibility</td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">4.</td>
+                <td class="custom-design">Experimental Details</td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">5.</td>
+                <td class="custom-design">Description of SOP</td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">6.</td>
+                <td class="custom-design">Specifications </td>
+                <td class="custom-design"></td>
+            </tr>
+
+
+            <tr>
+                <td class="custom-design">7.</td>
+                <td class="custom-design"> Sampling and Analysis Plan </td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">8.</td>
+                <td class="custom-design">Environmental conditions during hold time </td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">9.</td>
+                <td class="custom-design">Sampling Quantity calculation </td>
+                <td class="custom-design"></td>
+            </tr>
+
+            <tr>
+                <td class="custom-design">10.</td>
+                <td class="custom-design">Deviation </td>
+                <td class="custom-design"></td>
+            </tr>
+            <tr>
+                <td class="custom-design">11.</td>
+                <td class="custom-design">Summary </td>
+                <td class="custom-design"></td>
+            </tr>
+            <tr>
+                <td class="custom-design">12.</td>
+                <td class="custom-design">Conclusion </td>
+                <td class="custom-design"></td>
+            </tr>
+
+
+
+
+        </tbody>
+    </table>
+
+
+
+
+
+
+    <div class="container">
+        <p class="custom-style" style=" font-weight: bold; margin-bottom: 50px;">Content of Protcol not limited as per above table it may vary </p>
     </div>
-
-
-
 
 
 
@@ -734,9 +788,9 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-5">1.</th>
+                    <th class="w-5">1.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Critical process parameters & Critical quality attributes</div>
+                        <div style="font-weight: bold;">PURPOSE:</div>
                     </th>
                 </tr>
             </thead>
@@ -759,9 +813,9 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-5">2.</th>
+                    <th class="w-5">2.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Results of In process data</div>
+                        <div style="font-weight: bold;">SCOPE:</div>
                     </th>
                 </tr>
             </thead>
@@ -783,9 +837,105 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-5">3.</th>
+                    <th class="w-5">3.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">% Yield at various stages</div>
+                        <div style="font-weight: bold;">
+                            3.0 RESPONSIBILITY:
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">4.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;"> CALIBRATION AND QUALIFICATION STATUS</div>
+                    </th>
+                </tr>
+            </thead>
+
+        </table>
+
+
+
+        <table class="border" border="1">
+            <thead>
+                <tr>
+                    <th class="custom-style">Equipment Name</th>
+                    <th class="custom-style">Location</th>
+                    <th class="custom-style">Equipment No.</th>
+                    <th class="custom-style">Calibration Status</th>
+                    <th class="custom-style">Qualification Status</th>
+                    <th class="custom-style">Valid Upto</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">5.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">DESCRIPTION OF SOP s TO BE FOLLOWED </div>
                     </th>
                 </tr>
             </thead>
@@ -807,82 +957,9 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-5">4.</th>
+                    <th class="w-5">6.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Deviation (If any)</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">5.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Change Control ( If any)</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">6.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Summary</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">7.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Conclusion </div>
+                        <div style="font-weight: bold;">SPECIFICATIONS:</div>
                     </th>
                 </tr>
             </thead>
@@ -911,9 +988,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="w-5">8.</th>
+                        <th class="w-5">6.1</th>
                         <th class="text-left">
-                            <div style="font-weight: bold;">Report Approval</div>
+                            <div style="font-weight: bold;"> Bulk Stage :</div>
                         </th>
                     </tr>
                 </thead>
@@ -933,61 +1010,166 @@
 
 
 
-        <div>
-            <div><span class="bold">Note:</span>Content of report not limited as per above table it may vary.</div>
-        </div>
 
 
 
         <div>
-            <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">REPORT APPROVAL</h3>
-        </div>
 
-        <table class="table" border="1">
-            <thead>
-                <th style="font-weight: bold;">RESPONSIBILITY</th>
-                <th style="font-weight: bold;">DEPARTMENT</th>
-                <th style="font-weight: bold;">DESIGNATION</th>
-                <th style="font-weight: bold;">NAME</th>
-                <th style="font-weight: bold;">SIGN & DATE</th>
-            </thead>
 
-            <tbody style="height: 100PX;">
-                <th style="font-weight: bold;">PREPARED BY</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tbody>
-        </table>
-
-        <table class="table table-bordered" style="width: 100%;" border="1">
-            <tbody>
-                <tr>
-                    <td  style="font-weight: bold;">CHECKED BY</td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                </tr>
-
-                <tr>
-                    <td style="font-weight: bold;">APPROVED BY</td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                </tr>
-
-            </tbody>
-        </table>
+            <div class="other-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-5">7.0</th>
+                            <th class="text-left">
+                                <div style="font-weight: bold;"> SAMPLING & ANALYSIS PLAN: </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="scope-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                            <div class="w-100">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
 
 
-        <script type="text/php">
-            if ( isset($pdf) ) {
+
+            <div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">8.0</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;">ENVIRONMENTALCONDITIONS DURING HOLD TIME: </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">9.0</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;">SAMPLE QUANTITY CALCULATION:  </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">10.0</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;">DEVIATION:</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">11.0</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;"> SUMMARY: </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">12.0</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;">CONCLUSION :  </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/php">
+                    if ( isset($pdf) ) {
             $pdf->page_script('
                 if ($PAGE_COUNT > 1) {
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");

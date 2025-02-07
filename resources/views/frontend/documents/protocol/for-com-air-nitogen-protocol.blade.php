@@ -329,7 +329,7 @@
 
         body {
             margin-top: 280px;
-            margin-bottom: 70px;
+            margin-bottom: 100px;
         }
 
         footer {
@@ -543,35 +543,18 @@
     </style>
 
     <style>
-        .other-container th {
-            font-weight: bold;
-        }
-    </style>
-    <style>
         .custom-style {
             font-weight: bold;
-            text-align: left !important;
+            text-align: center !important;
             padding-left: 10px;
         }
     </style>
-
-
 
 </head>
 
 <body>
 
     <header class="">
-
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num">
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
         <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
@@ -581,425 +564,575 @@
                     </td>
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight:bold">AGIO PHARMACEUTICALS LTD.BHOSARI</p>
+                        <p style="margin: 0; text-align: center; font-weight:bold">{{ config('site.pdf_title') }}</p>
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
-                        <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
+                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., BHOSARI, PUNE - 411026</p>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        {{-- <table class="border border-top-none" style="width: 100%;">
+
+
+        {{-- <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
                 <tr>
-                    <td class="doc-num">
-                         Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) 
-                        STANDARD OPERATING PROCEDURE
-                    </td>
-                </tr>
-            </tbody>
+                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Name of Area</td>
+                    <td style="width: 65%; padding: 5px; text-align: left">
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
+        </tr>
+        </tbody>
         </table> --}}
-
-        <table class="border border-top-none">
+        <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
                 <tr>
-                    <td style="width: 20%; padding: 5px;" class="doc-num">Dosage Form</td>
-                    <td style="width: 35%; padding: 5px;">
-                        : ________________
-                        {{-- {{ Helpers::getFullDepartmentName($data->department_id) }}--}}
+                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Name</td>
+                    <td style="width: 65%; padding: 5px; text-align: left">
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}
                     </td>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left"></td>
+
                 </tr>
             </tbody>
         </table>
-
-
-        <table class="border border-top-none" style="width: 100%;">
+        <table class="border border-top-none" border="1"
+            style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
+
+                <tr style="height:10px">
+                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Number:</td>
+                    <td style="width: 30%; padding: 5px; text-align: left" class="doc-num">Supersedes Number:.:</td>
+                    <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
+
+                    <!-- <td style="width: 30%; padding: 5px; text-align: left">
+                     @if($document->revised == 'Yes')
+                        @php
+                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                        @endphp
+
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
+                        @else
+                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                        @else
+                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                        @endif
+                     @endif
+                    </td> -->
+                </tr>
                 <tr>
-                    <td class="doc-num" style="width: 50%; padding: 5px; text-align: left">
-                        Process Validation Interim Report
+                    <td style="width: 35%; padding: 5px; text-align: left">
+                        @if($document->revised == 'Yes')
+                        @php
+                        $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                        @endphp
+
+                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @else
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @endif
+                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
+                        @else
+                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                        @else
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                        @endif
+                        @endif
                     </td>
-                    <td>
-                        _______________________________
+
+                    <td style="width: 30%; padding: 5px; text-align: left">
+                        @php
+                        $temp = DB::table('document_types')
+                        ->where('name', $document->document_type_name)
+                        ->value('typecode');
+                        @endphp
+                        @if ($document->revised === 'Yes')
+                        {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
+                        @else
+                        -
+                        @endif
                     </td>
+
+                    <td style="width: 35%; padding: 5px; text-align: left">
+                        @if ($data->training_required == 'yes')
+                        @if ($data->stage >= 10)
+                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                        @endif
+                        @else
+                        @if ($data->stage > 7)
+                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                        @endif
+                        @endif
+                    </td>
+
                 </tr>
             </tbody>
         </table>
-
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num">
-                        APL/PVP/XX/XXXX/XX
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
     </header>
 
-    <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Product Name</h3>
-    </div>
-    <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Report No.:</h3>
-    </div>
-    <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
+    <div class="container">
+        <p class="custom-style" style=" font-weight: bold; margin-bottom: 50px;">REVALIDATION NAME OF COMPRESSED AIR / NITROGEN GAS SYSTEM
+        </p>
     </div>
 
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">1.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Protocol approval </div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">2.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Objective:</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">3.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">PURPOSE:</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">4.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">SCOPE</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">5.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Execution Team Responsibilities</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">6.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Abbreviations</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">7.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Equipment / System Identification </div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">8.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Documents To Be Followed </div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">9.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">General consideration/Prerequisites</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">10.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Revalidation criteria</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">11.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Precautions</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">12.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Revalidation process</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">13.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Acceptance criteria</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-5">14.0</th>
+                    <th class="text-left">
+                        <div style="font-weight: bold;">Annexure:</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="scope-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                    <div class="w-100">
+                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div><span class="bold">Note:</span>Formate shall be modified as per requirement.</div>
+    </div>
 
 
 
 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
+        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    @php
+                        $inreviews = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Review-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">
+            @if ($inreviews->isEmpty())
+            <div>Yet Not Performed</div>
+            @else
+            @foreach ($inreviews as $temp)
+            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+            @endforeach
+            @endif
+            @php
+            $inreview = DB::table('stage_manages')
+            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+            ->select('stage_manages.*', 'users.name as user_name')
+            ->where('document_id', $document->id)
+            ->where('stage', 'Approval-Submit')
+            ->where('deleted_at', null)
+            ->get();
 
-        <span>Format No.: QA/025/F8-00</span>
+            @endphp
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+            @if ($inreview->isEmpty())
+            <div>Yet Not Performed</div>
+            @else
+            @foreach ($inreview as $temp)
+            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+            @endforeach
+            @endif
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @if ($inreviews->isEmpty())
+                    <div>Yet Not Performed</div>
+                    @else
+                    @foreach ($inreviews as $temp)
+                    <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                    @endforeach
+                    @endif
+                </td>
+
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @if ($inreview->isEmpty())
+                    <div>Yet Not Performed</div>
+                    @else
+                    @foreach ($inreview as $temp)
+                    <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                    @endforeach
+                    @endif
+                </td>
+            </tr>
+            </tbody>
+
+
+
+
+            </table> --}}
+
+
+            <span>Format No.: QA/079/F1-00</span>
     </footer>
 
 
 
 
-
-
-
-    <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS</h3>
-    </div>
-
-    <table border="1">
-        <tbody>
-            <tr>
-                <td class="custom-style">Generic Name</td>
-                <td style="width:10%">:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Product Code</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Std.Batch size</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Category</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Label Claim</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Market</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">Shelf Life</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">BMR No.</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="custom-style">MFR No.</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-
-
-    <div>
-
-    </div>
-
-
-
-
-
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">1.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Critical process parameters & Critical quality attributes</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">2.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Results of In process data</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100" style="font-weight: bold;">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">3.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">% Yield at various stages</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">4.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Deviation (If any)</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">5.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Change Control ( If any)</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">6.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Summary</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="other-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-5">7.</th>
-                    <th class="text-left">
-                        <div style="font-weight: bold;">Conclusion </div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="scope-block">
-            <div class="w-100">
-                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                    <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-    <div>
-
-        <div class="other-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="w-5">8.</th>
-                        <th class="text-left">
-                            <div style="font-weight: bold;">Report Approval</div>
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-            <div class="scope-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                        <div class="w-100">
-                            <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div>
-            <div><span class="bold">Note:</span>Content of report not limited as per above table it may vary.</div>
-        </div>
-
-
-
-        <div>
-            <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">REPORT APPROVAL</h3>
-        </div>
-
-        <table class="table" border="1">
-            <thead>
-                <th style="font-weight: bold;">RESPONSIBILITY</th>
-                <th style="font-weight: bold;">DEPARTMENT</th>
-                <th style="font-weight: bold;">DESIGNATION</th>
-                <th style="font-weight: bold;">NAME</th>
-                <th style="font-weight: bold;">SIGN & DATE</th>
-            </thead>
-
-            <tbody style="height: 100PX;">
-                <th style="font-weight: bold;">PREPARED BY</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tbody>
-        </table>
-
-        <table class="table table-bordered" style="width: 100%;" border="1">
-            <tbody>
-                <tr>
-                    <td  style="font-weight: bold;">CHECKED BY</td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                </tr>
-
-                <tr>
-                    <td style="font-weight: bold;">APPROVED BY</td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                </tr>
-
-            </tbody>
-        </table>
-
-
-
-
-
-        <script type="text/php">
-            if ( isset($pdf) ) {
+    {{-- <script type="text/php">
+        if ( isset($pdf) ) {
             $pdf->page_script('
                 if ($PAGE_COUNT > 1) {
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 102;
+                    $y = 115;
                     $x = 490;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
             ');
         }
-    </script>
+    </script> --}}
 </body>
 
 </html>

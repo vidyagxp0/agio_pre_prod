@@ -547,6 +547,7 @@
             font-weight: bold;
         }
     </style>
+
     <style>
         .custom-style {
             font-weight: bold;
@@ -582,6 +583,7 @@
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
                         <p style="margin: 0; text-align: center; font-weight:bold">AGIO PHARMACEUTICALS LTD.BHOSARI</p>
+
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
                     </td>
@@ -619,7 +621,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num" style="width: 50%; padding: 5px; text-align: left">
-                        Process Validation Interim Report
+                       Packing Validation Protocol for
                     </td>
                     <td>
                         _______________________________
@@ -632,7 +634,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num">
-                        APL/PVP/XX/XXXX/XX
+                        APL/PKP/XX/XXXX/XX
                     </td>
                 </tr>
             </tbody>
@@ -641,23 +643,71 @@
     </header>
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Product Name</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT NAME</h3>
     </div>
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Report No.:</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Protocol No.:</h3>
     </div>
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
     </div>
+    <div>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PROTOCOL APPROVAL</h3>
+    </div>
+
+    <table border="1">
+        <thead>
+            <th>RESPONSIBILITY</th>
+            <th>DEPARTMENT</th>
+            <th>DESIGNATION</th>
+            <th>NAME</th>
+            <th>SIGN & DATE</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PREPARED BY</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan="3">CHECKED BY</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>APROVED BY</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
 
-
+        </tbody>
+    </table>
 
 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
 
-        <span>Format No.: QA/025/F8-00</span>
+        <span>Format No.: QA/025/F3-01</span>
     </footer>
 
 
@@ -667,7 +717,7 @@
 
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PROTOCOL DETAILS</h3>
     </div>
 
     <table border="1">
@@ -736,7 +786,7 @@
                 <tr>
                     <th class="w-5">1.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Critical process parameters & Critical quality attributes</div>
+                        <div style="font-weight: bold;">Purpose</div>
                     </th>
                 </tr>
             </thead>
@@ -761,7 +811,7 @@
                 <tr>
                     <th class="w-5">2.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Results of In process data</div>
+                        <div style="font-weight: bold;">Scope</div>
                     </th>
                 </tr>
             </thead>
@@ -785,7 +835,7 @@
                 <tr>
                     <th class="w-5">3.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">% Yield at various stages</div>
+                        <div style="font-weight: bold;">Reason for validation</div>
                     </th>
                 </tr>
             </thead>
@@ -809,7 +859,7 @@
                 <tr>
                     <th class="w-5">4.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Deviation (If any)</div>
+                        <div style="font-weight: bold;">Responsibility</div>
                     </th>
                 </tr>
             </thead>
@@ -834,7 +884,7 @@
                 <tr>
                     <th class="w-5">5.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Change Control ( If any)</div>
+                        <div style="font-weight: bold;">Validation Policy</div>
                     </th>
                 </tr>
             </thead>
@@ -858,7 +908,7 @@
                 <tr>
                     <th class="w-5">6.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Summary</div>
+                        <div style="font-weight: bold;">Description of SOP</div>
                     </th>
                 </tr>
             </thead>
@@ -882,7 +932,7 @@
                 <tr>
                     <th class="w-5">7.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Conclusion </div>
+                        <div style="font-weight: bold;">Packing material approved vendor details </div>
                     </th>
                 </tr>
             </thead>
@@ -913,7 +963,7 @@
                     <tr>
                         <th class="w-5">8.</th>
                         <th class="text-left">
-                            <div style="font-weight: bold;">Report Approval</div>
+                            <div style="font-weight: bold;">Equipment Calibration & Qualification Status</div>
                         </th>
                     </tr>
                 </thead>
@@ -933,61 +983,341 @@
 
 
 
-        <div>
-            <div><span class="bold">Note:</span>Content of report not limited as per above table it may vary.</div>
-        </div>
 
 
 
         <div>
-            <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">REPORT APPROVAL</h3>
-        </div>
 
-        <table class="table" border="1">
-            <thead>
-                <th style="font-weight: bold;">RESPONSIBILITY</th>
-                <th style="font-weight: bold;">DEPARTMENT</th>
-                <th style="font-weight: bold;">DESIGNATION</th>
-                <th style="font-weight: bold;">NAME</th>
-                <th style="font-weight: bold;">SIGN & DATE</th>
-            </thead>
 
-            <tbody style="height: 100PX;">
-                <th style="font-weight: bold;">PREPARED BY</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tbody>
-        </table>
-
-        <table class="table table-bordered" style="width: 100%;" border="1">
-            <tbody>
-                <tr>
-                    <td  style="font-weight: bold;">CHECKED BY</td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                    <td class=""></td>
-                </tr>
-
-                <tr>
-                    <td style="font-weight: bold;">APPROVED BY</td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                    <td class="py-5"></td>
-                </tr>
-
-            </tbody>
-        </table>
+            <div class="other-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-5">9.</th>
+                            <th class="text-left">
+                                <div style="font-weight: bold;">Equipment Calibration & Qualification Status </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="scope-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                            <div class="w-100">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
 
 
-        <script type="text/php">
-            if ( isset($pdf) ) {
+
+            <div>
+
+                <div class="other-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">10.</th>
+                                <th class="text-left">
+                                    <div style="font-weight: bold;">Sampling Plan & Procedure </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                <div class="w-100">
+                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div>
+
+
+                    <div class="other-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-5">11.</th>
+                                    <th class="text-left">
+                                        <div style="font-weight: bold;">Critical Process Parameters & Critical quality Attributes</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="scope-block">
+                            <div class="w-100">
+                                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                    <div class="w-100">
+                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div>
+
+                        <div class="other-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="w-5">12.</th>
+                                        <th class="text-left">
+                                            <div style="font-weight: bold;">Product Acceptance Criteria </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="scope-block">
+                                <div class="w-100">
+                                    <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                        <div class="w-100">
+                                            <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div>
+
+                            <div class="other-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5">13.</th>
+                                            <th class="text-left">
+                                                <div style="font-weight: bold;">Hold time study </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="scope-block">
+                                    <div class="w-100">
+                                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                            <div class="w-100">
+                                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+
+
+                                <div class="other-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5">14.</th>
+                                                <th class="text-left">
+                                                    <div style="font-weight: bold;">Cleaning validation</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <div class="scope-block">
+                                        <div class="w-100">
+                                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                <div class="w-100">
+                                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+
+
+
+                                    <div class="other-container">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-5">15.</th>
+                                                    <th class="text-left">
+                                                        <div style="font-weight: bold;">Stability study</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <div class="scope-block">
+                                            <div class="w-100">
+                                                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                    <div class="w-100">
+                                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+
+
+                                        <div class="other-container">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-5">16.</th>
+                                                        <th class="text-left">
+                                                            <div style="font-weight: bold;">Deviation</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <div class="scope-block">
+                                                <div class="w-100">
+                                                    <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                        <div class="w-100">
+                                                            <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+
+
+                                            <div class="other-container">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="w-5">17.</th>
+                                                            <th class="text-left">
+                                                                <div style="font-weight: bold;">Change control</div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="scope-block">
+                                                    <div class="w-100">
+                                                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                            <div class="w-100">
+                                                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+
+
+                                                <div class="other-container">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-5">18.</th>
+                                                                <th class="text-left">
+                                                                    <div style="font-weight: bold;">Summary </div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <div class="scope-block">
+                                                        <div class="w-100">
+                                                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                                <div class="w-100">
+                                                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+
+                                                    <div class="other-container">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-5">19.</th>
+                                                                    <th class="text-left">
+                                                                        <div style="font-weight: bold;">Conclusion</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                        <div class="scope-block">
+                                                            <div class="w-100">
+                                                                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                                                                    <div class="w-100">
+                                                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+
+
+                                                     
+
+
+                                                              
+
+
+
+                                                                       
+
+                                                                           
+                                                                            <div>
+                                                                                <div><span class="bold">Note:</span>Content of protocol not limited as per above table it may vary.</div>
+                                                                            </div>
+
+
+
+
+
+                                                                            <script type="text/php">
+                                                                                if ( isset($pdf) ) {
             $pdf->page_script('
                 if ($PAGE_COUNT > 1) {
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
