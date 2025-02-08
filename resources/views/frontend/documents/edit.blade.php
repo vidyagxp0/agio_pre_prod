@@ -155,7 +155,9 @@
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
                 <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
                 <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
-
+             
+                <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
+             
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -1877,7 +1879,8 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <div id="responsibilitydiv">
-                                        @if ($document->document_content && !empty($document->document_content->responsibility))
+                                         @if ($document->document_content && !empty($document->document_content->responsibility))
+                                        
                                             @foreach (unserialize($document->document_content->responsibility) as $key => $data)
                                                 <div
                                                     class="{{ str_contains($key, 'sub') ? 'subSingleResponsibilityBlock' : 'singleResponsibilityBlock' }}">
@@ -3330,7 +3333,7 @@
                                         <input type="text" name="balance_quantity" value="{{$document->balance_quantity}}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Balance Quantity Destructed</label>
                                         <select name="balance_quantity_destructed" required>
@@ -3342,7 +3345,7 @@
                                    
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                         <div class="button-block">
@@ -4762,7 +4765,170 @@
 
 
 
-                           
+           
+        <!---------------------------------------------- Process Validation Report tab ----------------------------------------->
+
+        <div id="doc_pvr" class="tabcontent">
+                    <div class="orig-head">
+                        RAW MATERIAL STANDARD TESTING PROCEDURE
+                    </div>
+                <div class="input-fields">
+                    <div class="row">
+
+
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Generic Name </label>
+                                        <input type="text" name="generic_pvr" value="{{$document->document_content->generic_pvr}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Product Code</label>
+                                        <input type="text" name="product_code" value="{{$document->document_content->product_code_pvr}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Std. Batch size </label>
+                                        <input type="text" name="std_batch_pvr" value="{{$document->document_content->std_batch_pvr}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Category</label>
+                                        <input type="text" name="category_pvr" value="{{$document->document_content->category_pvr}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Label Claim  </label>
+                                        <input type="text" name="label_claim_pvr" value="{{$document->document_content->label_claim_pvr}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Market</label>
+                                        <input type="text" name="market_pvr" value="{{$document->document_content->market_pvr}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Shelf Life</label>
+                                        <input type="text" name="shelf_life_pvr" value="{{$document->document_content->shelf_life_pvr}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">BMR No.</label>
+                                        <input type="text" name="bmr_no_pvr" value="{{$document->document_content->bmr_no_pvr}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">MFR No.</label>
+                                        <input type="text" name="mfr_no_pvr" value="{{$document->document_content->mfr_no_pvr}}">
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="purpose_pvr" id="purpose_pvr">
+                                    Purpose<button type="button" id="purpose_pvrbtnadd" name="button"
+                                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                                    </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <div id="purpose_pvrdiv">
+                                         @if ($document->document_content && !empty($document->document_content->purpose_pvr))
+                                        
+                                            @foreach (unserialize($document->document_content->purpose_pvr) as $key => $data)
+                                                <div
+                                                    class="{{ str_contains($key, 'sub') ? 'subsinglepurpose_pvrBlock' : 'singlepurpose_pvrBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <textarea name="[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button
+                                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="purpose_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button
+                                                                    class="btn btn-dark subpurpose_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button
+                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="singlepurpose_pvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="purpose_pvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subpurpose_pvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button
+                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                   
+                                </div>
+                            </div>
+
+                          
+
+
+
+
+
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
 
