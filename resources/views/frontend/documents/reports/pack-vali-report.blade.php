@@ -582,9 +582,11 @@
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
                         <p style="margin: 0; text-align: center; font-weight:bold">AGIO PHARMACEUTICALS LTD.BHOSARI</p>
+                        ANNEXURE-IV
                         {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
                     </td>
+                   
                 </tr>
             </tbody>
         </table>
@@ -619,7 +621,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num" style="width: 50%; padding: 5px; text-align: left">
-                        Process Validation Report for
+                        Packing Validation Report Of
                     </td>
                     <td>
                         _______________________________
@@ -632,7 +634,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num">
-                        APL/PVP/XX/XXXX/XX
+                        APL/PKR/XX/XXXX/XX
                     </td>
                 </tr>
             </tbody>
@@ -657,7 +659,7 @@
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
 
-        <span>Format No.: QA/025/F2-01</span>
+        <span>Format No.: QA/025/F4-01</span>
     </footer>
 
 
@@ -834,7 +836,7 @@
                 <tr>
                     <th class="w-5">5.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Active raw material approved vendor details</div>
+                        <div style="font-weight: bold;">Packing material approved vendor details</div>
                     </th>
                 </tr>
             </thead>
@@ -858,7 +860,7 @@
                 <tr>
                     <th class="w-5">6.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Primary packing material approved vendor details</div>
+                        <div style="font-weight: bold;">Used Equipment Calibration and  Qualification status</div>
                     </th>
                 </tr>
             </thead>
@@ -882,7 +884,7 @@
                 <tr>
                     <th class="w-5">7.</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;">Used Equipment Calibration and Qualification status </div>
+                        <div style="font-weight: bold;">Results Of Packing (Finished product) </div>
                     </th>
                 </tr>
             </thead>
@@ -913,7 +915,7 @@
                     <tr>
                         <th class="w-5">8.</th>
                         <th class="text-left">
-                            <div style="font-weight: bold;">Results of intermediate Product</div>
+                            <div style="font-weight: bold;">Critical process parameters & Critical quality attributes</div>
                         </th>
                     </tr>
                 </thead>
@@ -945,7 +947,7 @@
                         <tr>
                             <th class="w-5">9.</th>
                             <th class="text-left">
-                                <div style="font-weight: bold;">Result of Finished Product</div>
+                                <div style="font-weight: bold;">% Yield</div>
                             </th>
                         </tr>
                     </thead>
@@ -976,7 +978,7 @@
                             <tr>
                                 <th class="w-5">10.</th>
                                 <th class="text-left">
-                                    <div style="font-weight: bold;">Results Of Packing (Finished product) </div>
+                                    <div style="font-weight: bold;">Hold time study </div>
                                 </th>
                             </tr>
                         </thead>
@@ -1008,7 +1010,7 @@
                                 <tr>
                                     <th class="w-5">11.</th>
                                     <th class="text-left">
-                                        <div style="font-weight: bold;">Critical process parameters & Critical quality attributes </div>
+                                        <div style="font-weight: bold;">Cleaning validation</div>
                                     </th>
                                 </tr>
                             </thead>
@@ -1039,7 +1041,7 @@
                                     <tr>
                                         <th class="w-5">12.</th>
                                         <th class="text-left">
-                                            <div style="font-weight: bold;">% Yield at various stages </div>
+                                            <div style="font-weight: bold;">Stability study  </div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -1070,7 +1072,7 @@
                                         <tr>
                                             <th class="w-5">13.</th>
                                             <th class="text-left">
-                                                <div style="font-weight: bold;"> Hold time study </div>
+                                                <div style="font-weight: bold;">Deviation (If any) </div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -1097,7 +1099,7 @@
                                             <tr>
                                                 <th class="w-5">14.</th>
                                                 <th class="text-left">
-                                                    <div style="font-weight: bold;">Cleaning validation</div>
+                                                    <div style="font-weight: bold;">Change Control ( If any)</div>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -1125,7 +1127,7 @@
                                                 <tr>
                                                     <th class="w-5">15.</th>
                                                     <th class="text-left">
-                                                        <div style="font-weight: bold;">Stability study</div>
+                                                        <div style="font-weight: bold;">Summary</div>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -1151,7 +1153,7 @@
                                                     <tr>
                                                         <th class="w-5">16.</th>
                                                         <th class="text-left">
-                                                            <div style="font-weight: bold;">Deviation (If any)</div>
+                                                            <div style="font-weight: bold;">Conclusion</div>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -1177,7 +1179,7 @@
                                                         <tr>
                                                             <th class="w-5">17.</th>
                                                             <th class="text-left">
-                                                                <div style="font-weight: bold;">Change Control ( If any)</div>
+                                                                <div style="font-weight: bold;">Proposed parameters for upcoming batches</div>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -1202,7 +1204,7 @@
                                                             <tr>
                                                                 <th class="w-5">18.</th>
                                                                 <th class="text-left">
-                                                                    <div style="font-weight: bold;">Summary</div>
+                                                                    <div style="font-weight: bold;">Report Approval</div>
                                                                 </th>
                                                             </tr>
                                                         </thead>
@@ -1219,82 +1221,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <div class="other-container">
-                                                        <table>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="w-5">19</th>
-                                                                    <th class="text-left">
-                                                                        <div style="font-weight: bold;">Conclusion </div>
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                        </table>
-                                                        <div class="scope-block">
-                                                            <div class="w-100">
-                                                                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                                                    <div class="w-100">
-                                                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
+                                               
 
-                                                        <div class="other-container">
-                                                            <table>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="w-5">20.</th>
-                                                                        <th class="text-left">
-                                                                            <div style="font-weight: bold;">Proposed parameters for upcoming batches </div>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                            </table>
-                                                            <div class="scope-block">
-                                                                <div class="w-100">
-                                                                    <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                                                        <div class="w-100">
-                                                                            <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                                                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div>
+                                                       
 
-
-                                                            <div class="other-container">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="w-5">21.</th>
-                                                                            <th class="text-left">
-                                                                                <div style="font-weight: bold;">Report Approval </div>
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                                <div class="scope-block">
-                                                                    <div class="w-100">
-                                                                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                                                            <div class="w-100">
-                                                                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                                                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div>
+                                                           
 
 
 
@@ -1307,7 +1238,7 @@
 
 
                                                                 <div>
-                                                                    <div><span class="bold">Note:</span>Content of protocol not limited as per above table it may vary.</div>
+                                                                    <div><span class="bold">Note:</span>Content of report not limited as per above table it may vary.</div>
                                                                 </div>
 
 
