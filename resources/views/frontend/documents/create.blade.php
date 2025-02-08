@@ -1696,7 +1696,37 @@
 
 
 
-                           
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="refrence_document_pvr" id="refrence_document_pvr">
+                                        Reference Document<button type="button" id="refrence_document_pvrbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="refrence_document_pvrdiv">
+                                            <div class="singlerefrence_document_pvrBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="refrence_document_pvr[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subrefrence_document_pvrAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 

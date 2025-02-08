@@ -793,6 +793,10 @@ class DocumentController extends Controller
             if (!empty($request->batchdetail_pvr)) {
                 $content->batchdetail_pvr = serialize($request->batchdetail_pvr);
             }
+
+            if (!empty($request->refrence_document_pvr)) {
+                $content->refrence_document_pvr = serialize($request->refrence_document_pvr);
+            }
             if (!empty($request->active_raw_material_pvr)) {
                 $content->active_raw_material_pvr = serialize($request->active_raw_material_pvr);
             }
@@ -1919,6 +1923,8 @@ class DocumentController extends Controller
             $documentcontet->purpose_pvr = $request->purpose_pvr ? serialize($request->purpose_pvr) : serialize([]);
             $documentcontet->scope_pvr = $request->scope_pvr ? serialize($request->scope_pvr) : serialize([]);
             $documentcontet->batchdetail_pvr = $request->batchdetail_pvr ? serialize($request->batchdetail_pvr) : serialize([]);
+
+            $documentcontet->refrence_document_pvr = $request->refrence_document_pvr ? serialize($request->refrence_document_pvr) : serialize([]);
             $documentcontet->active_raw_material_pvr = $request->active_raw_material_pvr ? serialize($request->active_raw_material_pvr) : serialize([]);
             $documentcontet->primary_packingmaterial_pvr = $request->primary_packingmaterial_pvr ? serialize($request->primary_packingmaterial_pvr) : serialize([]);
             $documentcontet->used_equipment_calibration_pvr = $request->used_equipment_calibration_pvr ? serialize($request->used_equipment_calibration_pvr) : serialize([]);
@@ -2769,6 +2775,7 @@ class DocumentController extends Controller
       
         
         $documentContent = DocumentContent::where('document_id', $id)->first();
+        // dd($documentContent);
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
@@ -2821,7 +2828,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','documentContent'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

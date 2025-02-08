@@ -347,6 +347,14 @@
 
                 });
 
+                $('#refrence_document_pvrbtnadd').click(function(e) {
+
+                    var html =
+                        '<div class="singlerefrence_document_pvrBlock"><div class="resrow row"><div class="col-10"><textarea name="refrence_document_pvr[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subrefrence_document_pvrAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+                    $('#refrence_document_pvrdiv').append(html);
+
+                    });
 
 
 
@@ -594,6 +602,7 @@
         let subpurpose_pvrAdd=0;
         let subbatchdeatails_pvrAdd=0;
         let subbatchdetail_pvrAdd=0;
+        let subrefrence_document_pvrAdd=0;
         let subrefrence_documentAdd=0;
         let subactive_raw_material_pvrAdd=0;
         let subprimary_packingmaterial_pvrAdd=0;
@@ -718,7 +727,7 @@
             e.preventDefault();
             subpurpose_pvrAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><textarea name="accountability[sub_'+ subpurpose_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger purpose_pvrbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="purpose_pvr[sub_'+ subpurpose_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger purpose_pvrbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singlepurpose_pvrBlock');
 
@@ -772,6 +781,27 @@
 
 
 
+        $(document).on('click', '.subrefrence_document_pvrAdd', function(e) {
+            e.preventDefault();
+            subrefrence_document_pvrAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="refrence_document_pvr[sub_'+ subrefrence_document_pvrAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger refrence_document_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlerefrence_document_pvrBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlerefrence_document_pvrBlock', '.subSinglerefrence_document_pvrBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSinglerefrence_document_pvrBlock">' + html + '</div>');
+            }
+        });
+       
+
+
+
+
 
 
 
@@ -802,12 +832,12 @@
 
             var closestSingleBlock = $(this).closest('.singleactive_raw_material_pvrBlock');
 
-            var nextSubBlocks = closestSingleBlock.nextUntil('.singleactive_raw_material_pvrBlock', '.subSingleactive_raw_material_pvrBlock');
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleactive_raw_material_pvrBlock', '.subsingleactive_raw_material_pvrBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
-                closestSingleBlock.after('<div class="subSingleactive_raw_material_pvrBlock">' + html + '</div>');
+                closestSingleBlock.after('<div class="subsingleactive_raw_material_pvrBlock">' + html + '</div>');
             }
         });
 
@@ -822,12 +852,12 @@
 
             var closestSingleBlock = $(this).closest('.singleprimary_packingmaterial_pvrBlock');
 
-            var nextSubBlocks = closestSingleBlock.nextUntil('.singleprimary_packingmaterial_pvrBlock', '.subSingleprimary_packingmaterial_pvrBlock');
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleprimary_packingmaterial_pvrBlock', '.subsingleprimary_packingmaterial_pvrBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
-                closestSingleBlock.after('<div class="subSingleprimary_packingmaterial_pvrBlock">' + html + '</div>');
+                closestSingleBlock.after('<div class="subsingleprimary_packingmaterial_pvrBlock">' + html + '</div>');
             }
         });
 

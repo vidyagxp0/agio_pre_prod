@@ -27,6 +27,8 @@ return new class extends Migration
             $table->longtext('purpose_pvr')->nullable();
             $table->longtext('scope_pvr')->nullable();
             $table->longtext('batchdetail_pvr')->nullable();
+            $table->longtext('refrence_document_pvr')->nullable();
+            
             $table->longtext('active_raw_material_pvr')->nullable();
             $table->longtext('primary_packingmaterial_pvr')->nullable();
 
