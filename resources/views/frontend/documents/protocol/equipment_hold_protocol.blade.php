@@ -585,69 +585,37 @@
 
 <body>
 
-    <table class="table table-bordered" border="1" style="font-weight: bold;">
-        <tbody>
 
-            <tr>
-                <td rowspan="2" class="logo w-20">
-                    <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                        style="max-height: 55px; max-width: 40px;">
-                </td>
-                <td style="font-weight: bold;"> TITLE</td>
-                <td style="font-weight: bold;">Report No.: XX</td>
+ <header class="">
+ <table class="table table-bordered" style="font-weight: bold;">
+    <tbody>
 
+        <tr style="border: 1px solid black;">
+            <td rowspan="2" class="logo w-20">
+                <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                    style="max-height: 55px; max-width: 40px;">
+            </td>
+            <td style="font-weight: bold; text-align: center;" colspan="2">AGIO PHARMACEUTICAL LTD. BHOSARI</td>
+        </tr>
+        <tr style="border: 1px solid black;">
+            <td style="font-weight: bold; text-align: center;" colspan="2">QUALITY ASSURANCE DEPARTMENT</td>
+        </tr>
+    </tbody>
+ </table>
+
+        <table class="border border-top-none border=1" style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tr style="border: 1px solid black;">
+                <td style="font-weight: bold;">Dosage Form :</td>
+                <td style="font-weight: bold;">Page 1 of 2</td>
             </tr>
-            <tr>
-
-                <td style="font-weight: bold;"> XX HOLD TIME STUDY REPORT</td>
-                <td style="font-weight: bold;"> Effective Date</td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;"> Page </td>
-                <td style="font-weight: bold;"> Department: XX</td>
-                <td style="font-weight: bold;"> Supersedes No: NA</td>
-
-            </tr>
-        </tbody>
-                
-    </table>
-
-
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-15">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
-                    </td>
-                    <td class="title w-60"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight:bold">{{ config('site.pdf_title') }}</p>
-                        {{--
-                        <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                    </td>
-                </tr>
-            </tbody>
         </table>
 
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num">
-                        {{-- {{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }} --}}
-                        EQUIPMENT HOLD TIME STUDY REPORT
-                    </td>
-                </tr>
-            </tbody>
+        <table class="border border-top-none border=1" style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tr style="border: 1px solid black;">
+                <td style="font-weight: bold; text-align: center;" colspan="3">EQUIPMENT HOLD TIME STUDY PROTOCOL FOR XX  </td>
+            </tr>
         </table>
-
-        <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-
-        </table>
-    </header>
+</header>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <!-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -726,7 +694,7 @@
                 </tr> 
             </tbody>
         </table> -->
-        <span>Format No.: QA/083/F2-01</span>
+        <span>Format No.: QA/083/F1-01</span>
     </footer>
 
     <div>
@@ -745,6 +713,8 @@
 
         <h2>Batch No.: XX</h2>
 
+        <h2>PROTOCOL APPROVAL </h2>
+
         <h4>PRODUCT DETAILS:</h4>
 
 
@@ -762,52 +732,72 @@
                 <tbody style="">
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">1.0</td>
-                        <td style="font-weight: bold; text-align:left">Objective</td>
+                        <td style="font-weight: bold; text-align:left">Approval </td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">2.0</td>
-                        <td style="font-weight: bold; text-align:left">Scope</td>
+                        <td style="font-weight: bold; text-align:left">Objective</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">3.0</td>
-                        <td style="font-weight: bold; text-align:left">Purpose</td>
+                        <td style="font-weight: bold; text-align:left">Scope</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">4.0</td>
-                        <td style="font-weight: bold; text-align:left">Responsibilities</td>
+                        <td style="font-weight: bold; text-align:left">Responsibility</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">5.0</td>
-                        <td style="font-weight: bold; text-align:left">Analytical Report</td>
+                        <td style="font-weight: bold; text-align:left">Equipment & Product details</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">6.0</td>
-                        <td style="font-weight: bold; text-align:left"> HISTOR Deviation (If Any)</td>
+                        <td style="font-weight: bold; text-align:left">Sampling plan</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">7.0</td>
-                        <td style="font-weight: bold; text-align:left">Change Control ( If Any)</td>
+                        <td style="font-weight: bold; text-align:left">Sampling and analysis procedure </td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">8.0</td>
-                        <td style="font-weight: bold; text-align:left">Summary</td>
+                        <td style="font-weight: bold; text-align:left">Acceptance criteria</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">9.0</td>
-                        <td style="font-weight: bold; text-align:left">Conclusion</td>
+                        <td style="font-weight: bold; text-align:left">Environmental Conditions</td>
                         <td style="font-weight: bold;"></td>
                     </tr>
                     <tr>
                         <td style="font-size: 16px; font-weight: bold;">10</td>
-                        <td style="font-weight: bold; text-align:left">Report Approval </td>
+                        <td style="font-weight: bold; text-align:left">Deviation (if any)  </td>
+                        <td style="font-weight: bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; font-weight: bold;">11</td>
+                        <td style="font-weight: bold; text-align:left">Change Control (If any)  </td>
+                        <td style="font-weight: bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; font-weight: bold;">12</td>
+                        <td style="font-weight: bold; text-align:left">Summary   </td>
+                        <td style="font-weight: bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; font-weight: bold;">13</td>
+                        <td style="font-weight: bold; text-align:left">Conclusion   </td>
+                        <td style="font-weight: bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 16px; font-weight: bold;">14</td>
+                        <td style="font-weight: bold; text-align:left"> Training </td>
                         <td style="font-weight: bold;"></td>
                     </tr>
 
@@ -844,7 +834,7 @@
                             <tr>
                                 <th class="w-5">1.</th>
                                 <th class="text-left">
-                                    <div class="bold">Objective</div>
+                                    <div class="bold">Approval </div>
                                 </th>
                             </tr>
                         </thead>
@@ -868,7 +858,7 @@
                             <tr>
                                 <th class="w-5">2.</th>
                                 <th class="text-left">
-                                    <div class="bold">Scope</div>
+                                    <div class="bold">Objective</div>
                                 </th>
                             </tr>
                         </thead>
@@ -893,7 +883,7 @@
 
                             <th class="w-5 vertical-baseline">3.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Purpose</div>
+                                <div class="bold">Scope </div>
                             </th>
                         </tr>
                     </tbody>
@@ -945,7 +935,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">4.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Responsibilities</div>
+                                <div class="bold">Responsibility</div>
                             </th>
                         </tr>
                     </tbody>
@@ -999,7 +989,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">5.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Analytical Report</div>
+                                <div class="bold">Equipment & Product details</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1048,7 +1038,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">6.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Deviation (If Any)</div>
+                                <div class="bold">Sampling plan</div>
                             </th>
                         </tr>
                     </tbody>
@@ -1100,7 +1090,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">7.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Change Control ( If Any)</div>
+                                <div class="bold">Sampling and analysis procedure </div>
                             </th>
                         </tr>
                     </tbody>
@@ -1152,7 +1142,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">8.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Summary</div>
+                                <div class="bold">Acceptance criteria</div>
                             </th>
                         </tr>
                         <tr>
@@ -1203,7 +1193,7 @@
                             <tr>
                                 <th class="w-5">9.</th>
                                 <th class="text-left">
-                                    <div class="bold">Conclusion</div>
+                                    <div class="bold">Environmental Conditions</div>
                                 </th>
                             </tr>
                         </thead>
@@ -1309,7 +1299,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">10.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Report Approval</div>
+                                <div class="bold">Deviation (if any) </div>
                             </th>
                         </tr>
                     </tbody>
@@ -1352,6 +1342,232 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">11.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Change Control (If any) </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                        $definitions = $data->document_content
+                                            ? unserialize($data->document_content->defination)
+                                            : [];
+                                    @endphp
+                                    @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
+                                                                    @foreach ($definitions as $key => $definition)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($definition) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                          @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">12.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Summary  </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                        $definitions = $data->document_content
+                                            ? unserialize($data->document_content->defination)
+                                            : [];
+                                    @endphp
+                                    @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
+                                                                    @foreach ($definitions as $key => $definition)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($definition) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                          @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">13.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Conclusion </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                            $data->document_content &&
+                                            !empty($data->document_content->accountability) &&
+                                            is_array(unserialize($data->document_content->accountability))
+)
+            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                          @endforeach
+                                    @endif
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <table class="mb-15">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">14.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold">Training </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                            $data->document_content &&
+                                            !empty($data->document_content->accountability) &&
+                                            is_array(unserialize($data->document_content->accountability))
+)
+            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                          @endforeach
+                                    @endif
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+   
+     
+     
                 {{-- REPORTING END --}}
 
 
@@ -1584,14 +1800,12 @@
                 <section class="doc-control" style="page-break-after: never;">
                     <div class="head">
                         <div>
-                            <h5>Content of Report not limited as per above table it may vary</h5>
+                            <h5>Content of Protocol not limited as per above table it may vary.    </h5>
                         </div>
                     </div>
                     <div class="body">
                         <div class="block mb-40">
-                            <div class="block-head">
-                                REPORT APPROVAL
-                            </div>
+                          
                             <div class="block-content">
                                 <!-- Content goes here -->
                             </div>

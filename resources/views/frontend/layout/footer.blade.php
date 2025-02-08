@@ -502,7 +502,141 @@
 
         });
 
+        // Process Validation Protocol
+        $('#responsibilityprvpbtnadd').click(function(e) {
 
+            var html =
+                '<div class="singleResponsibilityPrvpBlock"><div class="resrow row"><div class="col-10"><textarea name="responsibilityprvp[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subResponsibilityprvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#responsibilityprvpdiv').append(html);
+
+        });
+
+        $('#accountabilityprvpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleAccountabilityPrvpBlock"><div class="resrow row"><div class="col-10"><textarea name="prvp_rawmaterial[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subAccountabilityprvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#accountabilityprvpdiv').append(html);
+
+        });
+
+        $('#referencesprvpbtadd').click(function(e) {
+
+            var html =
+                '<div class="singleReferencesPrvpBlock"><div class="resrow row"><div class="col-10"><textarea name="pripackmaterial[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subReferencesPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#referencesprvpdiv').append(html);
+
+        });
+
+
+        $('#abbreviationprvpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleAbbreviationPrvpBlock"><div class="resrow row"><div class="col-10"><textarea name="equipCaliQuali[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subAbbreviationPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#abbreviationprvpdiv').append(html);
+
+        });
+
+        $('#DefinitionPrvpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleDefinitionPrvpBlock"><div class="resrow row"><div class="col-10"><textarea name="rationale_critical[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subDefinitionPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#definitionprvpdiv').append(html);
+
+        });
+
+        $('#materialsgeneralbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleMaterialGeneralBlock"><div class="resrow row"><div class="col-10"><textarea name="general_instrument[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subMaterialsGenAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#materialsGeneraldiv').append(html);
+
+        });
+
+
+        $('#processflowbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleProcessFlowBlock"><div class="resrow row"><div class="col-10"><textarea name="process_flow[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subProcessFlowAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#processFlowdiv').append(html);
+
+        });
+
+        $('#diagrammaticbtnadd').click(function(e) {
+            var html =
+                '<div class="singleDiagrammaticBlock"><div class="resrow row"><div class="col-10"><textarea name="diagrammatic[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subDiagrammaticAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#diagrammaticdiv').append(html);
+        });
+
+        $('#criticalprocessbtnadd').click(function(e) {
+            var html =
+                '<div class="singleCriticalBlock"><div class="resrow row"><div class="col-10"><textarea name="critical_process[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subCriticalAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#criticaldiv').append(html);
+        });
+
+        $('#productacceptancebtnadd').click(function(e) {
+            var html =
+                '<div class="singleProductAccpBlock"><div class="resrow row"><div class="col-10"><textarea name="product_acceptance[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subProductAccpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#productaccpdiv').append(html);
+        });
+
+        $('#cleaningvalibtnadd').click(function(e) {
+            var html =
+                '<div class="singleCleaningValiBlock"><div class="resrow row"><div class="col-10"><textarea name="cleaning_validation[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subCleaningValiAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#cleaningvalidiv').append(html);
+        });
+
+        $('#stabilitystudybtnadd').click(function(e) {
+            var html =
+                '<div class="singleStabilityStudyBlock"><div class="resrow row"><div class="col-10"><textarea name="stability_study[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subStabilityAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stabilitystudydiv').append(html);
+        });
+
+        $('#deviationbtnadd').click(function(e) {
+            var html =
+                '<div class="singleDeviationBlock"><div class="resrow row"><div class="col-10"><textarea name="deviation[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subDeviationAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#deviationdiv').append(html);
+        });
+
+        $('#changecontrolbtnadd').click(function(e) {
+            var html =
+                '<div class="singleChangeControlBlock"><div class="resrow row"><div class="col-10"><textarea name="change_control[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subChangeControlAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#changecontroldiv').append(html);
+        });
+
+        $('#summaryprvpbtnadd').click(function(e) {
+            var html =
+                '<div class="singleSummaryBlock"><div class="resrow row"><div class="col-10"><textarea name="summary_prvp[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subSummaryPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#summaryprvpdiv').append(html);
+        });
+
+        $('#conclusionprvpbtnadd').click(function(e) {
+            var html =
+                '<div class="singleConclusionBlock"><div class="resrow row"><div class="col-10"><textarea name="conclusion_prvp[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subConclusionPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#conclusionprvpdiv').append(html);
+        });
+
+        $('#trainingprvpbtnadd').click(function(e) {
+            var html =
+                '<div class="singleTrainingBlock"><div class="resrow row"><div class="col-10"><textarea name="training_prvp[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subTrainingPrvpAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#trainingprvpdiv').append(html);
+        });
 
         $('#abbreviationbtnadd').click(function(e) {
 
@@ -558,6 +692,12 @@
         let subReferencesAdd = 0;
         let subAnnexureAdd = 0;
         let subReportingAdd = 0;
+        let subResponsibilityprvpAdd = 0;
+        let subAccountabilityprvpAdd = 0;
+        let subDefinitionPrvpAdd = 0;
+
+
+
 
         $(document).on('click', '.removeAllBlocks', function(e) {
             e.preventDefault();
