@@ -495,40 +495,29 @@
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">REVISION HISTORY</h4>
             <div class="table-responsive retrieve-table">
                 <table class="table table-bordered" id="distribution-list">
-                    <thead style="width:20%">
+                    <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:60%">Reason of revision</th>
-
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>
                     </thead>
-                    <tbody style="">
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">1</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">2</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">3</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">4</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 16px; font-weight: bold;">5</td>
-                            <td style="font-weight: bold;"></td>
-                            <td style="font-weight: bold;"></td>
-                        </tr>
+                    <tbody>
+                        @if (!empty($RevisionGridData))
+                            @foreach ($RevisionGridData as $key => $item)
+                                <tr>
+                                    <td>{{ $item['revision_number'] ?? '' }}</td>
+                                    <td>{{ $item['cc_no'] ?? '' }}</td>
+                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

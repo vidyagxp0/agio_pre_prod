@@ -1311,60 +1311,80 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="test">
-                                            Revision History
-                                        </label>
                                         <div><small class="text-primary"></small></div>
-                                        <div class="table-responsive retrieve-table">
-                                        <table class="table-bordered table" id="">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr. No.</th>
-                                                    <th class="copy-name">Revision No.</th>
-                                                    <th class="copy-name">Change Control No./ DCRF No</th>
-                                                    <th class="copy-name">Effective Date</th>
-                                                    <th class="copy-name">Reason of revision</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        </div>
+                                            <label for="action-plan-grid">
+                                                    Revision History<button type="button" name="action-plan-grid"
+                                                        id="Details_add_revision">+</button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                    Row Increment
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Details-table-revision">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 2%">Sr. No.</th>
+                                                            <th style="width: 12%">Revision No.</th>
+                                                            <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                            <th style="width: 12%">Effective Date</th>
+                                                            <th style="width: 30%">Reason of revision</th>
+                                                            <th style="width: 3%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $serialNumber = 1;
+                                                        @endphp
+                                                        <td disabled>{{ $serialNumber++ }}</td>
+                                                        <td><input type="text" name="revision_history[0][revision_number]"></td>
+                                                        <td><input type="text" name="revision_history[0][cc_no]"></td>
+                                                        <td><input type="text" name="revision_history[0][revised_effective_date]"></td>
+                                                        <td><input type="text" name="revision_history[0][reason_of_revision]"></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                     </div>
                                 </div>
 
-                {{-- <div class="col-md-12">
-                <div class="group-input">
-                    <label for="test">
-                        Revision History<button type="button" name="reporting2" onclick="addRevRow('revision')">+</button>
-                    </label>
-                    <div><small class="text-primary">Please mention brief summary</small></div>
-                    <table class="table-bordered table" id="revision">
-                        <thead>
-                            <tr>
-                                <th class="sop-num">SOP Revision No.</th>
-                                <th class="dcrf-num">Change Control No./ DCRF No.</th>
-                                <th class="changes">Changes</th>
-                                <th class="deleteRow">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" id="rev-num0"></td>
-                                <td><input type="text" id="control0"></td>
-                                <td><input type="text" id="change0"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> --}}
+                                <script>
+                                    $(document).ready(function() {
+                                        let investdetails = 1;
+                                        $('#Details_add_revision').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+                                                var users = @json($users);
+                                                console.log(users);
+                                                var html =
+                                                        '<tr>' +
+                                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="revision_history[' + investdetails +
+                                                        '][revision_number]" value=""></td>' +
+                                                        '<td><input type="text" name="revision_history[' + investdetails +
+                                                        '][cc_no]" value=""></td>' +
+                                                        '<td><input type="text" name="revision_history[' + investdetails +
+                                                        '][revised_effective_date]" value=""></td>' +
+                                                        '<td><input type="text" name="revision_history[' + investdetails +
+                                                        '][reason_of_revision]" value=""></td>' +
+
+
+                                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>';
+
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Details-table-revision tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                </script>
+
                             </div>
                         </div>
                         <div class="button-block">
@@ -2308,6 +2328,8 @@
                             });
                         });
                 </script>
+
+
 
                 <script>
                     $(document).on('click', '.removeRowBtn', function() {
@@ -3570,12 +3592,16 @@
                                 });
                             </script>
 
-                            <!-- <div class="col-md-12">
+                            <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="tds_remark">Remark</label>
-                                    <textarea name="tds_remark"></textarea>
+                                    <label for="procedure">B) Test wise data and calculation:-</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea name="procedure" class="summernote">
+                                </textarea>
                                 </div>
-                            </div> -->
+                            </div>
+
 
                             <div class="orig-head">
                                SAMPLE RECONCILATION
@@ -3586,19 +3612,18 @@
                                     <input type="text" name="name_of_material_sample">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Batch No.</label>
                                     <input type="text" name="sample_reconcilation_batchNo">
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">A.R.No.</label>
                                     <input type="text" name="sample_reconcilation_arNo">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-12">
                                 <div class="group-input">

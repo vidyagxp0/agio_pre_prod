@@ -925,6 +925,11 @@ class DocumentController extends Controller
             $GtpGridData->data = $request->gtp;
             $GtpGridData->save();
 
+            $RevisionData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_history'])->firstOrNew();
+            $RevisionData->document_type_id = $document->id;
+            $RevisionData->identifier = 'revision_history';
+            $RevisionData->data = $request->revision_history;
+            $RevisionData->save();
 
 
             $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
@@ -1130,7 +1135,8 @@ class DocumentController extends Controller
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
-        // dd($GtpGridData);
+
+        $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
         
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
@@ -1163,14 +1169,6 @@ class DocumentController extends Controller
 
         $SpecificationData_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'specificationInprocessValidationSpecification')->first();
         $Specification_Validation_Data_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
-
-
-
-
-
-
-
-
 
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
@@ -1226,7 +1224,7 @@ class DocumentController extends Controller
             'GtpGridData',
             'currentId',
             'Specification_Validation_Data_CVS',
-            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber'
+            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData'
         ));
     }
 
@@ -2158,6 +2156,12 @@ class DocumentController extends Controller
             $GtpGridData->save();
 
 
+            $RevisionData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_history'])->firstOrNew();
+            $RevisionData->document_type_id = $document->id;
+            $RevisionData->identifier = 'revision_history';
+            $RevisionData->data = $request->revision_history;
+            $RevisionData->save();
+
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
             $ProductSpecification->document_type_id = $document->id;
@@ -2677,6 +2681,10 @@ class DocumentController extends Controller
         $GtpGridData = isset($GtpData->data) && is_string($GtpData->data) 
             ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
 
+        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
+        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data) 
+            ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
+
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data) 
             ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
@@ -2802,7 +2810,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

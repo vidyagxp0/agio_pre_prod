@@ -2715,7 +2715,7 @@
                     </div>
 
 
-                    <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <div class="group-input">
                                 <label for="test">
                                     Revision History
@@ -2754,8 +2754,95 @@
                                 </table>
                                 </div>
                             </div>
+                        </div> --}}
+
+                        <div class="group-input">
+                            <label for="action-plan-grid">
+                                Revision History<button type="button" name="action-plan-grid"
+                                        id="Details_add_revision">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    Row Increment
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="Details-table-revision">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 2%">Sr. No.</th>
+                                            <th style="width: 12%">Revision No.</th>
+                                            <th style="width: 12%">Change Control No./ DCRF No</th>
+                                            <th style="width: 12%">Effective Date</th>
+                                            <th style="width: 30%">Reason of revision</th>
+                                            <th style="width: 3%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php 
+                                            $serialNumber = 1; 
+                                            $GtpData = isset($RevisionHistoryData->data) && is_string($RevisionHistoryData->data) 
+                                                ? json_decode($RevisionHistoryData->data, true) 
+                                                : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
+                                        @endphp
+
+                                        @if(!empty($GtpData))
+                                            @foreach($GtpData as $key => $gtp_data)
+                                                <tr>
+                                                    <td>{{ $serialNumber++ }}</td>
+                                                    <td><input type="text" name="revision_history[{{ $key }}][revision_number]" value="{{ $gtp_data['revision_number'] ?? '' }}"></td>
+                                                    <td><input type="text" name="revision_history[{{ $key }}][cc_no]" value="{{ $gtp_data['cc_no'] ?? '' }}"></td>
+                                                    <td><input type="text" name="revision_history[{{ $key }}][revised_effective_date]" value="{{ $gtp_data['revised_effective_date'] ?? '' }}"></td>
+                                                    <td><input type="text" name="revision_history[{{ $key }}][reason_of_revision]" value="{{ $gtp_data['reason_of_revision'] ?? '' }}"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td>{{ $serialNumber++ }}</td>
+                                                <td><input type="text" name="revision_history[0][revision_number]"></td>
+                                                <td><input type="text" name="revision_history[0][cc_no]"></td>
+                                                <td><input type="text" name="revision_history[0][revised_effective_date]"></td>
+                                                <td><input type="text" name="revision_history[0][reason_of_revision]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
+                        <script>
+                            $(document).ready(function() {
+                                function updateSerialNumbers() {
+                                    $('#Details-table-revision tbody tr').each(function(index) {
+                                        $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                        $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                    });
+                                }
+
+                                $('#Details_add_revision').click(function() {
+                                    var serialNumber = $('#Details-table-revision tbody tr').length + 1; // Get the next serial number
+                                    var newRow = `
+                                        <tr>
+                                            <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                            <td><input type="text" name="revision_history[${serialNumber - 1}][revision_number]" value=""></td>
+                                            <td><input type="text" name="revision_history[${serialNumber - 1}][cc_no]" value=""></td>
+                                            <td><input type="text" name="revision_history[${serialNumber - 1}][revised_effective_date]" value=""></td>
+                                            <td><input type="text" name="revision_history[${serialNumber - 1}][reason_of_revision]" value=""></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>`;
+                                    
+                                    $('#Details-table-revision tbody').append(newRow);
+                                });
+
+                                // Remove row functionality
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                    updateSerialNumbers(); // Update serial numbers after removal
+                                });
+                            });
+                        </script>
 
 
                     <div class="button-block">
@@ -4600,8 +4687,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-
-                            </div>
+                                </div>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -5012,6 +5098,83 @@
                                                     <div class="row">
                                                         <div class="col-sm-10">
                                                             <textarea name="prvp_rawmaterial[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subAccountabilityprvpAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button
+                                                                class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Responsibility' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="responsibility" id="responsibility">
+                                                Active raw material approved vendor details<button type="button" id="referencesprvpbtadd" name="button"
+                                                {{ Helpers::isRevised($document->stage) }}>+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                require completion</small></div>
+                                        <div id="referencesprvpdiv">
+                                            @if ($document->document_content && !empty($document->document_content->equipCaliQuali))
+                                                @foreach (unserialize($document->document_content->equipCaliQuali) as $key => $data)
+                                                    <div
+                                                        class="{{ str_contains($key, 'sub') ? 'subReferencesPrvpAdd' : 'singleReferencesPrvpBlock' }}">
+                                                        @if (str_contains($key, 'sub'))
+                                                            <div class="resrow row">
+                                                                <div class="col-6">
+                                                                    <textarea name="equipCaliQuali[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <button
+                                                                        class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="equipCaliQuali[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button
+                                                                        class="btn btn-dark subAccountabilityprvpAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button
+                                                                        class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="singleReferencesPrvpBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="equipCaliQuali[]" class="myclassname"></textarea>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <button class="btn btn-dark subAccountabilityprvpAdd">+</button>
