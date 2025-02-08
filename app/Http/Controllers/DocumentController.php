@@ -441,7 +441,6 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->submit == 'save') {
 
             $document = new Document();
@@ -727,6 +726,25 @@ class DocumentController extends Controller
             $content->revision_summary = $request->revision_summary;
             $content->safety_precautions = $request->safety_precautions;
             $content->hod_comments = $request->hod_comments;
+
+            //PRVProtocol
+            $content->generic_prvp = $request->generic_prvp;
+            $content->prvp_product_code = $request->prvp_product_code;
+            $content->prvp_std_batch = $request->prvp_std_batch;
+            $content->prvp_category = $request->prvp_category;
+            $content->prvp_label_claim = $request->prvp_label_claim;
+            $content->prvp_market = $request->prvp_market;
+            $content->prvp_shelf_life = $request->prvp_shelf_life;
+            $content->prvp_bmr_no = $request->prvp_bmr_no;
+            $content->prvp_mfr_no = $request->prvp_mfr_no;
+
+            $content->prvp_purpose = $request->prvp_purpose;
+            $content->prvp_scope = $request->prvp_scope;
+            $content->reason_validation = $request->reason_validation;
+            $content->validation_po_prvp = $request->validation_po_prvp;
+            $content->description_sop_prvp = $request->description_sop_prvp;
+            $content->prvp_procedure = $request->prvp_procedure;
+
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
@@ -855,16 +873,6 @@ class DocumentController extends Controller
 
             // if ($request->hasfile('references')) {
 
-            //     $image = $request->file('references');
-
-            //     $ext = $image->getClientOriginalExtension();
-
-            //     $image_name = date('y-m-d').'-'.rand().'.'.$ext;
-
-            //     $image->move('upload/document/', $image_name);
-
-            //     $content->references = $image_name;
-            // }
             if (!empty($request->ann)) {
                 $content->ann = serialize($request->ann);
             }
@@ -875,8 +883,78 @@ class DocumentController extends Controller
                 $content->distribution = serialize($request->distribution);
             }
 
-            $griddata = $document->id;
+            // Process Validation Protocol
+            if (!empty($request->responsibilityprvp)) {
+                $content->responsibilityprvp = serialize($request->responsibilityprvp);
+            }
 
+            if (!empty($request->prvp_rawmaterial)) {
+                $content->prvp_rawmaterial = serialize($request->prvp_rawmaterial);
+            }
+            
+            if (!empty($request->pripackmaterial)) {
+                $content->pripackmaterial = serialize($request->pripackmaterial);
+            }
+
+            if (!empty($request->equipCaliQuali)) {
+                $content->equipCaliQuali = serialize($request->equipCaliQuali);
+            }
+
+            if (!empty($request->rationale_critical)) {
+                $content->rationale_critical = serialize($request->rationale_critical);
+            }
+
+            if (!empty($request->general_instrument)) {
+                $content->general_instrument = serialize($request->general_instrument);
+            }
+            
+            if (!empty($request->process_flow)) {
+                $content->process_flow = serialize($request->process_flow);
+            }
+
+            if (!empty($request->diagrammatic)) {
+                $content->diagrammatic = serialize($request->diagrammatic);
+            }
+
+            if (!empty($request->critical_process)) {
+                $content->critical_process = serialize($request->critical_process);
+            }
+
+            if (!empty($request->product_acceptance)) {
+                $content->product_acceptance = serialize($request->product_acceptance);
+            }
+
+            if (!empty($request->holdtime_study)) {
+                $content->holdtime_study = serialize($request->holdtime_study);
+            }
+
+            if (!empty($request->cleaning_validation)) {
+                $content->cleaning_validation = serialize($request->cleaning_validation);
+            }
+
+            if (!empty($request->stability_study)) {
+                $content->stability_study = serialize($request->stability_study);
+            }
+
+            if (!empty($request->deviation)) {
+                $content->deviation = serialize($request->deviation);
+            }
+            if (!empty($request->change_control)) {
+                $content->change_control = serialize($request->change_control);
+            }
+            if (!empty($request->summary_prvp)) {
+                $content->summary_prvp = serialize($request->summary_prvp);
+            }
+            if (!empty($request->conclusion_prvp)) {
+                $content->conclusion_prvp = serialize($request->conclusion_prvp);
+            }
+            if (!empty($request->training_prvp)) {
+                $content->training_prvp = serialize($request->training_prvp);
+            }
+            $content->save();
+
+
+            $griddata = $document->id;
             // Store data for Specification grid
             $SpecificationData = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'SPECIFICATION'])->firstOrNew();
             $SpecificationData->document_type_id = $griddata;
@@ -889,7 +967,6 @@ class DocumentController extends Controller
             $Specification_Validation_Data->document_type_id = $griddata;
             $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
             $Specification_Validation_Data->data = $request->specification_validation_details;
-            // dd($Specification_Validation_Data->data);
             $Specification_Validation_Data->save();
 
             $content->save();
@@ -916,7 +993,6 @@ class DocumentController extends Controller
             $RowSpecification_Data->identifier = 'ROW_SPECIFICATION';
             $RowSpecification_Data->data = $request->Row_Materail;
             $RowSpecification_Data->save();
-            $content->save();
 
 
             $DocumentGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'Rowmaterialtest'])->firstOrNew();
@@ -932,23 +1008,25 @@ class DocumentController extends Controller
             $PackingGridData->document_type_id = $document->id;
             $PackingGridData->identifier = 'Packingmaterialdata';
             $PackingGridData->data = $request->packingtest;
-          //  dd($PackingGridData);
             $PackingGridData->save();
 
             $GtpGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'gtp'])->firstOrNew();
             $GtpGridData->document_type_id = $document->id;
             $GtpGridData->identifier = 'gtp';
             $GtpGridData->data = $request->gtp;
-            // dd($GtpGridData);
             $GtpGridData->save();
 
+            $RevisionData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_history'])->firstOrNew();
+            $RevisionData->document_type_id = $document->id;
+            $RevisionData->identifier = 'revision_history';
+            $RevisionData->data = $request->revision_history;
+            $RevisionData->save();
 
 
             $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
             $ProductSpecification->document_type_id = $document->id;
             $ProductSpecification->identifier = 'ProductSpecification';
             $ProductSpecification->data = $request->product;
-          //  dd($ProductSpecification);
             $ProductSpecification->save();
 
 
@@ -1148,7 +1226,8 @@ class DocumentController extends Controller
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
-        // dd($GtpGridData);
+
+        $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
         
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
@@ -1181,14 +1260,6 @@ class DocumentController extends Controller
 
         $SpecificationData_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'specificationInprocessValidationSpecification')->first();
         $Specification_Validation_Data_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
-
-
-
-
-
-
-
-
 
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
@@ -1247,7 +1318,7 @@ class DocumentController extends Controller
             'GtpGridData',
             'currentId',
             'Specification_Validation_Data_CVS',
-            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber'
+            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData'
         ));
     }
 
@@ -2171,8 +2242,6 @@ class DocumentController extends Controller
             $DocumentGridData->save();
 
 
-            
-
             $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
             $PackingGridData->document_type_id = $document->id;
             $PackingGridData->identifier = 'Packingmaterialdata';
@@ -2185,6 +2254,12 @@ class DocumentController extends Controller
             $GtpGridData->data = $request->gtp;
             $GtpGridData->save();
 
+
+            $RevisionData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_history'])->firstOrNew();
+            $RevisionData->document_type_id = $document->id;
+            $RevisionData->identifier = 'revision_history';
+            $RevisionData->data = $request->revision_history;
+            $RevisionData->save();
 
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
@@ -2199,18 +2274,13 @@ class DocumentController extends Controller
             $MaterialSpecification->document_type_id = $document->id;
             $MaterialSpecification->identifier = 'MaterialSpecification';
             $MaterialSpecification->data = $request->row_material;
-            // dd($MaterialSpecification);
             $MaterialSpecification->save();
-
-
-
 
            
             $Finished_Product = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product']);
             $Finished_Product->document_type_id = $document->id;
             $Finished_Product->identifier = 'Finished_Product';
             $Finished_Product->data = $request->item;
-           // dd($Finished_Product);
             $Finished_Product->save();
 
             $Inprocess_standard = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard']);
@@ -2223,10 +2293,7 @@ class DocumentController extends Controller
             $CLEANING_VALIDATION->document_type_id = $document->id;
             $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
             $CLEANING_VALIDATION->data = $request->cleaning_validation;
-            // dd($CLEANING_VALIDATION);
             $CLEANING_VALIDATION->save();
-
-
 
 
             $SpecificationData = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION']);
@@ -2239,9 +2306,7 @@ class DocumentController extends Controller
             $Specification_Validation_Data->document_type_id = $document->id;
             $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
             $Specification_Validation_Data->data = $request->specification_validation_details;
-            //dd($Specification_Validation_Data);
             $Specification_Validation_Data->save();
-
 
 
             $SpecificationData_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SpecificationCleaningValidationSpecification']);
@@ -2254,7 +2319,6 @@ class DocumentController extends Controller
             $Specification_Validation_Data_CVS->document_type_id = $document->id;
             $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
             $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
-            //dd($Specification_Validation_Data_CVS);
             $Specification_Validation_Data_CVS->save();
            
 
@@ -2268,12 +2332,8 @@ class DocumentController extends Controller
             $Specification_Validation_Data_invs->document_type_id = $document->id;
             $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
             $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
-        //    dd($Specification_Validation_Data_invs);
             $Specification_Validation_Data_invs->save();
  
- 
- 
-
 
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
@@ -2720,6 +2780,10 @@ class DocumentController extends Controller
         $GtpGridData = isset($GtpData->data) && is_string($GtpData->data) 
             ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
 
+        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
+        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data) 
+            ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
+
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data) 
             ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
@@ -2806,17 +2870,35 @@ class DocumentController extends Controller
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
             'PROTO' => 'frontend.documents.proto-pdf',
+            'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
             'STUDY' => 'frontend.documents.reports.study_report',
+            'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
             'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
             'REPORT' => 'frontend.documents.report-pdf',
             'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
             'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
             'REQULIFICATION'=>'frontend.documents.reports.requlification',
+            'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
+            'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
+            'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
+            'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
             'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
             'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
             'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
             'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
             'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
+            'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
+            'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
+            'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
+            'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
+            'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
+            'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
+            'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
+            'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
+            'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
+            'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+            'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
             'SMF' => 'frontend.documents.smf-pdf',
             'VMP' => 'frontend.documents.vmp-pdf',
             'QM' => 'frontend.documents.qm-pdf',

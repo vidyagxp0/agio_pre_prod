@@ -1371,55 +1371,34 @@
                         </thead>
                     </table>
                     <div class="table-responsive retrieve-table">
-                            <table class="table table-bordered" id="distribution-list">
-                                <thead>
-                                    <tr>
-                                        <th style="font-size: 16px; font-weight: bold;">Rev. No.</th>
-                                        <th style="font-size: 16px; font-weight: bold;">Change Control No.</th>
-                                        <th style="font-size: 16px; font-weight: bold;">Effective Date</th>
-                                        <th style="font-size: 16px; font-weight: bold;">Details of revision</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">1</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">2</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                         <td>
-                                         {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                       
-                                        </tr>
+                        <table class="table table-bordered" id="distribution-list">
+                            <thead>
+                                <tr>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($RevisionGridData))
+                                    @foreach ($RevisionGridData as $key => $item)
                                         <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">3</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td>{{ $data->effective_date}}</td>
-                                        <td>
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                        </td>
-                                    </tr> --}}
-                                </tbody>
-                            </table>
-                        </div>
-                    {{-- <div class="scope-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                <div class="w-100">
-                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->revision_summary ? nl2br($data->revision_summary) : '' !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                                            <td>{{ $item['revision_number'] ?? '' }}</td>
+                                            <td>{{ $item['cc_no'] ?? '' }}</td>
+                                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                            <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </section>
             {{-- <br><br>

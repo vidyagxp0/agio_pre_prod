@@ -293,7 +293,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                     
                     <span>
                         @if($document->revised == 'Yes')

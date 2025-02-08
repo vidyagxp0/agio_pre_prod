@@ -646,9 +646,9 @@
             <tbody>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->batch_no}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"> </td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">A.R. No.</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->ar_no}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"> </td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Mfg. Date</td>
@@ -1144,27 +1144,30 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="scope-block">
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    <div class="table-responsive retrieve-table">
+                        <table class="table table-bordered" id="distribution-list">
                             <thead>
                                 <tr>
-                                    <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
-                                    <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
-                                    <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @if($data->revised == 'Yes')
-                                    <tr>
-                                        <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                    
-                                        <td style="border: 1px solid black;">{{ Helpers::getdateFormat($data->effective_date) }}</td>                 
-                                        <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
-                                    </tr>
+                                @if (!empty($RevisionGridData))
+                                    @foreach ($RevisionGridData as $key => $item)
+                                        <tr>
+                                            <td>{{ $item['revision_number'] ?? '' }}</td>
+                                            <td>{{ $item['cc_no'] ?? '' }}</td>
+                                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                            <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>
-                                    <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>

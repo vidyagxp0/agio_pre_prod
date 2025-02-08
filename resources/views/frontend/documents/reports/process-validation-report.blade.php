@@ -641,7 +641,7 @@
     </header>
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT NAME</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Product Name</h3>
     </div>
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Report No.:</h3>
@@ -649,51 +649,9 @@
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
     </div>
-    <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PROTOCOL APPROVAL</h3>
-    </div>
+   
 
-    <table border="1">
-        <thead>
-            <th>RESPONSIBILITY</th>
-            <th>DEPARTMENT</th>
-            <th>DESIGNATION</th>
-            <th>NAME</th>
-            <th>SIGN & DATE</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>PREPARED BY</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td rowspan="2">CHECKED BY</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>APROVED BY</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-
-        </tbody>
-    </table>
+   
 
 
 
@@ -709,7 +667,7 @@
 
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PROTOCOL DETAILS</h3>
+        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS</h3>
     </div>
 
     <table border="1">

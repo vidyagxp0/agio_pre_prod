@@ -680,30 +680,34 @@
         </thead>
     </table>
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
-                <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
-            </tr>
-        </thead>
-        <tbody>
-        @if($data->revised == 'Yes')
-            <tr>
-                <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                                                                 
-                <td style="border: 1px solid black;">{{ $data->effective_date }}</td>                 
-                <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
-            </tr>
-        @else
-        <tr>
-            <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                No Data Available
-            </td>
-        </tr>
-        @endif
-        </tbody>
-    </table>
+    <div class="table-responsive retrieve-table">
+        <table class="table table-bordered" id="distribution-list">
+            <thead>
+                <tr>
+                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
+                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!empty($RevisionGridData))
+                    @foreach ($RevisionGridData as $key => $item)
+                        <tr>
+                            <td>{{ $item['revision_number'] ?? '' }}</td>
+                            <td>{{ $item['cc_no'] ?? '' }}</td>
+                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                            <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
 
 
 
