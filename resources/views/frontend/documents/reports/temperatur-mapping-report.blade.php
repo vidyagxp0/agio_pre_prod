@@ -898,9 +898,9 @@
                                             @endphp
                                             @if (
                                                 $data->document_content &&
-                                                    !empty($data->document_content->Conclusion_HoTiStRe) &&
-                                                    is_array(unserialize($data->document_content->Conclusion_HoTiStRe)))
-                                                @foreach (unserialize($data->document_content->Conclusion_HoTiStRe) as $key => $res)
+                                                    !empty($data->document_content->ProtocolApproval_TemperMap) &&
+                                                    is_array(unserialize($data->document_content->ProtocolApproval_TemperMap)))
+                                                @foreach (unserialize($data->document_content->ProtocolApproval_TemperMap) as $key => $res)
                                                     @php
                                                         $isSub = str_contains($key, 'sub');
                                                     @endphp
