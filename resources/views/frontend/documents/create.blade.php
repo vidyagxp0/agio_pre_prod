@@ -1727,35 +1727,7 @@
 
 
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-
-                                        <label for="refrence_document" id="refrence_document">
-                                        Refrence Document<button type="button" id="refrence_documentbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="refrence_documentdiv">
-                                            <div class="singlerefrence_documentBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="refrence_document[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subrefrence_documentAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
+                               
                                 <div class="col-md-12">
                                     <div class="group-input">
 
