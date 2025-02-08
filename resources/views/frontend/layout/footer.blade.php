@@ -562,6 +562,15 @@
 
         });
 
+        $('#ReportApproval_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleReportApproval_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="ReportApproval_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReportApproval_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ReportApproval_HoTiStRediv').append(html);
+
+        });
+
 
 
 
@@ -770,6 +779,7 @@
         let subDeviationIfAny_HoTiStReAdd = 0;
         let subSummary_HoTiStReAdd = 0;
         let subConclusion_HoTiStReAdd = 0;
+        let subReportApproval_HoTiStReAdd = 0;
         let subAbbreviationAdd = 0;
         let subDefinitionAdd = 0;
         let subReferencesAdd = 0;
@@ -1271,7 +1281,7 @@
             }
         });
 
-       
+
 
         $(document).on('click', '.subReferenceDocument_HoTiStReAdd', function(e) {
             e.preventDefault();
@@ -1355,6 +1365,23 @@
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subsingleConclusion_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subReportApproval_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subReportApproval_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReportApproval_HoTiStRe[sub_'+ subReportApproval_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReportApproval_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReportApproval_HoTiStReBlock', '.subsingleReportApproval_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReportApproval_HoTiStReBlock">' + html + '</div>');
             }
         });
 

@@ -4941,6 +4941,35 @@
                 </div>
             </div>
 
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ReportApproval_HoTiStRe" id="ReportApproval_HoTiStRe">
+                        Report Approval <button type="button" id="ReportApproval_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ReportApproval_HoTiStRediv">
+                        <div class="singleReportApproval_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ReportApproval_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subReportApproval_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
         </div>
     </div>

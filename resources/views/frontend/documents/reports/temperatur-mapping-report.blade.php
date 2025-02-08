@@ -892,8 +892,37 @@
                             <div class="w-100">
                                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                     <div class="w-100">
-                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! $data->document_content ? nl2br($data->document_content->ProtocolApproval_TemperMap) : '' !!}
+                                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @if (
+                                                $data->document_content &&
+                                                    !empty($data->document_content->Conclusion_HoTiStRe) &&
+                                                    is_array(unserialize($data->document_content->Conclusion_HoTiStRe)))
+                                                @foreach (unserialize($data->document_content->Conclusion_HoTiStRe) as $key => $res)
+                                                    @php
+                                                        $isSub = str_contains($key, 'sub');
+                                                    @endphp
+                                                    @if (!empty($res))
+                                                        <div style="position: relative;">
+                                                            <span
+                                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                            {!! nl2br($res) !!} <br>
+                                                        </div>
+                                                    @endif
+                                                    @php
+                                                        if (!$isSub) {
+                                                            $i++;
+                                                            $sub_index = 1;
+                                                        } else {
+                                                            $sub_index++;
+                                                        }
+                                                    @endphp
+                                                @endforeach
+                                            @endif
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -916,9 +945,39 @@
                             <div class="w-100">
                                 <div class="w-100" style="display:inline-block;">
                                     <div class="w-100">
-                                        <div class="text-justify"
-                                            style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                            {!! $data->document_content ? nl2br($data->document_content->Objective_TemperMap) : '' !!}
+                                        <div class="w-100">
+                                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                                @php
+                                                    $i = 1;
+                                                @endphp
+                                                @if (
+                                                    $data->document_content &&
+                                                        !empty($data->document_content->Objective_TemperMap) &&
+                                                        is_array(unserialize($data->document_content->Objective_TemperMap)))
+                                                    @foreach (unserialize($data->document_content->Objective_TemperMap) as $key => $res)
+                                                        @php
+                                                            $isSub = str_contains($key, 'sub');
+                                                        @endphp
+                                                        @if (!empty($res))
+                                                            <div style="position: relative;">
+                                                                <span
+                                                                    style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                                {!! nl2br($res) !!} <br>
+                                                            </div>
+                                                        @endif
+                                                        @php
+                                                            if (!$isSub) {
+                                                                $i++;
+                                                                $sub_index = 1;
+                                                            } else {
+                                                                $sub_index++;
+                                                            }
+                                                        @endphp
+                                                    @endforeach
+                                                @endif
+
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1594,21 +1653,42 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="custom-procedure-block">
-                            <div class="custom-container">
-                                <div class="custom-table-wrapper" id="custom-table2">
-                                    <div class="custom-procedure-content">
-                                        <div class="custom-content-wrapper">
-                                            @if ($data->document_content)
-                                                {!! strip_tags($data->document_content->DeviationAny_TemperMap,
-                                                '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        <div class="procedure-block">
+                            <div class="w-100">
+                                <div class="w-100" style="display:inline-block;">
+                                    <div class="w-100">
+                                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                                            @php
+                                                $i = 1;
+                                                $sub_index = 1;
+                                            @endphp
+                                            @if ($data->document_content && is_array(unserialize($data->document_content->DeviationAny_TemperMap)))
+                                                @foreach (unserialize($data->document_content->DeviationAny_TemperMap) as $key => $res)
+                                                    @php
+                                                        $isSub = str_contains($key, 'sub');
+                                                    @endphp
+                                                    @if (!empty($res))
+                                                        <div style="position: relative;">
+                                                            <span
+                                                                style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                            {!! nl2br($res) !!} <br>
+                                                        </div>
+                                                    @endif
+                                                    @php
+                                                        if (!$isSub) {
+                                                            $i++;
+                                                            $sub_index = 1;
+                                                        } else {
+                                                            $sub_index++;
+                                                        }
+                                                    @endphp
+                                                @endforeach
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     {{-- Deviation if any end--}}
 
                     <br>

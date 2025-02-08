@@ -873,6 +873,9 @@ class DocumentController extends Controller
         if (!empty($request->Conclusion_HoTiStRe)) {
             $content->Conclusion_HoTiStRe = serialize($request->Conclusion_HoTiStRe);
         }
+        if (!empty($request->ReportApproval_HoTiStRe)) {
+            $content->ReportApproval_HoTiStRe = serialize($request->ReportApproval_HoTiStRe);
+        }
 
 
 
@@ -2070,6 +2073,7 @@ $documentcontet->ResultBulkStage_HoTiStRe = $request->ResultBulkStage_HoTiStRe ?
 $documentcontet->DeviationIfAny_HoTiStRe = $request->DeviationIfAny_HoTiStRe ? serialize($request->DeviationIfAny_HoTiStRe) : serialize([]);
 $documentcontet->Summary_HoTiStRe = $request->Summary_HoTiStRe ? serialize($request->Summary_HoTiStRe) : serialize([]);
 $documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize($request->Conclusion_HoTiStRe) : serialize([]);
+$documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? serialize($request->ReportApproval_HoTiStRe) : serialize([]);
 
             $documentcontet->hod_comments = $request->hod_comments;
 
@@ -2854,7 +2858,10 @@ $documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize
         $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
         $specificationValidationData = isset($specificationValidation->data)&& is_string($specificationValidation->data) ? json_decode($specificationValidation->data,true) :(is_array($specificationValidation->data) ? $specificationValidation->data:[]);
 
+        $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id)->where('identifier', "CalibrationQualificationStatus")->first();
 
+
+        $calibrationdata = isset($CalibrationQualificationstatus->data) && is_string($CalibrationQualificationstatus->data) ? json_decode($CalibrationQualificationstatus->data) : (is_array($CalibrationQualificationstatus->data) ? $CalibrationQualificationstatus->data : []);
 
 
         $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
@@ -2947,7 +2954,7 @@ $documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','calibrationdata'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
